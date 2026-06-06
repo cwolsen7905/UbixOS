@@ -133,10 +133,41 @@ void InputRouter::handle_mouse(mouse_event_t &ev)
 	 */
 	if ((ev.dx || ev.dy) && !dragging_ && !resizing_)
 	{
+		int cx = comp_.cur_x(), cy = comp_.cur_y();
 		Window *f = reg_.focused();
-		if (f != nullptr && f->wants_motion && !f->minimized &&
-		    (f->hit_test(comp_.cur_x(), comp_.cur_y()) || ev.buttons != 0))
-			send_mouse(f, comp_.cur_x(), comp_.cur_y(), ev.buttons);
+		if (f != nullptr && f->wants_motion && !f->minimized && (f->hit_test(cx, cy) || ev.buttons != 0))
+			send_mouse(f, cx, cy, ev.buttons);
+
+		/* Hover: also deliver motion to the topmost opted-in window under the
+		 * cursor (if it isn't the focused one already handled above) so panels
+		 * and menus — taskbar, start menu — can track hover without being
+		 * focused. */
+		Window *hov = nullptr;
+		for (auto it = reg_.z_stack().rbegin(); it != reg_.z_stack().rend(); ++it)
+		{
+			Window *h = *it;
+			if (h->minimized || !h->wants_motion)
+				continue;
+			if (h->hit_test(cx, cy))
+			{
+				hov = h;
+				break; /* topmost hit only */
+			}
+		}
+
+		/* Tell the previously-hovered window the cursor left (negative coords)
+		 * so it can clear its hover highlight — there is no enter/exit event. */
+		uint32_t hov_id = hov ? hov->id : 0;
+		if (last_hover_id_ != 0 && last_hover_id_ != hov_id)
+		{
+			Window *prev = reg_.find(last_hover_id_);
+			if (prev != nullptr && prev->wants_motion)
+				send_mouse(prev, -1, -1, 0);
+		}
+		last_hover_id_ = hov_id;
+
+		if (hov != nullptr && hov != f)
+			send_mouse(hov, cx, cy, ev.buttons);
 	}
 
 	if (ev.buttons == prev_buttons_)

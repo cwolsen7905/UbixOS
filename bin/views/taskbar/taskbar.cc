@@ -51,6 +51,7 @@ extern char **environ; /* inherited session env, forwarded to launched apps */
 #define BTN_W 104   /* start button: hamburger icon + "uBixOS" */
 #define CLOCK_W 160 /* fits "MM/DD  HH:MM:SS" */
 #define WIN_BTN_W 96
+#define TRAY_W 34 /* system-tray area (volume) left of the clock */
 
 /* Start-menu geometry (a Menu sizes its height to its item count). */
 #define MENU_W 180
@@ -313,21 +314,28 @@ class Menu
 	bool open_ = false;
 	bool footer_ = false; /* show the user + power row (start menu only) */
 	int x_ = 0, y_ = 0, w_ = 0, h_ = 0;
+	int hover_item_ = -1; /* item under the cursor (highlight) */
+	int active_row_ = -1; /* row whose submenu is open (stays highlighted) */
 	std::vector<MenuItem> items_;
 
 	void draw(ogScalableFont &font)
 	{
 		/* Flat panel: items render straight on the panel fill (no per-item raised
 		 * boxes) for a modern pop-over look.  A 1px accent strip down the left
-		 * edge gives the menu a bit of identity. */
+		 * edge gives the menu a bit of identity.  The hovered item — and the row
+		 * whose submenu is open — get a highlight fill. */
 		surf_.ogFillRect(0, 0, w_ - 1, h_ - 1, FLY_BG_C);
 		surf_.ogFillRect(0, 0, 2, h_ - 1, FLY_ITEM_C);
 		for (int i = 0; i < (int)items_.size(); i++)
 		{
 			int top = i * MENU_ITEM_H;
 			int ty = top + (MENU_ITEM_H - FONT_SIZE) / 2;
+			bool hl = (i == hover_item_ || i == active_row_);
+			uint32_t bg = hl ? FLY_ITEM_C : FLY_BG_C;
+			if (hl)
+				surf_.ogFillRect(2, top, w_ - 1, top + MENU_ITEM_H - 1, FLY_ITEM_C);
 			font_fg(font, COL_WHITE);
-			font_bg(font, FLY_BG_C);
+			font_bg(font, bg);
 			font.PutString(surf_, 14, ty, items_[i].label.c_str());
 			if (items_[i].submenu)
 				font.PutString(surf_, w_ - 16, ty, ">");
@@ -408,6 +416,31 @@ class Menu
 		footer_ = on;
 	}
 
+	/* Update the hovered item (negative y / out-of-range clears it).  Returns
+	 * true if it changed (caller should redraw). */
+	bool set_hover(int item)
+	{
+		if (item == hover_item_)
+			return false;
+		hover_item_ = item;
+		return true;
+	}
+
+	/* Mark a row as "active" (its submenu is open) so it stays highlighted. */
+	void set_active_row(int row)
+	{
+		active_row_ = row;
+	}
+
+	/* Repaint and flip (used on hover changes). */
+	void redraw(ogScalableFont &font)
+	{
+		if (!open_)
+			return;
+		draw(font);
+		send_flip_msg(win_id_);
+	}
+
 	/* Total height including the footer when enabled. */
 	int height() const
 	{
@@ -486,6 +519,7 @@ class Menu
 		creq->h = h_;
 		creq->sender_pid = ubix::pid();
 		creq->no_decor = 1;
+		creq->wants_motion = 1; /* receive hover motion for highlighting */
 		std::strncpy(creq->title, "menu", sizeof(creq->title) - 1);
 		creq->title[sizeof(creq->title) - 1] = '\0';
 		std::strncpy(creq->reply, "taskbar", sizeof(creq->reply) - 1);
@@ -519,6 +553,8 @@ class Menu
 
 		open_ = false;
 		win_id_ = 0;
+		hover_item_ = -1;
+		active_row_ = -1;
 	}
 };
 
@@ -539,13 +575,44 @@ class Taskbar
 	Menu submenu_;
 	Launcher launcher_;
 	bool btn_pressed_ = false;
+	bool prev_down_ = false;  /* previous button-1 state, for release-edge clicks */
 	uint32_t focused_id_ = 0; /* active window (DISPLAY_FOCUS); highlights its tab */
+
+	/* Hover state on the strip (updated from pointer-motion events). */
+	bool hover_start_ = false; /* cursor over the start button */
+	int hover_tab_ = -1;       /* window tab under the cursor, or -1 */
+	bool hover_vol_ = false;   /* cursor over the volume tray glyph */
+
+	/* System tray: master volume mirrored from ubistry (/aural/*). */
+	int volume_ = 100;
+	bool muted_ = false;
 
 	/* Draw the hamburger "menu" glyph for the start button. */
 	void draw_start_icon(int cx, int cy)
 	{
 		for (int i = -1; i <= 1; i++)
 			surf_.ogFillRect(cx - 7, cy + i * 5 - 1, cx + 7, cy + i * 5, COL_WHITE);
+	}
+
+	/* Draw a compact speaker glyph for the volume tray.  Red + slashed when
+	 * muted; a couple of "wave" ticks to the right scale with the level. */
+	void draw_volume_glyph(int cx, int cy)
+	{
+		uint32_t col = muted_ ? 0x00FF6E6Eu : (hover_vol_ ? COL_WHITE : 0x00C8C8D2u);
+		surf_.ogFillRect(cx - 7, cy - 2, cx - 5, cy + 2, col); /* driver block */
+		for (int c = 0; c <= 5; c++)                           /* cone widens right */
+			surf_.ogVLine(cx - 4 + c, cy - c, cy + c, col);
+		if (muted_)
+		{
+			surf_.ogLine(cx - 7, cy + 6, cx + 7, cy - 6, 0x00FF6E6Eu); /* mute slash */
+		}
+		else
+		{
+			if (volume_ > 5)
+				surf_.ogVLine(cx + 4, cy - 3, cy + 3, col);
+			if (volume_ >= 55)
+				surf_.ogVLine(cx + 7, cy - 5, cy + 5, col);
+		}
 	}
 
 	void draw_strip()
@@ -555,33 +622,42 @@ class Taskbar
 		surf_.ogFillRect(0, 0, sw - 1, TB_H - 1, TB_BG);
 		surf_.ogFillRect(0, 0, sw - 1, 0, TB_SEP); /* 1px top hairline */
 
-		/* Launcher button — flat; hamburger icon + brand, fills only on press. */
-		uint32_t start_bg = btn_pressed_ ? TB_BTN_P : TB_BG;
-		if (btn_pressed_)
-			surf_.ogFillRect(2, 1, 2 + BTN_W - 1, TB_H - 1, TB_BTN_P);
+		/* Launcher button — flat; hamburger icon + brand.  Fills on press, and a
+		 * subtle highlight on hover. */
+		uint32_t start_bg = btn_pressed_ ? TB_BTN_P : (hover_start_ ? TB_BTN_N : TB_BG);
+		if (btn_pressed_ || hover_start_)
+			surf_.ogFillRect(2, 1, 2 + BTN_W - 1, TB_H - 1, start_bg);
 		draw_start_icon(16, TB_H / 2);
 		font_fg(font_, COL_WHITE);
 		font_bg(font_, start_bg);
 		font_.PutString(surf_, 30, 12, "uBixOS");
 
-		/* Window list — flat tabs; the focused window gets a brighter fill and a
-		 * full-accent underline, the rest a flat fill with no underline. */
+		/* Window list — flat tabs; focused window gets a brighter fill + accent
+		 * underline, hovered tab a lighter fill, the rest a flat fill. */
 		int wx = 2 + BTN_W + 4;
 		int clock_x = sw - CLOCK_W - 2;
+		int tray_x = clock_x - TRAY_W;
+		int i = 0;
 		for (const auto &tw : tracked_)
 		{
-			if (wx + WIN_BTN_W > clock_x - 4)
+			if (wx + WIN_BTN_W > tray_x - 4)
 				break;
 			bool active = (tw.id == focused_id_);
+			bool hover = (i == hover_tab_);
 			uint32_t fill = active ? TB_BTN_P : TB_BTN_N;
 			surf_.ogFillRect(wx, 4, wx + WIN_BTN_W - 1, TB_H - 1, fill);
-			if (active)
-				surf_.ogFillRect(wx, TB_H - 3, wx + WIN_BTN_W - 1, TB_H - 1, COL_WHITE);
-			font_fg(font_, active ? COL_WHITE : 0x00C8C8D2u);
+			if (active || hover)
+				surf_.ogFillRect(
+				    wx, TB_H - 3, wx + WIN_BTN_W - 1, TB_H - 1, active ? COL_WHITE : TB_BTN_P);
+			font_fg(font_, (active || hover) ? COL_WHITE : 0x00C8C8D2u);
 			font_bg(font_, fill);
 			font_.PutString(surf_, wx + 8, 12, tw.title.c_str());
 			wx += WIN_BTN_W + 2;
+			i++;
 		}
+
+		/* System tray: volume glyph. */
+		draw_volume_glyph(tray_x + TRAY_W / 2, TB_H / 2);
 
 		/* Clock — boxless date + time, right-aligned text on the bar. */
 		char tstr[20];
@@ -591,13 +667,20 @@ class Taskbar
 		font_.PutString(surf_, clock_x + 8, 12, tstr);
 	}
 
+	/* Tray hit-test: true if mx is over the volume glyph. */
+	bool vol_hit(int mx) const
+	{
+		int tray_x = (int)sw_ - CLOCK_W - 2 - TRAY_W;
+		return mx >= tray_x && mx < tray_x + TRAY_W;
+	}
+
 	int winbtn_hit(int mx) const
 	{
 		int wx = 2 + BTN_W + 4;
-		int clock_x = (int)sw_ - CLOCK_W - 2;
+		int tray_x = (int)sw_ - CLOCK_W - 2 - TRAY_W;
 		for (int i = 0; i < (int)tracked_.size(); i++)
 		{
-			if (wx + WIN_BTN_W > clock_x - 4)
+			if (wx + WIN_BTN_W > tray_x - 4)
 				break;
 			if (mx >= wx && mx < wx + WIN_BTN_W)
 				return i;
@@ -650,6 +733,7 @@ class Taskbar
 		creq->h = TB_H;
 		creq->sender_pid = ubix::pid();
 		creq->no_decor = 1;
+		creq->wants_motion = 1; /* receive hover motion for highlighting */
 		std::strncpy(creq->title, "taskbar", sizeof(creq->title) - 1);
 		creq->title[sizeof(creq->title) - 1] = '\0';
 		std::strncpy(creq->reply, "taskbar", sizeof(creq->reply) - 1);
@@ -703,6 +787,15 @@ class Taskbar
 		send_flip_msg(win_id_);
 	}
 
+	/* Re-read master volume/mute from ubistry into the cached members. */
+	void refresh_volume()
+	{
+		int v = 0, m = 0;
+		if (ubistry_get_int("/aural/volume", &v) == 0)
+			volume_ = v < 0 ? 0 : (v > 100 ? 100 : v);
+		muted_ = (ubistry_get_int("/aural/mute", &m) == 0) && (m != 0);
+	}
+
 	/*
 	 * Re-claim the bottom strip at a new screen size after a live resolution
 	 * change (DISPLAY_RESIZE): release the old window, claim a full-width strip
@@ -728,6 +821,7 @@ class Taskbar
 		creq->h = TB_H;
 		creq->sender_pid = ubix::pid();
 		creq->no_decor = 1;
+		creq->wants_motion = 1; /* receive hover motion for highlighting */
 		std::strncpy(creq->title, "taskbar", sizeof(creq->title) - 1);
 		creq->title[sizeof(creq->title) - 1] = '\0';
 		std::strncpy(creq->reply, "taskbar", sizeof(creq->reply) - 1);
@@ -817,12 +911,49 @@ class Taskbar
 		submenu_.show(sx, sy, mbox, font_);
 	}
 
+	/* Update hover highlight from a pointer event (motion or click).  Negative
+	 * coords are the "cursor left" signal; they clear the relevant hover. */
+	void update_hover(const display_mouse_ev *me)
+	{
+		bool exited = (me->x < 0);
+		if (me->window_id == win_id_)
+		{
+			bool hs = !exited && (me->x >= 2 && me->x < 2 + BTN_W);
+			int ht = exited ? -1 : winbtn_hit(me->x);
+			bool hv = !exited && vol_hit(me->x);
+			if (hs != hover_start_ || ht != hover_tab_ || hv != hover_vol_)
+			{
+				hover_start_ = hs;
+				hover_tab_ = ht;
+				hover_vol_ = hv;
+				draw_strip();
+				send_flip();
+			}
+		}
+		else if (me->window_id == start_menu_.win_id() && start_menu_.is_open())
+		{
+			if (start_menu_.set_hover(exited ? -1 : start_menu_.hit_item(me->y)))
+				start_menu_.redraw(font_);
+		}
+		else if (me->window_id == submenu_.win_id() && submenu_.is_open())
+		{
+			if (submenu_.set_hover(exited ? -1 : submenu_.hit_item(me->y)))
+				submenu_.redraw(font_);
+		}
+	}
+
 	void on_mouse(const display_mouse_ev *me, ubix::Mailbox &mbox)
 	{
+		bool down = (me->buttons & 1) != 0;
+		bool click = !down && prev_down_; /* release edge = a completed click */
+		prev_down_ = down;
+
+		update_hover(me);
+
 		/* Submenu click: dispatch the chosen leaf. */
 		if (me->window_id == submenu_.win_id() && submenu_.is_open())
 		{
-			if (!(me->buttons & 1))
+			if (click)
 			{
 				const MenuItem *it = submenu_.item(submenu_.hit_item(me->y));
 				MenuItem sel = it ? *it : MenuItem();
@@ -836,7 +967,7 @@ class Taskbar
 		/* Top-level menu click: power button, cascade a submenu, or dispatch. */
 		if (me->window_id == start_menu_.win_id() && start_menu_.is_open())
 		{
-			if (!(me->buttons & 1))
+			if (click)
 			{
 				if (start_menu_.footer_power_hit(me->x, me->y))
 				{
@@ -847,6 +978,7 @@ class Taskbar
 				const MenuItem *it = start_menu_.item(row);
 				if (it && it->submenu)
 				{
+					start_menu_.set_active_row(row); /* keep parent lit */
 					open_submenu(*it, row, mbox);
 				}
 				else
@@ -860,40 +992,45 @@ class Taskbar
 			return;
 		}
 
-		bool pressed = (me->buttons & 1) != 0;
-		if (pressed == btn_pressed_)
-			return;
-		btn_pressed_ = pressed;
-		draw_strip();
-		send_flip();
-
-		if (!pressed)
+		/* Strip: reflect the pressed state on the start button. */
+		if (down != btn_pressed_)
 		{
-			int wi = winbtn_hit(me->x);
-			if (wi >= 0)
+			btn_pressed_ = down;
+			draw_strip();
+			send_flip();
+		}
+		if (!click)
+			return;
+
+		int wi = winbtn_hit(me->x);
+		if (wi >= 0)
+		{
+			close_menus();
+			raise_window(tracked_[wi].id);
+			return;
+		}
+		if (vol_hit(me->x))
+		{
+			launcher_.launch("/bin/settings"); /* open Settings for volume */
+			return;
+		}
+		bool in_btn = (me->x >= 2 && me->x < 2 + BTN_W);
+		if (in_btn)
+		{
+			if (start_menu_.is_open())
 			{
 				close_menus();
-				raise_window(tracked_[wi].id);
-				return;
-			}
-			bool in_btn = (me->x >= 2 && me->x < 2 + BTN_W);
-			if (in_btn)
-			{
-				if (start_menu_.is_open())
-				{
-					close_menus();
-				}
-				else
-				{
-					start_menu_.load("/views/startmenu");
-					start_menu_.set_footer(true); /* user + power row */
-					start_menu_.show(2, (int)sh_ - TB_H - start_menu_.height(), mbox, font_);
-				}
 			}
 			else
 			{
-				close_menus(); /* click elsewhere dismisses the menu */
+				start_menu_.load("/views/startmenu");
+				start_menu_.set_footer(true); /* user + power row */
+				start_menu_.show(2, (int)sh_ - TB_H - start_menu_.height(), mbox, font_);
 			}
+		}
+		else
+		{
+			close_menus(); /* click elsewhere dismisses the menu */
 		}
 	}
 };
@@ -921,6 +1058,7 @@ int main(int argc, char **argv)
 	if (!tb.init(mbox, FONT_PATH))
 		return 1;
 
+	tb.refresh_volume();
 	tb.draw();
 	tb.send_flip();
 
@@ -931,6 +1069,7 @@ int main(int argc, char **argv)
 		if (t != last_sec)
 		{
 			last_sec = t;
+			tb.refresh_volume(); /* pick up volume/mute changes once a second */
 			tb.draw();
 			tb.send_flip();
 		}

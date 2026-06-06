@@ -58,6 +58,10 @@ class InputRouter
 	Window *last_click_win_ = nullptr;
 	int last_click_x_ = 0, last_click_y_ = 0;
 
+	/* Id of the window the cursor last hovered (for motion delivery); 0 if none.
+	 * Tracked by id, not pointer, so a destroyed window can't dangle. */
+	uint32_t last_hover_id_ = 0;
+
 	/* on_close_ is called when the user clicks the close button.
 	 * WindowManager sets this to its own close_window method via a
 	 * captureless lambda + context pointer, avoiding a circular dep. */
