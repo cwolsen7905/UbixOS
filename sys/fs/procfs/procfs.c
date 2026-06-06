@@ -326,13 +326,15 @@ procfs_build_meminfo(char *buf, int bufsz)
 	    "MemUsed:  %8u kB\n"
 	    "PageSize: %8u bytes\n"
 	    "Pages:    total %u free %u\n"
-	    "FileCache: %u pages\n",
+	    "FileCache: %u pages\n"
+	    "OrphanPages: %u\n",
 	    total_pages * kb_per_page,
 	    free_pages * kb_per_page,
 	    (total_pages - free_pages) * kb_per_page,
 	    (u_int32_t)PAGE_SIZE,
 	    total_pages, free_pages,
-	    vm_filecache_page_count());
+	    vm_filecache_page_count(),
+	    vmm_audit_orphan_pages());
 }
 
 /* -----------------------------------------------------------------------

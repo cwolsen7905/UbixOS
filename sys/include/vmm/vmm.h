@@ -76,6 +76,7 @@ extern "C" {
     int adjust_cow_counter(u_int32_t baseAddr, int adjustment);
     void vmm_share_ref(u_int32_t phys);
     void vmm_free_process_pages(pidType pid);
+    u_int32_t vmm_audit_orphan_pages(void);
 
     int vmm_alloc_page_table(u_int32_t, pidType);
     void vmm_unmap_page(u_int32_t, unmapFlags_t);
