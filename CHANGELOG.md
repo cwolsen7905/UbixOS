@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-Reconstructed from commit history since `v2.2.0-BETA` (2026-05-24).
+---
+
+## [2.3.0-BETA] - 2026-06-06
 
 ### Added
 - **Kernel threads** — `rfork(RFMEM)` / `clone` foundation: tasks in a thread
@@ -117,6 +119,12 @@ Reconstructed from commit history since `v2.2.0-BETA` (2026-05-24).
   `fd < 3` and allocate from the lowest free slot; `kern_openat` returns negative
   errno (musl ABI); POSIX errno-sign + dir-stat + MPI mailbox cleanup (NetSurf
   runtime gates); FPU corruption from the per-CPU `_current` macro under SMP.
+- `execve` now resets caught signals to `SIG_DFL` (POSIX): the old handler
+  addresses point into the torn-down address space, so a process that inherited a
+  caught signal across exec would jump to a wild pointer on its next signal (the
+  cause of the first kernel-threads test crash — a child's `SIGCHLD` delivered to
+  a stale inherited handler). `SIG_IGN` dispositions, the signal mask, and pending
+  signals are preserved.
 - VMM: physical use-after-free of shared regions on owner `free()`; segfault report
   now names the VMA / backing file holding `eip`.
 - FAT: keep `cur_cluster` consistent after a boundary-ending read **and** write
@@ -523,7 +531,8 @@ Initial git import from prior CVS/SVN history. Kernel booted, basic VFS and VMM 
 - `lseek` syscall (`SEEK_END` not yet implemented).
 - TCC added to base system.
 
-[Unreleased]: https://github.com/cwolsen7905/UbixOS/compare/v2.2.0-BETA...HEAD
+[Unreleased]: https://github.com/cwolsen7905/UbixOS/compare/v2.3.0-BETA...HEAD
+[2.3.0-BETA]: https://github.com/cwolsen7905/UbixOS/compare/v2.2.0-BETA...v2.3.0-BETA
 [2.2.0-BETA]: https://github.com/cwolsen7905/UbixOS/compare/v2.1.0-BETA...v2.2.0-BETA
 [2.1.0-BETA]: https://github.com/cwolsen7905/UbixOS/compare/v2.0.1-BETA...v2.1.0-BETA
 [2.0.1-BETA]: https://github.com/cwolsen7905/UbixOS/compare/v2.0.0-BETA...v2.0.1-BETA
