@@ -44,7 +44,10 @@ class WindowManager
 	InputRouter input_;
 	bool mode_pending_ = false; /* awaiting the 0x82 reply for a live mode switch */
 
+	uint32_t last_focus_sent_ = 0; /* last window id sent to the taskbar via DISPLAY_FOCUS */
+
 	void notify_taskbar(Window *w, uint8_t added);
+	void set_focus(Window *w); /* set focus + notify the taskbar (highlights its tab) */
 	void reap_window(Window *w);
 	void close_window(Window *w);
 	void minimize_window(Window *w);

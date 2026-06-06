@@ -51,9 +51,11 @@ InputRouter::InputRouter(WindowRegistry &reg,
                          void (*close_fn)(void *, Window *),
                          void (*min_fn)(void *, Window *),
                          void (*resize_fn)(void *, Window *, int, int),
-                         void (*place_fn)(void *, Window *, int))
+                         void (*place_fn)(void *, Window *, int),
+                         void (*focus_fn)(void *, Window *))
     : reg_(reg), comp_(comp), dragging_(false), drag_win_(nullptr), drag_off_x_(0), drag_off_y_(0), prev_buttons_(0),
-      close_ctx_(close_ctx), close_fn_(close_fn), min_fn_(min_fn), resize_fn_(resize_fn), place_fn_(place_fn)
+      close_ctx_(close_ctx), close_fn_(close_fn), min_fn_(min_fn), resize_fn_(resize_fn), place_fn_(place_fn),
+      focus_fn_(focus_fn)
 {
 }
 
@@ -222,7 +224,7 @@ void InputRouter::handle_mouse(mouse_event_t &ev)
 		if (hit)
 		{
 			reg_.z_raise(hit);
-			reg_.set_focused(hit);
+			focus_fn_(close_ctx_, hit);
 			comp_.invalidate_all();
 
 			if (hit->in_resize_grip(cx, cy))

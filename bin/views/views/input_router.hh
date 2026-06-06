@@ -70,6 +70,7 @@ class InputRouter
 	void (*min_fn_)(void *, Window *);              /* minimize callback (same ctx) */
 	void (*resize_fn_)(void *, Window *, int, int); /* resize-commit callback (same ctx) */
 	void (*place_fn_)(void *, Window *, int);       /* maximize/snap (mode: 0=max,1=left,2=right) */
+	void (*focus_fn_)(void *, Window *);            /* click-to-focus callback (same ctx) */
 
 	void send_mouse(Window *w, int cx, int cy, uint8_t buttons);
 	void close_window(Window *w);
@@ -81,7 +82,8 @@ class InputRouter
 	            void (*close_fn)(void *, Window *),
 	            void (*min_fn)(void *, Window *),
 	            void (*resize_fn)(void *, Window *, int, int),
-	            void (*place_fn)(void *, Window *, int));
+	            void (*place_fn)(void *, Window *, int),
+	            void (*focus_fn)(void *, Window *));
 
 	void handle_mouse(mouse_event_t &ev);
 	void handle_kbd(kbd_event_t &ev);
