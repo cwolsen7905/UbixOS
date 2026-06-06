@@ -108,6 +108,29 @@ static void vmm_report_segfault(const char *reason, struct trapframe *frame, u_i
 			kprintf("    (no VMA contains the fault — wild/corrupted pointer, not a "
 			        "lazy-mapping miss)\n");
 	}
+
+	/* Which mapping holds the faulting instruction?  For a library-backed VMA
+	 * this names the backing file and the offset within the mapping, so eip can
+	 * be symbolised offline (addr2line -e <file> <off>). */
+	{
+		vm_map_entry_t *ev = vm_map_lookup(&_current->vm_map, (uintptr_t)frame->tf_eip);
+		if (ev != NULL)
+		{
+			const char *name = "(anon)";
+			if ((ev->vm_flags & VM_MAP_FILE) && ev->vm_vnode != NULL)
+				name = ((fileDescriptor_t *)ev->vm_vnode)->fileName;
+			kprintf("  eip in [0x%X-0x%X) flags=0x%X off=0x%X file=%s\n",
+			        (u_int32_t)ev->vm_start,
+			        (u_int32_t)ev->vm_end,
+			        ev->vm_flags,
+			        (u_int32_t)((u_int32_t)frame->tf_eip - (u_int32_t)ev->vm_start),
+			        name);
+		}
+		else
+		{
+			kprintf("  eip 0x%X is in no VMA (corrupted code pointer)\n", (u_int32_t)frame->tf_eip);
+		}
+	}
 }
 
 /**
