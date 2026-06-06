@@ -53,18 +53,19 @@ extern char **environ; /* inherited session env, forwarded to launched apps */
 #define WIN_BTN_W 96
 
 /* Start-menu geometry (a Menu sizes its height to its item count). */
-#define MENU_W 140
-#define MENU_ITEM_H 20
+#define MENU_W 180
+#define MENU_ITEM_H 28
 #define MENU_MAX_ITEMS 16
 
 /* Colours: (r<<16)|(g<<8)|b.  All but white are derived from the per-user accent
- * colour (views/theme/accent) by apply_theme(); defaults match the old blue. */
-static uint32_t TB_BG = 0x003C8Cu;
-static uint32_t TB_BTN_N = 0x0050B0u;
-static uint32_t TB_BTN_P = 0x0070D0u;
-static uint32_t TB_SEP = 0x002868u;
-static uint32_t FLY_BG_C = 0x002860u;
-static uint32_t FLY_ITEM_C = 0x004080u;
+ * colour (views/theme/accent) by apply_theme(); defaults are slate-derived to
+ * match the compositor's calm default title-bar accent (0x333C4C). */
+static uint32_t TB_BG = 0x0028303Cu;      /* taskbar fill (slightly darker than title bars) */
+static uint32_t TB_BTN_N = 0x00333C4Cu;   /* window-button fill (= title-bar slate) */
+static uint32_t TB_BTN_P = 0x00424E62u;   /* pressed / active accent (lighter slate) */
+static uint32_t TB_SEP = 0x00191E26u;     /* top hairline / separators */
+static uint32_t FLY_BG_C = 0x002D3644u;   /* start-menu panel fill */
+static uint32_t FLY_ITEM_C = 0x00424E62u; /* start-menu item highlight */
 static const uint32_t COL_WHITE = 0x00FFFFFFu;
 
 /**
@@ -96,13 +97,15 @@ static void apply_theme(void)
 	if (ubistry_get_for_int((user && user[0]) ? user : nullptr, "views/theme/accent", &accent) != 0)
 		return; /* keep current palette if the key is missing */
 
+	/* Derived so the window-button fill equals the title-bar accent (a) and the
+	 * bar sits a touch darker — matching the compositor's chrome. */
 	uint32_t a = (uint32_t)accent & 0x00FFFFFFu;
-	TB_BG = scale_color(a, 5, 10);
-	TB_SEP = scale_color(a, 3, 10);
-	TB_BTN_N = scale_color(a, 8, 10);
-	TB_BTN_P = scale_color(a, 12, 10);
-	FLY_BG_C = scale_color(a, 4, 10);
-	FLY_ITEM_C = scale_color(a, 7, 10);
+	TB_BG = scale_color(a, 8, 10);
+	TB_SEP = scale_color(a, 5, 10);
+	TB_BTN_N = scale_color(a, 10, 10);
+	TB_BTN_P = scale_color(a, 13, 10);
+	FLY_BG_C = scale_color(a, 9, 10);
+	FLY_ITEM_C = scale_color(a, 13, 10);
 }
 
 /* ------------------------------------------------------------------ */
@@ -302,16 +305,20 @@ class Menu
 
 	void draw(ogScalableFont &font)
 	{
+		/* Flat panel: items render straight on the panel fill (no per-item raised
+		 * boxes) for a modern pop-over look.  A 1px accent strip down the left
+		 * edge gives the menu a bit of identity. */
 		surf_.ogFillRect(0, 0, w_ - 1, h_ - 1, FLY_BG_C);
+		surf_.ogFillRect(0, 0, 2, h_ - 1, FLY_ITEM_C);
 		for (int i = 0; i < (int)items_.size(); i++)
 		{
 			int top = i * MENU_ITEM_H;
-			surf_.ogFillRect(2, top + 2, w_ - 3, top + MENU_ITEM_H - 3, FLY_ITEM_C);
+			int ty = top + (MENU_ITEM_H - FONT_SIZE) / 2;
 			font_fg(font, COL_WHITE);
-			font_bg(font, FLY_ITEM_C);
-			font.PutString(surf_, 8, top + 6, items_[i].label.c_str());
+			font_bg(font, FLY_BG_C);
+			font.PutString(surf_, 14, ty, items_[i].label.c_str());
 			if (items_[i].submenu)
-				font.PutString(surf_, w_ - 12, top + 6, ">");
+				font.PutString(surf_, w_ - 16, ty, ">");
 		}
 	}
 
@@ -480,41 +487,39 @@ class Taskbar
 
 	void draw_strip()
 	{
-		uint32_t btn_color = btn_pressed_ ? TB_BTN_P : TB_BTN_N;
 		int sw = (int)sw_;
 
 		surf_.ogFillRect(0, 0, sw - 1, TB_H - 1, TB_BG);
-		surf_.ogFillRect(0, 0, sw - 1, 0, TB_SEP);
+		surf_.ogFillRect(0, 0, sw - 1, 0, TB_SEP); /* 1px top hairline */
 
-		/* Launcher button */
-		surf_.ogFillRect(2, 2, 2 + BTN_W - 1, TB_H - 3, btn_color);
-		surf_.ogRect(2, 2, 2 + BTN_W - 1, TB_H - 3, TB_SEP);
+		/* Launcher button — flat; only fills on press (no hard outline). */
+		uint32_t start_bg = btn_pressed_ ? TB_BTN_P : TB_BG;
+		if (btn_pressed_)
+			surf_.ogFillRect(2, 1, 2 + BTN_W - 1, TB_H - 1, TB_BTN_P);
 		font_fg(font_, COL_WHITE);
-		font_bg(font_, btn_color);
-		font_.PutString(surf_, 10, 12, "UbixOS");
+		font_bg(font_, start_bg);
+		font_.PutString(surf_, 12, 12, "UbixOS");
 
-		/* Window list */
+		/* Window list — flat tabs with a 2px accent underline (no outline). */
 		int wx = 2 + BTN_W + 4;
 		int clock_x = sw - CLOCK_W - 2;
 		for (const auto &tw : tracked_)
 		{
 			if (wx + WIN_BTN_W > clock_x - 4)
 				break;
-			surf_.ogFillRect(wx, 2, wx + WIN_BTN_W - 1, TB_H - 3, TB_BTN_N);
-			surf_.ogRect(wx, 2, wx + WIN_BTN_W - 1, TB_H - 3, TB_SEP);
+			surf_.ogFillRect(wx, 4, wx + WIN_BTN_W - 1, TB_H - 1, TB_BTN_N);
+			surf_.ogFillRect(wx, TB_H - 3, wx + WIN_BTN_W - 1, TB_H - 1, TB_BTN_P);
 			font_fg(font_, COL_WHITE);
 			font_bg(font_, TB_BTN_N);
-			font_.PutString(surf_, wx + 4, 12, tw.title.c_str());
+			font_.PutString(surf_, wx + 8, 12, tw.title.c_str());
 			wx += WIN_BTN_W + 2;
 		}
 
-		/* Clock */
+		/* Clock — boxless, just right-aligned text on the bar. */
 		char tstr[12];
 		get_time_str(tstr);
-		surf_.ogFillRect(clock_x, 2, clock_x + CLOCK_W - 1, TB_H - 3, TB_BTN_N);
-		surf_.ogRect(clock_x, 2, clock_x + CLOCK_W - 1, TB_H - 3, TB_SEP);
 		font_fg(font_, COL_WHITE);
-		font_bg(font_, TB_BTN_N);
+		font_bg(font_, TB_BG);
 		font_.PutString(surf_, clock_x + 8, 12, tstr);
 	}
 
