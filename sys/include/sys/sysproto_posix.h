@@ -1471,6 +1471,9 @@ struct sys_futex_args
 	char val_l_[PADL_(int)];
 	int val;
 	char val_r_[PADR_(int)];
+	char timeout_l_[PADL_(void *)];
+	void *timeout; /* const struct timespec * (relative); NULL = no timeout */
+	char timeout_r_[PADR_(void *)];
 };
 int sys_futex(struct thread *td, struct sys_futex_args *uap);
 

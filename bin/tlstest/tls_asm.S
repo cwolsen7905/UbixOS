@@ -60,12 +60,14 @@ spawn_thread:
 	hlt
 
 /*
- * set_tls — install this thread's userland TLS base via set_thread_area (351).
+ * set_tls — install this thread's userland TLS base via set_thread_area.
  *
  *   void set_tls(void *base);
  *
- * The POSIX syscall layer reads args at user_esp + 4 (it skips the return
- * address), so push the base after a fake return address.
+ * set_thread_area lives in the UbixOS-native table (int $0x81, slot 63), not the
+ * FreeBSD POSIX table — it is a Linux primitive with no FreeBSD number.  The
+ * syscall layer reads args at user_esp + 4 (it skips the return address), so
+ * push the base after a fake return address.
  */
 .global set_tls
 .type   set_tls,@function
@@ -73,8 +75,8 @@ set_tls:
 	mov 4(%esp), %ecx	/* base */
 	push %ecx		/* args+4 = u_info (the TLS base) */
 	push $0			/* args+0 = fake return address */
-	mov $351, %eax		/* SYS_set_thread_area */
-	int $0x80
+	mov $63, %eax		/* UbixOS-native slot 63 = set_thread_area */
+	int $0x81
 	add $8, %esp
 	ret
 

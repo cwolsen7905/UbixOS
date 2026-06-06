@@ -48,6 +48,7 @@
 #include <sys/sysproto.h>
 #include <ubixos/errno.h>
 #include <ubixos/time.h>
+#include <isa/pit.h>
 #include <vmm/vmm.h>
 #include <vmm/mmap.h>
 #include <vmm/paging.h>
@@ -283,11 +284,123 @@ int sys_clock_gettime(struct thread *td, struct sys_clock_gettime_args *uap)
 	return (0);
 }
 
-/* futex stub — always succeeds for single-threaded musl */
+/* FUTEX command mask — strips FUTEX_PRIVATE (0x80) / FUTEX_CLOCK_REALTIME (0x100). */
+#define FUTEX_CMD_MASK 0x7F
+#define FUTEX_WAIT 0
+#define FUTEX_WAKE 1
+#define FUTEX_REQUEUE 3
+#define FUTEX_CMP_REQUEUE 4
+#define FUTEX_WAIT_BITSET 9
+
+/* Context for the FUTEX_WAIT sleep condition (see futex_wait_cond). */
+struct futex_wait_ctx
+{
+	volatile int *uaddr;
+	int           val;
+};
+
+/**
+ * futex_wait_cond - stop-waiting predicate for a FUTEX_WAIT sleep.
+ *
+ * Returns true once the futex word no longer holds the value the waiter slept
+ * on — i.e. a waker changed it.  sched_wait_event_timeout() re-checks this
+ * under interrupts-off, which on a single CPU makes the compare-and-sleep
+ * atomic with respect to FUTEX_WAKE (no other thread can run between).
+ */
+static int futex_wait_cond(void *arg)
+{
+	struct futex_wait_ctx *c = (struct futex_wait_ctx *)arg;
+
+	return (*c->uaddr != c->val);
+}
+
+/**
+ * sys_futex - minimal futex on the kernel's wait_chan sleep/wake primitive.
+ *
+ * UbixOS-native ABI (int $0x81) — futex is a Linux primitive with no FreeBSD
+ * syscall number, so it lives in the native table, not the FreeBSD-numbered
+ * POSIX one.  musl's pthread layer (mutex/cond/sem/barrier/once) funnels
+ * through FUTEX_WAIT/FUTEX_WAKE.  Threads share one address space, so a user
+ * virtual address is a stable wait token across the whole group — we sleep and
+ * wake directly on `uaddr`.
+ *
+ * REQUEUE/CMP_REQUEUE are treated as WAKE (waking instead of requeueing is
+ * correct — woken waiters simply re-contend; the requeue target is ignored, a
+ * v1 simplification that is safe for musl's condition variables).  Priority-
+ * inheritance and other ops return -ENOSYS so musl falls back.
+ *
+ * @return 0 on a normal wake / successful wake; -errno (EAGAIN if the value
+ *         already changed, ETIMEDOUT on timeout, ENOSYS for unsupported ops).
+ */
 int sys_futex(struct thread *td, struct sys_futex_args *uap)
 {
-	td->td_retval[0] = 0;
-	return (0);
+	int  cmd = uap->op & FUTEX_CMD_MASK;
+	int *uaddr = uap->uaddr;
+
+	if (uaddr == NULL)
+	{
+		td->td_retval[0] = EINVAL;
+		return (-1);
+	}
+
+	switch (cmd)
+	{
+	case FUTEX_WAIT:
+	case FUTEX_WAIT_BITSET: /* bitset/abs-time nuance ignored — treat as WAIT */
+	{
+		struct futex_wait_ctx ctx;
+		u_int32_t             ticks = 0;
+		int                   timed_out;
+
+		/* Value already changed → don't sleep (classic futex race guard). */
+		if (*uaddr != uap->val)
+		{
+			td->td_retval[0] = EAGAIN;
+			return (-1);
+		}
+
+		/* Optional RELATIVE timeout.  musl i386 timespec is { int64 tv_sec;
+		 * long tv_nsec }; read it with a matching local layout so we do not
+		 * depend on the kernel's struct timespec.  PIT_TIMER ticks/second. */
+		if (uap->timeout != NULL)
+		{
+			struct
+			{
+				long long tv_sec;
+				long      tv_nsec;
+			} ts;
+
+			memcpy(&ts, uap->timeout, sizeof(ts));
+			ticks = (u_int32_t)((long long)ts.tv_sec * PIT_TIMER +
+			                    ts.tv_nsec / (1000000000L / PIT_TIMER));
+			if (ticks == 0)
+				ticks = 1; /* non-NULL but sub-tick → wait at least one tick */
+		}
+
+		ctx.uaddr = (volatile int *)uaddr;
+		ctx.val   = uap->val;
+
+		timed_out = sched_wait_event_timeout(uaddr, futex_wait_cond, &ctx, ticks);
+		if (timed_out)
+		{
+			td->td_retval[0] = ETIMEDOUT;
+			return (-1);
+		}
+		td->td_retval[0] = 0;
+		return (0);
+	}
+
+	case FUTEX_WAKE:
+	case FUTEX_REQUEUE:     /* wake instead of requeue (v1) */
+	case FUTEX_CMP_REQUEUE: /* wake instead of requeue (v1) */
+		sched_wakeup_chan(uaddr);
+		td->td_retval[0] = (uap->val > 0) ? uap->val : 0; /* >=0: not -ENOSYS */
+		return (0);
+
+	default:
+		td->td_retval[0] = ENOSYS; /* PI mutexes, WAKE_OP, … → musl fallback */
+		return (-1);
+	}
 }
 
 /*

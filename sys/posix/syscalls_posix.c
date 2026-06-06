@@ -387,9 +387,9 @@ struct syscall_entry systemCalls_posix[] = {
     {0, "__acl_get_file", sys_invalid, SYSCALL_NOTIMP},                                                         /* 347 - Invalid */
     {0, "__acl_set_file", sys_invalid, SYSCALL_NOTIMP},                                                         /* 348 - Invalid */
     {0, "__acl_get_fd", sys_invalid, SYSCALL_NOTIMP},                                                           /* 349 - Invalid */
-    {ARG_COUNT(sys_futex_args), "futex", (sys_call_t *)sys_futex, SYSCALL_VALID},                               /* 350 - futex stub (musl threading) */
-    {ARG_COUNT(sys_set_thread_area_args), "set_thread_area", (sys_call_t *)sys_set_thread_area, SYSCALL_VALID}, /* 351 - set_thread_area stub (musl TLS) */
-    {ARG_COUNT(sys_exit_group_args), "exit_group", (sys_call_t *)sys_exit_group, SYSCALL_VALID},                /* 352 - exit_group (musl exit) */
+    {0, "__acl_set_fd", sys_invalid, SYSCALL_NOTIMP},      /* 350 - Invalid (Linux futex moved to native int $0x81 slot 64) */
+    {0, "__acl_delete_file", sys_invalid, SYSCALL_NOTIMP}, /* 351 - Invalid (set_thread_area moved to native int $0x81 slot 63) */
+    {0, "__acl_delete_fd", sys_invalid, SYSCALL_NOTIMP},   /* 352 - Invalid (exit_group moved to native int $0x81 slot 65) */
     {0, "__acl_aclcheck_file", sys_invalid, SYSCALL_NOTIMP},                                                    /* 353 - Invalid */
     {0, "__acl_aclcheck_fd", sys_invalid, SYSCALL_NOTIMP},                                                      /* 354 - Invalid */
     {0, "extattrctl", sys_invalid, SYSCALL_NOTIMP},                                                             /* 355 - Invalid */

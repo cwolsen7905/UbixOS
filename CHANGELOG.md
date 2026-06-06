@@ -14,6 +14,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   threads in an address space share that one LDT slot, so each resume must restore
   the running thread's own base. `bin/tlstest` verifies two threads keep independent
   TLS across switches.
+- **Kernel threads — `futex` syscall (Task D)** — `sys_futex` on the kernel's
+  `wait_chan` sleep/wake primitive: FUTEX_WAIT/WAKE (+WAIT_BITSET; REQUEUE treated as
+  WAKE). Threads share the address space, so a user virtual address is the wait token.
+  Backs musl's mutex/cond/sem/barrier/once. `bin/futextest` verifies a worker blocks
+  in FUTEX_WAIT until FUTEX_WAKE.
+- **UbixOS-native ABI for Linux-compat primitives** — `futex`, `set_thread_area`, and
+  `exit_group` (Linux calls with no FreeBSD syscall number) moved from the
+  FreeBSD-numbered POSIX table (`int $0x80`) to the UbixOS-native table (`int $0x81`,
+  slots 64/63/65). musl flags these with bit `0x8000` on the syscall number; the i386
+  shims dispatch them to `int $0x81`. POSIX slots 350/351/352 restored to faithful
+  FreeBSD `Invalid` (`__acl_*`), keeping the POSIX table a clean FreeBSD ABI for a
+  future FreeBSD-libc port. `clone` stays at POSIX 251 = real FreeBSD `rfork`.
 - **objGFX UI primitives** — `ogFillRoundRect` / `ogRoundRect` (filled + outline
   rounded rectangles), `ogDropShadow` (soft quadratic-falloff shadow around a
   rect), and `ogBlendColor` (packed-RGB lerp).  Non-virtual additions, so existing

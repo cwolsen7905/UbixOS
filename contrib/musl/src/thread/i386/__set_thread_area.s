@@ -1,9 +1,11 @@
 /*
  * __set_thread_area.s — UbixOS i386 TLS setup
  *
- * Calls UbixOS POSIX syscall slot 351 (set_thread_area) using the
- * FreeBSD stack-based ABI: push the user_desc pointer, push a fake
- * return address, set eax=351, int $0x80.
+ * Calls the UbixOS-native syscall slot 63 (set_thread_area) via int $0x81,
+ * using the stack-based ABI: push the user_desc pointer, push a fake return
+ * address, set eax=63.  It lives in the native table (int $0x81), not the
+ * FreeBSD-numbered POSIX table — set_thread_area is a Linux primitive with no
+ * FreeBSD syscall number.
  *
  * The kernel (sys_set_thread_area in gen_calls.c):
  *   1. Reads base_addr from the user_desc
@@ -23,8 +25,8 @@ __set_thread_area:
 	movl 4(%esp), %ecx	/* user_desc ptr (arg from caller) */
 	pushl %ecx		/* FreeBSD ABI arg1 → lands at esp+4 */
 	pushl $0		/* fake return address at esp+0 */
-	movl $351, %eax		/* UbixOS slot 351 = set_thread_area */
-	int  $0x80
+	movl $63, %eax		/* UbixOS-native slot 63 = set_thread_area */
+	int  $0x81
 	addl $8, %esp		/* restore stack */
 	jnc  1f			/* CF=0: success */
 	negl %eax		/* CF=1: negate errno for musl */

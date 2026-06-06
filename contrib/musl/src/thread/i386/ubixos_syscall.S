@@ -14,9 +14,25 @@
  * Register save rules (i386 System V ABI):
  *   Caller-saved: eax, ecx, edx — we clobber these freely.
  *   Callee-saved: ebx, esi, edi, ebp — saved/restored when used.
+ *
+ * Native-ABI routing: a syscall number with bit 0x8000 set is a UbixOS-native
+ * call (int $0x81), not a FreeBSD POSIX call (int $0x80) — used for Linux-compat
+ * primitives (futex, exit_group, …) that have no FreeBSD number.  UBIX_INT masks
+ * the flag off and dispatches to the right vector; the return convention (CF set
+ * on error) is identical for both tables, so the surrounding code is unchanged.
  */
 
 .text
+
+.macro UBIX_INT
+	testl $0x8000, %eax
+	jnz   2f
+	int   $0x80
+	jmp   3f
+2:	andl  $0x7FFF, %eax
+	int   $0x81
+3:
+.endm
 
 /* ------------------------------------------------------------------ */
 /* __syscall0(n)                                                        */
@@ -26,7 +42,7 @@
 __syscall0:
 	movl 4(%esp), %eax
 	pushl $0		/* fake return addr — no args follow */
-	int  $0x80
+	UBIX_INT
 	leal 4(%esp), %esp	/* restore stack — leal preserves CF from int $0x80 */
 	jnc  1f
 	negl %eax
@@ -43,7 +59,7 @@ __syscall1:
 	movl 8(%esp), %ecx	/* a1 */
 	pushl %ecx
 	pushl $0
-	int  $0x80
+	UBIX_INT
 	leal 8(%esp), %esp
 	jnc  1f
 	negl %eax
@@ -62,7 +78,7 @@ __syscall2:
 	pushl %edx
 	pushl %ecx
 	pushl $0
-	int  $0x80
+	UBIX_INT
 	leal 12(%esp), %esp
 	jnc  1f
 	negl %eax
@@ -84,7 +100,7 @@ __syscall3:
 	pushl %edx
 	pushl %ecx
 	pushl $0
-	int  $0x80
+	UBIX_INT
 	leal 16(%esp), %esp
 	jnc  1f
 	negl %eax
@@ -110,7 +126,7 @@ __syscall4:
 	pushl %edx
 	pushl %ecx
 	pushl $0
-	int  $0x80
+	UBIX_INT
 	leal 20(%esp), %esp
 	jnc  1f
 	negl %eax
@@ -140,7 +156,7 @@ __syscall5:
 	pushl %edx
 	pushl %ecx
 	pushl $0
-	int  $0x80
+	UBIX_INT
 	leal 24(%esp), %esp
 	jnc  1f
 	negl %eax
@@ -174,7 +190,7 @@ __syscall6:
 	pushl %edx
 	pushl %ecx
 	pushl $0
-	int  $0x80
+	UBIX_INT
 	leal 28(%esp), %esp
 	jnc  1f
 	negl %eax
