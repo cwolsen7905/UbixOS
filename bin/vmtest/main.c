@@ -38,10 +38,12 @@ int main(void)
 
 	printf("vmtest: malloc(%d)+write x%d, no free (mimics nsfb font load)\n", BUF_SIZE, NBUFS);
 
-	for (i = 0; i < NBUFS; i++) {
+	for (i = 0; i < NBUFS; i++)
+	{
 		unsigned char *p = malloc(BUF_SIZE);
 		printf("buf %2d: malloc = %p .. %p\n", i, (void *)p, (void *)(p ? p + BUF_SIZE : 0));
-		if (p == NULL) {
+		if (p == NULL)
+		{
 			printf("        malloc returned NULL — clean OOM, not the bug\n");
 			break;
 		}
@@ -62,13 +64,23 @@ int main(void)
 	 * — not stbtt.  If every file reads cleanly with a valid sfnt magic, then
 	 * the nsfb crash is inside stb_truetype's parse/raster. */
 	static const char *const fonts[] = {
-		"SANS.TTF", "SANSB.TTF", "SANSI.TTF", "SANSBI.TTF",
-		"SERIF.TTF", "SERIFB.TTF", "SERIFI.TTF", "SERIFBI.TTF",
-		"MONO.TTF", "MONOB.TTF", "MONOI.TTF", "MONOBI.TTF",
+	    "SANS.TTF",
+	    "SANSB.TTF",
+	    "SANSI.TTF",
+	    "SANSBI.TTF",
+	    "SERIF.TTF",
+	    "SERIFB.TTF",
+	    "SERIFI.TTF",
+	    "SERIFBI.TTF",
+	    "MONO.TTF",
+	    "MONOB.TTF",
+	    "MONOI.TTF",
+	    "MONOBI.TTF",
 	};
 	printf("vmtest: reading %d font files from /usr/local/share/netsurf\n",
 	       (int)(sizeof(fonts) / sizeof(fonts[0])));
-	for (i = 0; i < (int)(sizeof(fonts) / sizeof(fonts[0])); i++) {
+	for (i = 0; i < (int)(sizeof(fonts) / sizeof(fonts[0])); i++)
+	{
 		char path[128];
 		FILE *f;
 		long len;
@@ -77,7 +89,8 @@ int main(void)
 
 		snprintf(path, sizeof(path), "/usr/local/share/netsurf/%s", fonts[i]);
 		f = fopen(path, "rb");
-		if (f == NULL) {
+		if (f == NULL)
+		{
 			printf("  %-10s fopen FAILED\n", fonts[i]);
 			continue;
 		}
@@ -90,15 +103,21 @@ int main(void)
 		fclose(f);
 		/* sfnt magic: 00 01 00 00 (TrueType) or 'OTTO'/'true'/'ttcf'. */
 		printf("read=%-7zu magic=%02X%02X%02X%02X %s\n",
-		       got, p[0], p[1], p[2], p[3],
+		       got,
+		       p[0],
+		       p[1],
+		       p[2],
+		       p[3],
 		       (got == (size_t)len &&
-			((p[0] == 0 && p[1] == 1 && p[2] == 0 && p[3] == 0) ||
-			 p[0] == 'O' || p[0] == 't')) ? "OK" : "*** BAD ***");
+		        ((p[0] == 0 && p[1] == 1 && p[2] == 0 && p[3] == 0) || p[0] == 'O' || p[0] == 't'))
+		           ? "OK"
+		           : "*** BAD ***");
 		free(p);
 	}
 
 	printf("\nvmtest: stb_truetype InitFont + render on each font\n");
-	for (i = 0; i < (int)(sizeof(fonts) / sizeof(fonts[0])); i++) {
+	for (i = 0; i < (int)(sizeof(fonts) / sizeof(fonts[0])); i++)
+	{
 		char path[128];
 		FILE *f;
 		long len;
@@ -110,7 +129,8 @@ int main(void)
 
 		snprintf(path, sizeof(path), "/usr/local/share/netsurf/%s", fonts[i]);
 		f = fopen(path, "rb");
-		if (f == NULL) {
+		if (f == NULL)
+		{
 			printf("  %-10s fopen FAILED\n", fonts[i]);
 			continue;
 		}
@@ -118,7 +138,8 @@ int main(void)
 		len = ftell(f);
 		fseek(f, 0, SEEK_SET);
 		buf = malloc((size_t)len);
-		if (fread(buf, 1, (size_t)len, f) != (size_t)len) {
+		if (fread(buf, 1, (size_t)len, f) != (size_t)len)
+		{
 			printf("  %-10s short read\n", fonts[i]);
 			fclose(f);
 			free(buf);
@@ -154,30 +175,30 @@ int main(void)
 		int fd;
 		char *m;
 
-		/* Create the file with known content (O_WRONLY|O_TRUNC), then reopen
-		 * O_RDONLY for the mapping.  We deliberately avoid O_RDWR: on this FAT
-		 * it maps to write mode and TRUNCATES the file on open.  mmap PROT_WRITE
-		 * works through the kernel's internal read backing fd, so an O_RDONLY fd
-		 * is sufficient for a writable MAP_SHARED mapping here. */
+		/* POSIX mmap-edit pattern: O_RDWR|O_CREAT|O_TRUNC to create+truncate,
+		 * write known content, mmap that O_RDWR fd, then reopen O_RDWR to verify.
+		 * Opening an existing file O_RDWR must NOT truncate it (honours O_TRUNC). */
 		memset(init, 'A', sizeof(init));
-		fd = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		if (fd < 0) {
+		fd = open(path, O_RDWR | O_CREAT | O_TRUNC, 0644);
+		if (fd < 0)
+		{
 			printf("  open(create %s) FAILED\n", path);
-		} else if (write(fd, init, sz) != sz) {
+		}
+		else if (write(fd, init, sz) != sz)
+		{
 			printf("  write(init) FAILED\n");
 			close(fd);
-		} else {
-			close(fd);
-			fd = open(path, O_RDONLY, 0);
-			if (fd < 0) {
-				printf("  msync test: FAIL (reopen O_RDONLY failed)\n");
-				goto msync_done;
-			}
+		}
+		else
+		{
 			m = mmap(0, sz, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
-			if (m == NULL || m == (char *)-1) {
+			if (m == NULL || m == (char *)-1)
+			{
 				printf("  msync test: FAIL (mmap returned %p)\n", (void *)m);
 				close(fd);
-			} else {
+			}
+			else
+			{
 				int dr_ok, wb_ok, n;
 				char dr0, dr1;
 
@@ -195,24 +216,32 @@ int main(void)
 				close(fd);
 
 				/* (3) re-read from disk: writes persisted, neighbour untouched. */
-				fd = open(path, O_RDONLY, 0);
+				fd = open(path, O_RDWR, 0);
 				n = (fd >= 0) ? (int)read(fd, chk, sz) : -1;
 				if (fd >= 0)
 					close(fd);
 				wb_ok = (n == sz && chk[0] == 'Z' && chk[4096] == 'Y' && chk[1] == 'A');
 
-				if (dr_ok && wb_ok) {
+				if (dr_ok && wb_ok)
+				{
 					printf("  msync test: PASS (demand-read + writeback verified)\n");
-				} else {
+				}
+				else
+				{
 					printf("  msync test: FAIL —%s%s\n",
 					       dr_ok ? "" : " demand-read returned wrong bytes;",
 					       wb_ok ? "" : " writeback did not persist to disk;");
-					printf("    detail: demand [0]=%c [4096]=%c  reread n=%d [0]=%c [4096]=%c [1]=%c\n",
-					       dr0, dr1, n, chk[0], chk[4096], chk[1]);
+					printf("    detail: demand [0]=%c [4096]=%c  reread n=%d [0]=%c [4096]=%c "
+					       "[1]=%c\n",
+					       dr0,
+					       dr1,
+					       n,
+					       chk[0],
+					       chk[4096],
+					       chk[1]);
 				}
 			}
 		}
-	msync_done:;
 	}
 
 	printf("vmtest: done\n");
