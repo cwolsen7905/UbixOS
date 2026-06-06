@@ -112,7 +112,7 @@ struct syscall_entry systemCalls_posix[] = {
     {0, "vadvise", sys_invalid, SYSCALL_NOTIMP},                                                                /*  72 */
     {ARG_COUNT(sys_munmap_args), "munmap", sys_munmap, SYSCALL_VALID},                                          /* 73 */
     {ARG_COUNT(mprotect_args), "mprotect", (sys_call_t *)mprotect, SYSCALL_VALID},                              /* 74 */
-    {0, "madvise", sys_invalid, SYSCALL_NOTIMP},                                                                /* 75 */
+    {ARG_COUNT(sys_madvise_args), "madvise", (sys_call_t *)sys_madvise, SYSCALL_VALID},                         /* 75 */
     {0, "Obsolete vhangup", sys_invalid, SYSCALL_INVALID},                                                      /*  76 - Invalid */
     {0, "Obsolete vlimit", sys_invalid, SYSCALL_INVALID},                                                       /*  77 - Invalid */
     {0, "mincore", sys_invalid, SYSCALL_NOTIMP},                                                                /*  78 - minicore */

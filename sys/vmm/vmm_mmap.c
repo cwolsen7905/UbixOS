@@ -144,6 +144,47 @@ int sys_msync(struct thread *td, struct sys_msync_args *uap)
 	return (0);
 }
 
+/* madvise behaviour values (match musl/Linux/FreeBSD). */
+#define MADV_DONTNEED 4
+#define MADV_FREE 8
+
+/**
+ * madvise(addr, len, behav).  Only DONTNEED/FREE have an effect: drop the
+ * resident pages of the range so they are reclaimed now, keeping the VMA so a
+ * later access re-faults (anon → demand-zero, file → demand-read).  Dirty
+ * MAP_SHARED file pages are written back first so no un-msync'd data is lost.
+ * Only pages covered by a registered VMA are dropped — never bare heap memory
+ * that has no demand-fault backing.  All other advices are accepted hints
+ * (there is no read-ahead engine to tune).
+ *
+ * @return 0 always.
+ */
+int sys_madvise(struct thread *td, struct sys_madvise_args *uap)
+{
+	u_int32_t base = (u_int32_t)uap->addr & ~0xFFFU;
+	u_int32_t end = base + round_page(uap->len);
+	u_int32_t va;
+
+	if (uap->behav != MADV_DONTNEED && uap->behav != MADV_FREE)
+	{
+		td->td_retval[0] = 0;
+		return (0);
+	}
+
+	vmm_writeback_range(base, end);
+
+	for (va = base; va < end; va += PAGE_SIZE)
+	{
+		if (vm_map_lookup(&_current->vm_map, va) == NULL)
+			continue; /* not a demand-faultable mapping — leave it resident */
+		vmm_unmap_page(va, VMM_FREE);
+	}
+
+	asm volatile("movl %cr3,%eax\n movl %eax,%cr3\n");
+	td->td_retval[0] = 0;
+	return (0);
+}
+
 int sys_mmap(struct thread *td, struct sys_mmap_args *uap)
 {
 	struct file *fd = NULL;
