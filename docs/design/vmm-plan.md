@@ -14,7 +14,7 @@
 | — | Labeled segfault report (pid/name, fault/eip/esp/cs/err, pde/pte, bracketing VMAs) | 2 | ✅ Done (`d63d9a8ee`) — `vmm_report_segfault`; distinguishes a VMM demand bug from a wild pointer |
 | 3.1 | Swap device integration — page out to swap partition | 3 | ✅ Done — `sys/vmm/swap.c`: slot bitmap, `swap_write/read_page`, `swap_evict_page` (clock); page fault handler handles `PAGE_SWAPPED` PTEs |
 | 3.2 | Pageout daemon — proactive page reclaim | 3 | ✅ Done — `sys/vmm/pageout.c`; polls every 100 ticks, iterates task list with CR3 switching, calls `swap_evict_page` per task until high watermark; launched from `kmain` at `QOS_BACKGROUND` |
-| 3.3 | `madvise` hints (MADV_SEQUENTIAL, MADV_DONTNEED) | 3 | ⬜ Not started |
+| 3.3 | `madvise` hints (MADV_SEQUENTIAL, MADV_DONTNEED) | 3 | ✅ Done (`71d7c6e02`). `MADV_DONTNEED`/`MADV_FREE` write back dirty `MAP_SHARED` file pages then drop resident pages in the range (keeping the VMA, so anon re-faults zero and file re-reads); other advices are accepted no-op hints. Verified by `bin/vmtest`. |
 
 **Legend:** ⬜ Not started · 🔄 In progress · ✅ Done · ⏸ Blocked
 
@@ -41,7 +41,7 @@ localized; chase with `/proc/meminfo` before/after controlled process cycles.
   existing file the POSIX way now works. *Remaining minor deviation:* `O_WRONLY`
   without `O_TRUNC` still truncates (the `O_WRONLY|O_CREAT|O_TRUNC` callers rely
   on it) — left as-is to avoid changing write-from-scratch behaviour.
-- **3.3 `madvise`** still not started (MADV_DONTNEED / MADV_SEQUENTIAL).
+- **3.3 `madvise`** — ✅ done (`71d7c6e02`).
 - **Cross-process `MAP_SHARED` coherence.** msync is write-back only; two
   processes mapping the same file do not see each other's writes live (each gets
   a private writable copy). A shared writable page cache is the larger follow-up.
