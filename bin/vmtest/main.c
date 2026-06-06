@@ -244,6 +244,41 @@ int main(void)
 		}
 	}
 
+	/* Phase: madvise(MADV_DONTNEED) (VMM 3.3).  Touch two pages of an anonymous
+	 * mapping, drop them with MADV_DONTNEED, and confirm a later read re-faults
+	 * to zero (the pages were reclaimed and the VMA demand-zeroes on re-access). */
+	printf("\nvmtest: madvise(MADV_DONTNEED) test\n");
+	{
+		const int sz = 8192; /* two pages */
+		char *a = mmap(0, sz, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+		if (a == NULL || a == (char *)-1)
+		{
+			printf("  madvise test: FAIL (anon mmap returned %p)\n", (void *)a);
+		}
+		else
+		{
+			int wrote_ok, zeroed_ok;
+
+			a[0] = 'X';    /* page 0 */
+			a[4096] = 'X'; /* page 1 */
+			wrote_ok = (a[0] == 'X' && a[4096] == 'X');
+
+			madvise(a, sz, MADV_DONTNEED);
+
+			/* Re-access must demand-zero (DONTNEED reclaimed the pages). */
+			zeroed_ok = (a[0] == 0 && a[4096] == 0);
+
+			if (wrote_ok && zeroed_ok)
+				printf("  madvise test: PASS (pages dropped, re-faulted to zero)\n");
+			else
+				printf("  madvise test: FAIL — wrote_ok=%d post-DONTNEED [0]=%d [4096]=%d\n",
+				       wrote_ok,
+				       a[0],
+				       a[4096]);
+			munmap(a, sz);
+		}
+	}
+
 	printf("vmtest: done\n");
 	return 0;
 }
