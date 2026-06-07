@@ -96,7 +96,7 @@ same status.
 | 13g | `fork` — child diverges with a copied address space, both scheduled | B | ✅ **Done** — `ret_from_fork` + full-trapframe + `pmap_fork_copy`; QEMU-verified parent+child.  COW is a later optimization |
 | 13h | **Preemptive scheduling** — 100 Hz timer drives sched() | B | ✅ **Done** — never-yielding tasks are time-sliced; kthread_trampoline unmasks IRQs on first dispatch.  QEMU-verified |
 | 13i | VFS core (vfs_init + buffer cache) linked + initialized in kmain | B | ✅ **Done** — filesystem registry + bcache up; mount/devfs/procfs (device layer) next |
-| 13j | Full native/POSIX syscall tables on aarch64 (open/read/close/mmap/…) | B | ⬜ — gated on the FS layer + the userland port |
+| 13j | aarch64 syscall surface (bring-up dispatcher) | B | 🟡 **Partial** — write/exit/fork/getpid/set_tid_address/exit_group/mmap/mprotect/brk implemented in the transitional `arch/aarch64/syscall.c`; runs simple musl programs.  malloc/mallocng needs MAP_FIXED + PROT_NONE/mprotect-commit modelling (deferred).  End state: route the SVC entry to the generic syscall tables once VFS/fd land |
 | 14 | virtio-blk + virtio-net | B | ⬜ Not started |
 | 15 | virtio-gpu framebuffer + virtio-input (touch) | B | ⬜ Not started — needed for **boot-to-desktop** |
 | 15a | **virtio-sound** (audio) → existing `aural` layer | B | ⬜ Not started |
