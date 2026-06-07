@@ -16,10 +16,8 @@
 #include <sys/types.h>
 #include <ubixos/sched.h>   /* _current, sched_yield */
 #include <ubixos/endtask.h> /* endTask */
-#include <vmm/vmm.h>        /* vmm_find_free_page */
-#include <vmm/paging.h>     /* PAGE_SIZE */
-#include <lib/kmalloc.h>    /* sysID */
-#include <string.h>         /* memset */
+#include <vmm/vmm.h>        /* address-space helpers */
+#include <vmm/uregion.h>    /* vmm_uregion_mmap_anon, vmm_uregion_brk */
 
 #define SYS_EXIT 1
 #define SYS_FORK 2
@@ -76,84 +74,53 @@ static u_int64_t sc_write(u_int64_t fd, u_int64_t buf, u_int64_t len)
 }
 
 /**
- * mmap(addr, len, prot, flags, fd, off): minimal anonymous mapping — allocate
- * len/PAGE zeroed frames and map them RW into the current process at a per-
- * process bump address.  Ignores addr/prot/flags/fd/off (anonymous private
- * only), which covers musl's malloc.
+ * mmap(addr, len, prot, flags, fd, off): anonymous private mapping.  Arch glue
+ * around the generic policy (vmm_uregion_mmap_anon): owns only the VA-layout
+ * choice (where this address space's mmap region starts) and the TTBR0 root;
+ * the page-counting / allocate-zero-map work is architecture-neutral.  prot/fd/
+ * off are ignored — pages are backed RW, which covers musl's malloc.
  *
  * @return the mapped base VA, or (void*)-1 on failure.
  */
 static u_int64_t sc_mmap(u_int64_t addr, u_int64_t len, u_int64_t flags)
 {
-	u_int64_t *l1, va, npages, i;
+	u_int64_t *l1;
+	uintptr_t next, va;
 
 	if (_current == 0 || _current->md.md_ttbr0 == 0)
 		return (u_int64_t)-1;
 	if (_current->md.md_mmap_next == 0)
 		_current->md.md_mmap_next = MMAP_BASE;
 
-	npages = (len + PAGE_SIZE - 1) / PAGE_SIZE;
-	if (npages == 0)
-		return (u_int64_t)-1;
-
 	l1 = (u_int64_t *)(uintptr_t)_current->md.md_ttbr0;
+	next = (uintptr_t)_current->md.md_mmap_next;
 
-	/* MAP_FIXED (FreeBSD 0x10): the caller (e.g. mallocng) requires the mapping
-	 * to land exactly at addr — honour it.  Otherwise bump-allocate.  We always
-	 * back pages RW; prot is not enforced yet (mprotect is a no-op), which is
-	 * fine for mallocng's PROT_NONE-reserve-then-commit pattern. */
-	if ((flags & 0x10) && addr != 0)
-		va = addr & ~((u_int64_t)PAGE_SIZE - 1);
-	else
-		va = _current->md.md_mmap_next;
-
-	for (i = 0; i < npages; i++)
-	{
-		uintptr_t frame = vmm_find_free_page(sysID);
-		if (frame == 0)
-			return (u_int64_t)-1;
-		memset((void *)frame, 0, PAGE_SIZE); /* anonymous pages read as zero */
-		pmap_map_user_page(l1, va + i * PAGE_SIZE, (u_int64_t)frame, 0);
-	}
-	/* Only advance the bump pointer for non-fixed mappings; a high MAP_FIXED
-	 * address must not push md_mmap_next past it. */
-	if (!((flags & 0x10) && addr != 0))
-		_current->md.md_mmap_next = va + npages * PAGE_SIZE;
-	return va;
+	/* MAP_FIXED is FreeBSD flag 0x10: the caller (e.g. mallocng's guard page)
+	 * requires the mapping to land exactly at addr. */
+	va = vmm_uregion_mmap_anon(l1, &next, (size_t)len, (flags & 0x10) && addr != 0, (uintptr_t)addr);
+	_current->md.md_mmap_next = (u_int64_t)next;
+	return (va != 0) ? (u_int64_t)va : (u_int64_t)-1;
 }
 
 /**
  * brk(newbrk): set the program break, Linux-style — returns the resulting break
- * (musl's mallocng glue.h treats the return as the new break).  brk(0) queries.
- * Grows the heap by mapping zeroed pages; never shrinks (returns the high-water
- * break).
+ * (musl's mallocng glue.h treats the return as the new break; brk(0) queries).
+ * Arch glue around the generic vmm_uregion_brk policy; owns only the heap-base
+ * VA-layout choice and the TTBR0 root.
  *
  * @return the (new) program break.
  */
 static u_int64_t sc_brk(u_int64_t newbrk)
 {
-	u_int64_t *l1, va;
+	u_int64_t *l1;
 
 	if (_current == 0 || _current->md.md_ttbr0 == 0)
 		return BRK_BASE;
 	if (_current->md.md_brk == 0)
 		_current->md.md_brk = BRK_BASE;
 
-	if (newbrk <= _current->md.md_brk) /* query or shrink request: report current */
-		return _current->md.md_brk;
-
-	/* Grow: map any pages between the old and new (page-aligned) break. */
 	l1 = (u_int64_t *)(uintptr_t)_current->md.md_ttbr0;
-	for (va = (_current->md.md_brk + PAGE_SIZE - 1) & ~((u_int64_t)PAGE_SIZE - 1); va < newbrk; va += PAGE_SIZE)
-	{
-		uintptr_t frame = vmm_find_free_page(sysID);
-		if (frame == 0)
-			return _current->md.md_brk; /* OOM: leave the break where it was */
-		memset((void *)frame, 0, PAGE_SIZE);
-		pmap_map_user_page(l1, va, (u_int64_t)frame, 0);
-	}
-	_current->md.md_brk = newbrk;
-	return newbrk;
+	return (u_int64_t)vmm_uregion_brk(l1, (uintptr_t *)&_current->md.md_brk, (uintptr_t)newbrk);
 }
 
 /**

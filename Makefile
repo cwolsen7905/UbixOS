@@ -94,6 +94,7 @@ AARCH64_GENERIC_SRCS = \
 	sys/fs/vfs/vfs.c \
 	sys/fs/vfs/bcache.c \
 	sys/vmm/vmm_memory.c \
+	sys/vmm/vmm_uregion.c \
 	sys/lib/kmalloc.c \
 	sys/kern/elf64_load.c
 
