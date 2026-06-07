@@ -32,8 +32,14 @@
  */
 void md_new_task(kTask_t *t)
 {
+	u_int64_t ttbr0;
+
 	t->md.md_kstack = 0; /* "not yet seeded" — sched_ready() builds the frame */
-	t->md.md_ttbr0 = 0;  /* kernel-only address space for now */
+
+	/* Inherit the current (kernel) address space by default.  A user process
+	 * overrides md_ttbr0 with its own page-table root at exec time. */
+	__asm__ volatile("mrs %0, ttbr0_el1" : "=r"(ttbr0));
+	t->md.md_ttbr0 = ttbr0 & 0x0000FFFFFFFFF000UL;
 }
 
 /**
@@ -61,6 +67,13 @@ void md_setup_initial_frame(kTask_t *t)
  */
 void switch_to(kTask_t *prev, kTask_t *next)
 {
+	/* Load next's address space if it differs (avoid a needless TLB flush when
+	 * switching between tasks that share one, e.g. kernel threads).  All address
+	 * spaces map the kernel + identity-mapped stacks, so it is safe to swap here
+	 * before the register switch resumes next. */
+	if (next->md.md_ttbr0 != 0 && next->md.md_ttbr0 != prev->md.md_ttbr0)
+		pmap_switch((u_int64_t *)(uintptr_t)next->md.md_ttbr0);
+
 	aarch64_ctx_switch(&prev->md.md_kstack, next->md.md_kstack);
 }
 
