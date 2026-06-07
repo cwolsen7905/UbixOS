@@ -4,6 +4,34 @@ Modernizing the uBixOS desktop (compositor + taskbar + start menu) from a
 2000s-era look to a contemporary flat design. Branch: `wip/netsurf-fonts`,
 June 2026.
 
+## Status matrix
+
+At-a-glance view of every tracked item. Detail for done items is in the **Done**
+table; detail for open items is in the numbered **Outstanding** sections.
+
+| Item | Status | Ref |
+|------|--------|-----|
+| Window chrome — flat title bars, hand-rasterised glyphs | ✅ Done | Done table |
+| Window depth — drop shadows + rounded corners | ✅ Done | Done table |
+| Roomier dimensions + calm slate accent | ✅ Done | Done table |
+| Taskbar restyle, brand, clock, start menu | ✅ Done | Done table |
+| Hover highlighting (start/tabs/menus) | ✅ Done | Done table |
+| Volume system tray | ✅ Done | Done table |
+| Logout→relogin reboot fix | ✅ Done | Done table |
+| Shared-region refcount (removes the ~3 MB/logout leak) | ✅ Done | Done table |
+| Modern login screen (vlogin) | ✅ Done | Done table |
+| objGFX reusable primitives (rounded-rect/shadow/blend) | ✅ Done | Done table |
+| Active-window highlight (`DISPLAY_FOCUS` sender) | ✅ Done | Done table |
+| **Network tray indicator** | ⬜ To do | §1 |
+| **Login affordances** (caret blink, clock, power, field hover) | ⬜ To do | §2 |
+| **Hover-to-open submenus** | ⬜ To do | §3 |
+| **Volume tray scroll-to-adjust / click-to-mute** | ⬜ To do | §4 |
+| **Taskbar translucency** | ⬜ To do | §5 |
+| **Per-app icons on window tabs** | ⬜ To do | §6 |
+
+Related (tracked elsewhere): the residual ~51-page/cycle **orphan-zombie reaping**
+leak lives in `docs/design/session-plan.md` (post-rfork follow-up).
+
 ## Done (shipped & committed)
 
 | Area | What | Commits |
@@ -19,6 +47,10 @@ June 2026.
 | Stability | **Logout→relogin reboot fixed** — `vmm_share_region` physical-page use-after-free (see below) | `0e695e4d3` |
 | Stability | objGFX glyph-blit hardened against corrupted cache entries (defensive) | `e44ee148c` |
 | Diagnostics | Kernel segfault report names the VMA/backing file holding `eip` (offline `addr2line`) | `d5c645d7e` |
+| VMM / leak | Shared-region refcount: `cowCounter` +1 per shared page; freed exactly once after **both** owner and recipient unmap — removes the ~3 MB/logout leak the reboot fix left behind | `596b66839` |
+| Login | Modern rounded login card: calm slate palette, soft drop shadow, boxed `Username`/`Password` fields with accent-underline + caret on focus, centred "uBixOS"/"Sign in" header | `2b675e041` |
+| objGFX | Reusable `ogFillRoundRect` / `ogRoundRect` / `ogDropShadow` / `ogBlendColor` primitives; the compositor + chrome's local `decor_blend` folded into `ogBlendColor` (single implementation, ABI-safe additions) | `80facc813`, `7940fab39` |
+| Active window | Compositor sends `DISPLAY_FOCUS` so the taskbar highlights the active tab; all focus changes route through one `WindowManager::set_focus()`, deduped and sent after the claim ACK to dodge the handshake race | `54f9cbfb7` |
 
 ### The logout reboot bug (root cause, for reference)
 
@@ -32,64 +64,47 @@ stb_truetype glyph cache → wild read/write → compositor crash → triple fau
 reboot. Only logout triggered it because only vlogin's buffer is large enough
 that musl `munmap`s on `free()` (small app buffers stay in the heap free-list
 and never reach `free_page`). Fixed by marking the **source** pages
-`PAGE_SHARED` too, so the owner's free skips `free_page` for shared frames.
+`PAGE_SHARED` too (`0e695e4d3`), then properly refcounted in `596b66839`.
 
 ## Outstanding
 
-### 1. Refcount shared regions (remove the logout leak) — **priority**
-The fix above is a *bounded leak*: shared frames are now freed only when the
-**owning** process exits, so each logout cycle leaks vlogin's ~3 MB buffer
-(~80 logouts → OOM on a 256 MB VM). Proper fix:
-- `vmm_share_region`: `adjust_cow_counter(phys[i], +1)` per shared page (instead
-  of, or in addition to, the `PAGE_SHARED` source mark).
-- Both teardown sites (`vmm_unmap_page.c`, `vmm_paging.c` clean-virtual-space):
-  for a `PAGE_SHARED` page **not** in the file-page cache (i.e. a share_region
-  page), call `free_page` (which decrements `cowCounter` and frees at 0) instead
-  of the current no-op. Must distinguish file-cache `PAGE_SHARED` pages (managed
-  by `vm_filecache` refcount) from share_region ones — use the
-  `vm_filecache_unref_phys` "was-in-cache" result.
-- Net: page freed exactly once after **both** owner and recipient unmap, in
-  either order. Verify with the logout cycle + `/proc/meminfo` free-page count
-  staying flat across many cycles.
+### 1. Network tray indicator
+A network status glyph (link up/down, maybe the IP) in the system tray next to
+the volume speaker. Blocked on a **data source the taskbar can read** — none
+exists yet. Plan:
+- Add a procfs entry (e.g. `/proc/net` or a small `net`/`ifstatus` file) or a
+  tiny syscall exposing link state + the primary IPv4 address.
+- Taskbar: poll it (like it mirrors `/aural/*` for volume), draw a glyph (filled
+  when up, slashed when down), optional click → opens the Network settings pane.
 
-### 2. Active-window highlight — ✅ DONE
-Shipped: the compositor now sends `DISPLAY_FOCUS` (the taskbar receiver already
-existed), so the active window's taskbar tab is highlighted.
-- All focus changes route through `WindowManager::set_focus()` — claim, release,
-  reap, close, minimize, raise, and `input_router`'s click-to-focus (via a new
-  focus callback, the path the first attempt missed).
-- Posts the focused window id (0 for no-decor/none), deduped so redundant updates
-  don't spam the taskbar mailbox.
-- Avoids the earlier handshake race: in `handle_claim` the focus is sent **after**
-  the client ACK + tab NOTIFY, and the dedupe makes the taskbar's own no-decor
-  claim a no-op, so `DISPLAY_FOCUS` never lands mid-claim.
+### 2. Login affordances (deferred from the login modernization)
+The login card shipped (`2b675e041`); these are the polish items left off it:
+- **Blinking caret** — the focus caret is currently static; animate it (the
+  vlogin loop would need a periodic redraw tick, today it redraws on input only).
+- **Clock / date** on the login screen.
+- **Power / restart control** on the login screen (mirrors the taskbar footer's
+  logout/power button).
+- **Field hover states** — the login window is already a `wants_motion` surface,
+  so hover highlights on the fields/buttons can be added like the taskbar's.
 
-### 3. Network tray indicator
-Volume tray is done; a network status glyph (link up/down, maybe IP) needs a
-data source the taskbar can read. None exists yet — add a procfs entry
-(e.g. `/proc/net` or a `net` status file) or a small syscall, then a glyph in
-the tray next to the volume speaker.
+### 3. Hover-to-open submenus
+Start-menu submenus currently **open on click**; hover only highlights the row.
+Make hovering a parent row open its submenu (with a small dwell delay so passing
+the cursor over rows doesn't flicker submenus open/closed).
 
-### 4. Modernize the login screen (vlogin) — ✅ DONE
-Shipped: the login UI was rebuilt to match the modern chrome.
-- **Palette** — calm slate (slate card `#272E3A`, border `#394456`, modern-blue
-  accent `#5B8DEF`); the old saturated navy is gone.
-- **Centered card** — rounded-corner card with a soft drop shadow, drawn with the
-  new shared objGFX primitives (`ogFillRoundRect`/`ogRoundRect`/`ogDropShadow`),
-  sat 45px below screen centre.
-- **Real input fields** — boxed `Username`/`Password` fields; the focused field
-  lights up with a 2px accent underline + caret (replaces the block-cursor row).
-- **Branding** — centred "uBixOS" wordmark + "Sign in" subtitle and divider.
-- **Reusable primitives** — the rounded-rect/shadow/blend helpers were promoted
-  into objGFX (and the compositor's `decor_blend` folded into `ogBlendColor`), so
-  this look is now available to every app, not bespoke to vlogin.
+### 4. Volume tray: scroll-to-adjust / click-to-mute
+The volume glyph currently **opens Settings** on click. Add direct control:
+scroll-wheel over the glyph adjusts `/aural/volume`; click toggles `/aural/mute`.
+Needs scroll-event delivery to the tray (mouse wheel → `wants_motion`/a new event
+field) — check what the input path currently forwards.
 
-Deferred (nice-to-have, not blocking): blinking-caret animation, a clock/date and
-power/restart control on the login screen, and field hover states (the window is
-already a `wants_motion` surface, so hover can be added later).
+### 5. Taskbar translucency
+Once shadows/corners are proven, give the taskbar strip a translucent blend over
+the desktop (compositor alpha blend of the strip against the cached background),
+for a more modern frosted look.
 
-### 5. Nice-to-haves (unscheduled)
-- Hover-to-open submenus (currently click-to-open; hover only highlights).
-- Volume tray: scroll-to-adjust / click-to-mute instead of opening Settings.
-- Taskbar translucency (compositor blend) once shadows/corners are proven.
-- Per-app icons on window tabs (needs an icon protocol/asset path).
+### 6. Per-app icons on window tabs
+Show a small per-application icon on each taskbar window tab (and possibly the
+title bar). Needs an **icon protocol/asset path**: a way for an app to declare
+its icon (e.g. a `DISPLAY_SETICON` message or an icon file path convention) plus
+a small icon decoder/cache in the taskbar.
