@@ -76,20 +76,49 @@ same status.
 | 6 | `machine/ansi.h`, pointer types parameterized | A | ✅ Done |
 | 9 | `machine/vmm_layout.h` address-space constants | A | ✅ Done |
 | — | Software context switch (`cpu_switch`) — *the historic #1 blocker* | A | ✅ Done |
-| **7** | **`u_int32_t` → `uintptr_t` for address-typed values** | A | 🟡 **Core done** (frame allocator, paging map/translate API, frame-map field, `vm_map`); mmap/exec inline i386 page-table walks deferred to the aarch64-MMU work |
-| **T** | **Quarantine i386 TLS (`set_thread_area`/LDT/`%gs`) behind `<machine/tls.h>`** | A | ⬜ **Not started — blocker** |
-| 8 | Move `start.S`/`main.c` to `sys/arch/i386/` | A | ⬜ Not started |
-| 10 | `sys/arch/aarch64/` skeleton + `ubix.target.aarch64.mk` | A | ⬜ Not started |
-| — | musl world arch shim + de-hardcode i386 in `lib/Makefile` | Userland | ⬜ Not started — blocker for `world` |
+| **7** | **`u_int32_t` → `uintptr_t` for address-typed values** | A | ✅ **Done for shared code** (frame allocator, paging map/translate API, frame-map field, `vm_map`, `kmalloc` descriptor arithmetic, `vmm_bitmap_phys`); mmap/exec inline i386 page-table walks are i386-only code aarch64 *replaces*, not recompiles |
+| **T** | **Quarantine i386 TLS (`set_thread_area`/LDT/`%gs`) behind `<machine/tls.h>`** | A | ✅ **Done** — `machine_set_tls()` contract; i386 → LDT[1]+`tf_gs`, aarch64 → `TPIDR_EL0` |
+| 8 | Move `start.S`/`main.c` to `sys/arch/i386/` | A | ⬜ Not started (i386 cosmetic; aarch64 has its own `start.S`/`boot.c`) |
+| 10 | `sys/arch/aarch64/` skeleton + `ubix.target.aarch64.mk` | A | ✅ **Done** — full arch tree + arch-homed `build/${ARCH}`, `bmake … TARGET=aarch64` |
+| — | musl world arch shim + de-hardcode i386 in `lib/Makefile` | Userland | ⬜ Not started — blocker for `world` (boot-to-desktop) |
 | 11 | Boot to PL011 UART on QEMU `virt` | B | ✅ **Done** — `uBixOS aarch64` banner verified on serial (`bmake run-debug TARGET=aarch64`) |
 | 12 | Exceptions + GICv2 + generic timer | B | ✅ **Done** — kprintf + EL1 vectors (12a); GICv2 + CNTP timer ticking at 2 Hz (12b), verified |
-| 13 | MMU (TTBR0/1) + AArch64 `cpu_switch` + syscall entry | B | 🟡 **MMU done** (TTBR0 identity, caches, verified under IRQs); `cpu_switch`/SVC + fork/exec gated on the generic-kernel port |
+| 13 | MMU + AArch64 `cpu_switch` + syscall entry | B | ✅ **Done** — MMU (1 GB identity blocks + 4 KB pmap), `aarch64_ctx_switch`/`switch_to`, EL0 entry + SVC sync handler all verified |
+| 13a | **Generic scheduler runs on aarch64** (`sched_core` + `sched_dispatch` linked unmodified, `md_*` hooks) | B | ✅ **Done** — QEMU-verified round-robin of real `kTask_t` threads |
+| 13b | **Shared VMM frame allocator + real `kmalloc`** on aarch64 (over identity-mapped RAM) | B | ✅ **Done** — `vmm_memory.c`/`kmalloc.c` linked; `vmm_machdep.c` per-arch layout |
+| 13c | **Per-process address spaces** (`pmap_create_user_space`/`pmap_switch`) | B | ✅ **Done** — TTBR0 isolation verified (kernel still in TTBR0; TTBR1 split deferred) |
+| 13d | **Real syscalls** — EL0 `write`/`exit` via FreeBSD ABI numbers | B | ✅ **Done** — EL0 program prints through the kernel + exits |
+| 13e | ELF loader + `execve`/`fork` on aarch64 (run a compiled binary as a scheduled process) | B | 🟡 **Next** — trapframe + syscall table done; ELF load + per-process kTask integration remain |
 | 14 | virtio-blk + virtio-net | B | ⬜ Not started |
-| 15 | virtio-gpu framebuffer + virtio-input (touch) | B | ⬜ Not started |
-| 15a | **virtio-sound** (audio) → existing `aural` layer | B | ⬜ Not started — *was missing* |
+| 15 | virtio-gpu framebuffer + virtio-input (touch) | B | ⬜ Not started — needed for **boot-to-desktop** |
+| 15a | **virtio-sound** (audio) → existing `aural` layer | B | ⬜ Not started |
 | 16 | Raspberry Pi 4 hardware (**optional** — QEMU is the target) | B | ⬜ Deferred |
+| — | Display stack (`views`/`objGFX`) on aarch64 | Userland | ⬜ Not started — **boot-to-desktop** target |
 
-### Major blockers (reviewed 2026-06-06)
+### Progress update (2026-06-07)
+
+Track A is **effectively complete**: the TLS quarantine (the last substantive
+blocker) is done, and every shared subsystem aarch64 needs is converted. Track B
+has advanced from "MMU done" through a full kernel-primitive stack: the
+**generic scheduler, the shared VMM frame allocator + real `kmalloc`, a 4 KB
+pmap, per-process address spaces, and real EL0 `write`/`exit` syscalls all run
+and are QEMU-verified** — i386 stays byte/behaviour-neutral throughout (the
+generic kernel is genuinely shared, not forked). aarch64 can now execute user
+code at EL0 and service its syscalls.
+
+**Remaining path to boot-to-desktop**, in order:
+
+1. **ELF exec + `fork` (Phase 13e)** — load a compiled aarch64 binary into a
+   per-process address space and run it as a scheduled `kTask_t`. Trapframe and
+   syscall dispatch already exist; this adds the ELF64 loader and wires
+   exec/fork to the pmap + scheduler.
+2. **Userland port** — de-hardcode i386 in `lib/Makefile`/`musl-libc`, build
+   musl + libc + `bin/` for aarch64. The single biggest remaining chunk; gates
+   any real `world` (and therefore login + desktop).
+3. **virtio drivers** — virtio-blk (root disk), virtio-gpu + virtio-input
+   (the desktop framebuffer + pointer), then the `views`/`objGFX` display stack.
+
+### Earlier blocker analysis (reviewed 2026-06-06; items 1–2 now resolved)
 
 **No new architectural blocker** — the structure holds and the historically
 biggest one (i386 hardware task switching) is *gone*, replaced by the
