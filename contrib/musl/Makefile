@@ -158,8 +158,9 @@ obj/%.lo: $(srcdir)/%.S
 obj/%.lo: $(srcdir)/%.c $(GENH) $(IMPH)
 	$(CC_CMD)
 
+LDEMULATION ?= elf_i386
 lib/libc.so: $(LOBJS) $(LDSO_OBJS)
-	$(LD) -m elf_i386 -shared -e _dlstart \
+	$(LD) -m $(LDEMULATION) -shared -e _dlstart \
 	-o $@ $(LOBJS) $(LDSO_OBJS) $(LIBCC)
 
 lib/libc.a: $(AOBJS)

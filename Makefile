@@ -132,9 +132,11 @@ kernel-aarch64:
 .if ${_ARCH} == "aarch64"
 MUSL_USER_CFLAGS = -march=armv8-a -ffreestanding -fno-stack-protector
 MUSL_LIBCC       = ${LIBGCC}
+MUSL_LDEMULATION = aarch64elf
 .else
 MUSL_USER_CFLAGS = ${CROSS_M32} -mno-sse -mno-sse2 -mno-mmx -mno-3dnow -ffreestanding -fno-stack-protector
 MUSL_LIBCC       = ${OBJ_DIR}/lib/libgcc32.a
+MUSL_LDEMULATION = elf_i386
 .endif
 
 musl-libc:
@@ -160,6 +162,7 @@ musl-libc:
 	${GNU_MAKE} -C ${OBJ_DIR}/obj/musl -f ${CURDIR}/contrib/musl/Makefile \
 	    srcdir=${CURDIR}/contrib/musl ARCH=${_ARCH} \
 	    LD=${CROSS_PREFIX}ld \
+	    LDEMULATION=${MUSL_LDEMULATION} \
 	    LIBCC=${MUSL_LIBCC}
 	cp ${OBJ_DIR}/obj/musl/lib/libc.a ${OBJ_DIR}/lib/musl.a
 	cp ${OBJ_DIR}/obj/musl/lib/libc.a ${OBJ_DIR}/lib/libc.a
