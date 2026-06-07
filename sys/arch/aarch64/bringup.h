@@ -1,0 +1,25 @@
+/*-
+ * Copyright (c) 2002-2026 The UbixOS Project.
+ * All rights reserved.
+ *
+ * Shared prototypes for the AArch64 bring-up (QEMU `virt`).  This is the minimal
+ * standalone bring-up surface (UART/kprintf, exception vectors, GIC, timer); it
+ * is replaced/absorbed by the real kernel interfaces as aarch64 matures.
+ */
+#ifndef _AARCH64_BRINGUP_H
+#define _AARCH64_BRINGUP_H
+
+#include <stdarg.h>
+#include <stdint.h>
+
+/* uart.c — PL011 console + a minimal kprintf. */
+void uart_putc(char c);
+void uart_puts(const char *s);
+void kvprintf(const char *fmt, va_list ap);
+void kprintf(const char *fmt, ...);
+
+/* exceptions.c — install the EL1 vector table (defined in vectors.S). */
+void aarch64_vbar_init(void);
+extern char vectors_el1[]; /* vector table base (vectors.S) */
+
+#endif /* _AARCH64_BRINGUP_H */

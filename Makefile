@@ -78,13 +78,18 @@ kernel-i386:
 # the QEMU `virt` RAM base.  Standalone — does NOT descend into sys/Makefile.
 kernel-aarch64:
 	@mkdir -p ${OBJ_DIR}/boot ${OBJ_DIR}/obj/sys/aarch64
-	${CROSS_PREFIX}gcc ${KERN_TARGET_CFLAGS} -ffreestanding -fno-pie -fno-pic \
-	    -c ${CURDIR}/sys/arch/aarch64/start.S -o ${OBJ_DIR}/obj/sys/aarch64/start.o
-	${CROSS_PREFIX}gcc ${KERN_TARGET_CFLAGS} -ffreestanding -fno-pie -fno-pic -std=c99 -O2 \
-	    -Wall -Wextra -c ${CURDIR}/sys/arch/aarch64/boot.c -o ${OBJ_DIR}/obj/sys/aarch64/boot.o
-	${CROSS_PREFIX}ld -T ${CURDIR}/sys/compile/ldscript.aarch64 \
-	    -o ${OBJ_DIR}/boot/kernel \
-	    ${OBJ_DIR}/obj/sys/aarch64/start.o ${OBJ_DIR}/obj/sys/aarch64/boot.o
+	@for f in ${CURDIR}/sys/arch/aarch64/*.S; do \
+	    o=${OBJ_DIR}/obj/sys/aarch64/`basename $$f .S`.o; \
+	    echo "${CROSS_PREFIX}gcc [asm] $$f"; \
+	    ${CROSS_PREFIX}gcc ${KERN_TARGET_CFLAGS} -ffreestanding -fno-pie -fno-pic -c $$f -o $$o || exit 1; \
+	done
+	@for f in ${CURDIR}/sys/arch/aarch64/*.c; do \
+	    o=${OBJ_DIR}/obj/sys/aarch64/`basename $$f .c`.o; \
+	    echo "${CROSS_PREFIX}gcc [c]   $$f"; \
+	    ${CROSS_PREFIX}gcc ${KERN_TARGET_CFLAGS} -ffreestanding -fno-pie -fno-pic -std=c99 -O2 -Wall -Wextra \
+	        -c $$f -o $$o || exit 1; \
+	done
+	${CROSS_PREFIX}ld -T ${CURDIR}/sys/compile/ldscript.aarch64 -o ${OBJ_DIR}/boot/kernel ${OBJ_DIR}/obj/sys/aarch64/*.o
 	@echo "aarch64 bring-up kernel linked: ${OBJ_DIR}/boot/kernel"
 
 musl-libc:
