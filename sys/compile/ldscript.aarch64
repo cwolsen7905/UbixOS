@@ -1,0 +1,39 @@
+/* AArch64 bring-up linker script (QEMU `virt`).
+ *
+ * `-kernel <ELF>` loads segments at their physical addresses and jumps to the
+ * ELF entry.  QEMU `virt` RAM starts at 0x40000000; link there.  This is the
+ * minimal Phase-11 bring-up image (start.S + boot.c), not the full kernel. */
+OUTPUT_FORMAT("elf64-littleaarch64")
+OUTPUT_ARCH(aarch64)
+ENTRY(_start)
+
+SECTIONS
+{
+	. = 0x40000000;
+
+	/* .text.boot (the _start entry) must come first so the ELF entry lands
+	 * at the load address. */
+	.text : {
+		*(.text.boot)
+		*(.text*)
+	}
+
+	.rodata : { *(.rodata*) }
+	.data   : { *(.data*) }
+
+	. = ALIGN(16);
+	__bss_start = .;
+	.bss : {
+		*(.bss*)
+		*(COMMON)
+	}
+	. = ALIGN(16);
+	__bss_end = .;
+
+	/* 16 KB boot stack; _stack_top is the initial SP (stack grows down). */
+	. = ALIGN(16);
+	. += 0x4000;
+	_stack_top = .;
+
+	/DISCARD/ : { *(.comment) *(.note*) *(.eh_frame*) }
+}

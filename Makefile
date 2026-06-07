@@ -56,7 +56,7 @@ _USB_FLAGS!= test -f ${USB_IMAGE} && \
 
 # ── Primary targets ──────────────────────────────────────────────────────────
 
-.PHONY: all kernel musl-libc world makeuser image usb-image \
+.PHONY: all kernel kernel-i386 kernel-aarch64 musl-libc world makeuser image usb-image \
         mount-image unmount-image \
         install-kernel install-world install \
         run run-debug run-i386 run-debug-i386 run-aarch64 run-debug-aarch64 \
@@ -64,9 +64,28 @@ _USB_FLAGS!= test -f ${USB_IMAGE} && \
         kernel-to-image clean-kernel clean
 
 all: kernel world image
-kernel:
+
+# `kernel` is arch-dispatched.  i386 builds the full tree (sys/Makefile); aarch64
+# builds the minimal Phase-11 bring-up image (start.S + boot.c) standalone, since
+# the generic subsystems aren't ported to aarch64 yet.
+kernel: kernel-${_ARCH}
+
+kernel-i386:
 	@mkdir -p ${OBJ_DIR}/boot ${OBJ_DIR}/obj/sys
 	@cd sys;${MAKE}
+
+# AArch64 bring-up kernel: assemble the entry, compile the PL011 banner, link at
+# the QEMU `virt` RAM base.  Standalone — does NOT descend into sys/Makefile.
+kernel-aarch64:
+	@mkdir -p ${OBJ_DIR}/boot ${OBJ_DIR}/obj/sys/aarch64
+	${CROSS_PREFIX}gcc ${KERN_TARGET_CFLAGS} -ffreestanding -fno-pie -fno-pic \
+	    -c ${CURDIR}/sys/arch/aarch64/start.S -o ${OBJ_DIR}/obj/sys/aarch64/start.o
+	${CROSS_PREFIX}gcc ${KERN_TARGET_CFLAGS} -ffreestanding -fno-pie -fno-pic -std=c99 -O2 \
+	    -Wall -Wextra -c ${CURDIR}/sys/arch/aarch64/boot.c -o ${OBJ_DIR}/obj/sys/aarch64/boot.o
+	${CROSS_PREFIX}ld -T ${CURDIR}/sys/compile/ldscript.aarch64 \
+	    -o ${OBJ_DIR}/boot/kernel \
+	    ${OBJ_DIR}/obj/sys/aarch64/start.o ${OBJ_DIR}/obj/sys/aarch64/boot.o
+	@echo "aarch64 bring-up kernel linked: ${OBJ_DIR}/boot/kernel"
 
 musl-libc:
 	@mkdir -p ${OBJ_DIR}/obj/musl ${OBJ_DIR}/lib
