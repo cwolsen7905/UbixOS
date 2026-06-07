@@ -83,7 +83,7 @@ same status.
 | — | musl world arch shim + de-hardcode i386 in `lib/Makefile` | Userland | ⬜ Not started — blocker for `world` |
 | 11 | Boot to PL011 UART on QEMU `virt` | B | ✅ **Done** — `uBixOS aarch64` banner verified on serial (`bmake run-debug TARGET=aarch64`) |
 | 12 | Exceptions + GICv2 + generic timer | B | ✅ **Done** — kprintf + EL1 vectors (12a); GICv2 + CNTP timer ticking at 2 Hz (12b), verified |
-| 13 | MMU (TTBR0/1) + AArch64 `cpu_switch` + syscall entry | B | ⬜ Not started |
+| 13 | MMU (TTBR0/1) + AArch64 `cpu_switch` + syscall entry | B | 🟡 **MMU done** (TTBR0 identity, caches, verified under IRQs); `cpu_switch`/SVC + fork/exec gated on the generic-kernel port |
 | 14 | virtio-blk + virtio-net | B | ⬜ Not started |
 | 15 | virtio-gpu framebuffer + virtio-input (touch) | B | ⬜ Not started |
 | 15a | **virtio-sound** (audio) → existing `aural` layer | B | ⬜ Not started — *was missing* |
@@ -701,7 +701,7 @@ corrupt addresses. See the Status matrix near the top for the at-a-glance view.
 |-------|------|--------|
 | 11 | Boot to PL011 UART on QEMU `virt` | ✅ Done (banner verified, TCG + HVF) |
 | 12 | Exceptions + GICv2 + generic timer | ✅ Done (vectors + kprintf; timer IRQ ticking, verified) |
-| 13 | MMU + `cpu_switch` + syscall entry | Not started |
+| 13 | MMU (identity) done; `cpu_switch`+SVC pending generic-kernel port | 🟡 Partial |
 | 14 | virtio-blk + virtio-net | Not started |
 | 15 | virtio-gpu framebuffer + virtio-input (touch) | Not started |
 | 15a | virtio-sound (audio) → `aural` abstraction | Not started |
