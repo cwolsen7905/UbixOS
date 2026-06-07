@@ -45,4 +45,8 @@ void aarch64_sched_demo(void);
 /* vmmdemo.c — bring up + exercise the generic physical page allocator. */
 void aarch64_vmm_demo(void);
 
+/* pmap.c — 4 KB-granule page-table mapping + its demo. */
+int pmap_map_page(u_int64_t *l1, u_int64_t va, u_int64_t pa, u_int64_t attrs);
+void aarch64_pmap_demo(void);
+
 #endif /* _AARCH64_BRINGUP_H */
