@@ -1,69 +1,89 @@
 # UbixOS Kernel Threads & POSIX Threads Plan
 
-> Carved out of `scheduler-plan.md` (2026-06-03). The scheduler itself
-> (priority run queue, QoS, boosts, PI, aging) is **complete** — see
-> `completed/scheduler-plan.md`. This plan is the separate, larger initiative
-> that builds on it: a real process/thread split and POSIX threads.
+> Carved out of `scheduler-plan.md` (2026-06-03). The scheduler itself (priority
+> run queue, QoS, boosts, PI, aging) is **complete** — see
+> `completed/scheduler-plan.md`. This plan builds on it: kernel threads + POSIX
+> threads.
 
 ## Goal
 
 Give UbixOS genuine kernel threads — multiple execution contexts sharing one
-address space — and wire musl's `pthread_*` to them. Today `kTask_t` conflates
-"process" (address space, fd table, signals) with "execution context" (stack,
-registers, priority); this plan separates them and adds `clone()`, TLS, and
-futexes.
+address space — and wire musl's `pthread_*` to them.
 
-## Approach: pragmatic v1, then clean up
+**Approach (decided 2026-06-06):** ship working pthreads on a shared-address-space
+`kTask_t` *first* (v1), and defer the full `kTask_t` → `kProc_t` + `kThread_t`
+struct split to a follow-up. Get threads working in days, not a weeks-long refactor.
 
-The original plan led with a full `kTask_t` → `kProc_t` + `kThread_t` struct
-split (a big-bang refactor touching the scheduler, fork, exec, and signals).
-We are deliberately **deferring that split** and shipping working pthreads on a
-shared-address-space `kTask_t` first, then doing the clean refactor afterward.
-Decision (2026-06-06): get threads working in days, not a weeks-long refactor.
+## Status at a glance
 
-## Status — v1 (pragmatic: shared-AS `kTask_t`)
-
-| # | Task | Status |
+| # | Item | Status |
 |---|------|--------|
-| A | `clone()` syscall — new `kTask_t` sharing parent `cr3` + sigacts; caller stack/entry | ✅ **Done & verified** (`bin/clonetest` PASS: thread ran in the shared AS, wrote our globals, exited, main reaped it) — **A1:** `sys_rfork` at FreeBSD slot 251 (`sys/arch/i386/fork.c`) shares `cr3`, runs on the caller's stack at the same eip with eax=0, shallow-shares fds, joins caller `tgid`; `tgid` field on `kTask_t` (defaults to own id). Kernel compiles. **A2:** `contrib/musl/src/thread/i386/clone.s` rewritten to invoke slot 251 with the uBixOS stack-arg ABI (was stock Linux `eax=120`); stashes fn/arg on the child stack, child calls `fn(arg)` then `SYS_exit`. v1 copies `vm_map` (shared vm_map = follow-up). **End-to-end test:** `bin/clonetest` (raw `spawn_thread` wrapper, no TLS) spawns a thread that writes shared globals. First run SIGSEGV'd — but in the *parent* on SIGCHLD delivery, not the thread: the thread ran and exited cleanly. Root cause was a **latent POSIX exec bug**, not threads — `sys_exec` never reset signal dispositions, so a process kept its parent's caught-signal handler *addresses* across `execve` (clonetest inherited tcsh's SIGCHLD handler, wild in the new AS). Fixed: `sys_exec` (`i386_exec.c`) now resets every caught signal to `SIG_DFL` on exec (SIG_IGN preserved; mask/pending untouched), per POSIX. clonetest is just the first non-shell program to both inherit a caught SIGCHLD and reap a child. **Re-test after kernel rebuild.** |
-| B | Address-space refcount — tear down the shared `cr3` only when the *last* task of the `tgid` exits | ✅ **Done & verified** (clonetest: the thread's exit did not tear down main's AS) — `sched_tgid_others_alive()` (`sched_core.c`) counts live siblings; `endTask` skips `vmm_clean_virtual_space` and sets `reap_free_as=0` for a non-last thread; the reaper (`systemtask.c`) skips `vmm_free_process_pages` unless `reap_free_as`. `reap_free_as` field on `kTask_t` (defaults 1). Stayed out of `vmm_memory.c`. **Known v1 leak:** PT/PD pages allocated by *non-last* tgid members aren't reclaimed (page bitmap is per-pid) — fix is tgid-based page ownership; tracked under F. Shallow-shared `td.o_files` aren't freed by the reaper (it frees the legacy `files[0]`), so no double-free; proper shared close semantics tracked under G. |
-| C | TLS — `sys_set_thread_area` (per-thread userland `%gs` base, saved/restored at the user↔kernel boundary) | ✅ **Done & verified** (clean boot + `bin/tlstest` PASS in QEMU) — `set_thread_area` records the base in `kTask_t.tls_base`; `cpu_switch` re-installs it into the shared LDT[1] slot after the CR3 swap (all threads in an address space share that one slot, so each resume restores the running thread's base). `fork` gives the LDT page a private writable copy instead of COW (it is CPU state, never shared) and inherits `tls_base`; without that the per-switch LDT write faulted on the read-only COW page with interrupts off. |
-| D | `futex` syscall — wait/wake on a user address, on the existing `wait_chan` sleep/wakeup | 🔄 Code complete (untested) — `sys_futex` (`gen_calls.c`) on `sched_wait_event_timeout`/`sched_wakeup_chan`; WAIT/WAKE/WAIT_BITSET + REQUEUE-as-WAKE (PI/other → ENOSYS, musl falls back). Threads share the AS so the user VA is the wait token. `bin/futextest` verifies a worker blocks in FUTEX_WAIT until FUTEX_WAKE. **ABI relocation (this task):** futex/set_thread_area/exit_group moved OFF the FreeBSD-numbered POSIX table (int $0x80, were squatting on `__acl_*` slots 350/351/352 — now restored to Invalid) ONTO the UbixOS-native table (int $0x81, slots 64/63/65). They are Linux primitives with no FreeBSD number; the native table is the honest home and keeps the POSIX table a faithful FreeBSD ABI for the future FreeBSD-libc port. musl routes them via a 0x8000 flag on the syscall number (`ubixos_syscall.S`/`syscall_cp.s` dispatch to int $0x81). `clone` stays at POSIX slot 251 = real FreeBSD `rfork`. **Needs build + QEMU run** (re-verify tlstest too — set_thread_area moved). |
-| E | musl pthreads wiring — `pthread_create`→`clone`, `mutex`/`cond`→`futex`, `set_thread_area` | ✅ **Milestone 1 done & verified** (`bin/pthreadtest` PASS: 4 threads, mutex-guarded counter=80000, all joined) — wired the three CLONE bits musl needs: **CLONE_SETTLS** (`sys_rfork` installs `args->tls` as the child `tls_base`, gs=0xF; cpu_switch restores it before the child's first iret), **CLONE_PARENT_SETTID** (`sys_rfork` writes the new tid to `*ptid`), **CLONE_CHILD_CLEARTID** (`clear_tid` on `kTask_t`; `endTask` zeroes it + futex-wakes — releases musl's thread-list lock held across `pthread_exit`). `clone.s` extended to pass ptid/ctid. `bin/pthreadtest` (N threads, mutex-guarded counter, join) is the milestone test. **Deferred:** detached-thread `__unmapself` — UbixOS's stack-arg syscall ABI can't munmap its own stack then exit() (no stack left for exit args); needs a kernel-assisted unmap+exit syscall (tracked with F/G). Joinable threads (the joiner frees the map) don't hit it. **Needs build + QEMU run.** |
+| A | `clone()`/`rfork` syscall — new context sharing the caller's `cr3` | ✅ Done & verified |
+| B | Address-space refcount — free shared `cr3` only when the last `tgid` task exits | ✅ Done & verified |
+| C | TLS — per-thread userland `%gs` base | ✅ Done & verified |
+| D | `futex` syscall — wait/wake on a user address | ✅ Done & verified |
+| E | musl pthreads — `pthread_create` / `mutex` / `join` | ✅ Milestone 1 done & verified |
+| E2 | pthreads — `cond`, detached threads, cancellation | 🔲 Remaining |
+| F | Split `kTask_t` → `kProc_t` + `kThread_t` | 🔲 Deferred |
+| G | True shared fd table | 🔲 Deferred |
 
-## Status — deferred cleanup (after threads work end-to-end)
+**Legend:** ✅ Done · 🔄 In progress · 🔲 Not started/Deferred
 
-| # | Task | Status | Why deferred |
-|---|------|--------|--------------|
-| F | Split `kTask_t` → `kProc_t` + `kThread_t` (proper process/thread separation) | ⬜ Deferred | Big refactor; v1 ships on shared-AS `kTask_t` without it |
-| G | Shared **fd table** (`struct fdtable`) with correct cross-thread `close()`/`dup()` semantics | ⬜ Deferred | v1 shallow-shares `files[]` (threads share the `fileDescriptor_t` objects but keep separate arrays, so a `close()` in one thread isn't reflected in another's slot — fine for typical threaded code, not fully POSIX) |
+**Bottom line:** the v1 *functional core* (A–E milestone 1) is complete and
+verified — real `pthread_create`/mutex/join work. The plan is **not 100% complete**:
+E2 polish and the F/G refactors remain (all non-blocking for app use).
 
-**Legend:** ⬜ Not started/Deferred · 🔄 In progress · ✅ Done
+## What's left — decision matrix
 
-## Dependencies / relationship to other work
+| Item | What it is | Effort | Blocks | Notes |
+|------|-----------|--------|--------|-------|
+| **E2a — `pthread_cond`** | Verify condition variables (producer/consumer test). Runs on the existing futex; uses `FUTEX_WAIT`-with-timeout + the REQUEUE-as-WAKE path. | ~½ day | A worker-pool / job-queue design (e.g. the **NetSurf async fetcher**) | Cheap to test now; likely works, but unverified. Recommended before building anything on cond vars. |
+| **E2b — detached threads** | `pthread_detach` / detached-create teardown. Needs a kernel-assisted "unmap own stack + exit" syscall: the stack-arg ABI can't `munmap` its own stack then pass `exit`'s args (no stack left). `__unmapself.s` is currently a documented non-functional stub. | ~½–1 day | Detached threads only (joinable threads work — the joiner frees the map) | Add a native `thread_exit_unmap(base,size,code)` call that does both in one trap. |
+| **E2c — cancellation** | `pthread_cancel` / `SIGCANCEL` delivery into a blocked futex (`-EINTR` return). | ~½ day | `pthread_cancel` users (rare) | Futex currently doesn't return `-EINTR` on signal; a blocked thread defers signals until woken. |
+| **F — kProc/kThread split** | Separate "process" (AS, fds, signals) from "execution context" (stack, regs). The scheduler would operate on `kThread_t`. | ~weeks | Cleanliness; fixes the v1 PT/PD page leak below | Big refactor; intentionally deferred. v1 runs on shared-AS `kTask_t`. |
+| **G — shared fd table** | `struct fdtable` with correct cross-thread `close()`/`dup()`. | ~days | Fully-POSIX fd semantics across threads | v1 shallow-shares `o_files[]` (threads share the `fileDescriptor_t` objects but keep separate arrays — a `close()` in one thread isn't reflected in another's slot). Fine for typical threaded code. |
 
-- **Built on the completed scheduler** (`completed/scheduler-plan.md`): the
-  scheduler already operates on a per-priority run queue with QoS/boosts/PI/aging.
-  It currently schedules `kTask_t`; after step 1 it schedules `kThread_t`.
-- **Not an arm64 bring-up prerequisite.** arm64 boots, runs the scheduler, and
-  runs single-threaded processes without any of this. Threads are an app-facing
-  capability to add once the port is up — relevant to the mobile direction
-  (apps use threads) but not blocking it.
-- **Independent of SMP.** Threads (many contexts per process) and SMP (many CPUs
-  running contexts) compose but neither requires the other. Both refactor
-  `kTask_t`, so whichever lands first should keep the struct changes clean for
-  the other; see `smp-plan.md`.
+**Known v1 leaks (tracked under F/G, not blocking):**
+- PT/PD pages allocated by a *non-last* `tgid` member aren't reclaimed (the page
+  bitmap is per-pid). Fix = `tgid`-based page ownership (F).
+- Shallow-shared `o_files` aren't freed by the reaper (it frees the legacy
+  `files[0]`), so no double-free, but no proper shared-close either (G).
 
-## 1. Separate process from thread
+## What shipped (v1 core — all verified in QEMU)
 
-Split `kTask_t` into:
+- **A — `sys_rfork`** (FreeBSD slot 251, `fork.c`): new `kTask_t` shares the
+  caller's `cr3`, runs on a caller-supplied stack at the same eip with `eax=0`,
+  shallow-shares fds, joins the caller's `tgid`. musl `clone.s` drives it.
+  Test: `bin/clonetest`. *(Surfaced + fixed a latent POSIX bug: `execve` didn't
+  reset caught signal dispositions — `i386_exec.c` now does, per POSIX.)*
+- **B — AS refcount** (`sched_tgid_others_alive`, `endTask`, reaper): the shared
+  `cr3` is torn down only when the last task of a `tgid` exits.
+- **C — TLS**: `set_thread_area` records `kTask_t.tls_base`; `cpu_switch`
+  re-installs it into the shared LDT[1] after the CR3 swap (all threads share one
+  LDT slot). `fork` gives the LDT page a private writable copy (never COW — it's
+  CPU state). Test: `bin/tlstest`.
+- **D — `sys_futex`** (`gen_calls.c`) on `sched_wait_event_timeout` /
+  `sched_wakeup_chan`: WAIT/WAKE/WAIT_BITSET, REQUEUE-as-WAKE. Test:
+  `bin/futextest`.
+- **E (milestone 1)**: `sys_rfork` honours CLONE_SETTLS / PARENT_SETTID /
+  CHILD_CLEARTID (the last releases musl's thread-list lock on exit via a futex
+  wake in `endTask`). Test: `bin/pthreadtest` (4 threads, mutex-guarded counter,
+  joins).
+
+**Syscall ABI placement** (see memory `project_native_abi_threading`): Linux-only
+primitives with no FreeBSD number live on the **native** table (`int $0x81`):
+`futex` 64, `set_thread_area` 63, `exit_group` 65 — musl flags them with `0x8000`.
+Calls FreeBSD *does* have stay on the **POSIX** table at their real number:
+`rfork` 251, `membarrier` 584.
+
+## Deferred refactor (F) — target shape
 
 ```c
 typedef struct kProc {
     pidType          pid;
     kTask_t         *threads;       /* threads belonging to this process */
     struct vmspace  *vm;            /* address space */
-    struct fdtable  *fds;           /* file descriptor table */
+    struct fdtable  *fds;           /* file descriptor table (G) */
     sigset_t         sigmask;
     /* ... uid, gid, cwd, etc. */
 } kProc_t;
@@ -71,42 +91,21 @@ typedef struct kProc {
 typedef struct kThread {
     tidType          tid;
     kProc_t         *proc;          /* owning process */
-    uint8_t          priority;
-    uint8_t          base_priority;
-    uint8_t          quantum;
+    uint8_t          priority, base_priority, quantum;
     struct md_thread md;            /* arch registers/stack */
     /* ... per-thread errno, TLS pointer, signal mask */
 } kThread_t;
 ```
 
-The scheduler operates on `kThread_t`. `kProc_t` is the unit for `fork()` /
-`waitpid()`.
+The scheduler operates on `kThread_t`; `kProc_t` is the unit for `fork()`/`waitpid()`.
 
-## 2. `clone()` / `rfork()` syscall
+## Dependencies / relationship to other work
 
-`clone()` (Linux ABI, slot 120) or `rfork()` (FreeBSD ABI) creates a new thread
-sharing the caller's address space and fd table, with a caller-supplied stack
-and entry point. Foundation for `pthread_create()`.
-
-## 3. Thread-local storage (TLS) — **architecture-specific**
-
-Each thread gets a TLS block.
-
-- **i386**: the GS segment register points to it; `sys_set_thread_area()`
-  (FreeBSD `sysarch(I386_SET_GSBASE)`) installs the pointer; `__thread` resolves
-  via GS-relative addressing. Note: this is the same `%gs` mechanism the kernel
-  uses for per-CPU `_current` — userland TLS uses a *different* GS base, set per
-  thread, so the kernel's per-CPU `%gs` and userland's TLS `%gs` must be saved/
-  restored across the user/kernel boundary (already handled by the entry stubs).
-- **aarch64** (when ported): TLS is `TPIDR_EL0`, a dedicated thread-pointer
-  system register — a completely different mechanism. This step therefore needs
-  an arch abstraction (`<machine/tls.h>`); the i386 `sys_set_thread_area`
-  implementation should move to `sys/arch/i386/` per `cross-arch-plan.md`.
-
-## 4. libc pthreads
-
-With `clone()` and TLS in place, musl's pthread implementation works with
-minimal adaptation:
-- `pthread_create` → `clone()`
-- `pthread_mutex_*` → futex or kernel semaphore
-- `pthread_cond_*` → futex wait/wake
+- **Built on the completed scheduler** (`completed/scheduler-plan.md`).
+- **Not an arm64 prerequisite** — arm64 boots and runs single-threaded processes
+  without this; threads are an app-facing capability to add post-port. TLS is
+  arch-specific (i386 `%gs`/LDT vs aarch64 `TPIDR_EL0`) and would move behind
+  `<machine/tls.h>` per `cross-arch-plan.md`.
+- **Independent of SMP** — threads (many contexts/process) and SMP (many CPUs)
+  compose but neither requires the other. Both touch `kTask_t`; keep the struct
+  changes clean for whichever lands second. See `smp-plan.md`.
