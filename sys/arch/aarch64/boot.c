@@ -10,6 +10,8 @@
  */
 
 #include "bringup.h"
+#include <vmm/vmm.h>       /* vmm_mem_map_init */
+#include <ubixos/vitals.h> /* vitals_init */
 
 /**
  * Return the current exception level (0-3) from CurrentEL[3:2].
@@ -35,6 +37,11 @@ void kmain_aarch64(void)
 
 	aarch64_mmu_init();
 	kprintf("MMU enabled: TTBR0 identity map (39-bit VA), caches on.\n");
+
+	/* Core init order (the embryonic kmain): physical allocator, then the
+	 * vitals node (kmalloc'd, so the allocator must be up first). */
+	vmm_mem_map_init();
+	vitals_init();
 
 	aarch64_vmm_demo();
 	aarch64_pmap_demo();

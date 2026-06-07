@@ -22,8 +22,8 @@ void aarch64_vmm_demo(void)
 {
 	uintptr_t p1, p2, p3, p4;
 
-	kprintf("vmm demo: bringing up the physical page allocator...\n");
-	vmm_mem_map_init();
+	kprintf("vmm demo: exercising the physical page allocator...\n");
+	/* vmm_mem_map_init() now runs once in kmain (boot.c), before this. */
 
 	p1 = vmm_find_free_page(sysID);
 	p2 = vmm_find_free_page(sysID);

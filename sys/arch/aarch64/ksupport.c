@@ -30,10 +30,8 @@
 #include <ubixos/callout.h>
 #include <sys/shutdown.h>
 
-/* ---- system vitals ------------------------------------------------------ */
-
-static vitalsNode g_vitals;
-vitalsNode *systemVitals = &g_vitals;
+/* systemVitals is now the real generic vitals node (sys/kern/vitals.c),
+ * allocated by vitals_init() during kmain bring-up. */
 
 /* ---- deferred reboot (inactive on aarch64 bring-up) --------------------- */
 
