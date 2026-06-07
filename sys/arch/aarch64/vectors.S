@@ -120,3 +120,15 @@ el1_invalid:
 	mov	x1, sp
 	bl	aarch64_exception
 	KERNEL_EXIT
+
+/*
+ * ret_from_fork: a fork child's first dispatch `ret`s here (its seeded ctx frame
+ * has lr = ret_from_fork) with SP pointing at its copied trapframe.  Run the
+ * normal trap-return epilogue to ERET into EL0 — the child resumes at the fork
+ * SVC return point with x0 = 0 (set by aarch64_fork).
+ */
+	.global ret_from_fork
+	.type ret_from_fork, %function
+ret_from_fork:
+	KERNEL_EXIT
+	.size ret_from_fork, . - ret_from_fork

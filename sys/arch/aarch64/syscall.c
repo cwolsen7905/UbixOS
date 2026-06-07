@@ -18,6 +18,7 @@
 #include <ubixos/endtask.h> /* endTask */
 
 #define SYS_EXIT 1
+#define SYS_FORK 2
 #define SYS_WRITE 4
 #define SYS_GETPID 20
 
@@ -49,8 +50,12 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args)
 		case SYS_WRITE:
 			return sys_write(args[0], args[1], args[2]);
 
+		case SYS_FORK:
+			/* args is the trapframe; the child resumes here returning 0. */
+			return (u_int64_t)aarch64_fork(args);
+
 		case SYS_GETPID:
-			return 1; /* no real PID for the bring-up EL0 task yet */
+			return (_current != 0) ? (u_int64_t)_current->id : 0;
 
 		case SYS_EXIT:
 			kprintf("[kernel] EL0 process exit(%lu)\n", args[0]);

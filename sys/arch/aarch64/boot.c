@@ -44,6 +44,7 @@ void kmain_aarch64(void)
 	aarch64_ctx_demo();
 	aarch64_sched_demo();
 	aarch64_proc_demo();
+	aarch64_fork_demo();
 
 	gic_init();
 	timer_init();

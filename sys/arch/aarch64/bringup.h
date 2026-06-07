@@ -34,6 +34,7 @@ void timer_tick(void);
 
 /* mmu.c — enable the MMU with a TTBR0 identity map (39-bit VA). */
 void aarch64_mmu_init(void);
+u_int64_t *aarch64_kernel_l1(void); /* kernel identity L1 root (basis for new address spaces) */
 
 /* context.S / ctxdemo.c — cooperative context switch + its demo. */
 void aarch64_ctx_switch(u_int64_t *save_sp, u_int64_t next_sp);
@@ -49,7 +50,11 @@ void aarch64_vmm_demo(void);
 int pmap_map_page(u_int64_t *l1, u_int64_t va, u_int64_t pa, u_int64_t attrs);
 int pmap_map_user_page(u_int64_t *l1, u_int64_t va, u_int64_t pa, int executable);
 u_int64_t *pmap_create_user_space(void);
+u_int64_t *pmap_fork_copy(u_int64_t *parent); /* deep-copy user mappings (fork) */
 void pmap_switch(u_int64_t *l1);
+
+/* vectors.S — a fork child's first-dispatch landing pad (ERETs to EL0). */
+void ret_from_fork(void);
 void aarch64_pmap_demo(void);
 void aarch64_aspace_demo(void);
 
@@ -59,9 +64,14 @@ void aarch64_eret_to_el0(u_int64_t entry, u_int64_t usp); /* scheduled task: no 
 void aarch64_el0_return(void);
 extern char user_demo_code_start[];
 extern char user_demo_code_end[];
+extern char fork_demo_code_start[];
+extern char fork_demo_code_end[];
 
-/* syscall.c — minimal EL0 syscall dispatch (write/exit/getpid). */
+/* syscall.c — minimal EL0 syscall dispatch (write/exit/getpid/fork). */
 u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args);
+
+/* proc.c — fork(): child resumes at the caller's EL0 point with a copied space. */
+int aarch64_fork(u_int64_t *parent_tf);
 
 /* syscalldemo.c — map a user page, drop to EL0, exercise the SVC path. */
 void aarch64_syscall_demo(void);
@@ -71,5 +81,8 @@ void aarch64_elf_demo(void);
 
 /* procdemo.c — run a user process dispatched by the scheduler (Phase 13f). */
 void aarch64_proc_demo(void);
+
+/* forkdemo.c — a user process that fork()s; both run via the scheduler (13g). */
+void aarch64_fork_demo(void);
 
 #endif /* _AARCH64_BRINGUP_H */

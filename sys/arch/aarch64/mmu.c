@@ -19,11 +19,21 @@
 /* Level-1 table: 512 entries, each a 1 GB block.  4 KB aligned (one page). */
 static u_int64_t l1_table[512] __attribute__((aligned(4096)));
 
+/**
+ * The kernel's identity L1 root.  New address spaces (pmap_create_user_space,
+ * fork) copy this so they all map the kernel + identity-mapped RAM, regardless
+ * of which process address space is currently active.
+ */
+u_int64_t *aarch64_kernel_l1(void)
+{
+	return l1_table;
+}
+
 /* Block/page descriptor bits. */
-#define DESC_BLOCK 0x1UL          /* [1:0] = 01: block at level 1/2 */
+#define DESC_BLOCK 0x1UL                   /* [1:0] = 01: block at level 1/2 */
 #define DESC_ATTR(i) ((u_int64_t)(i) << 2) /* [4:2] = MAIR AttrIndx */
-#define DESC_SH_INNER (3UL << 8)  /* [9:8] = 11: inner shareable */
-#define DESC_AF (1UL << 10)       /* [10] = access flag */
+#define DESC_SH_INNER (3UL << 8)           /* [9:8] = 11: inner shareable */
+#define DESC_AF (1UL << 10)                /* [10] = access flag */
 
 /* MAIR attribute indices + values. */
 #define ATTR_NORMAL_IDX 0
@@ -59,13 +69,13 @@ void aarch64_mmu_init(void)
 	 * TCR_EL1: T0SZ=25 (39-bit VA → start at level 1), TG0=4KB, inner-shareable,
 	 * WB cacheable table walks, EPD1=1 (TTBR1 unused for now), IPS=40-bit PA.
 	 */
-	u_int64_t tcr = (25UL << 0)  /* T0SZ */
-	             | (1UL << 8)   /* IRGN0 = WB */
-	             | (1UL << 10)  /* ORGN0 = WB */
-	             | (3UL << 12)  /* SH0   = inner */
-	             | (0UL << 14)  /* TG0   = 4KB */
-	             | (1UL << 23)  /* EPD1  = disable TTBR1 walks */
-	             | (2UL << 32); /* IPS   = 40-bit */
+	u_int64_t tcr = (25UL << 0)    /* T0SZ */
+	                | (1UL << 8)   /* IRGN0 = WB */
+	                | (1UL << 10)  /* ORGN0 = WB */
+	                | (3UL << 12)  /* SH0   = inner */
+	                | (0UL << 14)  /* TG0   = 4KB */
+	                | (1UL << 23)  /* EPD1  = disable TTBR1 walks */
+	                | (2UL << 32); /* IPS   = 40-bit */
 	__asm__ volatile("msr tcr_el1, %0" : : "r"(tcr));
 
 	__asm__ volatile("msr ttbr0_el1, %0" : : "r"((u_int64_t)(uintptr_t)l1_table));
@@ -75,8 +85,8 @@ void aarch64_mmu_init(void)
 
 	u_int64_t sctlr;
 	__asm__ volatile("mrs %0, sctlr_el1" : "=r"(sctlr));
-	sctlr |= (1UL << 0)    /* M — MMU enable */
-	       | (1UL << 2)    /* C — data/unified cache */
-	       | (1UL << 12);  /* I — instruction cache */
+	sctlr |= (1UL << 0)     /* M — MMU enable */
+	         | (1UL << 2)   /* C — data/unified cache */
+	         | (1UL << 12); /* I — instruction cache */
 	__asm__ volatile("msr sctlr_el1, %0; isb" : : "r"(sctlr));
 }

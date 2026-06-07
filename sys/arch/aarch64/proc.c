@@ -20,10 +20,13 @@
 #include "bringup.h"
 #include <ubixos/sched.h>
 #include <machine/proc.h>
+#include <string.h>
 
 #define FRAME_SLOTS 12 /* x19-x28, x29(fp), x30(lr) — must match context.S */
 #define LR_SLOT 11     /* x30 (lr) is the 12th slot */
 #define KSTACK_SIZE 8192
+#define TRAPFRAME_SIZE 288 /* must match KERNEL_ENTRY in vectors.S */
+#define TF_SLOT_SP_EL0 34  /* sp_el0 at offset 272 in the trapframe */
 
 /**
  * Initialise a freshly-allocated task's md state.  The software-context fields
@@ -95,4 +98,51 @@ void switch_to(kTask_t *prev, kTask_t *next)
 void md_sched_pre_switch(kTask_t *t)
 {
 	(void)t;
+}
+
+/**
+ * fork(): create a child task that resumes at the same EL0 point as the caller
+ * with a copy of its address space.  @parent_tf is the caller's trapframe (the
+ * saved x0-x30 + ELR/SPSR/SP_EL0 from the fork SVC).
+ *
+ * The child gets a deep copy of the parent's user pages, a duplicate of the
+ * trapframe (with x0 = 0 so its fork returns 0), and a seeded ctx frame whose lr
+ * is ret_from_fork, so its first dispatch ERETs to EL0 via that trapframe.
+ *
+ * @return the child's pid (the parent's fork return value), or -1 on failure.
+ */
+int aarch64_fork(u_int64_t *parent_tf)
+{
+	u_int64_t ttbr0;
+	u_int64_t *child_l1;
+	kTask_t *child;
+	u_int8_t *top;
+	u_int64_t *tf, *ctx;
+
+	__asm__ volatile("mrs %0, ttbr0_el1" : "=r"(ttbr0));
+	child_l1 = pmap_fork_copy((u_int64_t *)(uintptr_t)(ttbr0 & 0x0000FFFFFFFFF000UL));
+	if (child_l1 == 0)
+		return -1;
+
+	child = schedNewTask();
+	child->md.md_ttbr0 = (u_int64_t)(uintptr_t)child_l1;
+	child->md.md_usp = parent_tf[TF_SLOT_SP_EL0]; /* same user SP (copied space); marks a user task */
+	child->md.md_entry = 0;                       /* unused — the trapframe drives the return */
+
+	/* Build the child kernel stack: a copy of the parent trapframe at the top
+	 * (with x0 = 0), and below it a ctx frame that ret_from_fork's into it. */
+	top = (u_int8_t *)child->kernelStack + KSTACK_SIZE;
+	tf = (u_int64_t *)(top - TRAPFRAME_SIZE);
+	memcpy(tf, parent_tf, TRAPFRAME_SIZE);
+	tf[0] = 0; /* child's fork() returns 0 */
+
+	ctx = (u_int64_t *)((u_int8_t *)tf - FRAME_SLOTS * 8);
+	for (unsigned i = 0; i < FRAME_SLOTS; i++)
+		ctx[i] = 0;
+	ctx[LR_SLOT] = (u_int64_t)(uintptr_t)ret_from_fork;
+
+	child->md.md_kstack = (u_int64_t)(uintptr_t)ctx; /* set, so sched_ready skips md_setup_initial_frame */
+	sched_ready(child);
+
+	return child->id;
 }

@@ -158,8 +158,59 @@ u_int64_t *pmap_create_user_space(void)
 {
 	u_int64_t *l1 = (u_int64_t *)(uintptr_t)vmm_find_free_page(sysID);
 
-	memcpy(l1, pmap_active_l1(), PAGE_SIZE); /* 512 entries × 8 = one page */
+	/* Copy the KERNEL identity L1 (not whatever is active) so this never shares
+	 * another process's user sub-tables — critical for fork correctness. */
+	memcpy(l1, aarch64_kernel_l1(), PAGE_SIZE); /* 512 entries × 8 = one page */
 	return l1;
+}
+
+/* User VA region for processes (block 4 = 4 GB and up): below this are the
+ * kernel identity blocks (0-1) and bring-up demo scratch — not per-process data,
+ * so fork shares them via the kernel-L1 copy rather than duplicating them. */
+#define USER_L1_MIN 4
+
+/**
+ * Deep-copy the user mappings of @parent into a fresh child address space:
+ * every mapped 4 KB user page (L1 index >= USER_L1_MIN) is duplicated into a new
+ * frame with the parent's attributes preserved.  This is a full copy (not COW
+ * yet) — correct and simple; COW is a later optimization.
+ *
+ * @return the child L1 root, or NULL on allocation failure.
+ */
+u_int64_t *pmap_fork_copy(u_int64_t *parent)
+{
+	u_int64_t *child = pmap_create_user_space(); /* kernel identity */
+	u_int64_t i1, i2, i3;
+
+	for (i1 = USER_L1_MIN; i1 < 512; i1++)
+	{
+		if ((parent[i1] & PTE_VALID) == 0 || (parent[i1] & PTE_TYPE_MASK) != PTE_TABLE)
+			continue;
+		u_int64_t *l2 = (u_int64_t *)(uintptr_t)(parent[i1] & PTE_ADDR_MASK);
+
+		for (i2 = 0; i2 < 512; i2++)
+		{
+			if ((l2[i2] & PTE_VALID) == 0 || (l2[i2] & PTE_TYPE_MASK) != PTE_TABLE)
+				continue;
+			u_int64_t *l3 = (u_int64_t *)(uintptr_t)(l2[i2] & PTE_ADDR_MASK);
+
+			for (i3 = 0; i3 < 512; i3++)
+			{
+				if ((l3[i3] & PTE_VALID) == 0)
+					continue;
+				u_int64_t va = (i1 << 30) | (i2 << 21) | (i3 << 12);
+				u_int64_t attrs = l3[i3] & ~PTE_ADDR_MASK; /* preserve AP/AF/SH/XN/type */
+				uintptr_t src = (uintptr_t)(l3[i3] & PTE_ADDR_MASK);
+				uintptr_t dst = vmm_find_free_page(sysID);
+
+				if (dst == 0)
+					return 0;
+				memcpy((void *)dst, (const void *)src, PAGE_SIZE);
+				pmap_map_page(child, va, (u_int64_t)dst, attrs & ~(u_int64_t)(PTE_AF | PTE_PAGE));
+			}
+		}
+	}
+	return child;
 }
 
 /**

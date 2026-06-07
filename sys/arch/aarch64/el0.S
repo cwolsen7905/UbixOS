@@ -85,6 +85,7 @@ aarch64_el0_return:
  * x8 = number (FreeBSD: write=4, exit=1), x0-x2 = args.
  */
 	.global user_demo_code_start, user_demo_code_end
+	.balign	4			/* instructions must be 4-byte aligned */
 user_demo_code_start:
 	mov	x0, #1					/* fd = stdout */
 	adr	x1, user_demo_msg			/* buf (runtime VA) */
@@ -99,6 +100,36 @@ user_demo_msg:
 	.ascii	"Hello from EL0 — aarch64 user mode via syscall!\n"
 user_demo_msg_end:
 user_demo_code_end:
+
+/*
+ * EL0 fork payload: fork(), then parent and child each write a distinct line and
+ * exit.  Demonstrates two processes diverging from one fork.  Position-independent.
+ */
+	.global fork_demo_code_start, fork_demo_code_end
+	.balign	4			/* instructions must be 4-byte aligned */
+fork_demo_code_start:
+	mov	x8, #2			/* SYS_fork */
+	svc	#0
+	cbz	x0, 2f			/* x0 == 0 -> child */
+	adr	x1, fork_parent_msg	/* parent */
+	mov	x2, #(fork_parent_msg_end - fork_parent_msg)
+	b	1f
+2:	adr	x1, fork_child_msg	/* child */
+	mov	x2, #(fork_child_msg_end - fork_child_msg)
+1:	mov	x0, #1			/* fd = stdout */
+	mov	x8, #4			/* SYS_write */
+	svc	#0
+	mov	x0, #0
+	mov	x8, #1			/* SYS_exit */
+	svc	#0
+3:	b	3b
+fork_parent_msg:
+	.ascii	"fork: parent here (child pid in x0)\n"
+fork_parent_msg_end:
+fork_child_msg:
+	.ascii	"fork: child here (x0 == 0)\n"
+fork_child_msg_end:
+fork_demo_code_end:
 
 	.section .bss
 	.balign 16
