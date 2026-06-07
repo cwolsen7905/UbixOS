@@ -71,7 +71,7 @@ vectors_el1:
 	VENTRY	el1_irq		/* 0x280 Current EL SPx  irq  */
 	VENTRY	el1_invalid	/* 0x300 Current EL SPx  fiq  */
 	VENTRY	el1_invalid	/* 0x380 Current EL SPx  serr */
-	VENTRY	el1_invalid	/* 0x400 Lower EL aarch64 sync */
+	VENTRY	el0_sync	/* 0x400 Lower EL aarch64 sync (SVC syscalls) */
 	VENTRY	el1_invalid	/* 0x480 Lower EL aarch64 irq  */
 	VENTRY	el1_invalid	/* 0x500 Lower EL aarch64 fiq  */
 	VENTRY	el1_invalid	/* 0x580 Lower EL aarch64 serr */
@@ -90,6 +90,13 @@ el1_sync:
 el1_irq:
 	KERNEL_ENTRY
 	mov	x0, #2		/* kind = irq */
+	mov	x1, sp
+	bl	aarch64_exception
+	KERNEL_EXIT
+
+el0_sync:
+	KERNEL_ENTRY
+	mov	x0, #3		/* kind = EL0 sync (SVC) */
 	mov	x1, sp
 	bl	aarch64_exception
 	KERNEL_EXIT

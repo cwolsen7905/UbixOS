@@ -90,6 +90,25 @@ int pmap_map_page(u_int64_t *l1, u_int64_t va, u_int64_t pa, u_int64_t attrs)
 }
 
 /**
+ * Map one 4 KB EL0-accessible (user) page: @va → @pa in the tree at @l1.
+ *
+ * @param executable  non-zero for user code (EL0-executable, EL1 exec denied);
+ *                     zero for user data/stack (execute-never).
+ * @return 0 on success.
+ */
+int pmap_map_user_page(u_int64_t *l1, u_int64_t va, u_int64_t pa, int executable)
+{
+	u_int64_t attrs = PTE_ATTR(ATTR_NORMAL_IDX) | PTE_SH_INNER | PTE_AP_EL0;
+
+	if (executable)
+		attrs |= PTE_PXN; /* runnable at EL0, never at EL1 */
+	else
+		attrs |= PTE_PXN | PTE_UXN; /* data/stack: never executable */
+
+	return pmap_map_page(l1, va, pa, attrs);
+}
+
+/**
  * Exercise pmap_map_page in the live TTBR0 tree: map a 4 KB page at an unused
  * VA (in a 1 GB slot the kernel doesn't touch — replacing its identity block
  * with a real L2/L3 chain) and confirm the mapping is bidirectional with the

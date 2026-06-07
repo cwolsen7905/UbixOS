@@ -47,6 +47,16 @@ void aarch64_vmm_demo(void);
 
 /* pmap.c — 4 KB-granule page-table mapping + its demo. */
 int pmap_map_page(u_int64_t *l1, u_int64_t va, u_int64_t pa, u_int64_t attrs);
+int pmap_map_user_page(u_int64_t *l1, u_int64_t va, u_int64_t pa, int executable);
 void aarch64_pmap_demo(void);
+
+/* el0.S — drop to EL0 / return from it + the EL0 demo payload. */
+void aarch64_enter_el0(u_int64_t entry, u_int64_t ustack);
+void aarch64_el0_return(void);
+extern char user_demo_code_start[];
+extern char user_demo_code_end[];
+
+/* syscalldemo.c — map a user page, drop to EL0, exercise the SVC path. */
+void aarch64_syscall_demo(void);
 
 #endif /* _AARCH64_BRINGUP_H */

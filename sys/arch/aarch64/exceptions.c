@@ -17,14 +17,17 @@ enum
 	EXC_INVALID = 0,
 	EXC_SYNC = 1,
 	EXC_IRQ = 2,
+	EXC_EL0_SYNC = 3,
 };
+
+#define ESR_EC_SVC64 0x15 /* ESR_EL1 EC for an AArch64 SVC instruction */
 
 /**
  * Read a system register by name into a u_int64_t.
  */
 #define READ_SYSREG(reg)                                                                                               \
 	({                                                                                                             \
-		u_int64_t _v;                                                                                            \
+		u_int64_t _v;                                                                                          \
 		__asm__ volatile("mrs %0, " #reg : "=r"(_v));                                                          \
 		_v;                                                                                                    \
 	})
@@ -53,6 +56,32 @@ void aarch64_exception(u_int64_t kind, void *frame)
 		return;
 	}
 
+	/* Synchronous exception from EL0 — the only expected cause is an SVC. */
+	if (kind == EXC_EL0_SYNC)
+	{
+		u_int64_t esr = READ_SYSREG(esr_el1);
+		u_int64_t *gpr = (u_int64_t *)frame; /* saved x0..x30 (KERNEL_ENTRY layout) */
+
+		if (((esr >> 26) & 0x3f) == ESR_EC_SVC64)
+		{
+			u_int64_t num = gpr[8]; /* x8 = syscall number */
+			u_int64_t arg = gpr[0]; /* x0 = first argument  */
+
+			if (num == 0)
+			{
+				/* exit: abandon the handler and longjmp back to enter_el0's caller. */
+				kprintf("  [EL0] exit syscall — returning to kernel\n");
+				aarch64_el0_return(); /* does not return */
+			}
+
+			kprintf("  [EL0] syscall #%lu (arg=%lu)\n", num, arg);
+			gpr[0] = num * 2; /* demo return value, lands in x0 via KERNEL_EXIT */
+			return;           /* ERET back to EL0 */
+		}
+
+		/* Any other EL0 sync cause (fault, undef) falls through to the dump. */
+	}
+
 	u_int64_t esr = READ_SYSREG(esr_el1);
 	u_int64_t elr = READ_SYSREG(elr_el1);
 	u_int64_t far = READ_SYSREG(far_el1);
@@ -62,11 +91,7 @@ void aarch64_exception(u_int64_t kind, void *frame)
 	else
 		kprintf("\n*** aarch64 unexpected/invalid vector ***\n");
 
-	kprintf("  ESR_EL1=0x%lx  EC=0x%lx  ELR_EL1=0x%lx  FAR_EL1=0x%lx\n",
-	        esr,
-	        (esr >> 26) & 0x3f,
-	        elr,
-	        far);
+	kprintf("  ESR_EL1=0x%lx  EC=0x%lx  ELR_EL1=0x%lx  FAR_EL1=0x%lx\n", esr, (esr >> 26) & 0x3f, elr, far);
 
 	for (;;)
 		__asm__ volatile("wfi");
