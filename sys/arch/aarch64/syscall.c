@@ -16,12 +16,21 @@
 #include <sys/types.h>
 #include <ubixos/sched.h>   /* _current, sched_yield */
 #include <ubixos/endtask.h> /* endTask */
+#include <vmm/vmm.h>        /* vmm_find_free_page */
+#include <vmm/paging.h>     /* PAGE_SIZE */
+#include <lib/kmalloc.h>    /* sysID */
+#include <string.h>         /* memset */
 
 #define SYS_EXIT 1
 #define SYS_FORK 2
 #define SYS_WRITE 4
 #define SYS_GETPID 20
+#define SYS_MPROTECT 74
+#define SYS_MMAP 477
 #define SYS_SET_TID_ADDRESS 258
+
+/* Per-process anonymous-mmap region base (block 8 — clear of code/stack). */
+#define MMAP_BASE 0x200000000UL
 
 /* musl routes the Linux-compat primitives (exit_group, set_thread_area, futex)
  * through the UbixOS-native int $0x81 table by ORing in this flag (matches the
@@ -53,7 +62,7 @@ static void do_exit(u_int64_t code)
  *
  * @return number of bytes written.
  */
-static u_int64_t sys_write(u_int64_t fd, u_int64_t buf, u_int64_t len)
+static u_int64_t sc_write(u_int64_t fd, u_int64_t buf, u_int64_t len)
 {
 	const char *p = (const char *)(uintptr_t)buf;
 
@@ -61,6 +70,42 @@ static u_int64_t sys_write(u_int64_t fd, u_int64_t buf, u_int64_t len)
 	for (u_int64_t i = 0; i < len; i++)
 		uart_putc(p[i]);
 	return len;
+}
+
+/**
+ * mmap(addr, len, prot, flags, fd, off): minimal anonymous mapping — allocate
+ * len/PAGE zeroed frames and map them RW into the current process at a per-
+ * process bump address.  Ignores addr/prot/flags/fd/off (anonymous private
+ * only), which covers musl's malloc.
+ *
+ * @return the mapped base VA, or (void*)-1 on failure.
+ */
+static u_int64_t sc_mmap(u_int64_t len)
+{
+	u_int64_t *l1, va, npages, i;
+
+	if (_current == 0 || _current->md.md_ttbr0 == 0)
+		return (u_int64_t)-1;
+	if (_current->md.md_mmap_next == 0)
+		_current->md.md_mmap_next = MMAP_BASE;
+
+	npages = (len + PAGE_SIZE - 1) / PAGE_SIZE;
+	if (npages == 0)
+		return (u_int64_t)-1;
+
+	l1 = (u_int64_t *)(uintptr_t)_current->md.md_ttbr0;
+	va = _current->md.md_mmap_next;
+
+	for (i = 0; i < npages; i++)
+	{
+		uintptr_t frame = vmm_find_free_page(sysID);
+		if (frame == 0)
+			return (u_int64_t)-1;
+		memset((void *)frame, 0, PAGE_SIZE); /* anonymous pages read as zero */
+		pmap_map_user_page(l1, va + i * PAGE_SIZE, (u_int64_t)frame, 0);
+	}
+	_current->md.md_mmap_next = va + npages * PAGE_SIZE;
+	return va;
 }
 
 /**
@@ -88,7 +133,13 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args)
 	switch (number)
 	{
 		case SYS_WRITE:
-			return sys_write(args[0], args[1], args[2]);
+			return sc_write(args[0], args[1], args[2]);
+
+		case SYS_MMAP:
+			return sc_mmap(args[1]); /* args[1] = len (addr/prot/flags/fd/off ignored) */
+
+		case SYS_MPROTECT:
+			return 0; /* mmap pages are already RW; no fine-grained enforcement yet */
 
 		case SYS_FORK:
 			/* args is the trapframe; the child resumes here returning 0. */

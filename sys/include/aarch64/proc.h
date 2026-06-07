@@ -14,8 +14,9 @@ struct md_proc
 {
 	u_int64_t md_kstack; /* saved kernel SP (callee-saved frame; aarch64_ctx_switch) */
 	u_int64_t md_ttbr0;  /* user address-space root (TTBR0_EL1), 0 for kernel-only */
-	u_int64_t md_entry;  /* initial PC: kernel-thread entry, or EL0 entry for a user task */
-	u_int64_t md_usp;    /* user stack pointer; non-zero marks an EL0 (user) task */
+	u_int64_t md_entry;     /* initial PC: kernel-thread entry, or EL0 entry for a user task */
+	u_int64_t md_usp;       /* user stack pointer; non-zero marks an EL0 (user) task */
+	u_int64_t md_mmap_next; /* bump pointer for anonymous mmap in this address space (0 = uninit) */
 };
 
 struct taskStruct; /* == kTask_t */
