@@ -145,15 +145,24 @@ B+tree deferred until a dir overflows); **direct extents only** (indirect/double
 deferred); no journal (clean/dirty flag). Enough to prove the format + perms end to
 end on the host.
 
-### 2. GRUB module — read-only `ubixfs2.c`
-GRUB needs only to **read the kernel** off the volume, so a read-only module:
-implement GRUB's `grub_fs` ops (`.dir` iterate, `.open`, `.read`, `.close`,
-`.label`, `.uuid`) by walking superblock → root B+tree → path → inode →
-`dataStream`. Build it into the GRUB image via `grub-mkimage` (add `ubixfs2` to
-the module list in `tools/mkimage.sh`'s GRUB step). It links the **read layer** of
-`ubixfs2_core` (compiled into the GRUB module — GPLv3 there, which is fine: it
-lives in the GRUB build). This is what lets `/boot/kernel` live on a UbixFS v2
-partition instead of FAT.
+### 2. GRUB module — read-only `ubixfs2.c`  ⏸️ DEFERRED (see rollout)
+**Only needed to put `/boot` itself on UbixFS v2.** During development we use a
+**hybrid boot**: `/boot` stays FAT, GRUB loads the kernel via multiboot exactly
+as today, and the *kernel* mounts the UbixFS v2 root — so GRUB needs no ubixfs2
+support at all. The GRUB module is therefore deferred until the FS has *proven
+itself worth keeping* (the graduation gate in the rollout).
+
+It's also the heaviest integration: a custom GRUB filesystem module is **not** a
+drop-in `.mod` against the prebuilt Homebrew GRUB — GRUB modules need GRUB's
+in-tree build (special ELF sections, `genmod`, `Makefile.core.def`). So this means
+**vendoring the GRUB source and building it from scratch** with
+`grub-core/fs/ubixfs2.c` added. Not worth that cost until the FS is a keeper.
+
+When we do it: a read-only module implementing GRUB's `grub_fs` ops (`.dir`,
+`.open`, `.read`, `.close`, `.label`, `.uuid`) over the **read layer** of
+`ubixfs2_core` (which is `grub_*`-shim-able pure C). GRUB's existing **BeFS**
+module (`grub-core/fs/befs.c`) is a close structural reference since the format is
+BeFS-derived.
 
 ### 3. Kernel driver — `sys/fs/ubixfs2/` (C, VFS function-pointer adapter)
 The kernel VFS is **C function pointers** (`vfsRegisterFS(struct fileSystem)`,
@@ -178,33 +187,45 @@ independent of which FS supplies the bits (the VFS already has a
 Do this in parallel — it's what makes the feature real, and it lights up the
 moment any perm-capable FS is mounted.
 
-## Phased rollout (each phase independently testable)
+## Phased rollout
 
-1. **Freeze the format** — `include/fs/ubixfs2/format.h` + `_Static_assert`
-   sizes. Revive `ubixfs2_core` read+write from the dormant C++ as **pure C**.
-2. **Host tool** `tools/mkubixfs` (format + populate). *Testable entirely on
-   macOS* — format an image, populate a tree, dump it back, verify perms. No
-   kernel, no GRUB. Highest-confidence first step.
-3. **GRUB read-only module** — boot a kernel from a UbixFS v2 partition (prove
-   the format end-to-end through a second independent reader).
-4. **Kernel driver — read path** — mount a `mkubixfs`-built image read-only,
-   `ls`/`cat`/exec from it.
-5. **Kernel perms enforcement** — `chmod`/`chown`/`access` + open/exec checks.
-6. **Kernel driver — write path** — allocation, B+tree insert, then the journal
-   (last; clean/dirty flag + fsck until then).
-7. **Make it root** — `tools/mkimage.sh` builds a UbixFS v2 root partition with
-   correct perms; GRUB loads the kernel from it (or keep a tiny FAT `/boot` as a
-   hybrid for the macOS dev loop — decide at this phase). ACLs via the
-   `attributes` extent come after.
+**Strategy (decided 2026-06-07): prove the filesystem first, pay the GRUB tax
+last.** Build and harden UbixFS v2 iteratively behind a **hybrid boot** (FAT
+`/boot` + UbixFS v2 root) so GRUB needs no changes during development. Only once
+the FS has earned its keep — robust, tested, decided we're keeping it — do we take
+on vendoring + building GRUB from source. Each phase is independently testable.
+
+1. ✅ **Freeze the format + core** — `include/fs/ubixfs2/format.h` (+ size
+   asserts) and `ubixfs2_core` read+write as pure C. **Done.**
+2. ✅ **Host CLI suite** `tools/ubixfs2/u2fs` (`mkfs/ls/mkdir/cp`±`/rm`) — the
+   test harness; format/populate/extract/verify entirely on macOS. **Done &
+   verified** (200 KB binary round-trips byte-exact; perms shown by `ls`).
+3. 🔜 **Kernel driver — read path** (`sys/fs/ubixfs2/`, `vfsType 0xF2`, reuses
+   `ubixfs2_core`). Hybrid boot: FAT `/boot`, kernel mounts a `u2fs`-built UbixFS
+   v2 partition. `ls`/`cat`/exec it from *inside* UbixOS — the second independent
+   reader that re-validates the format. *(One-line `vfsRegisterFS` add in
+   `vfs.c`; otherwise new files — minimal cross-arch overlap.)*
+4. **Kernel perms enforcement** — `chmod`/`chown`/`access` + open/exec checks via
+   the `namei` `permission()` hook. *(Touches shared `namei.c`/syscall tables —
+   coordinate with the cross-arch agent or isolate into new files.)*
+5. **Kernel driver — write path + hardening** — allocation, then lift the v0
+   limits as needed: **B+tree directories** (beyond inline), **indirect/double
+   extents** (beyond 256 KB files), robustness/fuzzing via `u2fs`. Journal last.
+6. **🚦 Graduation gate** — decide UbixFS v2 is robust and worth keeping. Only
+   past this gate do phases 7–8 happen.
+7. **GRUB module** — vendor + build GRUB from source with
+   `grub-core/fs/ubixfs2.c`; lets `/boot` live on UbixFS v2 (drops the hybrid).
+8. **Make it full root + extras** — `mkimage.sh` `FS=ubixfs2` builds a UbixFS v2
+   root with correct perms; journaling; ACLs via the `attributes` extent.
 
 ## Open decisions
 
-- **Hybrid `/boot` or full UbixFS v2 root?** GRUB can read either; the only thing
-  a FAT `/boot` buys is macOS-mountability of the boot bits. Lean: full UbixFS v2
-  root once the GRUB module is solid (simpler one-FS story); revisit if the dev
-  loop hurts.
-- **Journal now or later?** Defer to phase 6 — bootstrap non-journaled (clean/
-  dirty flag) so we get a working FS fast, add journaling once the rest is proven.
-- **Endianness/portability** of the format header — fix little-endian now so the
-  GRUB module and host tool agree byte-for-byte.
+- **Hybrid `/boot` vs full UbixFS v2 root** — *decided: hybrid during
+  development.* FAT `/boot` keeps GRUB untouched and the macOS dev loop intact;
+  the kernel mounts the UbixFS v2 root. Revisit full-root only after the
+  graduation gate (phase 7), if a single-FS story is wanted.
+- **Journal now or later?** Later (phase 5/8) — bootstrap non-journaled
+  (clean/dirty flag + fsck) so we get a working FS fast.
+- **Endianness** — fixed little-endian in the format header now, so the host
+  tool, kernel driver, and (eventual) GRUB module agree byte-for-byte.
 ```
