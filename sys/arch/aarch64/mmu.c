@@ -83,6 +83,11 @@ void aarch64_mmu_init(void)
 	__asm__ volatile("isb");
 	__asm__ volatile("tlbi vmalle1; dsb nsh; isb");
 
+	/* Allow FP/SIMD at EL0 and EL1 (CPACR_EL1.FPEN = 0b11, no trap).  The kernel
+	 * itself is built -mgeneral-regs-only, but userland (musl) uses FP, so EL0
+	 * must not trap it. */
+	__asm__ volatile("msr cpacr_el1, %0; isb" : : "r"((u_int64_t)(3UL << 20)));
+
 	u_int64_t sctlr;
 	__asm__ volatile("mrs %0, sctlr_el1" : "=r"(sctlr));
 	sctlr |= (1UL << 0)     /* M — MMU enable */

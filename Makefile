@@ -123,28 +123,44 @@ kernel-aarch64:
 	${CROSS_PREFIX}ld -T ${CURDIR}/sys/compile/ldscript.aarch64 -o ${OBJ_DIR}/boot/kernel ${OBJ_DIR}/obj/sys/*.o
 	@echo "aarch64 bring-up kernel linked: ${OBJ_DIR}/boot/kernel"
 
+# musl libc per-arch knobs.  i386 uses the FreeBSD stack ABI (-m32, no SSE) and a
+# hand-rolled libgcc32; aarch64 uses the stock SVC ABI + the real libgcc.  Both
+# build with the FreeBSD syscall numbers (arch/<arch>/bits/syscall.h.in).
+# Userland (unlike the kernel) needs FP/SIMD — musl's math code uses double/float,
+# which is incompatible with -mgeneral-regs-only.  The kernel enables EL0 FP
+# access (CPACR_EL1) so these instructions run at EL0.
+.if ${_ARCH} == "aarch64"
+MUSL_USER_CFLAGS = -march=armv8-a -ffreestanding -fno-stack-protector
+MUSL_LIBCC       = ${LIBGCC}
+.else
+MUSL_USER_CFLAGS = ${CROSS_M32} -mno-sse -mno-sse2 -mno-mmx -mno-3dnow -ffreestanding -fno-stack-protector
+MUSL_LIBCC       = ${OBJ_DIR}/lib/libgcc32.a
+.endif
+
 musl-libc:
 	@mkdir -p ${OBJ_DIR}/obj/musl ${OBJ_DIR}/lib
 	@if [ ! -f ${OBJ_DIR}/obj/musl/config.mak ]; then \
-		echo "Configuring musl libc..."; \
+		echo "Configuring musl libc for ${_ARCH}..."; \
 		cd ${OBJ_DIR}/obj/musl && ${CURDIR}/contrib/musl/configure \
 			--srcdir=${CURDIR}/contrib/musl \
-			--target=i386-ubixos \
+			--target=${_ARCH}-ubixos \
 			--enable-shared \
 			--enable-static \
-			CC="${CROSS_PREFIX}gcc ${CROSS_M32} -mno-sse -mno-sse2 -mno-mmx -mno-3dnow -ffreestanding -fno-stack-protector" \
+			CC="${CROSS_PREFIX}gcc ${MUSL_USER_CFLAGS}" \
 			CROSS_COMPILE=${CROSS_PREFIX} \
 			LIBCC="" \
-			CFLAGS="${CROSS_M32} -mno-sse -mno-sse2 -mno-mmx -mno-3dnow -ffreestanding -fno-stack-protector"; \
+			CFLAGS="${MUSL_USER_CFLAGS}"; \
 	fi
-	${CROSS_PREFIX}gcc ${CROSS_M32} -mno-sse -mno-sse2 -mno-mmx -mno-3dnow \
-	    -ffreestanding -fno-pie -fno-pic -nostdinc -std=c99 -O2 \
-	    -c ${CURDIR}/tools/libgcc32.c -o ${OBJ_DIR}/obj/musl/libgcc32.o
-	${CROSS_PREFIX}ar rcs ${OBJ_DIR}/lib/libgcc32.a ${OBJ_DIR}/obj/musl/libgcc32.o
+	@if [ "${_ARCH}" != "aarch64" ]; then \
+		${CROSS_PREFIX}gcc ${CROSS_M32} -mno-sse -mno-sse2 -mno-mmx -mno-3dnow \
+		    -ffreestanding -fno-pie -fno-pic -nostdinc -std=c99 -O2 \
+		    -c ${CURDIR}/tools/libgcc32.c -o ${OBJ_DIR}/obj/musl/libgcc32.o && \
+		${CROSS_PREFIX}ar rcs ${OBJ_DIR}/lib/libgcc32.a ${OBJ_DIR}/obj/musl/libgcc32.o; \
+	fi
 	${GNU_MAKE} -C ${OBJ_DIR}/obj/musl -f ${CURDIR}/contrib/musl/Makefile \
-	    srcdir=${CURDIR}/contrib/musl ARCH=i386 \
+	    srcdir=${CURDIR}/contrib/musl ARCH=${_ARCH} \
 	    LD=${CROSS_PREFIX}ld \
-	    LIBCC=${OBJ_DIR}/lib/libgcc32.a
+	    LIBCC=${MUSL_LIBCC}
 	cp ${OBJ_DIR}/obj/musl/lib/libc.a ${OBJ_DIR}/lib/musl.a
 	cp ${OBJ_DIR}/obj/musl/lib/libc.a ${OBJ_DIR}/lib/libc.a
 	cp ${OBJ_DIR}/obj/musl/lib/libc.so ${OBJ_DIR}/lib/libc.so
