@@ -48,7 +48,10 @@ void aarch64_vmm_demo(void);
 /* pmap.c — 4 KB-granule page-table mapping + its demo. */
 int pmap_map_page(u_int64_t *l1, u_int64_t va, u_int64_t pa, u_int64_t attrs);
 int pmap_map_user_page(u_int64_t *l1, u_int64_t va, u_int64_t pa, int executable);
+u_int64_t *pmap_create_user_space(void);
+void pmap_switch(u_int64_t *l1);
 void aarch64_pmap_demo(void);
+void aarch64_aspace_demo(void);
 
 /* el0.S — drop to EL0 / return from it + the EL0 demo payload. */
 void aarch64_enter_el0(u_int64_t entry, u_int64_t ustack);

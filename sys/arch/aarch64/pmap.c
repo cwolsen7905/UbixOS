@@ -19,7 +19,7 @@
 #include <vmm/vmm.h>
 #include <vmm/paging.h>  /* PAGE_SIZE */
 #include <lib/kmalloc.h> /* sysID */
-#include <string.h>      /* memset */
+#include <string.h>      /* memset, memcpy */
 
 /* 39-bit VA, 4 KB granule: level index extractors. */
 #define L1_IDX(va) (((va) >> 30) & 0x1FFUL)
@@ -106,6 +106,88 @@ int pmap_map_user_page(u_int64_t *l1, u_int64_t va, u_int64_t pa, int executable
 		attrs |= PTE_PXN | PTE_UXN; /* data/stack: never executable */
 
 	return pmap_map_page(l1, va, pa, attrs);
+}
+
+/**
+ * Return the active TTBR0 translation-table root (the kernel's identity L1).
+ */
+static u_int64_t *pmap_active_l1(void)
+{
+	u_int64_t ttbr0;
+	__asm__ volatile("mrs %0, ttbr0_el1" : "=r"(ttbr0));
+	return (u_int64_t *)(uintptr_t)(ttbr0 & PTE_ADDR_MASK);
+}
+
+/**
+ * Create a fresh per-process address space (TTBR0 root).
+ *
+ * The new L1 starts as a copy of the kernel's identity L1, so kernel code, the
+ * page bitmap and the peripherals stay mapped while this address space is
+ * active (no kernel-in-TTBR1 relocation yet).  Per-process user mappings are
+ * then added with pmap_map_user_page() in VA blocks the kernel does not use.
+ *
+ * @return the new L1 table (identity-mapped, == its physical address).
+ */
+u_int64_t *pmap_create_user_space(void)
+{
+	u_int64_t *l1 = (u_int64_t *)(uintptr_t)vmm_find_free_page(sysID);
+
+	memcpy(l1, pmap_active_l1(), PAGE_SIZE); /* 512 entries × 8 = one page */
+	return l1;
+}
+
+/**
+ * Make @l1 the active TTBR0 address space and flush stale translations.
+ */
+void pmap_switch(u_int64_t *l1)
+{
+	__asm__ volatile("msr ttbr0_el1, %0; isb; tlbi vmalle1; dsb nsh; isb"
+	                 :
+	                 : "r"((u_int64_t)(uintptr_t)l1)
+	                 : "memory");
+}
+
+/**
+ * Demonstrate per-process address-space isolation: map the same user VA to two
+ * different frames in two separate address spaces, switch between them, and
+ * confirm each sees only its own frame.  Throwaway bring-up scaffolding.
+ */
+void aarch64_aspace_demo(void)
+{
+	u_int64_t *kernel_l1 = pmap_active_l1();
+	u_int64_t *a, *b;
+	uintptr_t fa, fb;
+	/* A user VA in a 1 GB block no other demo has touched: blocks 0 (peripherals),
+	 * 1 (RAM/kernel), 2 (pmap demo) and 3 (syscall demo) are in use, so a shared
+	 * sub-table would otherwise leak across the copied L1s.  Use block 4 (4 GB),
+	 * still a clean identity block, so each space allocates its own L2/L3. */
+	u_int64_t va = 0x100004000UL;
+	u_int64_t in_a, in_b;
+
+	kprintf("aspace demo: per-process address-space isolation...\n");
+
+	a = pmap_create_user_space();
+	b = pmap_create_user_space();
+	fa = vmm_find_free_page(sysID);
+	fb = vmm_find_free_page(sysID);
+	*(volatile u_int64_t *)fa = 0xA0A0A0A0UL;
+	*(volatile u_int64_t *)fb = 0xB0B0B0B0UL;
+
+	pmap_map_page(a, va, (u_int64_t)fa, PMAP_KERNEL_DATA);
+	pmap_map_page(b, va, (u_int64_t)fb, PMAP_KERNEL_DATA);
+
+	pmap_switch(a);
+	in_a = *(volatile u_int64_t *)va;
+	pmap_switch(b);
+	in_b = *(volatile u_int64_t *)va;
+	pmap_switch(kernel_l1); /* restore the kernel's identity address space */
+
+	kprintf("  VA 0x%lX: space A reads 0x%lX, space B reads 0x%lX (isolated=%s)\n",
+	        va,
+	        in_a,
+	        in_b,
+	        (in_a == 0xA0A0A0A0UL && in_b == 0xB0B0B0B0UL) ? "yes" : "NO");
+	kprintf("aspace demo: per-process address spaces work on aarch64.\n");
 }
 
 /**
