@@ -11,7 +11,7 @@ MKOBJDIRS=no
 
 include Makefile.incl
 
-OBJ_DIR?= ${CURDIR}/build
+OBJ_DIR?= ${CURDIR}/build/${_ARCH}
 
 CLEANDIR=clean
 
@@ -25,7 +25,7 @@ WORLD_FLAGS=_ARCH=${_ARCH} CC="${CROSS_PREFIX}gcc" CXX="${CROSS_PREFIX}g++" AS="
 WORLD_FLAGS=_ARCH=${_ARCH} CC="cc" CXX="c++" AS="as" AR="ar" LD="ld" NM=nm OBJDUMP= OBJCOPY="objcopy" RANLIB=ranlib
 .endif
 
-WMAKE=${MAKE} ${WORLD_FLAGS} CROSS_M32="${CROSS_M32}" INCLUDE=${WORLD_INC} BUILD_DIR=${CURDIR}/build
+WMAKE=${MAKE} ${WORLD_FLAGS} CROSS_M32="${CROSS_M32}" INCLUDE=${WORLD_INC} BUILD_DIR=${OBJ_DIR}
 
 DISK_IMAGE?=ubixos.img
 
@@ -77,19 +77,19 @@ kernel-i386:
 # AArch64 bring-up kernel: assemble the entry, compile the PL011 banner, link at
 # the QEMU `virt` RAM base.  Standalone — does NOT descend into sys/Makefile.
 kernel-aarch64:
-	@mkdir -p ${OBJ_DIR}/boot ${OBJ_DIR}/obj/sys/aarch64
+	@mkdir -p ${OBJ_DIR}/boot ${OBJ_DIR}/obj/sys
 	@for f in ${CURDIR}/sys/arch/aarch64/*.S; do \
-	    o=${OBJ_DIR}/obj/sys/aarch64/`basename $$f .S`.o; \
+	    o=${OBJ_DIR}/obj/sys/`basename $$f .S`.o; \
 	    echo "${CROSS_PREFIX}gcc [asm] $$f"; \
 	    ${CROSS_PREFIX}gcc ${KERN_TARGET_CFLAGS} -ffreestanding -fno-pie -fno-pic -c $$f -o $$o || exit 1; \
 	done
 	@for f in ${CURDIR}/sys/arch/aarch64/*.c; do \
-	    o=${OBJ_DIR}/obj/sys/aarch64/`basename $$f .c`.o; \
+	    o=${OBJ_DIR}/obj/sys/`basename $$f .c`.o; \
 	    echo "${CROSS_PREFIX}gcc [c]   $$f"; \
 	    ${CROSS_PREFIX}gcc ${KERN_TARGET_CFLAGS} -ffreestanding -fno-pie -fno-pic -std=c99 -O2 -Wall -Wextra \
 	        -c $$f -o $$o || exit 1; \
 	done
-	${CROSS_PREFIX}ld -T ${CURDIR}/sys/compile/ldscript.aarch64 -o ${OBJ_DIR}/boot/kernel ${OBJ_DIR}/obj/sys/aarch64/*.o
+	${CROSS_PREFIX}ld -T ${CURDIR}/sys/compile/ldscript.aarch64 -o ${OBJ_DIR}/boot/kernel ${OBJ_DIR}/obj/sys/*.o
 	@echo "aarch64 bring-up kernel linked: ${OBJ_DIR}/boot/kernel"
 
 musl-libc:
@@ -191,7 +191,7 @@ makeuser:
 	@echo "==> etc/userdb updated (PBKDF2-hashed)"
 
 image: makeuser
-	@sh tools/mkimage.sh ${DISK_IMAGE}
+	@BUILD=${OBJ_DIR} KERNEL=${OBJ_DIR}/boot/kernel sh tools/mkimage.sh ${DISK_IMAGE}
 
 # Build a small FAT32 USB test image with a README.  Attach to QEMU via
 # bmake run (auto-detected when usb.img exists) or mount manually with hdiutil.

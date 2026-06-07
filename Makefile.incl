@@ -37,7 +37,9 @@ SRCTOP = ${.CURDIR}
 .endif
 UBIX_MK ?= ${SRCTOP}/share/mk
 .export UBIX_MK
-OBJ_DIR ?= ${SRCTOP}/build
+# Arch-homed build root: build/i386, build/aarch64, … so the two architectures'
+# objects/binaries/world never clobber each other and can build in parallel.
+OBJ_DIR ?= ${SRCTOP}/build/${_ARCH}
 .export OBJ_DIR
 
 .include "${UBIX_MK}/ubix.platform.mk"

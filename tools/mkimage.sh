@@ -22,9 +22,11 @@ IMG="${1:-ubixos.img}"
 IMG_SIZE_MB=512
 FAT_SIZE_MB=448     # FAT32 partition (type 0x0C)
 SWAP_SIZE_MB=64     # raw swap partition (type 0x82)
-KERNEL="build/boot/kernel"
+# BUILD/KERNEL honor the environment so the arch-homed build dir (build/i386)
+# can be passed in by the `image` target; default to the flat layout otherwise.
+BUILD="${BUILD:-build}"
+KERNEL="${KERNEL:-$BUILD/boot/kernel}"
 GRUB_CFG="tools/grub.cfg"
-BUILD="build"
 # Detect GRUB library directory and mkimage command dynamically.
 if command -v brew >/dev/null 2>&1 && brew --prefix i686-elf-grub >/dev/null 2>&1; then
     GRUB_LIB="$(brew --prefix i686-elf-grub)/lib/i686-elf/grub/i386-pc"
