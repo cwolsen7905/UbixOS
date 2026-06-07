@@ -99,34 +99,7 @@ int spinTryLock(spinLock_t lock)
 	return 0;
 }
 
-/* ---- callouts (not wired yet) ------------------------------------------ */
-
-/**
- * Arm a callout — no-op until timed sleeps are ported.
- */
-void callout_reset(struct callout *c, u_int32_t ticks, void (*fn)(void *arg), void *arg)
-{
-	(void)c;
-	(void)ticks;
-	(void)fn;
-	(void)arg;
-}
-
-/**
- * Cancel a callout — no-op.
- */
-void callout_stop(struct callout *c)
-{
-	(void)c;
-}
-
-/**
- * Fire expired callouts — no-op (no callouts are ever armed yet).
- */
-void callout_run_expired(u_int32_t now)
-{
-	(void)now;
-}
+/* callouts are now the real generic subsystem (sys/kern/callout.c). */
 
 /* ---- misc stubs --------------------------------------------------------- */
 
