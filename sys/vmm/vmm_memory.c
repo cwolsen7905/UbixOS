@@ -91,7 +91,7 @@ int vmm_mem_map_init()
 		vmmMemoryMap[i].cowCounter = 0;
 		vmmMemoryMap[i].status = memNotavail;
 		vmmMemoryMap[i].pid = vmmID;
-		vmmMemoryMap[i].pageAddr = i * PAGE_SIZE;
+		vmmMemoryMap[i].pageAddr = (uintptr_t)i * PAGE_SIZE;
 	}
 
 	/*

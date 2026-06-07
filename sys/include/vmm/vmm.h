@@ -52,7 +52,7 @@ extern "C" {
     extern struct spinLock pdSpinLock;
 
     typedef struct {
-            u_int32_t pageAddr;
+            uintptr_t pageAddr;
             u_int16_t status;
             u_int16_t reserved;
             pid_t pid;
