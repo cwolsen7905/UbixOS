@@ -22,7 +22,8 @@ extern char _binary_hello_musl_elf_end[];
 
 #define MUSL_STACK_VA 0x100200000UL /* well above the program segments (0x100000000+) */
 #define MUSL_STACK_TOP (MUSL_STACK_VA + PAGE_SIZE)
-#define INITIAL_FRAME 8 /* u64 slots: argc, argv[0]=NULL, envp[0]=NULL, auxv{0,0}, pad */
+#define INITIAL_FRAME 8 /* u64 slots: argc, argv[0]=NULL, envp[0]=NULL, auxv{AT_PAGESZ,4096},{0,0}, pad */
+#define AT_PAGESZ 6     /* auxv type: page size — aarch64 musl reads PAGE_SIZE from here */
 
 /**
  * Load + run the embedded musl ELF with a minimal SysV initial stack.
@@ -56,7 +57,12 @@ void aarch64_musl_elf_demo(void)
 	stack_frame = vmm_find_free_page(sysID);
 	sp = (u_int64_t *)(stack_frame + PAGE_SIZE) - INITIAL_FRAME;
 	for (i = 0; i < INITIAL_FRAME; i++)
-		sp[i] = 0; /* argc=0, argv[0]=NULL, envp[0]=NULL, auxv{AT_NULL,0} */
+		sp[i] = 0;
+	/* sp[0]=argc=0, sp[1]=argv[0]=NULL, sp[2]=envp[0]=NULL, then auxv: */
+	sp[3] = AT_PAGESZ; /* aarch64 musl has no fixed PAGE_SIZE macro — it reads */
+	sp[4] = PAGE_SIZE; /* libc.page_size from here; without it mallocng rounds */
+	                   /* allocation sizes to 0 and every malloc() fails. */
+	sp[5] = 0;         /* AT_NULL terminates the auxv */
 	pmap_map_user_page(l1, MUSL_STACK_VA, (u_int64_t)stack_frame, 0);
 
 	t = schedNewTask();

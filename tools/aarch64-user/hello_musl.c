@@ -7,10 +7,25 @@
  * surface a real program needs.
  */
 #include <unistd.h>
+#include <stdlib.h>
+#include <string.h>
 
 int main(void)
 {
 	static const char msg[] = "Hello from a musl-linked aarch64 program!\n";
 	write(1, msg, sizeof(msg) - 1);
+
+	char *p = malloc(256);
+	if (p)
+	{
+		memset(p, 'A', 255);
+		p[255] = '\0';
+		write(1, "malloc(256) OK\n", 15);
+		free(p);
+	}
+	else
+	{
+		write(1, "malloc(256) FAILED\n", 19);
+	}
 	return 0;
 }

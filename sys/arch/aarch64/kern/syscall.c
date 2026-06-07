@@ -83,7 +83,7 @@ static u_int64_t sc_write(u_int64_t fd, u_int64_t buf, u_int64_t len)
  *
  * @return the mapped base VA, or (void*)-1 on failure.
  */
-static u_int64_t sc_mmap(u_int64_t len)
+static u_int64_t sc_mmap(u_int64_t addr, u_int64_t len, u_int64_t flags)
 {
 	u_int64_t *l1, va, npages, i;
 
@@ -97,7 +97,15 @@ static u_int64_t sc_mmap(u_int64_t len)
 		return (u_int64_t)-1;
 
 	l1 = (u_int64_t *)(uintptr_t)_current->md.md_ttbr0;
-	va = _current->md.md_mmap_next;
+
+	/* MAP_FIXED (FreeBSD 0x10): the caller (e.g. mallocng) requires the mapping
+	 * to land exactly at addr — honour it.  Otherwise bump-allocate.  We always
+	 * back pages RW; prot is not enforced yet (mprotect is a no-op), which is
+	 * fine for mallocng's PROT_NONE-reserve-then-commit pattern. */
+	if ((flags & 0x10) && addr != 0)
+		va = addr & ~((u_int64_t)PAGE_SIZE - 1);
+	else
+		va = _current->md.md_mmap_next;
 
 	for (i = 0; i < npages; i++)
 	{
@@ -107,7 +115,10 @@ static u_int64_t sc_mmap(u_int64_t len)
 		memset((void *)frame, 0, PAGE_SIZE); /* anonymous pages read as zero */
 		pmap_map_user_page(l1, va + i * PAGE_SIZE, (u_int64_t)frame, 0);
 	}
-	_current->md.md_mmap_next = va + npages * PAGE_SIZE;
+	/* Only advance the bump pointer for non-fixed mappings; a high MAP_FIXED
+	 * address must not push md_mmap_next past it. */
+	if (!((flags & 0x10) && addr != 0))
+		_current->md.md_mmap_next = va + npages * PAGE_SIZE;
 	return va;
 }
 
@@ -173,7 +184,7 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args)
 			return sc_write(args[0], args[1], args[2]);
 
 		case SYS_MMAP:
-			return sc_mmap(args[1]); /* args[1] = len (addr/prot/flags/fd/off ignored) */
+			return sc_mmap(args[0], args[1], args[3]); /* addr, len, flags (prot/fd/off ignored) */
 
 		case SYS_MPROTECT:
 			return 0; /* mmap pages are already RW; no fine-grained enforcement yet */
