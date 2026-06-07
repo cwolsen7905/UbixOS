@@ -65,4 +65,7 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args);
 /* syscalldemo.c — map a user page, drop to EL0, exercise the SVC path. */
 void aarch64_syscall_demo(void);
 
+/* elfdemo.c — load + run an ELF64 binary via the generic loader. */
+void aarch64_elf_demo(void);
+
 #endif /* _AARCH64_BRINGUP_H */

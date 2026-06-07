@@ -108,6 +108,32 @@ int pmap_map_user_page(u_int64_t *l1, u_int64_t va, u_int64_t pa, int executable
 	return pmap_map_page(l1, va, pa, attrs);
 }
 
+/* ---- machine-dependent hooks for the generic ELF64 loader (sys/elf_load.h) ---- */
+
+/**
+ * Map a user page into @aspace_root (the aarch64 L1) for the ELF loader.
+ */
+void md_map_user_page(u_int64_t *aspace_root, u_int64_t va, u_int64_t pa, int executable)
+{
+	pmap_map_user_page(aspace_root, va, pa, executable);
+}
+
+/**
+ * Clean D-cache + invalidate I-cache for [@addr, @addr+@len) to the PoU so
+ * freshly-loaded code is fetched correctly (64-byte line, QEMU cortex-a72).
+ */
+void md_sync_icache(uintptr_t addr, u_int64_t len)
+{
+	uintptr_t p, start = addr & ~63UL, end = addr + len;
+
+	for (p = start; p < end; p += 64)
+		__asm__ volatile("dc cvau, %0" : : "r"(p) : "memory");
+	__asm__ volatile("dsb ish");
+	for (p = start; p < end; p += 64)
+		__asm__ volatile("ic ivau, %0" : : "r"(p) : "memory");
+	__asm__ volatile("dsb ish; isb");
+}
+
 /**
  * Return the active TTBR0 translation-table root (the kernel's identity L1).
  */

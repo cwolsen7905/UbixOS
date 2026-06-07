@@ -40,6 +40,7 @@ void kmain_aarch64(void)
 	aarch64_pmap_demo();
 	aarch64_aspace_demo();
 	aarch64_syscall_demo();
+	aarch64_elf_demo();
 	aarch64_ctx_demo();
 	aarch64_sched_demo();
 
