@@ -89,6 +89,7 @@ AARCH64_GENERIC_SRCS = \
 	sys/kern/sched_core.c \
 	sys/kern/sched_dispatch.c \
 	sys/kern/callout.c \
+	sys/kern/random.c \
 	sys/vmm/vmm_memory.c \
 	sys/lib/kmalloc.c \
 	sys/kern/elf64_load.c

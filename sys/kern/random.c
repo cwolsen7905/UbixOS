@@ -43,6 +43,7 @@
 #include <ubixos/spinlock.h>
 #include <ubixos/vitals.h>
 #include <sys/types.h>
+#include <machine/cpu.h> /* machine_cycles() — arch cycle counter */
 #include <string.h>
 
 #define CHACHA_ROTL(a, b) (((a) << (b)) | ((a) >> (32 - (b))))
@@ -72,24 +73,10 @@ static int g_inited;
 static struct spinLock g_random_lock = SPIN_LOCK_INITIALIZER;
 
 /**
- * Read the CPU timestamp counter (cycle count).  Not an SSE instruction, so it
- * is safe under the kernel's -mno-sse build.
- */
-static inline u_int64_t
-rdtsc(void)
-{
-	u_int32_t lo, hi;
-
-	__asm__ __volatile__("rdtsc" : "=a"(lo), "=d"(hi));
-	return (((u_int64_t)hi << 32) | lo);
-}
-
-/**
  * Run the 20-round ChaCha block function: out = block(in), with the final
  * word-wise addition of the input state.
  */
-static void
-chacha20_block(u_int32_t out[16], const u_int32_t in[16])
+static void chacha20_block(u_int32_t out[16], const u_int32_t in[16])
 {
 	u_int32_t x[16];
 	int i;
@@ -114,14 +101,13 @@ chacha20_block(u_int32_t out[16], const u_int32_t in[16])
 }
 
 /* see ubixos/random.h */
-void
-krandom_stir(u_int64_t sample)
+void krandom_stir(u_int64_t sample)
 {
 	u_int8_t idx;
 	int i;
 
 	/* Always fold in the cycle counter; the caller's sample is extra grist. */
-	sample ^= rdtsc();
+	sample ^= machine_cycles();
 
 	/*
 	 * Lock-free XOR-fold into the key.  Racing with krandom_bytes() or a
@@ -136,8 +122,7 @@ krandom_stir(u_int64_t sample)
 }
 
 /* see ubixos/random.h */
-void
-krandom_init(void)
+void krandom_init(void)
 {
 	volatile int onstack;
 	int i;
@@ -152,8 +137,7 @@ krandom_init(void)
 }
 
 /* see ubixos/random.h */
-void
-krandom_bytes(void *buf, size_t len)
+void krandom_bytes(void *buf, size_t len)
 {
 	u_int8_t *out = (u_int8_t *)buf;
 
@@ -167,7 +151,7 @@ krandom_bytes(void *buf, size_t len)
 	{
 		int i;
 		for (i = 0; i < 64; i++)
-			g_key[i & 31] ^= (u_int8_t)(rdtsc() >> ((i & 7) * 8));
+			g_key[i & 31] ^= (u_int8_t)(machine_cycles() >> ((i & 7) * 8));
 		g_inited = 1;
 	}
 

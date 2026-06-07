@@ -103,13 +103,7 @@ int spinTryLock(spinLock_t lock)
 
 /* ---- misc stubs --------------------------------------------------------- */
 
-/**
- * Stir the CSPRNG — no-op until the RNG is ported.
- */
-void krandom_stir(u_int64_t sample)
-{
-	(void)sample;
-}
+/* krandom_stir is now the real CSPRNG (sys/kern/random.c). */
 
 /**
  * Shut down / reboot the machine — bring-up: just halt.
