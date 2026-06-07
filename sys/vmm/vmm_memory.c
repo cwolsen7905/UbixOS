@@ -187,6 +187,57 @@ retry:
 	return 0;
 }
 
+/**
+ * Find and claim a run of @count contiguous free physical pages.
+ *
+ * Like vmm_find_free_page but for a contiguous block — used where a caller needs
+ * physically-contiguous frames (e.g. an identity-mapped kernel heap on arches
+ * without a separate kernel page-table mapping step).  Marks the run not-available
+ * and assigns @pid.  Does not evict on failure.
+ *
+ * @return physical address of the first page, or 0 if no run that large is free.
+ */
+uintptr_t vmm_find_free_pages_contig(u_int32_t count, pidType pid)
+{
+	u_int32_t i, c;
+
+	if (pid < sysID)
+		kpanic("Error: invalid PID %i\n", pid);
+	if (count == 0)
+		return 0;
+
+	spinLock(&g_vmm_spin_lock);
+
+	for (i = 0; i + count <= numPages; i++)
+	{
+		for (c = 0; c < count; c++)
+		{
+			if (vmmMemoryMap[i + c].status != memAvail || vmmMemoryMap[i + c].cowCounter != 0)
+				break;
+		}
+		if (c != count)
+		{
+			i += c; /* skip past the blocking page */
+			continue;
+		}
+
+		for (c = 0; c < count; c++)
+		{
+			vmmMemoryMap[i + c].status = memNotavail;
+			vmmMemoryMap[i + c].pid = pid;
+			g_free_pages--;
+		}
+		if (systemVitals)
+			systemVitals->freePages = g_free_pages;
+
+		spinUnlock(&g_vmm_spin_lock);
+		return (vmmMemoryMap[i].pageAddr);
+	}
+
+	spinUnlock(&g_vmm_spin_lock);
+	return 0;
+}
+
 /************************************************************************
 
  Function: int free_page(u_int32_t pageAddr);

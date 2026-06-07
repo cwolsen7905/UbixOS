@@ -88,7 +88,8 @@ AARCH64_KCFLAGS = ${KERN_TARGET_CFLAGS} -DDEBUG_SYSCTL -O -Wall -Wno-incompatibl
 AARCH64_GENERIC_SRCS = \
 	sys/kern/sched_core.c \
 	sys/kern/sched_dispatch.c \
-	sys/vmm/vmm_memory.c
+	sys/vmm/vmm_memory.c \
+	sys/lib/kmalloc.c
 
 kernel-aarch64:
 	@mkdir -p ${OBJ_DIR}/boot ${OBJ_DIR}/obj/sys

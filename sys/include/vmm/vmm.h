@@ -79,6 +79,7 @@ extern "C" {
     u_int32_t vmm_mem_free_pages(void);
 
     uintptr_t vmm_find_free_page(pidType pid);
+    uintptr_t vmm_find_free_pages_contig(u_int32_t count, pidType pid);
     int free_page(uintptr_t pageAddr);
     int adjust_cow_counter(uintptr_t baseAddr, int adjustment);
     void vmm_share_ref(uintptr_t phys);

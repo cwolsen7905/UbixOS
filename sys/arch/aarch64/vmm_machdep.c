@@ -24,6 +24,8 @@
 #include "bringup.h"
 #include <vmm/vmm.h>
 #include <vmm/paging.h>
+#include <lib/kmalloc.h> /* sysID */
+#include <string.h>      /* memset */
 
 /* QEMU `virt` physical RAM window.  -m 512 is what the bring-up runs use; DTB
  * parsing for the real size is a later refinement. */
@@ -79,6 +81,28 @@ int vmm_mem_map_init(void)
 	        vmm_mem_free_pages());
 
 	return 0;
+}
+
+/**
+ * Allocate @count contiguous physical pages for the kernel heap and return a
+ * usable pointer.
+ *
+ * All RAM is identity-mapped by the 1 GB block MMU (mmu.c), so a physical frame
+ * address is directly usable as a kernel virtual pointer — no separate
+ * page-table mapping step is needed (unlike i386, which maps scattered frames
+ * into contiguous kernel VA).  The pages are zeroed before return.
+ *
+ * @return pointer to the zeroed run, or NULL if no contiguous run is free.
+ */
+void *vmm_get_free_malloc_page(u_int16_t count)
+{
+	uintptr_t base = vmm_find_free_pages_contig(count, sysID);
+
+	if (base == 0)
+		return NULL;
+
+	memset((void *)base, 0, (size_t)count * PAGE_SIZE);
+	return (void *)base;
 }
 
 /**

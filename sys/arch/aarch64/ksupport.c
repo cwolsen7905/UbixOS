@@ -30,13 +30,6 @@
 #include <ubixos/callout.h>
 #include <sys/shutdown.h>
 
-/* ---- bump heap ---------------------------------------------------------- */
-
-#define ARENA_BYTES (2 * 1024 * 1024) /* 2 MB — enough for a handful of tasks */
-
-static u_int8_t g_arena[ARENA_BYTES] __attribute__((aligned(16)));
-static size_t g_arena_off;
-
 /* ---- system vitals ------------------------------------------------------ */
 
 static vitalsNode g_vitals;
@@ -46,25 +39,8 @@ vitalsNode *systemVitals = &g_vitals;
 
 volatile u_int32_t reboot_at_tick = 0;
 
-/**
- * Allocate @len bytes from the static arena, 16-byte aligned.  Never freed.
- */
-void *kmalloc(u_int32_t len)
-{
-	size_t off = (g_arena_off + 15u) & ~(size_t)15u;
-	if (off + len > ARENA_BYTES)
-		kpanic("aarch64 kmalloc: arena exhausted (need %u, off %u)\n", (unsigned)len, (unsigned)off);
-	g_arena_off = off + len;
-	return &g_arena[off];
-}
-
-/**
- * Bump-allocator free: a no-op (memory is reclaimed only by reboot for now).
- */
-void kfree(void *baseAddr)
-{
-	(void)baseAddr;
-}
+/* kmalloc/kfree are now the real generic allocator (sys/lib/kmalloc.c), backed
+ * by vmm_get_free_malloc_page (vmm_machdep.c) over identity-mapped RAM. */
 
 /* ---- panic -------------------------------------------------------------- */
 
