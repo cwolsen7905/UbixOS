@@ -81,7 +81,7 @@ same status.
 | 8 | Move `start.S`/`main.c` to `sys/arch/i386/` | A | ⬜ Not started |
 | 10 | `sys/arch/aarch64/` skeleton + `ubix.target.aarch64.mk` | A | ⬜ Not started |
 | — | musl world arch shim + de-hardcode i386 in `lib/Makefile` | Userland | ⬜ Not started — blocker for `world` |
-| 11 | Boot to PL011 UART on QEMU `virt` | B | ⬜ Not started |
+| 11 | Boot to PL011 UART on QEMU `virt` | B | ✅ **Done** — `uBixOS aarch64` banner verified on serial (`bmake run-debug TARGET=aarch64`) |
 | 12 | Exceptions + GICv2 + generic timer | B | ⬜ Not started |
 | 13 | MMU (TTBR0/1) + AArch64 `cpu_switch` + syscall entry | B | ⬜ Not started |
 | 14 | virtio-blk + virtio-net | B | ⬜ Not started |
@@ -461,15 +461,24 @@ All of these attach through the arch-neutral **newbus** model, exactly like the
 PC drivers — so the driver *framework* is reused; only the per-device virtio
 backends are new.
 
-### Phase 11 — Minimal arm64 boot to UART on QEMU `virt`
+### Phase 11 — Minimal arm64 boot to UART on QEMU `virt` ✅ DONE
 **Boot risk:** N/A (new kernel)
 
-- `sys/arch/aarch64/start.S`: entry at EL2/EL1, drop to EL1, set up a stack,
-  zero BSS, branch to `kmain`. (QEMU loads the kernel per the `virt` load
-  address; no multiboot.)
-- PL011 UART driver → wire `kprintf`. **First milestone: "UbixOS aarch64"
-  prints over `-serial`.**
-- `share/mk/ubix.target.aarch64.mk` + `sys/compile/ldscript.aarch64`.
+Shipped & verified — the `uBixOS aarch64 (QEMU virt) - boot OK` banner prints
+over the PL011 serial (confirmed under TCG; HVF on Apple Silicon for speed).
+- `sys/arch/aarch64/start.S`: EL-agnostic entry — mask IRQs (DAIF), set SP, zero
+  BSS, branch to `kmain_aarch64`; park on `wfi` if it returns. (QEMU `-kernel`
+  loads the ELF at its link address; no multiboot.)
+- `sys/arch/aarch64/boot.c`: PL011 UART (0x09000000) putc/puts + the banner.
+- `sys/compile/ldscript.aarch64` (link at the `virt` RAM base 0x40000000) +
+  `share/mk/ubix.target.aarch64.mk` (done earlier).
+- Built standalone via the arch-dispatched `kernel` target (`kernel:
+  kernel-${_ARCH}`); the full sys/ tree is **not** compiled for aarch64 yet.
+- **Run:** `bmake kernel TARGET=aarch64 && bmake run-debug TARGET=aarch64`.
+  Caveat: i386 and aarch64 both link to `build/boot/kernel`, so rebuild the arch
+  you intend to run.
+
+Next (Phase 12): wire `kprintf` to this UART, then EL1 setup + exception vectors.
 
 ### Phase 12 — Exceptions, GIC, generic timer
 - AArch64 exception vector table (VBAR_EL1), sync/IRQ/FIQ/SError handlers.
@@ -684,7 +693,7 @@ corrupt addresses. See the Status matrix near the top for the at-a-glance view.
 
 | Phase | Name | Status |
 |-------|------|--------|
-| 11 | Boot to PL011 UART on QEMU `virt` | Not started |
+| 11 | Boot to PL011 UART on QEMU `virt` | ✅ Done (banner verified, TCG + HVF) |
 | 12 | Exceptions + GICv2 + generic timer | Not started |
 | 13 | MMU + `cpu_switch` + syscall entry | Not started |
 | 14 | virtio-blk + virtio-net | Not started |
