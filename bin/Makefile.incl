@@ -17,13 +17,13 @@ BUILD_DIR?=${SRCTOP}/build
 CFLAGS = ${CROSS_M32} -nostdlib -nostdinc -fno-builtin -fno-exceptions -fno-rtti \
          -Wno-unused-command-line-argument \
          -mno-sse -mno-sse2 -mno-mmx -mno-3dnow -MMD -MP
-LDFLAGS = -Wl,-m,elf_i386
+LDFLAGS = -Wl,-m,${MUSL_LDEMULATION}
 
 MUSL_SRC = ${SRCTOP}/contrib/musl
 MUSL_OBJ = ${OBJ_DIR}/obj/musl
 INCLUDES = -I${MUSL_SRC}/include \
            -I${MUSL_OBJ}/obj/include \
-           -I${MUSL_SRC}/arch/i386 \
+           -I${MUSL_SRC}/arch/${MUSL_ARCH} \
            -I${MUSL_SRC}/arch/generic \
            -I${SRCTOP}/include
 

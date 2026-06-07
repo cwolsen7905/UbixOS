@@ -1,11 +1,5 @@
-UNAME_S != uname -s
-.if ${UNAME_S} == "Darwin"
-CROSS_PREFIX?=x86_64-elf-
-CROSS_M32?=-m32
-.else
-CROSS_PREFIX?=
-CROSS_M32?=
-.endif
+# Host-platform + per-arch knobs (CROSS_PREFIX, CROSS_M32, MUSL_ARCH, ...).
+.include "${UBIX_MK}/ubix.platform.mk"
 
 CC=${CROSS_PREFIX}gcc
 CXX=${CROSS_PREFIX}g++
@@ -16,13 +10,13 @@ NM=${CROSS_PREFIX}nm
 OBJCOPY=${CROSS_PREFIX}objcopy
 RANLIB=${CROSS_PREFIX}ranlib
 
-CFLAGS = -m32 -nostdlib -nostdinc -fno-builtin -Wno-unused-command-line-argument -fPIC -MMD -MP
+CFLAGS = ${CROSS_M32} -nostdlib -nostdinc -fno-builtin -Wno-unused-command-line-argument -fPIC -MMD -MP
 
 MUSL_SRC = ${SRCTOP}/contrib/musl
 MUSL_OBJ = ${OBJ_DIR}/obj/musl
 INCLUDES = -I${MUSL_SRC}/include \
            -I${MUSL_OBJ}/obj/include \
-           -I${MUSL_SRC}/arch/i386 \
+           -I${MUSL_SRC}/arch/${MUSL_ARCH} \
            -I${MUSL_SRC}/arch/generic \
            -I${SRCTOP}/include
 

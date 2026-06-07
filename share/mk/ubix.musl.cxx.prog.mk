@@ -52,7 +52,7 @@ OBJDIR ?= ${OBJ_DIR}/obj/bin/${.CURDIR:T}
 _OBJS_FULL = ${OBJS:S|^|${OBJDIR}/|}
 
 $(BINARY): $(OBJS)
-	$(CC) ${CROSS_M32} -nostdlib -static -Wl,-m,elf_i386 -Wl,-z,noexecstack ${EXTRA_LDFLAGS} \
+	$(CC) ${CROSS_M32} -nostdlib -static -Wl,-m,${MUSL_LDEMULATION} -Wl,-z,noexecstack ${EXTRA_LDFLAGS} \
 		${MUSL_LIB}/crt1.o \
 		${MUSL_LIB}/crti.o \
 		-Wl,--start-group \

@@ -40,8 +40,8 @@ OBJDIR ?= ${OBJ_DIR}/obj/bin/${.CURDIR:T}
 _OBJS_FULL = ${OBJS:S|^|${OBJDIR}/|}
 
 $(BINARY): $(OBJS)
-	$(CC) ${CROSS_M32} -nostdlib -Wl,-m,elf_i386 \
-		-Wl,-dynamic-linker,/lib/ld-musl-i386.so.1 \
+	$(CC) ${CROSS_M32} -nostdlib -Wl,-m,${MUSL_LDEMULATION} \
+		-Wl,-dynamic-linker,${MUSL_LDSO} \
 		-Wl,-rpath,/lib \
 		-Wl,-z,noexecstack \
 		${EXTRA_LDFLAGS} \
@@ -52,7 +52,7 @@ $(BINARY): $(OBJS)
 		-Wl,--start-group \
 		${EXTRA_LIBS} \
 		-L${OBJ_DIR}/lib -lc \
-		${OBJ_DIR}/lib/libgcc32.a \
+		${MUSL_LIBGCC_COMPAT} \
 		${LIBGCC} \
 		-Wl,--end-group \
 		${MUSL_LIB}/crtn.o \

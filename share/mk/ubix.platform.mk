@@ -50,6 +50,20 @@ GNU_MAKE     ?= gmake
 LIBGCC != ${CROSS_PREFIX}gcc ${CROSS_M32} -print-libgcc-file-name 2>/dev/null
 .endif
 
-.export CROSS_PREFIX CROSS_M32 LIBGCC GNU_MAKE
+# Per-arch musl/link knobs for the world build (mirrors ubix.musl.vars.mk, for
+# the .incl files that don't pull vars.mk in).  _ARCH comes down from the
+# top-level Makefile via WMAKE; default i386 so a bare invocation is unchanged.
+#   MUSL_ARCH         musl per-arch header subdir under contrib/musl/arch/
+#   MUSL_LDEMULATION  ld -m emulation
+_ARCH ?= i386
+.if ${_ARCH} == "aarch64"
+MUSL_ARCH        ?= aarch64
+MUSL_LDEMULATION ?= aarch64elf
+.else
+MUSL_ARCH        ?= i386
+MUSL_LDEMULATION ?= elf_i386
+.endif
+
+.export CROSS_PREFIX CROSS_M32 LIBGCC GNU_MAKE MUSL_ARCH MUSL_LDEMULATION
 
 .endif # _UBIX_PLATFORM_MK
