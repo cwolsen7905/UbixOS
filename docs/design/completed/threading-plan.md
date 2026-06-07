@@ -1,9 +1,13 @@
-# UbixOS Kernel Threads & POSIX Threads Plan
+# UbixOS Kernel Threads & POSIX Threads Plan  — COMPLETE (v1)
 
-> Carved out of `scheduler-plan.md` (2026-06-03). The scheduler itself (priority
-> run queue, QoS, boosts, PI, aging) is **complete** — see
-> `completed/scheduler-plan.md`. This plan builds on it: kernel threads + POSIX
-> threads.
+> **Archived 2026-06-06.** The threads v1 functional core is **done & verified**:
+> `pthread_create`, `join`, `detach`, mutexes, and condition variables all work in
+> QEMU. Remaining follow-ups (cancellation, the `kProc`/`kThread` split, a shared
+> fd table) are deliberately deferred and tracked in `../threads-refactor.md` —
+> none blocks app use of threads.
+>
+> Carved out of `scheduler-plan.md` (2026-06-03); builds on the completed
+> scheduler (`scheduler-plan.md` in this directory).
 
 ## Goal
 
@@ -25,31 +29,17 @@ struct split to a follow-up. Get threads working in days, not a weeks-long refac
 | E | musl pthreads — `pthread_create` / `mutex` / `join` | ✅ Milestone 1 done & verified |
 | E2a | pthreads — `pthread_cond` | ✅ Done & verified (`bin/condtest`) |
 | E2b | pthreads — detached threads | ✅ Done & verified (`bin/detachtest`) |
-| E2c | pthreads — cancellation | 🔲 Remaining |
-| F | Split `kTask_t` → `kProc_t` + `kThread_t` | 🔲 Deferred |
-| G | True shared fd table | 🔲 Deferred |
+| E2c | pthreads — cancellation | ⏭️ Deferred → `../threads-refactor.md` (needs 64-bit signals) |
+| F | Split `kTask_t` → `kProc_t` + `kThread_t` | ⏭️ Deferred → `../threads-refactor.md` |
+| G | True shared fd table | ⏭️ Deferred → `../threads-refactor.md` |
 
-**Legend:** ✅ Done · 🔄 In progress · 🔲 Not started/Deferred
+**Legend:** ✅ Done · ⏭️ Deferred (see backlog)
 
-**Bottom line:** the v1 *functional core* (A–E milestone 1) is complete and
-verified — real `pthread_create`/mutex/join work. The plan is **not 100% complete**:
-E2 polish and the F/G refactors remain (all non-blocking for app use).
-
-## What's left — decision matrix
-
-| Item | What it is | Effort | Blocks | Notes |
-|------|-----------|--------|--------|-------|
-| ~~E2a — `pthread_cond`~~ | ✅ **Done** — `bin/condtest` (bounded-buffer producer/consumer, 100k items, checksum verified) PASS. No kernel change needed; runs on the existing futex. The **NetSurf async fetcher** is now unblocked. | — | — | — |
-| ~~E2b — detached threads~~ | ✅ **Done** — native `thread_exit_unmap(base,size)` (int $0x81 slot 66, `vmm_mmap.c`) unmaps the thread's own stack then `endTask`s in one trap (kernel stack, so the vanished user stack is fine); `__unmapself.s` rewritten to call it. `bin/detachtest` (5 waves × 6 detached threads) PASS — clean teardown, no tl-lock deadlock. | — | — | — |
-| **E2c — cancellation** | `pthread_cancel` / `SIGCANCEL` delivery into a blocked futex (`-EINTR` return). | ~½ day | `pthread_cancel` users (rare) | Futex currently doesn't return `-EINTR` on signal; a blocked thread defers signals until woken. |
-| **F — kProc/kThread split** | Separate "process" (AS, fds, signals) from "execution context" (stack, regs). The scheduler would operate on `kThread_t`. | ~weeks | Cleanliness; fixes the v1 PT/PD page leak below | Big refactor; intentionally deferred. v1 runs on shared-AS `kTask_t`. |
-| **G — shared fd table** | `struct fdtable` with correct cross-thread `close()`/`dup()`. | ~days | Fully-POSIX fd semantics across threads | v1 shallow-shares `o_files[]` (threads share the `fileDescriptor_t` objects but keep separate arrays — a `close()` in one thread isn't reflected in another's slot). Fine for typical threaded code. |
-
-**Known v1 leaks (tracked under F/G, not blocking):**
-- PT/PD pages allocated by a *non-last* `tgid` member aren't reclaimed (the page
-  bitmap is per-pid). Fix = `tgid`-based page ownership (F).
-- Shallow-shared `o_files` aren't freed by the reaper (it frees the legacy
-  `files[0]`), so no double-free, but no proper shared-close either (G).
+**Bottom line:** the v1 functional core (A–E + E2a/E2b) is **complete and verified**
+— real `pthread_create`/mutex/cond/join/detach work. Cancellation (E2c) turned out
+to need a 64-bit signal subsystem (`SIGCANCEL`=33 exceeds UbixOS's 31-signal limit),
+so it joins F/G in `../threads-refactor.md`. None of the deferred items blocks app
+use of threads.
 
 ## What shipped (v1 core — all verified in QEMU)
 
