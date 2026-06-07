@@ -175,6 +175,14 @@ int sys_shutdown(shutdownCMD_t cmd)
 }
 
 /**
+ * assert() failure handler — print the location and panic.
+ */
+void __assert(const char *func, const char *file, int line, const char *expr)
+{
+	kpanic("assert failed: %s (%s:%d in %s)\n", expr, file, line, func != 0 ? func : "?");
+}
+
+/**
  * Terminate a task — bring-up: mark it ZOMBIE (the generic reap path then
  * transitions it to DEAD).  The full address-space teardown is not ported.
  */

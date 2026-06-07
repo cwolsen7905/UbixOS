@@ -28,7 +28,9 @@
 
 #include <vmm/vmm.h>
 #include <vmm/swap.h>
-#include <sys/io.h>
+#if defined(__i386__)
+#include <sys/io.h> /* port I/O + cr0 access — only the i386 memory probe needs it */
+#endif
 #include <ubixos/kpanic.h>
 #include <lib/kprintf.h>
 #include <lib/kmalloc.h>
@@ -63,6 +65,15 @@ extern char _end[];   // NOLINT(bugprone-reserved-identifier,readability-identif
  02/20/2004 - Made It Report Real And Available Memory
 
  ************************************************************************/
+/*
+ * vmm_mem_map_init() and count_memory() are machine-dependent: they detect
+ * installed RAM and lay out the page bitmap over the i386 physical map (1 MB
+ * ISA/VGA/BIOS hole, kernel at 0x300000).  aarch64 supplies its own pair in
+ * sys/arch/aarch64 for the QEMU `virt` layout (RAM at 0x40000000).  Everything
+ * below this guard — the bitmap allocator (vmm_find_free_page/free_page, COW,
+ * share, audit) — is machine-independent and links on every arch.
+ */
+#if defined(__i386__)
 int vmm_mem_map_init()
 {
 	u_int32_t i = 0;
@@ -260,6 +271,8 @@ u_int32_t count_memory()
  Notes:
 
  ************************************************************************/
+#endif /* __i386__ — machine-dependent memory detection / bitmap layout */
+
 uintptr_t vmm_find_free_page(pidType pid)
 {
 

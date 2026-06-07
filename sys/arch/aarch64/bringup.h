@@ -42,4 +42,7 @@ void aarch64_ctx_demo(void);
 /* scheddemo.c — drive the generic sched_core/sched_dispatch with real threads. */
 void aarch64_sched_demo(void);
 
+/* vmmdemo.c — bring up + exercise the generic physical page allocator. */
+void aarch64_vmm_demo(void);
+
 #endif /* _AARCH64_BRINGUP_H */

@@ -35,5 +35,10 @@ SECTIONS
 	. += 0x4000;
 	_stack_top = .;
 
+	/* End of the kernel image, page-aligned: the physical page bitmap
+	 * (vmm_mem_map_init) is staged here.  Matches i386's extern _end[]. */
+	. = ALIGN(0x1000);
+	_end = .;
+
 	/DISCARD/ : { *(.comment) *(.note*) *(.eh_frame*) }
 }

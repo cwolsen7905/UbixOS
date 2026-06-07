@@ -87,7 +87,8 @@ AARCH64_KCFLAGS = ${KERN_TARGET_CFLAGS} -DDEBUG_SYSCTL -O -Wall -Wno-incompatibl
 # of the generic kernel is ported; the scheduler core is the first to link.
 AARCH64_GENERIC_SRCS = \
 	sys/kern/sched_core.c \
-	sys/kern/sched_dispatch.c
+	sys/kern/sched_dispatch.c \
+	sys/vmm/vmm_memory.c
 
 kernel-aarch64:
 	@mkdir -p ${OBJ_DIR}/boot ${OBJ_DIR}/obj/sys
