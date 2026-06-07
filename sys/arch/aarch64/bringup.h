@@ -31,4 +31,7 @@ void aarch64_irq_dispatch(void); /* called from the EL1 IRQ vector */
 void timer_init(void);
 void timer_tick(void);
 
+/* mmu.c — enable the MMU with a TTBR0 identity map (39-bit VA). */
+void aarch64_mmu_init(void);
+
 #endif /* _AARCH64_BRINGUP_H */

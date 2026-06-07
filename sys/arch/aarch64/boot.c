@@ -33,6 +33,9 @@ void kmain_aarch64(void)
 	aarch64_vbar_init();
 	kprintf("EL1 exception vectors installed (VBAR_EL1).\n");
 
+	aarch64_mmu_init();
+	kprintf("MMU enabled: TTBR0 identity map (39-bit VA), caches on.\n");
+
 	gic_init();
 	timer_init();
 
