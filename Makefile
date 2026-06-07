@@ -83,6 +83,12 @@ AARCH64_KCFLAGS = ${KERN_TARGET_CFLAGS} -DDEBUG_SYSCTL -O -Wall -Wno-incompatibl
 	-nostdlib -nostdinc -fno-builtin -fno-exceptions -ffreestanding -fno-pie -fno-pic \
 	-fno-stack-protector -I${CURDIR}/sys/include
 
+# Arch-neutral kernel sources now linked into the aarch64 kernel.  Grows as more
+# of the generic kernel is ported; the scheduler core is the first to link.
+AARCH64_GENERIC_SRCS = \
+	sys/kern/sched_core.c \
+	sys/kern/sched_dispatch.c
+
 kernel-aarch64:
 	@mkdir -p ${OBJ_DIR}/boot ${OBJ_DIR}/obj/sys
 	@for f in ${CURDIR}/sys/arch/aarch64/*.S; do \
@@ -94,6 +100,11 @@ kernel-aarch64:
 	    o=${OBJ_DIR}/obj/sys/`basename $$f .c`.o; \
 	    echo "${CROSS_PREFIX}gcc [c]   $$f"; \
 	    ${CROSS_PREFIX}gcc ${AARCH64_KCFLAGS} -std=c99 -c $$f -o $$o || exit 1; \
+	done
+	@for f in ${AARCH64_GENERIC_SRCS}; do \
+	    o=${OBJ_DIR}/obj/sys/`basename $$f .c`.o; \
+	    echo "${CROSS_PREFIX}gcc [gen] $$f"; \
+	    ${CROSS_PREFIX}gcc ${AARCH64_KCFLAGS} -std=c99 -c ${CURDIR}/$$f -o $$o || exit 1; \
 	done
 	${CROSS_PREFIX}ld -T ${CURDIR}/sys/compile/ldscript.aarch64 -o ${OBJ_DIR}/boot/kernel ${OBJ_DIR}/obj/sys/*.o
 	@echo "aarch64 bring-up kernel linked: ${OBJ_DIR}/boot/kernel"

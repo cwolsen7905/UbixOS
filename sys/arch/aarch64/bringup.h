@@ -11,12 +11,13 @@
 
 #include <stdarg.h>
 #include <sys/types.h>
+#include <lib/kprintf.h> /* canonical int kprintf(const char *, ...) */
 
-/* uart.c — PL011 console + a minimal kprintf. */
+/* uart.c — PL011 console + a minimal kprintf (the aarch64 kprintf until the
+ * portable vsprintf-based one is brought up). */
 void uart_putc(char c);
 void uart_puts(const char *s);
-void kvprintf(const char *fmt, va_list ap);
-void kprintf(const char *fmt, ...);
+void uart_vprintf(const char *fmt, va_list ap); /* bring-up formatting engine */
 
 /* exceptions.c — install the EL1 vector table (defined in vectors.S). */
 void aarch64_vbar_init(void);
@@ -37,5 +38,8 @@ void aarch64_mmu_init(void);
 /* context.S / ctxdemo.c — cooperative context switch + its demo. */
 void aarch64_ctx_switch(u_int64_t *save_sp, u_int64_t next_sp);
 void aarch64_ctx_demo(void);
+
+/* scheddemo.c — drive the generic sched_core/sched_dispatch with real threads. */
+void aarch64_sched_demo(void);
 
 #endif /* _AARCH64_BRINGUP_H */

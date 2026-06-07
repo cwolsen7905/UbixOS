@@ -16,7 +16,7 @@
 #define PL011_BASE 0x09000000UL
 #define UART_DR (*(volatile u_int32_t *)(PL011_BASE + 0x00)) /* data */
 #define UART_FR (*(volatile u_int32_t *)(PL011_BASE + 0x18)) /* flags */
-#define UART_FR_TXFF (1u << 5)                              /* TX FIFO full */
+#define UART_FR_TXFF (1u << 5)                               /* TX FIFO full */
 
 /**
  * Write one byte to the PL011, blocking while the TX FIFO is full.
@@ -45,10 +45,14 @@ void uart_puts(const char *s)
 
 /**
  * Emit an unsigned value in @base, right-justified to @width with @pad.
+ *
+ * @param upper  non-zero to use uppercase hex digits (A-F) for %X.
  */
-static void put_uint(u_int64_t v, unsigned base, int width, char pad)
+static void put_uint(u_int64_t v, unsigned base, int width, char pad, int upper)
 {
-	static const char digits[] = "0123456789abcdef";
+	static const char lower[] = "0123456789abcdef";
+	static const char upperd[] = "0123456789ABCDEF";
+	const char *digits = upper ? upperd : lower;
 	char buf[32];
 	int i = 0;
 
@@ -68,7 +72,7 @@ static void put_uint(u_int64_t v, unsigned base, int width, char pad)
 /**
  * Minimal vprintf to the console.  Not a full printf — just the bring-up subset.
  */
-void kvprintf(const char *fmt, va_list ap)
+void uart_vprintf(const char *fmt, va_list ap)
 {
 	for (; *fmt != '\0'; fmt++)
 	{
@@ -103,44 +107,50 @@ void kvprintf(const char *fmt, va_list ap)
 				uart_putc((char)va_arg(ap, int));
 				break;
 			case 'd':
+			case 'i':
 			{
 				int v = va_arg(ap, int);
 				if (v < 0)
 				{
 					uart_putc('-');
-					put_uint((u_int64_t)(-(int64_t)v), 10, 0, ' ');
+					put_uint((u_int64_t)(-(int64_t)v), 10, 0, ' ', 0);
 				}
 				else
-					put_uint((u_int64_t)v, 10, width, pad);
+					put_uint((u_int64_t)v, 10, width, pad, 0);
 				break;
 			}
 			case 'u':
-				put_uint(va_arg(ap, unsigned), 10, width, pad);
+				put_uint(va_arg(ap, unsigned), 10, width, pad, 0);
 				break;
 			case 'x':
-				put_uint(va_arg(ap, unsigned), 16, width, pad);
+				put_uint(va_arg(ap, unsigned), 16, width, pad, 0);
+				break;
+			case 'X':
+				put_uint(va_arg(ap, unsigned), 16, width, pad, 1);
 				break;
 			case 'p':
 				uart_puts("0x");
-				put_uint((u_int64_t)(uintptr_t)va_arg(ap, void *), 16, 16, '0');
+				put_uint((u_int64_t)(uintptr_t)va_arg(ap, void *), 16, 16, '0', 0);
 				break;
 			case 'l':
 			{
 				fmt++;
 				if (*fmt == 'x')
-					put_uint(va_arg(ap, u_int64_t), 16, width, pad);
+					put_uint(va_arg(ap, u_int64_t), 16, width, pad, 0);
+				else if (*fmt == 'X')
+					put_uint(va_arg(ap, u_int64_t), 16, width, pad, 1);
 				else if (*fmt == 'u')
-					put_uint(va_arg(ap, u_int64_t), 10, width, pad);
+					put_uint(va_arg(ap, u_int64_t), 10, width, pad, 0);
 				else if (*fmt == 'd')
 				{
 					int64_t v = va_arg(ap, int64_t);
 					if (v < 0)
 					{
 						uart_putc('-');
-						put_uint((u_int64_t)(-v), 10, 0, ' ');
+						put_uint((u_int64_t)(-v), 10, 0, ' ', 0);
 					}
 					else
-						put_uint((u_int64_t)v, 10, width, pad);
+						put_uint((u_int64_t)v, 10, width, pad, 0);
 				}
 				else
 					uart_putc('l');
@@ -159,11 +169,15 @@ void kvprintf(const char *fmt, va_list ap)
 
 /**
  * Console printf — the bring-up logging entry point.
+ *
+ * @return number of conversions is not tracked; always 0 (matches the canonical
+ *         int-returning prototype, whose result the kernel ignores).
  */
-void kprintf(const char *fmt, ...)
+int kprintf(const char *fmt, ...)
 {
 	va_list ap;
 	va_start(ap, fmt);
-	kvprintf(fmt, ap);
+	uart_vprintf(fmt, ap);
 	va_end(ap);
+	return 0;
 }
