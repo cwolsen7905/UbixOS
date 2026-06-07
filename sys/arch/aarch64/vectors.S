@@ -11,9 +11,12 @@
  * (sync @0x200, irq @0x280).  Everything else funnels to an "invalid" dump.
  */
 
-/* Save x0-x30 into a 256-byte frame (16-aligned); SP then points at the frame. */
+/* Save x0-x30 + ELR/SPSR/SP_EL0 into a 288-byte trapframe (16-aligned); SP then
+ * points at the frame.  Saving the return state (not just GPRs) lets a frame be
+ * resumed later — required for fork (ret_from_fork) and preemption, not just the
+ * immediate syscall return. */
 	.macro KERNEL_ENTRY
-	sub	sp, sp, #256
+	sub	sp, sp, #288
 	stp	x0, x1, [sp, #0]
 	stp	x2, x3, [sp, #16]
 	stp	x4, x5, [sp, #32]
@@ -30,9 +33,19 @@
 	stp	x26, x27, [sp, #208]
 	stp	x28, x29, [sp, #224]
 	str	x30, [sp, #240]
+	mrs	x9, elr_el1		/* return PC */
+	mrs	x10, spsr_el1		/* saved PSTATE */
+	mrs	x11, sp_el0		/* user stack pointer */
+	stp	x9, x10, [sp, #256]
+	str	x11, [sp, #272]
 	.endm
 
 	.macro KERNEL_EXIT
+	ldp	x9, x10, [sp, #256]
+	ldr	x11, [sp, #272]
+	msr	elr_el1, x9
+	msr	spsr_el1, x10
+	msr	sp_el0, x11
 	ldp	x0, x1, [sp, #0]
 	ldp	x2, x3, [sp, #16]
 	ldp	x4, x5, [sp, #32]
@@ -49,7 +62,7 @@
 	ldp	x26, x27, [sp, #208]
 	ldp	x28, x29, [sp, #224]
 	ldr	x30, [sp, #240]
-	add	sp, sp, #256
+	add	sp, sp, #288
 	eret
 	.endm
 
