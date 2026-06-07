@@ -1,12 +1,23 @@
 # The System Makefile (C) 2002-2026 The UbixOS Project
 # Global 'Source' Options
 
-# Target architecture.  TARGET_ARCH is the user-facing knob (override with
-# `bmake TARGET_ARCH=x86_64`); _ARCH is the historical alias that the kernel
-# tree keys off (sys/arch/${_ARCH}, ldscript.${_ARCH}, obj/sys/${_ARCH}).
-# The matching share/mk/ubix.target.${_ARCH}.mk supplies the per-arch ISA/ABI
+# Target architecture.  TARGET_ARCH is the user-facing knob; _ARCH is the
+# historical alias the kernel tree keys off (sys/arch/${_ARCH},
+# ldscript.${_ARCH}, obj/sys/${_ARCH}).  The matching
+# share/mk/ubix.target.${_ARCH}.mk supplies the per-arch toolchain + ISA/ABI
 # compile flags and linker-script suffix, keeping arch facts out of the shared
 # host-detection and CFLAGS.
+#
+# Override with either spelling: `bmake TARGET=aarch64` (short alias, resolved
+# first) or `bmake TARGET_ARCH=aarch64`.
+#
+# NOTE: the default is intentionally still i386 — flip it to aarch64 only once
+# the aarch64 kernel actually builds/boots (otherwise a bare `bmake` would error
+# on the not-yet-existent arch tree).  Until then aarch64 is driven by the
+# override and the i386 build/run path is unchanged.
+.if defined(TARGET) && !empty(TARGET)
+TARGET_ARCH ?= ${TARGET}
+.endif
 TARGET_ARCH ?= i386
 _ARCH       ?= ${TARGET_ARCH}
 

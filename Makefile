@@ -59,7 +59,8 @@ _USB_FLAGS!= test -f ${USB_IMAGE} && \
 .PHONY: all kernel musl-libc world makeuser image usb-image \
         mount-image unmount-image \
         install-kernel install-world install \
-        run run-debug run-en0 run-shared \
+        run run-debug run-i386 run-debug-i386 run-aarch64 run-debug-aarch64 \
+        run-en0 run-shared \
         kernel-to-image clean-kernel clean
 
 all: kernel world image
@@ -266,10 +267,24 @@ install: install-world install-kernel
 
 # ── QEMU ─────────────────────────────────────────────────────────────────────
 
+# `run` / `run-debug` are arch dispatchers — they invoke the per-arch recipe for
+# the selected ${_ARCH}.  `bmake run` boots i386 today; `bmake run TARGET=aarch64`
+# boots the aarch64 kernel in QEMU `virt` once it exists.  The i386 recipes below
+# are unchanged (just renamed to run-i386 / run-debug-i386).
+run:       run-${_ARCH}
+run-debug: run-debug-${_ARCH}
+
+# aarch64 (QEMU `virt`) root disk, attached to run-aarch64 only if it exists.
+DISK_IMAGE_ARM?=ubixos-arm.img
+_ARM_DISK_FLAGS!= test -f ${DISK_IMAGE_ARM} && \
+	echo "-drive file=${DISK_IMAGE_ARM},format=raw,if=none,id=hd0 -device virtio-blk-device,drive=hd0" || \
+	echo ""
+
+# ── i386 (PC: IDE disk, e1000, AC97, UHCI keyboard) ─────────────────────────
 # Boot the disk image in QEMU (primary IDE master, boot from HD).
 # Serial output is captured to serial.log for post-mortem inspection.
 # If usb.img exists it is attached as a USB mass-storage device.
-run:
+run-i386:
 	qemu-system-i386 -m 256 -drive file=${DISK_IMAGE},format=raw,if=ide,index=0 \
 	  -machine pc \
 	  -device piix3-usb-uhci,id=uhci-bus \
@@ -282,9 +297,9 @@ run:
 	  -d guest_errors,unimp -D /tmp/qemu_debug.log \
 	  --trace "e1000_*"
 
-# Headless run: no display, serial to stdout.  Ctrl-C to stop.
+# Headless i386 run: no display, serial to stdout.  Ctrl-C to stop.
 # If usb.img exists it is attached as a USB mass-storage device.
-run-debug:
+run-debug-i386:
 	qemu-system-i386 -m 256 -drive file=${DISK_IMAGE},format=raw,if=ide,index=0 \
 	  -machine pc \
 	  -device piix3-usb-uhci,id=uhci-bus \
@@ -293,6 +308,28 @@ run-debug:
 	  -nographic \
 	  -device e1000,netdev=net0 -netdev user,id=net0 \
 	  -object filter-dump,id=f1,netdev=net0,file=/tmp/e1000dump.pcap
+
+# ── aarch64 (QEMU `virt`: virtio devices, HVF accel on Apple Silicon) ───────
+# Boots the kernel directly via -kernel (no GRUB / disk needed for early
+# bring-up); virtio-blk is attached only if ${DISK_IMAGE_ARM} exists.  HVF gives
+# near-native speed since host and guest are both ARM64.  Serial → serial.log.
+run-aarch64:
+	qemu-system-aarch64 -machine virt -accel hvf -cpu host -m 512 \
+	  -kernel ${OBJ_DIR}/boot/kernel \
+	  ${_ARM_DISK_FLAGS} \
+	  -device virtio-net-device,netdev=net0 -netdev user,id=net0 \
+	  -device virtio-gpu-device \
+	  -device virtio-keyboard-device -device virtio-mouse-device \
+	  -audiodev coreaudio,id=snd0 -device virtio-sound-device,audiodev=snd0 \
+	  -serial file:serial.log
+
+# Headless aarch64 run: serial to stdout — the bring-up console.  Ctrl-A X quits.
+run-debug-aarch64:
+	qemu-system-aarch64 -machine virt -accel hvf -cpu host -m 512 \
+	  -kernel ${OBJ_DIR}/boot/kernel \
+	  ${_ARM_DISK_FLAGS} \
+	  -device virtio-net-device,netdev=net0 -netdev user,id=net0 \
+	  -nographic
 
 # Headless run with a NE2000 (RTL8029) NIC instead of the e1000, to exercise the
 # ne2k driver.  net_init falls back to ne2k when no e1000 is present.  Frames are
