@@ -82,7 +82,7 @@ same status.
 | 10 | `sys/arch/aarch64/` skeleton + `ubix.target.aarch64.mk` | A | ⬜ Not started |
 | — | musl world arch shim + de-hardcode i386 in `lib/Makefile` | Userland | ⬜ Not started — blocker for `world` |
 | 11 | Boot to PL011 UART on QEMU `virt` | B | ✅ **Done** — `uBixOS aarch64` banner verified on serial (`bmake run-debug TARGET=aarch64`) |
-| 12 | Exceptions + GICv2 + generic timer | B | ⬜ Not started |
+| 12 | Exceptions + GICv2 + generic timer | B | ✅ **Done** — kprintf + EL1 vectors (12a); GICv2 + CNTP timer ticking at 2 Hz (12b), verified |
 | 13 | MMU (TTBR0/1) + AArch64 `cpu_switch` + syscall entry | B | ⬜ Not started |
 | 14 | virtio-blk + virtio-net | B | ⬜ Not started |
 | 15 | virtio-gpu framebuffer + virtio-input (touch) | B | ⬜ Not started |
@@ -480,12 +480,18 @@ over the PL011 serial (confirmed under TCG; HVF on Apple Silicon for speed).
 
 Next (Phase 12): wire `kprintf` to this UART, then EL1 setup + exception vectors.
 
-### Phase 12 — Exceptions, GIC, generic timer
-- AArch64 exception vector table (VBAR_EL1), sync/IRQ/FIQ/SError handlers.
-- GICv2 driver (distributor + CPU interface) — this is what `-machine virt`
-  and the **Pi 4** both expose (GIC-400). Replaces the i386 8259/APIC.
-- ARM generic timer (CNTP) → the scheduler tick + the callout subsystem
-  (already arch-neutral) ride on it.
+### Phase 12 — Exceptions, GIC, generic timer ✅ DONE
+Shipped & verified in QEMU (`virt,gic-version=2`):
+- **kprintf** over PL011 + EL1 **exception vector table** (`vectors.S` → `VBAR_EL1`);
+  sync/invalid faults dump ESR/EC/ELR/FAR and park (verified with a `brk` → EC 0x3c).
+- **GICv2** driver (`gic.c`: GICD 0x08000000 / GICC 0x08010000) — enable, per-INTID
+  priority, IAR/EOIR; `aarch64_irq_dispatch` routes by INTID. Replaces the i386
+  8259/APIC; the **Pi 4**'s GIC-400 is the same programming model.
+- **ARM generic timer** (`timer.c`, CNTP) — periodic ~2 Hz tick, re-armed each
+  IRQ. **Verified:** `timer tick #N` streams at 2 Hz (cntfrq 62.5 MHz).
+- Run target pins `gic-version=2` (HVF can default to GICv3).
+- Next: the (arch-neutral) scheduler tick + callout subsystem will ride this timer
+  once aarch64 scheduling lands (after Phase 13 MMU + context switch).
 
 ### Phase 13 — MMU + context switch
 - 4-level (or 3-level, 4 KB granule) page tables; TTBR0_EL1 (user, low half) /
@@ -694,7 +700,7 @@ corrupt addresses. See the Status matrix near the top for the at-a-glance view.
 | Phase | Name | Status |
 |-------|------|--------|
 | 11 | Boot to PL011 UART on QEMU `virt` | ✅ Done (banner verified, TCG + HVF) |
-| 12 | Exceptions + GICv2 + generic timer | Not started |
+| 12 | Exceptions + GICv2 + generic timer | ✅ Done (vectors + kprintf; timer IRQ ticking, verified) |
 | 13 | MMU + `cpu_switch` + syscall entry | Not started |
 | 14 | virtio-blk + virtio-net | Not started |
 | 15 | virtio-gpu framebuffer + virtio-input (touch) | Not started |
