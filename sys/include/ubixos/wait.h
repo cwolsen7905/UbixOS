@@ -41,13 +41,24 @@ struct semaphore {
     struct wait_queue *wait;
 };
 
-#define sti() __asm__ __volatile__ ("sti": : :"memory")
-#define cli() __asm__ __volatile__ ("cli": : :"memory")
-#define nop() __asm__ __volatile__ ("nop")
-
-#define save_flags(x) __asm__ __volatile__("pushfl ; popl %0":"=r" (x): /* no input */ :"memory")
-
-#define restore_flags(x) __asm__ __volatile__("pushl %0 ; popfl": /* no output */ :"r" (x):"memory")
+/*
+ * Local interrupt enable/disable + flag save/restore.  Arch-specific: i386 uses
+ * the EFLAGS IF bit (sti/cli/pushfl/popfl); aarch64 uses DAIF.I (the IRQ mask).
+ * save_flags()/restore_flags() take a word-sized variable.
+ */
+#if defined(__aarch64__)
+#define sti() __asm__ __volatile__("msr daifclr, #2" : : : "memory")          /* unmask IRQ */
+#define cli() __asm__ __volatile__("msr daifset, #2" : : : "memory")          /* mask IRQ */
+#define nop() __asm__ __volatile__("nop")
+#define save_flags(x) __asm__ __volatile__("mrs %0, daif" : "=r"(x) : : "memory")
+#define restore_flags(x) __asm__ __volatile__("msr daif, %0" : : "r"(x) : "memory")
+#else
+#define sti() __asm__ __volatile__("sti" : : : "memory")
+#define cli() __asm__ __volatile__("cli" : : : "memory")
+#define nop() __asm__ __volatile__("nop")
+#define save_flags(x) __asm__ __volatile__("pushfl ; popl %0" : "=r"(x) : /* no input */ : "memory")
+#define restore_flags(x) __asm__ __volatile__("pushl %0 ; popfl" : /* no output */ : "r"(x) : "memory")
+#endif
 
 void add_wait_queue(struct wait_queue **p, struct wait_queue *wait);
 void remove_wait_queue(struct wait_queue **p, struct wait_queue *wait);
