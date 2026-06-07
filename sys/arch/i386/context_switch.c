@@ -52,6 +52,7 @@
 #include <sys/types.h>
 #include <sys/gdt.h>
 #include <i386/pcpu_asm.h>
+#include <isa/8259.h>
 #include <lib/kprintf.h>
 
 /* The hand-written %gs loads in the entry stubs (PCPU_GS_SEL in <i386/pcpu_asm.h>)
@@ -103,6 +104,17 @@ void md_new_task(kTask_t *t)
 {
 	t->md.md_tss.esp0 = (u_int32_t)t->kernelStack + 8192;
 	t->md.md_tss.ss0 = 0x10;
+}
+
+/**
+ * Per-dispatch arch hook invoked by the generic scheduler just before
+ * switch_to().  i386 masks the timer IRQ while a VM86 (BIOS) task runs so the
+ * tick cannot preempt the v86 monitor.
+ */
+void md_sched_pre_switch(kTask_t *t)
+{
+	if (t->oInfo.v86Task == 0x1)
+		irqDisable(0x0); /* mask timer while v86 task runs */
 }
 
 void md_setup_initial_frame(kTask_t *t)

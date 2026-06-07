@@ -48,4 +48,14 @@ void md_setup_initial_frame(struct taskStruct *t);
  */
 void switch_to(struct taskStruct *prev, struct taskStruct *next);
 
+/* Scheduler tick rate (Hz): the PIT is programmed for 200 Hz on i386. */
+#define SCHED_HZ 200
+
+/*
+ * Per-dispatch arch hook the generic scheduler calls just before switch_to(),
+ * passing the incoming task.  i386 masks the timer IRQ while a VM86 (BIOS) task
+ * runs.  Defined in arch/i386/context_switch.c.
+ */
+void md_sched_pre_switch(struct taskStruct *t);
+
 #endif /* _I386_PROC_H */

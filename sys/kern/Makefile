@@ -15,6 +15,7 @@ OBJS = \
 	klog.o \
 	random.o \
 	sched_core.o \
+	sched_dispatch.o \
 	shutdown.o \
 	syscall.o \
 	syscalls.o \

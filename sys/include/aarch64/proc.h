@@ -25,4 +25,10 @@ void md_new_task(struct taskStruct *t);
 void md_setup_initial_frame(struct taskStruct *t);
 void switch_to(struct taskStruct *prev, struct taskStruct *next);
 
+/* Scheduler tick rate (Hz): the bring-up generic timer ticks at 2 Hz (timer.c). */
+#define SCHED_HZ 2
+
+/* Per-dispatch arch hook before switch_to (see i386/proc.h).  aarch64: no-op. */
+void md_sched_pre_switch(struct taskStruct *t);
+
 #endif /* _AARCH64_PROC_H */

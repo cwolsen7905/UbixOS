@@ -29,11 +29,20 @@
 #ifndef _SYS_SHUTDOWN_H
 #define _SYS_SHUTDOWN_H
 
+#include <sys/types.h>
+
 typedef enum {
     HALT,
     REBOOT
 } shutdownCMD_t;
 
 int sys_shutdown(shutdownCMD_t);
+
+/*
+ * Deferred-reboot countdown deadline, in scheduler ticks (0 = inactive).  Armed
+ * by the platform's reboot affordance (i386: Ctrl-M in the AT keyboard driver)
+ * and counted down by the generic scheduler.  Defined per-arch.
+ */
+extern volatile u_int32_t reboot_at_tick;
 
 #endif /* _SYS_SHUTDOWN_H */
