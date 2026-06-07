@@ -96,7 +96,7 @@ same status.
 | 13g | `fork` — child diverges with a copied address space, both scheduled | B | ✅ **Done** — `ret_from_fork` + full-trapframe + `pmap_fork_copy`; QEMU-verified parent+child.  COW is a later optimization |
 | 13h | **Preemptive scheduling** — 100 Hz timer drives sched() | B | ✅ **Done** — never-yielding tasks are time-sliced; kthread_trampoline unmasks IRQs on first dispatch.  QEMU-verified |
 | 13i | VFS core (vfs_init + buffer cache) linked + initialized in kmain | B | ✅ **Done** — filesystem registry + bcache up; mount/devfs/procfs (device layer) next |
-| 13j | aarch64 syscall surface (bring-up dispatcher) | B | 🟡 **Partial** — write/exit/fork/getpid/set_tid_address/exit_group/mmap/mprotect/brk implemented in the transitional `arch/aarch64/syscall.c`; runs simple musl programs.  malloc/mallocng needs MAP_FIXED + PROT_NONE/mprotect-commit modelling (deferred).  End state: route the SVC entry to the generic syscall tables once VFS/fd land |
+| 13j | aarch64 syscall surface (bring-up dispatcher) | B | 🟡 **Partial** — write/exit/fork/getpid/set_tid_address/exit_group/mmap/mprotect/brk in the transitional `arch/aarch64/kern/syscall.c`; **musl malloc now works** (the bug was a missing `AT_PAGESZ` auxv entry, not the mmap surface — aarch64 has no fixed `PAGE_SIZE` macro so `libc.page_size` was 0 and mallocng rounded every size to 0; fixed in the ELF-loader initial stack).  mmap/brk page mechanics extracted to the generic `sys/vmm/vmm_uregion.c` (sc_mmap/sc_brk are thin arch wrappers).  End state: route the SVC entry to the generic syscall tables once VFS/fd land |
 | 14 | virtio-blk + virtio-net | B | ⬜ Not started |
 | 15 | virtio-gpu framebuffer + virtio-input (touch) | B | ⬜ Not started — needed for **boot-to-desktop** |
 | 15a | **virtio-sound** (audio) → existing `aural` layer | B | ⬜ Not started |
@@ -113,6 +113,27 @@ pmap, per-process address spaces, and real EL0 `write`/`exit` syscalls all run
 and are QEMU-verified** — i386 stays byte/behaviour-neutral throughout (the
 generic kernel is genuinely shared, not forked). aarch64 can now execute user
 code at EL0 and service its syscalls.
+
+**VMM generic/arch split + arch-tree layout (2026-06-07).** Two structural
+clean-ups landed alongside the malloc fix:
+
+- **Arch trees are now organized into subfolders** (`kern/ vmm/ dev/ lib/`,
+  plus `bringup/` for aarch64's transitional demos) mirroring the generic
+  `sys/` tree — both `sys/arch/i386/` and `sys/arch/aarch64/`. Reverses the
+  earlier flat-layout decision; cf. Linux `arch/arm64/{kernel,mm,lib}`.
+- **`sys/vmm/` audit** — 18 files split cleanly: **4 generic** (`vmm_memory.c`
+  frame allocator [linked], `vm_map.c`, `vm_filecache.c`, `vmm_init.c`) vs **14
+  i386-pmap** (recursive-paging: `vmm_paging/mmap/page_fault/alloc_page_table/
+  get_free_page/unmap_page/set_page_attributes/get_physical_addr/
+  copy_virtual_space/create_virtual_space/free_virtual_page/
+  get_free_virtual_page/share_region/pageout/swap`). The 14 are conceptually the
+  **i386 pmap**; aarch64 replaces them with `arch/aarch64/vmm/pmap.c`.
+- **First extraction done**: the anonymous-mmap/brk *policy* is now generic
+  (`sys/vmm/vmm_uregion.c`, sibling of `elf64_load.c`, agnostic types over the
+  `md_map_user_page` hook). **Next VMM step**: relocate the 14 i386-pmap files to
+  `sys/arch/i386/vmm/` behind a generic pmap interface so i386 and the LP64
+  arches share one VMM policy layer — deferred (large, touches the one working
+  arch; not malloc-blocking now that malloc works).
 
 **Remaining path to boot-to-desktop**, in order:
 
