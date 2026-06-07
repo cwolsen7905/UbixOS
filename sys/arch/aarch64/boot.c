@@ -12,6 +12,7 @@
 #include "bringup.h"
 #include <vmm/vmm.h>       /* vmm_mem_map_init */
 #include <ubixos/vitals.h> /* vitals_init */
+#include <fs/vfs/vfs.h>    /* vfs_init */
 
 /**
  * Return the current exception level (0-3) from CurrentEL[3:2].
@@ -42,6 +43,7 @@ void kmain_aarch64(void)
 	 * vitals node (kmalloc'd, so the allocator must be up first). */
 	vmm_mem_map_init();
 	vitals_init();
+	vfs_init(); /* VFS core: filesystem registry + buffer cache */
 
 	aarch64_vmm_demo();
 	aarch64_pmap_demo();

@@ -81,7 +81,7 @@ kernel-i386:
 # objects can link in), with the aarch64 ISA flags from KERN_TARGET_CFLAGS.
 AARCH64_KCFLAGS = ${KERN_TARGET_CFLAGS} -DDEBUG_SYSCTL -O -Wall -Wno-incompatible-pointer-types \
 	-nostdlib -nostdinc -fno-builtin -fno-exceptions -ffreestanding -fno-pie -fno-pic \
-	-fno-stack-protector -I${CURDIR}/sys/include
+	-fno-stack-protector -mno-outline-atomics -I${CURDIR}/sys/include
 
 # Arch-neutral kernel sources now linked into the aarch64 kernel.  Grows as more
 # of the generic kernel is ported; the scheduler core is the first to link.
@@ -91,6 +91,8 @@ AARCH64_GENERIC_SRCS = \
 	sys/kern/callout.c \
 	sys/kern/random.c \
 	sys/kern/vitals.c \
+	sys/fs/vfs/vfs.c \
+	sys/fs/vfs/bcache.c \
 	sys/vmm/vmm_memory.c \
 	sys/lib/kmalloc.c \
 	sys/kern/elf64_load.c
