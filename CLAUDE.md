@@ -12,13 +12,22 @@ The project uses **BSD make (`bmake`)**. On macOS use `bmake`; on FreeBSD `make`
 
 ### Common targets
 
+Build output is **arch-homed** under `build/${ARCH}/` (e.g. `build/i386/`,
+`build/aarch64/`) so the two architectures never clobber each other. Select the
+target with `TARGET=` (alias for `TARGET_ARCH=`); default is i386.
+
 ```sh
-bmake                  # kernel + world (default)
-bmake kernel           # kernel only → build/boot/kernel
-bmake world            # userland only → build/bin/, build/lib/, build/libexec/
+bmake                  # kernel + world (default, i386)
+bmake kernel           # kernel only → build/i386/boot/kernel
+bmake world            # userland only → build/i386/{bin,lib,libexec}/
 bmake image            # build a fresh bootable FAT32 disk image from scratch
-bmake run              # launch QEMU with ubixos.img
+bmake run              # launch QEMU with ubixos.img (i386)
 bmake run-debug        # headless QEMU, serial to stdout
+
+# aarch64 (QEMU virt) — Track B port, see docs/design/cross-arch-plan.md
+bmake kernel TARGET=aarch64       # → build/aarch64/boot/kernel (standalone bring-up)
+bmake run-debug TARGET=aarch64    # boot it headless in QEMU virt (HVF on Apple Silicon)
+
 bmake clean            # clean all build artifacts
 ```
 
