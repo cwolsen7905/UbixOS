@@ -46,13 +46,18 @@ void aarch64_exception(uint64_t kind, void *frame)
 {
 	(void)frame;
 
+	/* IRQs: hand off to the GIC dispatcher and resume (ERET in the stub). */
+	if (kind == EXC_IRQ)
+	{
+		aarch64_irq_dispatch();
+		return;
+	}
+
 	uint64_t esr = READ_SYSREG(esr_el1);
 	uint64_t elr = READ_SYSREG(elr_el1);
 	uint64_t far = READ_SYSREG(far_el1);
 
-	if (kind == EXC_IRQ)
-		kprintf("\n*** aarch64 IRQ with no handler yet (Phase 12b) ***\n");
-	else if (kind == EXC_SYNC)
+	if (kind == EXC_SYNC)
 		kprintf("\n*** aarch64 synchronous exception ***\n");
 	else
 		kprintf("\n*** aarch64 unexpected/invalid vector ***\n");

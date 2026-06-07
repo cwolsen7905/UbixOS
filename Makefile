@@ -338,7 +338,7 @@ run-debug-i386:
 # bring-up); virtio-blk is attached only if ${DISK_IMAGE_ARM} exists.  HVF gives
 # near-native speed since host and guest are both ARM64.  Serial → serial.log.
 run-aarch64:
-	qemu-system-aarch64 -machine virt -accel hvf -cpu host -m 512 \
+	qemu-system-aarch64 -machine virt,gic-version=2 -accel hvf -cpu host -m 512 \
 	  -kernel ${OBJ_DIR}/boot/kernel \
 	  ${_ARM_DISK_FLAGS} \
 	  -device virtio-net-device,netdev=net0 -netdev user,id=net0 \
@@ -349,7 +349,7 @@ run-aarch64:
 
 # Headless aarch64 run: serial to stdout — the bring-up console.  Ctrl-A X quits.
 run-debug-aarch64:
-	qemu-system-aarch64 -machine virt -accel hvf -cpu host -m 512 \
+	qemu-system-aarch64 -machine virt,gic-version=2 -accel hvf -cpu host -m 512 \
 	  -kernel ${OBJ_DIR}/boot/kernel \
 	  ${_ARM_DISK_FLAGS} \
 	  -device virtio-net-device,netdev=net0 -netdev user,id=net0 \

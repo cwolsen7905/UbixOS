@@ -33,5 +33,13 @@ void kmain_aarch64(void)
 	aarch64_vbar_init();
 	kprintf("EL1 exception vectors installed (VBAR_EL1).\n");
 
-	kprintf("bring-up idle; GIC + generic timer next (Phase 12b).\n");
+	gic_init();
+	timer_init();
+
+	/* Unmask IRQs (clear DAIF.I); timer ticks now arrive via the GIC. */
+	__asm__ volatile("msr daifclr, #2");
+	kprintf("IRQs enabled; idling on wfi (expect periodic timer ticks).\n");
+
+	for (;;)
+		__asm__ volatile("wfi");
 }
