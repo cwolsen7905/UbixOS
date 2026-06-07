@@ -114,6 +114,12 @@ kernel-aarch64:
 	    echo "${CROSS_PREFIX}gcc [gen] $$f"; \
 	    ${CROSS_PREFIX}gcc ${AARCH64_KCFLAGS} -std=c99 -c ${CURDIR}/$$f -o $$o || exit 1; \
 	done
+	@echo "${CROSS_PREFIX}gcc [user] tools/aarch64-user/hello.c -> hello.elf (embedded)"
+	@${CROSS_PREFIX}gcc -march=armv8-a -mgeneral-regs-only -static -nostdlib -nostartfiles \
+	    -ffreestanding -fno-pic -fno-pie -O2 -Wl,-Ttext=0x100000000 -e _start \
+	    ${CURDIR}/tools/aarch64-user/hello.c -o ${OBJ_DIR}/hello.elf || exit 1
+	@cd ${OBJ_DIR} && ${CROSS_PREFIX}objcopy -I binary -O elf64-littleaarch64 -B aarch64 \
+	    hello.elf ${OBJ_DIR}/obj/sys/hello_embed.o || exit 1
 	${CROSS_PREFIX}ld -T ${CURDIR}/sys/compile/ldscript.aarch64 -o ${OBJ_DIR}/boot/kernel ${OBJ_DIR}/obj/sys/*.o
 	@echo "aarch64 bring-up kernel linked: ${OBJ_DIR}/boot/kernel"
 

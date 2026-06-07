@@ -88,4 +88,7 @@ void aarch64_fork_demo(void);
 /* preemptdemo.c — CPU-bound tasks preempted by the timer-driven scheduler. */
 void aarch64_preempt_demo(void);
 
+/* userelfdemo.c — load + run a real compiled aarch64 ELF (userland-port spike). */
+void aarch64_user_elf_demo(void);
+
 #endif /* _AARCH64_BRINGUP_H */

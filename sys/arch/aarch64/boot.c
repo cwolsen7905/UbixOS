@@ -54,6 +54,7 @@ void kmain_aarch64(void)
 	aarch64_sched_demo();
 	aarch64_proc_demo();
 	aarch64_fork_demo();
+	aarch64_user_elf_demo();
 
 	/* Spawn never-yielding CPU-bound tasks, then enable the timer — it must
 	 * preempt them (proves preemptive scheduling). */
