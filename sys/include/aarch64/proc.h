@@ -17,6 +17,7 @@ struct md_proc
 	u_int64_t md_entry;     /* initial PC: kernel-thread entry, or EL0 entry for a user task */
 	u_int64_t md_usp;       /* user stack pointer; non-zero marks an EL0 (user) task */
 	u_int64_t md_mmap_next; /* bump pointer for anonymous mmap in this address space (0 = uninit) */
+	u_int64_t md_brk;       /* current program break for brk()/sbrk() (0 = uninit) */
 };
 
 struct taskStruct; /* == kTask_t */

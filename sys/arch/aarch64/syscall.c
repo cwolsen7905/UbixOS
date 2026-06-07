@@ -24,6 +24,7 @@
 #define SYS_EXIT 1
 #define SYS_FORK 2
 #define SYS_WRITE 4
+#define SYS_BRK 17
 #define SYS_GETPID 20
 #define SYS_MPROTECT 74
 #define SYS_MMAP 477
@@ -31,6 +32,8 @@
 
 /* Per-process anonymous-mmap region base (block 8 — clear of code/stack). */
 #define MMAP_BASE 0x200000000UL
+/* Per-process brk heap base (block 7 — clear of code/stack/mmap). */
+#define BRK_BASE 0x1C0000000UL
 
 /* musl routes the Linux-compat primitives (exit_group, set_thread_area, futex)
  * through the UbixOS-native int $0x81 table by ORing in this flag (matches the
@@ -109,6 +112,40 @@ static u_int64_t sc_mmap(u_int64_t len)
 }
 
 /**
+ * brk(newbrk): set the program break, Linux-style — returns the resulting break
+ * (musl's mallocng glue.h treats the return as the new break).  brk(0) queries.
+ * Grows the heap by mapping zeroed pages; never shrinks (returns the high-water
+ * break).
+ *
+ * @return the (new) program break.
+ */
+static u_int64_t sc_brk(u_int64_t newbrk)
+{
+	u_int64_t *l1, va;
+
+	if (_current == 0 || _current->md.md_ttbr0 == 0)
+		return BRK_BASE;
+	if (_current->md.md_brk == 0)
+		_current->md.md_brk = BRK_BASE;
+
+	if (newbrk <= _current->md.md_brk) /* query or shrink request: report current */
+		return _current->md.md_brk;
+
+	/* Grow: map any pages between the old and new (page-aligned) break. */
+	l1 = (u_int64_t *)(uintptr_t)_current->md.md_ttbr0;
+	for (va = (_current->md.md_brk + PAGE_SIZE - 1) & ~((u_int64_t)PAGE_SIZE - 1); va < newbrk; va += PAGE_SIZE)
+	{
+		uintptr_t frame = vmm_find_free_page(sysID);
+		if (frame == 0)
+			return _current->md.md_brk; /* OOM: leave the break where it was */
+		memset((void *)frame, 0, PAGE_SIZE);
+		pmap_map_user_page(l1, va, (u_int64_t)frame, 0);
+	}
+	_current->md.md_brk = newbrk;
+	return newbrk;
+}
+
+/**
  * Dispatch an EL0 syscall.  @args points at the saved x0..x5 (x0 = arg0).
  *
  * @return the value to place in the caller's x0 (exit does not return).
@@ -140,6 +177,9 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args)
 
 		case SYS_MPROTECT:
 			return 0; /* mmap pages are already RW; no fine-grained enforcement yet */
+
+		case SYS_BRK:
+			return sc_brk(args[0]);
 
 		case SYS_FORK:
 			/* args is the trapframe; the child resumes here returning 0. */
