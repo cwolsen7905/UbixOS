@@ -66,7 +66,7 @@ extern "C" {
 
     extern u_int32_t numPages;
     extern vmm_page_info_t *vmmMemoryMap;
-    extern u_int32_t vmm_bitmap_phys;
+    extern uintptr_t vmm_bitmap_phys;
 
     int vmm_init();
     int vmm_mem_map_init(); /* machine-dependent — sys/arch/<arch>/vmm_machdep.c */

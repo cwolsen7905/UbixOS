@@ -45,7 +45,7 @@ u_int32_t numPages = 0;
 
 /* Physical address where the page bitmap is staged (set in vmm_mem_map_init,
  * read by paging.c to remap the bitmap into kernel virtual space). */
-u_int32_t vmm_bitmap_phys = 0;
+uintptr_t vmm_bitmap_phys = 0;
 
 vmm_page_info_t *vmmMemoryMap = NULL;
 
@@ -74,7 +74,7 @@ void vmm_mem_bitmap_init(uintptr_t bitmap_phys, u_int32_t num_pages)
 	u_int32_t i;
 
 	numPages = num_pages;
-	vmm_bitmap_phys = (u_int32_t)bitmap_phys;
+	vmm_bitmap_phys = bitmap_phys;
 	vmmMemoryMap = (vmm_page_info_t *)bitmap_phys;
 	g_free_pages = 0;
 
@@ -258,11 +258,11 @@ int free_page(uintptr_t page_addr)
 
 	if (page_index >= numPages)
 	{
-		kprintf("free_page: addr 0x%X out of bounds (index %u numPages %u mmap 0x%X)\n",
-		        page_addr,
+		kprintf("free_page: addr %p out of bounds (index %u numPages %u mmap %p)\n",
+		        (void *)page_addr,
 		        page_index,
 		        numPages,
-		        (u_int32_t)vmmMemoryMap);
+		        (void *)vmmMemoryMap);
 		return (-1);
 	}
 
