@@ -169,7 +169,7 @@ world:
 # can be rebuilt on its own; depends on the world libraries (Step 1) being built.
 # Driven by a shell script because NetSurf uses its own GNU-make buildsystem.
 netsurf:
-	SRCTOP=${.CURDIR} ${.CURDIR}/tools/build-netsurf.sh
+	SRCTOP=${.CURDIR} BUILD=${OBJ_DIR} ${.CURDIR}/tools/build-netsurf.sh
 
 # ── Disk image ───────────────────────────────────────────────────────────────
 

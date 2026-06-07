@@ -10,8 +10,9 @@ OBJDIR = ${OBJ_DIR}/obj/libexec/ld
 _OBJS_FULL = ${OBJS:S|^|${OBJDIR}/|}
 
 $(OUTPUT): $(OBJS)
+	@mkdir -p ${OBJ_DIR}/libexec
 	${CROSS_PREFIX}ld -m elf_i386 -shared --soname=$(OUTPUT) -e _ld \
-		-o ../../build/libexec/$(OUTPUT) ${_OBJS_FULL} $(LIBRARIES)
+		-o ${OBJ_DIR}/libexec/$(OUTPUT) ${_OBJS_FULL} $(LIBRARIES)
 
 .SUFFIXES: .o .c .cc .S
 
@@ -32,7 +33,7 @@ $(OUTPUT): $(OBJS)
 all: $(OUTPUT)
 
 clean:
-	$(REMOVE) ${OBJDIR} ../../build/libexec/$(OUTPUT)
+	$(REMOVE) ${OBJDIR} ${OBJ_DIR}/libexec/$(OUTPUT)
 
 .for _d in ${OBJS:.o=.d}
 .sinclude "${OBJDIR}/${_d}"

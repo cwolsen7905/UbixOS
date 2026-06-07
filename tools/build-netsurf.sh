@@ -20,7 +20,9 @@
 set -e
 
 SRCTOP=$(cd "$(dirname "$0")/.." && pwd)
-BUILD="$SRCTOP/build"
+# Honor an arch-homed build dir (build/i386) passed by the `netsurf` make target;
+# default to the flat layout otherwise.
+BUILD="${BUILD:-$SRCTOP/build}"
 NS="$SRCTOP/contrib/netsurf"
 NSBUILD="$SRCTOP/contrib/netsurf-buildsystem"
 PCDIR="$BUILD/netsurf-pc"
