@@ -10,6 +10,28 @@
 #define _I386_PROC_H
 
 #include <sys/tss.h>
+#include <sys/gdt.h> /* SEL_PCPU */
+
+/**
+ * Re-establish this CPU's per-CPU segment base (%gs = SEL_PCPU).
+ *
+ * Generic code (e.g. endTask after freeing the address space) calls this where
+ * an operation may have disturbed %gs; without it, `_current` (read as %gs:8)
+ * would be poisoned for the rest of the function.  aarch64 has no equivalent
+ * (per-CPU state is not segment-based), so its hook is a no-op.
+ */
+static inline void machine_pcpu_reload(void)
+{
+	__asm__ __volatile__("movw %0, %%gs" : : "r"((u_int16_t)SEL_PCPU) : "memory");
+}
+
+/**
+ * Halt the CPU until the next interrupt (idle / unreachable-loop backstop).
+ */
+static inline void machine_idle(void)
+{
+	__asm__ __volatile__("hlt");
+}
 
 struct md_proc
 {

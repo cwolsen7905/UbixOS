@@ -62,7 +62,7 @@ void endTask(pidType pid)
 	 * GS to 0, as the hardware-task-switch era did, now poisons every _current
 	 * access in the remainder of endTask.)
 	 */
-	asm volatile("movw %0, %%gs" : : "r"((u_int16_t)SEL_PCPU) : "memory");
+	machine_pcpu_reload();
 
 	/*
 	 * CLONE_CHILD_CLEARTID: a thread created via rfork/clone may have asked the
@@ -121,6 +121,6 @@ void endTask(pidType pid)
 	sched_yield();
 	while (1)
 	{
-		asm("hlt");
+		machine_idle();
 	}
 }

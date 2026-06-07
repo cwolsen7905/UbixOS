@@ -32,4 +32,16 @@ void switch_to(struct taskStruct *prev, struct taskStruct *next);
 /* Per-dispatch arch hook before switch_to (see i386/proc.h).  aarch64: no-op. */
 void md_sched_pre_switch(struct taskStruct *t);
 
+/* Re-establish per-CPU register base (see i386/proc.h).  aarch64: no-op —
+ * per-CPU state is not segment-based. */
+static inline void machine_pcpu_reload(void)
+{
+}
+
+/* Halt the CPU until the next interrupt (see i386/proc.h). */
+static inline void machine_idle(void)
+{
+	__asm__ __volatile__("wfi");
+}
+
 #endif /* _AARCH64_PROC_H */
