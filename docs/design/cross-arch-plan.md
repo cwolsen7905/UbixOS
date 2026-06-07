@@ -89,7 +89,8 @@ same status.
 | 13c | **Per-process address spaces** (`pmap_create_user_space`/`pmap_switch`) | B | ✅ **Done** — TTBR0 isolation verified (kernel still in TTBR0; TTBR1 split deferred) |
 | 13d | **Real syscalls** — EL0 `write`/`exit` via FreeBSD ABI numbers | B | ✅ **Done** — EL0 program prints through the kernel + exits |
 | 13e | ELF loader on aarch64 (load + run a binary at EL0) | B | ✅ **Done** — generic `sys/kern/elf64_load.c` (arch-neutral, md hooks for map + icache); loads + runs an ELF64 at EL0 via syscalls |
-| 13f | `execve`/`fork` wired to the scheduler (ELF process as a dispatched `kTask_t`) | B | 🟡 **Next** — loader + address spaces + trapframe exist; integrate with `sched_core`/per-process kTask |
+| 13f | User process as a scheduler-dispatched `kTask_t` (own address space, EL0, syscalls, exit) | B | ✅ **Done** — `sched()` dispatches a user task via `switch_to` (TTBR0 swap) + `user_trampoline` ERET to EL0; `exit` terminates it.  QEMU-verified |
+| 13g | `fork` (COW address-space copy) + the full native/POSIX syscall tables | B | 🟡 **Next** — single processes run; `fork` + the broader syscall surface enable real programs |
 | 14 | virtio-blk + virtio-net | B | ⬜ Not started |
 | 15 | virtio-gpu framebuffer + virtio-input (touch) | B | ⬜ Not started — needed for **boot-to-desktop** |
 | 15a | **virtio-sound** (audio) → existing `aural` layer | B | ⬜ Not started |
