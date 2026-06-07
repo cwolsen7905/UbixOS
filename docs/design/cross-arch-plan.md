@@ -81,7 +81,9 @@ same status.
 | 8 | Move `start.S`/`main.c` to `sys/arch/i386/` | A | ⬜ Not started (i386 cosmetic; aarch64 has its own `start.S`/`boot.c`) |
 | 10 | `sys/arch/aarch64/` skeleton + `ubix.target.aarch64.mk` | A | ✅ **Done** — full arch tree + arch-homed `build/${ARCH}`, `bmake … TARGET=aarch64` |
 | U0 | **Userland toolchain spike** — build a real aarch64 ELF + run it via the kernel | Userland | ✅ **Done** — `tools/aarch64-user/hello.c` built static/no-pie, objcopy-embedded, `elf64_load`ed + run at EL0 via the SVC ABI.  Proves toolchain→ELF→loader→ABI |
-| U1 | musl arch port for aarch64 (FreeBSD syscall numbers) + de-hardcode i386 in `lib/Makefile`/`musl-libc` | Userland | ⬜ Next — the C library; gates real `world` (login/desktop) |
+| U1 | **musl libc builds for aarch64** (FreeBSD numbers + ABI bits/ overlay + parameterized build) | Userland | ✅ **Done** — `libc.a`/`libc.so` produced; i386 unchanged |
+| U2 | musl-linked program runs (crt + libc startup syscalls: TLS/brk/mmap) | Userland | 🟡 Next — drives the kernel syscall surface (13j) |
+| U3 | Build the world libs + `bin/` for aarch64 (de-hardcode i386 in `lib/Makefile` etc.) | Userland | ⬜ — then login/shell |
 | 11 | Boot to PL011 UART on QEMU `virt` | B | ✅ **Done** — `uBixOS aarch64` banner verified on serial (`bmake run-debug TARGET=aarch64`) |
 | 12 | Exceptions + GICv2 + generic timer | B | ✅ **Done** — kprintf + EL1 vectors (12a); GICv2 + CNTP timer ticking at 2 Hz (12b), verified |
 | 13 | MMU + AArch64 `cpu_switch` + syscall entry | B | ✅ **Done** — MMU (1 GB identity blocks + 4 KB pmap), `aarch64_ctx_switch`/`switch_to`, EL0 entry + SVC sync handler all verified |
