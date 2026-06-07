@@ -55,6 +55,7 @@ void aarch64_aspace_demo(void);
 
 /* el0.S — drop to EL0 / return from it + the EL0 demo payload. */
 void aarch64_enter_el0(u_int64_t entry, u_int64_t ustack);
+void aarch64_eret_to_el0(u_int64_t entry, u_int64_t usp); /* scheduled task: no longjmp save */
 void aarch64_el0_return(void);
 extern char user_demo_code_start[];
 extern char user_demo_code_end[];
@@ -67,5 +68,8 @@ void aarch64_syscall_demo(void);
 
 /* elfdemo.c — load + run an ELF64 binary via the generic loader. */
 void aarch64_elf_demo(void);
+
+/* procdemo.c — run a user process dispatched by the scheduler (Phase 13f). */
+void aarch64_proc_demo(void);
 
 #endif /* _AARCH64_BRINGUP_H */

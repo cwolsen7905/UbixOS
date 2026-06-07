@@ -40,6 +40,24 @@ aarch64_enter_el0:
 	.size aarch64_enter_el0, . - aarch64_enter_el0
 
 /*
+ * void aarch64_eret_to_el0(uint64_t entry [x0], uint64_t usp [x1]);
+ *   ERET to EL0 at @entry with SP_EL0=@usp, WITHOUT stashing kernel context.
+ *   Used to launch a scheduled user task: it lives at EL0 until it exits (which
+ *   terminates the task), so there is no kernel caller to return to.  SP_EL1 is
+ *   left as-is (the task's kernel stack), so its later traps land there.
+ */
+	.global aarch64_eret_to_el0
+	.type aarch64_eret_to_el0, %function
+aarch64_eret_to_el0:
+	msr	sp_el0, x1
+	msr	elr_el1, x0
+	mov	x10, #0x3C0		/* SPSR: M=EL0t, DAIF masked (no preemption yet) */
+	msr	spsr_el1, x10
+	isb
+	eret
+	.size aarch64_eret_to_el0, . - aarch64_eret_to_el0
+
+/*
  * void aarch64_el0_return(void);
  *   Restore the state saved by aarch64_enter_el0 and `ret` into its caller —
  *   abandoning the current (exception-handler) stack.  Never returns normally.

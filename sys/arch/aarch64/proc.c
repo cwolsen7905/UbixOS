@@ -43,10 +43,21 @@ void md_new_task(kTask_t *t)
 }
 
 /**
- * Build a new thread's initial kernel-stack frame.  Lays down a 12-slot
- * callee-saved frame at the top of the task's kernel stack with the saved lr set
- * to md_entry, so the first switch_to() into this task restores the (zeroed)
- * registers and `ret`s straight into the entry point.
+ * First-switch trampoline for a user (EL0) task: ERET to its entry at EL0.
+ *
+ * Reached when switch_to() first dispatches the task — _current is already the
+ * new task, and SP (SP_EL1) is its kernel stack (the seeded frame was popped),
+ * so its later EL0 traps land on that stack.  Does not return.
+ */
+static void user_trampoline(void)
+{
+	aarch64_eret_to_el0(_current->md.md_entry, _current->md.md_usp);
+}
+
+/**
+ * Build a new task's initial kernel-stack frame.  A kernel thread's saved lr is
+ * its entry point (the first switch_to() `ret`s into it); a user task's (md_usp
+ * set) saved lr is user_trampoline, which ERETs to EL0.
  */
 void md_setup_initial_frame(kTask_t *t)
 {
@@ -55,7 +66,7 @@ void md_setup_initial_frame(kTask_t *t)
 	sp -= FRAME_SLOTS;
 	for (unsigned i = 0; i < FRAME_SLOTS; i++)
 		sp[i] = 0;
-	sp[LR_SLOT] = t->md.md_entry; /* aarch64_ctx_switch `ret`s here on first switch-in */
+	sp[LR_SLOT] = (t->md.md_usp != 0) ? (u_int64_t)(uintptr_t)user_trampoline : t->md.md_entry;
 
 	t->md.md_kstack = (u_int64_t)(uintptr_t)sp;
 }

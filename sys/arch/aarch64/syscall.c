@@ -14,6 +14,8 @@
 
 #include "bringup.h"
 #include <sys/types.h>
+#include <ubixos/sched.h>   /* _current, sched_yield */
+#include <ubixos/endtask.h> /* endTask */
 
 #define SYS_EXIT 1
 #define SYS_WRITE 4
@@ -52,8 +54,20 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args)
 
 		case SYS_EXIT:
 			kprintf("[kernel] EL0 process exit(%lu)\n", args[0]);
-			aarch64_el0_return(); /* abandons the handler, returns to enter_el0's caller */
-			return 0;             /* unreachable */
+			if (_current != 0 && _current->md.md_usp != 0)
+			{
+				/* A real scheduled user task: terminate it and reschedule (the
+				 * scheduler switches to the next runnable task; never returns). */
+				endTask(_current->id);
+				sched_yield();
+			}
+			else
+			{
+				/* Bring-up demo launched via aarch64_enter_el0: longjmp back to
+				 * its kernel caller. */
+				aarch64_el0_return();
+			}
+			return 0; /* unreachable */
 
 		default:
 			kprintf("[kernel] unknown EL0 syscall #%lu\n", number);
