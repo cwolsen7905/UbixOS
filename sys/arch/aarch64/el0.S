@@ -61,22 +61,25 @@ aarch64_el0_return:
 	.size aarch64_el0_return, . - aarch64_el0_return
 
 /*
- * EL0 demo payload: invoke two "print" syscalls then the exit syscall.
- * Position-independent (only svc + relative branch), so it can be copied into
- * any EL0-mapped page.  Calling convention mirrors Linux/aarch64: x8 = syscall
- * number, x0 = first argument.
+ * EL0 demo payload: write(1, msg, len) then exit(0) via real syscalls.
+ * Position-independent (svc, relative branch, PC-relative `adr` for the
+ * message), so it can be copied into any EL0-mapped page.  Syscall convention:
+ * x8 = number (FreeBSD: write=4, exit=1), x0-x2 = args.
  */
 	.global user_demo_code_start, user_demo_code_end
 user_demo_code_start:
-	mov	x8, #42			/* syscall 42 */
-	mov	x0, #7			/*   arg = 7  */
+	mov	x0, #1					/* fd = stdout */
+	adr	x1, user_demo_msg			/* buf (runtime VA) */
+	mov	x2, #(user_demo_msg_end - user_demo_msg)	/* len */
+	mov	x8, #4					/* SYS_write */
 	svc	#0
-	mov	x8, #43			/* syscall 43 */
-	mov	x0, #9			/*   arg = 9  */
+	mov	x0, #0					/* exit code 0 */
+	mov	x8, #1					/* SYS_exit */
 	svc	#0
-	mov	x8, #0			/* syscall 0 = exit */
-	svc	#0
-1:	b	1b			/* safety: never reached */
+1:	b	1b					/* safety: never reached */
+user_demo_msg:
+	.ascii	"Hello from EL0 — aarch64 user mode via syscall!\n"
+user_demo_msg_end:
 user_demo_code_end:
 
 	.section .bss

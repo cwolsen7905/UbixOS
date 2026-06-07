@@ -59,6 +59,9 @@ void aarch64_el0_return(void);
 extern char user_demo_code_start[];
 extern char user_demo_code_end[];
 
+/* syscall.c — minimal EL0 syscall dispatch (write/exit/getpid). */
+u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args);
+
 /* syscalldemo.c — map a user page, drop to EL0, exercise the SVC path. */
 void aarch64_syscall_demo(void);
 

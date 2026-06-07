@@ -64,19 +64,10 @@ void aarch64_exception(u_int64_t kind, void *frame)
 
 		if (((esr >> 26) & 0x3f) == ESR_EC_SVC64)
 		{
-			u_int64_t num = gpr[8]; /* x8 = syscall number */
-			u_int64_t arg = gpr[0]; /* x0 = first argument  */
-
-			if (num == 0)
-			{
-				/* exit: abandon the handler and longjmp back to enter_el0's caller. */
-				kprintf("  [EL0] exit syscall — returning to kernel\n");
-				aarch64_el0_return(); /* does not return */
-			}
-
-			kprintf("  [EL0] syscall #%lu (arg=%lu)\n", num, arg);
-			gpr[0] = num * 2; /* demo return value, lands in x0 via KERNEL_EXIT */
-			return;           /* ERET back to EL0 */
+			/* x8 = syscall number; x0..x5 (gpr[0..5]) are the arguments.
+			 * The return value lands in x0 via KERNEL_EXIT (exit never returns). */
+			gpr[0] = aarch64_syscall(gpr[8], gpr);
+			return; /* ERET back to EL0 */
 		}
 
 		/* Any other EL0 sync cause (fault, undef) falls through to the dump. */
