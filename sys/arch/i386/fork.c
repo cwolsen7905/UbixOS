@@ -114,7 +114,11 @@ int sys_rfork(struct thread *td, struct sys_rfork_args *args) {
   newThread->md.md_tss.ds       = td->frame->tf_ds;
   newThread->md.md_tss.es       = td->frame->tf_es;
   newThread->md.md_tss.fs       = td->frame->tf_fs;
-  newThread->md.md_tss.gs       = _current->md.md_tss.gs & 0xFF; /* TLS %gs set in the TLS step */
+  /* TLS: %gs selects the shared LDT[1] (0xF); install this thread's own base
+   * (CLONE_SETTLS — args->tls is musl's thread pointer).  cpu_switch restores
+   * tls_base into LDT[1] on every resume, so the child sees its own %gs:0. */
+  newThread->md.md_tss.gs       = 0xF;
+  newThread->tls_base           = (u_int32_t)args->tls;
   newThread->md.md_tss.ldt      = 0x18;
   newThread->md.md_tss.back_link = 0x0;
   newThread->md.md_tss.trace_bitmap = 0x0000;
@@ -138,6 +142,17 @@ int sys_rfork(struct thread *td, struct sys_rfork_args *args) {
   memset(newThread->td.sig_extra, 0, sizeof(newThread->td.sig_extra));
   memcpy(newThread->td.sigact, td->sigact, sizeof(newThread->td.sigact));
   memcpy(&newThread->td.sigmask, &td->sigmask, sizeof(newThread->td.sigmask));
+
+  /*
+   * CLONE_PARENT_SETTID: publish the new tid to the parent's user memory now
+   * (we run in the parent's address space).  musl reads pthread->tid from here.
+   * CLONE_CHILD_CLEARTID: remember the address the kernel must zero + futex-wake
+   * when this thread exits (endTask) — musl uses it to release the thread-list
+   * lock held across pthread_exit.
+   */
+  if (args->ptid != NULL)
+    *args->ptid = newThread->id;
+  newThread->clear_tid = (int *)args->ctid;
 
   newThread->parent = _current;
   _current->children++;

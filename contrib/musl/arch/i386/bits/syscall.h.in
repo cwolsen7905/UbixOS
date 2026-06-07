@@ -673,6 +673,11 @@
 #undef  __NR_exit_group
 #define __NR_exit_group		(0x8000 | 65)
 
+/* membarrier: Linux=375, but FreeBSD has it natively at 584 — a real FreeBSD
+ * syscall, so it stays on the POSIX table (int $0x80), NOT the native ABI. */
+#undef  __NR_membarrier
+#define __NR_membarrier		584
+
 /* getpgid: Linux=132, UbixOS=207 */
 #undef  __NR_getpgid
 #define __NR_getpgid		207

@@ -8,10 +8,13 @@
  *   ebp+8=fn  +12=stack  +16=flags  +20=arg  +24=ptid  +28=tls  +32=ctid
  *
  * Kernel ABI (sys_rfork): args read from the user stack at tf_esp+4:
- *   arg1=flags  arg2=child_stack  arg3=tls
+ *   arg1=flags  arg2=child_stack  arg3=tls  arg4=ptid  arg5=ctid
  * The kernel starts the new thread on child_stack at this same eip with
  * eax==0; the parent gets the new tid in eax.  fn+arg are stashed on the
- * child stack so the child can retrieve and call them.
+ * child stack so the child can retrieve and call them.  The kernel installs
+ * tls as the child's %gs base (CLONE_SETTLS), writes the new tid to *ptid
+ * (CLONE_PARENT_SETTID), and zeroes + futex-wakes *ctid on exit
+ * (CLONE_CHILD_CLEARTID — musl's thread-list-lock release).
  */
 .text
 .global __clone
@@ -34,13 +37,13 @@ __clone:
 	mov 8(%ebp), %eax	/* fn */
 	mov %eax, 0(%ecx)
 
-	/* Push the uBixOS syscall args (flags, child_stack, tls) + a fake return
-	 * slot, so the kernel reads them at tf_esp+4.. */
-	mov 28(%ebp), %edx	/* tls */
-	mov 16(%ebp), %eax	/* flags */
-	push %edx		/* tf_esp+12 = tls */
+	/* Push the uBixOS syscall args (flags, child_stack, tls, ptid, ctid) + a
+	 * fake return slot, so the kernel reads them at tf_esp+4.. */
+	push 32(%ebp)		/* tf_esp+20 = ctid */
+	push 24(%ebp)		/* tf_esp+16 = ptid */
+	push 28(%ebp)		/* tf_esp+12 = tls  */
 	push %ecx		/* tf_esp+8  = child stack */
-	push %eax		/* tf_esp+4  = flags */
+	push 16(%ebp)		/* tf_esp+4  = flags */
 	push $0			/* tf_esp+0  = fake return address */
 	mov $251, %eax		/* SYS_rfork */
 	int $0x80
@@ -49,7 +52,7 @@ __clone:
 	test %eax, %eax
 	jz 1f
 
-	add $16, %esp		/* drop the 4 pushed dwords */
+	add $24, %esp		/* drop the 6 pushed dwords */
 	pop %edi
 	pop %esi
 	pop %ebx

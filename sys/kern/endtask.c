@@ -65,6 +65,20 @@ void endTask(pidType pid)
 	asm volatile("movw %0, %%gs" : : "r"((u_int16_t)SEL_PCPU) : "memory");
 
 	/*
+	 * CLONE_CHILD_CLEARTID: a thread created via rfork/clone may have asked the
+	 * kernel to zero a user address and futex-wake it on exit (musl uses this to
+	 * release the thread-list lock held across pthread_exit).  Do it now, while
+	 * this thread's (shared) address space is still mapped and before any
+	 * teardown below.  The waiter is a sibling sleeping on the same address.
+	 */
+	if (_current->clear_tid != NULL)
+	{
+		*_current->clear_tid = 0;
+		sched_wakeup_chan(_current->clear_tid);
+		_current->clear_tid = NULL;
+	}
+
+	/*
 	 * Release the full per-process address space while we are still _current
 	 * so PT_BASE_ADDR reflects our own page tables.  Start at PD[1]
 	 * (0x400000) rather than VMM_USER_START (0x800000): PD[1] holds COW'd

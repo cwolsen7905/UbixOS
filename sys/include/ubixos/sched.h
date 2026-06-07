@@ -122,6 +122,10 @@ typedef struct taskStruct {
                                   * an address space share one LDT[1] slot, so each switch must
                                   * restore the resuming thread's own base.  0 = no TLS (kernel
                                   * threads, or a process before its first set_thread_area). */
+    int       *clear_tid;        /* CLONE_CHILD_CLEARTID: user address the kernel zeroes and
+                                  * futex-wakes when this thread exits (endTask).  musl uses it to
+                                  * release the thread-list lock held across pthread_exit.  NULL for
+                                  * a normal process or a thread created without the flag. */
 } kTask_t;
 
 /*

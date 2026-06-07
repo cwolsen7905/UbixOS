@@ -601,6 +601,27 @@ struct syscall_entry systemCalls_posix[] = {
     {0, "cpuset_getdomain", sys_invalid, SYSCALL_NOTIMP},                                                       /* 561 - Invalid */
     {0, "cpuset_setdomain", sys_invalid, SYSCALL_NOTIMP},                                                       /* 562 - Invalid */
     {ARG_COUNT(sys_getrandom_args), "getrandom", (sys_call_t *)sys_getrandom, SYSCALL_VALID},                  /* 563 - getrandom */
+    {0, "getfhat", sys_invalid, SYSCALL_NOTIMP},                                                               /* 564 - Invalid */
+    {0, "fhlink", sys_invalid, SYSCALL_NOTIMP},                                                                /* 565 - Invalid */
+    {0, "fhlinkat", sys_invalid, SYSCALL_NOTIMP},                                                              /* 566 - Invalid */
+    {0, "fhreadlink", sys_invalid, SYSCALL_NOTIMP},                                                            /* 567 - Invalid */
+    {0, "funlinkat", sys_invalid, SYSCALL_NOTIMP},                                                             /* 568 - Invalid */
+    {0, "copy_file_range", sys_invalid, SYSCALL_NOTIMP},                                                       /* 569 - Invalid */
+    {0, "__sysctlbyname", sys_invalid, SYSCALL_NOTIMP},                                                        /* 570 - Invalid */
+    {0, "shm_open2", sys_invalid, SYSCALL_NOTIMP},                                                             /* 571 - Invalid */
+    {0, "shm_rename", sys_invalid, SYSCALL_NOTIMP},                                                            /* 572 - Invalid */
+    {0, "sigfastblock", sys_invalid, SYSCALL_NOTIMP},                                                          /* 573 - Invalid */
+    {0, "__realpathat", sys_invalid, SYSCALL_NOTIMP},                                                          /* 574 - Invalid */
+    {0, "close_range", sys_invalid, SYSCALL_NOTIMP},                                                           /* 575 - Invalid */
+    {0, "rpctls_syscall", sys_invalid, SYSCALL_NOTIMP},                                                        /* 576 - Invalid */
+    {0, "__specialfd", sys_invalid, SYSCALL_NOTIMP},                                                           /* 577 - Invalid */
+    {0, "aio_writev", sys_invalid, SYSCALL_NOTIMP},                                                            /* 578 - Invalid */
+    {0, "aio_readv", sys_invalid, SYSCALL_NOTIMP},                                                             /* 579 - Invalid */
+    {0, "fspacectl", sys_invalid, SYSCALL_NOTIMP},                                                             /* 580 - Invalid */
+    {0, "sched_getcpu", sys_invalid, SYSCALL_NOTIMP},                                                          /* 581 - Invalid */
+    {0, "swapoff", sys_invalid, SYSCALL_NOTIMP},                                                               /* 582 - Invalid */
+    {0, "kqueuex", sys_invalid, SYSCALL_NOTIMP},                                                               /* 583 - Invalid */
+    {2, "membarrier", (sys_call_t *)sys_membarrier, SYSCALL_VALID},                                            /* 584 - membarrier (UP no-op) */
 };
 
 int totalCalls_posix = sizeof(systemCalls_posix) / sizeof(struct syscall_entry);

@@ -19,6 +19,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   WAKE). Threads share the address space, so a user virtual address is the wait token.
   Backs musl's mutex/cond/sem/barrier/once. `bin/futextest` verifies a worker blocks
   in FUTEX_WAIT until FUTEX_WAKE.
+- **Kernel threads — musl pthreads (Task E, milestone 1)** — real `pthread_create` /
+  `pthread_mutex` / `pthread_join` work. `sys_rfork` now honours the three CLONE bits
+  musl needs: SETTLS (installs the child's `%gs` base), PARENT_SETTID (writes the new
+  tid to `*ptid`), CHILD_CLEARTID (`endTask` zeroes + futex-wakes the address, releasing
+  musl's thread-list lock held across `pthread_exit`). `clone.s` passes ptid/ctid.
+  `bin/pthreadtest` (4 threads, mutex-guarded counter, joins) verifies it. (Deferred:
+  detached-thread `__unmapself` needs a kernel-assisted unmap+exit; `membarrier`.)
+- **`membarrier` syscall** — uniprocessor no-op at the real FreeBSD number (POSIX 584;
+  musl's Linux #375 remapped to it). POSIX table extended through 584. Keeps a real
+  FreeBSD call on the FreeBSD-numbered table (native ABI is only for Linux-only calls).
 - **UbixOS-native ABI for Linux-compat primitives** — `futex`, `set_thread_area`, and
   `exit_group` (Linux calls with no FreeBSD syscall number) moved from the
   FreeBSD-numbered POSIX table (`int $0x80`) to the UbixOS-native table (`int $0x81`,

@@ -81,6 +81,12 @@ struct sys_rfork_args
 	char tls_l_[PADL_(caddr_t)];
 	caddr_t tls;
 	char tls_r_[PADR_(caddr_t)];
+	char ptid_l_[PADL_(int *)];
+	int *ptid; /* CLONE_PARENT_SETTID: kernel writes the new tid here (parent) */
+	char ptid_r_[PADR_(int *)];
+	char ctid_l_[PADL_(int *)];
+	int *ctid; /* CLONE_CHILD_CLEARTID: kernel zeroes + futex-wakes this on exit */
+	char ctid_r_[PADR_(int *)];
 };
 
 struct sys_read_args
@@ -1476,6 +1482,7 @@ struct sys_futex_args
 	char timeout_r_[PADR_(void *)];
 };
 int sys_futex(struct thread *td, struct sys_futex_args *uap);
+int sys_membarrier(struct thread *td, void *uap);
 
 struct sys_set_thread_area_args
 {

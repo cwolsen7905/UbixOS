@@ -315,6 +315,22 @@ static int futex_wait_cond(void *arg)
 }
 
 /**
+ * sys_membarrier - no-op on a uniprocessor.
+ *
+ * membarrier(2) forces memory barriers across all CPUs running threads of the
+ * process; on a single CPU that is trivially already satisfied, so every command
+ * is a successful no-op.  musl calls MEMBARRIER_CMD_REGISTER_PRIVATE_EXPEDITED
+ * once from pthread_create and ignores the result.  FreeBSD has membarrier
+ * natively (POSIX syscall 584), so it lives on the FreeBSD-numbered table.
+ */
+int sys_membarrier(struct thread *td, void *uap)
+{
+	(void)uap;
+	td->td_retval[0] = 0;
+	return (0);
+}
+
+/**
  * sys_futex - minimal futex on the kernel's wait_chan sleep/wake primitive.
  *
  * UbixOS-native ABI (int $0x81) — futex is a Linux primitive with no FreeBSD
