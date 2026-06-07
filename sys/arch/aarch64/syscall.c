@@ -21,6 +21,31 @@
 #define SYS_FORK 2
 #define SYS_WRITE 4
 #define SYS_GETPID 20
+#define SYS_SET_TID_ADDRESS 258
+
+/* musl routes the Linux-compat primitives (exit_group, set_thread_area, futex)
+ * through the UbixOS-native int $0x81 table by ORing in this flag (matches the
+ * i386 port; see project_native_abi_threading). */
+#define NATIVE_FLAG 0x8000
+#define NATIVE_EXIT_GROUP 65
+
+/**
+ * Terminate the current task (shared by exit / exit_group): a scheduled user
+ * task is reaped + rescheduled; a bring-up enter_el0 demo longjmps back.
+ */
+static void do_exit(u_int64_t code)
+{
+	kprintf("[kernel] EL0 process exit(%lu)\n", code);
+	if (_current != 0 && _current->md.md_usp != 0)
+	{
+		endTask(_current->id);
+		sched_yield();
+	}
+	else
+	{
+		aarch64_el0_return();
+	}
+}
 
 /**
  * write(fd, buf, len): copy @len bytes from the (currently-mapped) user buffer
@@ -45,6 +70,21 @@ static u_int64_t sys_write(u_int64_t fd, u_int64_t buf, u_int64_t len)
  */
 u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args)
 {
+	/* Native (int $0x81-equivalent) syscalls musl ORs with NATIVE_FLAG. */
+	if (number & NATIVE_FLAG)
+	{
+		u_int64_t n = number & ~(u_int64_t)NATIVE_FLAG;
+		switch (n)
+		{
+			case NATIVE_EXIT_GROUP:
+				do_exit(args[0]);
+				return 0; /* unreachable */
+			default:
+				kprintf("[kernel] unimplemented native EL0 syscall #%lu\n", n);
+				return (u_int64_t)-1;
+		}
+	}
+
 	switch (number)
 	{
 		case SYS_WRITE:
@@ -57,21 +97,13 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args)
 		case SYS_GETPID:
 			return (_current != 0) ? (u_int64_t)_current->id : 0;
 
+		case SYS_SET_TID_ADDRESS:
+			/* musl registers a clear-on-exit TID address at startup; the return
+			 * value is the caller's thread id. */
+			return (_current != 0) ? (u_int64_t)_current->id : 1;
+
 		case SYS_EXIT:
-			kprintf("[kernel] EL0 process exit(%lu)\n", args[0]);
-			if (_current != 0 && _current->md.md_usp != 0)
-			{
-				/* A real scheduled user task: terminate it and reschedule (the
-				 * scheduler switches to the next runnable task; never returns). */
-				endTask(_current->id);
-				sched_yield();
-			}
-			else
-			{
-				/* Bring-up demo launched via aarch64_enter_el0: longjmp back to
-				 * its kernel caller. */
-				aarch64_el0_return();
-			}
+			do_exit(args[0]);
 			return 0; /* unreachable */
 
 		default:
