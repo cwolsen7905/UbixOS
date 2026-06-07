@@ -14,9 +14,9 @@
 /**
  * Return the current exception level (0-3) from CurrentEL[3:2].
  */
-static uint64_t current_el(void)
+static u_int64_t current_el(void)
 {
-	uint64_t v;
+	u_int64_t v;
 	__asm__ volatile("mrs %0, CurrentEL" : "=r"(v));
 	return (v >> 2) & 0x3;
 }

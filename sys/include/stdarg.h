@@ -29,7 +29,16 @@
 #ifndef _STDARG_H
 #define _STDARG_H
 
+/*
+ * va_list is the compiler's builtin variadic-argument type.  On i386 it is
+ * pointer-like (historically char *); on aarch64 it is a struct, so the builtin
+ * type must be used or __builtin_va_arg rejects it.
+ */
+#if defined(__aarch64__)
+typedef __builtin_va_list va_list;
+#else
 typedef char *va_list;
+#endif
 
 /*
  #define __va_size(type) (((sizeof(type) + sizeof(int) - 1) / sizeof(int)) * sizeof(int))

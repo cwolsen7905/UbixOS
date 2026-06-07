@@ -14,25 +14,25 @@
 
 #define TIMER_INTID 30 /* EL1 physical timer PPI */
 
-static uint64_t g_interval; /* counts per tick */
+static u_int64_t g_interval; /* counts per tick */
 static unsigned g_ticks;
 
 /**
  * Read the timer frequency (Hz) the platform reports in CNTFRQ_EL0.
  */
-static uint64_t read_cntfrq(void)
+static u_int64_t read_cntfrq(void)
 {
-	uint64_t v;
+	u_int64_t v;
 	__asm__ volatile("mrs %0, cntfrq_el0" : "=r"(v));
 	return v;
 }
 
-static void write_tval(uint64_t v)
+static void write_tval(u_int64_t v)
 {
 	__asm__ volatile("msr cntp_tval_el0, %0" : : "r"(v));
 }
 
-static void write_ctl(uint64_t v)
+static void write_ctl(u_int64_t v)
 {
 	__asm__ volatile("msr cntp_ctl_el0, %0" : : "r"(v));
 }
@@ -43,7 +43,7 @@ static void write_ctl(uint64_t v)
  */
 void timer_init(void)
 {
-	uint64_t freq = read_cntfrq();
+	u_int64_t freq = read_cntfrq();
 	g_interval = freq / 2; /* 2 Hz */
 	kprintf("timer: cntfrq=%lu Hz, tick interval=%lu counts (~2 Hz)\n", freq, g_interval);
 

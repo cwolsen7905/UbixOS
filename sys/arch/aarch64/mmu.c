@@ -17,11 +17,11 @@
 #define MMU_1GB (1UL << 30)
 
 /* Level-1 table: 512 entries, each a 1 GB block.  4 KB aligned (one page). */
-static uint64_t l1_table[512] __attribute__((aligned(4096)));
+static u_int64_t l1_table[512] __attribute__((aligned(4096)));
 
 /* Block/page descriptor bits. */
 #define DESC_BLOCK 0x1UL          /* [1:0] = 01: block at level 1/2 */
-#define DESC_ATTR(i) ((uint64_t)(i) << 2) /* [4:2] = MAIR AttrIndx */
+#define DESC_ATTR(i) ((u_int64_t)(i) << 2) /* [4:2] = MAIR AttrIndx */
 #define DESC_SH_INNER (3UL << 8)  /* [9:8] = 11: inner shareable */
 #define DESC_AF (1UL << 10)       /* [10] = access flag */
 
@@ -40,8 +40,8 @@ void aarch64_mmu_init(void)
 {
 	for (unsigned i = 0; i < 512; i++)
 	{
-		uint64_t pa = (uint64_t)i * MMU_1GB;
-		uint64_t attr;
+		u_int64_t pa = (u_int64_t)i * MMU_1GB;
+		u_int64_t attr;
 
 		if (i == 0)
 			attr = DESC_ATTR(ATTR_DEVICE_IDX); /* peripherals: no shareability */
@@ -52,14 +52,14 @@ void aarch64_mmu_init(void)
 	}
 
 	/* MAIR_EL1: attr0 = Normal WB, attr1 = Device-nGnRE. */
-	uint64_t mair = (MAIR_NORMAL << (8 * ATTR_NORMAL_IDX)) | (MAIR_DEVICE << (8 * ATTR_DEVICE_IDX));
+	u_int64_t mair = (MAIR_NORMAL << (8 * ATTR_NORMAL_IDX)) | (MAIR_DEVICE << (8 * ATTR_DEVICE_IDX));
 	__asm__ volatile("msr mair_el1, %0" : : "r"(mair));
 
 	/*
 	 * TCR_EL1: T0SZ=25 (39-bit VA → start at level 1), TG0=4KB, inner-shareable,
 	 * WB cacheable table walks, EPD1=1 (TTBR1 unused for now), IPS=40-bit PA.
 	 */
-	uint64_t tcr = (25UL << 0)  /* T0SZ */
+	u_int64_t tcr = (25UL << 0)  /* T0SZ */
 	             | (1UL << 8)   /* IRGN0 = WB */
 	             | (1UL << 10)  /* ORGN0 = WB */
 	             | (3UL << 12)  /* SH0   = inner */
@@ -68,12 +68,12 @@ void aarch64_mmu_init(void)
 	             | (2UL << 32); /* IPS   = 40-bit */
 	__asm__ volatile("msr tcr_el1, %0" : : "r"(tcr));
 
-	__asm__ volatile("msr ttbr0_el1, %0" : : "r"((uint64_t)(uintptr_t)l1_table));
+	__asm__ volatile("msr ttbr0_el1, %0" : : "r"((u_int64_t)(uintptr_t)l1_table));
 
 	__asm__ volatile("isb");
 	__asm__ volatile("tlbi vmalle1; dsb nsh; isb");
 
-	uint64_t sctlr;
+	u_int64_t sctlr;
 	__asm__ volatile("mrs %0, sctlr_el1" : "=r"(sctlr));
 	sctlr |= (1UL << 0)    /* M — MMU enable */
 	       | (1UL << 2)    /* C — data/unified cache */

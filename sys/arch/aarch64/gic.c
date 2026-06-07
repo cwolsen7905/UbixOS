@@ -16,9 +16,9 @@
 #define GICD_BASE 0x08000000UL
 #define GICC_BASE 0x08010000UL
 
-#define GICD(off) (*(volatile uint32_t *)(GICD_BASE + (off)))
-#define GICC(off) (*(volatile uint32_t *)(GICC_BASE + (off)))
-#define GICD_PRIO(intid) (*(volatile uint8_t *)(GICD_BASE + 0x400 + (intid)))
+#define GICD(off) (*(volatile u_int32_t *)(GICD_BASE + (off)))
+#define GICC(off) (*(volatile u_int32_t *)(GICC_BASE + (off)))
+#define GICD_PRIO(intid) (*(volatile u_int8_t *)(GICD_BASE + 0x400 + (intid)))
 
 #define GICD_CTLR 0x000
 #define GICD_ISENABLER 0x100
@@ -56,8 +56,8 @@ void gic_enable_intid(unsigned intid)
  */
 void aarch64_irq_dispatch(void)
 {
-	uint32_t iar = GICC(GICC_IAR);
-	uint32_t intid = iar & 0x3FF;
+	u_int32_t iar = GICC(GICC_IAR);
+	u_int32_t intid = iar & 0x3FF;
 
 	if (intid >= GICC_SPURIOUS)
 		return; /* spurious — no EOI */

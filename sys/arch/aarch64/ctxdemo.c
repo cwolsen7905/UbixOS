@@ -16,25 +16,25 @@
 #define FRAME_SLOTS 12   /* callee-saved frame: x19-x28, x29, x30 */
 #define LR_SLOT 11       /* x30 (lr) offset 88 = slot 11 in the frame */
 
-static uint64_t g_main_sp;
-static uint64_t g_a_sp;
-static uint64_t g_b_sp;
-static uint64_t g_a_stack[STACK_WORDS] __attribute__((aligned(16)));
-static uint64_t g_b_stack[STACK_WORDS] __attribute__((aligned(16)));
+static u_int64_t g_main_sp;
+static u_int64_t g_a_sp;
+static u_int64_t g_b_sp;
+static u_int64_t g_a_stack[STACK_WORDS] __attribute__((aligned(16)));
+static u_int64_t g_b_stack[STACK_WORDS] __attribute__((aligned(16)));
 
 /**
  * Seed a fresh thread stack with a ctx-switch frame whose saved lr (x30) is the
  * entry point; the first switch-in restores it and `ret`s into @entry.  Returns
  * the SP to hand to aarch64_ctx_switch().
  */
-static uint64_t seed(uint64_t *stack, unsigned words, void (*entry)(void))
+static u_int64_t seed(u_int64_t *stack, unsigned words, void (*entry)(void))
 {
-	uint64_t *sp = stack + words; /* top of stack (grows down) */
+	u_int64_t *sp = stack + words; /* top of stack (grows down) */
 	sp -= FRAME_SLOTS;
 	for (unsigned i = 0; i < FRAME_SLOTS; i++)
 		sp[i] = 0;
-	sp[LR_SLOT] = (uint64_t)(uintptr_t)entry;
-	return (uint64_t)(uintptr_t)sp;
+	sp[LR_SLOT] = (u_int64_t)(uintptr_t)entry;
+	return (u_int64_t)(uintptr_t)sp;
 }
 
 static void thread_a(void)

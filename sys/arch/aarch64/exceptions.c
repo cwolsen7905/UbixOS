@@ -20,11 +20,11 @@ enum
 };
 
 /**
- * Read a system register by name into a uint64_t.
+ * Read a system register by name into a u_int64_t.
  */
 #define READ_SYSREG(reg)                                                                                               \
 	({                                                                                                             \
-		uint64_t _v;                                                                                            \
+		u_int64_t _v;                                                                                            \
 		__asm__ volatile("mrs %0, " #reg : "=r"(_v));                                                          \
 		_v;                                                                                                    \
 	})
@@ -34,7 +34,7 @@ enum
  */
 void aarch64_vbar_init(void)
 {
-	uint64_t base = (uint64_t)(uintptr_t)vectors_el1;
+	u_int64_t base = (u_int64_t)(uintptr_t)vectors_el1;
 	__asm__ volatile("msr vbar_el1, %0; isb" : : "r"(base));
 }
 
@@ -42,7 +42,7 @@ void aarch64_vbar_init(void)
  * C exception dispatcher called from every vector stub.  @kind is one of the
  * EXC_* values; @frame points at the saved GPRs (unused for now).
  */
-void aarch64_exception(uint64_t kind, void *frame)
+void aarch64_exception(u_int64_t kind, void *frame)
 {
 	(void)frame;
 
@@ -53,9 +53,9 @@ void aarch64_exception(uint64_t kind, void *frame)
 		return;
 	}
 
-	uint64_t esr = READ_SYSREG(esr_el1);
-	uint64_t elr = READ_SYSREG(elr_el1);
-	uint64_t far = READ_SYSREG(far_el1);
+	u_int64_t esr = READ_SYSREG(esr_el1);
+	u_int64_t elr = READ_SYSREG(elr_el1);
+	u_int64_t far = READ_SYSREG(far_el1);
 
 	if (kind == EXC_SYNC)
 		kprintf("\n*** aarch64 synchronous exception ***\n");

@@ -76,18 +76,24 @@ kernel-i386:
 
 # AArch64 bring-up kernel: assemble the entry, compile the PL011 banner, link at
 # the QEMU `virt` RAM base.  Standalone — does NOT descend into sys/Makefile.
+# Kernel compile flags shared by aarch64 .S and .c — the same -nostdinc +
+# sys/include + freestanding conventions as the i386 kernel (so generic kernel
+# objects can link in), with the aarch64 ISA flags from KERN_TARGET_CFLAGS.
+AARCH64_KCFLAGS = ${KERN_TARGET_CFLAGS} -DDEBUG_SYSCTL -O -Wall -Wno-incompatible-pointer-types \
+	-nostdlib -nostdinc -fno-builtin -fno-exceptions -ffreestanding -fno-pie -fno-pic \
+	-fno-stack-protector -I${CURDIR}/sys/include
+
 kernel-aarch64:
 	@mkdir -p ${OBJ_DIR}/boot ${OBJ_DIR}/obj/sys
 	@for f in ${CURDIR}/sys/arch/aarch64/*.S; do \
 	    o=${OBJ_DIR}/obj/sys/`basename $$f .S`.o; \
 	    echo "${CROSS_PREFIX}gcc [asm] $$f"; \
-	    ${CROSS_PREFIX}gcc ${KERN_TARGET_CFLAGS} -ffreestanding -fno-pie -fno-pic -c $$f -o $$o || exit 1; \
+	    ${CROSS_PREFIX}gcc ${AARCH64_KCFLAGS} -c $$f -o $$o || exit 1; \
 	done
 	@for f in ${CURDIR}/sys/arch/aarch64/*.c; do \
 	    o=${OBJ_DIR}/obj/sys/`basename $$f .c`.o; \
 	    echo "${CROSS_PREFIX}gcc [c]   $$f"; \
-	    ${CROSS_PREFIX}gcc ${KERN_TARGET_CFLAGS} -ffreestanding -fno-pie -fno-pic -std=c99 -O2 -Wall -Wextra \
-	        -c $$f -o $$o || exit 1; \
+	    ${CROSS_PREFIX}gcc ${AARCH64_KCFLAGS} -std=c99 -c $$f -o $$o || exit 1; \
 	done
 	${CROSS_PREFIX}ld -T ${CURDIR}/sys/compile/ldscript.aarch64 -o ${OBJ_DIR}/boot/kernel ${OBJ_DIR}/obj/sys/*.o
 	@echo "aarch64 bring-up kernel linked: ${OBJ_DIR}/boot/kernel"

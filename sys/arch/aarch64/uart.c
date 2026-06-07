@@ -14,8 +14,8 @@
 
 /* QEMU `virt` PL011 UART0. */
 #define PL011_BASE 0x09000000UL
-#define UART_DR (*(volatile uint32_t *)(PL011_BASE + 0x00)) /* data */
-#define UART_FR (*(volatile uint32_t *)(PL011_BASE + 0x18)) /* flags */
+#define UART_DR (*(volatile u_int32_t *)(PL011_BASE + 0x00)) /* data */
+#define UART_FR (*(volatile u_int32_t *)(PL011_BASE + 0x18)) /* flags */
 #define UART_FR_TXFF (1u << 5)                              /* TX FIFO full */
 
 /**
@@ -27,7 +27,7 @@ void uart_putc(char c)
 	{
 		/* spin */
 	}
-	UART_DR = (uint32_t)(uint8_t)c;
+	UART_DR = (u_int32_t)(u_int8_t)c;
 }
 
 /**
@@ -46,7 +46,7 @@ void uart_puts(const char *s)
 /**
  * Emit an unsigned value in @base, right-justified to @width with @pad.
  */
-static void put_uint(uint64_t v, unsigned base, int width, char pad)
+static void put_uint(u_int64_t v, unsigned base, int width, char pad)
 {
 	static const char digits[] = "0123456789abcdef";
 	char buf[32];
@@ -108,10 +108,10 @@ void kvprintf(const char *fmt, va_list ap)
 				if (v < 0)
 				{
 					uart_putc('-');
-					put_uint((uint64_t)(-(int64_t)v), 10, 0, ' ');
+					put_uint((u_int64_t)(-(int64_t)v), 10, 0, ' ');
 				}
 				else
-					put_uint((uint64_t)v, 10, width, pad);
+					put_uint((u_int64_t)v, 10, width, pad);
 				break;
 			}
 			case 'u':
@@ -122,25 +122,25 @@ void kvprintf(const char *fmt, va_list ap)
 				break;
 			case 'p':
 				uart_puts("0x");
-				put_uint((uint64_t)(uintptr_t)va_arg(ap, void *), 16, 16, '0');
+				put_uint((u_int64_t)(uintptr_t)va_arg(ap, void *), 16, 16, '0');
 				break;
 			case 'l':
 			{
 				fmt++;
 				if (*fmt == 'x')
-					put_uint(va_arg(ap, uint64_t), 16, width, pad);
+					put_uint(va_arg(ap, u_int64_t), 16, width, pad);
 				else if (*fmt == 'u')
-					put_uint(va_arg(ap, uint64_t), 10, width, pad);
+					put_uint(va_arg(ap, u_int64_t), 10, width, pad);
 				else if (*fmt == 'd')
 				{
 					int64_t v = va_arg(ap, int64_t);
 					if (v < 0)
 					{
 						uart_putc('-');
-						put_uint((uint64_t)(-v), 10, 0, ' ');
+						put_uint((u_int64_t)(-v), 10, 0, ' ');
 					}
 					else
-						put_uint((uint64_t)v, 10, width, pad);
+						put_uint((u_int64_t)v, 10, width, pad);
 				}
 				else
 					uart_putc('l');

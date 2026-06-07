@@ -10,7 +10,7 @@
 #define _AARCH64_BRINGUP_H
 
 #include <stdarg.h>
-#include <stdint.h>
+#include <sys/types.h>
 
 /* uart.c — PL011 console + a minimal kprintf. */
 void uart_putc(char c);
@@ -35,7 +35,7 @@ void timer_tick(void);
 void aarch64_mmu_init(void);
 
 /* context.S / ctxdemo.c — cooperative context switch + its demo. */
-void aarch64_ctx_switch(uint64_t *save_sp, uint64_t next_sp);
+void aarch64_ctx_switch(u_int64_t *save_sp, u_int64_t next_sp);
 void aarch64_ctx_demo(void);
 
 #endif /* _AARCH64_BRINGUP_H */
