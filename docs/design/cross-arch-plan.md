@@ -86,7 +86,8 @@ same status.
 | 13 | MMU (TTBR0/1) + AArch64 `cpu_switch` + syscall entry | B | ⬜ Not started |
 | 14 | virtio-blk + virtio-net | B | ⬜ Not started |
 | 15 | virtio-gpu framebuffer + virtio-input (touch) | B | ⬜ Not started |
-| 16 | Raspberry Pi 4 hardware | B | ⬜ Not started |
+| 15a | **virtio-sound** (audio) → existing `aural` layer | B | ⬜ Not started — *was missing* |
+| 16 | Raspberry Pi 4 hardware (**optional** — QEMU is the target) | B | ⬜ Deferred |
 
 ### Major blockers (reviewed 2026-06-06)
 
@@ -404,9 +405,50 @@ the active target.)
 # Track B — arm64 (AArch64) bring-up
 
 Track-A leaves a clean, 64-bit-ready generic kernel. Track B writes the AArch64
-arch code and drivers. Each phase targets QEMU `virt` first (fully documented,
-virtio), then real hardware. Build with `TARGET_ARCH=aarch64`; the i386 build is
-never touched.
+arch code and drivers. Build with `TARGET_ARCH=aarch64`; the i386 build is never
+touched.
+
+### Target & dev environment (current effort)
+
+**QEMU `virt` is the target**, not a waypoint — the whole desktop (graphics,
+sound, network, input) runs on QEMU's virtio devices. Real hardware (Phase 16) is
+now **optional/deferred**; none of the board-specific work (GIC-400, mailbox FB,
+GENET, xHCI) is required to reach a working GUI.
+
+- **Host:** macOS on Apple Silicon (M5). Because the guest *and* host are both
+  AArch64, QEMU runs under the **HVF hardware accelerator at near-native speed** —
+  no slow x86→ARM TCG emulation. This is the best-case porting host.
+  ```sh
+  qemu-system-aarch64 -machine virt -accel hvf -cpu host -m 512 \
+    -kernel build/boot/kernel \
+    -drive if=none,file=ubixos-arm.img,format=raw,id=hd0 -device virtio-blk-device,drive=hd0 \
+    -netdev user,id=n0 -device virtio-net-device,netdev=n0 \
+    -device virtio-gpu-device -device virtio-keyboard-device -device virtio-mouse-device \
+    -audiodev coreaudio,id=a0 -device virtio-sound-device,audiodev=a0 \
+    -serial mon:stdio
+  ```
+- **Toolchain:** `brew install aarch64-elf-gcc aarch64-elf-binutils` (kernel,
+  freestanding); the world cross-compiles via the musl AArch64 shim. QEMU itself:
+  `brew install qemu`.
+- **Transport:** `-machine virt` exposes both **virtio-mmio** slots and a **PCIe**
+  bus. Bring-up uses virtio-mmio (simplest — fixed MMIO slots from the device
+  tree, no PCIe enumeration); virtio-pci can come later if wanted.
+
+### QEMU `virt` device coverage — what each subsystem rides on
+
+| Subsystem | QEMU device | UbixOS layer it plugs into | Phase |
+|-----------|-------------|----------------------------|-------|
+| Console | PL011 UART | `kprintf` / serial tty | 11 |
+| Interrupts/timer | GICv2 + ARM generic timer | IRQ dispatch + scheduler tick / callouts | 12 |
+| Storage | virtio-blk | existing VFS + FAT stack | 14 |
+| Network | virtio-net | existing lwIP stack | 14 |
+| Graphics | virtio-gpu (linear FB) | `sys_mapfb` → `views` + `objGFX` (CPU rendering) | 15 |
+| Input / touch | virtio-input | mouse/keyboard event queues; touch → pointer | 15 |
+| **Sound** | **virtio-sound (virtio-snd)** | existing **`aural`** audio abstraction (AC97 driver is i386/PCI-only, does not port) | 15a |
+
+All of these attach through the arch-neutral **newbus** model, exactly like the
+PC drivers — so the driver *framework* is reused; only the per-device virtio
+backends are new.
 
 ### Phase 11 — Minimal arm64 boot to UART on QEMU `virt`
 **Boot risk:** N/A (new kernel)
@@ -445,7 +487,17 @@ never touched.
 - virtio-input → keyboard + **touch/pointer**, the first step toward the
   touch-first mobile UX.
 
-### Phase 16 — Real hardware: Raspberry Pi / Orange Pi
+### Phase 15a — virtio-sound (audio)
+- virtio-snd driver (PCM playback stream over the virtqueues) attached via
+  newbus, presented under the existing **`aural`** sound abstraction so the
+  Settings Sound pane, volume tray, and `sndcfg` all work unchanged.
+- The i386 **AC97** driver does not port (PC PCI device); virtio-snd replaces it.
+  QEMU side: `-audiodev coreaudio,id=a0 -device virtio-sound-device,audiodev=a0`.
+- Milestone: a tone / WAV plays through the host's CoreAudio output.
+
+### Phase 16 — Real hardware: Raspberry Pi / Orange Pi (optional / deferred)
+**QEMU `virt` is the destination for this effort; this phase is optional** and
+only needed if/when the project wants to leave emulation for a physical board.
 - Swap QEMU `virt` peripherals for the board's: Pi 4 uses a GIC-400 (matches
   virt — least surprise), PL011 UART (over the GPIO header + USB-TTL cable),
   the firmware mailbox framebuffer, BCM GENET gigabit ethernet, and xHCI USB
@@ -541,7 +593,8 @@ Phase 5 is the hardest — do it last among the arch-isolation phases.
 | 13 | MMU (TTBR0/1) + AArch64 `cpu_switch` + syscall entry | QEMU `virt` |
 | 14 | virtio-mmio + virtio-blk + virtio-net (VFS/lwIP ride on top) | QEMU `virt` |
 | 15 | virtio-gpu framebuffer + virtio-input → `views`/`objGFX` + touch | QEMU `virt` |
-| 16 | Board peripherals (GIC-400, mailbox FB, GENET, xHCI) | Raspberry Pi 4 |
+| 15a | virtio-sound → `aural` audio abstraction | QEMU `virt` |
+| 16 | Board peripherals (GIC-400, mailbox FB, GENET, xHCI) — **optional** | Raspberry Pi 4 |
 
 ---
 
@@ -625,4 +678,5 @@ corrupt addresses. See the Status matrix near the top for the at-a-glance view.
 | 13 | MMU + `cpu_switch` + syscall entry | Not started |
 | 14 | virtio-blk + virtio-net | Not started |
 | 15 | virtio-gpu framebuffer + virtio-input (touch) | Not started |
-| 16 | Raspberry Pi 4 hardware | Not started |
+| 15a | virtio-sound (audio) → `aural` abstraction | Not started |
+| 16 | Raspberry Pi 4 hardware (optional — QEMU is the target) | Deferred |
