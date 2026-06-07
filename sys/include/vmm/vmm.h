@@ -69,8 +69,15 @@ extern "C" {
     extern u_int32_t vmm_bitmap_phys;
 
     int vmm_init();
-    int vmm_mem_map_init();
-    u_int32_t count_memory();
+    int vmm_mem_map_init(); /* machine-dependent — sys/arch/<arch>/vmm_machdep.c */
+    u_int32_t count_memory(); /* machine-dependent — sys/arch/<arch>/vmm_machdep.c */
+
+    /* Machine-independent page-bitmap helpers (sys/vmm/vmm_memory.c) called by
+     * the per-arch vmm_mem_map_init to stage the bitmap and account free RAM. */
+    void vmm_mem_bitmap_init(uintptr_t bitmap_phys, u_int32_t num_pages);
+    void vmm_mem_mark_available(u_int32_t first_page, u_int32_t last_page);
+    u_int32_t vmm_mem_free_pages(void);
+
     uintptr_t vmm_find_free_page(pidType pid);
     int free_page(uintptr_t pageAddr);
     int adjust_cow_counter(uintptr_t baseAddr, int adjustment);

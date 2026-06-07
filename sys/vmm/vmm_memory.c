@@ -28,9 +28,6 @@
 
 #include <vmm/vmm.h>
 #include <vmm/swap.h>
-#if defined(__i386__)
-#include <sys/io.h> /* port I/O + cr0 access — only the i386 memory probe needs it */
-#endif
 #include <ubixos/kpanic.h>
 #include <lib/kprintf.h>
 #include <lib/kmalloc.h>
@@ -52,10 +49,6 @@ u_int32_t vmm_bitmap_phys = 0;
 
 vmm_page_info_t *vmmMemoryMap = NULL;
 
-/* Linker symbols bracketing the kernel image. */
-extern char _start[]; // NOLINT(bugprone-reserved-identifier,readability-identifier-naming)
-extern char _end[];   // NOLINT(bugprone-reserved-identifier,readability-identifier-naming)
-
 /************************************************************************
 
  Function: void vmm_mem_map_init();
@@ -66,37 +59,26 @@ extern char _end[];   // NOLINT(bugprone-reserved-identifier,readability-identif
 
  ************************************************************************/
 /*
- * vmm_mem_map_init() and count_memory() are machine-dependent: they detect
- * installed RAM and lay out the page bitmap over the i386 physical map (1 MB
- * ISA/VGA/BIOS hole, kernel at 0x300000).  aarch64 supplies its own pair in
- * sys/arch/aarch64 for the QEMU `virt` layout (RAM at 0x40000000).  Everything
- * below this guard — the bitmap allocator (vmm_find_free_page/free_page, COW,
- * share, audit) — is machine-independent and links on every arch.
+ * Machine-independent page-bitmap helpers used by the per-arch vmm_mem_map_init
+ * (sys/arch/<arch>/vmm_machdep.c).  The arch code detects RAM and decides the
+ * layout; these own the bitmap contents and the free-page accounting, so
+ * g_free_pages stays encapsulated here with the allocator that maintains it.
  */
-#if defined(__i386__)
-int vmm_mem_map_init()
+
+/**
+ * Stage the page bitmap at @bitmap_phys for @num_pages frames and mark every
+ * frame unavailable.  Call once at init before vmm_mem_mark_available().
+ */
+void vmm_mem_bitmap_init(uintptr_t bitmap_phys, u_int32_t num_pages)
 {
-	u_int32_t i = 0;
-	u_int32_t kernel_start_page, bitmap_end_page;
-	u_int32_t bitmap_size;
+	u_int32_t i;
 
-	/* Count System Memory */
-	numPages = count_memory();
+	numPages = num_pages;
+	vmm_bitmap_phys = (u_int32_t)bitmap_phys;
+	vmmMemoryMap = (vmm_page_info_t *)bitmap_phys;
+	g_free_pages = 0;
 
-	/*
-	 * Place the page bitmap immediately after the kernel image (page-aligned).
-	 * This makes the layout RAM-size-independent: with N pages the bitmap is
-	 * N*sizeof(vmm_page_info_t) bytes, and free pages begin right after it
-	 * regardless of how much RAM is installed.
-	 */
-	vmm_bitmap_phys = ((u_int32_t)_end + PAGE_SIZE - 1) & ~(PAGE_SIZE - 1);
-	vmmMemoryMap = (vmm_page_info_t *)vmm_bitmap_phys;
-
-	bitmap_size = numPages * sizeof(vmm_page_info_t);
-	bitmap_end_page = (vmm_bitmap_phys + bitmap_size + PAGE_SIZE - 1) / PAGE_SIZE;
-
-	/* Initialize every entry — bitmap lives in raw RAM, not in BSS, so we
-	 * must not assume it is zeroed. */
+	/* Bitmap lives in raw RAM, not BSS, so initialise every entry explicitly. */
 	for (i = 0; i < numPages; i++)
 	{
 		vmmMemoryMap[i].cowCounter = 0;
@@ -104,161 +86,35 @@ int vmm_mem_map_init()
 		vmmMemoryMap[i].pid = vmmID;
 		vmmMemoryMap[i].pageAddr = (uintptr_t)i * PAGE_SIZE;
 	}
+}
 
-	/*
-	 * Free page ranges:
-	 *  [0x100000, kernel_start): RAM below the kernel (former bitmap staging area)
-	 *  [bitmap_end, numPages*PAGE_SIZE): all RAM above the bitmap
-	 *
-	 * The first 1 MB (0x0–0xFFFFF) stays reserved: ISA devices, VGA, BIOS.
-	 */
-	kernel_start_page = ((u_int32_t)_start & ~(PAGE_SIZE - 1)) / PAGE_SIZE;
+/**
+ * Mark the half-open frame range [@first_page, @last_page) as available RAM,
+ * updating the free-page count (and systemVitals->freePages when available).
+ */
+void vmm_mem_mark_available(u_int32_t first_page, u_int32_t last_page)
+{
+	u_int32_t i;
 
-	for (i = 0x100; i < kernel_start_page; i++)
+	for (i = first_page; i < last_page && i < numPages; i++)
 	{
-		vmmMemoryMap[i].status = memAvail;
-		g_free_pages++;
-	}
-
-	for (i = bitmap_end_page; i < numPages; i++)
-	{
-		vmmMemoryMap[i].status = memAvail;
-		g_free_pages++;
+		if (vmmMemoryMap[i].status != memAvail)
+		{
+			vmmMemoryMap[i].status = memAvail;
+			g_free_pages++;
+		}
 	}
 
 	if (systemVitals)
-	{
 		systemVitals->freePages = g_free_pages;
-	}
-
-	/* Print Out Amount Of Memory */
-	kprintf("Real Memory:      %uKB\n", numPages * 4);
-	kprintf("Available Memory: %uKB\n", g_free_pages * 4);
-	kprintf("vmm: bitmap phys=0x%X pages=%u end_page=%u\n", vmm_bitmap_phys, numPages, bitmap_end_page);
-
-	/* Return */
-	return (0);
 }
 
-/************************************************************************
-
- Function: int count_memory();
- Description: This Function Counts The Systems Physical Memory
- Notes:
-
- 02/20/2004 - Inspect For Quality And Approved
-
- ************************************************************************/
-u_int32_t count_memory()
+/**
+ * @return current count of available physical pages.
+ */
+u_int32_t vmm_mem_free_pages(void)
 {
-	register u_int32_t *mem = NULL;
-	unsigned long mem_count = -1, temp_memory = 0;
-	unsigned short mem_kb = 8;
-	unsigned char irq1_state, irq2_state;
-	unsigned long cr0 = 0;
-
-	/*
-	 * Save The States Of Both IRQ 1 And 2 So We Can Turn Them Off And Restore
-	 * Them Later
-	 */
-	irq1_state = inportByte(0x21);
-	irq2_state = inportByte(0xA1);
-
-	/* Turn Off IRQ 1 And 2 To Prevent Chances Of Faults While Examining Memory */
-	outportByte(0x21, 0xFF);
-	outportByte(0xA1, 0xFF);
-
-	/* Save The State Of Register CR0 */
-	cr0 = rcr0();
-
-	/*
-	 asm volatile (
-	 "movl %%cr0, %%ebx\n"
-	 : "=a" (cr0)
-	 :
-	 : "ebx"
-	 );
-	 */
-
-	asm volatile("wbinvd");
-
-	load_cr0(cr0 | 0x00000001 | 0x40000000 | 0x20000000);
-
-	/*
-	 asm volatile (
-	 "movl %%ebx, %%cr0\n"
-	 :
-	 : "a" (cr0 | 0x00000001 | 0x40000000 | 0x20000000)
-	 : "ebx"
-	 );
-	 */
-
-	while (mem_kb < 4096 && mem_count != 0)
-	{
-		mem_kb++;
-
-		if (mem_count == -1)
-		{
-			mem_count = 8388608;
-		}
-		else
-		{
-			mem_count += 1024 * 1024;
-		}
-
-		mem = (u_int32_t *)mem_count;
-
-		temp_memory = *mem; // NOLINT(clang-analyzer-core.FixedAddressDereference)
-
-		*mem = 0x55AA55AA;
-
-		asm("" : : : "memory");
-
-		if (*mem != 0x55AA55AA)
-		{
-			mem_count = 0;
-		}
-		else
-		{
-			*mem = 0xAA55AA55;
-			asm("" : : : "memory");
-			if (*mem != 0xAA55AA55)
-			{
-				mem_count = 0;
-			}
-		}
-		asm("" : : : "memory");
-		*mem = temp_memory;
-	}
-
-	asm("nop");
-
-	// MrOlsen (2016-01-10) NOTE: I don't like this but I start incrementing form the start.
-	mem_kb--;
-
-	asm("nop");
-
-	load_cr0(cr0);
-
-	/*
-	 asm volatile (
-	 "movl %%ebx, %%cr0\n"
-	 :
-	 : "a" (cr0)
-	 : "ebx"
-	 );
-	 */
-
-	asm("nop");
-
-	/* Restore States For Both IRQ 1 And 2 */
-	outportByte(0x21, irq1_state);
-	outportByte(0xA1, irq2_state);
-
-	asm("nop");
-
-	/* Return Amount Of Memory In Pages */
-	return ((mem_kb * 1024 * 1024) / PAGE_SIZE);
+	return g_free_pages;
 }
 
 /************************************************************************
@@ -271,8 +127,6 @@ u_int32_t count_memory()
  Notes:
 
  ************************************************************************/
-#endif /* __i386__ — machine-dependent memory detection / bitmap layout */
-
 uintptr_t vmm_find_free_page(pidType pid)
 {
 

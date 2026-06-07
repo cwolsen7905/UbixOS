@@ -55,39 +55,28 @@ u_int32_t count_memory(void)
  */
 int vmm_mem_map_init(void)
 {
-	u_int32_t i;
 	uintptr_t bitmap_phys;
-	u_int32_t bitmap_size;
-	u_int32_t bitmap_end_page;
-
-	numPages = count_memory();
+	u_int32_t bitmap_size, bitmap_end_page;
+	u_int32_t num = count_memory();
 
 	bitmap_phys = ((uintptr_t)_end + PAGE_SIZE - 1) & ~((uintptr_t)PAGE_SIZE - 1);
-	vmm_bitmap_phys = (u_int32_t)bitmap_phys;
-	vmmMemoryMap = (vmm_page_info_t *)bitmap_phys;
+	vmm_mem_bitmap_init(bitmap_phys, num);
 
-	bitmap_size = numPages * sizeof(vmm_page_info_t);
+	bitmap_size = num * sizeof(vmm_page_info_t);
 	bitmap_end_page = (u_int32_t)((bitmap_phys + bitmap_size + PAGE_SIZE - 1) / PAGE_SIZE);
 
-	/* Bitmap lives in raw RAM, not BSS — initialise every entry explicitly. */
-	for (i = 0; i < numPages; i++)
-	{
-		vmmMemoryMap[i].cowCounter = 0;
-		vmmMemoryMap[i].status = memNotavail;
-		vmmMemoryMap[i].pid = vmmID;
-		vmmMemoryMap[i].pageAddr = (uintptr_t)i * PAGE_SIZE;
-	}
+	/* Free RAM = everything from the end of the bitmap to the top of RAM.  The
+	 * kernel + bitmap (RAM base .. bitmap end) and everything below the RAM base
+	 * stay reserved. */
+	vmm_mem_mark_available(bitmap_end_page, num);
 
-	/* Free RAM = everything from the end of the bitmap to the top of RAM. */
-	for (i = bitmap_end_page; i < numPages; i++)
-		vmmMemoryMap[i].status = memAvail;
-
-	kprintf("vmm(aarch64): RAM 0x%lX..0x%lX, bitmap phys=0x%lX end_page=%u pages=%u\n",
+	kprintf("vmm(aarch64): RAM 0x%lX..0x%lX, bitmap phys=0x%lX end_page=%u pages=%u free=%u\n",
 	        (u_int64_t)AARCH64_RAM_BASE,
 	        (u_int64_t)AARCH64_RAM_TOP,
 	        (u_int64_t)bitmap_phys,
 	        bitmap_end_page,
-	        numPages);
+	        num,
+	        vmm_mem_free_pages());
 
 	return 0;
 }
