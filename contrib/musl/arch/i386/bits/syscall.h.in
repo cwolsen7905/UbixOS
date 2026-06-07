@@ -653,17 +653,30 @@
 #undef  __NR_writev
 #define __NR_writev		121
 
-/* futex: Linux=240, UbixOS=350 (stub) */
+/*
+ * Linux-only threading primitives have no FreeBSD syscall number, so they live
+ * in the UbixOS-native syscall table (int $0x81), not the FreeBSD-numbered POSIX
+ * table (int $0x80).  The 0x8000 flag tells the i386 syscall shims to dispatch
+ * via int $0x81; the low bits are the native slot number (see ubixos_syscall.S,
+ * syscall_cp.s, and sys/kern/syscalls.c).
+ */
+
+/* futex: Linux=240, UbixOS-native slot 64 */
 #undef  __NR_futex
-#define __NR_futex		350
+#define __NR_futex		(0x8000 | 64)
 
-/* set_thread_area: Linux=243, UbixOS=351 */
+/* set_thread_area: Linux=243, UbixOS-native slot 63 (also hardcoded in __set_thread_area.s) */
 #undef  __NR_set_thread_area
-#define __NR_set_thread_area	351
+#define __NR_set_thread_area	(0x8000 | 63)
 
-/* exit_group: Linux=252, UbixOS=352 */
+/* exit_group: Linux=252, UbixOS-native slot 65 */
 #undef  __NR_exit_group
-#define __NR_exit_group		352
+#define __NR_exit_group		(0x8000 | 65)
+
+/* membarrier: Linux=375, but FreeBSD has it natively at 584 — a real FreeBSD
+ * syscall, so it stays on the POSIX table (int $0x80), NOT the native ABI. */
+#undef  __NR_membarrier
+#define __NR_membarrier		584
 
 /* getpgid: Linux=132, UbixOS=207 */
 #undef  __NR_getpgid

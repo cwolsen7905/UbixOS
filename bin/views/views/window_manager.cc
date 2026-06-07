@@ -31,6 +31,7 @@
 #include <cstring>
 #include <ubix/mailbox.hh>
 #include <ubix/sched.hh>
+#include <ubix/process.hh>
 #include "window_manager.hh"
 
 #define PAGE_SIZE 4096
@@ -51,7 +52,8 @@ WindowManager::WindowManager()
           [](void *ctx, Window *w) { static_cast<WindowManager *>(ctx)->close_window(w); },
           [](void *ctx, Window *w) { static_cast<WindowManager *>(ctx)->minimize_window(w); },
           [](void *ctx, Window *w, int nw, int nh) { static_cast<WindowManager *>(ctx)->resize_window(w, nw, nh); },
-          [](void *ctx, Window *w, int mode) { static_cast<WindowManager *>(ctx)->place_window(w, mode); })
+          [](void *ctx, Window *w, int mode) { static_cast<WindowManager *>(ctx)->place_window(w, mode); },
+          [](void *ctx, Window *w) { static_cast<WindowManager *>(ctx)->set_focus(w); })
 {
 }
 
@@ -83,6 +85,29 @@ void WindowManager::notify_taskbar(Window *w, uint8_t added)
 	ubix::post_message(tb, DISPLAY_NOTIFY, nm);
 }
 
+void WindowManager::set_focus(Window *w)
+{
+	reg_.set_focused(w);
+
+	/* Tell the taskbar which decorated window is active so it can highlight the
+	 * matching tab.  Only decorated windows have a tab; focusing a no-decor
+	 * surface (taskbar, vlogin) or nothing clears the highlight (id 0).  Dedupe
+	 * so redundant focus updates don't spam the taskbar mailbox — this also makes
+	 * the taskbar's own claim a no-op (id 0 == initial last_focus_sent_), so we
+	 * never post DISPLAY_FOCUS into the middle of its claim handshake. */
+	uint32_t id = (w != nullptr && w->decor_h > 0) ? w->id : 0;
+	if (id == last_focus_sent_)
+		return;
+	last_focus_sent_ = id;
+
+	static const char tb[] = "taskbar";
+	mpi_message_t fm;
+	struct display_focus *df = (struct display_focus *)fm.data;
+	fm.header = DISPLAY_FOCUS;
+	df->window_id = id;
+	ubix::post_message(tb, DISPLAY_FOCUS, fm);
+}
+
 void WindowManager::close_window(Window *w)
 {
 	/* Two-phase close: send DISPLAY_CLOSE to the client, remove the window
@@ -94,7 +119,7 @@ void WindowManager::close_window(Window *w)
 	if (w->decor_h > 0)
 		notify_taskbar(w, 0);
 	reg_.z_remove(w);
-	reg_.set_focused(reg_.z_stack().empty() ? nullptr : reg_.z_stack().back());
+	set_focus(reg_.z_stack().empty() ? nullptr : reg_.z_stack().back());
 	comp_.invalidate_all();
 
 	if (!w->mbox.empty())
@@ -126,7 +151,7 @@ void WindowManager::minimize_window(Window *w)
 				nf = *it;
 				break;
 			}
-		reg_.set_focused(nf);
+		set_focus(nf);
 	}
 	comp_.invalidate_all();
 	/* The taskbar already shows a button for this window (from DISPLAY_NOTIFY);
@@ -323,7 +348,6 @@ void WindowManager::handle_claim(struct display_claim_req *creq)
 	w->id = next_id++;
 
 	reg_.z_push(w);
-	reg_.set_focused(w);
 
 	ack.header = DISPLAY_ACK;
 	da->window_id = w->id;
@@ -341,6 +365,9 @@ void WindowManager::handle_claim(struct display_claim_req *creq)
 
 	if (dh > 0)
 		notify_taskbar(w, 1);
+	/* Focus the new window AFTER its ACK (and the tab NOTIFY) are queued, so the
+	 * DISPLAY_FOCUS never lands in the middle of the client's claim handshake. */
+	set_focus(w);
 	comp_.invalidate_all();
 }
 
@@ -373,12 +400,46 @@ void WindowManager::handle_release(struct display_release *rel)
 			notify_taskbar(w, 0);
 		reg_.z_remove(w);
 		if (reg_.focused() == w)
-			reg_.set_focused(reg_.z_stack().empty() ? nullptr : reg_.z_stack().back());
+			set_focus(reg_.z_stack().empty() ? nullptr : reg_.z_stack().back());
 		comp_.invalidate_all();
 	}
 	/* closing==true: already removed from z-stack by close_window(); just free */
 	std::free(w->buf);
 	reg_.destroy(w); /* w is dangling after this point */
+}
+
+void WindowManager::reap_window(Window *w)
+{
+	/* The client is gone, so there is no DISPLAY_RELEASE handshake to wait for
+	 * and no mailbox to message: drop the window from the visible stack, hand
+	 * focus to whatever is left, free the shared buffer (its last reference, so
+	 * the physical pages are reclaimed), and destroy the record. */
+	if (w->decor_h > 0)
+		notify_taskbar(w, 0);
+	reg_.z_remove(w);
+	if (reg_.focused() == w)
+		set_focus(reg_.z_stack().empty() ? nullptr : reg_.z_stack().back());
+	std::free(w->buf);
+	reg_.destroy(w); /* w is dangling after this point */
+}
+
+void WindowManager::reap_dead_clients()
+{
+	/* Collect first, then free: reap_window() mutates the registry, so we must
+	 * not free while iterating the snapshot. */
+	bool reaped = false;
+	for (Window *w : reg_.all())
+	{
+		if (w->sender_pid <= 0)
+			continue;
+		if (::kill(w->sender_pid, 0) == 0)
+			continue; /* client still alive */
+		std::printf("views: reaping window %u (dead client pid %d)\n", w->id, w->sender_pid);
+		reap_window(w);
+		reaped = true;
+	}
+	if (reaped)
+		comp_.invalidate_all();
 }
 
 void WindowManager::handle_raise(struct display_raise *dr)
@@ -388,7 +449,7 @@ void WindowManager::handle_raise(struct display_raise *dr)
 		return;
 	w->minimized = false; /* a taskbar click restores a minimized window */
 	reg_.z_raise(w);
-	reg_.set_focused(w);
+	set_focus(w);
 	comp_.invalidate_all();
 }
 

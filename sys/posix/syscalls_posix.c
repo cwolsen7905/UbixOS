@@ -102,7 +102,7 @@ struct syscall_entry systemCalls_posix[] = {
     {0, "No Call", sys_invalid, SYSCALL_INVALID},                                                               //  62
     {0, "No Call", sys_invalid, SYSCALL_INVALID},                                                               //  63
     {0, "No Call", sys_invalid, SYSCALL_INVALID},                                                               //  64
-    {0, "msync", sys_invalid, SYSCALL_NOTIMP},                                                                  //  65 - msync
+    {ARG_COUNT(sys_msync_args), "msync", (sys_call_t *)sys_msync, SYSCALL_VALID},                               //  65 - msync
     {0, "vfork", sys_invalid, SYSCALL_NOTIMP},                                                                  //  66 - vfork
     {0, "No Call", sys_invalid, SYSCALL_INVALID},                                                               /*  67 - Invalid */
     {0, "No Call", sys_invalid, SYSCALL_INVALID},                                                               /*  68 - Invalid */
@@ -112,7 +112,7 @@ struct syscall_entry systemCalls_posix[] = {
     {0, "vadvise", sys_invalid, SYSCALL_NOTIMP},                                                                /*  72 */
     {ARG_COUNT(sys_munmap_args), "munmap", sys_munmap, SYSCALL_VALID},                                          /* 73 */
     {ARG_COUNT(mprotect_args), "mprotect", (sys_call_t *)mprotect, SYSCALL_VALID},                              /* 74 */
-    {0, "madvise", sys_invalid, SYSCALL_NOTIMP},                                                                /* 75 */
+    {ARG_COUNT(sys_madvise_args), "madvise", (sys_call_t *)sys_madvise, SYSCALL_VALID},                         /* 75 */
     {0, "Obsolete vhangup", sys_invalid, SYSCALL_INVALID},                                                      /*  76 - Invalid */
     {0, "Obsolete vlimit", sys_invalid, SYSCALL_INVALID},                                                       /*  77 - Invalid */
     {0, "mincore", sys_invalid, SYSCALL_NOTIMP},                                                                /*  78 - minicore */
@@ -288,7 +288,7 @@ struct syscall_entry systemCalls_posix[] = {
     {0, "ntp_gettime", sys_invalid, SYSCALL_NOTIMP},                                                            /* 248 - Invalid */
     {0, "No Call", sys_invalid, SYSCALL_INVALID},                                                               /* 249 - Invalid */
     {0, "minherit", sys_invalid, SYSCALL_NOTIMP},                                                               /* 250 - Invalid */
-    {0, "rfork", sys_invalid, SYSCALL_NOTIMP},                                                                  /* 251 - Invalid */
+    {ARG_COUNT(sys_rfork_args), "rfork", (sys_call_t *)sys_rfork, SYSCALL_VALID},                               /* 251 - rfork (thread create) */
     {0, "openbsd_poll", sys_invalid, SYSCALL_NOTIMP},                                                           /* 252 - Invalid */
     {ARG_COUNT(sys_issetugid_args), "issetugid", (sys_call_t *)sys_issetugid, SYSCALL_VALID},                   /* 253 - Invalid */
     {0, "lchown", sys_invalid, SYSCALL_NOTIMP},                                                                 /* 254 - Invalid */
@@ -387,9 +387,9 @@ struct syscall_entry systemCalls_posix[] = {
     {0, "__acl_get_file", sys_invalid, SYSCALL_NOTIMP},                                                         /* 347 - Invalid */
     {0, "__acl_set_file", sys_invalid, SYSCALL_NOTIMP},                                                         /* 348 - Invalid */
     {0, "__acl_get_fd", sys_invalid, SYSCALL_NOTIMP},                                                           /* 349 - Invalid */
-    {ARG_COUNT(sys_futex_args), "futex", (sys_call_t *)sys_futex, SYSCALL_VALID},                               /* 350 - futex stub (musl threading) */
-    {ARG_COUNT(sys_set_thread_area_args), "set_thread_area", (sys_call_t *)sys_set_thread_area, SYSCALL_VALID}, /* 351 - set_thread_area stub (musl TLS) */
-    {ARG_COUNT(sys_exit_group_args), "exit_group", (sys_call_t *)sys_exit_group, SYSCALL_VALID},                /* 352 - exit_group (musl exit) */
+    {0, "__acl_set_fd", sys_invalid, SYSCALL_NOTIMP},      /* 350 - Invalid (Linux futex moved to native int $0x81 slot 64) */
+    {0, "__acl_delete_file", sys_invalid, SYSCALL_NOTIMP}, /* 351 - Invalid (set_thread_area moved to native int $0x81 slot 63) */
+    {0, "__acl_delete_fd", sys_invalid, SYSCALL_NOTIMP},   /* 352 - Invalid (exit_group moved to native int $0x81 slot 65) */
     {0, "__acl_aclcheck_file", sys_invalid, SYSCALL_NOTIMP},                                                    /* 353 - Invalid */
     {0, "__acl_aclcheck_fd", sys_invalid, SYSCALL_NOTIMP},                                                      /* 354 - Invalid */
     {0, "extattrctl", sys_invalid, SYSCALL_NOTIMP},                                                             /* 355 - Invalid */
@@ -601,6 +601,27 @@ struct syscall_entry systemCalls_posix[] = {
     {0, "cpuset_getdomain", sys_invalid, SYSCALL_NOTIMP},                                                       /* 561 - Invalid */
     {0, "cpuset_setdomain", sys_invalid, SYSCALL_NOTIMP},                                                       /* 562 - Invalid */
     {ARG_COUNT(sys_getrandom_args), "getrandom", (sys_call_t *)sys_getrandom, SYSCALL_VALID},                  /* 563 - getrandom */
+    {0, "getfhat", sys_invalid, SYSCALL_NOTIMP},                                                               /* 564 - Invalid */
+    {0, "fhlink", sys_invalid, SYSCALL_NOTIMP},                                                                /* 565 - Invalid */
+    {0, "fhlinkat", sys_invalid, SYSCALL_NOTIMP},                                                              /* 566 - Invalid */
+    {0, "fhreadlink", sys_invalid, SYSCALL_NOTIMP},                                                            /* 567 - Invalid */
+    {0, "funlinkat", sys_invalid, SYSCALL_NOTIMP},                                                             /* 568 - Invalid */
+    {0, "copy_file_range", sys_invalid, SYSCALL_NOTIMP},                                                       /* 569 - Invalid */
+    {0, "__sysctlbyname", sys_invalid, SYSCALL_NOTIMP},                                                        /* 570 - Invalid */
+    {0, "shm_open2", sys_invalid, SYSCALL_NOTIMP},                                                             /* 571 - Invalid */
+    {0, "shm_rename", sys_invalid, SYSCALL_NOTIMP},                                                            /* 572 - Invalid */
+    {0, "sigfastblock", sys_invalid, SYSCALL_NOTIMP},                                                          /* 573 - Invalid */
+    {0, "__realpathat", sys_invalid, SYSCALL_NOTIMP},                                                          /* 574 - Invalid */
+    {0, "close_range", sys_invalid, SYSCALL_NOTIMP},                                                           /* 575 - Invalid */
+    {0, "rpctls_syscall", sys_invalid, SYSCALL_NOTIMP},                                                        /* 576 - Invalid */
+    {0, "__specialfd", sys_invalid, SYSCALL_NOTIMP},                                                           /* 577 - Invalid */
+    {0, "aio_writev", sys_invalid, SYSCALL_NOTIMP},                                                            /* 578 - Invalid */
+    {0, "aio_readv", sys_invalid, SYSCALL_NOTIMP},                                                             /* 579 - Invalid */
+    {0, "fspacectl", sys_invalid, SYSCALL_NOTIMP},                                                             /* 580 - Invalid */
+    {0, "sched_getcpu", sys_invalid, SYSCALL_NOTIMP},                                                          /* 581 - Invalid */
+    {0, "swapoff", sys_invalid, SYSCALL_NOTIMP},                                                               /* 582 - Invalid */
+    {0, "kqueuex", sys_invalid, SYSCALL_NOTIMP},                                                               /* 583 - Invalid */
+    {2, "membarrier", (sys_call_t *)sys_membarrier, SYSCALL_VALID},                                            /* 584 - membarrier (UP no-op) */
 };
 
 int totalCalls_posix = sizeof(systemCalls_posix) / sizeof(struct syscall_entry);

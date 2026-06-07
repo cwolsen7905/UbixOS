@@ -50,6 +50,11 @@ ifeq ($(NETSURF_FB_FONTLIB),freetype)
   endif
 endif
 
+# stb_truetype font backend (UbixOS): no external library, header-only.
+ifeq ($(NETSURF_FB_FONTLIB),stbtt)
+  CFLAGS += -DFB_USE_STBTT
+endif
+
 # non optional pkg-configed libs
 LDFLAGS += -Wl,--whole-archive
 $(eval $(call pkg_config_find_and_add,libnsfb,libnsfb))

@@ -29,6 +29,7 @@
 #include <ubixos/tty.h>
 #include <ubixos/kpanic.h>
 #include <ubixos/signal.h>
+#include <ubixos/sched.h>
 #include <ubixos/spinlock.h>
 #include <lib/kprintf.h>
 #include <lib/kmalloc.h>
@@ -941,7 +942,10 @@ int pty_alloc(void)
 		t->t_stopped = 0;
 		t->t_exclusive = 0;
 		t->t_pgrp = 0;
-		t->owner = 0;
+		/* Record the allocating process as the pty master "owner" (the graphical
+		 * terminal app).  When that process dies, tty_hangup_by_owner() hangs up
+		 * the slave session so an orphaned shell does not leak. */
+		t->owner = (_current != NULL) ? (pidType)_current->id : 0;
 		t->t_esc_state = 0;
 		t->t_esc_priv = 0;
 		t->t_esc_nparams = 0;
@@ -974,6 +978,36 @@ void pty_free(int slot)
 	terms[slot].t_inuse = 0;
 	terms[slot].t_pgrp = 0;
 	terms[slot].owner = 0;
+}
+
+/**
+ * Hang up every pty whose master owner is the given (dying) process.
+ *
+ * Implements the POSIX "controlling-process death" semantics: when the process
+ * that allocated a pty master (the graphical terminal app) exits, the slave's
+ * session is sent SIGHUP and the slot is released.  Without this, a shell that
+ * called setsid() for its pty — putting it in its own session and process group
+ * — escapes the parent's process-group/session teardown on logout and leaks
+ * (the shell keeps running, holding its pages, across the next login).
+ *
+ * Called from endTask() while the dying task is still _current.
+ */
+void tty_hangup_by_owner(pidType pid)
+{
+	int slot;
+
+	for (slot = TTY_PTY_BASE; slot < TTY_MAX_TERMS; slot++)
+	{
+		tty_term *t = &terms[slot];
+
+		if (!t->t_inuse || t->owner != pid)
+			continue;
+
+		/* Post SIGHUP first (signal_post_tty's fallback finds the slave via its
+		 * ct_tty pointer), then free the slot — the master is gone. */
+		signal_post_tty(t, SIGHUP);
+		pty_free(slot);
+	}
 }
 
 /*

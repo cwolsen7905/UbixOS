@@ -29,6 +29,7 @@
 #include <sys/types.h>
 #include <sys/errno.h>
 #include <vmm/vmm.h>
+#include <vmm/vm_filecache.h>
 #include <lib/kprintf.h>
 #include <lib/kmalloc.h>
 #include <ubixos/kpanic.h>
@@ -457,11 +458,8 @@ void *vmm_get_free_kernel_page(pidType pid, u_int16_t count)
 gotPages:
 	for (c = 0; c < count; c++)
 	{
-		if ((vmm_remap_page(vmm_find_free_page(pid),
-		                   (start_address + (PAGE_SIZE * c)),
-		                   KERNEL_PAGE_DEFAULT,
-		                   pid,
-		                   1)) == 0)
+		if ((vmm_remap_page(
+		        vmm_find_free_page(pid), (start_address + (PAGE_SIZE * c)), KERNEL_PAGE_DEFAULT, pid, 1)) == 0)
 		{
 			K_PANIC("vmmRemapPage failed: gfkp-1\n");
 		}
@@ -537,8 +535,7 @@ void *vmm_map_from_task(pidType pid, void *ptr, u_int32_t size)
 		{
 			// kprintf("mapping: 0x%X\n", i);
 			if (vmm_remap_page(
-			        child_page_dir[i], 0x5A01000 + (i * 0x1000), KERNEL_PAGE_DEFAULT, _current->id, 0) ==
-			    0)
+			        child_page_dir[i], 0x5A01000 + (i * 0x1000), KERNEL_PAGE_DEFAULT, _current->id, 0) == 0)
 			{
 				K_PANIC("Returned NULL");
 			}
@@ -595,11 +592,11 @@ void *vmm_map_from_task(pidType pid, void *ptr, u_int32_t size)
 								    PAGE_PRESENT)
 								{
 									if (vmm_remap_page(child_page_table[t_i + c],
-									                  ((x * (1024 * 4096)) +
-									                   ((y + c) * 4096)),
-									                  KERNEL_PAGE_DEFAULT,
-									                  _current->id,
-									                  0) == 0)
+									                   ((x * (1024 * 4096)) +
+									                    ((y + c) * 4096)),
+									                   KERNEL_PAGE_DEFAULT,
+									                   _current->id,
+									                   0) == 0)
 									{
 										K_PANIC("remap == NULL");
 									}
@@ -628,10 +625,10 @@ void *vmm_map_from_task(pidType pid, void *ptr, u_int32_t size)
 						if ((child_page_table[t_i] & PAGE_PRESENT) == PAGE_PRESENT)
 						{
 							if (vmm_remap_page(child_page_table[t_i],
-							                  ((x * (1024 * 4096)) + (y * 4096)),
-							                  KERNEL_PAGE_DEFAULT,
-							                  _current->id,
-							                  0) == 0)
+							                   ((x * (1024 * 4096)) + (y * 4096)),
+							                   KERNEL_PAGE_DEFAULT,
+							                   _current->id,
+							                   0) == 0)
 							{
 								K_PANIC("remap Failed");
 							}
@@ -705,10 +702,10 @@ void *vmm_get_free_malloc_page(u_int16_t count)
 						for (c = 0; c < count; c++)
 						{
 							if (vmm_remap_page(vmm_find_free_page(sysID),
-							                  ((x * 0x400000) + ((y + c) * 0x1000)),
-							                  KERNEL_PAGE_DEFAULT,
-							                  sysID,
-							                  0) == 0)
+							                   ((x * 0x400000) + ((y + c) * 0x1000)),
+							                   KERNEL_PAGE_DEFAULT,
+							                   sysID,
+							                   0) == 0)
 							{
 								K_PANIC("remap Failed");
 							}
@@ -723,10 +720,10 @@ void *vmm_get_free_malloc_page(u_int16_t count)
 				{
 					/* Map A Physical Page To The Virtual Page */
 					if (vmm_remap_page(vmm_find_free_page(sysID),
-					                  ((x * 0x400000) + (y * 0x1000)),
-					                  KERNEL_PAGE_DEFAULT,
-					                  sysID,
-					                  0) == 0)
+					                   ((x * 0x400000) + (y * 0x1000)),
+					                   KERNEL_PAGE_DEFAULT,
+					                   sysID,
+					                   0) == 0)
 					{
 						K_PANIC("Failed");
 					}
@@ -874,7 +871,13 @@ int vmm_clean_virtual_space(u_int32_t addr)
 					}
 					else if ((page_table_src[y] & PAGE_SHARED) == PAGE_SHARED)
 					{
-						/* Borrowed via vmm_share_region — owner frees it */
+						/* Shared page: file-page cache or vmm_share_region.  Try a
+						 * file-cache unref first (frees on the last cache ref); if
+						 * it isn't a cache page it is a share_region page whose
+						 * references are tracked in the COW counter, so free_page
+						 * decrements it and frees the frame on the last mapper. */
+						if (!vm_filecache_unref_phys(phys) && (phys >> 12) < numPages)
+							free_page(phys);
 					}
 					else if ((phys >> 12) < numPages)
 					{

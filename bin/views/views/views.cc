@@ -43,69 +43,69 @@
 /* ------------------------------------------------------------------ */
 
 /* Syscall 43 — map the VESA framebuffer into the calling process */
-asm(
-    ".text                            \n"
+asm(".text                            \n"
     ".globl _sys_mapfb                \n"
     ".type  _sys_mapfb, @function     \n"
     "_sys_mapfb:                      \n"
     "  movl $43, %eax                 \n"
     "  int  $0x81                     \n"
-    "  ret                            \n"
-);
+    "  ret                            \n");
 
 /* Syscall 45 — share a virtual region into another process's space */
-asm(
-    ".text                                \n"
+asm(".text                                \n"
     ".globl _sys_shareregion              \n"
     ".type  _sys_shareregion, @function   \n"
     "_sys_shareregion:                    \n"
     "  movl $45, %eax                     \n"
     "  int  $0x81                         \n"
-    "  ret                                \n"
-);
+    "  ret                                \n");
 
 /* Syscall 44 — poll mouse event queue */
-asm(
-    ".text                              \n"
+asm(".text                              \n"
     ".globl _sys_getmouse               \n"
     ".type  _sys_getmouse, @function    \n"
     "_sys_getmouse:                     \n"
     "  movl $44, %eax                   \n"
     "  int  $0x81                       \n"
-    "  ret                              \n"
-);
+    "  ret                              \n");
 
 /* Syscall 46 — poll keyboard event queue */
-asm(
-    ".text                              \n"
+asm(".text                              \n"
     ".globl _sys_getkbd                 \n"
     ".type  _sys_getkbd, @function      \n"
     "_sys_getkbd:                       \n"
     "  movl $46, %eax                   \n"
     "  int  $0x81                       \n"
-    "  ret                              \n"
-);
+    "  ret                              \n");
 
-extern "C" {
+extern "C"
+{
 	int _sys_getmouse(mouse_event_t *ev);
 	int _sys_getkbd(kbd_event_t *ev);
 }
 
-static int poll_mouse(mouse_event_t *ev) { return _sys_getmouse(ev); }
-static int poll_kbd(kbd_event_t *ev)     { return _sys_getkbd(ev); }
+static int poll_mouse(mouse_event_t *ev)
+{
+	return _sys_getmouse(ev);
+}
+static int poll_kbd(kbd_event_t *ev)
+{
+	return _sys_getkbd(ev);
+}
 
 /* ------------------------------------------------------------------ */
 /* main                                                                 */
 /* ------------------------------------------------------------------ */
 
-int
-main(int argc, char **argv)
+int main(int argc, char **argv)
 {
-	(void)argc; (void)argv;
+	(void)argc;
+	(void)argv;
 
 	ubix::Mailbox mbox;
 	mbox.assign("views");
-	if (!mbox.create()) {
+	if (!mbox.create())
+	{
 		std::printf("views: mpi_createMbox failed\n");
 		return 1;
 	}
@@ -116,12 +116,17 @@ main(int argc, char **argv)
 	 * safe.  data[0..] is the reply mailbox name. */
 	mpi_message_t req;
 	std::memset(&req, 0, sizeof(req));
-	req.header  = 0x82;
-	req.data[0] = 'v'; req.data[1] = 'i'; req.data[2] = 'e';
-	req.data[3] = 'w'; req.data[4] = 's'; req.data[5] = '\0';
+	req.header = 0x82;
+	req.data[0] = 'v';
+	req.data[1] = 'i';
+	req.data[2] = 'e';
+	req.data[3] = 'w';
+	req.data[4] = 's';
+	req.data[5] = '\0';
 	{
 		char mode_s[16];
-		if (ubistry_get_str("/display/mode", mode_s, sizeof(mode_s)) == 0) {
+		if (ubistry_get_str("/display/mode", mode_s, sizeof(mode_s)) == 0)
+		{
 			long m = std::strtol(mode_s, nullptr, 0);
 			if (m > 0)
 				*(uint16_t *)&req.data[64] = (uint16_t)m;
@@ -133,7 +138,8 @@ main(int argc, char **argv)
 	while (!mbox.try_fetch(reply))
 		ubix::yield();
 
-	if (reply.data[0] == 0) {
+	if (reply.data[0] == 0)
+	{
 		std::printf("views: VESA init failed\n");
 		return 1;
 	}
@@ -143,8 +149,10 @@ main(int argc, char **argv)
 	WindowManager wm;
 	{
 		int tries = 500;
-		while (wm.init() != 0) {
-			if (--tries == 0) {
+		while (wm.init() != 0)
+		{
+			if (--tries == 0)
+			{
 				std::printf("views: fb_open failed\n");
 				return 1;
 			}
@@ -157,9 +165,10 @@ main(int argc, char **argv)
 	 * init.d races with VESA VM86 and corrupts vlogin's startup context. */
 	{
 		int pid = ::fork();
-		if (pid == 0) {
-			char *argv_vl[] = { (char *)"vlogin", nullptr };
-			char *envp_vl[] = { nullptr };
+		if (pid == 0)
+		{
+			char *argv_vl[] = {(char *)"vlogin", nullptr};
+			char *envp_vl[] = {nullptr};
 			::execve("/bin/vlogin", argv_vl, envp_vl);
 			std::printf("views: failed to exec vlogin\n");
 			std::exit(1);
@@ -168,7 +177,15 @@ main(int argc, char **argv)
 
 	mpi_message_t msg;
 
-	for (;;) {
+	/* Throttle the dead-client sweep: the loop spins very tightly (one yield
+	 * per pass), so probing every window's liveness each pass would be wasteful.
+	 * Once every reap_interval passes is ample to reclaim a logged-out session's
+	 * windows promptly without measurable overhead. */
+	const unsigned reap_interval = 64;
+	unsigned reap_tick = 0;
+
+	for (;;)
+	{
 		kbd_event_t kev;
 		while (poll_kbd(&kev) == 0)
 			wm.handle_kbd(kev);
@@ -179,6 +196,12 @@ main(int argc, char **argv)
 
 		while (mbox.try_fetch(msg))
 			wm.dispatch(msg.header, msg.data);
+
+		if (++reap_tick >= reap_interval)
+		{
+			reap_tick = 0;
+			wm.reap_dead_clients();
+		}
 
 		wm.flush();
 		ubix::yield();

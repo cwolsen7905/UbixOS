@@ -7,6 +7,194 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **Kernel threads — per-thread TLS (Task C)** — `set_thread_area` now records each
+  thread's `%gs` base in `kTask_t.tls_base`, and `cpu_switch` re-installs it into the
+  shared LDT[1] descriptor on every context switch (right after the CR3 swap). All
+  threads in an address space share that one LDT slot, so each resume must restore
+  the running thread's own base. `bin/tlstest` verifies two threads keep independent
+  TLS across switches.
+- **Kernel threads — `futex` syscall (Task D)** — `sys_futex` on the kernel's
+  `wait_chan` sleep/wake primitive: FUTEX_WAIT/WAKE (+WAIT_BITSET; REQUEUE treated as
+  WAKE). Threads share the address space, so a user virtual address is the wait token.
+  Backs musl's mutex/cond/sem/barrier/once. `bin/futextest` verifies a worker blocks
+  in FUTEX_WAIT until FUTEX_WAKE.
+- **Kernel threads — musl pthreads (Task E, milestone 1)** — real `pthread_create` /
+  `pthread_mutex` / `pthread_join` work. `sys_rfork` now honours the three CLONE bits
+  musl needs: SETTLS (installs the child's `%gs` base), PARENT_SETTID (writes the new
+  tid to `*ptid`), CHILD_CLEARTID (`endTask` zeroes + futex-wakes the address, releasing
+  musl's thread-list lock held across `pthread_exit`). `clone.s` passes ptid/ctid.
+  `bin/pthreadtest` (4 threads, mutex-guarded counter, joins) verifies it. (Deferred:
+  detached-thread `__unmapself` needs a kernel-assisted unmap+exit; `membarrier`.)
+- **Kernel threads — detached threads (Task E2b)** — native `thread_exit_unmap`
+  syscall (unmaps the exiting detached thread's own stack and terminates it in one
+  kernel trap; a userspace munmap-then-exit is impossible under the stack-arg ABI).
+  musl's `__unmapself` now calls it. `bin/detachtest` (5 waves of detached threads)
+  and `bin/condtest` (pthread_cond producer/consumer) verify E2.
+- **`membarrier` syscall** — uniprocessor no-op at the real FreeBSD number (POSIX 584;
+  musl's Linux #375 remapped to it). POSIX table extended through 584. Keeps a real
+  FreeBSD call on the FreeBSD-numbered table (native ABI is only for Linux-only calls).
+- **UbixOS-native ABI for Linux-compat primitives** — `futex`, `set_thread_area`, and
+  `exit_group` (Linux calls with no FreeBSD syscall number) moved from the
+  FreeBSD-numbered POSIX table (`int $0x80`) to the UbixOS-native table (`int $0x81`,
+  slots 64/63/65). musl flags these with bit `0x8000` on the syscall number; the i386
+  shims dispatch them to `int $0x81`. POSIX slots 350/351/352 restored to faithful
+  FreeBSD `Invalid` (`__acl_*`), keeping the POSIX table a clean FreeBSD ABI for a
+  future FreeBSD-libc port. `clone` stays at POSIX 251 = real FreeBSD `rfork`.
+- **objGFX UI primitives** — `ogFillRoundRect` / `ogRoundRect` (filled + outline
+  rounded rectangles), `ogDropShadow` (soft quadratic-falloff shadow around a
+  rect), and `ogBlendColor` (packed-RGB lerp).  Non-virtual additions, so existing
+  app binaries stay ABI-compatible.
+
+### Changed
+- **Modern login screen (vlogin)** — calm-slate rounded card with a soft drop
+  shadow (drawn with the new objGFX primitives), `uBixOS`/`Sign in` header, and
+  boxed username/password fields that light up with an accent underline + caret on
+  focus, replacing the old navy panel and block-cursor rows.
+- **views** — the compositor + window chrome now use `ogSurface::ogBlendColor`
+  instead of a local `decor_blend`, so the focus-dim / shadow / corner-AA blend has
+  a single shared implementation (output unchanged).
+- **Active-window highlight** — the compositor sends `DISPLAY_FOCUS` (via a single
+  `WindowManager::set_focus()` routing all focus changes incl. click-to-focus), so
+  the taskbar highlights the active window's tab; deduped and sent after the claim
+  ACK to avoid the handshake race.
+
+### Fixed
+- `fork` no longer COW-marks the per-process LDT page (userland TLS descriptors):
+  it is CPU state, never shared, so the child gets a private writable copy and the
+  parent stays writable. COW left it read-only, so the kernel's LDT[1] update in
+  `cpu_switch` faulted with interrupts off.
+
+---
+
+## [2.3.0-BETA] - 2026-06-06
+
+### Added
+- **Kernel threads** — `rfork(RFMEM)` / `clone` foundation: tasks in a thread
+  group (`tgid`) share one address space (cr3); `endTask` frees the address space
+  only when the last task of a group exits (`reap_free_as`). musl `clone.s` for
+  i386. (v1; TLS, futexes, and full pthread wiring to follow.)
+- **NetSurf web browser** — renders real web pages in-OS as part of `bmake world`
+  (`tools/build-netsurf.sh`, needs host bison ≥ 3 + libpng):
+  - **JavaScript** via Duktape with nsgenbind-generated DOM bindings.
+  - PNG/JPEG image decode via vendored `stb_image` (replaces libpng/libjpeg).
+  - Scalable antialiased fonts (`font_stbtt` backend) with bold/italic/serif faces
+    and lazy face loading.
+  - Mouse/keyboard input through views (opt-in pointer-motion delivery).
+  - `libnsfb` objGFX surface backend; vendored core libs (libnsutils, libutf8proc,
+    libwapcaplet, …); per-process mailbox so concurrent browsers don't collide.
+  - Listed in the start menu under Applications.
+- **macOS-style desktop environment**:
+  - **ubistry** — hierarchical persistent registry + client lib + `ulog`; seed
+    generator installs defaults to `/var/db`.
+  - **Settings app** — sidebar layout with Desktop, Sound, General overview, and
+    About panes (system info from `uname`/`sysinfo`).
+  - Desktop wallpaper from the registry (image / solid / jailbars) with an RGB
+    picker and preview thumbnail; per-user wallpaper + accent-theme layering
+    (tropical/synthwave/Miami defaults); default `ubix.bmp` wallpaper.
+  - Data-driven cascading start menu (start icon, date clock, footer) sourced from
+    the registry; About action wired to the Settings About pane.
+- **busybox 1.36.1 userland** — replaces UbixOS stub utilities and adds a broad
+  command set: `cat`, `ls`, `uname`, `stat`, `grep`, `find`, `less`, `wc`, `head`,
+  `tail`, `sort`, `cut`, `tr`, `uniq`, `more`, `cp`, `mkdir`, `rm`, `mv`, `touch`,
+  `sed`, `env`, `sleep`, `date`, `basename`, `dirname`, `which`, `top`, `ps`, and
+  the **vi** editor (with a working save path via `ftruncate` + `/tmp`).
+- **Scalable antialiased TrueType fonts** — `objgfx` `ogScalableFont` (stb_truetype)
+  used across views window titles, taskbar, Settings, login, and a damage-tracked
+  antialiased monospace font in the terminal.
+- **Virtual memory**:
+  - RB-tree VMA tracking (Phase 1) + lazy anonymous allocation (Phase 2.1).
+  - Demand-paged file-backed `mmap` with `MAP_FIXED` overlap trimming (Phase 2.2);
+    read-only library pages shared.
+  - `msync` writeback for `MAP_SHARED` writable file mappings (Phase 2.3).
+  - `madvise` (`MADV_DONTNEED`/`MADV_FREE` + hint no-ops) (Phase 3.3).
+  - Pageout daemon (Phase 3.2).
+  - Shared-region refcounting so freed frames are reclaimed, not leaked.
+  - i386 address-space layout extracted into `machine/vmm_layout.h` (cross-arch).
+- **procfs** — `/proc/meminfo` (total/free physical pages, file-cache count).
+- **Pseudo-terminals & TTY** — pty pool backing graphical terminals; the GUI term
+  runs the user's interactive shell on a pty (tcsh login shell, macOS-style);
+  VT100 engine parameterized on per-TTY `t_cols`/`t_rows` with live resize +
+  `SIGWINCH`; `IL`/`DL`/`ICH` CSI sequences; Ctrl-C in the GUI term.
+- **Crypto / TLS** — vendored **BearSSL**; `libpw` PBKDF2-HMAC-SHA256; kernel
+  ChaCha20 CSPRNG (`getrandom(2)` + `/dev/urandom`); `libhttp` HTTP/1.0 + HTTPS
+  client and `httpsget`/`udptest`/`ping` tools; `authd` hashes passwords with
+  `libpw` instead of plaintext compare.
+- **Networking** — user-configurable network (DHCP/static) from Settings via
+  ubistry + `net_configure` syscall; NE2000 (RTL8029) rewritten on newbus + lwIP;
+  real sleep/wakeup with IRQ-driven e1000; one-shot callout timer subsystem;
+  `close()` on a socket fd tears down the lwIP netconn.
+- **SMP groundwork** — build the SMP objects; map the LAPIC and register the BSP;
+  bring up application processors; per-CPU state (`struct pcpu`, `curcpu()`); APs
+  adopt the kernel address space and run a per-CPU idle loop; per-CPU GDT segment
+  with `%gs` (`SEL_PCPU`); true spinning lock (`spinLockIrq`/`spinUnlockIrq`).
+- **Software task switching** — `md_kstack` + initial-frame builder, `switch_to` /
+  `cpu_switch` (saves/restores segment registers), replacing hardware task gates.
+- **Audio** — AC97 master volume + mute mixer ioctls; persisted via `/aural` keys +
+  `sndcfg` boot applier; Sound settings pane.
+- **Build system** — musl shared library (`libc.so`) + `libobjgfx.so` with dynamic
+  linking for views/taskbar/term/vlogin; `TARGET_ARCH` abstraction lifting i386
+  ISA flags into a target makefile; GitHub Actions Linux CI producing
+  `ubixos.img`; centralized platform detection.
+- **Syscalls** — `sysinfo` (slot 62); `net_configure`; `rename` (via
+  `fat_dir_rename`); `utimensat`; `ftruncate`; `gettimeofday` returns real wall
+  clock; `mkdir -p` (sysMkDir rewrite + umask stub).
+- **Session teardown** — `views` reaps windows whose client process has died
+  (frees the shared buffer, removes the ghost frame); `vlogin` tears down the
+  session process group on logout (`sys_kill` gains POSIX process-group
+  semantics); pty hangup on owner death — when a graphical terminal app exits,
+  `tty_hangup_by_owner()` SIGHUPs the slave session so a shell that ran `setsid()`
+  for its pty (in its own session/group) is not left running across the next
+  login; a read on a released pty returns EOF.  Together these cut the per-logout
+  memory leak by ~76%.
+- **procfs `/proc/meminfo` `OrphanPages`** — count of in-use physical pages owned
+  by PIDs that no longer exist; a value that climbs across logout/login cycles
+  flags a process-teardown leak (the per-dead-PID breakdown is logged to serial
+  only when orphans exist).
+- Reference app `bin/hello` + `docs/apps/` guide for views developers;
+  `bin/vmtest` standalone heap + FAT + stb_truetype self-test.
+
+### Changed
+- **views — modern look & feel** — Windows 11-flat window chrome; window depth
+  (shadows, rounded corners, taller title bars); brighter/larger window-control
+  glyphs; flat modern taskbar + start menu; hover feedback + volume tray;
+  compositor caches the desktop and repaints only the dragged/damaged region;
+  window minimize-to-taskbar, maximize/snap (button, edge-snap, double-click),
+  and resizable windows; VESA prefers a 32bpp LFB mode for faster present.
+- **Source tree restructure** — `sys/kernel/` split into `sys/kern/`,
+  `sys/posix/`, `sys/exec/`; `smp.c` relocated to `sys/arch/i386/`; display-stack
+  binaries grouped under `bin/views/`; busybox restructured to upstream layout.
+- **Style / tooling** — project-wide clang-format (120-col) + expanded clang-tidy
+  (clang-analyzer, bugprone, naming, internal-linkage); snake_case file/function
+  renames; `g_` prefix on file-scope globals; braces on all single-statement
+  bodies; BSD `u_int*_t` as the canonical unsigned types; mandatory Doxygen doc
+  blocks; `bzero` → `memset`.
+- `gettimeofday`/time — real wall clock instead of uptime; cert-time validation in
+  `httpsget`.
+
+### Fixed
+- Kernel: pipe refcount + EOF handling (no more `0xBEBEBEBE`); actually close
+  `fd < 3` and allocate from the lowest free slot; `kern_openat` returns negative
+  errno (musl ABI); POSIX errno-sign + dir-stat + MPI mailbox cleanup (NetSurf
+  runtime gates); FPU corruption from the per-CPU `_current` macro under SMP.
+- `execve` now resets caught signals to `SIG_DFL` (POSIX): the old handler
+  addresses point into the torn-down address space, so a process that inherited a
+  caught signal across exec would jump to a wild pointer on its next signal (the
+  cause of the first kernel-threads test crash — a child's `SIGCHLD` delivered to
+  a stale inherited handler). `SIG_IGN` dispositions, the signal mask, and pending
+  signals are preserved.
+- VMM: physical use-after-free of shared regions on owner `free()`; segfault report
+  now names the VMA / backing file holding `eip`.
+- FAT: keep `cur_cluster` consistent after a boundary-ending read **and** write
+  (random-access fix); `open(O_RDWR)` no longer truncates an existing file;
+  `ftruncate` actually shrinks the cluster chain; harden basename parsing +
+  `EEXIST` on existing dir; `sys_rename`; `utimensat` + unlink return propagation.
+- `objgfx`: harden `ogScalableFont` glyph blit against corrupted cache entries.
+- musl: zero `O_LARGEFILE` on i386 (collided with FreeBSD `O_NOCTTY`).
+- login: fix password hang, add `*` feedback, unify Enter as CR.
+- Boot/build: `bmake world` from a clean checkout; `ttyd`/`sys_wait4`/keymap boot
+  stall + backspace.
+
 ---
 
 ## [2.2.0-BETA] - 2026-05-24
@@ -401,7 +589,8 @@ Initial git import from prior CVS/SVN history. Kernel booted, basic VFS and VMM 
 - `lseek` syscall (`SEEK_END` not yet implemented).
 - TCC added to base system.
 
-[Unreleased]: https://github.com/cwolsen7905/UbixOS/compare/v2.2.0-BETA...HEAD
+[Unreleased]: https://github.com/cwolsen7905/UbixOS/compare/v2.3.0-BETA...HEAD
+[2.3.0-BETA]: https://github.com/cwolsen7905/UbixOS/compare/v2.2.0-BETA...v2.3.0-BETA
 [2.2.0-BETA]: https://github.com/cwolsen7905/UbixOS/compare/v2.1.0-BETA...v2.2.0-BETA
 [2.1.0-BETA]: https://github.com/cwolsen7905/UbixOS/compare/v2.0.1-BETA...v2.1.0-BETA
 [2.0.1-BETA]: https://github.com/cwolsen7905/UbixOS/compare/v2.0.0-BETA...v2.0.1-BETA

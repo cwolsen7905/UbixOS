@@ -65,6 +65,20 @@ void endTask(pidType pid)
 	asm volatile("movw %0, %%gs" : : "r"((u_int16_t)SEL_PCPU) : "memory");
 
 	/*
+	 * CLONE_CHILD_CLEARTID: a thread created via rfork/clone may have asked the
+	 * kernel to zero a user address and futex-wake it on exit (musl uses this to
+	 * release the thread-list lock held across pthread_exit).  Do it now, while
+	 * this thread's (shared) address space is still mapped and before any
+	 * teardown below.  The waiter is a sibling sleeping on the same address.
+	 */
+	if (_current->clear_tid != NULL)
+	{
+		*_current->clear_tid = 0;
+		sched_wakeup_chan(_current->clear_tid);
+		_current->clear_tid = NULL;
+	}
+
+	/*
 	 * Release the full per-process address space while we are still _current
 	 * so PT_BASE_ADDR reflects our own page tables.  Start at PD[1]
 	 * (0x400000) rather than VMM_USER_START (0x800000): PD[1] holds COW'd
@@ -72,8 +86,21 @@ void endTask(pidType pid)
 	 * PD[0] (0–4 MB identity map) is shared by all processes and must not
 	 * be touched.  systemTask's vmm_free_process_pages only needs to reclaim
 	 * the private PT/PD physical pages after this runs.
+	 *
+	 * Threads (rfork(RFMEM)) SHARE one address space (cr3) across a tgid.
+	 * Only the LAST task of the group may free it — an earlier thread exiting
+	 * must leave the shared pages mapped for its still-running siblings.  The
+	 * reaper frees the page tables/dir only for the task flagged here.
 	 */
-	vmm_clean_virtual_space(0x400000U);
+	if (sched_tgid_others_alive(_current->tgid, _current->id) == 0)
+	{
+		_current->reap_free_as = 1;
+		vmm_clean_virtual_space(0x400000U);
+	}
+	else
+	{
+		_current->reap_free_as = 0; /* siblings still use the shared AS */
+	}
 
 	/* Free any MPI mailboxes this task owned so their names/pids do not leak
 	 * (a leaked mailbox blocks a relaunched owner — e.g. a views app — from
@@ -83,6 +110,12 @@ void endTask(pidType pid)
 	/* Return TTY ownership to parent so the shell gets its prompt back. */
 	if (_current->term != NULL && _current->term->owner == _current->id && _current->parent != NULL)
 		_current->term->owner = _current->parent->id;
+
+	/* Hang up any pseudo-terminal this task owned (it was the graphical terminal
+	 * app).  A shell that ran setsid() for the pty is in its own session and
+	 * escapes process-group/session teardown on logout; SIGHUP'ing the slave
+	 * session here makes it exit instead of leaking across the next login. */
+	tty_hangup_by_owner(_current->id);
 
 	sched_zombie(_current);
 	sched_yield();

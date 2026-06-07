@@ -318,6 +318,13 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 				t->t_eof = 0;
 				break; /* return x bytes (0 if line was empty = EOF) */
 			}
+			else if (!t->t_inuse)
+			{
+				/* The pty was released out from under us (its master owner died
+				 * — see tty_hangup_by_owner): report EOF so an orphaned shell
+				 * reading here unwinds and exits instead of yielding forever. */
+				break;
+			}
 			else
 			{
 				sched_yield();
@@ -1000,7 +1007,17 @@ int kern_openat(struct thread *thr, int afd, char *path, int flags, int mode)
 	}
 	else if (oflags & O_RDWR)
 	{
-		nfp->fd = fopen(path, "rwb");
+		if (oflags & O_TRUNC)
+		{
+			nfp->fd = fopen(path, "w+b"); /* read-write, truncate (and create) */
+		}
+		else
+		{
+			/* read-write in place — must NOT truncate an existing file. */
+			nfp->fd = fopen(path, "r+b");
+			if (nfp->fd == NULL && (oflags & O_CREAT))
+				nfp->fd = fopen(path, "w+b"); /* create a new empty file */
+		}
 	}
 	else
 	{

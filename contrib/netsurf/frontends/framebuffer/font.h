@@ -60,6 +60,8 @@ nserror fb_font_width(const struct plot_font_style *fstyle, const char *string, 
 
 #ifdef FB_USE_FREETYPE
 #include "framebuffer/font_freetype.h"
+#elif defined(FB_USE_STBTT)
+#include "framebuffer/font_stbtt.h"
 #else
 #include "framebuffer/font_internal.h"
 #endif

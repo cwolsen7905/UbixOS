@@ -29,6 +29,26 @@
 #include <ubixos/syscalls.h>
 #include <sys/sysproto.h>
 
+/*
+ * Linux-compat threading primitives live in the UbixOS-native table (int $0x81),
+ * NOT the FreeBSD-numbered POSIX table (int $0x80): futex / set_thread_area /
+ * exit_group have no FreeBSD syscall number, so squatting on FreeBSD slots would
+ * shadow real calls and pollute the ABI a future FreeBSD-libc port depends on.
+ * Handlers are defined in sys/posix/gen_calls.c; their arg structs live in
+ * sys/sysproto_posix.h (not included here to avoid PADL_ macro clashes with
+ * sys/sysproto.h — the native dispatch ignores sc_arg_count, so literal counts
+ * are used below).  musl reaches these via the 0x8000 native-ABI flag on the
+ * syscall number (see contrib/musl ubixos_syscall.S).
+ */
+struct sys_set_thread_area_args;
+struct sys_futex_args;
+struct sys_exit_group_args;
+struct sys_munmap_args;
+int sys_set_thread_area(struct thread *td, struct sys_set_thread_area_args *uap);
+int sys_futex(struct thread *td, struct sys_futex_args *uap);
+int sys_exit_group(struct thread *td, struct sys_exit_group_args *uap);
+int sys_thread_exit_unmap(struct thread *td, struct sys_munmap_args *uap);
+
 /* System Calls List */
 struct syscall_entry systemCalls[] = {
     {0, "No Call", sys_invalid, SYSCALL_VALID},                                               // 0 - syscall
@@ -109,6 +129,10 @@ struct syscall_entry systemCalls[] = {
     {ARG_COUNT(sys_vesa_modes_args), "vesa_modes", (sys_call_t *)sys_vesa_modes, SYSCALL_VALID}, // 60 - vesa_modes
     {ARG_COUNT(sys_ptyresize_args), "ptyresize", (sys_call_t *)sys_ptyresize, SYSCALL_VALID},    // 61 - ptyresize
     {ARG_COUNT(sys_sysinfo_args), "sysinfo", (sys_call_t *)sys_sysinfo, SYSCALL_VALID},          // 62 - sysinfo
+    {1, "set_thread_area", (sys_call_t *)sys_set_thread_area, SYSCALL_VALID},                    // 63 - set_thread_area (musl TLS)
+    {4, "futex", (sys_call_t *)sys_futex, SYSCALL_VALID},                                        // 64 - futex (musl threading)
+    {1, "exit_group", (sys_call_t *)sys_exit_group, SYSCALL_VALID},                              // 65 - exit_group (musl exit)
+    {2, "thread_exit_unmap", (sys_call_t *)sys_thread_exit_unmap, SYSCALL_VALID},                // 66 - unmap own stack + exit (musl __unmapself)
 };
 
 int totalCalls = sizeof(systemCalls) / sizeof(struct syscall_entry);

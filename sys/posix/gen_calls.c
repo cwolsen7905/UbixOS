@@ -48,6 +48,7 @@
 #include <sys/sysproto.h>
 #include <ubixos/errno.h>
 #include <ubixos/time.h>
+#include <isa/pit.h>
 #include <vmm/vmm.h>
 #include <vmm/mmap.h>
 #include <vmm/paging.h>
@@ -150,9 +151,10 @@ int read(struct thread *td, struct read_args *uap)
 
 	error = getfd(td, &fd, uap->fd);
 
-	if (error) {
+	if (error)
+	{
 		return (error);
-}
+	}
 
 	count = fread(uap->buf, uap->nbyte, 0x1, fd->fd);
 	kprintf("count: %i\n", count);
@@ -184,13 +186,15 @@ int mprotect(struct thread *td, struct mprotect_args *uap)
 	u_int32_t end = base + round_page(uap->len);
 	u_int16_t flags = PAGE_PRESENT | PAGE_USER;
 
-	if (uap->prot & PROT_WRITE) {
+	if (uap->prot & PROT_WRITE)
+	{
 		flags |= PAGE_WRITE;
-}
+	}
 
-	for (u_int32_t va = base; va < end; va += PAGE_SIZE) {
+	for (u_int32_t va = base; va < end; va += PAGE_SIZE)
+	{
 		vmm_set_page_attributes(va, flags);
-}
+	}
 
 	td->td_retval[0] = 0;
 	return (0);
@@ -198,6 +202,32 @@ int mprotect(struct thread *td, struct mprotect_args *uap)
 
 int sys_kill(struct thread *td, struct sys_kill_args *uap)
 {
+	/*
+	 * Process-group signalling (POSIX):
+	 *   pid == 0  -> every process in the caller's process group.
+	 *   pid <  0  -> every process in the group |pid|.
+	 * Used for session teardown: vlogin kills the session's group on logout.
+	 * The kernel is cooperative (no preemption without an explicit yield), so
+	 * walking taskList here without yielding is atomic and safe.
+	 */
+	if (uap->pid <= 0)
+	{
+		u_int32_t pgrp = (uap->pid == 0) ? _current->pgrp : (u_int32_t)(-uap->pid);
+		kTask_t *t;
+		int found = 0;
+
+		for (t = taskList; t != NULL; t = t->next)
+		{
+			if (t->pgrp != pgrp || t->id <= 1)
+				continue; /* never signal init (pid 1) */
+			found = 1;
+			if (uap->signum != 0)
+				signal_post_kill(_current->id, (int)t->id, uap->signum);
+		}
+		td->td_retval[0] = found ? 0 : -1;
+		return (td->td_retval[0]);
+	}
+
 	if (uap->signum == 0)
 	{
 		/* Signal 0: existence check only. */
@@ -254,11 +284,139 @@ int sys_clock_gettime(struct thread *td, struct sys_clock_gettime_args *uap)
 	return (0);
 }
 
-/* futex stub — always succeeds for single-threaded musl */
-int sys_futex(struct thread *td, struct sys_futex_args *uap)
+/* FUTEX command mask — strips FUTEX_PRIVATE (0x80) / FUTEX_CLOCK_REALTIME (0x100). */
+#define FUTEX_CMD_MASK 0x7F
+#define FUTEX_WAIT 0
+#define FUTEX_WAKE 1
+#define FUTEX_REQUEUE 3
+#define FUTEX_CMP_REQUEUE 4
+#define FUTEX_WAIT_BITSET 9
+
+/* Context for the FUTEX_WAIT sleep condition (see futex_wait_cond). */
+struct futex_wait_ctx
 {
+	volatile int *uaddr;
+	int           val;
+};
+
+/**
+ * futex_wait_cond - stop-waiting predicate for a FUTEX_WAIT sleep.
+ *
+ * Returns true once the futex word no longer holds the value the waiter slept
+ * on — i.e. a waker changed it.  sched_wait_event_timeout() re-checks this
+ * under interrupts-off, which on a single CPU makes the compare-and-sleep
+ * atomic with respect to FUTEX_WAKE (no other thread can run between).
+ */
+static int futex_wait_cond(void *arg)
+{
+	struct futex_wait_ctx *c = (struct futex_wait_ctx *)arg;
+
+	return (*c->uaddr != c->val);
+}
+
+/**
+ * sys_membarrier - no-op on a uniprocessor.
+ *
+ * membarrier(2) forces memory barriers across all CPUs running threads of the
+ * process; on a single CPU that is trivially already satisfied, so every command
+ * is a successful no-op.  musl calls MEMBARRIER_CMD_REGISTER_PRIVATE_EXPEDITED
+ * once from pthread_create and ignores the result.  FreeBSD has membarrier
+ * natively (POSIX syscall 584), so it lives on the FreeBSD-numbered table.
+ */
+int sys_membarrier(struct thread *td, void *uap)
+{
+	(void)uap;
 	td->td_retval[0] = 0;
 	return (0);
+}
+
+/**
+ * sys_futex - minimal futex on the kernel's wait_chan sleep/wake primitive.
+ *
+ * UbixOS-native ABI (int $0x81) — futex is a Linux primitive with no FreeBSD
+ * syscall number, so it lives in the native table, not the FreeBSD-numbered
+ * POSIX one.  musl's pthread layer (mutex/cond/sem/barrier/once) funnels
+ * through FUTEX_WAIT/FUTEX_WAKE.  Threads share one address space, so a user
+ * virtual address is a stable wait token across the whole group — we sleep and
+ * wake directly on `uaddr`.
+ *
+ * REQUEUE/CMP_REQUEUE are treated as WAKE (waking instead of requeueing is
+ * correct — woken waiters simply re-contend; the requeue target is ignored, a
+ * v1 simplification that is safe for musl's condition variables).  Priority-
+ * inheritance and other ops return -ENOSYS so musl falls back.
+ *
+ * @return 0 on a normal wake / successful wake; -errno (EAGAIN if the value
+ *         already changed, ETIMEDOUT on timeout, ENOSYS for unsupported ops).
+ */
+int sys_futex(struct thread *td, struct sys_futex_args *uap)
+{
+	int  cmd = uap->op & FUTEX_CMD_MASK;
+	int *uaddr = uap->uaddr;
+
+	if (uaddr == NULL)
+	{
+		td->td_retval[0] = EINVAL;
+		return (-1);
+	}
+
+	switch (cmd)
+	{
+	case FUTEX_WAIT:
+	case FUTEX_WAIT_BITSET: /* bitset/abs-time nuance ignored — treat as WAIT */
+	{
+		struct futex_wait_ctx ctx;
+		u_int32_t             ticks = 0;
+		int                   timed_out;
+
+		/* Value already changed → don't sleep (classic futex race guard). */
+		if (*uaddr != uap->val)
+		{
+			td->td_retval[0] = EAGAIN;
+			return (-1);
+		}
+
+		/* Optional RELATIVE timeout.  musl i386 timespec is { int64 tv_sec;
+		 * long tv_nsec }; read it with a matching local layout so we do not
+		 * depend on the kernel's struct timespec.  PIT_TIMER ticks/second. */
+		if (uap->timeout != NULL)
+		{
+			struct
+			{
+				long long tv_sec;
+				long      tv_nsec;
+			} ts;
+
+			memcpy(&ts, uap->timeout, sizeof(ts));
+			ticks = (u_int32_t)((long long)ts.tv_sec * PIT_TIMER +
+			                    ts.tv_nsec / (1000000000L / PIT_TIMER));
+			if (ticks == 0)
+				ticks = 1; /* non-NULL but sub-tick → wait at least one tick */
+		}
+
+		ctx.uaddr = (volatile int *)uaddr;
+		ctx.val   = uap->val;
+
+		timed_out = sched_wait_event_timeout(uaddr, futex_wait_cond, &ctx, ticks);
+		if (timed_out)
+		{
+			td->td_retval[0] = ETIMEDOUT;
+			return (-1);
+		}
+		td->td_retval[0] = 0;
+		return (0);
+	}
+
+	case FUTEX_WAKE:
+	case FUTEX_REQUEUE:     /* wake instead of requeue (v1) */
+	case FUTEX_CMP_REQUEUE: /* wake instead of requeue (v1) */
+		sched_wakeup_chan(uaddr);
+		td->td_retval[0] = (uap->val > 0) ? uap->val : 0; /* >=0: not -ENOSYS */
+		return (0);
+
+	default:
+		td->td_retval[0] = ENOSYS; /* PI mutexes, WAKE_OP, … → musl fallback */
+		return (-1);
+	}
 }
 
 /*
@@ -285,6 +443,13 @@ int sys_set_thread_area(struct thread *td, struct sys_set_thread_area_args *uap)
 		td->td_retval[0] = -1;
 		return (-1);
 	}
+
+	/*
+	 * Remember this thread's TLS base.  Every thread in an address space shares
+	 * the single LDT[1] descriptor written below, so cpu_switch() re-installs the
+	 * resuming thread's own base on each context switch (see context_switch.c).
+	 */
+	_current->tls_base = base_addr;
 
 	/* Write LDT[1] — second entry in the per-process LDT page */
 	tls_desc = (struct gdtDescriptor *)(VMM_USER_LDT + sizeof(struct gdtDescriptor));
@@ -328,9 +493,10 @@ int sys_writev(struct thread *td, struct sys_writev_args *uap)
 	{
 		wa.buf = uap->iov[i].iov_base;
 		wa.nbyte = uap->iov[i].iov_len;
-		if (wa.nbyte == 0) {
+		if (wa.nbyte == 0)
+		{
 			continue;
-}
+		}
 		sys_write(td, &wa);
 		if (td->td_retval[0] < 0)
 		{
@@ -354,9 +520,10 @@ int sys_readv(struct thread *td, struct sys_readv_args *uap)
 	{
 		ra.buf = uap->iov[i].iov_base;
 		ra.nbyte = uap->iov[i].iov_len;
-		if (ra.nbyte == 0) {
+		if (ra.nbyte == 0)
+		{
 			continue;
-}
+		}
 		sys_read(td, &ra);
 		if (td->td_retval[0] < 0)
 		{
@@ -364,9 +531,10 @@ int sys_readv(struct thread *td, struct sys_readv_args *uap)
 			return (-1);
 		}
 		total += td->td_retval[0];
-		if ((size_t)td->td_retval[0] < ra.nbyte) {
+		if ((size_t)td->td_retval[0] < ra.nbyte)
+		{
 			break;
-}
+		}
 	}
 	td->td_retval[0] = total;
 	return (0);
@@ -390,19 +558,22 @@ int sys_pidStatus(struct thread *td, struct sys_pidStatus_args *args)
 {
 	kTask_t *task = schedFindTask(args->pid);
 
-	if (task != NULL && task->state != DEAD) {
+	if (task != NULL && task->state != DEAD)
+	{
 		td->td_retval[0] = 1;
-	} else {
+	}
+	else
+	{
 		td->td_retval[0] = 0;
-}
+	}
 	return (0);
 }
 
-#define WNOHANG     0x0001  /* don't block if no child ready */
-#define WUNTRACED   0x0002  /* report stopped children */
+#define WNOHANG 0x0001   /* don't block if no child ready */
+#define WUNTRACED 0x0002 /* report stopped children */
 
-#define W_STOPPED(sig)  (((sig) << 8) | 0x7f)
-#define W_EXITED(code)  ((code) << 8)
+#define W_STOPPED(sig) (((sig) << 8) | 0x7f)
+#define W_EXITED(code) ((code) << 8)
 #define W_SIGNALED(sig) ((sig) & 0x7f)
 
 /*
@@ -410,13 +581,13 @@ int sys_pidStatus(struct thread *td, struct sys_pidStatus_args *args)
  * When a DEAD child is found it is spliced from taskList and queued for
  * freeing — the caller reads child->id before the system task reclaims it.
  */
-static kTask_t *
-wait_find_child(int want_pid, int options, int *wstatus)
+static kTask_t *wait_find_child(int want_pid, int options, int *wstatus)
 {
 	kTask_t *t;
-	int      untraced = options & WUNTRACED;
+	int untraced = options & WUNTRACED;
 
-	for (t = taskList; t != NULL; t = t->next) {
+	for (t = taskList; t != NULL; t = t->next)
+	{
 		if (t->parent != _current)
 			continue;
 		if (want_pid != -1 && (int)t->id != want_pid)
@@ -428,19 +599,24 @@ wait_find_child(int want_pid, int options, int *wstatus)
 		 * ZOMBIE.  Collecting it here is correct — the parent is the one
 		 * doing the reaping, not sched().
 		 */
-		if (t->state == DEAD || t->state == ZOMBIE) {
+		if (t->state == DEAD || t->state == ZOMBIE)
+		{
 			if (wstatus)
 				*wstatus = W_EXITED(0);
-			if (t->prev != NULL) t->prev->next = t->next;
-			else                 taskList       = t->next;
-			if (t->next != NULL) t->next->prev  = t->prev;
+			if (t->prev != NULL)
+				t->prev->next = t->next;
+			else
+				taskList = t->next;
+			if (t->next != NULL)
+				t->next->prev = t->prev;
 			pid_hash_remove(t);
 			sched_addDelTask(t);
 			if (_current->children > 0)
 				_current->children--;
 			return (t);
 		}
-		if (untraced && t->state == STOPPED && t->t_stopped_sig != 0) {
+		if (untraced && t->state == STOPPED && t->t_stopped_sig != 0)
+		{
 			if (wstatus)
 				*wstatus = W_STOPPED(t->t_stopped_sig);
 			t->t_stopped_sig = 0;
@@ -454,7 +630,7 @@ int sys_wait4(struct thread *td, struct sys_wait4_args *args)
 {
 #define SIG_PENDING_UNBLOCKED_W(td) ((td)->sig_pending & ~(td)->sigmask.__bits[0])
 	kTask_t *child;
-	int      wstatus = 0;
+	int wstatus = 0;
 
 	/*
 	 * ECHILD check.  For wait-any (pid == -1) we trust children counter
@@ -462,29 +638,42 @@ int sys_wait4(struct thread *td, struct sys_wait4_args *args)
 	 * counter decrement may have raced.  For a specific pid we verify the
 	 * target exists and is our direct child.
 	 */
-	if (args->pid == -1) {
-		if (_current->children <= 0) {
+	if (args->pid == -1)
+	{
+		if (_current->children <= 0)
+		{
 			kTask_t *t;
 			int found = 0;
-			for (t = taskList; t != NULL; t = t->next) {
-				if (t->parent == _current) { found = 1; break; }
+			for (t = taskList; t != NULL; t = t->next)
+			{
+				if (t->parent == _current)
+				{
+					found = 1;
+					break;
+				}
 			}
-			if (!found) {
+			if (!found)
+			{
 				td->td_retval[0] = -ECHILD;
 				return (ECHILD);
 			}
 		}
-	} else {
+	}
+	else
+	{
 		kTask_t *t = schedFindTask((u_int32_t)args->pid);
-		if (t == NULL || t->parent != _current) {
+		if (t == NULL || t->parent != _current)
+		{
 			td->td_retval[0] = -ECHILD;
 			return (ECHILD);
 		}
 	}
 
-	if (args->options & WNOHANG) {
+	if (args->options & WNOHANG)
+	{
 		child = wait_find_child(args->pid, args->options, &wstatus);
-		if (child == NULL) {
+		if (child == NULL)
+		{
 			td->td_retval[0] = 0;
 			if (args->status)
 				*args->status = 0;
@@ -505,12 +694,14 @@ int sys_wait4(struct thread *td, struct sys_wait4_args *args)
 	 * we were still RUNNING (no-op), then sched_sleep dequeued us.  The
 	 * re-check sees the now-DEAD/ZOMBIE child and avoids sleeping forever.
 	 */
-	for (;;) {
+	for (;;)
+	{
 		child = wait_find_child(args->pid, args->options, &wstatus);
 		if (child != NULL)
 			break;
 
-		if (SIG_PENDING_UNBLOCKED_W(td)) {
+		if (SIG_PENDING_UNBLOCKED_W(td))
+		{
 			td->td_retval[0] = -EINTR;
 			return (EINTR);
 		}
@@ -519,7 +710,8 @@ int sys_wait4(struct thread *td, struct sys_wait4_args *args)
 
 		/* Re-check to catch lost-wakeup. */
 		child = wait_find_child(args->pid, args->options, &wstatus);
-		if (child != NULL) {
+		if (child != NULL)
+		{
 			sched_wakeup(_current);
 			break;
 		}
@@ -670,9 +862,10 @@ int sys_getlogin(struct thread *thr, struct sys_getlogin_args *args)
 	int error = 0;
 	size_t len = args->namelen;
 
-	if (len > sizeof(_current->username)) {
+	if (len > sizeof(_current->username))
+	{
 		len = sizeof(_current->username);
-}
+	}
 
 	memcpy(args->namebuf, _current->username, len);
 
@@ -696,69 +889,69 @@ int sys_getrlimit(struct thread *thr, struct sys_getrlimit_args *args)
 
 	switch (args->which)
 	{
-	case 0:
-		args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
-		args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
-		break;
-	case 1:
-		args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
-		args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
-		break;
-	case 2:
-		args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
-		args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
-		break;
-	case 3:
-		args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
-		args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
-		break;
-	case 4:
-		args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
-		args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
-		break;
-	case 5:
-		args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
-		args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
-		break;
-	case 6:
-		args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
-		args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
-		break;
-	case 7:
-		args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
-		args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
-		break;
-	case 8:
-		args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
-		args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
-		break;
-	case 9:
-		args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
-		args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
-		break;
-	case 10:
-		args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
-		args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
-		break;
-	case 11:
-		args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
-		args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
-		break;
-	case 12:
-		args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
-		args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
-		break;
-	case 13:
-		args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
-		args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
-		break;
-	case 14:
-		args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
-		args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
-		break;
-	default:
-		error = -1;
-		kprintf("[getrlimit: %i]", args->which);
+		case 0:
+			args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+			args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+			break;
+		case 1:
+			args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+			args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+			break;
+		case 2:
+			args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+			args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+			break;
+		case 3:
+			args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+			args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+			break;
+		case 4:
+			args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+			args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+			break;
+		case 5:
+			args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+			args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+			break;
+		case 6:
+			args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+			args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+			break;
+		case 7:
+			args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+			args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+			break;
+		case 8:
+			args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+			args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+			break;
+		case 9:
+			args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+			args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+			break;
+		case 10:
+			args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+			args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+			break;
+		case 11:
+			args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+			args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+			break;
+		case 12:
+			args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+			args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+			break;
+		case 13:
+			args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+			args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+			break;
+		case 14:
+			args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+			args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+			break;
+		default:
+			error = -1;
+			kprintf("[getrlimit: %i]", args->which);
 	}
 
 	return (error);
@@ -770,69 +963,69 @@ int sys_setrlimit(struct thread *thr, struct sys_setrlimit_args *args)
 
 	switch (args->which)
 	{
-	case 0:
-		thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
-		thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
-		break;
-	case 1:
-		thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
-		thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
-		break;
-	case 2:
-		thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
-		thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
-		break;
-	case 3:
-		thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
-		thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
-		break;
-	case 4:
-		thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
-		thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
-		break;
-	case 5:
-		thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
-		thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
-		break;
-	case 6:
-		thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
-		thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
-		break;
-	case 7:
-		thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
-		thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
-		break;
-	case 8:
-		thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
-		thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
-		break;
-	case 9:
-		thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
-		thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
-		break;
-	case 10:
-		thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
-		thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
-		break;
-	case 11:
-		thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
-		thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
-		break;
-	case 12:
-		thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
-		thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
-		break;
-	case 13:
-		thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
-		thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
-		break;
-	case 14:
-		thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
-		thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
-		break;
-	default:
-		error = -1;
-		kprintf("[setrlimit: %i]", args->which);
+		case 0:
+			thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+			thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+			break;
+		case 1:
+			thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+			thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+			break;
+		case 2:
+			thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+			thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+			break;
+		case 3:
+			thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+			thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+			break;
+		case 4:
+			thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+			thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+			break;
+		case 5:
+			thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+			thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+			break;
+		case 6:
+			thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+			thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+			break;
+		case 7:
+			thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+			thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+			break;
+		case 8:
+			thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+			thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+			break;
+		case 9:
+			thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+			thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+			break;
+		case 10:
+			thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+			thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+			break;
+		case 11:
+			thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+			thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+			break;
+		case 12:
+			thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+			thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+			break;
+		case 13:
+			thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+			thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+			break;
+		case 14:
+			thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+			thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+			break;
+		default:
+			error = -1;
+			kprintf("[setrlimit: %i]", args->which);
 	}
 
 	return (error);

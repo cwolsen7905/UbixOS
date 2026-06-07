@@ -63,7 +63,17 @@ __cp_begin:
 	pushl %edx		/* a2 */
 	pushl %ecx		/* a1 */
 	pushl $0		/* fake return address */
+	/* Native-ABI routing (matches ubixos_syscall.S UBIX_INT): bit 0x8000 in
+	 * the syscall number selects int $0x81 (UbixOS-native, e.g. futex) over
+	 * int $0x80 (FreeBSD POSIX).  Both ints stay inside the [__cp_begin,
+	 * __cp_end) cancellation window so a pending cancel is still honored. */
+	testl $0x8000, %eax
+	jnz   2f
 	int  $0x80
+	jmp   3f
+2:	andl  $0x7FFF, %eax
+	int  $0x81
+3:
 __cp_end:
 	addl $28, %esp		/* pop the 7 words we pushed */
 	jnc  1f

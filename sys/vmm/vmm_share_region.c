@@ -69,17 +69,28 @@ uintptr_t vmm_share_region(uintptr_t vaddr, size_t size, pidType dst_pid)
 		return 0;
 	}
 
-	/* Collect physical addresses from current (src) address space */
+	/* Collect physical addresses from current (src) address space and mark each
+	 * SOURCE PTE PAGE_SHARED.  The per-frame COW counter is bumped for the
+	 * recipient's reference only once the mapping fully succeeds (below), so a
+	 * failure partway does not leak counts.  Marking the source PAGE_SHARED is
+	 * harmless on failure: with the count unbumped, free_page still releases the
+	 * frame normally on unmap. */
 	for (i = 0; i < n; i++)
 	{
-		phys[i] = vmm_get_physical_addr(vaddr + i * PAGE_SIZE);
+		u_int32_t va = vaddr + i * PAGE_SIZE;
+		u_int32_t *src_pt;
+
+		phys[i] = vmm_get_physical_addr(va);
 		if (phys[i] == 0)
 		{
-			kprintf("vmm_share_region: page %u at 0x%X not mapped\n", i, vaddr + i * PAGE_SIZE);
+			kprintf("vmm_share_region: page %u at 0x%X not mapped\n", i, va);
 			kfree(phys);
 			return 0;
 		}
+		src_pt = (u_int32_t *)(PT_BASE_ADDR + 0x1000 * (va >> 22));
+		src_pt[(va >> 12) & 0x3FF] |= PAGE_SHARED;
 	}
+	asm volatile("movl %cr3,%eax\n movl %eax,%cr3\n");
 
 	dst = schedFindTask(dst_pid);
 	if (dst == NULL)
@@ -158,6 +169,14 @@ uintptr_t vmm_share_region(uintptr_t vaddr, size_t size, pidType dst_pid)
 
 	asm volatile("movl %0, %%cr3" ::"r"(old_cr3));
 	asm volatile("sti");
+
+	/* All recipient pages are now mapped — count the recipient's reference on
+	 * each frame (vmm_share_ref: 0 -> 2 for the source+recipient pair, +1 for an
+	 * already-shared frame) so it is freed only when the last of the source,
+	 * recipient, and any forked children unmaps it.  Done here (success path
+	 * only) so a partial failure above leaks no counts. */
+	for (i = 0; i < n; i++)
+		vmm_share_ref(phys[i]);
 
 	kprintf("vmm_share_region: src vaddr 0x%X -> pid %d vaddr 0x%X (%u pages) phys[0]=0x%X\n",
 	        vaddr,

@@ -1205,6 +1205,20 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 	_current->priority     = _current->base_priority;
 
 	/*
+	 * POSIX: execve resets the disposition of every CAUGHT signal to
+	 * SIG_DFL — the old handler addresses point into the previous address
+	 * space we just tore down, so leaving them installed would jump to a
+	 * wild pointer on the next signal.  Signals set to SIG_IGN stay ignored;
+	 * the signal mask and any pending signals are preserved (not touched
+	 * here).  memset clears sa_handler/sa_sigaction, sa_flags and sa_mask in
+	 * one shot.
+	 */
+	for (i = 0; (size_t)i < sizeof(_current->td.sigact) / sizeof(_current->td.sigact[0]); i++) {
+		if ((void *)_current->td.sigact[i].sa_handler != (void *)0x1 /* SIG_IGN */)
+			memset(&_current->td.sigact[i], 0, sizeof(_current->td.sigact[i]));
+	}
+
+	/*
 	 * POSIX: exec does not change the process group.  Keep _current->pgrp
 	 * as-is (inherits from fork / setpgid).  Only sync the tty's t_pgrp so
 	 * tcgetpgrp() reflects the current foreground group.

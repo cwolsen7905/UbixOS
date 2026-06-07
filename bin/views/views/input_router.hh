@@ -58,6 +58,10 @@ class InputRouter
 	Window *last_click_win_ = nullptr;
 	int last_click_x_ = 0, last_click_y_ = 0;
 
+	/* Id of the window the cursor last hovered (for motion delivery); 0 if none.
+	 * Tracked by id, not pointer, so a destroyed window can't dangle. */
+	uint32_t last_hover_id_ = 0;
+
 	/* on_close_ is called when the user clicks the close button.
 	 * WindowManager sets this to its own close_window method via a
 	 * captureless lambda + context pointer, avoiding a circular dep. */
@@ -66,6 +70,7 @@ class InputRouter
 	void (*min_fn_)(void *, Window *);              /* minimize callback (same ctx) */
 	void (*resize_fn_)(void *, Window *, int, int); /* resize-commit callback (same ctx) */
 	void (*place_fn_)(void *, Window *, int);       /* maximize/snap (mode: 0=max,1=left,2=right) */
+	void (*focus_fn_)(void *, Window *);            /* click-to-focus callback (same ctx) */
 
 	void send_mouse(Window *w, int cx, int cy, uint8_t buttons);
 	void close_window(Window *w);
@@ -77,7 +82,8 @@ class InputRouter
 	            void (*close_fn)(void *, Window *),
 	            void (*min_fn)(void *, Window *),
 	            void (*resize_fn)(void *, Window *, int, int),
-	            void (*place_fn)(void *, Window *, int));
+	            void (*place_fn)(void *, Window *, int),
+	            void (*focus_fn)(void *, Window *));
 
 	void handle_mouse(mouse_event_t &ev);
 	void handle_kbd(kbd_event_t &ev);

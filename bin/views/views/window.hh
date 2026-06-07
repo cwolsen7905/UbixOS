@@ -29,19 +29,19 @@
 #pragma once
 
 #include <string>
+#include <objgfx/objgfx.h>
 #include "icanvas.hh"
 #include "framebuffer.hh"
 
-/* Decoration colour palette.  The focused title bar uses the user's accent
- * colour (g_theme_decor_*), resolved from the registry by the Compositor; the
- * rest are fixed.  Defaults match the historical blue. */
-extern uint32_t g_theme_decor_bg; /* focused title bar fill (accent) */
-extern uint32_t g_theme_decor_hi; /* focused title bar top highlight */
-#define DECOR_BG_INACT FB_RGB(0x28, 0x28, 0x38)
-#define DECOR_HI_INACT FB_RGB(0x38, 0x38, 0x50)
-#define DECOR_SEP FB_RGB(0x10, 0x20, 0x30)
-#define DECOR_CLOSE_BG FB_RGB(0x90, 0x22, 0x22)
-#define DECOR_MIN_BG FB_RGB(0x40, 0x44, 0x50)
+/* Decoration colour palette (Windows 11 "flat" chrome).  The focused title bar
+ * is filled with the user's accent colour (g_theme_decor_bg), resolved from the
+ * registry by the Compositor; unfocused bars use a neutral dim fill.  Buttons
+ * are hand-rasterised glyphs drawn straight over the bar (no per-button cell
+ * fill) — the close glyph tints red so it stays the obvious target. */
+extern uint32_t g_theme_decor_bg;                /* focused title bar fill (accent) */
+extern uint32_t g_theme_decor_hi;                /* (legacy) kept for the Compositor's setter */
+#define DECOR_BG_INACT FB_RGB(0x2A, 0x2A, 0x30)  /* unfocused title bar fill */
+#define DECOR_CLOSE_RED FB_RGB(0xFF, 0x6E, 0x6E) /* close-glyph accent (bright for contrast) */
 
 /* ------------------------------------------------------------------ */
 /* Window — client window state and rendering helpers                  */
@@ -105,34 +105,69 @@ class Window
 		return resizable() && cx >= x + w - GRIP && cx < x + w && cy >= by - GRIP && cy < by;
 	}
 
+	/* Crisp X (close glyph): two 2px-thick diagonals of half-extent r. */
+	static void glyph_close(ICanvas &c, int cx, int cy, int r, uint32_t col)
+	{
+		for (int i = -r; i <= r; i++)
+		{
+			c.pixel(cx + i, cy + i, col);
+			c.pixel(cx + i + 1, cy + i, col);
+			c.pixel(cx + i, cy - i, col);
+			c.pixel(cx + i + 1, cy - i, col);
+		}
+	}
+
+	/* Square outline (maximize glyph) of side s centred on (cx, cy). */
+	static void glyph_square(ICanvas &c, int cx, int cy, int s, uint32_t col)
+	{
+		int lx = cx - s / 2, ty = cy - s / 2;
+		c.rect(lx, ty, s, 1, col);
+		c.rect(lx, ty + s - 1, s, 1, col);
+		c.rect(lx, ty, 1, s, col);
+		c.rect(lx + s - 1, ty, 1, s, col);
+	}
+
 	void draw_decor(ICanvas &canvas, bool is_focused) const
 	{
+		/* Flat fill; focus dimming blends the accent toward neutral grey. */
 		uint32_t bg = is_focused ? g_theme_decor_bg : DECOR_BG_INACT;
-		uint32_t hi = is_focused ? g_theme_decor_hi : DECOR_HI_INACT;
-		canvas.rect(x, y, w, decor_h, bg);
-		canvas.rect(x, y, w, 1, hi);
-		canvas.rect(x, y + decor_h - 1, w, 1, DECOR_SEP);
-		canvas.text(x + 6, y + (decor_h - FB_FONT_H) / 2, title.c_str(), FB_WHITE, bg);
+		uint32_t glyph = is_focused ? FB_RGB(0xF0, 0xF0, 0xF4) : FB_RGB(0x80, 0x80, 0x90);
+		uint32_t txt = is_focused ? FB_WHITE : FB_RGB(0x9A, 0x9A, 0xAA);
 
+		canvas.rect(x, y, w, decor_h, bg);
+		/* Hairline at the content boundary — subtle, just darker than the bar. */
+		canvas.rect(x, y + decor_h - 1, w, 1, ogSurface::ogBlendColor(bg, 0, 70));
+
+		canvas.text(x + 10, y + (decor_h - FB_FONT_H) / 2, title.c_str(), txt, bg);
+
+		int cy = y + decor_h / 2;
+
+		/* Maximize / restore — only resizable windows. */
 		if (resizable())
 		{
-			int xbx = x + w - 3 * decor_h;
-			canvas.rect(xbx, y + 1, decor_h - 1, decor_h - 2, DECOR_MIN_BG);
-			int ix = xbx + (decor_h - 8) / 2, iy = y + (decor_h - 8) / 2;
-			canvas.rect(ix, iy, 8, 1, FB_WHITE); /* a small square = maximize */
-			canvas.rect(ix, iy + 7, 8, 1, FB_WHITE);
-			canvas.rect(ix, iy, 1, 8, FB_WHITE);
-			canvas.rect(ix + 7, iy, 1, 8, FB_WHITE);
+			int mcx = x + w - 3 * decor_h + decor_h / 2;
+			if (maximized)
+			{
+				/* Restore: two overlapped squares. */
+				glyph_square(canvas, mcx + 2, cy - 2, 8, glyph);
+				canvas.rect(mcx - 4, cy + 1, 8, 1, glyph);
+				canvas.rect(mcx - 4, cy + 1, 1, 6, glyph);
+				canvas.rect(mcx - 4, cy + 6, 8, 1, glyph);
+				canvas.rect(mcx + 3, cy + 1, 1, 6, glyph);
+			}
+			else
+			{
+				glyph_square(canvas, mcx, cy, 11, glyph);
+			}
 		}
 
-		int mbx = x + w - 2 * decor_h;
-		canvas.rect(mbx, y + 1, decor_h - 1, decor_h - 2, DECOR_MIN_BG);
-		canvas.ch(mbx + (decor_h - FB_FONT_W) / 2, y + (decor_h - FB_FONT_H) / 2, '_', FB_WHITE, DECOR_MIN_BG);
+		/* Minimize — a centred horizontal line. */
+		int icx = x + w - 2 * decor_h + decor_h / 2;
+		canvas.rect(icx - 5, cy, 11, 2, glyph);
 
-		int cbx = x + w - decor_h;
-		canvas.rect(cbx, y + 1, decor_h - 1, decor_h - 2, DECOR_CLOSE_BG);
-		canvas.ch(
-		    cbx + (decor_h - FB_FONT_W) / 2, y + (decor_h - FB_FONT_H) / 2, 'X', FB_WHITE, DECOR_CLOSE_BG);
+		/* Close — bright red X, far right. */
+		int ccx = x + w - decor_h + decor_h / 2;
+		glyph_close(canvas, ccx, cy, 5, is_focused ? DECOR_CLOSE_RED : glyph);
 	}
 
 	void blit_to(ICanvas &canvas) const

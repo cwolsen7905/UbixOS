@@ -93,6 +93,13 @@ class Compositor
 	void load_wallpaper(const char *path);
 	bool rect_covered(int rx, int ry, int rw, int rh);
 	void reblit_rect(int rx, int ry, int rw, int rh);
+
+	/* Modern depth: soft drop shadow under each window and anti-aliased
+	 * rounded outer corners, both clipped to [clipx,clipy,clipw,cliph]. */
+	uint32_t desk_pixel(int x, int y) const;
+	void draw_window_shadow(const Window *w, int clipx, int clipy, int clipw, int cliph);
+	void round_window_corners(const Window *w, int clipx, int clipy, int clipw, int cliph);
+
 	void cursor_save(int x, int y);
 	void cursor_erase(int x, int y);
 	void cursor_draw(int x, int y);

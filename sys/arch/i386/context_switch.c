@@ -70,7 +70,7 @@ _Static_assert(PCPU_GS_SEL == SEL_PCPU, "PCPU_GS_SEL must equal SEL_PCPU");
 
 extern void ret_from_fork(void);
 extern void enter_vm86(void);
-extern void cpu_switch(u_int32_t *save_ksp_slot, u_int32_t next_ksp, u_int32_t next_cr3);
+extern void cpu_switch(u_int32_t *save_ksp_slot, u_int32_t next_ksp, u_int32_t next_cr3, u_int32_t next_tls_base);
 
 /* Discard slot for the very first switch out of the boot context (prev == NULL);
  * the boot/kmain context is abandoned once init is dispatched. */
@@ -264,7 +264,7 @@ void switch_to(kTask_t *prev, kTask_t *next)
 	                     :
 	                     : "eax");
 
-	cpu_switch(save_slot, next->md.md_kstack, next->md.md_tss.cr3);
+	cpu_switch(save_slot, next->md.md_kstack, next->md.md_tss.cr3, next->tls_base);
 }
 
 /*
@@ -277,17 +277,26 @@ asm(".globl enter_vm86 \n"
     "  iret             \n");
 
 /*
- * cpu_switch(save_ksp_slot, next_ksp, next_cr3) — the register-level switch.
+ * cpu_switch(save_ksp_slot, next_ksp, next_cr3, next_tls_base) — register switch.
  *
  * cdecl args (read before any callee-saved push):
  *   4(%esp) = &prev->md.md_kstack   (where to save the outgoing kernel ESP)
  *   8(%esp) = next->md.md_kstack    (incoming kernel ESP)
  *  12(%esp) = next->md.md_tss.cr3   (incoming address space)
+ *  16(%esp) = next->tls_base        (incoming userland TLS base, 0 if none)
  *
  * Saves ebx/esi/edi/ebp + ESP into the prev slot, swaps CR3 if it changed
  * (kernel VA is shared across all spaces, so the stack stays mapped), loads the
  * next ESP, restores its callee-saved regs and returns — into the previous
  * cpu_switch caller (existing task) or ret_from_fork / a thread entry (new task).
+ *
+ * Userland TLS: all threads sharing an address space share the single LDT[1]
+ * descriptor (at VMM_USER_LDT, selected by user %gs = 0xF), so after the CR3
+ * swap — when VMM_USER_LDT maps the resuming task's LDT page — cpu_switch
+ * re-installs next's TLS base into LDT[1] (base bytes only; the access/limit
+ * bytes were set generically by set_thread_area).  Skipped when next_tls_base
+ * is 0 (kernel threads, or a process before its first set_thread_area, whose
+ * LDT page may not even be mapped).
  */
 asm(".globl cpu_switch \n"
     "cpu_switch:        \n"
@@ -308,6 +317,25 @@ asm(".globl cpu_switch \n"
     "  je 1f               \n"
     "  movl %ecx, %cr3     \n" /* swap address space */
     "1:                    \n"
+    /*
+     * Re-install next's userland TLS base into the shared LDT[1] descriptor
+     * (VMM_USER_LDT + 8 = 0x7FF008; base bytes at +2 word, +4 byte, +7 byte).
+     * Now safe: CR3 is next's, so 0x7FF00x maps next's LDT page.  esi was saved
+     * above so it is free scratch; eax is caller-clobbered.  edx (next_ksp) is
+     * preserved.  next_tls_base is the 4th arg: orig 16(%esp) + 32 bytes pushed.
+     */
+    "  movl 48(%esp), %esi \n" /* next_tls_base */
+    "  testl %esi, %esi    \n"
+    "  jz 2f               \n" /* 0 = no TLS (kernel thread / pre-set_thread_area) */
+    "  movl %esi, %eax     \n"
+    "  movw %ax, 0x007FF00A \n" /* LDT[1].baseLow  (bits 0..15)  */
+    "  movl %esi, %eax     \n"
+    "  shrl $16, %eax      \n"
+    "  movb %al, 0x007FF00C \n" /* LDT[1].baseMed  (bits 16..23) */
+    "  movl %esi, %eax     \n"
+    "  shrl $24, %eax      \n"
+    "  movb %al, 0x007FF00F \n" /* LDT[1].baseHigh (bits 24..31) */
+    "2:                    \n"
     "  movl %edx, %esp     \n" /* load next kernel stack */
     "  popl %ds            \n" /* restore next's data segments (in next's CR3)   */
     "  popl %es            \n"

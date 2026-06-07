@@ -56,6 +56,7 @@
 #define fileWrite   0x0002
 #define fileBinary  0x0004
 #define fileAppend  0x0008
+#define fileTrunc   0x0010  /* truncate on open (O_TRUNC / "w"); distinct from write access */
 
 /*!
  \brief filesSystem Structure

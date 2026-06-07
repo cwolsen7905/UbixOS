@@ -27,6 +27,8 @@
  */
 
 #include <vmm/vmm.h>
+#include <vmm/paging.h>
+#include <vmm/vm_filecache.h>
 
 /************************************************************************
 
@@ -72,7 +74,16 @@ void vmm_unmap_page(u_int32_t page_addr, unmapFlags_t flags)
 	if (flags == 0 && (page_table[page_table_index] & PAGE_PRESENT))
 	{
 		u_int32_t phys = page_table[page_table_index] & 0xFFFFF000;
-		if ((phys >> 12) < numPages)
+		if ((page_table[page_table_index] & PAGE_SHARED))
+		{
+			/* Shared page: file-page cache or vmm_share_region.  unref_phys
+			 * frees it iff this was the last file-cache reference; if it isn't a
+			 * cache page it is a share_region page whose references live in the
+			 * COW counter, so free_page decrements and frees on the last mapper. */
+			if (!vm_filecache_unref_phys(phys) && (phys >> 12) < numPages)
+				free_page(phys);
+		}
+		else if ((phys >> 12) < numPages)
 		{
 			free_page(phys);
 		}

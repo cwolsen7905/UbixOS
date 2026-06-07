@@ -40,6 +40,129 @@
 #include <sys/pipe.h>
 #include <sys/descrip.h>
 
+/**
+ * rfork(RFMEM)-style thread creation — the kernel side of pthread_create().
+ *
+ * Unlike fork(), the new task SHARES the caller's address space (same page
+ * directory / cr3) instead of copying it, runs on a caller-supplied user
+ * stack, and resumes at the same instruction (so musl's clone.s child path
+ * runs with eax==0 and calls the thread function).  It joins the caller's
+ * thread group (tgid) so endTask() tears the shared address space down only
+ * when the last task of the group exits.
+ *
+ * Args (uBixOS stack ABI, pushed by musl clone.s):
+ *   flags  — rfork flags (RFMEM etc.); informational for v1 (we always share).
+ *   stack  — top of the new thread's user stack.
+ *   tls    — thread-local-storage base (wired into %gs in the TLS step; stored
+ *            for now).
+ *
+ * @return the new thread's tid to the caller; the new thread sees 0.
+ */
+int sys_rfork(struct thread *td, struct sys_rfork_args *args) {
+  struct taskStruct *newThread;
+  int i;
+
+  newThread = schedNewTask();
+
+  /* Inherit QoS floor, cwd, identity, session/tty from the caller. */
+  newThread->base_priority = _current->base_priority;
+  newThread->priority      = _current->base_priority;
+  memcpy(newThread->oInfo.cwd, _current->oInfo.cwd, 1024);
+  newThread->ppid   = _current->id;
+  newThread->pgrp   = _current->pgrp;
+  newThread->sid    = _current->sid;
+  newThread->ct_tty = _current->ct_tty;
+  newThread->term   = _current->term;
+  newThread->uid    = _current->uid;
+  newThread->gid    = _current->gid;
+
+  /* Same thread group → shared address space; endTask uses this to decide
+   * whether it is the last task and must free the address space. */
+  newThread->tgid = _current->tgid;
+
+  /*
+   * Shallow-share the fd table: free the placeholders schedNewTask() created
+   * for 0–2, then point at the caller's fd objects so threads share open
+   * files (v1; a proper shared fdtable is the deferred cleanup).  endTask
+   * must NOT free these for a non-last thread (guarded by tgid there).
+   */
+  for (i = 0; i < O_FILES; i++) {
+    if (newThread->td.o_files[i] != NULL) {
+      kfree(newThread->td.o_files[i]);
+      newThread->td.o_files[i] = NULL;
+    }
+    newThread->td.o_files[i] = td->o_files[i];
+  }
+
+  /*
+   * Register state: copy the caller's frame, then override for a new thread —
+   * its own user stack, the clone() return convention (eax==0 in the child),
+   * and the same code address (resume right after the int $0x80 in clone.s).
+   */
+  newThread->md.md_tss.eip      = td->frame->tf_eip;
+  newThread->md.md_tss.eflags   = td->frame->tf_eflags;
+  newThread->md.md_tss.eax      = 0; /* the new thread sees rfork()/clone() == 0 */
+  newThread->md.md_tss.ebx      = td->frame->tf_ebx;
+  newThread->md.md_tss.ecx      = td->frame->tf_ecx;
+  newThread->md.md_tss.edx      = td->frame->tf_edx;
+  newThread->md.md_tss.esi      = td->frame->tf_esi;
+  newThread->md.md_tss.edi      = td->frame->tf_edi;
+  newThread->md.md_tss.ebp      = 0; /* fresh frame base on the new stack */
+  newThread->md.md_tss.esp      = (u_int32_t)args->stack;
+  newThread->md.md_tss.cs       = td->frame->tf_cs;
+  newThread->md.md_tss.ss       = td->frame->tf_ss;
+  newThread->md.md_tss.ds       = td->frame->tf_ds;
+  newThread->md.md_tss.es       = td->frame->tf_es;
+  newThread->md.md_tss.fs       = td->frame->tf_fs;
+  /* TLS: %gs selects the shared LDT[1] (0xF); install this thread's own base
+   * (CLONE_SETTLS — args->tls is musl's thread pointer).  cpu_switch restores
+   * tls_base into LDT[1] on every resume, so the child sees its own %gs:0. */
+  newThread->md.md_tss.gs       = 0xF;
+  newThread->tls_base           = (u_int32_t)args->tls;
+  newThread->md.md_tss.ldt      = 0x18;
+  newThread->md.md_tss.back_link = 0x0;
+  newThread->md.md_tss.trace_bitmap = 0x0000;
+  newThread->md.md_tss.io_map  = 0x8000;
+
+  newThread->td.vm_tsize = _current->td.vm_tsize;
+  newThread->td.vm_taddr = _current->td.vm_taddr;
+  newThread->td.vm_dsize = _current->td.vm_dsize;
+  newThread->td.vm_daddr = _current->td.vm_daddr;
+
+  /* SHARE the address space — same page directory as the caller (do NOT copy). */
+  newThread->md.md_tss.cr3 = _current->md.md_tss.cr3;
+  /* v1: copy the VMA map; a shared vm_map (cross-thread mmap/demand-zero) is a
+   * follow-up that touches the page-fault/mmap path. */
+  memset(&newThread->vm_map, 0, sizeof(newThread->vm_map));
+  vm_map_copy(&newThread->vm_map, &_current->vm_map);
+
+  /* Signals: inherit dispositions + mask, no pending signals at start. */
+  newThread->td.sig_pending = 0;
+  memset(newThread->td.sig_code,  0, sizeof(newThread->td.sig_code));
+  memset(newThread->td.sig_extra, 0, sizeof(newThread->td.sig_extra));
+  memcpy(newThread->td.sigact, td->sigact, sizeof(newThread->td.sigact));
+  memcpy(&newThread->td.sigmask, &td->sigmask, sizeof(newThread->td.sigmask));
+
+  /*
+   * CLONE_PARENT_SETTID: publish the new tid to the parent's user memory now
+   * (we run in the parent's address space).  musl reads pthread->tid from here.
+   * CLONE_CHILD_CLEARTID: remember the address the kernel must zero + futex-wake
+   * when this thread exits (endTask) — musl uses it to release the thread-list
+   * lock held across pthread_exit.
+   */
+  if (args->ptid != NULL)
+    *args->ptid = newThread->id;
+  newThread->clear_tid = (int *)args->ctid;
+
+  newThread->parent = _current;
+  _current->children++;
+
+  sched_ready(newThread);
+
+  td->td_retval[0] = newThread->id; /* caller gets the new thread's tid */
+  return (0);
+}
+
 int sys_fork(struct thread *td, struct sys_fork_args *args) {
   struct taskStruct *newProcess;
 
@@ -144,6 +267,15 @@ int sys_fork(struct thread *td, struct sys_fork_args *args) {
   newProcess->md.md_tss.cr3 = (u_int32_t) vmm_copy_virtual_space(newProcess->id);
   memset(&newProcess->vm_map, 0, sizeof(newProcess->vm_map));
   vm_map_copy(&newProcess->vm_map, &_current->vm_map);
+
+  /*
+   * Inherit the userland TLS base: the child got a private copy of the LDT page
+   * (vmm_copy_virtual_space) with the parent's TLS descriptor, and the same %gs.
+   * Copying tls_base too keeps cpu_switch re-installing the right base if this
+   * child later becomes multithreaded (a sibling thread would otherwise clobber
+   * the shared LDT[1] base with no record to restore it).
+   */
+  newProcess->tls_base = _current->tls_base;
 
   /*
    * Signal state must be cleared AFTER vmm_copy_virtual_space.

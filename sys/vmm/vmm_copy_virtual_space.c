@@ -27,6 +27,7 @@
  */
 
 #include <vmm/vmm.h>
+#include <vmm/vm_filecache.h>
 #include <vmm/paging.h>
 #include <sys/kern_sysctl.h>
 #include <ubixos/spinlock.h>
@@ -100,6 +101,36 @@ void *vmm_copy_virtual_space(pidType pid)
 				if ((phys >> 12) >= numPages)
 				{
 					new_page_table[x] = parent_page_table[x];
+				}
+				else if (x == PT_INDEX(VMM_USER_LDT))
+				{
+					/* Per-process LDT page (userland TLS descriptors) is CPU
+					 * state, never shared memory: give the child its own writable
+					 * copy and leave the parent's mapping writable too.  COW would
+					 * make it read-only, and the kernel's LDT[1] updates
+					 * (set_thread_area, and the per-thread base re-install in
+					 * cpu_switch) would then fault with interrupts off. */
+					new_stack_page = vmm_get_free_kernel_page(pid, 1);
+					if (new_stack_page == NULL)
+						kpanic("Error: new_stack_page (LDT) == NULL, File: %s, Line: %i\n",
+						       __FILE__,
+						       __LINE__);
+					memcpy(new_stack_page, (void *)VMM_USER_LDT, PAGE_SIZE);
+					new_page_table[x] =
+					    (vmm_get_physical_addr((u_int32_t)new_stack_page) | PAGE_DEFAULT);
+					vmm_unmap_page((u_int32_t)new_stack_page, VMM_KEEP);
+				}
+				else if ((parent_page_table[x] & PAGE_SHARED) == PAGE_SHARED)
+				{
+					/* Shared file-cache (or share_region) page: share as-is into
+					 * the child — never COW it.  Account for the child's new
+					 * mapping: bump the file-cache refcount if it's a cache page,
+					 * otherwise it's a share_region page tracked by the COW counter
+					 * (so bump that instead — without it the child's later unmap
+					 * would over-free the frame while the parent still maps it). */
+					new_page_table[x] = parent_page_table[x];
+					if (!vm_filecache_ref_phys(phys))
+						vmm_share_ref(phys);
 				}
 				else
 				{
@@ -314,8 +345,7 @@ void *vmm_copy_virtual_space(pidType pid)
 	 */
 	new_page_table = vmm_get_free_kernel_page(pid, 1);
 
-	new_page_directory[PD_INDEX(PD_BASE_ADDR)] =
-	    vmm_get_physical_addr((u_int32_t)new_page_table) | PAGE_DEFAULT;
+	new_page_directory[PD_INDEX(PD_BASE_ADDR)] = vmm_get_physical_addr((u_int32_t)new_page_table) | PAGE_DEFAULT;
 
 	new_page_table[0] = (u_int32_t)new_page_directory_address | PAGE_DEFAULT;
 
@@ -330,8 +360,7 @@ void *vmm_copy_virtual_space(pidType pid)
 
 	new_page_table = vmm_get_free_kernel_page(pid, 1);
 
-	new_page_directory[PD_INDEX(PT_BASE_ADDR)] =
-	    vmm_get_physical_addr((u_int32_t)new_page_table) | PAGE_DEFAULT;
+	new_page_directory[PD_INDEX(PT_BASE_ADDR)] = vmm_get_physical_addr((u_int32_t)new_page_table) | PAGE_DEFAULT;
 
 	/* Flush The Page From Garbage In Memory */
 	memset(new_page_table, 0, PAGE_SIZE);

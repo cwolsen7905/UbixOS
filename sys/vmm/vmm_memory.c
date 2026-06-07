@@ -260,7 +260,7 @@ u_int32_t count_memory()
  Notes:
 
  ************************************************************************/
-u_int32_t vmm_find_free_page(pidType pid)
+uintptr_t vmm_find_free_page(pidType pid)
 {
 
 	u_int32_t i = 0;
@@ -329,7 +329,7 @@ retry:
  Notes:
 
  ************************************************************************/
-int free_page(u_int32_t page_addr)
+int free_page(uintptr_t page_addr)
 {
 
 	u_int32_t page_index = 0;
@@ -383,7 +383,7 @@ int free_page(u_int32_t page_addr)
  08/01/02 - I Think If Counter Gets To 0 I Should Free The Page
 
  ************************************************************************/
-int adjust_cow_counter(u_int32_t base_addr, int adjustment)
+int adjust_cow_counter(uintptr_t base_addr, int adjustment)
 {
 
 	u_int32_t vmm_memory_map_index = base_addr / PAGE_SIZE;
@@ -421,6 +421,33 @@ int adjust_cow_counter(u_int32_t base_addr, int adjustment)
 	spinUnlock(&g_vmm_spin_lock);
 	/* Return */
 	return (0);
+}
+
+/************************************************************************
+
+ Function: void vmm_share_ref(u_int32_t phys);
+
+ Description: Account for one new mapping of a shared (non-COW, non-file-cache)
+ frame in the COW counter, which holds the total number of mappers.  A fresh
+ frame has counter 0 meaning "one owner"; the first additional mapper must bring
+ it to 2 (two mappers => two free_page calls before release), mirroring COW's
+ first-time +2.  Used by vmm_share_region and by fork when a share_region page
+ is shared into a child.
+
+ ************************************************************************/
+void vmm_share_ref(uintptr_t phys)
+{
+	u_int32_t idx = phys / PAGE_SIZE;
+
+	if (idx >= numPages)
+		return;
+
+	spinLock(&g_vmm_spin_lock);
+	if (vmmMemoryMap[idx].cowCounter == 0)
+		vmmMemoryMap[idx].cowCounter = 2;
+	else
+		vmmMemoryMap[idx].cowCounter += 1;
+	spinUnlock(&g_vmm_spin_lock);
 }
 
 /************************************************************************
@@ -467,4 +494,77 @@ void vmm_free_process_pages(pidType pid)
 	/* Return */
 	spinUnlock(&g_vmm_spin_lock);
 	return;
+}
+
+/**
+ * Audit physical pages owned by processes that no longer exist.
+ *
+ * Walks vmmMemoryMap and counts every in-use page owned by a real user PID (> 1)
+ * that schedFindTask() can no longer find — an "orphaned" frame whose owning
+ * process died without its teardown path reclaiming it.  The total is returned
+ * (surfaced via /proc/meminfo "OrphanPages") and is normally a small constant; a
+ * value that climbs each logout/login cycle indicates a process-teardown leak.
+ *
+ * Stays silent while healthy: a per-dead-PID breakdown is logged to the serial
+ * console only when orphans actually exist, so reading /proc/meminfo on a clean
+ * system produces no noise.
+ *
+ * @return number of in-use pages owned by dead PIDs.
+ */
+u_int32_t vmm_audit_orphan_pages(void)
+{
+	struct holder
+	{
+		pid_t pid;
+		u_int32_t count;
+	};
+	struct holder dead[32]; /* per-dead-pid breakdown (logged only on a leak) */
+	u_int32_t ndead = 0;
+	u_int32_t orphan_total = 0;
+	u_int32_t dead_overflow = 0;
+	u_int32_t i = 0, h = 0;
+
+	for (i = 0; i < numPages; i++)
+	{
+		pid_t owner = vmmMemoryMap[i].pid;
+
+		if (vmmMemoryMap[i].status == memAvail)
+			continue;
+		if (owner <= 1 || owner == vmmID) /* kernel/init/free — not a leak */
+			continue;
+		if (schedFindTask(owner) != NULL) /* owner still alive */
+			continue;
+
+		orphan_total++;
+		for (h = 0; h < ndead; h++)
+			if (dead[h].pid == owner)
+				break;
+		if (h < ndead)
+			dead[h].count++;
+		else if (ndead < (sizeof(dead) / sizeof(dead[0])))
+		{
+			dead[ndead].pid = owner;
+			dead[ndead].count = 1;
+			ndead++;
+		}
+		else
+			dead_overflow++;
+	}
+
+	if (orphan_total > 0)
+	{
+		kprintf("vmm_audit: %u orphan pages (%u kB) owned by %u dead pid(s)\n",
+		        orphan_total,
+		        orphan_total * 4,
+		        ndead + (dead_overflow ? 1 : 0));
+		for (i = 0; i < ndead; i++)
+			kprintf("vmm_audit:   dead pid %d -> %u pages (%u kB)\n",
+			        dead[i].pid,
+			        dead[i].count,
+			        dead[i].count * 4);
+		if (dead_overflow)
+			kprintf("vmm_audit:   (+%u more orphan pages from additional dead pids)\n", dead_overflow);
+	}
+
+	return orphan_total;
 }

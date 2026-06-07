@@ -56,6 +56,7 @@
 #define DISPLAY_SETMODE 17         /* client → display: switch the VBE video mode (live) */
 #define DISPLAY_RESIZE 18          /* display → client: screen geometry changed, re-claim */
 #define DISPLAY_WINRESIZE 19       /* display → client: window resized; re-attach new buffer */
+#define DISPLAY_FOCUS 20           /* display → taskbar: focused window changed */
 
 /* display → client */
 #define DISPLAY_ACK 4     /* region granted; carries window_id + shm token */
@@ -67,7 +68,7 @@
 #define DISPLAY_NOTIFY 12 /* window added or removed (sent to taskbar) */
 
 /* Height of the server-drawn title bar (0 for no_decor windows) */
-#define DECOR_H 18
+#define DECOR_H 28
 
 /*
  * DISPLAY_CLAIM payload (client → display).
@@ -256,6 +257,16 @@ struct display_notify
 	uint32_t window_id;
 	uint8_t added;
 	char title[64];
+};
+
+/*
+ * DISPLAY_FOCUS payload (display → taskbar).
+ * Sent whenever the focused window changes so the taskbar can highlight the
+ * active window's tab.  window_id == 0 means "no window focused".
+ */
+struct display_focus
+{
+	uint32_t window_id;
 };
 
 #endif /* _DISPLAY_PROTO_H */

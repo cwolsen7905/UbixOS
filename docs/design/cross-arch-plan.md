@@ -59,6 +59,64 @@ touchscreen GUI.** Everything below is the staged path there, each rung bootable
 
 ---
 
+## Status matrix
+
+At-a-glance view of both tracks plus the cross-cutting userland prerequisite.
+Detail is in the per-phase sections; the per-track tables at the bottom carry the
+same status.
+
+| # | Item | Track | Status |
+|---|------|-------|--------|
+| 0 | `TARGET_ARCH` knob + per-arch ISA flags | A | ✅ Done |
+| 1 | `_ARCH?=i386`, linker script parameterized | A | ✅ Done |
+| 2 | `sys/include/machine/` forwarding headers | A | ✅ Done |
+| 3 | Move `idt.c`/`io.c` to `sys/arch/i386/` | A | ✅ Done |
+| 4 | Split `sched.c` → `sched_core.c` + arch switch | A | ✅ Done |
+| 5 | `struct md_proc` hides the TSS in `kTask_t` | A | ✅ Done |
+| 6 | `machine/ansi.h`, pointer types parameterized | A | ✅ Done |
+| 9 | `machine/vmm_layout.h` address-space constants | A | ✅ Done |
+| — | Software context switch (`cpu_switch`) — *the historic #1 blocker* | A | ✅ Done |
+| **7** | **`u_int32_t` → `uintptr_t` for address-typed values** | A | ⬜ **Not started — blocker** |
+| **T** | **Quarantine i386 TLS (`set_thread_area`/LDT/`%gs`) behind `<machine/tls.h>`** | A | ⬜ **Not started — blocker** |
+| 8 | Move `start.S`/`main.c` to `sys/arch/i386/` | A | ⬜ Not started |
+| 10 | `sys/arch/aarch64/` skeleton + `ubix.target.aarch64.mk` | A | ⬜ Not started |
+| — | musl world arch shim + de-hardcode i386 in `lib/Makefile` | Userland | ⬜ Not started — blocker for `world` |
+| 11 | Boot to PL011 UART on QEMU `virt` | B | ⬜ Not started |
+| 12 | Exceptions + GICv2 + generic timer | B | ⬜ Not started |
+| 13 | MMU (TTBR0/1) + AArch64 `cpu_switch` + syscall entry | B | ⬜ Not started |
+| 14 | virtio-blk + virtio-net | B | ⬜ Not started |
+| 15 | virtio-gpu framebuffer + virtio-input (touch) | B | ⬜ Not started |
+| 15a | **virtio-sound** (audio) → existing `aural` layer | B | ⬜ Not started — *was missing* |
+| 16 | Raspberry Pi 4 hardware (**optional** — QEMU is the target) | B | ⬜ Deferred |
+
+### Major blockers (reviewed 2026-06-06)
+
+**No new architectural blocker** — the structure holds and the historically
+biggest one (i386 hardware task switching) is *gone*, replaced by the
+arch-neutral software `cpu_switch`. The remaining gates, in order:
+
+1. **Phase 7 — address types are still 32-bit (`u_int32_t`).** Every VMM address
+   signature (`vmm_get_physical_addr`, `vmm_remap_page`, `kernelPageDirectory`,
+   `kernelStack`, …) is `u_int32_t`. A 64-bit build would **silently truncate
+   physical/virtual addresses** — this is the real correctness gate before any
+   arm64 kernel can run, and it is the largest untouched Track-A item. *Same
+   machine code on i386; it only changes the semantic type.*
+2. **i386 TLS leaked into generic code — and it just grew.** `sys_set_thread_area`
+   (writes LDT[1], the `0x0F` selector) lives in generic `sys/posix/gen_calls.c`,
+   and `kTask_t.tls_base` is in generic `sched.h`; the recent threads/TLS work
+   deepened this coupling. arm64 uses `TPIDR_EL0`, a completely different
+   mechanism. Quarantine behind `<machine/tls.h>` (i386 → LDT, aarch64 → TPIDR)
+   before the port — this was a "Key Trap" and is now an active blocker.
+3. **Userland hardcodes i386.** `lib/Makefile` + the `musl-libc` target bake in
+   i386, so `bmake world TARGET_ARCH=aarch64` can't run yet. The AArch64 musl
+   shim itself is small (3 files), but de-hardcoding the world build is the
+   prerequisite. (Kernel and userland port independently; this only gates `world`.)
+
+Phases 8 and 10 are mechanical (a file move and an empty skeleton) and carry no
+design risk. Track B is greenfield and starts only after 7 + the TLS quarantine
+land. Net: **~2 substantive Track-A tasks (7 + TLS) remain before arm64 bring-up
+can begin**, both well-scoped.
+
 ## Current Problem Areas
 
 ### 1. Hardware task switching leaks everywhere
@@ -347,9 +405,50 @@ the active target.)
 # Track B — arm64 (AArch64) bring-up
 
 Track-A leaves a clean, 64-bit-ready generic kernel. Track B writes the AArch64
-arch code and drivers. Each phase targets QEMU `virt` first (fully documented,
-virtio), then real hardware. Build with `TARGET_ARCH=aarch64`; the i386 build is
-never touched.
+arch code and drivers. Build with `TARGET_ARCH=aarch64`; the i386 build is never
+touched.
+
+### Target & dev environment (current effort)
+
+**QEMU `virt` is the target**, not a waypoint — the whole desktop (graphics,
+sound, network, input) runs on QEMU's virtio devices. Real hardware (Phase 16) is
+now **optional/deferred**; none of the board-specific work (GIC-400, mailbox FB,
+GENET, xHCI) is required to reach a working GUI.
+
+- **Host:** macOS on Apple Silicon (M5). Because the guest *and* host are both
+  AArch64, QEMU runs under the **HVF hardware accelerator at near-native speed** —
+  no slow x86→ARM TCG emulation. This is the best-case porting host.
+  ```sh
+  qemu-system-aarch64 -machine virt -accel hvf -cpu host -m 512 \
+    -kernel build/boot/kernel \
+    -drive if=none,file=ubixos-arm.img,format=raw,id=hd0 -device virtio-blk-device,drive=hd0 \
+    -netdev user,id=n0 -device virtio-net-device,netdev=n0 \
+    -device virtio-gpu-device -device virtio-keyboard-device -device virtio-mouse-device \
+    -audiodev coreaudio,id=a0 -device virtio-sound-device,audiodev=a0 \
+    -serial mon:stdio
+  ```
+- **Toolchain:** `brew install aarch64-elf-gcc aarch64-elf-binutils` (kernel,
+  freestanding); the world cross-compiles via the musl AArch64 shim. QEMU itself:
+  `brew install qemu`.
+- **Transport:** `-machine virt` exposes both **virtio-mmio** slots and a **PCIe**
+  bus. Bring-up uses virtio-mmio (simplest — fixed MMIO slots from the device
+  tree, no PCIe enumeration); virtio-pci can come later if wanted.
+
+### QEMU `virt` device coverage — what each subsystem rides on
+
+| Subsystem | QEMU device | UbixOS layer it plugs into | Phase |
+|-----------|-------------|----------------------------|-------|
+| Console | PL011 UART | `kprintf` / serial tty | 11 |
+| Interrupts/timer | GICv2 + ARM generic timer | IRQ dispatch + scheduler tick / callouts | 12 |
+| Storage | virtio-blk | existing VFS + FAT stack | 14 |
+| Network | virtio-net | existing lwIP stack | 14 |
+| Graphics | virtio-gpu (linear FB) | `sys_mapfb` → `views` + `objGFX` (CPU rendering) | 15 |
+| Input / touch | virtio-input | mouse/keyboard event queues; touch → pointer | 15 |
+| **Sound** | **virtio-sound (virtio-snd)** | existing **`aural`** audio abstraction (AC97 driver is i386/PCI-only, does not port) | 15a |
+
+All of these attach through the arch-neutral **newbus** model, exactly like the
+PC drivers — so the driver *framework* is reused; only the per-device virtio
+backends are new.
 
 ### Phase 11 — Minimal arm64 boot to UART on QEMU `virt`
 **Boot risk:** N/A (new kernel)
@@ -388,7 +487,17 @@ never touched.
 - virtio-input → keyboard + **touch/pointer**, the first step toward the
   touch-first mobile UX.
 
-### Phase 16 — Real hardware: Raspberry Pi / Orange Pi
+### Phase 15a — virtio-sound (audio)
+- virtio-snd driver (PCM playback stream over the virtqueues) attached via
+  newbus, presented under the existing **`aural`** sound abstraction so the
+  Settings Sound pane, volume tray, and `sndcfg` all work unchanged.
+- The i386 **AC97** driver does not port (PC PCI device); virtio-snd replaces it.
+  QEMU side: `-audiodev coreaudio,id=a0 -device virtio-sound-device,audiodev=a0`.
+- Milestone: a tone / WAV plays through the host's CoreAudio output.
+
+### Phase 16 — Real hardware: Raspberry Pi / Orange Pi (optional / deferred)
+**QEMU `virt` is the destination for this effort; this phase is optional** and
+only needed if/when the project wants to leave emulation for a physical board.
 - Swap QEMU `virt` peripherals for the board's: Pi 4 uses a GIC-400 (matches
   virt — least surprise), PL011 UART (over the GPIO header + USB-TTL cable),
   the firmware mailbox framebuffer, BCM GENET gigabit ethernet, and xHCI USB
@@ -484,7 +593,8 @@ Phase 5 is the hardest — do it last among the arch-isolation phases.
 | 13 | MMU (TTBR0/1) + AArch64 `cpu_switch` + syscall entry | QEMU `virt` |
 | 14 | virtio-mmio + virtio-blk + virtio-net (VFS/lwIP ride on top) | QEMU `virt` |
 | 15 | virtio-gpu framebuffer + virtio-input → `views`/`objGFX` + touch | QEMU `virt` |
-| 16 | Board peripherals (GIC-400, mailbox FB, GENET, xHCI) | Raspberry Pi 4 |
+| 15a | virtio-sound → `aural` audio abstraction | QEMU `virt` |
+| 16 | Board peripherals (GIC-400, mailbox FB, GENET, xHCI) — **optional** | Raspberry Pi 4 |
 
 ---
 
@@ -552,10 +662,12 @@ sys/
 | 10 | `sys/arch/aarch64/` skeleton + `ubix.target.aarch64.mk` | Not started |
 
 Remaining Track-A work before arm64: **Phase 7** (address-typed values must be
-`uintptr_t`, not `uint32_t`, or they truncate on 64-bit), **Phase 8** (quarantine
-the i386 boot entry), then **Phase 10** (arm64 skeleton). Phase 7 is the real
-prerequisite — it is where a 64-bit build would otherwise silently corrupt
-addresses.
+`uintptr_t`, not `u_int32_t`, or they truncate on 64-bit), the **TLS quarantine**
+(move `set_thread_area`/LDT/`%gs` and `tls_base` behind `<machine/tls.h>` — the
+recent threads work deepened this i386 coupling in generic code), **Phase 8**
+(quarantine the i386 boot entry), then **Phase 10** (arm64 skeleton). Phase 7 is
+the real prerequisite — it is where a 64-bit build would otherwise silently
+corrupt addresses. See the Status matrix near the top for the at-a-glance view.
 
 **Track B — arm64 bring-up**
 
@@ -566,4 +678,5 @@ addresses.
 | 13 | MMU + `cpu_switch` + syscall entry | Not started |
 | 14 | virtio-blk + virtio-net | Not started |
 | 15 | virtio-gpu framebuffer + virtio-input (touch) | Not started |
-| 16 | Raspberry Pi 4 hardware | Not started |
+| 15a | virtio-sound (audio) → `aural` abstraction | Not started |
+| 16 | Raspberry Pi 4 hardware (optional — QEMU is the target) | Deferred |

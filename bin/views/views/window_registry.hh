@@ -36,39 +36,52 @@
 /* WindowRegistry — owns window storage and Z-order                   */
 /* ------------------------------------------------------------------ */
 
-class WindowRegistry {
+class WindowRegistry
+{
 	std::vector<std::unique_ptr<Window>> windows_;
-	std::vector<Window *>                z_stack_;
-	uint32_t                             next_id_;
-	int                                  cascade_x_;
-	int                                  cascade_y_;
-	Window                              *focused_;
+	std::vector<Window *> z_stack_;
+	uint32_t next_id_;
+	int cascade_x_;
+	int cascade_y_;
+	Window *focused_;
 
-public:
+      public:
 	WindowRegistry();
 
 	/* Window lifecycle */
-	Window  *alloc();
-	void     destroy(Window *w);
-	Window  *find(uint32_t id) const;
+	Window *alloc();
+	void destroy(Window *w);
+	Window *find(uint32_t id) const;
 
 	/* Z-order */
-	void     z_push(Window *w);
-	void     z_remove(Window *w);
-	void     z_raise(Window *w);
+	void z_push(Window *w);
+	void z_remove(Window *w);
+	void z_raise(Window *w);
 
 	/* Focus */
-	Window  *focused() const { return focused_; }
-	void     set_focused(Window *w) { focused_ = w; }
+	Window *focused() const
+	{
+		return focused_;
+	}
+	void set_focused(Window *w)
+	{
+		focused_ = w;
+	}
 
 	/* Z-order access for compositor */
-	const std::vector<Window *> &z_stack() const { return z_stack_; }
+	const std::vector<Window *> &z_stack() const
+	{
+		return z_stack_;
+	}
+
+	/* Snapshot of every registered window (including minimized/closing ones not
+	 * in the z-stack).  Used by the dead-client reaper. */
+	std::vector<Window *> all() const;
 
 	/* Cascade placement: writes wx/wy and advances the cascade origin.
 	 * Caller provides the window dimensions and framebuffer size. */
-	void next_cascade(int32_t *out_x, int32_t *out_y,
-	                  int32_t ww, int32_t dh, int32_t wh,
-	                  uint32_t fb_w, uint32_t fb_h);
+	void next_cascade(
+	    int32_t *out_x, int32_t *out_y, int32_t ww, int32_t dh, int32_t wh, uint32_t fb_w, uint32_t fb_h);
 
 	/* Clamp every window's origin so it stays on a screen of sw x sh (used
 	 * after a live resolution change). */

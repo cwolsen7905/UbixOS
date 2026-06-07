@@ -28,6 +28,7 @@
 
 #include <vmm/vm_map.h>
 #include <lib/kmalloc.h>
+#include <fs/vfs/file.h>
 
 /* ------------------------------------------------------------------ */
 /* RB tree comparators                                                  */
@@ -93,6 +94,28 @@ int vm_map_insert(vm_map_t *map, uintptr_t start, uintptr_t end, u_int32_t prot,
 	return (0);
 }
 
+int vm_map_insert_file(
+    vm_map_t *map, uintptr_t start, uintptr_t end, u_int32_t prot, u_int32_t flags, void *vnode, off_t offset)
+{
+	vm_map_entry_t *e = kmalloc(sizeof *e);
+
+	if (e == NULL)
+	{
+		return (-1);
+	}
+
+	e->vm_start = start;
+	e->vm_end = end;
+	e->vm_prot = prot;
+	e->vm_flags = flags | VM_MAP_FILE;
+	e->vm_vnode = vnode;
+	e->vm_offset = offset;
+
+	rb_insert(&map->vm_root, &e->rb, vma_cmp);
+	map->vm_nentries++;
+	return (0);
+}
+
 void vm_map_remove(vm_map_t *map, uintptr_t start, uintptr_t end)
 {
 	struct rb_node *n = rb_first(&map->vm_root);
@@ -115,9 +138,11 @@ void vm_map_remove(vm_map_t *map, uintptr_t start, uintptr_t end)
 			continue;
 		}
 
-		/* Full containment: remove and free. */
+		/* Full containment: remove and free (release a file VMA's backing fd). */
 		if (e->vm_start >= start && e->vm_end <= end)
 		{
+			if ((e->vm_flags & VM_MAP_FILE) && e->vm_vnode != NULL)
+				fclose((fileDescriptor_t *)e->vm_vnode);
 			rb_erase(&map->vm_root, n);
 			map->vm_nentries--;
 			kfree(e);
@@ -125,7 +150,7 @@ void vm_map_remove(vm_map_t *map, uintptr_t start, uintptr_t end)
 			continue;
 		}
 
-		/* Partial overlap — left tail: trim vm_end. */
+		/* Partial overlap — left tail: trim vm_end (vm_start/offset unchanged). */
 		if (e->vm_start < start && e->vm_end > start && e->vm_end <= end)
 		{
 			e->vm_end = start;
@@ -133,9 +158,11 @@ void vm_map_remove(vm_map_t *map, uintptr_t start, uintptr_t end)
 			continue;
 		}
 
-		/* Partial overlap — right tail: trim vm_start. */
+		/* Partial overlap — right tail: trim vm_start (shift the file offset). */
 		if (e->vm_start >= start && e->vm_start < end && e->vm_end > end)
 		{
+			if (e->vm_flags & VM_MAP_FILE)
+				e->vm_offset += (off_t)(end - e->vm_start);
 			e->vm_start = end;
 			n = next;
 			continue;
@@ -148,6 +175,13 @@ void vm_map_remove(vm_map_t *map, uintptr_t start, uintptr_t end)
 			if (tail != NULL)
 			{
 				*tail = *e;
+				/* The tail starts at `end`: shift its file offset and give it
+				 * its own backing fd (the head keeps the original). */
+				if ((tail->vm_flags & VM_MAP_FILE) && e->vm_vnode != NULL)
+				{
+					tail->vm_offset += (off_t)(end - e->vm_start);
+					tail->vm_vnode = fopen(((fileDescriptor_t *)e->vm_vnode)->fileName, "r");
+				}
 				tail->vm_start = end;
 				rb_insert(&map->vm_root, &tail->rb, vma_cmp);
 				map->vm_nentries++;
@@ -175,8 +209,14 @@ void vm_map_free(vm_map_t *map)
 	while (n != NULL)
 	{
 		struct rb_node *next = rb_next(n);
+		vm_map_entry_t *e = (vm_map_entry_t *)n;
+
+		/* Release the private backing fd a file-backed VMA owns. */
+		if ((e->vm_flags & VM_MAP_FILE) && e->vm_vnode != NULL)
+			fclose((fileDescriptor_t *)e->vm_vnode);
+
 		rb_erase(&map->vm_root, n);
-		kfree((vm_map_entry_t *)n);
+		kfree(e);
 		n = next;
 	}
 	map->vm_nentries = 0;
@@ -197,6 +237,14 @@ int vm_map_copy(vm_map_t *dst, const vm_map_t *src)
 		}
 
 		*de = *se;
+
+		/* A file-backed VMA owns a private backing fd; give the child its own
+		 * independent fd (re-open by path) so parent and child don't share or
+		 * double-close it.  On failure the child VMA has no backing — harmless
+		 * while mappings are eager; demand-read would just fault. */
+		if ((de->vm_flags & VM_MAP_FILE) && se->vm_vnode != NULL)
+			de->vm_vnode = fopen(((fileDescriptor_t *)se->vm_vnode)->fileName, "r");
+
 		rb_insert(&dst->vm_root, &de->rb, vma_cmp);
 		dst->vm_nentries++;
 	}

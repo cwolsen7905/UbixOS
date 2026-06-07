@@ -52,6 +52,15 @@ void WindowRegistry::destroy(Window *w)
 		windows_.erase(it);
 }
 
+std::vector<Window *> WindowRegistry::all() const
+{
+	std::vector<Window *> out;
+	out.reserve(windows_.size());
+	for (auto &w : windows_)
+		out.push_back(w.get());
+	return out;
+}
+
 Window *WindowRegistry::find(uint32_t id) const
 {
 	for (auto &w : windows_)

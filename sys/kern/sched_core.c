@@ -156,6 +156,8 @@ kTask_t *schedNewTask()
 
 	spinLock(&schedulerSpinLock);
 	tmpTask->id = nextID++;
+	tmpTask->tgid = tmpTask->id; /* its own thread group until rfork(RFMEM) overrides */
+	tmpTask->reap_free_as = 1;   /* a normal process owns/frees its own address space */
 	tmpTask->quantum = 6;
 	tmpTask->next = taskList;
 	tmpTask->prev = 0x0;
@@ -240,6 +242,31 @@ void sched_killTree(pidType id)
 			sched_killTree(t->id);
 	}
 	sched_setStatus(id, DEAD);
+}
+
+/**
+ * Count tasks in thread group @tgid, other than @self, that are still using the
+ * shared address space — i.e. not exited (DEAD/ZOMBIE) or a placeholder.
+ *
+ * endTask() uses this to decide whether the exiting task is the last thread of
+ * its group and must tear the shared address space down.
+ *
+ * @return number of other live threads sharing the address space.
+ */
+int sched_tgid_others_alive(pidType tgid, pidType self)
+{
+	int n = 0;
+	kTask_t *t;
+
+	for (t = taskList; t != NULL; t = t->next)
+	{
+		if (t->id == (u_int32_t)self || t->tgid != tgid)
+			continue;
+		if (t->state == DEAD || t->state == ZOMBIE || t->state == PLACEHOLDER)
+			continue;
+		n++;
+	}
+	return (n);
 }
 
 int sched_deleteTask(pidType id)

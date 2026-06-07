@@ -20,6 +20,7 @@
 
 #include <unistd.h>
 #include <sched.h>
+#include <sys/mman.h>
 
 #include <ubix/mailbox.hh>
 #include <ubix/sched.hh>
@@ -37,9 +38,19 @@
 /* Colours                                                              */
 /* ------------------------------------------------------------------ */
 
-#define BG_COLOR 0x00162033u     /* dark navy background */
-#define BOX_COLOR 0x001A2840u    /* slightly lighter panel */
-#define ACCENT_COLOR 0x002060A0u /* blue accent line */
+/* Calm slate palette — matches the modern (Win11-flat) views chrome instead of
+ * the old saturated navy.  Packed 0x00RRGGBB. */
+#define BG_COLOR 0x00202530u      /* solid background (wallpaper fallback) */
+#define CARD_COLOR 0x00272E3Au    /* login card fill */
+#define CARD_BORDER 0x00394456u   /* 1px card outline */
+#define FIELD_BG 0x001B2029u      /* inset text field (idle) */
+#define FIELD_FOCUS 0x00222B38u   /* inset text field (focused) */
+#define ACCENT_COLOR 0x005B8DEFu  /* focus underline / caret (modern blue) */
+#define DIVIDER_COLOR 0x00333C4Cu /* header divider line */
+#define TEXT_COLOR 0x00F0F2F6u    /* primary text (near white) */
+#define LABEL_COLOR 0x008A93A3u   /* field labels (muted slate) */
+#define HINT_COLOR 0x00697283u    /* bottom hint */
+#define ERROR_COLOR 0x00FF6E6Eu   /* error message (matches close-glyph red) */
 
 /* ------------------------------------------------------------------ */
 /* Constants                                                            */
@@ -66,10 +77,14 @@ class LoginUI
 	std::vector<uint32_t> bg_; /* wallpaper stretched to the screen (32bpp) */
 	bool have_bg_ = false;
 
-	/* panel geometry (computed in layout()) */
-	int px_, py_, pw_, ph_;       /* panel rect */
-	int field_x_;                 /* x start of text fields */
-	int user_y_, pass_y_, err_y_; /* y of each field row */
+	/* card + field geometry (computed in layout()) */
+	int px_, py_, pw_, ph_; /* card rect */
+	int fbx_, fbw_;         /* field-box x and width (shared by both fields) */
+	int field_h_;           /* field-box height */
+	int title_y_, sub_y_, div_y_;
+	int user_label_y_, user_field_y_;
+	int pass_label_y_, pass_field_y_;
+	int msg_y_;
 
       public:
 	bool loaded = false;
@@ -143,78 +158,132 @@ class LoginUI
 		int fw = (int)font_.GetWidth();
 		int fh = (int)font_.GetHeight();
 
-		pw_ = 36 * fw; /* panel width  (~288 px at 8 px/ch) */
-		ph_ = 10 * fh; /* panel height (~80 px) */
-		px_ = (sw_ - pw_) / 2;
-		py_ = (sh_ - ph_) / 2;
+		const int pad = fh;               /* card inner padding */
+		const int label_gap = 4;          /* label baseline → its field box */
+		const int block_gap = fh / 2 + 4; /* one field block → the next */
+		field_h_ = fh + 12;               /* inset field box height */
 
-		field_x_ = px_ + 11 * fw; /* after "Password: " label */
-		user_y_ = py_ + 2 * fh;
-		pass_y_ = py_ + 4 * fh;
-		err_y_ = py_ + 7 * fh;
+		pw_ = 44 * fw;
+
+		/* Stack the contents top-to-bottom, accumulating the card height; then
+		 * centre the card and convert the running offsets to absolute y. */
+		int y = pad;
+		int title_o = y;
+		y += fh + 8;
+		int sub_o = y;
+		y += fh + 6;
+		int div_o = y;
+		y += 10;
+		int ul_o = y;
+		y += fh + label_gap;
+		int uf_o = y;
+		y += field_h_ + block_gap;
+		int pl_o = y;
+		y += fh + label_gap;
+		int pf_o = y;
+		y += field_h_ + block_gap;
+		int msg_o = y;
+		y += fh;
+		y += pad;
+		ph_ = y;
+
+		/* Horizontally centred; nudged below dead-centre so the card sits a touch
+		 * lower on the screen (feels more grounded than perfectly centred). */
+		const int vertical_offset = 45;
+		px_ = (sw_ - pw_) / 2;
+		py_ = (sh_ - ph_) / 2 + vertical_offset;
+
+		fbx_ = px_ + pad;
+		fbw_ = pw_ - 2 * pad;
+
+		title_y_ = py_ + title_o;
+		sub_y_ = py_ + sub_o;
+		div_y_ = py_ + div_o;
+		user_label_y_ = py_ + ul_o;
+		user_field_y_ = py_ + uf_o;
+		pass_label_y_ = py_ + pl_o;
+		pass_field_y_ = py_ + pf_o;
+		msg_y_ = py_ + msg_o;
 	}
 
 	void draw(const std::string &user, const std::string &pass, bool in_pass, const std::string &err)
 	{
 		int fw = (int)font_.GetWidth();
-		int fh = (int)font_.GetHeight();
 
 		/* Background (desktop wallpaper, or solid fallback) */
 		draw_background();
 
-		/* Panel */
-		surf_.ogFillRect(px_ - 4, py_ - 4, px_ + pw_ + 4, py_ + ph_ + 4, BOX_COLOR);
+		/* Soft drop shadow, then the rounded card and its hairline border —
+		 * all shared objGFX primitives (ogDropShadow / ogFillRoundRect /
+		 * ogRoundRect) rather than bespoke per-app drawing. */
+		const int radius = 12;
+		surf_.ogDropShadow(px_, py_, px_ + pw_, py_ + ph_, 12, 6, 110);
+		surf_.ogFillRoundRect(px_, py_, px_ + pw_, py_ + ph_, radius, CARD_COLOR);
+		surf_.ogRoundRect(px_, py_, px_ + pw_, py_ + ph_, radius, CARD_BORDER);
 
-		/* Accent bar at top of panel */
-		surf_.ogFillRect(px_ - 4, py_ - 4, px_ + pw_ + 4, py_ - 4 + fh, ACCENT_COLOR);
+		/* Header: stylised product name + sign-in subtitle, both centred. */
+		put_centered(title_y_, "uBixOS", TEXT_COLOR, CARD_COLOR);
+		put_centered(sub_y_, "Sign in", LABEL_COLOR, CARD_COLOR);
+		surf_.ogHLine(fbx_, fbx_ + fbw_, div_y_, DIVIDER_COLOR);
 
-		/* Title */
-		set_color(0xE0, 0xE0, 0xFF);
-		font_.PutString(surf_, px_ + (pw_ - 6 * fw) / 2, py_ - 4, "UbixOS");
-
-		/* Username row */
-		set_color(0x80, 0xA0, 0xC0);
-		font_.PutString(surf_, px_, user_y_, "Login:    ");
-		set_color(in_pass ? 0xA0 : 0xFF, 0xFF, 0xFF);
-		font_.PutString(surf_, field_x_, user_y_, user.c_str());
-		if (!in_pass)
-			surf_.ogFillRect(field_x_ + (int)user.size() * fw,
-			                 user_y_,
-			                 field_x_ + (int)user.size() * fw + fw - 1,
-			                 user_y_ + fh - 1,
-			                 0x00C0C0C0u);
-
-		/* Password row */
-		set_color(0x80, 0xA0, 0xC0);
-		font_.PutString(surf_, px_, pass_y_, "Password: ");
+		/* Fields */
+		draw_field("Username", user, !in_pass, user_label_y_, user_field_y_, fw);
 		std::string masked(pass.size(), '*');
-		set_color(0xFF, 0xFF, 0xFF);
-		font_.PutString(surf_, field_x_, pass_y_, masked.c_str());
-		if (in_pass)
-			surf_.ogFillRect(field_x_ + (int)pass.size() * fw,
-			                 pass_y_,
-			                 field_x_ + (int)pass.size() * fw + fw - 1,
-			                 pass_y_ + fh - 1,
-			                 0x00C0C0C0u);
+		draw_field("Password", masked, in_pass, pass_label_y_, pass_field_y_, fw);
 
 		/* Error / hint */
 		if (!err.empty())
 		{
-			set_color(0xFF, 0x60, 0x60);
-			font_.PutString(surf_, px_, err_y_, err.c_str());
+			set_text(ERROR_COLOR, CARD_COLOR);
+			font_.PutString(surf_, fbx_, msg_y_, err.c_str());
 		}
 		else
 		{
-			set_color(0x50, 0x70, 0x90);
-			font_.PutString(surf_, px_, err_y_, "Enter to login, Tab to switch field");
+			set_text(HINT_COLOR, CARD_COLOR);
+			font_.PutString(surf_, fbx_, msg_y_, "Enter to sign in   |   Tab to switch field");
 		}
 	}
 
       private:
-	void set_color(uint8_t r, uint8_t g, uint8_t b)
+	/* Draw one labelled text field: muted label, an inset box (lit when focused
+	 * with an accent underline + caret), and the value text centred in the box. */
+	void draw_field(const char *label, const std::string &text, bool focused, int label_y, int field_y, int fw)
 	{
-		font_.SetFGColor(r, g, b, 255);
-		font_.SetBGColor((BG_COLOR >> 16) & 0xFF, (BG_COLOR >> 8) & 0xFF, BG_COLOR & 0xFF, 255);
+		int fh = (int)font_.GetHeight();
+
+		set_text(LABEL_COLOR, CARD_COLOR);
+		font_.PutString(surf_, fbx_, label_y, label);
+
+		uint32_t fill = focused ? FIELD_FOCUS : FIELD_BG;
+		surf_.ogFillRect(fbx_, field_y, fbx_ + fbw_, field_y + field_h_, fill);
+		if (focused)
+			surf_.ogFillRect(fbx_, field_y + field_h_ - 2, fbx_ + fbw_, field_y + field_h_, ACCENT_COLOR);
+		else
+			surf_.ogHLine(fbx_, fbx_ + fbw_, field_y + field_h_, CARD_BORDER);
+
+		int tx = fbx_ + 10;
+		int ty = field_y + (field_h_ - fh) / 2;
+		set_text(TEXT_COLOR, fill);
+		font_.PutString(surf_, tx, ty, text.c_str());
+
+		if (focused)
+		{
+			int cx = tx + (int)text.size() * fw;
+			surf_.ogFillRect(cx + 1, ty + 2, cx + 2, ty + fh - 2, ACCENT_COLOR);
+		}
+	}
+
+	void put_centered(int y, const char *s, uint32_t fg, uint32_t bg)
+	{
+		int tw = (int)std::strlen(s) * (int)font_.GetWidth();
+		set_text(fg, bg);
+		font_.PutString(surf_, px_ + (pw_ - tw) / 2, y, s);
+	}
+
+	void set_text(uint32_t fg, uint32_t bg)
+	{
+		font_.SetFGColor((fg >> 16) & 0xFF, (fg >> 8) & 0xFF, fg & 0xFF, 255);
+		font_.SetBGColor((bg >> 16) & 0xFF, (bg >> 8) & 0xFF, bg & 0xFF, 255);
 	}
 };
 
@@ -298,6 +367,11 @@ static void run_session(const struct auth_response &resp, const std::string &use
 	int pid = ::fork();
 	if (pid == 0)
 	{
+		/* Put the session in its own process group (== the taskbar's pid) so
+		 * everything it launches (apps, their children) inherits the group and
+		 * vlogin can tear the whole session down on logout.  Set it in the child
+		 * too, race-free against the parent's setpgid. */
+		::setpgid(0, 0);
 		::setuid(resp.uid);
 		::setgid(resp.gid);
 		::execve(TASKBAR_PATH, (char *const *)taskbar_argv, (char *const *)taskbar_envp);
@@ -306,12 +380,21 @@ static void run_session(const struct auth_response &resp, const std::string &use
 	if (pid < 0)
 		return;
 
+	/* Session group = taskbar pid (also set here to win the fork/exec race). */
+	::setpgid(pid, pid);
+
 	/* Apply this user's desktop for the lifetime of the session. */
 	set_display_user(username);
 
-	/* Wait for the session to end */
+	/* Wait for the session leader (taskbar) to exit (logout). */
 	while (pidStatus(pid) == pid)
 		ubix::yield();
+
+	/* Tear down the rest of the session: kill every process still in the
+	 * group — the apps the user launched, which would otherwise keep running
+	 * (and holding memory + windows) across the next login.  vlogin itself is in
+	 * a different group, so it survives to show the login screen again. */
+	::kill(-pid, SIGKILL);
 
 	/* Revert to the system-default desktop at logout. */
 	set_display_user("");
@@ -420,6 +503,15 @@ int main(int argc, char **argv)
 		m.header = DISPLAY_RELEASE;
 		dr->window_id = win_id;
 		ubix::post_message(VIEWS_MBOX, DISPLAY_RELEASE, m);
+
+		/* Unmap our view of the shared window buffer.  views frees its own copy
+		 * on DISPLAY_RELEASE, but the shared frames are only reclaimed once every
+		 * mapper unmaps — and vlogin loops (it does not exit between logins), so
+		 * without this each login would strand a full-screen (~scr_w*scr_h*4)
+		 * mapping.  munmap drops vlogin's reference; the frame frees when views
+		 * has also released it. */
+		if (shm != nullptr && act_w > 0 && act_h > 0)
+			munmap(shm, (size_t)act_w * (size_t)act_h * 4u);
 		win_id = 0;
 		shm = nullptr;
 	};

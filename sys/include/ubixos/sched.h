@@ -109,6 +109,23 @@ typedef struct taskStruct {
     struct callout sleep_callout; /* timed-sleep timeout (armed by sched_wait_event_timeout) */
     u_int32_t  last_run_tick;     /* sysTicks when last dispatched (starvation aging) */
     vm_map_t  vm_map;            /* VMA red-black tree — O(log n) mmap/fault lookup */
+    pidType    tgid;             /* thread-group id (leader's pid); == id for a normal process.
+                                  * Threads created via rfork(RFMEM) share the leader's tgid and
+                                  * its address space (cr3); endTask tears the address space down
+                                  * only when the last task of a tgid exits. */
+    u_int8_t   reap_free_as;     /* 1 = this task's reap frees the (shared) page tables/dir.
+                                  * Set by endTask: 1 for a normal process or the last thread of a
+                                  * tgid, 0 for a non-last thread (whose siblings still use the AS). */
+    u_int32_t  tls_base;         /* per-thread userland TLS base (the %gs:0 self-pointer).
+                                  * Installed into the shared LDT[1] descriptor by set_thread_area
+                                  * and re-installed by cpu_switch on every resume: all threads in
+                                  * an address space share one LDT[1] slot, so each switch must
+                                  * restore the resuming thread's own base.  0 = no TLS (kernel
+                                  * threads, or a process before its first set_thread_area). */
+    int       *clear_tid;        /* CLONE_CHILD_CLEARTID: user address the kernel zeroes and
+                                  * futex-wakes when this thread exits (endTask).  musl uses it to
+                                  * release the thread-list lock held across pthread_exit.  NULL for
+                                  * a normal process or a thread created without the flag. */
 } kTask_t;
 
 /*
@@ -132,6 +149,7 @@ void sched_killTree(pidType);
 int sched_deleteTask(pidType);
 int sched_addDelTask(kTask_t *);
 kTask_t *sched_getDelTask();
+int sched_tgid_others_alive(pidType tgid, pidType self); /* other live threads sharing the AS */
 void sched_yield();
 void sched();
 

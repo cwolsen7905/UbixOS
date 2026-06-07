@@ -118,8 +118,35 @@ void systemTask() {
           u_int16_t prev_mode = vesa_current_mode;
           u_int16_t want_mode = *(u_int16_t *)&myMsg.data[64];
 
-          if (want_mode == 0)
-            want_mode = 0x118;
+          /* Resolve to a 32bpp LFB mode wherever possible: a 32bpp framebuffer
+           * lets the compositor present via aligned row memcpy instead of the
+           * per-pixel 24bpp byte conversion — a real win under QEMU's software
+           * (TCG) emulation.  The 32bpp mode number varies by BIOS, so
+           * enumerate and map by resolution: take the requested mode's
+           * resolution (or 1024x768 for the default request) and pick the
+           * matching 32bpp mode.  Falls back to the known-good 24bpp 0x118. */
+          if (g_vesa_mode_count < 0)
+            g_vesa_mode_count = vesa_enum_modes(g_vesa_modes, VESA_MAX_MODES);
+          {
+            int tgt_w = 1024, tgt_h = 768, mi_i;
+            for (mi_i = 0; want_mode != 0 && mi_i < g_vesa_mode_count; mi_i++) {
+              if (g_vesa_modes[mi_i].mode == want_mode) {
+                tgt_w = g_vesa_modes[mi_i].width;
+                tgt_h = g_vesa_modes[mi_i].height;
+                break;
+              }
+            }
+            for (mi_i = 0; mi_i < g_vesa_mode_count; mi_i++) {
+              if (g_vesa_modes[mi_i].bpp == 32 &&
+                  g_vesa_modes[mi_i].width == tgt_w &&
+                  g_vesa_modes[mi_i].height == tgt_h) {
+                want_mode = g_vesa_modes[mi_i].mode;
+                break;
+              }
+            }
+            if (want_mode == 0)
+              want_mode = 0x118; /* no 32bpp match and no explicit request */
+          }
 
           vesa_ok = (vesa_init(want_mode) == 0);
           if (!vesa_ok && want_mode != 0x118)
@@ -198,7 +225,12 @@ void systemTask() {
       if (tmpTask->files[0] != 0x0)
         fclose(tmpTask->files[0]);
       vm_map_free(&tmpTask->vm_map);
-      vmm_free_process_pages(tmpTask->id);
+      /* Reclaim the page tables/dir only for the task that owns the address
+       * space (a normal process, or the last thread of a tgid).  A non-last
+       * thread shared its siblings' cr3 and must not free it (reap_free_as=0,
+       * set in endTask). */
+      if (tmpTask->reap_free_as)
+        vmm_free_process_pages(tmpTask->id);
       if (tmpTask->kernelStack != 0x0)
         kfree(tmpTask->kernelStack);
       else
