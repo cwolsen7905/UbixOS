@@ -2,15 +2,14 @@
  * __unmapself(base, size) — unmap the exiting (DETACHED) thread's own
  * stack+TLS mapping, then exit, without touching the stack in between.
  *
- * NOT yet functional on UbixOS and only reached by detached threads (joinable
- * threads are freed by their joiner, so the pthread_create+join path never gets
- * here).  The UbixOS syscall ABI passes arguments ON THE STACK, but this routine
- * is unmapping the very stack it runs on — after munmap there is no stack to
- * push the exit() argument onto, so the stack-based ABI cannot express
- * "munmap then exit".  The proper fix is a single kernel-assisted syscall that
- * unmaps the region and terminates the thread in one trap.  TODO(threads-F/G):
- * add that native call and rewrite this.  munmap=73 (not Linux 91) noted for
- * when it lands.
+ * On Linux this is munmap+exit using the register syscall ABI so no stack is
+ * needed after the unmap.  UbixOS passes syscall arguments ON THE STACK, so a
+ * userspace munmap-then-exit is impossible: once this routine unmaps its own
+ * stack there is nowhere to push exit()'s arguments.  Instead we use a single
+ * UbixOS-native call, thread_exit_unmap (int $0x81 slot 66), which unmaps the
+ * region AND terminates the thread in the kernel (on the kernel stack), so the
+ * vanished user stack is harmless.  The kernel reads base/size from the stack
+ * during the trap (still valid) and never returns here.
  */
 .text
 .global __unmapself
@@ -18,15 +17,9 @@
 __unmapself:
 	movl 4(%esp),%ebx	/* base */
 	movl 8(%esp),%ecx	/* size */
-	pushl %ecx		/* munmap arg2 = size  (tf_esp+8) */
-	pushl %ebx		/* munmap arg1 = base  (tf_esp+4) */
+	pushl %ecx		/* arg2 = size (tf_esp+8) */
+	pushl %ebx		/* arg1 = base (tf_esp+4) */
 	pushl $0		/* fake return address (tf_esp+0) */
-	movl $73,%eax		/* SYS_munmap (FreeBSD/UbixOS) */
-	int $0x80
-	/* If we reach here the stack we just unmapped may be gone; exit anyway.
-	 * This is the broken window documented above — fine until a detached
-	 * thread actually exercises it. */
-	pushl $0		/* exit code */
-	pushl $0		/* fake return address */
-	movl $1,%eax		/* SYS_exit */
-	int $0x80
+	movl $66,%eax		/* UbixOS-native slot 66 = thread_exit_unmap */
+	int $0x81
+	hlt			/* never returns */

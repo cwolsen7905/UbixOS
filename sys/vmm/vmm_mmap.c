@@ -41,6 +41,7 @@
 #include <ubixos/kpanic.h>
 #include <ubixos/spinlock.h>
 #include <ubixos/sched.h>
+#include <ubixos/endtask.h>
 
 int sys_mmap2(struct thread *td, struct sys_mmap_args *uap)
 {
@@ -123,6 +124,38 @@ int sys_munmap(struct thread *td, struct sys_munmap_args *uap)
 
 	td->td_retval[0] = 0;
 	return (0);
+}
+
+/**
+ * sys_thread_exit_unmap - unmap the calling thread's own stack, then exit.
+ *
+ * UbixOS-native primitive (no FreeBSD or Linux single-call equivalent): the
+ * detached-thread teardown musl's __unmapself wants.  A userspace munmap+exit
+ * cannot work under our stack-argument syscall ABI — once a thread unmaps its
+ * own stack there is nowhere to pass exit()'s arguments.  Doing both in one trap
+ * sidesteps that: we run on the kernel stack here, so the user stack vanishing
+ * is harmless.  args (reused sys_munmap_args): addr=region base, len=region size.
+ *
+ * Reads its arguments into locals BEFORE unmapping — `uap` points into the very
+ * stack being torn down.  Calls endTask (which performs the CLONE_CHILD_CLEARTID
+ * clear + futex wake and then zombies the thread); never returns.
+ */
+int sys_thread_exit_unmap(struct thread *td, struct sys_munmap_args *uap)
+{
+	u_int32_t base = (u_int32_t)uap->addr & ~0xFFFU;
+	u_int32_t end = base + round_page(uap->len);
+
+	(void)td;
+
+	vmm_writeback_range(base, end);
+	vm_map_remove(&_current->vm_map, base, end);
+	for (u_int32_t va = base; va < end; va += PAGE_SIZE)
+	{
+		vmm_unmap_page(va, VMM_FREE);
+	}
+
+	endTask(_current->id); /* clears clear_tid + wakes, then zombies — no return */
+	return (0);            /* not reached */
 }
 
 /**

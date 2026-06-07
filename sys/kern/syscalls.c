@@ -43,9 +43,11 @@
 struct sys_set_thread_area_args;
 struct sys_futex_args;
 struct sys_exit_group_args;
+struct sys_munmap_args;
 int sys_set_thread_area(struct thread *td, struct sys_set_thread_area_args *uap);
 int sys_futex(struct thread *td, struct sys_futex_args *uap);
 int sys_exit_group(struct thread *td, struct sys_exit_group_args *uap);
+int sys_thread_exit_unmap(struct thread *td, struct sys_munmap_args *uap);
 
 /* System Calls List */
 struct syscall_entry systemCalls[] = {
@@ -130,6 +132,7 @@ struct syscall_entry systemCalls[] = {
     {1, "set_thread_area", (sys_call_t *)sys_set_thread_area, SYSCALL_VALID},                    // 63 - set_thread_area (musl TLS)
     {4, "futex", (sys_call_t *)sys_futex, SYSCALL_VALID},                                        // 64 - futex (musl threading)
     {1, "exit_group", (sys_call_t *)sys_exit_group, SYSCALL_VALID},                              // 65 - exit_group (musl exit)
+    {2, "thread_exit_unmap", (sys_call_t *)sys_thread_exit_unmap, SYSCALL_VALID},                // 66 - unmap own stack + exit (musl __unmapself)
 };
 
 int totalCalls = sizeof(systemCalls) / sizeof(struct syscall_entry);

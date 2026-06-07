@@ -26,6 +26,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   musl's thread-list lock held across `pthread_exit`). `clone.s` passes ptid/ctid.
   `bin/pthreadtest` (4 threads, mutex-guarded counter, joins) verifies it. (Deferred:
   detached-thread `__unmapself` needs a kernel-assisted unmap+exit; `membarrier`.)
+- **Kernel threads — detached threads (Task E2b)** — native `thread_exit_unmap`
+  syscall (unmaps the exiting detached thread's own stack and terminates it in one
+  kernel trap; a userspace munmap-then-exit is impossible under the stack-arg ABI).
+  musl's `__unmapself` now calls it. `bin/detachtest` (5 waves of detached threads)
+  and `bin/condtest` (pthread_cond producer/consumer) verify E2.
 - **`membarrier` syscall** — uniprocessor no-op at the real FreeBSD number (POSIX 584;
   musl's Linux #375 remapped to it). POSIX table extended through 584. Keeps a real
   FreeBSD call on the FreeBSD-numbered table (native ABI is only for Linux-only calls).
