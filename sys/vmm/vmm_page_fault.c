@@ -215,7 +215,7 @@ static int vmm_demand_file_page(vm_map_entry_t *vma, u_int32_t mem_addr)
 
  *****************************************************************************************/
 /* void vmm_page_fault(u_int32_t mem_addr,u_int32_t eip,u_int32_t esp) { */
-void vmm_page_fault(struct trapframe *frame, u_int32_t cr2)
+void vmm_page_fault(struct trapframe *frame, uintptr_t cr2)
 {
 	u_int32_t i = 0, page_table_index = 0, page_directory_index = 0;
 	u_int32_t *page_dir = NULL, *page_table = NULL;

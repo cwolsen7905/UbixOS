@@ -81,7 +81,7 @@
 #define ctob(x)         ((x)<<PAGE_SHIFT)
 #define btoc(x)         (((vm_offset_t)(x)+PAGE_MASK)>>PAGE_SHIFT)
 
-int vmm_clear_virtual_page(u_int32_t pageAddr);
+int vmm_clear_virtual_page(uintptr_t pageAddr);
 
 void *vmm_map_from_task(pidType, void *, u_int32_t);
 void *vmm_copy_virtual_space(pidType);
@@ -91,23 +91,23 @@ void *vmm_create_virtual_space(pidType);
 void *vmm_get_free_virtual_page(pidType, int, int);
 void *vmm_reserve_anon_range(pidType pid, int count);
 
-u_int32_t vmm_get_physical_addr(u_int32_t);
-u_int32_t vmm_get_real_addr(u_int32_t);
-int vmm_set_page_attributes(u_int32_t, u_int32_t);
-u_int32_t vmm_remap_page(u_int32_t, u_int32_t, u_int32_t, pidType, int haveLock);
-int vmm_remap_io_page(u_int32_t phys, u_int32_t perms, pidType pid);
+uintptr_t vmm_get_physical_addr(uintptr_t);
+uintptr_t vmm_get_real_addr(uintptr_t);
+int vmm_set_page_attributes(uintptr_t, u_int32_t);
+uintptr_t vmm_remap_page(uintptr_t, uintptr_t, u_int32_t, pidType, int haveLock);
+int vmm_remap_io_page(uintptr_t phys, u_int32_t perms, pidType pid);
 int vmm_paging_init();
 void *vmm_get_free_malloc_page(u_int16_t count);
 //void vmm_page_fault( u_int32_t, u_int32_t, u_int32_t );
-void vmm_page_fault(struct trapframe *, u_int32_t);
+void vmm_page_fault(struct trapframe *, uintptr_t);
 void _vmm_page_fault();
 int mmap(struct thread *, struct sys_mmap_args *);
 int obreak(struct thread *, struct obreak_args *);
 int munmap(struct thread *, struct sys_munmap_args *);
 
-int vmm_clean_virtual_space(u_int32_t);
+int vmm_clean_virtual_space(uintptr_t);
 void *vmm_get_free_virtual_page(pidType pid, int count, int type);
 
-extern u_int32_t *kernelPageDirectory;
+extern uintptr_t *kernelPageDirectory;
 
 #endif

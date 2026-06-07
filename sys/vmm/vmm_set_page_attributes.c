@@ -37,7 +37,7 @@
  Notes:
 
  ************************************************************************/
-int vmm_set_page_attributes(u_int32_t mem_addr, u_int32_t attributes)
+int vmm_set_page_attributes(uintptr_t mem_addr, u_int32_t attributes)
 {
 	u_int32_t directory_index = 0, table_index = 0;
 	u_int32_t *page_table = NULL;

@@ -41,7 +41,7 @@
 #include <ubixos/vitals.h>
 #include <sys/klog.h>
 
-u_int32_t *kernelPageDirectory = NULL; // Pointer To Kernel Page Directory
+uintptr_t *kernelPageDirectory = NULL; // Pointer To Kernel Page Directory
 
 static struct spinLock g_fkp_spin_lock = SPIN_LOCK_INITIALIZER;
 
@@ -65,7 +65,7 @@ int vmm_paging_init()
 	u_int32_t *page_table = NULL;
 
 	/* Allocate A Page Of Memory For Kernels Page Directory */
-	kernelPageDirectory = (u_int32_t *)vmm_find_free_page(sysID);
+	kernelPageDirectory = (uintptr_t *)vmm_find_free_page(sysID);
 
 	if (kernelPageDirectory == NULL)
 	{
@@ -239,7 +239,7 @@ int vmm_paging_init()
  07/28/04 - If perms == 0x0 set to PAGE_DEFAULT
 
  *****************************************************************************************/
-u_int32_t vmm_remap_page(u_int32_t source, u_int32_t dest, u_int32_t perms, pidType pid, int have_lock)
+uintptr_t vmm_remap_page(uintptr_t source, uintptr_t dest, u_int32_t perms, pidType pid, int have_lock)
 {
 
 	u_int32_t dest_page_directory_index = 0, dest_page_table_index = 0;
@@ -354,7 +354,7 @@ rmDone:
 /* Map a physical MMIO page (e.g. framebuffer) to the same virtual address.
  * Unlike vmm_remap_page, this silently overwrites an existing mapping so
  * callers like ogDisplay_UbixOS::SetMode can be called more than once. */
-int vmm_remap_io_page(u_int32_t phys, u_int32_t perms, pidType pid)
+int vmm_remap_io_page(uintptr_t phys, u_int32_t perms, pidType pid)
 {
 	u_int32_t pd_idx, pt_idx;
 	u_int32_t *page_dir, *page_table;
@@ -482,7 +482,7 @@ noPagesAvail:
  Notes:
 
  ************************************************************************/
-int vmm_clear_virtual_page(u_int32_t page_addr)
+int vmm_clear_virtual_page(uintptr_t page_addr)
 {
 	u_int32_t *src = NULL;
 	u_int32_t counter = 0;
@@ -844,7 +844,7 @@ int obreak(struct thread *td, struct obreak_args *uap)
 	return 0;
 }
 
-int vmm_clean_virtual_space(u_int32_t addr)
+int vmm_clean_virtual_space(uintptr_t addr)
 {
 	u_int32_t x = 0;
 	u_int32_t y = 0;
