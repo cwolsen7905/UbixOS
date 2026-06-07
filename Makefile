@@ -190,7 +190,15 @@ netsurf:
 
 # ── Disk image ───────────────────────────────────────────────────────────────
 
-# Build a fresh bootable FAT32 disk image from scratch (GRUB + kernel + world).
+# Root filesystem for the disk image.  Override on the command line, e.g.
+#   bmake image FS=ubixfs2
+# Default is fat (the only fully-supported root today; macOS-mountable).
+# ubixfs2 is the in-progress permission-capable native FS (see
+# docs/design/ubixfs2-plan.md); /boot stays FAT regardless so GRUB + the macOS
+# dev loop keep working during bring-up.
+FS ?= fat
+
+# Build a fresh bootable disk image from scratch (GRUB + kernel + world).
 # Always authoritative — use this for releases or a clean initial image.
 makeuser:
 	@echo "==> Compiling and running tools/makeuser.c (PBKDF2-hashes passwords via libpw)"
@@ -208,7 +216,8 @@ makeuser:
 	@echo "==> etc/userdb updated (PBKDF2-hashed)"
 
 image: makeuser
-	@BUILD=${OBJ_DIR} KERNEL=${OBJ_DIR}/boot/kernel sh tools/mkimage.sh ${DISK_IMAGE}
+	@echo "==> Disk image root filesystem: FS=${FS}"
+	@BUILD=${OBJ_DIR} KERNEL=${OBJ_DIR}/boot/kernel FS=${FS} SRCTOP=${.CURDIR} sh tools/mkimage.sh ${DISK_IMAGE}
 
 # Build a small FAT32 USB test image with a README.  Attach to QEMU via
 # bmake run (auto-detected when usb.img exists) or mount manually with hdiutil.

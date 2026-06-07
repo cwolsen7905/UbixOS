@@ -27,6 +27,23 @@ SWAP_SIZE_MB=64     # raw swap partition (type 0x82)
 BUILD="${BUILD:-build}"
 KERNEL="${KERNEL:-$BUILD/boot/kernel}"
 GRUB_CFG="tools/grub.cfg"
+
+# Root filesystem selector (passed by the `image` target; default fat).
+FS="${FS:-fat}"
+case "$FS" in
+fat) ;; # the path below builds a FAT32 root
+ubixfs2)
+    echo "ERROR: FS=ubixfs2 is not wired into the image yet." >&2
+    echo "       The ubixfs2 host tools (tools/ubixfs2/u2fs) and the GRUB ubixfs2" >&2
+    echo "       module are in progress; until they land, build with FS=fat." >&2
+    echo "       Plan: docs/design/ubixfs2-plan.md" >&2
+    exit 1
+    ;;
+*)
+    echo "ERROR: unknown FS '$FS' (expected: fat, ubixfs2)" >&2
+    exit 1
+    ;;
+esac
 # Detect GRUB library directory and mkimage command dynamically.
 if command -v brew >/dev/null 2>&1 && brew --prefix i686-elf-grub >/dev/null 2>&1; then
     GRUB_LIB="$(brew --prefix i686-elf-grub)/lib/i686-elf/grub/i386-pc"
