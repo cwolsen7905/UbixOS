@@ -94,6 +94,17 @@ static u_int32_t g_boot_kstack_discard;
  * Must run AFTER md_tss is fully populated and is guarded to fire once per task.
  * v86 tasks are excluded (they keep hardware ljmp switching in the hybrid).
  */
+/**
+ * Initialise a freshly-allocated task's md state: point the TSS ring-0 stack
+ * (esp0/ss0) at the top of the task's kernel stack.  Called by schedNewTask
+ * once the kernel stack is allocated.
+ */
+void md_new_task(kTask_t *t)
+{
+	t->md.md_tss.esp0 = (u_int32_t)t->kernelStack + 8192;
+	t->md.md_tss.ss0 = 0x10;
+}
+
 void md_setup_initial_frame(kTask_t *t)
 {
 	struct tssStruct *tss = &t->md.md_tss;

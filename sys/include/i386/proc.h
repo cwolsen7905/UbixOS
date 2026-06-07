@@ -29,6 +29,13 @@ struct md_proc
 struct taskStruct; /* == kTask_t */
 
 /*
+ * Initialise a freshly-allocated task's md state (called by schedNewTask after
+ * its kernel stack is allocated): sets the TSS ring-0 stack (esp0/ss0).
+ * Defined in arch/i386/context_switch.c.
+ */
+void md_new_task(struct taskStruct *t);
+
+/*
  * Build a newly created task's initial kernel-stack frame for software context
  * switching.  Defined in arch/i386/context_switch.c.
  */

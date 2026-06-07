@@ -121,8 +121,8 @@ kTask_t *schedNewTask()
 	tmpTask->kernelStack = (u_int32_t *)kmalloc(8192);
 	if (tmpTask->kernelStack == 0x0)
 		kpanic("Error: schedNewTask() - kmalloc failed allocating kernel stack\n");
-	tmpTask->md.md_tss.esp0 = (u_int32_t)tmpTask->kernelStack + 8192;
-	tmpTask->md.md_tss.ss0 = 0x10;
+	/* Arch-specific md init (i386: TSS ring-0 stack; aarch64: clear sw-context). */
+	md_new_task(tmpTask);
 
 	tmpTask->usedMath = 0x0;
 	tmpTask->state = NEW;

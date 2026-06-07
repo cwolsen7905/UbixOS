@@ -12,12 +12,16 @@
 
 struct md_proc
 {
-	u_int64_t md_ksp;   /* saved kernel SP (callee-saved frame; aarch64_ctx_switch) */
-	u_int64_t md_ttbr0; /* user address-space root (TTBR0_EL1), 0 for kernel-only */
+	u_int64_t md_kstack; /* saved kernel SP (callee-saved frame; aarch64_ctx_switch) */
+	u_int64_t md_ttbr0;  /* user address-space root (TTBR0_EL1), 0 for kernel-only */
 };
 
 struct taskStruct; /* == kTask_t */
 
+/* Initialise a freshly-allocated task's md state (called by schedNewTask after
+ * its kernel stack is allocated).  i386 sets the TSS ring-0 stack; aarch64
+ * clears the software-context fields. */
+void md_new_task(struct taskStruct *t);
 void md_setup_initial_frame(struct taskStruct *t);
 void switch_to(struct taskStruct *prev, struct taskStruct *next);
 
