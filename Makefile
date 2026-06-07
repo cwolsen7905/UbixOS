@@ -81,7 +81,7 @@ kernel-i386:
 # objects can link in), with the aarch64 ISA flags from KERN_TARGET_CFLAGS.
 AARCH64_KCFLAGS = ${KERN_TARGET_CFLAGS} -DDEBUG_SYSCTL -O -Wall -Wno-incompatible-pointer-types \
 	-nostdlib -nostdinc -fno-builtin -fno-exceptions -ffreestanding -fno-pie -fno-pic \
-	-fno-stack-protector -mno-outline-atomics -I${CURDIR}/sys/include
+	-fno-stack-protector -mno-outline-atomics -I${CURDIR}/sys/include -I${CURDIR}/sys/arch/aarch64
 
 # Arch-neutral kernel sources now linked into the aarch64 kernel.  Grows as more
 # of the generic kernel is ported; the scheduler core is the first to link.
@@ -99,12 +99,12 @@ AARCH64_GENERIC_SRCS = \
 
 kernel-aarch64:
 	@mkdir -p ${OBJ_DIR}/boot ${OBJ_DIR}/obj/sys
-	@for f in ${CURDIR}/sys/arch/aarch64/*.S; do \
+	@for f in `find ${CURDIR}/sys/arch/aarch64 -name '*.S'`; do \
 	    o=${OBJ_DIR}/obj/sys/`basename $$f .S`.o; \
 	    echo "${CROSS_PREFIX}gcc [asm] $$f"; \
 	    ${CROSS_PREFIX}gcc ${AARCH64_KCFLAGS} -c $$f -o $$o || exit 1; \
 	done
-	@for f in ${CURDIR}/sys/arch/aarch64/*.c; do \
+	@for f in `find ${CURDIR}/sys/arch/aarch64 -name '*.c'`; do \
 	    o=${OBJ_DIR}/obj/sys/`basename $$f .c`.o; \
 	    echo "${CROSS_PREFIX}gcc [c]   $$f"; \
 	    ${CROSS_PREFIX}gcc ${AARCH64_KCFLAGS} -std=c99 -c $$f -o $$o || exit 1; \
