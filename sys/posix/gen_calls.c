@@ -30,6 +30,7 @@
 #include <sys/resource.h>
 #include <sys/thread.h>
 #include <sys/gdt.h>
+#include <machine/tls.h>
 #include <i386/pcpu_asm.h>
 #include <ubixos/sched.h>
 #include <ubixos/sched_internal.h>
@@ -423,59 +424,30 @@ int sys_futex(struct thread *td, struct sys_futex_args *uap)
  * set_thread_area — TLS setup syscall (slot 351).
  *
  * UbixOS musl calls __syscall(SYS_set_thread_area, pthread_ptr) where
- * pthread_ptr IS the TLS base (the pthread struct address).  This is NOT
- * the Linux struct user_desc interface — musl passes the raw TLS pointer
- * as a single argument.
- *
- * We write LDT[1] with base = pthread_ptr, then set tf_gs = 0xF so the
- * iret back to user mode installs %gs = LDT[1] selector.  After this,
- * %gs:0 == pthread->self, matching what musl's __get_tp() expects.
+ * pthread_ptr IS the TLS base (the pthread struct address).  This is NOT the
+ * Linux struct user_desc interface — musl passes the raw TLS pointer as a
+ * single argument.  We record the base and hand the actual install to the
+ * machine layer (i386 → LDT[1] + %gs; aarch64 → TPIDR_EL0), so this syscall is
+ * arch-neutral.
  */
 int sys_set_thread_area(struct thread *td, struct sys_set_thread_area_args *uap)
 {
-	struct gdtDescriptor *tls_desc = 0x0;
+	/* uap->u_info IS the TLS base pointer (the pthread struct address). */
+	uintptr_t base = (uintptr_t)uap->u_info;
 
-	/* uap->u_info IS the TLS base pointer (pthread struct address). */
-	u_int32_t base_addr = (u_int32_t)uap->u_info;
-
-	if (base_addr == 0)
+	if (base == 0)
 	{
 		td->td_retval[0] = -1;
 		return (-1);
 	}
 
 	/*
-	 * Remember this thread's TLS base.  Every thread in an address space shares
-	 * the single LDT[1] descriptor written below, so cpu_switch() re-installs the
-	 * resuming thread's own base on each context switch (see context_switch.c).
+	 * Remember this thread's TLS base; cpu_switch() re-installs the resuming
+	 * thread's own base on each context switch (see context_switch.c).  The
+	 * install itself is machine dependent — behind <machine/tls.h>.
 	 */
-	_current->tls_base = base_addr;
-
-	/* Write LDT[1] — second entry in the per-process LDT page */
-	tls_desc = (struct gdtDescriptor *)(VMM_USER_LDT + sizeof(struct gdtDescriptor));
-
-	tls_desc->limitLow = 0xFFFF;
-	tls_desc->limitHigh = 0xF;
-	tls_desc->baseLow = (base_addr & 0xFFFF);
-	tls_desc->baseMed = ((base_addr >> 16) & 0xFF);
-	tls_desc->access = ((dData + dWrite + dBig + dBiglim + dDpl3) + dPresent) >> 8;
-	tls_desc->granularity = ((dData + dWrite + dBig + dBiglim + dDpl3) & 0xFF) >> 4;
-	tls_desc->baseHigh = (base_addr >> 24);
-
-	/* Reload the LDT register so the updated LDT[1] descriptor is live. */
-	asm volatile("pushl %eax\n\t"
-	             "movw  $0x18,%ax\n\t"
-	             "lldt  %ax\n\t"
-	             "popl  %eax\n\t");
-
-	/*
-	 * Propagate the new %gs selector (0xF = LDT[1], TI=1, RPL=3) back to
-	 * user space via the saved trapframe register.  sys_call_posix.S pushes
-	 * and pops all segment registers around the syscall, so writing
-	 * tf_gs here is the only way to make %gs=0xF survive the iret.
-	 * Setting %gs directly in kernel asm would be discarded by the pop.
-	 */
-	td->frame->tf_gs = 0xF;
+	_current->tls_base = (u_int32_t)base;
+	machine_set_tls(td, base);
 
 	td->td_retval[0] = 0;
 	return (0);
