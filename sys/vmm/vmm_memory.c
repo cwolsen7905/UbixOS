@@ -260,7 +260,7 @@ u_int32_t count_memory()
  Notes:
 
  ************************************************************************/
-u_int32_t vmm_find_free_page(pidType pid)
+uintptr_t vmm_find_free_page(pidType pid)
 {
 
 	u_int32_t i = 0;
@@ -329,7 +329,7 @@ retry:
  Notes:
 
  ************************************************************************/
-int free_page(u_int32_t page_addr)
+int free_page(uintptr_t page_addr)
 {
 
 	u_int32_t page_index = 0;
@@ -383,7 +383,7 @@ int free_page(u_int32_t page_addr)
  08/01/02 - I Think If Counter Gets To 0 I Should Free The Page
 
  ************************************************************************/
-int adjust_cow_counter(u_int32_t base_addr, int adjustment)
+int adjust_cow_counter(uintptr_t base_addr, int adjustment)
 {
 
 	u_int32_t vmm_memory_map_index = base_addr / PAGE_SIZE;
@@ -435,7 +435,7 @@ int adjust_cow_counter(u_int32_t base_addr, int adjustment)
  is shared into a child.
 
  ************************************************************************/
-void vmm_share_ref(u_int32_t phys)
+void vmm_share_ref(uintptr_t phys)
 {
 	u_int32_t idx = phys / PAGE_SIZE;
 

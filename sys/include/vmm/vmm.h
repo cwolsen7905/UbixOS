@@ -71,10 +71,10 @@ extern "C" {
     int vmm_init();
     int vmm_mem_map_init();
     u_int32_t count_memory();
-    u_int32_t vmm_find_free_page(pidType pid);
-    int free_page(u_int32_t pageAddr);
-    int adjust_cow_counter(u_int32_t baseAddr, int adjustment);
-    void vmm_share_ref(u_int32_t phys);
+    uintptr_t vmm_find_free_page(pidType pid);
+    int free_page(uintptr_t pageAddr);
+    int adjust_cow_counter(uintptr_t baseAddr, int adjustment);
+    void vmm_share_ref(uintptr_t phys);
     void vmm_free_process_pages(pidType pid);
     u_int32_t vmm_audit_orphan_pages(void);
 
