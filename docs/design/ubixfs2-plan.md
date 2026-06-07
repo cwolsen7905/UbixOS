@@ -1,5 +1,11 @@
 # UbixFS v2 — carry-forward plan (POSIX-permission native filesystem)
 
+> ⚠️ **SUPERSEDED (2026-06-07)** by `ubixfs-pool-plan.md` — we pivoted from this
+> BeFS-style block filesystem to a **pooled copy-on-write design (lite-ZFS)**.
+> The v0 artifacts from this plan (`include/fs/ubixfs2/`, `lib/ubixfs2_core/`,
+> `tools/ubixfs2/`) and the dormant `sys/fs/ubixfsv2/` are dead code, to be
+> removed at cleanup. Kept here for history / the host-harness lessons.
+
 > Goal: a native UbixOS filesystem with real POSIX ownership/permissions
 > (`uid`/`gid`/`mode` + times, ACL-ready), to replace FAT as the place where
 > permissions actually mean something. FAT/exFAT can't store any of this; UFS/FFS
