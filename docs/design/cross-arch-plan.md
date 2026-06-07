@@ -76,7 +76,7 @@ same status.
 | 6 | `machine/ansi.h`, pointer types parameterized | A | ✅ Done |
 | 9 | `machine/vmm_layout.h` address-space constants | A | ✅ Done |
 | — | Software context switch (`cpu_switch`) — *the historic #1 blocker* | A | ✅ Done |
-| **7** | **`u_int32_t` → `uintptr_t` for address-typed values** | A | ⬜ **Not started — blocker** |
+| **7** | **`u_int32_t` → `uintptr_t` for address-typed values** | A | 🟡 **Core done** (frame allocator, paging map/translate API, frame-map field, `vm_map`); mmap/exec inline i386 page-table walks deferred to the aarch64-MMU work |
 | **T** | **Quarantine i386 TLS (`set_thread_area`/LDT/`%gs`) behind `<machine/tls.h>`** | A | ⬜ **Not started — blocker** |
 | 8 | Move `start.S`/`main.c` to `sys/arch/i386/` | A | ⬜ Not started |
 | 10 | `sys/arch/aarch64/` skeleton + `ubix.target.aarch64.mk` | A | ⬜ Not started |
@@ -95,12 +95,22 @@ same status.
 biggest one (i386 hardware task switching) is *gone*, replaced by the
 arch-neutral software `cpu_switch`. The remaining gates, in order:
 
-1. **Phase 7 — address types are still 32-bit (`u_int32_t`).** Every VMM address
-   signature (`vmm_get_physical_addr`, `vmm_remap_page`, `kernelPageDirectory`,
-   `kernelStack`, …) is `u_int32_t`. A 64-bit build would **silently truncate
-   physical/virtual addresses** — this is the real correctness gate before any
-   arm64 kernel can run, and it is the largest untouched Track-A item. *Same
-   machine code on i386; it only changes the semantic type.*
+1. **Phase 7 — address types → `uintptr_t`. 🟡 Core done.** The *shared* VMM
+   surface that aarch64's generic code consumes is converted and verified
+   codegen-identical on i386: the physical-frame allocator (`vmm_find_free_page`,
+   `free_page`, `adjust_cow_counter`, `vmm_share_ref`), the frame-map `pageAddr`
+   field, the public paging map/translate API (`vmm_get_physical_addr`,
+   `vmm_remap_page`, `vmm_set_page_attributes`, `vmm_clean_virtual_space`,
+   `vmm_page_fault`, `kernelPageDirectory`, …), and `vm_map` (was already clean).
+   **Deferred, intentionally:** `vmm_mmap.c` and the exec loader walk the i386
+   page tables *inline* (`PD_BASE_ADDR`/`PT_BASE_ADDR` recursive-mapping), so they
+   are i386-specific code that aarch64 *replaces* rather than recompiles —
+   retyping their locals adds risk for no aarch64 benefit. They get handled as
+   part of writing the aarch64 MMU (Phase 13), where the page-table access is
+   abstracted, not as a typedef sweep. `kernelStack` is a *pointer* (already
+   64-bit-safe); its one truncating use (`(u_int32_t)kernelStack` for
+   `md_tss.esp0`) is an i386-TSS arch-isolation leak in generic `sched_core.c`
+   (Phase 4/5), not a Phase 7 item.
 2. **i386 TLS leaked into generic code — and it just grew.** `sys_set_thread_area`
    (writes LDT[1], the `0x0F` selector) lives in generic `sys/posix/gen_calls.c`,
    and `kTask_t.tls_base` is in generic `sched.h`; the recent threads/TLS work
@@ -113,9 +123,10 @@ arch-neutral software `cpu_switch`. The remaining gates, in order:
    prerequisite. (Kernel and userland port independently; this only gates `world`.)
 
 Phases 8 and 10 are mechanical (a file move and an empty skeleton) and carry no
-design risk. Track B is greenfield and starts only after 7 + the TLS quarantine
-land. Net: **~2 substantive Track-A tasks (7 + TLS) remain before arm64 bring-up
-can begin**, both well-scoped.
+design risk. Track B is greenfield. Net: with Phase 7's shared core done, the
+**remaining substantive Track-A task is the TLS quarantine**; Phase 8/10 are
+mechanical; and the i386-coupled mmap/exec page-table walks fold into the
+aarch64-MMU work (Phase 13) rather than blocking bring-up.
 
 ## Current Problem Areas
 
@@ -657,7 +668,7 @@ sys/
 | 5 | `struct md_proc` hides TSS in `kTask_t` | Done |
 | 6 | `machine/ansi.h`, pointer types arch-parameterized | Done |
 | 9 | `machine/vmm_layout.h` for address-space constants | Done |
-| 7 | `uint32_t` → `uintptr_t` for address-typed values | Not started |
+| 7 | `u_int32_t` → `uintptr_t` for address-typed values | 🟡 Core done (allocator + paging API + vm_map); mmap/exec deferred to Phase 13 |
 | 8 | Move `start.S`, `main.c` to `sys/arch/i386/` | Not started |
 | 10 | `sys/arch/aarch64/` skeleton + `ubix.target.aarch64.mk` | Not started |
 
