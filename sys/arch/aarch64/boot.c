@@ -36,6 +36,8 @@ void kmain_aarch64(void)
 	aarch64_mmu_init();
 	kprintf("MMU enabled: TTBR0 identity map (39-bit VA), caches on.\n");
 
+	aarch64_ctx_demo();
+
 	gic_init();
 	timer_init();
 

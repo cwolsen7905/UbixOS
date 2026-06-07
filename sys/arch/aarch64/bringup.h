@@ -34,4 +34,8 @@ void timer_tick(void);
 /* mmu.c — enable the MMU with a TTBR0 identity map (39-bit VA). */
 void aarch64_mmu_init(void);
 
+/* context.S / ctxdemo.c — cooperative context switch + its demo. */
+void aarch64_ctx_switch(uint64_t *save_sp, uint64_t next_sp);
+void aarch64_ctx_demo(void);
+
 #endif /* _AARCH64_BRINGUP_H */
