@@ -23,7 +23,8 @@ struct split to a follow-up. Get threads working in days, not a weeks-long refac
 | C | TLS — per-thread userland `%gs` base | ✅ Done & verified |
 | D | `futex` syscall — wait/wake on a user address | ✅ Done & verified |
 | E | musl pthreads — `pthread_create` / `mutex` / `join` | ✅ Milestone 1 done & verified |
-| E2 | pthreads — `cond`, detached threads, cancellation | 🔲 Remaining |
+| E2a | pthreads — `pthread_cond` | ✅ Done & verified (`bin/condtest`) |
+| E2 | pthreads — detached threads, cancellation | 🔲 Remaining |
 | F | Split `kTask_t` → `kProc_t` + `kThread_t` | 🔲 Deferred |
 | G | True shared fd table | 🔲 Deferred |
 
@@ -37,7 +38,7 @@ E2 polish and the F/G refactors remain (all non-blocking for app use).
 
 | Item | What it is | Effort | Blocks | Notes |
 |------|-----------|--------|--------|-------|
-| **E2a — `pthread_cond`** | Verify condition variables (producer/consumer test). Runs on the existing futex; uses `FUTEX_WAIT`-with-timeout + the REQUEUE-as-WAKE path. | ~½ day | A worker-pool / job-queue design (e.g. the **NetSurf async fetcher**) | Cheap to test now; likely works, but unverified. Recommended before building anything on cond vars. |
+| ~~E2a — `pthread_cond`~~ | ✅ **Done** — `bin/condtest` (bounded-buffer producer/consumer, 100k items, checksum verified) PASS. No kernel change needed; runs on the existing futex. The **NetSurf async fetcher** is now unblocked. | — | — | — |
 | **E2b — detached threads** | `pthread_detach` / detached-create teardown. Needs a kernel-assisted "unmap own stack + exit" syscall: the stack-arg ABI can't `munmap` its own stack then pass `exit`'s args (no stack left). `__unmapself.s` is currently a documented non-functional stub. | ~½–1 day | Detached threads only (joinable threads work — the joiner frees the map) | Add a native `thread_exit_unmap(base,size,code)` call that does both in one trap. |
 | **E2c — cancellation** | `pthread_cancel` / `SIGCANCEL` delivery into a blocked futex (`-EINTR` return). | ~½ day | `pthread_cancel` users (rare) | Futex currently doesn't return `-EINTR` on signal; a blocked thread defers signals until woken. |
 | **F — kProc/kThread split** | Separate "process" (AS, fds, signals) from "execution context" (stack, regs). The scheduler would operate on `kThread_t`. | ~weeks | Cleanliness; fixes the v1 PT/PD page leak below | Big refactor; intentionally deferred. v1 runs on shared-AS `kTask_t`. |
