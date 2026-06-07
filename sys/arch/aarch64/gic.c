@@ -12,6 +12,7 @@
  */
 
 #include "bringup.h"
+#include <ubixos/sched.h> /* sched() — timer-driven preemption */
 
 #define GICD_BASE 0x08000000UL
 #define GICC_BASE 0x08010000UL
@@ -67,5 +68,11 @@ void aarch64_irq_dispatch(void)
 	else
 		kprintf("irq: unexpected intid %u\n", intid);
 
-	GICC(GICC_EOIR) = iar;
+	GICC(GICC_EOIR) = iar; /* EOI before any context switch */
+
+	/* Timer tick drives the scheduler (preemption).  Called AFTER EOI so the GIC
+	 * priority is dropped before switch_to resumes a different task — otherwise
+	 * the preempted-away interrupt stays active and the next task gets no ticks. */
+	if (intid == 30)
+		sched();
 }

@@ -58,6 +58,21 @@ static void user_trampoline(void)
 }
 
 /**
+ * First-switch trampoline for a kernel thread.  A fresh task is first entered
+ * from within the timer IRQ handler (preemptive dispatch) with IRQs masked, so
+ * unmask them before running the thread — otherwise it can never be preempted.
+ */
+static void kthread_trampoline(void)
+{
+	void (*entry)(void) = (void (*)(void))(uintptr_t)_current->md.md_entry;
+
+	__asm__ volatile("msr daifclr, #2"); /* enable IRQ for the new thread */
+	entry();
+	for (;;) /* a kernel thread returning is unexpected — park */
+		sched_yield();
+}
+
+/**
  * Build a new task's initial kernel-stack frame.  A kernel thread's saved lr is
  * its entry point (the first switch_to() `ret`s into it); a user task's (md_usp
  * set) saved lr is user_trampoline, which ERETs to EL0.
@@ -69,7 +84,8 @@ void md_setup_initial_frame(kTask_t *t)
 	sp -= FRAME_SLOTS;
 	for (unsigned i = 0; i < FRAME_SLOTS; i++)
 		sp[i] = 0;
-	sp[LR_SLOT] = (t->md.md_usp != 0) ? (u_int64_t)(uintptr_t)user_trampoline : t->md.md_entry;
+	sp[LR_SLOT] =
+	    (t->md.md_usp != 0) ? (u_int64_t)(uintptr_t)user_trampoline : (u_int64_t)(uintptr_t)kthread_trampoline;
 
 	t->md.md_kstack = (u_int64_t)(uintptr_t)sp;
 }

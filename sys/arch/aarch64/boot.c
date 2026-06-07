@@ -55,12 +55,16 @@ void kmain_aarch64(void)
 	aarch64_proc_demo();
 	aarch64_fork_demo();
 
+	/* Spawn never-yielding CPU-bound tasks, then enable the timer — it must
+	 * preempt them (proves preemptive scheduling). */
+	aarch64_preempt_demo();
+
 	gic_init();
 	timer_init();
 
-	/* Unmask IRQs (clear DAIF.I); timer ticks now arrive via the GIC. */
+	/* Unmask IRQs (clear DAIF.I); the 100 Hz timer now drives the scheduler. */
 	__asm__ volatile("msr daifclr, #2");
-	kprintf("IRQs enabled; idling on wfi (expect periodic timer ticks).\n");
+	kprintf("IRQs enabled; timer-driven preemption active.\n");
 
 	for (;;)
 		__asm__ volatile("wfi");

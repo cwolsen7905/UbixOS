@@ -85,4 +85,7 @@ void aarch64_proc_demo(void);
 /* forkdemo.c — a user process that fork()s; both run via the scheduler (13g). */
 void aarch64_fork_demo(void);
 
+/* preemptdemo.c — CPU-bound tasks preempted by the timer-driven scheduler. */
+void aarch64_preempt_demo(void);
+
 #endif /* _AARCH64_BRINGUP_H */

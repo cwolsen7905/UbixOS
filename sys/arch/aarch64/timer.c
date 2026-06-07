@@ -11,6 +11,7 @@
  */
 
 #include "bringup.h"
+#include <ubixos/vitals.h> /* systemVitals->sysTicks */
 
 #define TIMER_INTID 30 /* EL1 physical timer PPI */
 
@@ -44,8 +45,8 @@ static void write_ctl(u_int64_t v)
 void timer_init(void)
 {
 	u_int64_t freq = read_cntfrq();
-	g_interval = freq / 2; /* 2 Hz */
-	kprintf("timer: cntfrq=%lu Hz, tick interval=%lu counts (~2 Hz)\n", freq, g_interval);
+	g_interval = freq / 100; /* 100 Hz scheduler tick */
+	kprintf("timer: cntfrq=%lu Hz, tick interval=%lu counts (100 Hz)\n", freq, g_interval);
 
 	gic_enable_intid(TIMER_INTID);
 	write_tval(g_interval);
@@ -58,6 +59,7 @@ void timer_init(void)
 void timer_tick(void)
 {
 	g_ticks++;
-	kprintf("timer tick #%u\n", g_ticks);
-	write_tval(g_interval); /* re-arm for the next interval */
+	if (systemVitals != 0)
+		systemVitals->sysTicks++; /* the scheduler's quantum/aging clock */
+	write_tval(g_interval);           /* re-arm for the next interval */
 }
