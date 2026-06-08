@@ -144,4 +144,8 @@ extern u_int32_t virtio_gpu_width;
 extern u_int32_t virtio_gpu_height;
 extern u_int32_t virtio_gpu_pitch;
 
+/* virtio_input.c — virtio-mmio keyboard/mouse (Linux input events). */
+int aarch64_virtio_input_init(void); /* scan + bring up all input devices; count */
+int virtio_input_poll(void (*deliver)(int dev, u_int16_t type, u_int16_t code, u_int32_t value));
+
 #endif /* _AARCH64_BRINGUP_H */
