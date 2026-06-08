@@ -39,6 +39,10 @@
 #define SYS_OPENAT 499        /* FreeBSD ABI; musl openat (relative to a dir fd) */
 #define SYS_CLOCK_GETTIME 232 /* FreeBSD ABI */
 #define SYS_STATX 383         /* Linux slot; musl uses it for stat/fstat */
+#define SYS_FCNTL 92          /* FreeBSD ABI */
+#define SYS_MUNMAP 73         /* FreeBSD ABI */
+#define SYS_NANOSLEEP 240     /* FreeBSD ABI */
+#define SYS_UNAME 164         /* FreeBSD ABI */
 #define SYS_BRK 17
 #define SYS_GETPID 20
 #define SYS_MPROTECT 74
@@ -297,6 +301,41 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args)
 			ua.basep = 0;
 			sys_getdirentries(&_current->td, &ua);
 			return (u_int64_t)_current->td.td_retval[0];
+		}
+
+		case SYS_FCNTL:
+		{
+			struct sys_fcntl_args ua;
+			ua.fd = (int)args[0];
+			ua.cmd = (int)args[1];
+			ua.arg = (long)args[2];
+			sys_fcntl(&_current->td, &ua);
+			return (u_int64_t)_current->td.td_retval[0];
+		}
+
+		case SYS_MUNMAP:
+			/* No-op: the anonymous-mmap region is a bump allocator with no reclaim
+			 * yet, so unmapping just leaks (harmless for short-lived programs). */
+			return 0;
+
+		case SYS_NANOSLEEP:
+			/* No timed sleep yet — yield once and report completion. */
+			sched_yield();
+			return 0;
+
+		case SYS_UNAME:
+		{
+			/* uname(struct utsname*): musl's utsname is 6 x 65-byte fields. */
+			char *u = (char *)(uintptr_t)args[0];
+			if (u == 0)
+				return (u_int64_t)-1;
+			memset(u, 0, 65 * 6);
+			strncpy(u + 0 * 65, "UbixOS", 64);
+			strncpy(u + 1 * 65, "ubixos", 64);
+			strncpy(u + 2 * 65, "2", 64);
+			strncpy(u + 3 * 65, "uBixOS aarch64", 64);
+			strncpy(u + 4 * 65, "aarch64", 64);
+			return 0;
 		}
 
 		case SYS_IOCTL:
