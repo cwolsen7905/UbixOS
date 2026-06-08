@@ -20,6 +20,7 @@
 #include <vmm/uregion.h>        /* vmm_uregion_mmap_anon, vmm_uregion_brk */
 #include <sys/sysproto_posix.h> /* sys_open/read/close/lseek + uap structs */
 #include <sys/descrip.h>        /* getfd, struct file */
+#include <mpi/mpi.h>            /* MPI mailboxes (native syscalls 50-53) */
 
 #define SYS_EXIT 1
 #define SYS_READ 3
@@ -49,6 +50,12 @@
  * i386 port; see project_native_abi_threading). */
 #define NATIVE_FLAG 0x8000
 #define NATIVE_EXIT_GROUP 65
+
+/* UbixOS-native (int $0x81-equivalent) syscall numbers used by lib/ubix_api. */
+#define NATIVE_MPI_CREATE 50
+#define NATIVE_MPI_DESTROY 51
+#define NATIVE_MPI_POST 52
+#define NATIVE_MPI_FETCH 53
 
 /**
  * Terminate the current task (shared by exit / exit_group): a scheduled user
@@ -150,6 +157,21 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args)
 			case NATIVE_EXIT_GROUP:
 				do_exit(args[0]);
 				return 0; /* unreachable */
+
+			/* UbixOS MPI: the syscall runs in the caller's address space (IRQ-
+			 * masked), so the user name/message pointers are directly valid. */
+			case NATIVE_MPI_CREATE:
+				return (u_int64_t)mpi_createMbox((char *)(uintptr_t)args[0]);
+			case NATIVE_MPI_DESTROY:
+				return (u_int64_t)mpi_destroyMbox((char *)(uintptr_t)args[0]);
+			case NATIVE_MPI_POST:
+				return (u_int64_t)mpi_postMessage((char *)(uintptr_t)args[0],
+				                                  (u_int32_t)args[1],
+				                                  (mpi_message_t *)(uintptr_t)args[2]);
+			case NATIVE_MPI_FETCH:
+				return (u_int64_t)mpi_fetchMessage((char *)(uintptr_t)args[0],
+				                                   (mpi_message_t *)(uintptr_t)args[1]);
+
 			default:
 				kprintf("[kernel] unimplemented native EL0 syscall #%lu\n", n);
 				return (u_int64_t)-1;

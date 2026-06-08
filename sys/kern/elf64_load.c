@@ -99,7 +99,7 @@ int elf64_load_at(const void *image, u_int64_t *aspace_root, u_int64_t load_base
 	if (info != 0)
 	{
 		info->entry = load_base + eh->e_entry;
-		info->phdr_va = load_base + eh->e_phoff; /* PHDRs sit in the first PT_LOAD (file off 0) */
+		info->phdr_va = 0; /* resolved from the PT_LOAD that contains the headers */
 		info->phnum = eh->e_phnum;
 		info->phentsize = eh->e_phentsize;
 		info->interp_off = 0;
@@ -118,6 +118,14 @@ int elf64_load_at(const void *image, u_int64_t *aspace_root, u_int64_t load_base
 		}
 		if (ph->p_type != PT_LOAD || ph->p_memsz == 0)
 			continue;
+		/* AT_PHDR = the in-memory VA of the program headers.  They live at file
+		 * offset e_phoff inside the PT_LOAD that covers it; the in-memory VA is
+		 * that segment's load VA + (e_phoff - p_offset).  Computing it from the
+		 * segment (not load_base + e_phoff) is correct for ET_EXEC too, whose
+		 * first PT_LOAD vaddr is the link address, not 0. */
+		if (info != 0 && info->phdr_va == 0 && eh->e_phoff >= ph->p_offset &&
+		    eh->e_phoff < ph->p_offset + ph->p_filesz)
+			info->phdr_va = load_base + ph->p_vaddr + (eh->e_phoff - ph->p_offset);
 		if (load_segment(base, ph, aspace_root, load_base) != 0)
 			return -1;
 	}

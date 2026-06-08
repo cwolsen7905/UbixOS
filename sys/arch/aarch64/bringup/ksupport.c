@@ -29,6 +29,7 @@
 #include <ubixos/vitals.h>
 #include <ubixos/callout.h>
 #include <sys/shutdown.h>
+#include <mpi/mpi.h> /* mpi_destroyProcessMboxes — free a task's mailboxes on exit */
 
 /* systemVitals is now the real generic vitals node (sys/kern/vitals.c),
  * allocated by vitals_init() during kmain bring-up. */
@@ -135,5 +136,11 @@ void endTask(pidType pid)
 {
 	(void)pid;
 	if (_current != 0)
+	{
+		/* Free the task's MPI mailboxes so their names/pids do not leak — a leaked
+		 * mailbox blocks a relaunched owner (e.g. a respawned authd/login) from
+		 * recreating it. */
+		mpi_destroyProcessMboxes(_current->id);
 		_current->state = ZOMBIE;
+	}
 }

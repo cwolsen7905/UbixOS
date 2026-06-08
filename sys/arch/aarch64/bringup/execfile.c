@@ -235,7 +235,11 @@ static u_int64_t build_dyn_stack(
 	vec[k++] = AT_PHENT;
 	vec[k++] = mi->phentsize;
 	vec[k++] = AT_PHNUM;
-	vec[k++] = mi->phnum;
+	/* If the program headers are not in any PT_LOAD (e.g. a static ET_EXEC linked
+	 * high, whose headers sit before the first 64 KB-aligned LOAD), AT_PHDR is
+	 * unresolved (0); report 0 headers so musl's phdr walk (TLS setup) skips it
+	 * rather than dereferencing a NULL AT_PHDR. */
+	vec[k++] = (mi->phdr_va != 0) ? mi->phnum : 0;
 	vec[k++] = AT_PAGESZ;
 	vec[k++] = PAGE_SIZE;
 	vec[k++] = AT_BASE;

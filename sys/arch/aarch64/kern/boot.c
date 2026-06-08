@@ -29,6 +29,8 @@ extern char _binary_sh_elf_start[];
 extern char _binary_sh_elf_end[];
 extern char _binary_spin_elf_start[];
 extern char _binary_spin_elf_end[];
+extern char _binary_mpitest_elf_start[];
+extern char _binary_mpitest_elf_end[];
 
 /* The freestanding demo program, laid into /bin/hello so the shell has a real
  * command to fork/execve. */
@@ -155,6 +157,7 @@ void kmain_aarch64(void)
 		         install_bin("/bin/login", _binary_login_elf_start, _binary_login_elf_end) == 0 &&
 		         install_bin("/bin/sh", _binary_sh_elf_start, _binary_sh_elf_end) == 0 &&
 		         install_bin("/bin/spin", _binary_spin_elf_start, _binary_spin_elf_end) == 0 &&
+		         install_bin("/bin/mpitest", _binary_mpitest_elf_start, _binary_mpitest_elf_end) == 0 &&
 		         install_bin("/bin/hello", _binary_hello_elf_start, _binary_hello_elf_end) == 0;
 		if (ok)
 		{
@@ -162,6 +165,13 @@ void kmain_aarch64(void)
 			timer_init();
 			__asm__ volatile("msr daifclr, #2"); /* unmask IRQ — timer drives preemption */
 			kprintf("IRQs enabled; timer-driven preemption active.\n");
+
+			/* MPI self-test: prove the native message-passing syscalls work.
+			 * mpitest is a static ET_EXEC, so run it via the minimal-stack path
+			 * (its phdrs are not in a PT_LOAD, so the full auxv's AT_PHDR is N/A). */
+			kprintf("\n--- MPI self-test ---\n");
+			aarch64_run_elf_image(_binary_mpitest_elf_start, "mpitest");
+			kprintf("--- end MPI self-test ---\n");
 
 			/* Dynamic-linker bring-up test: lay the musl dynamic linker (= libc.so)
 			 * at its INTERP path + a PIE program, then run it through the kernel's
