@@ -7,7 +7,7 @@
 # aarch64 is being brought up bottom-up (desktop #5): the compositor first, then
 # the client apps.  taskbar/term/settings join the aarch64 list as each is ported.
 .if ${_ARCH} == "aarch64"
-SUBDIRS = views
+SUBDIRS = views taskbar term
 .else
 SUBDIRS = views taskbar term settings
 .endif

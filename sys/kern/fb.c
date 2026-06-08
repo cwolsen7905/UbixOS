@@ -160,7 +160,7 @@ int sys_shareregion(struct thread *td, struct sys_shareregion_args *args)
 		return (-1);
 	}
 
-	*args->out_vaddr = (u_int32_t)client_vaddr;
+	*args->out_vaddr = (uintptr_t)client_vaddr;
 	td->td_retval[0] = 0;
 	return (0);
 }

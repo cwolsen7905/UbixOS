@@ -25,6 +25,10 @@
 #include <ubixos/sched.h>
 #include <lib/kprintf.h>
 
+/* Per-process anonymous-mmap region base (matches MMAP_BASE in syscall.c); the
+ * client's shared window buffers are bump-allocated from the same region. */
+#define USER_MMAP_BASE 0x200000000UL
+
 /* virtio-gpu driver state + present entry point (sys/arch/aarch64/dev/virtio_gpu.c). */
 extern u_int8_t *virtio_gpu_fb;
 extern u_int32_t virtio_gpu_width;
@@ -32,8 +36,9 @@ extern u_int32_t virtio_gpu_height;
 extern u_int32_t virtio_gpu_pitch;
 void virtio_gpu_flush(void);
 
-/* pmap user-page mapper (sys/arch/aarch64/vmm/pmap.c). */
+/* pmap mappers (sys/arch/aarch64/vmm/pmap.c). */
 int pmap_map_user_page(u_int64_t *l1, u_int64_t va, u_int64_t pa, int executable);
+u_int64_t pmap_extract(u_int64_t *l1, u_int64_t va);
 
 /*
  * Fixed user VA window for the mapped framebuffer.  Block 12 (0x300000000) is
@@ -99,6 +104,58 @@ int sys_fbpresent(struct thread *td, struct sys_fbpresent_args *args)
 {
 	(void)args;
 	virtio_gpu_flush();
+	td->td_retval[0] = 0;
+	return (0);
+}
+
+/**
+ * sys_shareregion (native 45) — map the caller's pages [vaddr, vaddr+size) into
+ * process @dst_pid's address space, returning the destination VA in *out_vaddr.
+ *
+ * The compositor uses this to hand a window's shared backing buffer to its
+ * client.  Unlike the i386 vmm_share_region (CR3 switch + PT self-map, 32-bit),
+ * aarch64 maps cross-address-space directly: all RAM is identity-mapped, so the
+ * caller's frames (pmap_extract from its L1) are mapped into the client's L1
+ * (pmap_map_user_page) with no TTBR0 switch.  The client VA is bump-allocated
+ * from its mmap region.  No COW refcount yet — aarch64 leaks user pages on exit,
+ * so the shared frames outlive both ends (matches the current port's model).
+ *
+ * @return 0 on success, -1 if the destination is gone or a page is unmapped.
+ */
+int sys_shareregion(struct thread *td, struct sys_shareregion_args *args)
+{
+	kTask_t *dst = schedFindTask(args->dst_pid);
+	u_int64_t *src_l1 = (u_int64_t *)(uintptr_t)_current->md.md_ttbr0;
+	u_int64_t *dst_l1;
+	u_int64_t base = (u_int64_t)(uintptr_t)args->vaddr;
+	u_int64_t n, i, dst_va;
+
+	if (dst == 0 || args->vaddr == 0 || args->size == 0)
+	{
+		td->td_retval[0] = -1;
+		return (-1);
+	}
+	dst_l1 = (u_int64_t *)(uintptr_t)dst->md.md_ttbr0;
+
+	if (dst->md.md_mmap_next == 0)
+		dst->md.md_mmap_next = USER_MMAP_BASE;
+	dst_va = dst->md.md_mmap_next;
+
+	n = (args->size + PAGE_SIZE - 1) / PAGE_SIZE;
+	for (i = 0; i < n; i++)
+	{
+		u_int64_t pa = pmap_extract(src_l1, base + i * PAGE_SIZE);
+		if (pa == 0)
+		{
+			td->td_retval[0] = -1;
+			return (-1);
+		}
+		pmap_map_user_page(dst_l1, dst_va + i * PAGE_SIZE, pa, 0);
+	}
+	dst->md.md_mmap_next += n * PAGE_SIZE;
+
+	if (args->out_vaddr != 0)
+		*args->out_vaddr = (uintptr_t)dst_va;
 	td->td_retval[0] = 0;
 	return (0);
 }

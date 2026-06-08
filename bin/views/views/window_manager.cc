@@ -36,9 +36,9 @@
 
 #define PAGE_SIZE 4096
 
-extern "C" int _sys_shareregion(int dst_pid, void *vaddr, uint32_t size, uint32_t *out_vaddr);
+extern "C" int _sys_shareregion(int dst_pid, void *vaddr, uint32_t size, uintptr_t *out_vaddr);
 
-static int share_buffer(int dst_pid, void *buf, uint32_t size, uint32_t *client_vaddr)
+static int share_buffer(int dst_pid, void *buf, uint32_t size, uintptr_t *client_vaddr)
 {
 	return _sys_shareregion(dst_pid, buf, size, client_vaddr);
 }
@@ -172,7 +172,7 @@ void WindowManager::resize_window(Window *w, int new_w, int new_h)
 		return;
 	std::memset(nbuf, 0, buf_size);
 
-	uint32_t client_vaddr = 0;
+	uintptr_t client_vaddr = 0;
 	if (share_buffer(w->sender_pid, nbuf, buf_size, &client_vaddr) != 0)
 	{
 		std::free(nbuf);
@@ -316,7 +316,7 @@ void WindowManager::handle_claim(struct display_claim_req *creq)
 	}
 	std::memset(buf, 0, buf_size);
 
-	uint32_t client_vaddr = 0;
+	uintptr_t client_vaddr = 0;
 	if (share_buffer(creq->sender_pid, buf, buf_size, &client_vaddr) != 0)
 	{
 		std::free(buf);
@@ -360,8 +360,14 @@ void WindowManager::handle_claim(struct display_claim_req *creq)
 	if (creq->reply[0])
 		ubix::post_message(creq->reply, DISPLAY_ACK, ack);
 
-	std::printf(
-	    "views: window %u pid %d %dx%d+%d+%d shm=0x%X\n", w->id, creq->sender_pid, ww, wh, wx, wy, client_vaddr);
+	std::printf("views: window %u pid %d %dx%d+%d+%d shm=0x%lX\n",
+	            w->id,
+	            creq->sender_pid,
+	            ww,
+	            wh,
+	            wx,
+	            wy,
+	            (unsigned long)client_vaddr);
 
 	if (dh > 0)
 		notify_taskbar(w, 1);

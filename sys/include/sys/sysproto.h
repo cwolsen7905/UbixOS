@@ -146,7 +146,7 @@ struct sys_shareregion_args
 	pid_t dst_pid;
 	void *vaddr;
 	u_int32_t size;
-	u_int32_t *out_vaddr;
+	uintptr_t *out_vaddr; /* register-width: 32-bit i386, 64-bit aarch64 VA */
 };
 int sys_shareregion(struct thread *, struct sys_shareregion_args *);
 

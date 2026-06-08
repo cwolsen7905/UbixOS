@@ -148,13 +148,15 @@ void kmain_aarch64(void)
 			aarch64_virtio_gpu_init();
 			aarch64_virtio_input_init();
 
-			/* Real login chain: start a bring-up authd (provides the "authd" MPI
-			 * mailbox; plaintext root/user until libpw/BearSSL are ported), then
-			 * run /bin/login off the disk — it authenticates via authd and execs
-			 * /bin/shell.  The authentic init-less boot: login prompt -> shell. */
-			kprintf("\n--- disk-backed login ---\n");
+			/* Graphical desktop chain (#5): start authd (the "authd" MPI mailbox
+			 * for credential checks), then run the views compositor off disk — it
+			 * owns the virtio-gpu framebuffer (sys_mapfb), composites the desktop,
+			 * and forks /bin/vlogin for the graphical login.  (The text-console
+			 * chain is aarch64_run_dynamic_init("/bin/login"), still available as a
+			 * fallback.) */
+			kprintf("\n--- disk-backed desktop ---\n");
 			aarch64_spawn_dynamic("/bin/authd");    /* real authd (PBKDF2/BearSSL) from disk */
-			aarch64_run_dynamic_init("/bin/login"); /* login -> shell; never returns */
+			aarch64_run_dynamic_init("/bin/views"); /* compositor -> forks vlogin; never returns */
 		}
 	}
 

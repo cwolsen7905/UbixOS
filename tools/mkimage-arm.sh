@@ -46,6 +46,14 @@ done
 # Credentials for login (root / user), matching the i386 image.
 [ -f tools/userdb ] && mcopy -i "${IMG}" tools/userdb ::/etc/userdb || true
 
+# TrueType fonts for objGFX's scalable-font backend (vlogin/taskbar/term load
+# /var/fonts/DejaVuSans*.ttf) + desktop wallpapers.
+mmd -i "${IMG}" ::/var ::/var/fonts ::/var/background 2>/dev/null || true
+for f in tools/*.ttf; do [ -f "$f" ] && mcopy -o -i "${IMG}" "$f" ::/var/fonts/; done
+for f in tools/backgrounds/*.bmp tools/backgrounds/*.png; do
+	[ -f "$f" ] && mcopy -o -i "${IMG}" "$f" ::/var/background/
+done
+
 echo "mkimage-arm: done — contents:"
 mdir -i "${IMG}" ::/bin | tail -n +4 | head -20
 echo "  (boot with: bmake run-debug-aarch64 TARGET=aarch64)"

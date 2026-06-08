@@ -291,12 +291,7 @@ int sys_settty(struct thread *td, struct sys_settty_args *uap)
 	ENOSYS_STUB(td);
 }
 /* sys_getkbd + sys_getmouse: real implementations in sys/arch/aarch64/dev/input.c. */
-/* sys_mapfb + sys_fbpresent: real implementations in sys/arch/aarch64/dev/display.c. */
-int sys_shareregion(struct thread *td, struct sys_shareregion_args *uap)
-{
-	(void)uap;
-	ENOSYS_STUB(td);
-}
+/* sys_mapfb + sys_fbpresent + sys_shareregion: real in sys/arch/aarch64/dev/display.c. */
 int sys_vesa_modes(struct thread *td, struct sys_vesa_modes_args *uap)
 {
 	(void)uap;
