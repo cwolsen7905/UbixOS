@@ -333,10 +333,15 @@ are exactly the multiplexing B removes, so they would be discarded.
 
   ### Remaining for a FULL boot-to-login (the real init/login/shell chain)
   Three things, none of which are decoupling — all new functionality:
-  1. **Console/tty layer on aarch64** — login must read/write the console.  The
-     tty hooks (`g_console_ops`/`g_tty_*`) are NULL on aarch64; wire the PL011
-     UART into the tty line discipline + install them so a userland program's
-     read/write hit the console.
+  1. ✅ **Console/tty layer on aarch64** — DONE (commit a4c8ef254): `console.c`
+     wires the PL011 into the VFS console fileops (cooked line discipline: echo,
+     CRLF, backspace) + installs `g_console_ops`/`g_tty_*`; `run_elf_image` gives
+     a task console fds 0/1/2.  QEMU-verified interactive: `/bin/init` prints a
+     prompt, reads a piped line, echoes `you typed: hello uBixOS console`.  Also
+     fixed a latent bug (commit 66bb8ca2d): the timer used the **physical** timer
+     (CNTP) which **HVF traps** → boot faulted + preemption never worked; switched
+     to the **virtual** timer (CNTV/PPI 27).  **Boot is now clean (0 exceptions)
+     and preemption actually time-slices.**
   2. **fork + exec + wait wiring** — `init` forks `login`, `login` execs `shell`.
      fork works; `execve` from a path (the exec-from-file logic, as a syscall) +
      `wait4`/reap need wiring (and run_elf_image's read-after-reap fixed).
