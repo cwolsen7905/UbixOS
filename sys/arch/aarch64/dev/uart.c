@@ -16,7 +16,28 @@
 #define PL011_BASE 0x09000000UL
 #define UART_DR (*(volatile u_int32_t *)(PL011_BASE + 0x00)) /* data */
 #define UART_FR (*(volatile u_int32_t *)(PL011_BASE + 0x18)) /* flags */
+#define UART_FR_RXFE (1u << 4)                               /* RX FIFO empty */
 #define UART_FR_TXFF (1u << 5)                               /* TX FIFO full */
+
+/**
+ * Non-blocking read of one byte from the PL011 RX FIFO.
+ *
+ * @return the byte (0-255), or -1 if no input is available.
+ */
+int uart_getc(void)
+{
+	if (UART_FR & UART_FR_RXFE)
+		return (-1);
+	return ((int)(UART_DR & 0xFF));
+}
+
+/**
+ * Non-zero if the PL011 RX FIFO has a byte waiting (peek, non-consuming).
+ */
+int uart_rx_ready(void)
+{
+	return ((UART_FR & UART_FR_RXFE) == 0);
+}
 
 /**
  * Write one byte to the PL011, blocking while the TX FIFO is full.

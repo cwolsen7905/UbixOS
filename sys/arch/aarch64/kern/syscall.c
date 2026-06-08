@@ -19,6 +19,7 @@
 #include <vmm/vmm.h>             /* address-space helpers */
 #include <vmm/uregion.h>         /* vmm_uregion_mmap_anon, vmm_uregion_brk */
 #include <sys/sysproto_posix.h> /* sys_open/read/close/lseek + uap structs */
+#include <sys/descrip.h>        /* getfd, struct file */
 
 #define SYS_EXIT 1
 #define SYS_READ 3
@@ -154,6 +155,10 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args)
 	switch (number)
 	{
 		case SYS_WRITE:
+			/* The hand-rolled UART write already emits to the console for any fd;
+			 * no fd-table lookup needed (and the early EL0 demos have no fd table
+			 * yet).  The console fileop write path is reached via the file layer
+			 * for real file/pipe fds. */
 			return sc_write(args[0], args[1], args[2]);
 
 		case SYS_MMAP:

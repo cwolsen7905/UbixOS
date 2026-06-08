@@ -50,7 +50,8 @@ void kmain_aarch64(void)
 	 * vitals node (kmalloc'd, so the allocator must be up first). */
 	vmm_mem_map_init();
 	vitals_init();
-	vfs_init(); /* VFS core: filesystem registry + buffer cache */
+	vfs_init();             /* VFS core: filesystem registry + buffer cache */
+	aarch64_console_init(); /* PL011 -> VFS console fileops (stdin/stdout/stderr) */
 
 	aarch64_vmm_demo();
 	aarch64_pmap_demo();
@@ -62,9 +63,8 @@ void kmain_aarch64(void)
 	aarch64_proc_demo();
 	aarch64_fork_demo();
 	aarch64_user_elf_demo();
-	aarch64_procfs_demo(); /* mount /proc before the musl program (which reads it) */
+	aarch64_procfs_demo(); /* mount /proc before the program (which reads it) */
 	aarch64_ramfs_demo();  /* registers ramfs + exercises it at /ram */
-	aarch64_musl_elf_demo();
 
 	/* --- initramfs bootstrap: the shape of a real boot ---------------------
 	 * Mount a ramfs root, lay /bin/init into it (the embedded program stands in

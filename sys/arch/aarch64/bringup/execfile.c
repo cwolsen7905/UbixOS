@@ -56,6 +56,7 @@ int aarch64_run_elf_image(const void *image, const char *name)
 	t->md.md_entry = entry;
 	t->md.md_usp = USER_STACK_TOP - (u_int64_t)INITIAL_FRAME * 8; /* SP points at argc */
 	strncpy(t->name, name, sizeof(t->name) - 1);
+	aarch64_console_setup_fds(&t->td); /* stdin/stdout/stderr -> console */
 	sched_ready(t);
 
 	for (i = 0; i < 256 && t->state != DEAD && t->state != ZOMBIE; i++)

@@ -16,6 +16,13 @@
 /* uart.c — PL011 console + the arch kprintf (formats via the shared kvprintf). */
 void uart_putc(char c);
 void uart_puts(const char *s);
+int uart_getc(void);    /* non-blocking PL011 RX: byte, or -1 if empty */
+int uart_rx_ready(void); /* non-zero if a byte is waiting (peek) */
+
+/* console.c — wire the PL011 into the VFS console fileops (g_console_ops etc.). */
+struct thread;
+void aarch64_console_init(void);
+int aarch64_console_setup_fds(struct thread *td);
 
 /* exceptions.c — install the EL1 vector table (defined in vectors.S). */
 void aarch64_vbar_init(void);

@@ -50,5 +50,19 @@ int main(void)
 	{
 		write(1, "open(/proc/meminfo) FAILED\n", 27);
 	}
+
+	/* Console read: prompt, read a line from stdin, echo it back. */
+	write(1, "type a line> ", 13);
+	char line[128];
+	ssize_t ln = read(0, line, sizeof(line) - 1);
+	if (ln > 0)
+	{
+		write(1, "you typed: ", 11);
+		write(1, line, (size_t)ln);
+	}
+	else
+	{
+		write(1, "read(stdin) returned <= 0\n", 26);
+	}
 	return 0;
 }
