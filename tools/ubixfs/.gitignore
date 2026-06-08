@@ -1,0 +1,8 @@
+# built host tools + milestone test harnesses
+ubfs
+spa_test
+dmu_test
+dsl_test
+fs_test
+*.o
+*.dSYM/

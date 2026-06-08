@@ -126,8 +126,16 @@ multi-vdev, xattrs/ACLs (inode reserves the slot).
    reopen intact, unlink). *(VOL = thin block-device wrapper over a volume's one
    object — volume R/W already works via the DMU. Remaining fs ops — hardlink,
    rename, chmod/chown, object reclamation — are the next slice.)*
-6. **Host CLI** (`tools/ubixfs/`) — `mkpool`, `create` (fs/volume), `cp` in/out,
-   `ls` — the harness.
+6. ✅ **Host CLI** (`tools/ubixfs/ubfs.c` + `Makefile`) — the mtools-style tool:
+   `mkpool` (formats a pool + a default `root` filesystem dataset), `mkdir`
+   (mkdir -p), `cp` in/out (`img:/path` ref syntax; in-mode taken from the host
+   file), `ls` (perms/owner/size), `rm`. Each command is a self-contained
+   open → op → (sync + commit) cycle, so it edits an existing image incrementally
+   like mtools. **Done & verified** end-to-end (mkpool → nested mkdir → cp in
+   text + 5 KB binary → ls → cp out byte-identical → rm). `bmake test` builds and
+   runs all four milestone harnesses (spa/dmu/dsl/fs) + the CLI. *(`create`
+   fs/volume + volume cp are a thin follow-up once VOL lands; v1 exposes the one
+   default fs dataset, which is all `mkimage.sh FS=ubixfs` needs.)*
 7. **Kernel driver** (`sys/fs/ubixfs/`) — reuse the same C core; hybrid boot
    (FAT `/boot`, kernel mounts the pool). Coordinate the build with the
    cross-arch agent.
