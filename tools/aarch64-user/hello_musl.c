@@ -9,6 +9,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
+#include <fcntl.h>
 
 int main(void)
 {
@@ -26,6 +27,28 @@ int main(void)
 	else
 	{
 		write(1, "malloc(256) FAILED\n", 19);
+	}
+
+	/* File I/O via real syscalls: open + read /proc/meminfo, print it. */
+	int fd = open("/proc/meminfo", O_RDONLY);
+	if (fd >= 0)
+	{
+		char b[256];
+		ssize_t r = read(fd, b, sizeof(b) - 1);
+		if (r > 0)
+		{
+			write(1, "open+read /proc/meminfo OK:\n", 28);
+			write(1, b, (size_t)r);
+		}
+		else
+		{
+			write(1, "read(/proc/meminfo) returned <= 0\n", 34);
+		}
+		close(fd);
+	}
+	else
+	{
+		write(1, "open(/proc/meminfo) FAILED\n", 27);
 	}
 	return 0;
 }

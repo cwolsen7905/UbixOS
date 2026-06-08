@@ -16,16 +16,22 @@
 #include <sys/types.h>
 #include <ubixos/sched.h>   /* _current, sched_yield */
 #include <ubixos/endtask.h> /* endTask */
-#include <vmm/vmm.h>        /* address-space helpers */
-#include <vmm/uregion.h>    /* vmm_uregion_mmap_anon, vmm_uregion_brk */
+#include <vmm/vmm.h>             /* address-space helpers */
+#include <vmm/uregion.h>         /* vmm_uregion_mmap_anon, vmm_uregion_brk */
+#include <sys/sysproto_posix.h> /* sys_open/read/close/lseek + uap structs */
 
 #define SYS_EXIT 1
+#define SYS_READ 3
 #define SYS_FORK 2
 #define SYS_WRITE 4
+#define SYS_OPEN 5
+#define SYS_CLOSE 6
 #define SYS_BRK 17
 #define SYS_GETPID 20
 #define SYS_MPROTECT 74
+#define SYS_FSTAT 189
 #define SYS_MMAP 477
+#define SYS_LSEEK 478
 #define SYS_SET_TID_ADDRESS 258
 
 /* Per-process anonymous-mmap region base (block 8 — clear of code/stack). */
@@ -170,6 +176,36 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args)
 			/* musl registers a clear-on-exit TID address at startup; the return
 			 * value is the caller's thread id. */
 			return (_current != 0) ? (u_int64_t)_current->id : 1;
+
+		case SYS_OPEN:
+		{
+			/* FreeBSD sysent ABI: build the uap from x0..x2, run on the current
+			 * thread, hand x0 the td_retval (bytes / fd, or -errno on error). */
+			struct sys_open_args ua;
+			ua.path = (char *)(uintptr_t)args[0];
+			ua.flags = (int)args[1];
+			ua.mode = (int)args[2];
+			sys_open(&_current->td, &ua);
+			return (u_int64_t)_current->td.td_retval[0];
+		}
+
+		case SYS_READ:
+		{
+			struct sys_read_args ua;
+			ua.fd = (int)args[0];
+			ua.buf = (void *)(uintptr_t)args[1];
+			ua.nbyte = (size_t)args[2];
+			sys_read(&_current->td, &ua);
+			return (u_int64_t)_current->td.td_retval[0];
+		}
+
+		case SYS_CLOSE:
+		{
+			struct sys_close_args ua;
+			ua.fd = (int)args[0];
+			sys_close(&_current->td, &ua);
+			return (u_int64_t)_current->td.td_retval[0];
+		}
 
 		case SYS_EXIT:
 			do_exit(args[0]);
