@@ -63,7 +63,7 @@ void aarch64_irq_dispatch(void)
 	if (intid >= GICC_SPURIOUS)
 		return; /* spurious — no EOI */
 
-	if (intid == 30) /* EL1 physical (generic) timer PPI */
+	if (intid == 27) /* EL1 virtual (generic) timer PPI */
 		timer_tick();
 	else
 		kprintf("irq: unexpected intid %u\n", intid);
@@ -73,6 +73,6 @@ void aarch64_irq_dispatch(void)
 	/* Timer tick drives the scheduler (preemption).  Called AFTER EOI so the GIC
 	 * priority is dropped before switch_to resumes a different task — otherwise
 	 * the preempted-away interrupt stays active and the next task gets no ticks. */
-	if (intid == 30)
+	if (intid == 27)
 		sched();
 }

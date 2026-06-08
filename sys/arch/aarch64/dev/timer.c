@@ -2,18 +2,21 @@
  * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
- * ARM generic timer (EL1 physical timer, CNTP) — QEMU `virt` bring-up, Phase 12b.
+ * ARM generic timer (EL1 virtual timer, CNTV) — QEMU `virt` bring-up, Phase 12b.
  *
- * The EL1 physical timer raises PPI INTID 30 on the GIC.  We program a periodic
- * tick by re-arming CNTP_TVAL_EL0 each interrupt.  This is the arch tick that
- * the (arch-neutral) scheduler/callout subsystem will ride on once aarch64
- * scheduling lands; for now it just proves interrupts fire.
+ * The virtual timer raises PPI INTID 27 on the GIC.  We program a periodic tick
+ * by re-arming CNTV_TVAL_EL0 each interrupt.  The *virtual* timer (not the EL0
+ * physical timer, CNTP) is used because the Apple-Silicon HVF accelerator traps
+ * EL1 access to the physical timer registers — `msr cntp_tval_el0` faults under
+ * `-accel hvf`.  The virtual timer is freely accessible and is the standard
+ * guest tick.  This is the arch tick the (arch-neutral) scheduler/callout
+ * subsystem rides on.
  */
 
 #include "bringup.h"
 #include <ubixos/vitals.h> /* systemVitals->sysTicks */
 
-#define TIMER_INTID 30 /* EL1 physical timer PPI */
+#define TIMER_INTID 27 /* EL1 virtual timer PPI */
 
 static u_int64_t g_interval; /* counts per tick */
 static unsigned g_ticks;
@@ -30,16 +33,16 @@ static u_int64_t read_cntfrq(void)
 
 static void write_tval(u_int64_t v)
 {
-	__asm__ volatile("msr cntp_tval_el0, %0" : : "r"(v));
+	__asm__ volatile("msr cntv_tval_el0, %0" : : "r"(v));
 }
 
 static void write_ctl(u_int64_t v)
 {
-	__asm__ volatile("msr cntp_ctl_el0, %0" : : "r"(v));
+	__asm__ volatile("msr cntv_ctl_el0, %0" : : "r"(v));
 }
 
 /**
- * Program the EL1 physical timer for a ~2 Hz periodic tick and enable its GIC
+ * Program the EL1 virtual timer for a 100 Hz periodic tick and enable its GIC
  * interrupt.  Call after gic_init() and before unmasking IRQs.
  */
 void timer_init(void)
