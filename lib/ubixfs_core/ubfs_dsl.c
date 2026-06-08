@@ -4,52 +4,8 @@
  * UbixFS DSL implementation — datasets over the DMU.  See ubfs_dsl.h.
  */
 #include "ubfs_dsl.h"
+#include "ubfs_dir.h"
 #include <string.h>
-
-/* ── name→object directory stored in an object (v1: count-prefixed array) ────
- * Object data layout: [uint64_t count][ubfs_dirent[0..count)].  A removed entry
- * has obj == 0 (count does not shrink in v1).  Reused for the MOS dataset
- * directory now; the ZPL will reuse the same shape for FS directories. */
-
-static int dir_lookup(ubfs_dmu_os_t *os, uint64_t dirobj, const char *name, uint64_t *out)
-{
-	uint64_t count = 0, i;
-
-	if (ubfs_dmu_read(os, dirobj, 0, &count, sizeof(count)) < 0)
-		return -1;
-	for (i = 0; i < count; i++)
-	{
-		ubfs_dirent_t e;
-		if (ubfs_dmu_read(os, dirobj, 8 + i * UBFS_DIRENT_SIZE, &e, sizeof(e)) < 0)
-			return -1;
-		if (e.obj != 0 && strcmp(e.name, name) == 0)
-		{
-			*out = e.obj;
-			return 0;
-		}
-	}
-	return -1; /* not found */
-}
-
-static int dir_add(ubfs_dmu_os_t *os, uint64_t dirobj, const char *name, uint64_t target)
-{
-	uint64_t      count = 0;
-	ubfs_dirent_t e;
-
-	if (strlen(name) >= sizeof(e.name))
-		return -1;
-	if (ubfs_dmu_read(os, dirobj, 0, &count, sizeof(count)) < 0)
-		return -1; /* hole reads as 0 for a fresh directory */
-
-	memset(&e, 0, sizeof(e));
-	e.obj = target;
-	e.namelen = (uint8_t)strlen(name);
-	strcpy(e.name, name);
-	if (ubfs_dmu_write(os, dirobj, 8 + count * UBFS_DIRENT_SIZE, &e, sizeof(e)) < 0)
-		return -1;
-	count++;
-	return ubfs_dmu_write(os, dirobj, 0, &count, sizeof(count));
-}
 
 /* ── lifecycle ──────────────────────────────────────────────────────────────*/
 
@@ -128,7 +84,7 @@ int ubfs_dsl_create_fs(ubfs_dsl_t *dsl, const char *name, uint64_t *ds_obj)
 	strncpy(dp.name, name, sizeof(dp.name) - 1);
 
 	obj = ubfs_dmu_object_alloc(&dsl->mos, UBFS_OT_DATASET, UBFS_BT_DATASET);
-	if (obj == 0 || dataset_put(dsl, obj, &dp) < 0 || dir_add(&dsl->mos, UBFS_MOS_DIR_OBJ, name, obj) < 0)
+	if (obj == 0 || dataset_put(dsl, obj, &dp) < 0 || ubfs_dir_add(&dsl->mos, UBFS_MOS_DIR_OBJ, name, obj, 0) < 0)
 		return -1;
 	*ds_obj = obj;
 	return 0;
@@ -157,7 +113,7 @@ int ubfs_dsl_create_volume(ubfs_dsl_t *dsl, const char *name, uint64_t volsize, 
 	strncpy(dp.name, name, sizeof(dp.name) - 1);
 
 	obj = ubfs_dmu_object_alloc(&dsl->mos, UBFS_OT_DATASET, UBFS_BT_DATASET);
-	if (obj == 0 || dataset_put(dsl, obj, &dp) < 0 || dir_add(&dsl->mos, UBFS_MOS_DIR_OBJ, name, obj) < 0)
+	if (obj == 0 || dataset_put(dsl, obj, &dp) < 0 || ubfs_dir_add(&dsl->mos, UBFS_MOS_DIR_OBJ, name, obj, 0) < 0)
 		return -1;
 	*ds_obj = obj;
 	return 0;
@@ -165,7 +121,7 @@ int ubfs_dsl_create_volume(ubfs_dsl_t *dsl, const char *name, uint64_t volsize, 
 
 int ubfs_dsl_lookup(ubfs_dsl_t *dsl, const char *name, uint64_t *ds_obj)
 {
-	return dir_lookup(&dsl->mos, UBFS_MOS_DIR_OBJ, name, ds_obj);
+	return ubfs_dir_lookup(&dsl->mos, UBFS_MOS_DIR_OBJ, name, ds_obj, NULL);
 }
 
 int ubfs_dsl_open_dataset(ubfs_dsl_t *dsl, uint64_t ds_obj, ubfs_dataset_phys_t *dp, ubfs_dmu_os_t *os)

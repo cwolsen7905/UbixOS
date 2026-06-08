@@ -76,7 +76,7 @@ enum ubfs_dstype
 enum ubfs_btype
 {
 	UBFS_BT_NONE = 0,
-	UBFS_BT_ZNODE = 1,   /* POSIX attributes (ubfs_znode_t) */
+	UBFS_BT_INODE = 1,   /* POSIX attributes (ubfs_inode_t) */
 	UBFS_BT_DATASET = 2, /* ubfs_dataset_phys_t */
 };
 
@@ -151,7 +151,7 @@ UBFS_CTASSERT(vdev_config_blk, sizeof(ubfs_vdev_config_t) == UBFS_BLOCK_SIZE);
 
 /* ── dnode: an on-disk object ──────────────────────────────────────────────
  * Object data is addressed by a CoW blkptr tree rooted at blkptr[0] (nlevels
- * deep).  The bonus buffer holds inline metadata: a znode for FS objects, or a
+ * deep).  The bonus buffer holds inline metadata: a inode for FS objects, or a
  * ubfs_dataset_phys_t for dataset objects.  Fixed 512 bytes. */
 #define UBFS_DNODE_SIZE 512
 #define UBFS_DN_NBLKPTR 1 /* v1: one inline blkptr; bigger objects use indirection */
@@ -175,8 +175,8 @@ typedef struct ubfs_dnode
 } ubfs_dnode_t;
 UBFS_CTASSERT(dnode_512, sizeof(ubfs_dnode_t) == UBFS_DNODE_SIZE);
 
-/* ── znode: POSIX attributes, stored in a file/dir dnode's bonus ───────────*/
-typedef struct ubfs_znode
+/* ── inode: POSIX attributes, stored in a file/dir dnode's bonus ───────────*/
+typedef struct ubfs_inode
 {
 	uint64_t mode;   /* S_IF* type | rwxrwxrwx */
 	uint64_t size;   /* logical size in bytes */
@@ -192,8 +192,8 @@ typedef struct ubfs_znode
 	uint64_t rdev;   /* device id for special files (0 otherwise) */
 	uint64_t flags;
 	uint64_t gen;    /* generation (object-reuse guard) */
-} ubfs_znode_t;
-UBFS_CTASSERT(znode_fits_bonus, sizeof(ubfs_znode_t) <= UBFS_DNODE_SIZE - 32 - 128 * UBFS_DN_NBLKPTR);
+} ubfs_inode_t;
+UBFS_CTASSERT(inode_fits_bonus, sizeof(ubfs_inode_t) <= UBFS_DNODE_SIZE - 32 - 128 * UBFS_DN_NBLKPTR);
 
 /* ── dataset_phys: in a dataset object's bonus (in the MOS) ─────────────────
  * The uberblock -> MOS -> dataset -> objset indirection (snapshot hook #2)

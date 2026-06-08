@@ -291,9 +291,9 @@ int ubfs_dmu_write(ubfs_dmu_os_t *os, uint64_t obj, uint64_t off, const void *bu
 	}
 
 	/* If this object carries POSIX attrs, keep the size up to date. */
-	if (dn.bonustype == UBFS_BT_ZNODE && dn.bonuslen >= sizeof(ubfs_znode_t))
+	if (dn.bonustype == UBFS_BT_INODE && dn.bonuslen >= sizeof(ubfs_inode_t))
 	{
-		ubfs_znode_t *zn = (ubfs_znode_t *)dn.bonus;
+		ubfs_inode_t *zn = (ubfs_inode_t *)dn.bonus;
 		if (off > zn->size)
 			zn->size = off;
 	}

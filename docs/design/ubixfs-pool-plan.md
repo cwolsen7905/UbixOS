@@ -33,7 +33,7 @@ these three.
 ## Layered architecture (= the build order; each layer is one SOLID responsibility)
 
 ```
-ZPL (POSIX files/dirs/perms)        VOL (raw block volume)     <- consumers
+ubfs_fs (POSIX files/dirs/perms)        VOL (raw block volume)     <- consumers
 DSL (datasets, properties, [snapshots later])
 DMU (objects, CoW, block-ptr trees, checksums, compression)
 SPA (the pool: uberblock ring, txg commit, block allocation)
@@ -47,7 +47,7 @@ VFS (`struct fileSystem`) and the v0 core already use. SOLID mapping:
 
 | SOLID | Here |
 |---|---|
-| SRP | one module per layer (`vdev.c`/`spa.c`/`dmu.c`/`dsl.c`/`zpl.c`/`volume.c`) |
+| SRP | one module per layer (`vdev.c`/`spa.c`/`dmu.c`/`dsl.c`/`fs.c`/`volume.c`) |
 | DIP | block I/O injected as callbacks; layers depend on the layer-below's `ops` |
 | ISP/LSP | opaque handle + `ops` vtable per layer |
 | OCP | compression & checksum are **pluggable strategy tables** (add LZ4/zstd/Fletcher/SHA without touching callers) |
@@ -65,7 +65,7 @@ little-endian, `_Static_assert`-sized). Summary:
 - **blkptr** → `dva` (vdev + block offset, 64-bit → no size cap), **`birth_txg`**,
   logical/physical size, compression id, checksum id + 256-bit checksum, level/type.
 - **dnode** (an object) → block size (variable!), indirection levels, up to 3
-  blkptrs, and a **bonus buffer** holding the **znode** (POSIX attrs) for FS objects.
+  blkptrs, and a **bonus buffer** holding the **inode** (POSIX attrs) for FS objects.
 - **objset** → a metadnode whose data is the dnode array; the MOS and each
   dataset's filesystem are object sets.
 - **dataset** (in the MOS) → blkptr to its objset + properties + type (FS | volume).
@@ -100,7 +100,7 @@ format break):
 volume; LZ4 compression; variable recordsize; POSIX (perms, times+atime-toggle,
 symlinks, hardlinks, rename, sparse, large files). **Deferred:** snapshots/clones
 (hooked), RAID-Z/mirror, dedup, ZIL (sync = txg flush), ARC tuning, send/receive,
-multi-vdev, xattrs/ACLs (znode reserves the slot).
+multi-vdev, xattrs/ACLs (inode reserves the slot).
 
 ## Build order (host-first — develop & fuzz the CoW engine on macOS, like u2fs)
 
@@ -119,7 +119,13 @@ multi-vdev, xattrs/ACLs (znode reserves the slot).
    dataset directory, and `filesystem` + `volume` dataset kinds. **Done &
    verified** (`dsl_test`: pool → fs dataset + 16 MB volume → write each → sync →
    reopen → look up by name → read both back).
-5. **ZPL + VOL** — POSIX layer on objects; raw volume on one object.
+5. ✅ **ubfs_fs (POSIX layer)** — files/dirs/perms over a filesystem objset
+   (`lib/ubixfs_core/ubfs_fs.c` + shared `ubfs_dir.c`); inode (mode/uid/gid/times/
+   size/nlink) in the dnode bonus. **Done & verified** (`fs_test`: mkroot, mkdir,
+   create files w/ perms, 200 KB file, symlink/readlink, getattr, readdir, sync +
+   reopen intact, unlink). *(VOL = thin block-device wrapper over a volume's one
+   object — volume R/W already works via the DMU. Remaining fs ops — hardlink,
+   rename, chmod/chown, object reclamation — are the next slice.)*
 6. **Host CLI** (`tools/ubixfs/`) — `mkpool`, `create` (fs/volume), `cp` in/out,
    `ls` — the harness.
 7. **Kernel driver** (`sys/fs/ubixfs/`) — reuse the same C core; hybrid boot
