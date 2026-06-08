@@ -2,12 +2,12 @@
  * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
- * AArch64 PL011 UART console + a minimal kprintf (QEMU `virt`, bring-up).
+ * AArch64 PL011 UART console + the console kprintf (QEMU `virt`).
  *
- * Freestanding — drives the PL011 at 0x09000000 directly.  Supports the format
- * specifiers the bring-up code needs: %c %s %d %u %x %p, the %l{d,u,x} 64-bit
- * variants, %% , and a leading zero/width like %08x.  Replaced by the portable
- * kprintf once the generic kernel is ported.
+ * Freestanding — drives the PL011 at 0x09000000 directly.  Formatting is the
+ * portable shared engine (kvprintf, sys/lib/kprintf.c); this file owns only the
+ * arch console plumbing: the PL011 putc and the kprintf entry point that formats
+ * into a buffer and emits it.
  */
 
 #include "bringup.h"
@@ -44,140 +44,21 @@ void uart_puts(const char *s)
 }
 
 /**
- * Emit an unsigned value in @base, right-justified to @width with @pad.
+ * Console printf — formats via the shared kvprintf engine, then emits the
+ * result on the PL011.
  *
- * @param upper  non-zero to use uppercase hex digits (A-F) for %X.
- */
-static void put_uint(u_int64_t v, unsigned base, int width, char pad, int upper)
-{
-	static const char lower[] = "0123456789abcdef";
-	static const char upperd[] = "0123456789ABCDEF";
-	const char *digits = upper ? upperd : lower;
-	char buf[32];
-	int i = 0;
-
-	if (v == 0)
-		buf[i++] = '0';
-	while (v != 0)
-	{
-		buf[i++] = digits[v % base];
-		v /= base;
-	}
-	while (i < width)
-		buf[i++] = pad;
-	while (i-- > 0)
-		uart_putc(buf[i]);
-}
-
-/**
- * Minimal vprintf to the console.  Not a full printf — just the bring-up subset.
- */
-void uart_vprintf(const char *fmt, va_list ap)
-{
-	for (; *fmt != '\0'; fmt++)
-	{
-		if (*fmt != '%')
-		{
-			if (*fmt == '\n')
-				uart_putc('\r');
-			uart_putc(*fmt);
-			continue;
-		}
-
-		fmt++;
-		char pad = ' ';
-		int width = 0;
-		if (*fmt == '0')
-		{
-			pad = '0';
-			fmt++;
-		}
-		while (*fmt >= '0' && *fmt <= '9')
-			width = width * 10 + (*fmt++ - '0');
-
-		switch (*fmt)
-		{
-			case 's':
-			{
-				const char *s = va_arg(ap, const char *);
-				uart_puts(s != 0 ? s : "(null)");
-				break;
-			}
-			case 'c':
-				uart_putc((char)va_arg(ap, int));
-				break;
-			case 'd':
-			case 'i':
-			{
-				int v = va_arg(ap, int);
-				if (v < 0)
-				{
-					uart_putc('-');
-					put_uint((u_int64_t)(-(int64_t)v), 10, 0, ' ', 0);
-				}
-				else
-					put_uint((u_int64_t)v, 10, width, pad, 0);
-				break;
-			}
-			case 'u':
-				put_uint(va_arg(ap, unsigned), 10, width, pad, 0);
-				break;
-			case 'x':
-				put_uint(va_arg(ap, unsigned), 16, width, pad, 0);
-				break;
-			case 'X':
-				put_uint(va_arg(ap, unsigned), 16, width, pad, 1);
-				break;
-			case 'p':
-				uart_puts("0x");
-				put_uint((u_int64_t)(uintptr_t)va_arg(ap, void *), 16, 16, '0', 0);
-				break;
-			case 'l':
-			{
-				fmt++;
-				if (*fmt == 'x')
-					put_uint(va_arg(ap, u_int64_t), 16, width, pad, 0);
-				else if (*fmt == 'X')
-					put_uint(va_arg(ap, u_int64_t), 16, width, pad, 1);
-				else if (*fmt == 'u')
-					put_uint(va_arg(ap, u_int64_t), 10, width, pad, 0);
-				else if (*fmt == 'd')
-				{
-					int64_t v = va_arg(ap, int64_t);
-					if (v < 0)
-					{
-						uart_putc('-');
-						put_uint((u_int64_t)(-v), 10, 0, ' ', 0);
-					}
-					else
-						put_uint((u_int64_t)v, 10, width, pad, 0);
-				}
-				else
-					uart_putc('l');
-				break;
-			}
-			case '%':
-				uart_putc('%');
-				break;
-			default:
-				uart_putc('%');
-				uart_putc(*fmt);
-				break;
-		}
-	}
-}
-
-/**
- * Console printf — the bring-up logging entry point.
- *
- * @return number of conversions is not tracked; always 0 (matches the canonical
- *         int-returning prototype, whose result the kernel ignores).
+ * @return the number of characters formatted.
  */
 int kprintf(const char *fmt, ...)
 {
+	char buf[512];
 	va_list ap;
+	int n;
+
 	va_start(ap, fmt);
-	uart_vprintf(fmt, ap);
+	n = kvprintf(fmt, NULL, buf, 10, ap, sizeof(buf) - 1);
 	va_end(ap);
-	return 0;
+	buf[n < (int)sizeof(buf) - 1 ? n : (int)sizeof(buf) - 1] = '\0';
+	uart_puts(buf); /* uart_puts already maps '\n' -> CRLF */
+	return n;
 }

@@ -47,11 +47,15 @@ volatile u_int32_t reboot_at_tick = 0;
  */
 void kpanic(const char *fmt, ...)
 {
+	char buf[512];
 	va_list ap;
+
 	uart_puts("\nKERNEL PANIC: ");
 	va_start(ap, fmt);
-	uart_vprintf(fmt, ap);
+	kvprintf(fmt, NULL, buf, 10, ap, sizeof(buf) - 1);
 	va_end(ap);
+	buf[sizeof(buf) - 1] = '\0';
+	uart_puts(buf);
 	for (;;)
 		__asm__ volatile("wfi");
 }

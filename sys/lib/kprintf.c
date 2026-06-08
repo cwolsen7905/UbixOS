@@ -29,10 +29,21 @@
 #include <lib/kprintf.h>
 #include <lib/libkern.h>
 #include <string.h>
-#include <sys/video.h>
-#include <sys/io.h>
+#if !defined(__aarch64__)
+#include <sys/video.h> /* i386 VGA text console (kprint) */
+#include <sys/io.h>    /* i386 port I/O for the COM1 console */
+#endif
 #include <ubixos/kpanic.h>
 
+/*
+ * The pure formatting engine (kvprintf / sprintf / snprintf / ksprintn / imax)
+ * below is architecture-neutral and shared by every arch.  The console plumbing
+ * (COM1 serial + VGA, the kprintf entry point) and the 64-bit "quad" division
+ * helpers are i386-only and arch-gated — aarch64 supplies its own console
+ * kprintf (sys/arch/aarch64/dev/uart.c, which formats through kvprintf) and
+ * divides 64-bit values natively.
+ */
+#if !defined(__aarch64__)
 /* COM1 serial port output for debugging */
 static void serial_putc(char c)
 {
@@ -51,6 +62,7 @@ static void serial_puts(const char *s)
 		serial_putc(*s++);
 	}
 }
+#endif /* !__aarch64__ */
 
 static char *ksprintn(char *nbuf, uintmax_t num, int base, int *lenp, int upper);
 
@@ -59,6 +71,7 @@ static __inline int imax(int a, int b)
 	return (a > b ? a : b);
 }
 
+#if !defined(__aarch64__) /* i386 64-bit (quad) division helpers — aarch64 divides natively */
 union uu
 {
 	quad_t q;     /* as a (signed) quad */
@@ -293,10 +306,12 @@ u_quad_t a, b;
 	(void)__qdivrem(a, b, &r);
 	return (r);
 }
+#endif /* !__aarch64__ */
 
 int printOff = 0x0;
 int ogprintOff = 0x1; /* retained for ABI; ogPrintf is retired */
 
+#if !defined(__aarch64__) /* i386 console kprintf (COM1 + VGA); aarch64 has its own in uart.c */
 static int serial_initialized = 0;
 
 static void serial_init(void)
@@ -331,6 +346,7 @@ int kprintf(const char *fmt, ...)
 
 	return (retval);
 }
+#endif /* !__aarch64__ */
 
 int sprintf(char *buf, const char *fmt, ...)
 {

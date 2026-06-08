@@ -12,6 +12,12 @@
 
 #include <sys/types.h>
 
+/* Number-to-digit lookup table for the shared formatting engine (kvprintf in
+ * sys/lib/kprintf.c references it via the hex2ascii() macro).  i386 supplies its
+ * copy from sys/lib/string.c; aarch64 keeps its string primitives self-contained
+ * in this arch file (whose basename would otherwise collide with sys/lib's). */
+char const hex2ascii_data[] = "0123456789abcdefghijklmnopqrstuvwxyz";
+
 /**
  * Fill @n bytes at @dst with byte @c.
  */
@@ -46,4 +52,54 @@ char *strncpy(char *dst, const char *src, size_t n)
 	for (; i < n; i++)
 		dst[i] = '\0';
 	return dst;
+}
+
+/**
+ * Lexicographic compare of NUL-terminated strings @a and @b.
+ *
+ * @return <0, 0, or >0 as @a is less than, equal to, or greater than @b.
+ */
+int strcmp(const char *a, const char *b)
+{
+	while (*a != '\0' && *a == *b)
+	{
+		a++;
+		b++;
+	}
+	return (int)(u_int8_t)*a - (int)(u_int8_t)*b;
+}
+
+/**
+ * Like strcmp but comparing at most @n bytes.
+ */
+int strncmp(const char *a, const char *b, size_t n)
+{
+	while (n > 0 && *a != '\0' && *a == *b)
+	{
+		a++;
+		b++;
+		n--;
+	}
+	if (n == 0)
+		return 0;
+	return (int)(u_int8_t)*a - (int)(u_int8_t)*b;
+}
+
+/**
+ * Compare @n bytes of @a and @b.
+ *
+ * @return <0, 0, or >0 on the first differing byte (unsigned), or 0 if equal.
+ */
+int memcmp(const void *a, const void *b, size_t n)
+{
+	const u_int8_t *pa = (const u_int8_t *)a;
+	const u_int8_t *pb = (const u_int8_t *)b;
+	while (n-- > 0)
+	{
+		if (*pa != *pb)
+			return (int)*pa - (int)*pb;
+		pa++;
+		pb++;
+	}
+	return 0;
 }

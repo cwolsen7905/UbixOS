@@ -13,11 +13,9 @@
 #include <sys/types.h>
 #include <lib/kprintf.h> /* canonical int kprintf(const char *, ...) */
 
-/* uart.c — PL011 console + a minimal kprintf (the aarch64 kprintf until the
- * portable vsprintf-based one is brought up). */
+/* uart.c — PL011 console + the arch kprintf (formats via the shared kvprintf). */
 void uart_putc(char c);
 void uart_puts(const char *s);
-void uart_vprintf(const char *fmt, va_list ap); /* bring-up formatting engine */
 
 /* exceptions.c — install the EL1 vector table (defined in vectors.S). */
 void aarch64_vbar_init(void);
