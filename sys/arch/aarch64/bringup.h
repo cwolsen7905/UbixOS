@@ -126,4 +126,11 @@ void aarch64_spawn_dynamic(const char *path);    /* schedule a PIE daemon, retur
 struct ubx_device;
 struct ubx_device *aarch64_virtio_blk_init(void);
 
+/* virtio_net.c — virtio-mmio network device (polling; lwIP bridge calls these). */
+int aarch64_virtio_net_init(void);                                  /* scan + bring up; 0 on success */
+int virtio_net_send(const void *frame, u_int32_t len);              /* TX one Ethernet frame */
+int virtio_net_poll_rx(void (*deliver)(const u_int8_t *, u_int32_t)); /* drain RX used-ring */
+extern u_int8_t virtio_net_mac[6];                                  /* device MAC */
+extern int virtio_net_ready;                                        /* link-up flag */
+
 #endif /* _AARCH64_BRINGUP_H */

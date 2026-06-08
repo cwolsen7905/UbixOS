@@ -138,6 +138,11 @@ void kmain_aarch64(void)
 			__asm__ volatile("msr daifclr, #2");
 			kprintf("IRQs enabled; timer-driven preemption active.\n");
 
+			/* Bring up the virtio-net NIC (polling).  lwIP + sockets are wired
+			 * on top of this; for now this proves the device is found + the
+			 * RX/TX queues initialize (MAC printed). */
+			aarch64_virtio_net_init();
+
 			/* Real login chain: start a bring-up authd (provides the "authd" MPI
 			 * mailbox; plaintext root/user until libpw/BearSSL are ported), then
 			 * run /bin/login off the disk — it authenticates via authd and execs
