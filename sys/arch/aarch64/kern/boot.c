@@ -33,6 +33,13 @@ extern char _binary_spin_elf_end[];
 extern char _binary_hello_elf_start[];
 extern char _binary_hello_elf_end[];
 
+/* Dynamic-linker bring-up test: a PIE program (/bin/hello_dyn) + the musl
+ * dynamic linker (= libc.so, laid into /lib/ld-musl-aarch64.so.1). */
+extern char _binary_hello_dyn_elf_start[];
+extern char _binary_hello_dyn_elf_end[];
+extern char _binary_ld_musl_aarch64_so_1_start[];
+extern char _binary_ld_musl_aarch64_so_1_end[];
+
 /**
  * Lay an embedded ELF blob into the ramfs root at @path.
  *
@@ -122,6 +129,24 @@ void kmain_aarch64(void)
 			timer_init();
 			__asm__ volatile("msr daifclr, #2"); /* unmask IRQ — timer drives preemption */
 			kprintf("IRQs enabled; timer-driven preemption active.\n");
+
+			/* Dynamic-linker bring-up test: lay the musl dynamic linker (= libc.so)
+			 * at its INTERP path + a PIE program, then run it through the kernel's
+			 * dynamic loader (interp + auxv).  Proves the path the real dynamic
+			 * world needs before the static triad takes over. */
+			if (install_bin("/lib/ld-musl-aarch64.so.1",
+			                _binary_ld_musl_aarch64_so_1_start,
+			                _binary_ld_musl_aarch64_so_1_end) == 0 &&
+			    install_bin("/lib/libc.so",
+			                _binary_ld_musl_aarch64_so_1_start,
+			                _binary_ld_musl_aarch64_so_1_end) == 0 &&
+			    install_bin("/bin/hello_dyn", _binary_hello_dyn_elf_start, _binary_hello_dyn_elf_end) == 0)
+			{
+				kprintf("\n--- dynamic-linker test ---\n");
+				aarch64_run_dynamic("/bin/hello_dyn");
+				kprintf("--- end dynamic-linker test ---\n\n");
+			}
+
 			aarch64_run_init("/bin/init"); /* never returns */
 		}
 	}

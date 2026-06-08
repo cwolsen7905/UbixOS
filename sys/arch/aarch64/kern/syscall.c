@@ -27,8 +27,9 @@
 #define SYS_WRITE 4
 #define SYS_OPEN 5
 #define SYS_CLOSE 6
-#define SYS_WAIT4 7   /* FreeBSD ABI (the number musl actually emits) */
-#define SYS_EXECVE 59 /* FreeBSD ABI (the number musl actually emits) */
+#define SYS_WAIT4 7    /* FreeBSD ABI (the number musl actually emits) */
+#define SYS_EXECVE 59  /* FreeBSD ABI (the number musl actually emits) */
+#define SYS_WRITEV 121 /* FreeBSD ABI; the dynamic linker uses it for diagnostics */
 #define SYS_BRK 17
 #define SYS_GETPID 20
 #define SYS_MPROTECT 74
@@ -163,6 +164,21 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args)
 			 * yet).  The console fileop write path is reached via the file layer
 			 * for real file/pipe fds. */
 			return sc_write(args[0], args[1], args[2]);
+
+		case SYS_WRITEV:
+		{
+			/* writev(fd, iov, iovcnt): emit each iovec to the console.  The musl
+			 * dynamic linker uses it for its diagnostics (and stdio later). */
+			struct iovec_lp64
+			{
+				u_int64_t iov_base;
+				u_int64_t iov_len;
+			} *iov = (struct iovec_lp64 *)(uintptr_t)args[1];
+			u_int64_t total = 0;
+			for (int i = 0; i < (int)args[2]; i++)
+				total += sc_write(args[0], iov[i].iov_base, iov[i].iov_len);
+			return total;
+		}
 
 		case SYS_MMAP:
 			return sc_mmap(args[0], args[1], args[3]); /* addr, len, flags (prot/fd/off ignored) */

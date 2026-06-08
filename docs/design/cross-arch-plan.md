@@ -407,9 +407,28 @@ are exactly the multiplexing B removes, so they would be discarded.
           (off the run queue) like the generic `sys_wait4`, so the timer-driven
           reaper's `WAIT→READY` wake doesn't double-enqueue a still-runnable parent;
           the reap scan/splice runs under `cli()` (atomic vs the reaper).
-  4. **Dynamic linker** — the *real* `init`/`login`/`shell` are dynamically
-     linked (`ld-musl-aarch64.so.1`); run them via the dynamic linker (load the
-     interp + libc.so).  Unblocks the whole disk-backed world.
+  4. ✅ **Dynamic linker — DONE** (kernel side). A PIE program runs end-to-end on
+     aarch64 through the musl dynamic linker, QEMU-verified: `/bin/hello_dyn`
+     (PIE, `DT_NEEDED libc.so`) loads, the kernel maps it + the interp
+     (`/lib/ld-musl-aarch64.so.1` = libc.so) and builds the SysV auxv stack; musl
+     `ld.so` self-relocates, relocates the program, and runs it with **dynamic
+     libc** — `malloc`, `open`/`read` of `/proc/meminfo`, and an interactive
+     `read(stdin)` (`you typed: dynamic world!`) all work.
+     - `elf64_load_at(image, root, load_base, info)` (generalises `elf64_load`):
+       loads ET_EXEC **or ET_DYN** at a base, reports AT_PHDR/PHENT/PHNUM/entry +
+       the PT_INTERP path location.
+     - `load_dynamic` (execfile.c): main PIE at `DYN_MAIN_BASE` (4 GB), interp at
+       `DYN_INTERP_BASE` (5 GB), stack at `DYN_STACK_VA` (6 GB) — each its own
+       1 GB block above the kernel identity map (user VA must be ≥ 4 GB).
+     - `build_dyn_stack`: argv + AT_RANDOM + full auxv
+       (PHDR/PHENT/PHNUM/PAGESZ/BASE/ENTRY/RANDOM/NULL); start PC = interp entry.
+     - syscalls: added `writev`(121) — ld.so's diagnostics path (made the
+       DT_NEEDED bug visible: link the test with `-L … -lc`, not the host path).
+     - The interp is loaded by the kernel from `/lib/ld-musl-aarch64.so.1`; the
+       PIE main + a copy at `/lib/libc.so` are laid into ramfs.
+     Remaining to run the *real* dynamic world: relink the aarch64 world as PIE
+     (it's currently ET_EXEC at 0x400000, inside the kernel identity map → can't
+     map as user) and lay it + libc.so into the FS (ramfs now, virtio-blk later).
   Then **virtio-blk** for the disk-backed `/bin` world + the `views`/`objGFX`
   desktop; and the **generic-kmain unification** once this real init sequence
   exists (so `boot.c` and i386's `kmain` share one bootstrap).

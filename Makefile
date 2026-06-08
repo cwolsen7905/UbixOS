@@ -165,6 +165,25 @@ kernel-aarch64:
 	    ( cd ${OBJ_DIR} && ${CROSS_PREFIX}objcopy -I binary -O elf64-littleaarch64 -B aarch64 \
 	        $$prog.elf ${OBJ_DIR}/obj/sys/$${prog}_embed.o ) || exit 1; \
 	done
+	@echo "embedding a dynamic (PIE) hello + libc.so (the musl dynamic linker) for the linker test"
+	@if [ -f ${OBJ_DIR}/lib/libc.so ]; then \
+	    ${CROSS_PREFIX}gcc -fPIC -O2 -ffreestanding -fno-stack-protector \
+	        -nostdinc -isystem ${CURDIR}/contrib/musl/include -isystem ${CURDIR}/contrib/musl/arch/aarch64 \
+	        -isystem ${CURDIR}/contrib/musl/arch/generic -isystem ${OBJ_DIR}/obj/musl/obj/include \
+	        -nostdlib -pie -Wl,-dynamic-linker,/lib/ld-musl-aarch64.so.1 \
+	        ${OBJ_DIR}/obj/musl/lib/Scrt1.o ${OBJ_DIR}/obj/musl/lib/crti.o \
+	        ${CURDIR}/tools/aarch64-user/hello_musl.c \
+	        -L${OBJ_DIR}/lib -lc ${LIBGCC} ${OBJ_DIR}/obj/musl/lib/crtn.o \
+	        -o ${OBJ_DIR}/hello_dyn.elf || exit 1; \
+	    cp ${OBJ_DIR}/lib/libc.so ${OBJ_DIR}/ld-musl-aarch64.so.1; \
+	else \
+	    head -c 16 /dev/zero > ${OBJ_DIR}/hello_dyn.elf; \
+	    head -c 16 /dev/zero > ${OBJ_DIR}/ld-musl-aarch64.so.1; \
+	fi
+	@cd ${OBJ_DIR} && ${CROSS_PREFIX}objcopy -I binary -O elf64-littleaarch64 -B aarch64 \
+	    hello_dyn.elf ${OBJ_DIR}/obj/sys/hello_dyn_embed.o || exit 1
+	@cd ${OBJ_DIR} && ${CROSS_PREFIX}objcopy -I binary -O elf64-littleaarch64 -B aarch64 \
+	    ld-musl-aarch64.so.1 ${OBJ_DIR}/obj/sys/ldmusl_embed.o || exit 1
 	${CROSS_PREFIX}ld -T ${CURDIR}/sys/compile/ldscript.aarch64 -o ${OBJ_DIR}/boot/kernel ${OBJ_DIR}/obj/sys/*.o
 	@echo "aarch64 bring-up kernel linked: ${OBJ_DIR}/boot/kernel"
 

@@ -25,6 +25,32 @@
  */
 int elf64_load(const void *image, u_int64_t *aspace_root, u_int64_t *entry_out);
 
+/**
+ * Info reported by elf64_load_at() — what the SysV initial-stack auxv vector
+ * needs (AT_PHDR/PHENT/PHNUM/BASE/ENTRY) plus the PT_INTERP path location so the
+ * caller can load the dynamic linker.
+ */
+typedef struct elf64_load_info
+{
+	u_int64_t entry;      /* load_base + e_entry */
+	u_int64_t phdr_va;    /* in-memory VA of the program headers (load_base + e_phoff) */
+	u_int64_t phnum;      /* e_phnum */
+	u_int64_t phentsize;  /* e_phentsize */
+	u_int64_t interp_off; /* file offset of the PT_INTERP path string, 0 if none */
+	u_int64_t interp_sz;  /* PT_INTERP p_filesz (path length incl. NUL) */
+	int is_dyn;           /* non-zero for ET_DYN (PIE / shared object) */
+} elf64_load_info_t;
+
+/**
+ * Load an ELF64 image's PT_LOAD segments at @load_base (added to each p_vaddr;
+ * pass 0 for an ET_EXEC at its linked address).  Accepts ET_EXEC and ET_DYN, so
+ * it handles both a PIE main executable and the dynamic linker.
+ *
+ * @param info  out: entry/phdr/phnum/phentsize + PT_INTERP location.
+ * @return 0 on success; -1 on an invalid image or mapping failure.
+ */
+int elf64_load_at(const void *image, u_int64_t *aspace_root, u_int64_t load_base, elf64_load_info_t *info);
+
 /* ---- machine-dependent hooks (implemented per 64-bit arch) ---- */
 
 /**

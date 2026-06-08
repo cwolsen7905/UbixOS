@@ -33,14 +33,17 @@
 #define PAGE_UP(x) (((x) + PAGE_SIZE - 1) & ~((u_int64_t)PAGE_SIZE - 1))
 
 /**
- * Map and populate one PT_LOAD segment @ph from @image into @aspace_root.
+ * Map and populate one PT_LOAD segment @ph from @image into @aspace_root, with
+ * every VA shifted by @base (0 for an ET_EXEC at its linked address; the chosen
+ * load base for an ET_DYN / PIE).
  *
  * @return 0 on success, -1 on allocation failure.
  */
-static int load_segment(const u_int8_t *image, const Elf64_Phdr *ph, u_int64_t *aspace_root)
+static int load_segment(const u_int8_t *image, const Elf64_Phdr *ph, u_int64_t *aspace_root, u_int64_t base)
 {
-	u_int64_t va_start = PAGE_DOWN(ph->p_vaddr);
-	u_int64_t va_end = PAGE_UP(ph->p_vaddr + ph->p_memsz);
+	u_int64_t seg_vaddr = base + ph->p_vaddr;
+	u_int64_t va_start = PAGE_DOWN(seg_vaddr);
+	u_int64_t va_end = PAGE_UP(seg_vaddr + ph->p_memsz);
 	int exec = (ph->p_flags & PF_X) != 0;
 
 	for (u_int64_t va = va_start; va < va_end; va += PAGE_SIZE)
@@ -50,14 +53,14 @@ static int load_segment(const u_int8_t *image, const Elf64_Phdr *ph, u_int64_t *
 			return -1;
 		memset((void *)frame, 0, PAGE_SIZE); /* zero — covers BSS + partial pages */
 
-		/* Copy the slice of this page overlapping [p_vaddr, p_vaddr+p_filesz). */
-		u_int64_t seg_file_end = ph->p_vaddr + ph->p_filesz;
-		u_int64_t copy_lo = (va > ph->p_vaddr) ? va : ph->p_vaddr;
+		/* Copy the slice of this page overlapping [seg_vaddr, seg_vaddr+p_filesz). */
+		u_int64_t seg_file_end = seg_vaddr + ph->p_filesz;
+		u_int64_t copy_lo = (va > seg_vaddr) ? va : seg_vaddr;
 		u_int64_t copy_hi = (va + PAGE_SIZE < seg_file_end) ? (va + PAGE_SIZE) : seg_file_end;
 
 		if (copy_hi > copy_lo)
 		{
-			u_int64_t file_off = ph->p_offset + (copy_lo - ph->p_vaddr);
+			u_int64_t file_off = ph->p_offset + (copy_lo - seg_vaddr);
 			memcpy((void *)(frame + (copy_lo - va)), image + file_off, (size_t)(copy_hi - copy_lo));
 		}
 
@@ -69,9 +72,10 @@ static int load_segment(const u_int8_t *image, const Elf64_Phdr *ph, u_int64_t *
 }
 
 /**
- * Load a static ELF64 executable @image into the address space @aspace_root.
+ * Load an ELF64 image (ET_EXEC or ET_DYN) at @load_base into @aspace_root,
+ * reporting the auxv-relevant info + PT_INTERP location in @info.
  */
-int elf64_load(const void *image, u_int64_t *aspace_root, u_int64_t *entry_out)
+int elf64_load_at(const void *image, u_int64_t *aspace_root, u_int64_t load_base, elf64_load_info_t *info)
 {
 	const u_int8_t *base = (const u_int8_t *)image;
 	const Elf64_Ehdr *eh = (const Elf64_Ehdr *)image;
@@ -82,24 +86,61 @@ int elf64_load(const void *image, u_int64_t *aspace_root, u_int64_t *entry_out)
 		kprintf("elf64: bad magic\n");
 		return -1;
 	}
-	if (eh->e_ident[EI_CLASS] != ELFCLASS64 || eh->e_machine != ELF_TARG_MACH || eh->e_type != ET_EXEC)
+	if (eh->e_ident[EI_CLASS] != ELFCLASS64 || eh->e_machine != ELF_TARG_MACH ||
+	    (eh->e_type != ET_EXEC && eh->e_type != ET_DYN))
 	{
-		kprintf("elf64: not a static native ELF64 executable (class=%u mach=%u type=%u)\n",
+		kprintf("elf64: not a native ELF64 exec/dyn (class=%u mach=%u type=%u)\n",
 		        eh->e_ident[EI_CLASS],
 		        eh->e_machine,
 		        eh->e_type);
 		return -1;
 	}
 
+	if (info != 0)
+	{
+		info->entry = load_base + eh->e_entry;
+		info->phdr_va = load_base + eh->e_phoff; /* PHDRs sit in the first PT_LOAD (file off 0) */
+		info->phnum = eh->e_phnum;
+		info->phentsize = eh->e_phentsize;
+		info->interp_off = 0;
+		info->interp_sz = 0;
+		info->is_dyn = (eh->e_type == ET_DYN);
+	}
+
 	for (unsigned i = 0; i < eh->e_phnum; i++)
 	{
 		const Elf64_Phdr *ph = (const Elf64_Phdr *)(base + eh->e_phoff + (u_int64_t)i * eh->e_phentsize);
+		if (ph->p_type == PT_INTERP && info != 0)
+		{
+			info->interp_off = ph->p_offset;
+			info->interp_sz = ph->p_filesz;
+			continue;
+		}
 		if (ph->p_type != PT_LOAD || ph->p_memsz == 0)
 			continue;
-		if (load_segment(base, ph, aspace_root) != 0)
+		if (load_segment(base, ph, aspace_root, load_base) != 0)
 			return -1;
 	}
 
-	*entry_out = eh->e_entry;
+	return 0;
+}
+
+/**
+ * Load a static ELF64 executable @image into the address space @aspace_root.
+ */
+int elf64_load(const void *image, u_int64_t *aspace_root, u_int64_t *entry_out)
+{
+	const Elf64_Ehdr *eh = (const Elf64_Ehdr *)image;
+	elf64_load_info_t info;
+
+	if (eh->e_type != ET_EXEC)
+	{
+		kprintf("elf64: elf64_load() requires ET_EXEC (type=%u); use elf64_load_at\n", eh->e_type);
+		return -1;
+	}
+	if (elf64_load_at(image, aspace_root, 0, &info) != 0)
+		return -1;
+
+	*entry_out = info.entry;
 	return 0;
 }

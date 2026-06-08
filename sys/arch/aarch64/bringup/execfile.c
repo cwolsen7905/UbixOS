@@ -16,6 +16,7 @@
 #include <vmm/paging.h>
 #include <lib/kmalloc.h>
 #include <sys/elf_load.h>
+#include <sys/elf64.h> /* Elf64_Ehdr — peek the type for the load base */
 #include <fs/vfs/file.h>
 #include <string.h>
 
@@ -24,8 +25,27 @@
 #define INITIAL_FRAME 8 /* u64 slots: argc, argv[0]=NULL, envp[0]=NULL, auxv{6,PAGE_SIZE}{0,0}, pad */
 #define AT_PAGESZ 6     /* auxv: aarch64 musl reads PAGE_SIZE from here (else malloc fails) */
 
-#define EXEC_MAX (1024 * 1024)   /* cap on an ELF image we'll load from the FS */
-#define INITIAL_KSTACK_SIZE 8192 /* kernelStack size (matches schedNewTask kmalloc) */
+#define EXEC_MAX (4 * 1024 * 1024) /* cap on an ELF image we'll load (libc.so ~1 MB) */
+#define INITIAL_KSTACK_SIZE 8192   /* kernelStack size (matches schedNewTask kmalloc) */
+
+/* Dynamic-executable layout: a PIE main + the dynamic linker (also PIE) each get
+ * their own 1 GB block (user VA must be >= 4 GB — the low 4 GB is the kernel's
+ * identity map, see pmap USER_L1_MIN).  brk (0x1C0000000) + mmap (0x200000000)
+ * are clear of these. */
+#define DYN_MAIN_BASE 0x100000000UL   /* PIE main exe load base   (L1 idx 4) */
+#define DYN_INTERP_BASE 0x140000000UL /* dynamic linker load base (L1 idx 5) */
+#define DYN_STACK_VA 0x180000000UL    /* initial user stack page  (L1 idx 6) */
+
+/* SysV auxiliary-vector types (Linux/musl ABI — musl's __libc_start_main reads
+ * AT_PHDR/PHENT/PHNUM to find the program headers, AT_BASE for the linker's own
+ * load address, AT_ENTRY for the main entry, AT_RANDOM for the stack canary). */
+#define AT_NULL 0
+#define AT_PHDR 3
+#define AT_PHENT 4
+#define AT_PHNUM 5
+#define AT_BASE 7
+#define AT_ENTRY 9
+#define AT_RANDOM 25
 
 /**
  * Load ELF @image into a fresh user address space and build the minimal SysV
@@ -166,6 +186,165 @@ static char *read_elf_file(const char *path, int *out_size)
 
 	*out_size = sz;
 	return (buf);
+}
+
+/**
+ * Build the SysV initial stack for a dynamically-linked program in @phys_page
+ * (the identity-mapped kernel pointer to the stack frame, which is mapped at
+ * DYN_STACK_VA in the user space).  Lays down argv[0], a 16-byte AT_RANDOM block,
+ * then the argc / argv / envp / auxv vector musl's __libc_start_main + the
+ * dynamic linker consume.  All in-stack pointers use the user VA.
+ *
+ * @return the user-space stack pointer (16-byte aligned, points at argc).
+ */
+static u_int64_t build_dyn_stack(uintptr_t phys_page,
+                                 const char *argv0,
+                                 const elf64_load_info_t *mi,
+                                 u_int64_t interp_base)
+{
+	u_int8_t *page = (u_int8_t *)phys_page;
+	u_int8_t *p = page + PAGE_SIZE;
+	u_int64_t argv0_uva, random_uva;
+	u_int64_t *vec;
+	size_t slen = strlen(argv0) + 1;
+	int k = 0;
+#define UVA(ptr) (DYN_STACK_VA + (u_int64_t)((u_int8_t *)(ptr) - page))
+
+	/* argv[0] string + 16 random bytes for the stack canary, near the top. */
+	p -= slen;
+	memcpy(p, argv0, slen);
+	argv0_uva = UVA(p);
+
+	p -= 16;
+	memcpy(p, "uBixOS-aarch64!\x01", 16); /* AT_RANDOM: bring-up entropy (not a CSPRNG yet) */
+	random_uva = UVA(p);
+
+	/* The vector: argc, argv[0], NULL, envp NULL, then 8 auxv pairs (incl AT_NULL).
+	 * 4 + 16 = 20 u64 = 160 bytes (16-aligned), so SP stays 16-aligned. */
+	p = (u_int8_t *)((uintptr_t)p & ~(uintptr_t)15);
+	p -= 20 * sizeof(u_int64_t);
+	p = (u_int8_t *)((uintptr_t)p & ~(uintptr_t)15);
+	vec = (u_int64_t *)p;
+
+	vec[k++] = 1;         /* argc */
+	vec[k++] = argv0_uva; /* argv[0] */
+	vec[k++] = 0;         /* argv terminator */
+	vec[k++] = 0;         /* envp terminator */
+	vec[k++] = AT_PHDR;
+	vec[k++] = mi->phdr_va;
+	vec[k++] = AT_PHENT;
+	vec[k++] = mi->phentsize;
+	vec[k++] = AT_PHNUM;
+	vec[k++] = mi->phnum;
+	vec[k++] = AT_PAGESZ;
+	vec[k++] = PAGE_SIZE;
+	vec[k++] = AT_BASE;
+	vec[k++] = interp_base; /* dynamic linker load base (0 if statically linked) */
+	vec[k++] = AT_ENTRY;
+	vec[k++] = mi->entry;
+	vec[k++] = AT_RANDOM;
+	vec[k++] = random_uva;
+	vec[k++] = AT_NULL;
+	vec[k++] = 0;
+
+	return UVA(vec);
+#undef UVA
+}
+
+/**
+ * Load a (PIE) dynamically-linked program @image into @l1: map the main exe at
+ * DYN_MAIN_BASE, read + map its PT_INTERP dynamic linker at DYN_INTERP_BASE,
+ * build the SysV/auxv stack, and report the start PC (the linker's entry) + SP.
+ * Also handles a high-linked static ET_EXEC (no PT_INTERP -> jump straight to it).
+ *
+ * @return 0 on success, -1 on failure.
+ */
+static int load_dynamic(const void *image, u_int64_t *l1, const char *argv0, u_int64_t *out_entry, u_int64_t *out_usp)
+{
+	const Elf64_Ehdr *eh = (const Elf64_Ehdr *)image;
+	elf64_load_info_t mi;
+	u_int64_t main_base = (eh->e_type == ET_DYN) ? DYN_MAIN_BASE : 0;
+	u_int64_t start_entry, interp_base = 0;
+	uintptr_t stack_frame;
+
+	if (elf64_load_at(image, l1, main_base, &mi) != 0)
+		return (-1);
+	start_entry = mi.entry;
+
+	if (mi.interp_off != 0)
+	{
+		const char *interp = (const char *)image + mi.interp_off;
+		elf64_load_info_t ii;
+		char *ibuf;
+		int isz;
+
+		kprintf("dyn: interp = %s\n", interp);
+		ibuf = read_elf_file(interp, &isz);
+		if (ibuf == NULL)
+		{
+			kprintf("dyn: cannot load interp %s\n", interp);
+			return (-1);
+		}
+		interp_base = DYN_INTERP_BASE;
+		if (elf64_load_at(ibuf, l1, interp_base, &ii) != 0)
+		{
+			kfree(ibuf);
+			return (-1);
+		}
+		kfree(ibuf);
+		start_entry = ii.entry; /* enter the dynamic linker, not the main exe */
+	}
+
+	stack_frame = vmm_find_free_page(sysID);
+	if (stack_frame == 0)
+		return (-1);
+	memset((void *)stack_frame, 0, PAGE_SIZE);
+	*out_usp = build_dyn_stack(stack_frame, argv0, &mi, interp_base);
+	pmap_map_user_page(l1, DYN_STACK_VA, (u_int64_t)stack_frame, 0);
+
+	*out_entry = start_entry;
+	return (0);
+}
+
+/**
+ * Load + run a dynamically-linked program off the VFS as a scheduled task, and
+ * cooperatively wait for it (bring-up test of the dynamic-linker path).
+ */
+void aarch64_run_dynamic(const char *path)
+{
+	char *buf;
+	int sz, i;
+	u_int64_t *l1, entry, usp;
+	kTask_t *t;
+
+	kprintf("dyn: loading %s (dynamic)...\n", path);
+	buf = read_elf_file(path, &sz);
+	if (buf == NULL)
+	{
+		kprintf("dyn: %s not loadable\n", path);
+		return;
+	}
+
+	l1 = pmap_create_user_space();
+	if (load_dynamic(buf, l1, path, &entry, &usp) != 0)
+	{
+		kfree(buf);
+		kprintf("dyn: %s failed to load\n", path);
+		return;
+	}
+	kfree(buf);
+
+	t = schedNewTask();
+	t->md.md_ttbr0 = (u_int64_t)(uintptr_t)l1;
+	t->md.md_entry = entry;
+	t->md.md_usp = usp;
+	strncpy(t->name, path, sizeof(t->name) - 1);
+	aarch64_console_setup_fds(&t->td);
+	sched_ready(t);
+
+	for (i = 0; i < 200000 && t->state != DEAD && t->state != ZOMBIE; i++)
+		sched_yield();
+	kprintf("dyn: %s returned (state=%d).\n", path, t->state);
 }
 
 /**
