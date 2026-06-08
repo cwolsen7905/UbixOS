@@ -37,51 +37,23 @@
 #include <ubistry/ubistry.h>
 #include <api/display.h>
 #include "window_manager.hh"
+#include <sys/ubix_syscall.h>
 
 /* ------------------------------------------------------------------ */
-/* Syscall stubs                                                        */
+/* Syscall thunks (portable: i386 int $0x81, aarch64 svc — see the macro)  */
 /* ------------------------------------------------------------------ */
 
-/* Syscall 43 — map the VESA framebuffer into the calling process */
-asm(".text                            \n"
-    ".globl _sys_mapfb                \n"
-    ".type  _sys_mapfb, @function     \n"
-    "_sys_mapfb:                      \n"
-    "  movl $43, %eax                 \n"
-    "  int  $0x81                     \n"
-    "  ret                            \n");
-
-/* Syscall 45 — share a virtual region into another process's space */
-asm(".text                                \n"
-    ".globl _sys_shareregion              \n"
-    ".type  _sys_shareregion, @function   \n"
-    "_sys_shareregion:                    \n"
-    "  movl $45, %eax                     \n"
-    "  int  $0x81                         \n"
-    "  ret                                \n");
-
-/* Syscall 44 — poll mouse event queue */
-asm(".text                              \n"
-    ".globl _sys_getmouse               \n"
-    ".type  _sys_getmouse, @function    \n"
-    "_sys_getmouse:                     \n"
-    "  movl $44, %eax                   \n"
-    "  int  $0x81                       \n"
-    "  ret                              \n");
-
-/* Syscall 46 — poll keyboard event queue */
-asm(".text                              \n"
-    ".globl _sys_getkbd                 \n"
-    ".type  _sys_getkbd, @function      \n"
-    "_sys_getkbd:                       \n"
-    "  movl $46, %eax                   \n"
-    "  int  $0x81                       \n"
-    "  ret                              \n");
+UBIX_NATIVE_THUNK(_sys_mapfb, 43);       /* map the framebuffer into this process */
+UBIX_NATIVE_THUNK(_sys_shareregion, 45); /* share a region into another process   */
+UBIX_NATIVE_THUNK(_sys_getmouse, 44);    /* poll cooked mouse events              */
+UBIX_NATIVE_THUNK(_sys_getkbd, 46);      /* poll cooked keyboard events           */
+UBIX_NATIVE_THUNK(_sys_fbpresent, 54);   /* present a composited frame (no-op i386) */
 
 extern "C"
 {
 	int _sys_getmouse(mouse_event_t *ev);
 	int _sys_getkbd(kbd_event_t *ev);
+	int _sys_fbpresent(void);
 }
 
 static int poll_mouse(mouse_event_t *ev)
@@ -132,20 +104,23 @@ int main(int argc, char **argv)
 				*(uint16_t *)&req.data[64] = (uint16_t)m;
 		}
 	}
-	ubix::post_message("system", 0x82, req);
-
-	mpi_message_t reply;
-	while (!mbox.try_fetch(reply))
-		ubix::yield();
-
-	if (reply.data[0] == 0)
+	/* Ask the systemtask to bring up VESA.  On i386 the V86 BIOS mode-set runs
+	 * there and its reply gates sys_mapfb.  On a platform with no VESA systemtask
+	 * (aarch64: the virtio-gpu framebuffer is already up from boot), the "system"
+	 * mailbox doesn't exist, so the post fails — skip the handshake entirely and
+	 * go straight to mapping the (already-initialised) framebuffer. */
+	if (mpi_postMessage((char *)"system", 0x82, &req) == 0)
 	{
-		std::printf("views: VESA init failed\n");
-		return 1;
+		mpi_message_t reply;
+		while (!mbox.try_fetch(reply))
+			ubix::yield();
+		if (reply.data[0] == 0)
+		{
+			std::printf("views: VESA init failed\n");
+			return 1;
+		}
 	}
 
-	/* VESA mode-set is async — system replies before the LFB is ready.
-	 * Retry until sys_mapfb sees valid globals (typically 1-3 yields). */
 	WindowManager wm;
 	{
 		int tries = 500;
@@ -160,6 +135,7 @@ int main(int argc, char **argv)
 		}
 	}
 	wm.startup();
+	_sys_fbpresent(); /* show the initial desktop (no-op on i386's live LFB) */
 
 	/* Fork vlogin after the compositor is fully ready — launching it via
 	 * init.d races with VESA VM86 and corrupts vlogin's startup context. */
@@ -204,6 +180,7 @@ int main(int argc, char **argv)
 		}
 
 		wm.flush();
+		_sys_fbpresent(); /* present the composited frame (no-op on i386) */
 		ubix::yield();
 	}
 

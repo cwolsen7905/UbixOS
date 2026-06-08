@@ -35,6 +35,8 @@ mcopy -i "${IMG}" "${BUILD}/lib/libc.so" ::/lib/ld-musl-aarch64.so.1
 # Crypto libs for the real authd (PBKDF2 over BearSSL).
 [ -f "${BUILD}/lib/libpw.so" ] && mcopy -i "${IMG}" "${BUILD}/lib/libpw.so" ::/lib/libpw.so || true
 [ -f "${BUILD}/lib/libbearssl.so" ] && mcopy -i "${IMG}" "${BUILD}/lib/libbearssl.so" ::/lib/libbearssl.so || true
+# objGFX rendering library — needed by the views compositor + every GUI app.
+[ -f "${BUILD}/lib/libobjgfx.so" ] && mcopy -i "${IMG}" "${BUILD}/lib/libobjgfx.so" ::/lib/libobjgfx.so || true
 
 # The whole world (all dynamically-linked PIE binaries).
 for b in "${BUILD}"/bin/*; do

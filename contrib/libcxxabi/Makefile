@@ -14,9 +14,12 @@ OBJDIR   = ${OBJ_DIR}/obj/libcxxabi
 .if ${_ARCH} == "aarch64"
 ARCH_SIMD     =
 ARCH_MUSL_INC = -I${MUSL_SRC}/arch/aarch64
+# aarch64 world is PIE — the static archive must be position-independent.
+ARCH_PIC      = -fPIC
 .else
 ARCH_SIMD     = -mno-sse -mno-sse2 -mno-mmx -mno-3dnow
 ARCH_MUSL_INC = -I${MUSL_SRC}/arch/i386
+ARCH_PIC      =
 .endif
 
 INCLUDE  = -I./include \
@@ -36,7 +39,7 @@ OUTPUT   = ${OBJ_DIR}/lib/libcxxabi.a
 .cc.o:
 	@mkdir -p ${OBJDIR}
 	$(CXX) ${CROSS_M32} -Wall -nostdinc -fno-builtin -fno-rtti -fno-exceptions \
-		${ARCH_SIMD} \
+		${ARCH_SIMD} ${ARCH_PIC} \
 		-fomit-frame-pointer -O ${INCLUDE} -c -o ${OBJDIR}/${.TARGET:T} ${.IMPSRC}
 
 all: ${OUTPUT}

@@ -99,7 +99,11 @@ int ubistry_get_str(const char *path, char *buf, int len)
 	snprintf(q->reply_mbox, sizeof(q->reply_mbox), "%s", g_reply);
 	snprintf(q->path, sizeof(q->path), "%s", path);
 	msg.header = UB_MSG_GET;
-	mpi_postMessage(UBISTRY_MBOX, UB_MSG_GET, &msg);
+	/* If the registry daemon's mailbox doesn't exist (e.g. no ubistry running),
+	 * the post fails — bail immediately instead of spinning UB_WAIT_SPINS for a
+	 * reply that will never come.  Callers fall back to their defaults. */
+	if (mpi_postMessage(UBISTRY_MBOX, UB_MSG_GET, &msg) != 0)
+		return (-1);
 
 	if (wait_reply(UB_MSG_VALUE, &rep) != 0 || !r->ok)
 		return (-1);
@@ -171,7 +175,8 @@ int ubistry_enum(const char *path, char *names_buf, int len)
 	snprintf(q->reply_mbox, sizeof(q->reply_mbox), "%s", g_reply);
 	snprintf(q->path, sizeof(q->path), "%s", path);
 	msg.header = UB_MSG_ENUM;
-	mpi_postMessage(UBISTRY_MBOX, UB_MSG_ENUM, &msg);
+	if (mpi_postMessage(UBISTRY_MBOX, UB_MSG_ENUM, &msg) != 0)
+		return (-1); /* no registry daemon — don't spin waiting for a reply */
 
 	if (wait_reply(UB_MSG_CHILDREN, &rep) != 0)
 		return (-1);

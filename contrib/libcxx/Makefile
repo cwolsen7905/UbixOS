@@ -24,9 +24,13 @@ LIBCXX_DEFS = \
 .if ${_ARCH} == "aarch64"
 ARCH_SIMD     =
 ARCH_MUSL_INC = -I${MUSL_SRC}/arch/aarch64
+# aarch64 world links PIE (programs load at a high VA via ld.so), so the static
+# C++ archives must be position-independent to link into a -pie executable.
+ARCH_PIC      = -fPIC
 .else
 ARCH_SIMD     = -mno-sse -mno-sse2 -mno-mmx -mno-3dnow
 ARCH_MUSL_INC = -I${MUSL_SRC}/arch/i386
+ARCH_PIC      =
 .endif
 
 INCLUDE = \
@@ -42,7 +46,7 @@ CXXFLAGS = ${CROSS_M32} -std=c++20 \
 	-Wall -Wno-error \
 	-nostdinc -nostdinc++ \
 	-fno-builtin -fno-rtti -fno-exceptions \
-	${ARCH_SIMD} \
+	${ARCH_SIMD} ${ARCH_PIC} \
 	-fomit-frame-pointer -O2 \
 	${LIBCXX_DEFS} ${INCLUDE}
 

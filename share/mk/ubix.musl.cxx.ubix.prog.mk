@@ -61,12 +61,12 @@ OBJDIR ?= ${OBJ_DIR}/obj/bin/${.CURDIR:T}
 _OBJS_FULL = ${OBJS:S|^|${OBJDIR}/|}
 
 $(BINARY): $(OBJS)
-	$(CC) ${CROSS_M32} -nostdlib -Wl,-m,${MUSL_LDEMULATION} \
+	$(CC) ${CROSS_M32} -nostdlib ${MUSL_PIE_LDFLAGS} -Wl,-m,${MUSL_LDEMULATION} \
 		-Wl,-dynamic-linker,${MUSL_LDSO} \
 		-Wl,-rpath,/lib \
 		-Wl,-z,noexecstack \
 		${EXTRA_LDFLAGS} \
-		${MUSL_LIB}/crt1.o \
+		${MUSL_CRT1} \
 		${MUSL_LIB}/crti.o \
 		${_OBJS_FULL} \
 		${OBJ_DIR}/lib/ubix_api.a \
