@@ -61,6 +61,12 @@ struct timeval;
 struct fd_set;
 int lwip_select(int, struct fd_set *, struct fd_set *, struct fd_set *, struct timeval *);
 
+/* Console/TTY fileops (path B): defined here in the generic fd layer so it
+ * resolves on every arch; installed with &tty_ops by tty_init() (sys/posix/tty.c)
+ * and left NULL on arches without a TTY layer. */
+struct fileOps *g_console_ops = 0x0;
+void *(*g_tty_find)(u_int16_t slot) = 0x0;
+
 int fcntl(struct thread *td, struct sys_fcntl_args *uap)
 {
 	struct file *fp = 0x0;

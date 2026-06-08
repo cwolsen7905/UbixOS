@@ -596,7 +596,7 @@ int kern_openat(struct thread *thr, int afd, char *path, int flags, int mode)
 	/* /dev/console — always the system console (ttyv0). */
 	if (strcmp(path, "/dev/console") == 0)
 	{
-		tty_term *t = tty_find(0);
+		tty_term *t = g_tty_find ? (tty_term *)g_tty_find(0) : NULL;
 		if (t == NULL)
 		{
 			fdestroy(thr, nfp, fd);
@@ -651,7 +651,7 @@ int kern_openat(struct thread *thr, int afd, char *path, int flags, int mode)
 				idx = idx * 10 + (*p++ - '0');
 			if (*p == '\0')
 			{
-				tty_term *t = tty_find((u_int16_t)idx);
+				tty_term *t = g_tty_find ? (tty_term *)g_tty_find((u_int16_t)idx) : NULL;
 				if (t == NULL)
 				{
 					fdestroy(thr, nfp, fd);

@@ -346,13 +346,16 @@ static struct fileOps tty_ops = {
     .write = tty_fo_write,
     .close = 0x0, /* close has no tty symbols — stays inline in vfs_calls.c */
 };
-struct fileOps *g_console_ops = 0x0;
+/* g_console_ops itself is defined in sys/kern/descrip.c (generic, linked on every
+ * arch); tty_init() installs &tty_ops into it.  On arches without a TTY layer it
+ * stays NULL and the generic syscall core's tty fall-throughs error cleanly. */
 
 int tty_init()
 {
 	int i = 0x0;
 
 	g_console_ops = &tty_ops;
+	g_tty_find = (void *(*)(u_int16_t))tty_find;
 
 	/* Allocate memory for terminals */
 	terms = (tty_term *)kmalloc(sizeof(tty_term) * TTY_MAX_TERMS);
