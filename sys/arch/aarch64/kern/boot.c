@@ -56,6 +56,7 @@ void kmain_aarch64(void)
 	aarch64_fork_demo();
 	aarch64_user_elf_demo();
 	aarch64_procfs_demo(); /* mount /proc before the musl program (which reads it) */
+	aarch64_ramfs_demo();
 	aarch64_musl_elf_demo();
 
 	/* Spawn never-yielding CPU-bound tasks, then enable the timer — it must

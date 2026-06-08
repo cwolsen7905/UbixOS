@@ -106,6 +106,7 @@ AARCH64_GENERIC_SRCS = \
 	sys/fs/vfs/mount.c \
 	sys/fs/vfs/file.c \
 	sys/fs/procfs/procfs.c \
+	sys/fs/ramfs/ramfs.c \
 	sys/posix/vfs_calls.c
 
 kernel-aarch64:

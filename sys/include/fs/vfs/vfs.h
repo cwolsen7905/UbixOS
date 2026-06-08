@@ -39,6 +39,7 @@
 /* vfsType identifiers — used in struct fileSystem and vfs_mountPoint comparisons */
 #define VFS_TYPE_DEVFS   0x01
 #define VFS_TYPE_PROCFS  0x02
+#define VFS_TYPE_RAMFS   0x03
 #define VFS_TYPE_FAT     0xFA
 #define VFS_TYPE_UFS     0xAA
 

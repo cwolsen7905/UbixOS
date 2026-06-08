@@ -95,4 +95,7 @@ void aarch64_musl_elf_demo(void);
 /* procfsdemo.c — mount procfs + read /proc/meminfo through the generic VFS. */
 void aarch64_procfs_demo(void);
 
+/* ramfsdemo.c — mount ramfs + round-trip a file (VFS read + write/create). */
+void aarch64_ramfs_demo(void);
+
 #endif /* _AARCH64_BRINGUP_H */
