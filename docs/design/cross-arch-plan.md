@@ -284,15 +284,30 @@ are exactly the multiplexing B removes, so they would be discarded.
   installed by isa_bus/fat/tty) + linking `klog.c`/`vm_filecache.c`.  The full
   VFS read path links into the aarch64 kernel (295 KB); i386 boots unchanged.
 
-  **✅ STEP 3 (kernel-side) DONE** (commit ef39c0c56): a bring-up demo registers
-  procfs, `vfs_mount`s it at `/proc`, and `fopen()`/`fread()`s `/proc/meminfo`
-  — QEMU-verified output (`MemTotal: 1572864 kB / MemFree: 514180 kB`).  **The
-  generic VFS file layer works end-to-end on aarch64.**  Remaining for step 3:
-  route the SVC dispatcher (open=5/read=3/close=6/lseek=478/fstat=189 → the real
-  `sys_*` via the FreeBSD `sysent` ABI: build a `uap` struct from x0..x5, point
-  at the current `td`, return `td_retval[0]`) + per-process `o_files[]` init, so
-  a *user* program (not just the kernel) does file I/O — also aarch64-verifiable
-  (a musl program that reads `/proc/meminfo`).
+  **✅ STEP 3 DONE** (commits ef39c0c56 kernel-side, 51dcfafa7 user-side): the
+  generic VFS file layer works end-to-end on aarch64, from both the kernel
+  (procfs demo: `fopen`/`fread` `/proc/meminfo`) AND **a userland process** — the
+  musl program does `open("/proc/meminfo")` + `read` + `close` via the SVC
+  dispatcher routed (open=5/read=3/close=6) through the FreeBSD `sysent` ABI
+  (`uap` built from x0..x5, run on `&_current->td`, `td_retval[0]`→x0
+  sign-extended).  QEMU-verified MemTotal/MemFree printed by the program.
+  `kTask_t` embeds `struct thread`; `o_files[]` starts NULL so `falloc` works.
+  (`lseek`/`fstat` numbers reserved but not yet routed — add when a program
+  needs them.)
+
+  ### Next: step 4 (bootstrap → boots as uBixOS) — what's now unblocked vs gated
+  File syscalls + `fork` + the ELF loader all work on aarch64, and the world
+  (`init`/`login`/`shell`) builds.  Two things still gate a real boot:
+  1. **A populated root filesystem** — aarch64 has no disk; procfs is synthetic.
+     The boot triad must be *readable as files*.  Either **virtio-blk + FAT**
+     (step 5) or an **embedded initramfs / RAM fs** mounted as root.
+  2. **exec-from-file** — the loader runs *embedded* ELFs today; `execve` must
+     load an ELF from a path (uses the now-working file syscalls).
+  Once those exist, the **bootstrap unification** (generic `kmain` core + arch
+  hooks) replaces `boot.c`'s demo runner with mount-root → `execFile("/bin/init")`
+  → login → shell = **boots as uBixOS**.  An initramfs reaches this *before*
+  virtio-blk; virtio-blk + the dynamic linker then give the full disk-backed
+  `/bin` world + the `views`/`objGFX` desktop (step 5).
 
   (iv) pipe — self-contained cleanup, does not block aarch64 linking.
 
