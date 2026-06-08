@@ -104,9 +104,11 @@ multi-vdev, xattrs/ACLs (znode reserves the slot).
 
 ## Build order (host-first — develop & fuzz the CoW engine on macOS, like u2fs)
 
-1. **Spec + strategies** — `ondisk.h` (+ size asserts); Fletcher4; LZ4 (later).
-2. **vdev + SPA** — file-backed vdev, label R/W, uberblock ring, txg commit, block
-   allocator. *Testable: format a pool, commit an empty txg, reopen at last txg.*
+1. ✅ **Spec + strategies** — `ondisk.h` (+ size asserts); **Fletcher4**. **Done.**
+2. ✅ **vdev + SPA** — file-backed vdev, label, uberblock ring, txg commit, bitmap
+   allocator (`lib/ubixfs_core/ubfs_spa.c`). **Done & verified** (`spa_test`:
+   format → commit txgs → reopen at last txg → alloc/free persists → **corrupt
+   newest uberblock → falls back to previous txg**, i.e. CoW crash recovery).
 3. **DMU** — dnode CRUD, blkptr-tree read/write, **CoW**, checksum verify, compress.
    *Testable: create/grow/CoW/read an object on the host; pull the plug mid-write
    and confirm it rewinds.*
@@ -122,7 +124,8 @@ multi-vdev, xattrs/ACLs (znode reserves the slot).
 ## Code layout & cleanup
 
 New code (all C): `include/fs/ubixfs/`, `lib/ubixfs_core/`, `tools/ubixfs/`,
-later `sys/fs/ubixfs/`. **Cleanup (deferred):** drop the dormant
+later `sys/fs/ubixfs/`. **Symbol prefix `ubfs_` / `UBFS_`** (not `ufs_` — that
+would clash with the existing FreeBSD-style `sys/fs/ufs/`). **Cleanup (deferred):** drop the dormant
 `sys/fs/ubixfsv2/` (C++ BeFS), the v0 BeFS artifacts (`include/fs/ubixfs2/`,
 `lib/ubixfs2_core/`, `tools/ubixfs2/`), and reconcile the old v1 `sys/fs/ubixfs/`
 at the kernel phase.
