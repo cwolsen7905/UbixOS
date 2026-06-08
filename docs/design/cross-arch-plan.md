@@ -322,6 +322,31 @@ are exactly the multiplexing B removes, so they would be discarded.
   exec-from-file (`execve` loads an ELF from a path), then the bootstrap
   unification.
 
+  **✅ STEP 4a/b/c DONE** (commit 058ffbb43): aarch64 now **boots by mounting a
+  root filesystem and exec'ing `/bin/init` loaded from that filesystem** — the
+  structural shape of booting as uBixOS.  `boot.c`: mount ramfs at `/` →
+  `ramfs_populate("/bin/init", <embedded ELF>)` → `aarch64_exec_file("/bin/init")`,
+  which `fopen`/`fread`s the ELF off the VFS and runs it via the factored
+  `aarch64_run_elf_image()` (elf64_load + SysV initial stack; shared with
+  muslelfdemo).  QEMU-verified: `read 85632/85632 bytes of /bin/init; loading +
+  running` then the program runs.  `/bin/init` is the static musl stand-in.
+
+  ### Remaining for a FULL boot-to-login (the real init/login/shell chain)
+  Three things, none of which are decoupling — all new functionality:
+  1. **Console/tty layer on aarch64** — login must read/write the console.  The
+     tty hooks (`g_console_ops`/`g_tty_*`) are NULL on aarch64; wire the PL011
+     UART into the tty line discipline + install them so a userland program's
+     read/write hit the console.
+  2. **fork + exec + wait wiring** — `init` forks `login`, `login` execs `shell`.
+     fork works; `execve` from a path (the exec-from-file logic, as a syscall) +
+     `wait4`/reap need wiring (and run_elf_image's read-after-reap fixed).
+  3. **Dynamic linker** — the *real* `init`/`login`/`shell` are dynamically
+     linked (`ld-musl-aarch64.so.1`); either run them via the dynamic linker
+     (load the interp + libc.so) or build static initramfs variants.
+  Then **virtio-blk** for the disk-backed `/bin` world + the `views`/`objGFX`
+  desktop; and the **generic-kmain unification** once this real init sequence
+  exists (so `boot.c` and i386's `kmain` share one bootstrap).
+
   (iv) pipe — self-contained cleanup, does not block aarch64 linking.
 
   **TTY scope note (iii) — original assessment:** this is the gnarliest extraction — the
