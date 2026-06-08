@@ -383,6 +383,20 @@ are exactly the multiplexing B removes, so they would be discarded.
      - Chosen over the dynamic linker (user steer) to land a real prompt fast.
      Follow-ups: read `/etc/userdb` + no-echo password (no termios yet); argv to
      the shell's children; replace the trio with the real dynamic world.
+     - **Preemptible EL0 — attempted, reverted (mechanism works; reaper races).**
+       Wiring the `0x480` lower-EL IRQ vector + IRQ-enabled EL0 SPSR (0x340) does
+       make the timer preempt EL0: a CPU-bound `/bin/spin` (no syscalls) ran to
+       completion under the 100 Hz tick, proving the EL0 IRQ path. BUT under task
+       churn it corrupts the next task — e.g. `spin` then any command faults with
+       a `/bin/sh` whose `md_entry`/`md_usp` + trapframe `elr`/`x30` have their
+       **high 32 bits zeroed** (`0x100000248`→`0x248`). Root cause: with the timer
+       on, the **generic `sched()` reaper runs from the IRQ and races the
+       cooperative `aarch64_wait4`** — both mutate `taskList`/`delList`/task structs
+       with no mutual exclusion (the cooperative model avoids this by construction).
+       Fix needs reconciled reap ownership (proper locking, or route wait4 through
+       the generic `wait_find_child` + gate the reaper). Deferred; kept cooperative.
+       (The enriched EL1 exception dump — faulting pid/name + md + trapframe regs —
+       was added during this and **kept**.)
   4. **Dynamic linker** — the *real* `init`/`login`/`shell` are dynamically
      linked (`ld-musl-aarch64.so.1`); run them via the dynamic linker (load the
      interp + libc.so).  Unblocks the whole disk-backed world.

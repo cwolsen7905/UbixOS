@@ -11,6 +11,7 @@
  */
 
 #include "bringup.h"
+#include <ubixos/sched.h> /* _current — identify the faulting task in dumps */
 
 enum
 {
@@ -83,6 +84,19 @@ void aarch64_exception(u_int64_t kind, void *frame)
 		kprintf("\n*** aarch64 unexpected/invalid vector ***\n");
 
 	kprintf("  ESR_EL1=0x%lx  EC=0x%lx  ELR_EL1=0x%lx  FAR_EL1=0x%lx\n", esr, (esr >> 26) & 0x3f, elr, far);
+	if (_current != 0)
+		kprintf("  task: pid=%d name=%s state=%d md_entry=0x%lx md_usp=0x%lx md_ttbr0=0x%lx\n",
+		        _current->id,
+		        _current->name,
+		        _current->state,
+		        _current->md.md_entry,
+		        _current->md.md_usp,
+		        _current->md.md_ttbr0);
+	if (frame != 0)
+	{
+		u_int64_t *g = (u_int64_t *)frame;
+		kprintf("  frame: x30(lr)=0x%lx elr=0x%lx spsr=0x%lx sp_el0=0x%lx\n", g[30], g[32], g[33], g[34]);
+	}
 
 	for (;;)
 		__asm__ volatile("wfi");

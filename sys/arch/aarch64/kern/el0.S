@@ -51,7 +51,7 @@ aarch64_enter_el0:
 aarch64_eret_to_el0:
 	msr	sp_el0, x1
 	msr	elr_el1, x0
-	mov	x10, #0x3C0		/* SPSR: M=EL0t, DAIF masked (no preemption yet) */
+	mov	x10, #0x3C0		/* SPSR: M=EL0t, DAIF masked (cooperative EL0; preemption deferred) */
 	msr	spsr_el1, x10
 	isb
 	eret
@@ -72,7 +72,7 @@ aarch64_exec_to_el0:
 	mov	sp, x2			/* re-base SP_EL1 to the kernel-stack top */
 	msr	sp_el0, x1
 	msr	elr_el1, x0
-	mov	x10, #0x3C0		/* SPSR: M=EL0t, DAIF masked (cooperative EL0) */
+	mov	x10, #0x3C0		/* SPSR: M=EL0t, DAIF masked (cooperative EL0; preemption deferred) */
 	msr	spsr_el1, x10
 	isb
 	eret

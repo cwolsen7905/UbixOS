@@ -102,8 +102,9 @@ void kmain_aarch64(void)
 	 * then run /bin/init — which forks /bin/login, login execs /bin/sh.  This is
 	 * the terminal boot action: aarch64_run_init() schedules init and turns this
 	 * (boot) thread into the cooperative idle loop, so it never returns.  EL0 is
-	 * IRQ-masked for now, so scheduling is cooperative (the console read yields);
-	 * preemptible EL0 + the timer come with the lower-EL IRQ vector work. */
+	 * IRQ-masked, so scheduling is cooperative (the console read + wait4 yield);
+	 * preemptible EL0 is deferred (the timer-driven generic reaper races the
+	 * cooperative wait4 over taskList/delList — see cross-arch-plan.md). */
 	kprintf("\n--- uBixOS aarch64 userland bootstrap ---\n");
 	if (vfs_mount(0, 0, 0, VFS_TYPE_RAMFS, "/", "rw") == 0)
 	{
