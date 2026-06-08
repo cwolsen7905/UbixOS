@@ -54,7 +54,7 @@ enum ubfs_otype
 	UBFS_OT_PLAIN_FILE = 4, /* regular file data */
 	UBFS_OT_DIRECTORY = 5,  /* directory data (name -> object id) */
 	UBFS_OT_DATASET = 6,    /* a dataset object (bonus = ubfs_dataset_phys_t) */
-	UBFS_OT_ZVOL = 7,       /* raw volume data */
+	UBFS_OT_VOL = 7,       /* raw volume data */
 };
 
 /* Object-set types */
@@ -62,14 +62,14 @@ enum ubfs_ostype
 {
 	UBFS_OST_MOS = 0, /* the pool's meta-object-set (dataset directory) */
 	UBFS_OST_FS = 1,  /* a POSIX filesystem dataset */
-	UBFS_OST_ZVOL = 2 /* a raw block volume dataset */
+	UBFS_OST_VOL = 2 /* a raw block volume dataset */
 };
 
 /* Dataset types (ubfs_dataset_phys_t.type) */
 enum ubfs_dstype
 {
 	UBFS_DS_FS = 1,
-	UBFS_DS_ZVOL = 2
+	UBFS_DS_VOL = 2
 };
 
 /* dnode bonus-buffer types */
@@ -204,7 +204,7 @@ typedef struct ubfs_dataset_phys
 	uint64_t     type;        /* enum ubfs_dstype */
 	uint64_t     used;        /* bytes used by the dataset */
 	uint64_t     recordsize;  /* property: data block size in bytes */
-	uint64_t     volsize;     /* zvol: exported device size in bytes */
+	uint64_t     volsize;     /* volume: exported device size in bytes */
 	uint32_t     compression; /* property: enum ubfs_compress */
 	uint32_t     atime;       /* property: update atimes? (bool) */
 	char         name[64];

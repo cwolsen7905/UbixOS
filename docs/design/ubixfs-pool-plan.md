@@ -2,7 +2,7 @@
 
 > Supersedes `ubixfs2-plan.md` (the BeFS-style design). Decision (2026-06-07):
 > build a **lite ZFS** — a storage *pool* with *datasets* (a POSIX filesystem and
-> a raw block volume / zvol), copy-on-write, per-block checksums, and compression.
+> a raw block volume), copy-on-write, per-block checksums, and compression.
 > Language: **C** (portable across host tool + kernel + eventual GRUB; SOLID via
 > opaque handles + ops-vtables — no C++ runtime dependency). Snapshots are
 > **deferred but hooked** (see below) so they're never impossible to add.
@@ -13,7 +13,7 @@
 - **Datasets** allocate from the pool:
   - a **filesystem** dataset (POSIX: perms, owners, times, symlinks, hardlinks,
     rename, sparse files, xattrs→ACLs);
-  - a **zvol** — a raw block volume (e.g. backing **swap**).
+  - a **volume** — a raw block volume (e.g. backing **swap**).
 - Per-dataset **properties**: `compression` (off | lz4), `recordsize` (the
   "different block sizes"), `atime` (on/off).
 
@@ -27,13 +27,13 @@
 3. **Uberblock + transaction groups (txg)** — writes batch into a txg; flipping
    one uberblock in a ring atomically commits it (and is how we recover on mount).
 
-Everything else (datasets, zvols, snapshots, sparse files, compression) hangs off
+Everything else (datasets, volumes, snapshots, sparse files, compression) hangs off
 these three.
 
 ## Layered architecture (= the build order; each layer is one SOLID responsibility)
 
 ```
-ZPL (POSIX files/dirs/perms)        ZVOL (raw block volume)     <- consumers
+ZPL (POSIX files/dirs/perms)        VOL (raw block volume)     <- consumers
 DSL (datasets, properties, [snapshots later])
 DMU (objects, CoW, block-ptr trees, checksums, compression)
 SPA (the pool: uberblock ring, txg commit, block allocation)
@@ -47,7 +47,7 @@ VFS (`struct fileSystem`) and the v0 core already use. SOLID mapping:
 
 | SOLID | Here |
 |---|---|
-| SRP | one module per layer (`vdev.c`/`spa.c`/`dmu.c`/`dsl.c`/`zpl.c`/`zvol.c`) |
+| SRP | one module per layer (`vdev.c`/`spa.c`/`dmu.c`/`dsl.c`/`zpl.c`/`volume.c`) |
 | DIP | block I/O injected as callbacks; layers depend on the layer-below's `ops` |
 | ISP/LSP | opaque handle + `ops` vtable per layer |
 | OCP | compression & checksum are **pluggable strategy tables** (add LZ4/zstd/Fletcher/SHA without touching callers) |
@@ -68,7 +68,7 @@ little-endian, `_Static_assert`-sized). Summary:
   blkptrs, and a **bonus buffer** holding the **znode** (POSIX attrs) for FS objects.
 - **objset** → a metadnode whose data is the dnode array; the MOS and each
   dataset's filesystem are object sets.
-- **dataset** (in the MOS) → blkptr to its objset + properties + type (FS | zvol).
+- **dataset** (in the MOS) → blkptr to its objset + properties + type (FS | volume).
 - **directory** → object whose data maps name → object-id (v1 linear/micro; a
   scalable hash is a later phase).
 
@@ -97,7 +97,7 @@ format break):
 ## Scope
 
 **In v1:** single vdev; CoW + checksums + uberblock/txg; DMU objects; FS dataset +
-zvol; LZ4 compression; variable recordsize; POSIX (perms, times+atime-toggle,
+volume; LZ4 compression; variable recordsize; POSIX (perms, times+atime-toggle,
 symlinks, hardlinks, rename, sparse, large files). **Deferred:** snapshots/clones
 (hooked), RAID-Z/mirror, dedup, ZIL (sync = txg flush), ARC tuning, send/receive,
 multi-vdev, xattrs/ACLs (znode reserves the slot).
@@ -114,9 +114,13 @@ multi-vdev, xattrs/ACLs (znode reserves the slot).
    verified** (`dmu_test`: 200 KB file → 3-level tree → read-back exact → CoW
    middle-overwrite consistent → sparse holes → sync/commit/reopen intact).
    *(Compression still pass-through — LZ4 is a later, per-block strategy.)*
-4. **DSL** — MOS + datasets; create a filesystem dataset and a zvol.
-5. **ZPL + ZVOL** — POSIX layer on objects; raw volume on one object.
-6. **Host CLI** (`tools/ubixfs/`) — `mkpool`, `create` (fs/zvol), `cp` in/out,
+4. ✅ **DSL** — MOS + datasets (`lib/ubixfs_core/ubfs_dsl.c`): the
+   uberblock→MOS→dataset→objset indirection (snapshot hook #2), a name→object
+   dataset directory, and `filesystem` + `volume` dataset kinds. **Done &
+   verified** (`dsl_test`: pool → fs dataset + 16 MB volume → write each → sync →
+   reopen → look up by name → read both back).
+5. **ZPL + VOL** — POSIX layer on objects; raw volume on one object.
+6. **Host CLI** (`tools/ubixfs/`) — `mkpool`, `create` (fs/volume), `cp` in/out,
    `ls` — the harness.
 7. **Kernel driver** (`sys/fs/ubixfs/`) — reuse the same C core; hybrid boot
    (FAT `/boot`, kernel mounts the pool). Coordinate the build with the
