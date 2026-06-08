@@ -98,4 +98,8 @@ void aarch64_procfs_demo(void);
 /* ramfsdemo.c — mount ramfs + round-trip a file (VFS read + write/create). */
 void aarch64_ramfs_demo(void);
 
+/* execfile.c — load + run an ELF image / a file off the VFS (exec-from-file). */
+int aarch64_run_elf_image(const void *image, const char *name);
+void aarch64_exec_file(const char *path);
+
 #endif /* _AARCH64_BRINGUP_H */

@@ -10,9 +10,16 @@
  */
 
 #include "bringup.h"
-#include <vmm/vmm.h>       /* vmm_mem_map_init */
-#include <ubixos/vitals.h> /* vitals_init */
-#include <fs/vfs/vfs.h>    /* vfs_init */
+#include <vmm/vmm.h>        /* vmm_mem_map_init */
+#include <ubixos/vitals.h>  /* vitals_init */
+#include <fs/vfs/vfs.h>     /* vfs_init */
+#include <fs/vfs/mount.h>   /* vfs_mount */
+#include <fs/ramfs/ramfs.h> /* ramfs_init, ramfs_populate (initramfs root) */
+
+/* The embedded boot program — stands in for /bin/init until the dynamic linker
+ * + the real init/login/shell chain land. */
+extern char _binary_hello_musl_elf_start[];
+extern char _binary_hello_musl_elf_end[];
 
 /**
  * Return the current exception level (0-3) from CurrentEL[3:2].
@@ -56,8 +63,27 @@ void kmain_aarch64(void)
 	aarch64_fork_demo();
 	aarch64_user_elf_demo();
 	aarch64_procfs_demo(); /* mount /proc before the musl program (which reads it) */
-	aarch64_ramfs_demo();
+	aarch64_ramfs_demo();  /* registers ramfs + exercises it at /ram */
 	aarch64_musl_elf_demo();
+
+	/* --- initramfs bootstrap: the shape of a real boot ---------------------
+	 * Mount a ramfs root, lay /bin/init into it (the embedded program stands in
+	 * for init until the dynamic linker + the real init/login/shell land), then
+	 * exec it *from the filesystem path* — what the generic kmain will do once
+	 * unified.  ramfs is already registered by the demo above. */
+	kprintf("\n--- initramfs bootstrap ---\n");
+	if (vfs_mount(0, 0, 0, VFS_TYPE_RAMFS, "/", "rw") == 0)
+	{
+		u_int32_t len = (u_int32_t)(_binary_hello_musl_elf_end - _binary_hello_musl_elf_start);
+		if (ramfs_populate("/", "/bin/init", _binary_hello_musl_elf_start, len) == 0)
+			aarch64_exec_file("/bin/init");
+		else
+			kprintf("bootstrap: failed to populate /bin/init\n");
+	}
+	else
+	{
+		kprintf("bootstrap: failed to mount ramfs root\n");
+	}
 
 	/* Spawn never-yielding CPU-bound tasks, then enable the timer — it must
 	 * preempt them (proves preemptive scheduling). */
