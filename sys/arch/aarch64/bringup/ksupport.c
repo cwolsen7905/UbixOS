@@ -29,7 +29,9 @@
 #include <ubixos/vitals.h>
 #include <ubixos/callout.h>
 #include <sys/shutdown.h>
-#include <mpi/mpi.h> /* mpi_destroyProcessMboxes — free a task's mailboxes on exit */
+#include <mpi/mpi.h>     /* mpi_destroyProcessMboxes — free a task's mailboxes on exit */
+#include <sys/descrip.h> /* g_device_find — bus-device lookup hook (ubx_device_find shim) */
+#include <sys/bus.h>     /* struct ubx_device */
 
 /* systemVitals is now the real generic vitals node (sys/kern/vitals.c),
  * allocated by vitals_init() during kmain bring-up. */
@@ -118,6 +120,21 @@ int sys_shutdown(shutdownCMD_t cmd)
 	for (;;)
 		__asm__ volatile("wfi");
 	return 0;
+}
+
+/**
+ * Bus-device lookup shim: the generic newbus registry (sys/sys/bus.c) is not
+ * linked on aarch64 — block devices register through the g_device_find hook
+ * instead (virtio-blk installs it).  devfs and other generic code call
+ * ubx_device_find() directly, so provide it here by delegating to that hook.
+ *
+ * @return the matching device, or NULL (the hook is unset, or no match).
+ */
+struct ubx_device *ubx_device_find(int major, int minor)
+{
+	if (g_device_find == 0)
+		return (0);
+	return (struct ubx_device *)g_device_find(major, minor);
 }
 
 /**

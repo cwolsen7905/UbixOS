@@ -16,6 +16,7 @@
 #include <fs/vfs/mount.h>   /* vfs_mount */
 #include <fs/ramfs/ramfs.h> /* ramfs_init, ramfs_populate (initramfs root) */
 #include <fs/fat/fat.h>     /* fat_init — disk-backed root */
+#include <fs/devfs/devfs.h> /* devfs_init — /dev/{null,zero,...} for the shell */
 #include <sys/bus.h>        /* struct ubx_device — virtio-blk block device */
 
 /* The static boot triad — init forks login, login execs sh — laid into the
@@ -124,6 +125,14 @@ void kmain_aarch64(void)
 		if (blk != 0 && vfs_mount(0, 0, 0, VFS_TYPE_FAT, "/", "rw") == 0)
 		{
 			kprintf("root: FAT on virtio-blk vtblk0\n");
+
+			/* Mount devfs at /dev so the shell can open /dev/null, /dev/tty,
+			 * etc.  devfs_init() registers the FS + queues the pseudo-devices;
+			 * the mount replays them into /dev. */
+			devfs_init();
+			if (vfs_mount(0, 0, 0, VFS_TYPE_DEVFS, "/dev", "rw") == 0)
+				kprintf("dev: devfs mounted at /dev\n");
+
 			gic_init();
 			timer_init();
 			__asm__ volatile("msr daifclr, #2");

@@ -106,6 +106,7 @@ AARCH64_GENERIC_SRCS = \
 	sys/fs/vfs/mount.c \
 	sys/fs/vfs/file.c \
 	sys/fs/procfs/procfs.c \
+	sys/fs/devfs/devfs.c \
 	sys/fs/ramfs/ramfs.c \
 	sys/fs/fat/fat_bpb.c \
 	sys/fs/fat/fat_clust.c \
