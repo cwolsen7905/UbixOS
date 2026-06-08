@@ -332,7 +332,25 @@ void sched()
 	if (prev != _current)
 		switch_to(prev, _current);
 
+#if defined(__aarch64__)
+	/*
+	 * aarch64 runs a non-preemptible kernel: EL1 syscall/exception handlers run
+	 * with IRQs masked, and only EL0 is preemptible (its SPSR enables IRQ).  A
+	 * forced sti() here would unmask IRQs *inside* a syscall handler after its
+	 * first cooperative sched_yield(), making the handler preemptible mid-
+	 * critical-section.  Restore the caller's IRQ state instead: cooperative
+	 * yields from a (masked) syscall stay masked; an EL0 preemption unwinds to
+	 * its el1_irq KERNEL_EXIT, whose ERET restores the EL0 (IRQ-enabled) SPSR.
+	 */
+	restore_flags(flags);
+#else
+	/*
+	 * i386 runs a preemptible kernel (syscalls execute with IF set).  cpu_switch
+	 * restored prev's EFLAGS saved under the cli above (IF cleared), so re-enable
+	 * interrupts explicitly.
+	 */
 	sti();
+#endif
 
 	return;
 }

@@ -25,6 +25,8 @@ extern char _binary_login_elf_start[];
 extern char _binary_login_elf_end[];
 extern char _binary_sh_elf_start[];
 extern char _binary_sh_elf_end[];
+extern char _binary_spin_elf_start[];
+extern char _binary_spin_elf_end[];
 
 /* The freestanding demo program, laid into /bin/hello so the shell has a real
  * command to fork/execve. */
@@ -101,19 +103,27 @@ void kmain_aarch64(void)
 	 * Mount a ramfs root, lay the static boot triad + a demo command into it,
 	 * then run /bin/init — which forks /bin/login, login execs /bin/sh.  This is
 	 * the terminal boot action: aarch64_run_init() schedules init and turns this
-	 * (boot) thread into the cooperative idle loop, so it never returns.  EL0 is
-	 * IRQ-masked, so scheduling is cooperative (the console read + wait4 yield);
-	 * preemptible EL0 is deferred (the timer-driven generic reaper races the
-	 * cooperative wait4 over taskList/delList — see cross-arch-plan.md). */
+	 * (boot) thread into the idle loop, so it never returns.  EL0 tasks run with
+	 * IRQs enabled (SPSR.I clear), so the 100 Hz timer preempts them — CPU-bound
+	 * EL0 code time-slices; blocking syscalls (console read, wait4) yield/sleep
+	 * cooperatively.  wait4 blocks via sched_sleep(WAIT) so the timer-driven
+	 * reaper wakes it correctly (no run-queue double-enqueue). */
 	kprintf("\n--- uBixOS aarch64 userland bootstrap ---\n");
 	if (vfs_mount(0, 0, 0, VFS_TYPE_RAMFS, "/", "rw") == 0)
 	{
 		int ok = install_bin("/bin/init", _binary_init_elf_start, _binary_init_elf_end) == 0 &&
 		         install_bin("/bin/login", _binary_login_elf_start, _binary_login_elf_end) == 0 &&
 		         install_bin("/bin/sh", _binary_sh_elf_start, _binary_sh_elf_end) == 0 &&
+		         install_bin("/bin/spin", _binary_spin_elf_start, _binary_spin_elf_end) == 0 &&
 		         install_bin("/bin/hello", _binary_hello_elf_start, _binary_hello_elf_end) == 0;
 		if (ok)
+		{
+			gic_init();
+			timer_init();
+			__asm__ volatile("msr daifclr, #2"); /* unmask IRQ — timer drives preemption */
+			kprintf("IRQs enabled; timer-driven preemption active.\n");
 			aarch64_run_init("/bin/init"); /* never returns */
+		}
 	}
 	else
 	{

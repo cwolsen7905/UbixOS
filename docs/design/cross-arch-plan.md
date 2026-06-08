@@ -383,20 +383,30 @@ are exactly the multiplexing B removes, so they would be discarded.
      - Chosen over the dynamic linker (user steer) to land a real prompt fast.
      Follow-ups: read `/etc/userdb` + no-echo password (no termios yet); argv to
      the shell's children; replace the trio with the real dynamic world.
-     - **Preemptible EL0 — attempted, reverted (mechanism works; reaper races).**
-       Wiring the `0x480` lower-EL IRQ vector + IRQ-enabled EL0 SPSR (0x340) does
-       make the timer preempt EL0: a CPU-bound `/bin/spin` (no syscalls) ran to
-       completion under the 100 Hz tick, proving the EL0 IRQ path. BUT under task
-       churn it corrupts the next task — e.g. `spin` then any command faults with
-       a `/bin/sh` whose `md_entry`/`md_usp` + trapframe `elr`/`x30` have their
-       **high 32 bits zeroed** (`0x100000248`→`0x248`). Root cause: with the timer
-       on, the **generic `sched()` reaper runs from the IRQ and races the
-       cooperative `aarch64_wait4`** — both mutate `taskList`/`delList`/task structs
-       with no mutual exclusion (the cooperative model avoids this by construction).
-       Fix needs reconciled reap ownership (proper locking, or route wait4 through
-       the generic `wait_find_child` + gate the reaper). Deferred; kept cooperative.
-       (The enriched EL1 exception dump — faulting pid/name + md + trapframe regs —
-       was added during this and **kept**.)
+     - ✅ **Preemptible EL0 — DONE.** EL0 tasks run with IRQs enabled (SPSR 0x340)
+       and the `0x480` lower-EL IRQ vector routes to the IRQ handler, so the 100 Hz
+       timer time-slices EL0: a CPU-bound `/bin/spin` (no syscalls) is preempted and
+       still completes, and the interactive chain runs unchanged. Three fixes, all
+       found by the enriched exception dump (faulting pid/name/md + trapframe regs):
+       1. **TLS thread-pointer leak (the real corruption).** The context switch
+          never saved/restored `TPIDR_EL0` — musl's TLS base (errno, cancellation,
+          canary). A parent that forked+waited a *musl* child resumed with the
+          child's stale `TPIDR_EL0`, so its TLS reads hit another task's TCB →
+          garbage addresses → fault. This was a **pre-existing bug unrelated to
+          preemption** (cooperative repro'd identically); only surfaced now because
+          the shell forks musl children (the freestanding `/bin/hello` uses no TLS).
+          Fix: `md_tpidr` in `struct md_proc`; `switch_to` mrs/msr's `TPIDR_EL0`;
+          `aarch64_fork` seeds the child's from the parent's.
+       2. **sched() IRQ model.** The generic `sched()` ends a dispatch with an
+          unconditional `sti()` (correct for i386's preemptible kernel). aarch64
+          runs a *non-preemptible kernel* (syscalls IRQ-masked, only EL0 preempts),
+          so it now `restore_flags()` instead (guarded `#if __aarch64__`; i386 byte-
+          identical) — otherwise a syscall became preemptible after its first
+          cooperative `sched_yield`.
+       3. **wait4 wake protocol.** `aarch64_wait4` now blocks via `sched_sleep(WAIT)`
+          (off the run queue) like the generic `sys_wait4`, so the timer-driven
+          reaper's `WAIT→READY` wake doesn't double-enqueue a still-runnable parent;
+          the reap scan/splice runs under `cli()` (atomic vs the reaper).
   4. **Dynamic linker** — the *real* `init`/`login`/`shell` are dynamically
      linked (`ld-musl-aarch64.so.1`); run them via the dynamic linker (load the
      interp + libc.so).  Unblocks the whole disk-backed world.

@@ -10,6 +10,7 @@
 #include "bringup.h"
 #include <ubixos/sched.h>
 #include <ubixos/sched_internal.h> /* taskList, pid_hash_remove */
+#include <ubixos/wait.h>           /* save_flags/cli/restore_flags */
 #include <ubixos/errno.h>          /* ECHILD */
 #include <vmm/vmm.h>
 #include <vmm/paging.h>
@@ -218,51 +219,90 @@ int aarch64_exec_replace(const char *path)
 }
 
 /**
- * wait4(@want_pid, @status): cooperative reap.  Scan for a child of the current
- * task (any child if @want_pid == -1) that has exited (ZOMBIE/DEAD); collect it
- * (splice from taskList, free) and return its pid.  If a matching child exists
- * but is still running, sched_yield() and retry — EL0 tasks run cooperatively
- * here (IRQ-masked), so yielding lets the child run to exit.
+ * Scan the current task's children for an exited one (any if @want_pid == -1);
+ * if found, collect it (splice from taskList, move to the del list, decrement
+ * the child count) and return it.  Runs with IRQs masked so it is atomic with
+ * respect to the timer-driven sched() reaper (which may transition a child
+ * ZOMBIE->DEAD + notify us concurrently on a different scheduling quantum).
+ *
+ * @param have_child  out: set non-zero if a matching child exists at all (used
+ *                    to distinguish "no such child" -> ECHILD from "not yet").
+ * @return the reaped child, or NULL if none has exited yet.
+ */
+static kTask_t *find_and_reap_child(int want_pid, int *have_child)
+{
+	u_int32_t flags;
+	kTask_t *t, *found = NULL;
+
+	*have_child = 0;
+	save_flags(flags);
+	cli();
+	for (t = taskList; t != NULL; t = t->next)
+	{
+		if (t->parent != _current)
+			continue;
+		if (want_pid != -1 && (int)t->id != want_pid)
+			continue;
+		*have_child = 1;
+		if (t->state == DEAD || t->state == ZOMBIE)
+		{
+			if (t->prev != NULL)
+				t->prev->next = t->next;
+			else
+				taskList = t->next;
+			if (t->next != NULL)
+				t->next->prev = t->prev;
+			pid_hash_remove(t);
+			sched_addDelTask(t);
+			if (_current->children > 0)
+				_current->children--;
+			found = t;
+			break;
+		}
+	}
+	restore_flags(flags);
+	return (found);
+}
+
+/**
+ * wait4(@want_pid, @status): block until a child (any if @want_pid == -1) exits,
+ * then reap it.  Mirrors the generic sys_wait4 blocking protocol: sleep in the
+ * WAIT state (off the run queue) so the timer-driven sched() reaper wakes us
+ * (WAIT->READY) when a child goes ZOMBIE — busy-yielding instead would leave us
+ * runnable and the reaper's wake would double-enqueue us, corrupting the run
+ * queue under preemption.  The re-scan after sched_sleep closes the lost-wakeup
+ * window (child exited between our scan and the sleep).
  *
  * @return the reaped child's pid, or -ECHILD if there is no such child.
  */
 int aarch64_wait4(int want_pid, int *status)
 {
-	kTask_t *t;
-	int have_child;
-
 	for (;;)
 	{
-		have_child = 0;
-		for (t = taskList; t != NULL; t = t->next)
+		int have_child = 0;
+		kTask_t *child = find_and_reap_child(want_pid, &have_child);
+		if (child != NULL)
 		{
-			if (t->parent != _current)
-				continue;
-			if (want_pid != -1 && (int)t->id != want_pid)
-				continue;
-			have_child = 1;
-			if (t->state == DEAD || t->state == ZOMBIE)
-			{
-				int pid = (int)t->id;
-
-				if (status != NULL)
-					*status = 0; /* exit code not yet propagated; report 0 */
-				if (t->prev != NULL)
-					t->prev->next = t->next;
-				else
-					taskList = t->next;
-				if (t->next != NULL)
-					t->next->prev = t->prev;
-				pid_hash_remove(t);
-				sched_addDelTask(t);
-				if (_current->children > 0)
-					_current->children--;
-				return (pid);
-			}
+			if (status != NULL)
+				*status = 0; /* exit code not yet propagated; report 0 */
+			return ((int)child->id);
 		}
 		if (!have_child)
 			return (-ECHILD);
-		sched_yield(); /* let the still-running child make progress */
+
+		/* Block until a child exits.  Re-check after sleeping (the reaper may
+		 * have flagged the child between our scan and the sleep). */
+		sched_sleep(_current, WAIT);
+		child = find_and_reap_child(want_pid, &have_child);
+		if (child != NULL)
+		{
+			sched_wakeup(_current);
+			if (status != NULL)
+				*status = 0;
+			return ((int)child->id);
+		}
+		sched_yield();
+		sched_wakeup(_current);
 	}
 }
 

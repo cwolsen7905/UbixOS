@@ -85,7 +85,7 @@ vectors_el1:
 	VENTRY	el1_invalid	/* 0x300 Current EL SPx  fiq  */
 	VENTRY	el1_invalid	/* 0x380 Current EL SPx  serr */
 	VENTRY	el0_sync	/* 0x400 Lower EL aarch64 sync (SVC syscalls) */
-	VENTRY	el1_invalid	/* 0x480 Lower EL aarch64 irq  (EL0 preemption deferred — see plan) */
+	VENTRY	el1_irq		/* 0x480 Lower EL aarch64 irq  (EL0 preemption — same handler) */
 	VENTRY	el1_invalid	/* 0x500 Lower EL aarch64 fiq  */
 	VENTRY	el1_invalid	/* 0x580 Lower EL aarch64 serr */
 	VENTRY	el1_invalid	/* 0x600 Lower EL aarch32 sync */

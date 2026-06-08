@@ -147,8 +147,8 @@ kernel-aarch64:
 	fi
 	@cd ${OBJ_DIR} && ${CROSS_PREFIX}objcopy -I binary -O elf64-littleaarch64 -B aarch64 \
 	    hello_musl.elf ${OBJ_DIR}/obj/sys/hello_musl_embed.o || exit 1
-	@echo "embedding the static boot triad init/login/sh (built only if musl libc exists)"
-	@for prog in init login sh; do \
+	@echo "embedding the static boot triad init/login/sh + spin (built only if musl libc exists)"
+	@for prog in init login sh spin; do \
 	    if [ -f ${OBJ_DIR}/lib/libc.a ]; then \
 	        ${CROSS_PREFIX}gcc -static -no-pie -fno-pie -ffreestanding -fno-stack-protector -O2 \
 	            -nostdinc -isystem ${CURDIR}/contrib/musl/include -isystem ${CURDIR}/contrib/musl/arch/aarch64 \

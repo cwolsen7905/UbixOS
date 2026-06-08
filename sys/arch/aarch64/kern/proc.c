@@ -104,6 +104,14 @@ void switch_to(kTask_t *prev, kTask_t *next)
 	if (next->md.md_ttbr0 != 0 && next->md.md_ttbr0 != prev->md.md_ttbr0)
 		pmap_switch((u_int64_t *)(uintptr_t)next->md.md_ttbr0);
 
+	/* Save/restore the EL0 TLS thread pointer.  musl keeps its thread-control
+	 * block here (errno, cancellation state, stack-canary base); leaking the
+	 * outgoing task's TPIDR_EL0 into the incoming one makes its TLS accesses read
+	 * another task's (or a freed) TCB — e.g. a parent resuming after a musl child
+	 * exits would inherit the child's thread pointer and fault. */
+	__asm__ volatile("mrs %0, tpidr_el0" : "=r"(prev->md.md_tpidr));
+	__asm__ volatile("msr tpidr_el0, %0" : : "r"(next->md.md_tpidr));
+
 	aarch64_ctx_switch(&prev->md.md_kstack, next->md.md_kstack);
 }
 
@@ -150,6 +158,11 @@ int aarch64_fork(u_int64_t *parent_tf)
 	child->parent = _current;
 	child->ppid = _current->id;
 	_current->children++;
+
+	/* Inherit the parent's EL0 TLS thread pointer: the child's address space is a
+	 * copy, so the parent's TCB lives at the same VA.  The child resumes at the
+	 * fork return point and must see its TLS until it sets up its own. */
+	__asm__ volatile("mrs %0, tpidr_el0" : "=r"(child->md.md_tpidr));
 
 	/* Build the child kernel stack: a copy of the parent trapframe at the top
 	 * (with x0 = 0), and below it a ctx frame that ret_from_fork's into it. */
