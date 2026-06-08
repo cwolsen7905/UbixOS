@@ -66,6 +66,10 @@ int lwip_select(int, struct fd_set *, struct fd_set *, struct fd_set *, struct t
  * and left NULL on arches without a TTY layer. */
 struct fileOps *g_console_ops = 0x0;
 void *(*g_tty_find)(u_int16_t slot) = 0x0;
+/* sys_ioctl hooks (path B): installed by the tty + devfs/device layers; NULL on
+ * arches that don't link them, where the corresponding ioctls become no-ops. */
+void (*g_tty_inject)(void *term, char ch) = 0x0;
+int (*g_dev_char_ioctl)(struct file *fp, u_int32_t com, void *data) = 0x0;
 
 int fcntl(struct thread *td, struct sys_fcntl_args *uap)
 {
@@ -578,10 +582,10 @@ int sys_ioctl(struct thread *td, struct sys_ioctl_args *args)
 		return (0);
 
 	case TIOCSTI:
-		/* Inject one byte into the tty line discipline. */
-		if (on_tty && args->data)
+		/* Inject one byte into the tty line discipline (via the tty hook). */
+		if (on_tty && args->data && g_tty_inject != NULL)
 		{
-			tty_inject(term, *(char *)args->data);
+			g_tty_inject(term, *(char *)args->data);
 			td->td_retval[0] = 0;
 		}
 		else
@@ -597,20 +601,11 @@ int sys_ioctl(struct thread *td, struct sys_ioctl_args *args)
 
 	default:
 	{
-		/* Route audio ioctls to the devfs character device. */
+		/* Route char-device ioctls (e.g. audio) to the driver via the devfs
+		 * hook; -1 when the fd is not a char device or the ioctl is unhandled. */
 		struct file *fp = NULL;
 		getfd(td, &fp, args->fd);
-		if (fp != NULL && fp->fd != NULL && fp->fd->mp != NULL && fp->fd->mp->fs->vfsType == VFS_TYPE_DEVFS)
-		{
-			struct devfs_devices *node = (struct devfs_devices *)(uintptr_t)fp->fd->start;
-			struct ubx_device *dev = ubx_device_find(node->devMajor, node->devMinor);
-			if (dev != NULL && dev->dev_char_ioctl != NULL)
-			{
-				td->td_retval[0] = dev->dev_char_ioctl(dev, (u_int32_t)args->com, args->data);
-				return (0);
-			}
-		}
-		td->td_retval[0] = -1;
+		td->td_retval[0] = (g_dev_char_ioctl != NULL) ? g_dev_char_ioctl(fp, (u_int32_t)args->com, args->data) : -1;
 		return (0);
 	}
 	}

@@ -114,6 +114,13 @@ extern struct fileOps *g_console_ops;
  * without a TTY layer, where /dev/console and /dev/ttyvN opens return ENODEV. */
 extern void *(*g_tty_find)(u_int16_t slot);
 
+/* sys_ioctl hooks: g_tty_inject pushes a byte into the tty line discipline
+ * (TIOCSTI); g_dev_char_ioctl routes a char-device ioctl to its driver
+ * (returns the driver result, or -1 if the fd is not a char device / unhandled).
+ * Installed by the tty + devfs layers; NULL where those aren't linked. */
+extern void (*g_tty_inject)(void *term, char ch);
+extern int (*g_dev_char_ioctl)(struct file *fp, u_int32_t com, void *data);
+
 #ifdef _BALLS
 struct stat {
   __dev_t st_dev; /* inode's device */

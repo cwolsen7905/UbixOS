@@ -356,6 +356,7 @@ int tty_init()
 
 	g_console_ops = &tty_ops;
 	g_tty_find = (void *(*)(u_int16_t))tty_find;
+	g_tty_inject = (void (*)(void *, char))tty_inject;
 
 	/* Allocate memory for terminals */
 	terms = (tty_term *)kmalloc(sizeof(tty_term) * TTY_MAX_TERMS);

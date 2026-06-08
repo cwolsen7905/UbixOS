@@ -29,6 +29,7 @@
 #include <fs/devfs/devfs.h>
 #include <fs/vfs/vfs.h>
 #include <sys/bus.h>
+#include <sys/descrip.h> /* struct file + g_dev_char_ioctl hook (path B) */
 #include <sys/types.h>
 #include <ubixos/spinlock.h>
 #include <ubixos/kpanic.h>
@@ -290,7 +291,28 @@ static int devfs_closedir(kDIR_t *dir) {
   return (0x0);
 }
 
+/*
+ * devfs_char_ioctl — g_dev_char_ioctl hook (path B fileops): route an ioctl on a
+ * devfs char-device fd to the driver's dev_char_ioctl.  Keeps the device-model
+ * lookup out of the generic sys_ioctl (sys/kern/descrip.c).
+ *
+ * @return the driver result, or -1 if @fp is not a devfs char device or the
+ *         driver does not implement an ioctl op.
+ */
+static int devfs_char_ioctl(struct file *fp, u_int32_t com, void *data) {
+  if (fp != NULL && fp->fd != NULL && fp->fd->mp != NULL && fp->fd->mp->fs->vfsType == VFS_TYPE_DEVFS) {
+    struct devfs_devices *node = (struct devfs_devices *)(uintptr_t)fp->fd->start;
+    struct ubx_device *dev = ubx_device_find(node->devMajor, node->devMinor);
+    if (dev != NULL && dev->dev_char_ioctl != NULL)
+      return (dev->dev_char_ioctl(dev, com, data));
+  }
+  return (-1);
+}
+
 int devfs_init() {
+  /* Route char-device ioctls (path B): the generic sys_ioctl calls this hook. */
+  g_dev_char_ioctl = devfs_char_ioctl;
+
   /* Build our devfs struct */
   struct fileSystem devFS = { NULL, /* prev        */
   NULL, /* next        */
