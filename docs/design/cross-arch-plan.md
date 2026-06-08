@@ -244,13 +244,28 @@ are exactly the multiplexing B removes, so they would be discarded.
   remaining external deps are generic (fd table, VFS file layer, lib, sched).
   i386 boot-verified: mounts root, prints `Login:`, blocks stably at the prompt.
   **Two small tty couplings remain in `vfs_calls.c`, deferred to the
-  aarch64-foundational step:** (a) `g_console_ops` is *defined* in `tty.c` (move
-  the definition to a generic file — e.g. `descrip.c` — so it resolves on
-  aarch64; `tty.c` keeps only the install); (b) `tty_find` is still called from
-  `kern_openat`'s `/dev/tty[X]` open special-casing (move that device-open
-  handling behind the tty layer / a devfs registration).  (iv) pipe — cleanup,
-  doesn't block aarch64.  (v) `sys_select`/`sys_ioctl` in `descrip.c` still
-  couple socket/tty (poll-fileop + console hook).
+  aarch64-foundational step.**  ✅ BOTH DONE (commit e8ba832e5): `g_console_ops`
+  moved to `sys/kern/descrip.c` (generic) with `tty.c` keeping only the install;
+  `kern_openat`'s `/dev/console` + `/dev/ttyvN` opens resolve via a `g_tty_find`
+  hook (also generic in descrip.c, installed by tty_init, NULL→ENODEV on
+  aarch64).  **`vfs_calls.c` now calls none of the tty/socket symbols.**
+
+  **Remaining for the aarch64 file-layer link — `descrip.c` (the (v) work):**
+  - **`sys_ioctl`**: `TIOCSTI` calls `tty_inject` (→ a `g_tty_inject` hook); the
+    `default` case routes char-device ioctls via `ubx_device_find` +
+    `dev->dev_char_ioctl` (→ a `g_dev_char_ioctl` hook, installed by the device
+    layer — must stay installed on i386 so audio ioctls keep working).
+  - **`sys_select`**: directly builds lwIP fd-sets (`lwip_select`, `FD_SET` on
+    `f->socket`) and drains the console (`serial_rx_getbyte`/`kbd_getEvent`/
+    `tty_inject`/`tty_foreground`).  Needs a per-fd-type `poll`/`selectable`
+    fileop (socket + tty provide theirs) so the core stops referencing both
+    subsystems — the largest remaining piece.
+  - **Caveat:** neither `sys_select` nor `sys_ioctl` is exercised by the
+    boot-to-`Login:` smoke test, and the changes risk i386's select/device-ioctl
+    paths — they need real coverage (a select-based program, an audio ioctl), so
+    this is a focused step, not a session-tail sprint.
+
+  (iv) pipe — self-contained cleanup, does not block aarch64 linking.
 
   **TTY scope note (iii) — original assessment:** this is the gnarliest extraction — the
   FD_TYPE_TTYV/serial/VGA branches + the Ctrl+Alt+Fn VT-switch (`vesa_text_slot`/
