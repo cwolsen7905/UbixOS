@@ -61,7 +61,7 @@ struct ucred;
  */
 typedef int fo_read_t(struct file *fp, struct thread *td, void *buf, size_t nbyte);
 typedef int fo_write_t(struct file *fp, struct thread *td, const void *buf, size_t nbyte);
-typedef int fo_close_t(struct file *fp, struct thread *td);
+typedef int fo_close_t(struct file *fp, struct thread *td, int fd); /* fd = the descriptor number, for fdestroy */
 
 struct ucred {
     char pad;

@@ -50,10 +50,8 @@
 #include <fs/vfs/mount.h>
 /* fat_filelib.h removed — use VFS unlink() for file removal */
 
-/* Forward-declare lwIP read/write so we can call them for socket fds. */
-int lwip_send(int s, const void *dataptr, size_t size, int flags);
-int lwip_recv(int s, void *mem, size_t len, int flags);
-int lwip_close(int s);
+/* Socket read/write/close moved to the socket fileops (sys/net/net/sys_arch.c);
+ * the lwIP symbols are no longer referenced here. */
 
 /* True when an unblocked signal is pending — used to make blocking I/O
  * loops interruptible.  td must be struct thread *. */
@@ -80,7 +78,7 @@ int sys_close(struct thread *td, struct sys_close_args *args)
 
 	/* Path B (fileops): dispatch through f_ops once the fd type registers it. */
 	if (fd != NULL && fd->f_ops != NULL && fd->f_ops->close != NULL)
-		return (fd->f_ops->close(fd, td));
+		return (fd->f_ops->close(fd, td, args->fd));
 
 	// kprintf("[sC:%i:0x%X:0x%X]", args->fd, fd, fd->fd);
 
@@ -137,17 +135,6 @@ int sys_close(struct thread *td, struct sys_close_args *args)
 
 				td->td_retval[0] = 0;
 				break;
-			case 2:
-				/* Socket fd: tear down the lwIP netconn before freeing the
-				 * descriptor.  Without this, every closed socket leaks its
-				 * netconn (and lwIP socket slot) — the small MEMP_NUM_NETCONN
-				 * pool is exhausted after a few connections and socket()
-				 * starts failing. */
-				lwip_close(fd->socket);
-				if (fdestroy(td, fd, args->fd) != 0)
-					klog(KLOG_ERR, "sys_close: fdestroy failed for socket fd %d", args->fd);
-				td->td_retval[0] = 0;
-				break;
 			case FD_TYPE_TTY:
 			case FD_TYPE_TTYV:
 				/* tty fds have no underlying fileDescriptor_t to close.
@@ -198,29 +185,12 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 
 	getfd(td, &fd, args->fd);
 
-	/* Path B (fileops): once an fd type registers f_ops, read dispatches through
-	 * it; until then f_ops is NULL and the per-type logic below runs unchanged. */
+	/* Path B (fileops): socket fds (and eventually tty/pipe) dispatch through
+	 * f_ops, registered at fd creation, so this core no longer references the
+	 * lwIP/tty symbols directly.  FILE fds leave f_ops NULL and fall through to
+	 * the VFS path below. */
 	if (fd != NULL && fd->f_ops != NULL && fd->f_ops->read != NULL)
 		return (fd->f_ops->read(fd, td, (void *)args->buf, args->nbyte));
-
-	/* Socket fd: route through lwIP */
-	if (fd != NULL && fd->fd_type == 2)
-	{
-		void *kbuf = kmalloc(args->nbyte);
-		if (!kbuf)
-		{
-			td->td_retval[0] = -1;
-			return (-1);
-		}
-		int r = lwip_recv(fd->socket, kbuf, args->nbyte, 0);
-		if (r > 0)
-		{
-			memcpy((void *)args->buf, kbuf, (size_t)r);
-		}
-		kfree(kbuf);
-		td->td_retval[0] = r;
-		return (0);
-	}
 
 	/* Check fd_type first so dup2'd pipe fds work on stdin slot (0-3) */
 	if (fd != 0x0 && fd->fd_type == 3)
@@ -549,25 +519,10 @@ int sys_write(struct thread *td, struct sys_write_args *uap)
 
 	getfd(td, &fd, uap->fd);
 
-	/* Path B (fileops): dispatch through f_ops once the fd type registers it. */
+	/* Path B (fileops): socket fds dispatch through f_ops (registered at fd
+	 * creation); FILE fds fall through to the VFS path below. */
 	if (fd != NULL && fd->f_ops != NULL && fd->f_ops->write != NULL)
 		return (fd->f_ops->write(fd, td, (const void *)uap->buf, uap->nbyte));
-
-	/* Socket fd: route through lwIP */
-	if (fd != NULL && fd->fd_type == 2)
-	{
-		void *kbuf = kmalloc(uap->nbyte);
-		if (!kbuf)
-		{
-			td->td_retval[0] = -1;
-			return (-1);
-		}
-		memcpy(kbuf, uap->buf, uap->nbyte);
-		int r = lwip_send(fd->socket, kbuf, uap->nbyte, 0);
-		kfree(kbuf);
-		td->td_retval[0] = (r >= 0) ? r : -1;
-		return (0);
-	}
 
 	/* Check fd_type first so dup2'd pipe fds work on stdout/stderr slots */
 	if (fd != 0x0 && fd->fd_type == 3)

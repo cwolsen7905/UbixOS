@@ -530,6 +530,58 @@ u_int32_t sys_now() {
   return (sys_unix_now());
 }
 
+/*
+ * Socket fileops (path B of the cross-arch file-syscall plan): the read/write/
+ * close handlers for FD_TYPE_SOCKET live here, with the lwIP socket code — this
+ * file is not linked on architectures without lwIP, so the generic syscall core
+ * (sys/posix/vfs_calls.c) dispatches sockets through fp->f_ops and never refers
+ * to lwip_* directly.  Each follows the syscall convention: set td_retval[0],
+ * return 0 / errno.
+ */
+static int socket_fo_read(struct file *fp, struct thread *td, void *buf, size_t nbyte) {
+  void *kbuf = kmalloc(nbyte);
+  if (!kbuf) {
+    td->td_retval[0] = -1;
+    return (-1);
+  }
+  int r = lwip_recv(fp->socket, kbuf, nbyte, 0);
+  if (r > 0)
+    memcpy(buf, kbuf, (size_t)r);
+  kfree(kbuf);
+  td->td_retval[0] = r;
+  return (0);
+}
+
+static int socket_fo_write(struct file *fp, struct thread *td, const void *buf, size_t nbyte) {
+  void *kbuf = kmalloc(nbyte);
+  if (!kbuf) {
+    td->td_retval[0] = -1;
+    return (-1);
+  }
+  memcpy(kbuf, buf, nbyte);
+  int r = lwip_send(fp->socket, kbuf, nbyte, 0);
+  kfree(kbuf);
+  td->td_retval[0] = (r >= 0) ? r : -1;
+  return (0);
+}
+
+static int socket_fo_close(struct file *fp, struct thread *td, int fd) {
+  /* Tear down the lwIP netconn before freeing the descriptor, else every closed
+   * socket leaks its netconn + lwIP slot (the small MEMP_NUM_NETCONN pool is
+   * exhausted after a few connections and socket() starts failing). */
+  lwip_close(fp->socket);
+  if (fdestroy(td, fp, fd) != 0)
+    kprintf("sys_close: fdestroy failed for socket fd %d\n", fd);
+  td->td_retval[0] = 0;
+  return (0);
+}
+
+static struct fileOps socket_ops = {
+  .read = socket_fo_read,
+  .write = socket_fo_write,
+  .close = socket_fo_close,
+};
+
 int sys_socket(struct thread *td, struct sys_socket_args *args) {
   int error = 0x0;
   int fd = 0x0;
@@ -544,6 +596,7 @@ int sys_socket(struct thread *td, struct sys_socket_args *args) {
    * low byte (SOCK_STREAM=1, SOCK_DGRAM=2, SOCK_RAW=3). */
   nfp->socket = lwip_socket(args->domain, args->type & 0xFF, args->protocol);
   nfp->fd_type = 2;
+  nfp->f_ops = &socket_ops;
 
   if (nfp->socket < 0) {
     if (fdestroy(td, nfp, fd) != 0x0)
@@ -754,6 +807,7 @@ int sys_accept(struct thread *td, struct sys_accept_args *args) {
 
   nfp->socket  = newsock;
   nfp->fd_type = 2;
+  nfp->f_ops   = &socket_ops;
 
   if (args->name && args->anamelen) {
     unsigned int outlen;
