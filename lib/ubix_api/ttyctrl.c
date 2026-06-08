@@ -15,17 +15,16 @@
 /*
  * do_ttyctrl(cmd, val) — bare syscall thunk, args already on stack.
  */
-asm(
-  ".text                           \n"
-  ".globl _do_ttyctrl              \n"
-  ".type  _do_ttyctrl, @function   \n"
-  "_do_ttyctrl:                    \n"
-  "  movl $42, %eax                \n"
-  "  int  $0x81                    \n"
-  "  ret                           \n"
-);
+#include "ubix_syscall.h"
+UBIX_NATIVE_THUNK(_do_ttyctrl, 42);
 
 static int _do_ttyctrl(int cmd, int val);
 
-int tty_setraw(int val)  { return _do_ttyctrl(0, val); }
-int tty_setecho(int val) { return _do_ttyctrl(1, val); }
+int tty_setraw(int val)
+{
+	return _do_ttyctrl(0, val);
+}
+int tty_setecho(int val)
+{
+	return _do_ttyctrl(1, val);
+}

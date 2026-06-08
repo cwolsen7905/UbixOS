@@ -32,37 +32,12 @@
  * settty.c.
  */
 
-asm(".text                            \n"
-    ".globl _do_ptyalloc              \n"
-    ".type  _do_ptyalloc, @function   \n"
-    "_do_ptyalloc:                    \n"
-    "  movl $55, %eax                 \n"
-    "  int  $0x81                     \n"
-    "  ret                            \n"
-    ".globl _do_ptyfree               \n"
-    ".type  _do_ptyfree, @function    \n"
-    "_do_ptyfree:                     \n"
-    "  movl $56, %eax                 \n"
-    "  int  $0x81                     \n"
-    "  ret                            \n"
-    ".globl _do_ptyinject             \n"
-    ".type  _do_ptyinject, @function  \n"
-    "_do_ptyinject:                   \n"
-    "  movl $57, %eax                 \n"
-    "  int  $0x81                     \n"
-    "  ret                            \n"
-    ".globl _do_ptysnap               \n"
-    ".type  _do_ptysnap, @function    \n"
-    "_do_ptysnap:                     \n"
-    "  movl $58, %eax                 \n"
-    "  int  $0x81                     \n"
-    "  ret                            \n"
-    ".globl _do_ptyresize             \n"
-    ".type  _do_ptyresize, @function  \n"
-    "_do_ptyresize:                   \n"
-    "  movl $61, %eax                 \n"
-    "  int  $0x81                     \n"
-    "  ret                            \n");
+#include "ubix_syscall.h"
+UBIX_NATIVE_THUNK(_do_ptyalloc, 55);
+UBIX_NATIVE_THUNK(_do_ptyfree, 56);
+UBIX_NATIVE_THUNK(_do_ptyinject, 57);
+UBIX_NATIVE_THUNK(_do_ptysnap, 58);
+UBIX_NATIVE_THUNK(_do_ptyresize, 61);
 
 static int _do_ptyalloc(void);
 static int _do_ptyfree(int slot);

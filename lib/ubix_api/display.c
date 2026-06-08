@@ -34,10 +34,5 @@
  * is only safe in the systemtask context).
  */
 
-asm(".text                            \n"
-    ".globl ubix_vesa_modes           \n"
-    ".type  ubix_vesa_modes, @function\n"
-    "ubix_vesa_modes:                 \n"
-    "  movl $60, %eax                 \n"
-    "  int  $0x81                     \n"
-    "  ret                            \n");
+#include "ubix_syscall.h"
+UBIX_NATIVE_THUNK(ubix_vesa_modes, 60);

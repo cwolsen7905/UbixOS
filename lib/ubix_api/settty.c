@@ -14,16 +14,12 @@
 /*
  * _do_settty(slot) — bare syscall thunk; slot is the first (and only) arg.
  */
-asm(
-  ".text                           \n"
-  ".globl _do_settty               \n"
-  ".type  _do_settty, @function    \n"
-  "_do_settty:                     \n"
-  "  movl $48, %eax                \n"
-  "  int  $0x81                    \n"
-  "  ret                           \n"
-);
+#include "ubix_syscall.h"
+UBIX_NATIVE_THUNK(_do_settty, 48);
 
 static int _do_settty(int slot);
 
-int settty(int slot) { return _do_settty(slot); }
+int settty(int slot)
+{
+	return _do_settty(slot);
+}

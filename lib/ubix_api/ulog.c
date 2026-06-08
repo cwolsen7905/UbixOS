@@ -38,14 +38,9 @@
 /* Matches the kernel klog message cap (see bin/logd). */
 #define ULOG_MSG_MAX 188
 
-/* Bare syscall thunk: args stay at [esp+4..] when int $0x81 fires. */
-asm(".text                              \n"
-    ".globl _do_klog_write              \n"
-    ".type  _do_klog_write, @function   \n"
-    "_do_klog_write:                    \n"
-    "  movl $49, %eax                   \n"
-    "  int  $0x81                       \n"
-    "  ret                              \n");
+/* Bare syscall thunk: args reach the kernel where the C ABI puts them. */
+#include "ubix_syscall.h"
+UBIX_NATIVE_THUNK(_do_klog_write, 49);
 extern void _do_klog_write(int level, const char *msg);
 
 void ulog(int level, const char *msg)

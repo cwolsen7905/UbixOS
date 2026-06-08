@@ -33,7 +33,7 @@ OUTPUT  = ubix_api.so
 	$(CC) $(CFLAGS) ${CROSS_M32} -Wall -nostdinc -O \
 		-I${SRCTOP}/contrib/musl/include \
 		-I${OBJ_DIR}/obj/musl/obj/include \
-		-I${SRCTOP}/contrib/musl/arch/i386 \
+		-I${SRCTOP}/contrib/musl/arch/${MUSL_ARCH} \
 		-I${SRCTOP}/contrib/musl/arch/generic \
 		-I./include -I../../include \
 		-MT ${.TARGET:T} -MF ${OBJDIR}/${.TARGET:T:.o=.d} \
@@ -47,7 +47,7 @@ OUTPUT  = ubix_api.so
 all: lib.so lib.a
 
 lib.so: $(OBJS_SO)
-	$(CC) -m32 -nostdlib -shared -Wl,-soname,ubix_api.so -Wl,-m,elf_i386 \
+	$(CC) ${CROSS_M32} -nostdlib -shared -Wl,-soname,ubix_api.so -Wl,-m,${MUSL_LDEMULATION} \
 		-o ${OBJ_DIR}/lib/$(OUTPUT) \
 		${OBJS_SO:S|^|${OBJDIR}/|}
 

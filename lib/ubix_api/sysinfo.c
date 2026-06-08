@@ -31,13 +31,8 @@
 
 #include <api/ubix.h>
 
-asm(".text                            \n"
-    ".globl _do_sysinfo               \n"
-    ".type  _do_sysinfo, @function    \n"
-    "_do_sysinfo:                     \n"
-    "  movl $62, %eax                 \n"
-    "  int  $0x81                     \n"
-    "  ret                            \n");
+#include "ubix_syscall.h"
+UBIX_NATIVE_THUNK(_do_sysinfo, 62);
 
 static int _do_sysinfo(struct ubix_sysinfo *out);
 

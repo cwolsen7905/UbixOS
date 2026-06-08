@@ -32,18 +32,34 @@
  * syscall handler can read buf and size directly from [esp+4] and [esp+8].
  * Returns buf on success, NULL on error (eax != 0 from kernel).
  */
-asm(
-  ".text                          \n"
-  ".globl ubix_getcwd             \n"
-  ".type  ubix_getcwd, @function  \n"
-  "ubix_getcwd:                   \n"
-  "  movl $41, %eax               \n"
-  "  int  $0x81                   \n"
-  "  testl %eax, %eax             \n"
-  "  jnz  ubix_getcwd_err         \n"
-  "  movl 4(%esp), %eax           \n"  /* return buf */
-  "  ret                          \n"
-  "ubix_getcwd_err:               \n"
-  "  xorl %eax, %eax              \n"  /* return NULL */
-  "  ret                          \n"
-);
+#ifdef __aarch64__
+/* buf in x0, size in x1.  Native syscall 41 returns 0 on success (in x0); on
+ * success hand back the original buf, otherwise NULL. */
+asm(".text                          \n"
+    ".globl ubix_getcwd             \n"
+    ".type  ubix_getcwd, %function  \n"
+    "ubix_getcwd:                   \n"
+    "  mov x9, x0                   \n" /* save buf */
+    "  mov x8, #(41 | 0x8000)       \n"
+    "  svc #0                       \n"
+    "  cbnz x0, 1f                  \n" /* kernel ret != 0 -> error */
+    "  mov x0, x9                   \n" /* return buf */
+    "  ret                          \n"
+    "1:                             \n"
+    "  mov x0, #0                   \n" /* return NULL */
+    "  ret                          \n");
+#else
+asm(".text                          \n"
+    ".globl ubix_getcwd             \n"
+    ".type  ubix_getcwd, @function  \n"
+    "ubix_getcwd:                   \n"
+    "  movl $41, %eax               \n"
+    "  int  $0x81                   \n"
+    "  testl %eax, %eax             \n"
+    "  jnz  ubix_getcwd_err         \n"
+    "  movl 4(%esp), %eax           \n" /* return buf */
+    "  ret                          \n"
+    "ubix_getcwd_err:               \n"
+    "  xorl %eax, %eax              \n" /* return NULL */
+    "  ret                          \n");
+#endif

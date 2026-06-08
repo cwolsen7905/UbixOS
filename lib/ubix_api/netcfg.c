@@ -32,10 +32,5 @@
  * cfg pointer directly from [esp+4].  Returns 0 on success, -1 on error (eax).
  */
 
-asm(".text                            \n"
-    ".globl ubix_net_configure        \n"
-    ".type  ubix_net_configure, @function \n"
-    "ubix_net_configure:              \n"
-    "  movl $59, %eax                 \n"
-    "  int  $0x81                     \n"
-    "  ret                            \n");
+#include "ubix_syscall.h"
+UBIX_NATIVE_THUNK(ubix_net_configure, 59);
