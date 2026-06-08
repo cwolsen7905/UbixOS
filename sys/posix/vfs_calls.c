@@ -29,7 +29,7 @@
 #include <ubixos/sched.h>
 #include <ubixos/tty.h>
 #include <ubixos/signal.h>
-#include <i386/signal.h>
+#include <machine/signal.h>
 #include <isa/rs232.h>
 #include <isa/kbd.h>
 #include <isa/atkbd.h>
