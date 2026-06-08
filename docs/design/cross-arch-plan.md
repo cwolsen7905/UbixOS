@@ -483,8 +483,12 @@ engine; new syscalls are added once in the table, not hand-mapped per arch.
 - `sys_sysarch` is `#if __i386__`-guarded (aarch64 TLS is TPIDR_EL0, set at EL0).
 - i386 keeps its asm dispatch for now; the engine is shared-ready (i386 could adopt
   it by feeding stack-gathered args to `ksyscall_dispatch`).
-Follow-up (cosmetic): prune the now-redundant explicit cases in syscall.c that the
-table handles identically (open/read/close/lseek/getdents/statx/...).
+The explicit arch pre-cases in syscall.c that the table would also handle are now
+redundant belt-and-suspenders, but kept: a trial prune (routing statx/clock_gettime/
+fcntl/munmap/nanosleep/sched_yield through the table instead) tripped an HVF host
+assertion (`isv`, hvf.c) during `ls` — one of the generic handlers does something
+HVF can't emulate via the table path.  The pre-cases are harmless + proven, so the
+prune is deferred until that handler is identified (bisect under TCG, not HVF).
 
   (iv) pipe — self-contained cleanup, does not block aarch64 linking.
 
