@@ -60,6 +60,23 @@ static mpi_mbox_t *mpi_findMbox(char *name)
 	return (0x0);
 }
 
+/**
+ * Report whether a mailbox named @name currently exists.  Public, task-safe
+ * (takes the MPI lock) — used by the boot path to wait for a daemon (e.g.
+ * ubistry) to come up before launching clients that query it.
+ *
+ * @return 1 if the mailbox exists, 0 otherwise.
+ */
+int mpi_mbox_exists(const char *name)
+{
+	int found;
+
+	spinLock(&mpiSpinLock);
+	found = (mpi_findMbox((char *)name) != 0x0);
+	spinUnlock(&mpiSpinLock);
+	return (found);
+}
+
 /*****************************************************************************************
 
  Function: int mpiCreateMbox(char *name)

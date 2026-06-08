@@ -54,6 +54,11 @@ for f in tools/backgrounds/*.bmp tools/backgrounds/*.png; do
 	[ -f "$f" ] && mcopy -o -i "${IMG}" "$f" ::/var/background/
 done
 
+# ubistry registry seed (wallpaper/theme/per-user prefs) — the daemon loads it
+# from /var/db/ubistry.db at startup.
+mmd -i "${IMG}" ::/var/db 2>/dev/null || true
+[ -f tools/ubistry.db ] && mcopy -o -i "${IMG}" tools/ubistry.db ::/var/db/ubistry.db || true
+
 echo "mkimage-arm: done — contents:"
 mdir -i "${IMG}" ::/bin | tail -n +4 | head -20
 echo "  (boot with: bmake run-debug-aarch64 TARGET=aarch64)"

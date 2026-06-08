@@ -18,6 +18,8 @@
 #include <fs/fat/fat.h>     /* fat_init — disk-backed root */
 #include <fs/devfs/devfs.h> /* devfs_init — /dev/{null,zero,...} for the shell */
 #include <sys/bus.h>        /* struct ubx_device — virtio-blk block device */
+#include <mpi/mpi.h>        /* mpi_mbox_exists — wait for the ubistry daemon */
+#include <ubixos/sched.h>   /* sched_yield */
 
 /* The static boot triad — init forks login, login execs sh — laid into the
  * ramfs root as /bin/{init,login,sh}.  Stands in for the real (dynamically
@@ -155,6 +157,21 @@ void kmain_aarch64(void)
 			 * chain is aarch64_run_dynamic_init("/bin/login"), still available as a
 			 * fallback.) */
 			kprintf("\n--- disk-backed desktop ---\n");
+
+			/* Start the ubistry registry daemon and wait (bounded) for its
+			 * mailbox before launching the desktop, so views/vlogin read real
+			 * settings (wallpaper/theme/per-user prefs) instead of falling back
+			 * to defaults.  ubistry creates its mailbox only after loading
+			 * /var/db/ubistry.db, so the mailbox existing = fully ready. */
+			aarch64_spawn_dynamic("/bin/ubistry");
+			{
+				int tries = 100000;
+				while (!mpi_mbox_exists("ubistry") && --tries > 0)
+					sched_yield();
+				if (tries == 0)
+					kprintf("desktop: ubistry not ready — using defaults\n");
+			}
+
 			aarch64_spawn_dynamic("/bin/authd");    /* real authd (PBKDF2/BearSSL) from disk */
 			aarch64_run_dynamic_init("/bin/views"); /* compositor -> forks vlogin; never returns */
 		}

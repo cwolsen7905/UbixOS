@@ -52,13 +52,16 @@ int main(int argc, char **argv)
 	(void)argc;
 	(void)argv;
 
-	if (ubistry_init_mbox(UBISTRY_MBOX) != 0)
-		exit(1);
-
 	ub_root(); /* materialise the root container */
 
 	if (persist_load(UBISTRY_DB) != 0)
 		ulogf(ULOG_WARNING, "ubistry: %s not found — starting empty", UBISTRY_DB);
+
+	/* Create the serving mailbox LAST, so a client (or the boot path) that sees
+	 * the "ubistry" mailbox exist knows the registry is fully loaded and ready —
+	 * no window where a GET races an unpopulated db. */
+	if (ubistry_init_mbox(UBISTRY_MBOX) != 0)
+		exit(1);
 
 	ulogf(ULOG_INFO, "ubistry: ready (db %s)", UBISTRY_DB);
 
