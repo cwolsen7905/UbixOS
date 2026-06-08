@@ -290,21 +290,8 @@ int sys_settty(struct thread *td, struct sys_settty_args *uap)
 	(void)uap;
 	ENOSYS_STUB(td);
 }
-int sys_getkbd(struct thread *td, struct sys_getkbd_args *uap)
-{
-	(void)uap;
-	ENOSYS_STUB(td);
-}
-int sys_getmouse(struct thread *td, struct sys_getmouse_args *uap)
-{
-	(void)uap;
-	ENOSYS_STUB(td);
-}
-int sys_mapfb(struct thread *td, struct sys_mapfb_args *uap)
-{
-	(void)uap;
-	ENOSYS_STUB(td);
-}
+/* sys_getkbd + sys_getmouse: real implementations in sys/arch/aarch64/dev/input.c. */
+/* sys_mapfb + sys_fbpresent: real implementations in sys/arch/aarch64/dev/display.c. */
 int sys_shareregion(struct thread *td, struct sys_shareregion_args *uap)
 {
 	(void)uap;

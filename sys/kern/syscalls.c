@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -116,8 +116,11 @@ struct syscall_entry systemCalls[] = {
     {ARG_COUNT(sys_mpiFetchMessage_args),
      "mpiFetchMEssage",
      (sys_call_t *)sys_mpiFetchMessage,
-     SYSCALL_VALID},                                                                          // 53 - mpiFetchMessage
-    {0, "No Call", sys_invalid, SYSCALL_VALID},                                               // 54 - mpiSpam
+     SYSCALL_VALID}, // 53 - mpiFetchMessage
+    {ARG_COUNT(sys_fbpresent_args),
+     "fbpresent",
+     (sys_call_t *)sys_fbpresent,
+     SYSCALL_VALID}, // 54 - fbpresent (retired: mpiSpam)
     {ARG_COUNT(sys_ptyalloc_args), "ptyalloc", (sys_call_t *)sys_ptyalloc, SYSCALL_VALID},    // 55 - ptyalloc
     {ARG_COUNT(sys_ptyfree_args), "ptyfree", (sys_call_t *)sys_ptyfree, SYSCALL_VALID},       // 56 - ptyfree
     {ARG_COUNT(sys_ptyinject_args), "ptyinject", (sys_call_t *)sys_ptyinject, SYSCALL_VALID}, // 57 - ptyinject
@@ -129,10 +132,13 @@ struct syscall_entry systemCalls[] = {
     {ARG_COUNT(sys_vesa_modes_args), "vesa_modes", (sys_call_t *)sys_vesa_modes, SYSCALL_VALID}, // 60 - vesa_modes
     {ARG_COUNT(sys_ptyresize_args), "ptyresize", (sys_call_t *)sys_ptyresize, SYSCALL_VALID},    // 61 - ptyresize
     {ARG_COUNT(sys_sysinfo_args), "sysinfo", (sys_call_t *)sys_sysinfo, SYSCALL_VALID},          // 62 - sysinfo
-    {1, "set_thread_area", (sys_call_t *)sys_set_thread_area, SYSCALL_VALID},                    // 63 - set_thread_area (musl TLS)
-    {4, "futex", (sys_call_t *)sys_futex, SYSCALL_VALID},                                        // 64 - futex (musl threading)
-    {1, "exit_group", (sys_call_t *)sys_exit_group, SYSCALL_VALID},                              // 65 - exit_group (musl exit)
-    {2, "thread_exit_unmap", (sys_call_t *)sys_thread_exit_unmap, SYSCALL_VALID},                // 66 - unmap own stack + exit (musl __unmapself)
+    {1, "set_thread_area", (sys_call_t *)sys_set_thread_area, SYSCALL_VALID}, // 63 - set_thread_area (musl TLS)
+    {4, "futex", (sys_call_t *)sys_futex, SYSCALL_VALID},                     // 64 - futex (musl threading)
+    {1, "exit_group", (sys_call_t *)sys_exit_group, SYSCALL_VALID},           // 65 - exit_group (musl exit)
+    {2,
+     "thread_exit_unmap",
+     (sys_call_t *)sys_thread_exit_unmap,
+     SYSCALL_VALID}, // 66 - unmap own stack + exit (musl __unmapself)
 };
 
 int totalCalls = sizeof(systemCalls) / sizeof(struct syscall_entry);

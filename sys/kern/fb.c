@@ -135,6 +135,19 @@ int sys_sysinfo(struct thread *td, struct sys_sysinfo_args *args)
 	return (0);
 }
 
+/*
+ * sys_fbpresent (slot 54) — present the mapped framebuffer.  On i386 the VESA
+ * LFB mapped by sys_mapfb is the live scanout, so a write is already visible and
+ * this is a no-op; it exists so the compositor's per-frame present call is
+ * architecture-agnostic (on aarch64 it flushes the virtio-gpu scanout).
+ */
+int sys_fbpresent(struct thread *td, struct sys_fbpresent_args *args)
+{
+	(void)args;
+	td->td_retval[0] = 0;
+	return (0);
+}
+
 int sys_shareregion(struct thread *td, struct sys_shareregion_args *args)
 {
 	uintptr_t client_vaddr;

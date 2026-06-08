@@ -120,6 +120,15 @@ struct sys_mapfb_args
 };
 int sys_mapfb(struct thread *, struct sys_mapfb_args *);
 
+/* sys_fbpresent (native 54) — push the mapped framebuffer to the display.
+ * No-op on i386 (the VESA LFB is the live scanout); on aarch64 it issues a
+ * virtio-gpu TRANSFER_TO_HOST_2D + RESOURCE_FLUSH.  Takes no arguments. */
+struct sys_fbpresent_args
+{
+	register_t dummy;
+};
+int sys_fbpresent(struct thread *, struct sys_fbpresent_args *);
+
 struct sys_getmouse_args
 {
 	struct mouse_event *ev;
