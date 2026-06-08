@@ -23,6 +23,11 @@
 #include <mpi/mpi.h>            /* MPI mailboxes (native syscalls 50-53) */
 #include <string.h>             /* strncpy (getcwd) */
 #include <fs/vfs/stat.h>        /* struct statx (sys_statx) */
+#include <ubixos/syscalls.h>    /* systemCalls[] / systemCalls_posix[] tables */
+
+/* Generic table-driven dispatch engine (sys/kern/syscall_dispatch.c). */
+register_t ksyscall_dispatch(
+    struct thread *td, struct syscall_entry *tbl, int count, u_int32_t number, register_t *args);
 
 #define SYS_EXIT 1
 #define SYS_READ 3
@@ -206,8 +211,10 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args)
 			}
 
 			default:
-				kprintf("[kernel] unimplemented native EL0 syscall #%lu\n", n);
-				return (u_int64_t)-1;
+				/* Fall through to the shared native table (systemCalls[]) — new
+				 * native syscalls are added there, not hand-mapped here. */
+				return (u_int64_t)ksyscall_dispatch(
+				    &_current->td, systemCalls, totalCalls, (u_int32_t)n, (register_t *)args);
 		}
 	}
 
@@ -425,7 +432,11 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args)
 			return 0; /* unreachable */
 
 		default:
-			kprintf("[kernel] unknown EL0 syscall #%lu\n", number);
-			return (u_int64_t)-1;
+			/* Fall through to the shared POSIX table (systemCalls_posix[]) — the
+			 * arch-special calls above are intercepted; everything else dispatches
+			 * through the generic table, so new syscalls are added once (in the
+			 * table) rather than hand-mapped per architecture. */
+			return (u_int64_t)ksyscall_dispatch(
+			    &_current->td, systemCalls_posix, totalCalls_posix, (u_int32_t)number, (register_t *)args);
 	}
 }

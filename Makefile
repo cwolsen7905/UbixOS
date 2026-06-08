@@ -114,8 +114,13 @@ AARCH64_GENERIC_SRCS = \
 	sys/fs/fat/fat_sector.c \
 	sys/fs/fat/fat_vfs.c \
 	sys/fs/vfs/stat.c \
+	sys/kern/syscalls.c \
+	sys/kern/syscall_dispatch.c \
+	sys/posix/syscalls_posix.c \
+	sys/posix/gen_calls.c \
 	sys/mpi/system.c \
 	sys/mpi/message.c \
+	sys/mpi/mpi_syscalls.c \
 	sys/posix/vfs_calls.c
 
 kernel-aarch64:
