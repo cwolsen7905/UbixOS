@@ -34,5 +34,5 @@
  * is only safe in the systemtask context).
  */
 
-#include "ubix_syscall.h"
+#include <sys/ubix_syscall.h>
 UBIX_NATIVE_THUNK(ubix_vesa_modes, 60);

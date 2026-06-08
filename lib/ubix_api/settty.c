@@ -14,7 +14,7 @@
 /*
  * _do_settty(slot) — bare syscall thunk; slot is the first (and only) arg.
  */
-#include "ubix_syscall.h"
+#include <sys/ubix_syscall.h>
 UBIX_NATIVE_THUNK(_do_settty, 48);
 
 static int _do_settty(int slot);

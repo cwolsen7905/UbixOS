@@ -198,14 +198,12 @@ world:
 	${MAKE} musl-libc
 	@echo
 	@echo "***************************************************************"
-	@echo "Step 1a: Build libcxxabi (C++ ABI)"
+	@echo "Step 1a/1b: Build libcxxabi + libcxx (C++) — i386 only for now"
 	@echo "***************************************************************"
-	cd ${CURDIR}/contrib/libcxxabi; ${MAKE} all
-	@echo
-	@echo "***************************************************************"
-	@echo "Step 1b: Build libcxx (LLVM libc++)"
-	@echo "***************************************************************"
-	cd ${CURDIR}/contrib/libcxx; ${MAKE} all
+	@if [ "${_ARCH}" != "aarch64" ]; then \
+	    ( cd ${CURDIR}/contrib/libcxxabi; ${MAKE} all ) && \
+	    ( cd ${CURDIR}/contrib/libcxx;    ${MAKE} all ); \
+	  else echo "skip: C++ runtime not yet ported to aarch64"; fi
 	@echo
 	@echo "***************************************************************"
 	@echo "Step 1: Build World Libraries"
@@ -213,9 +211,11 @@ world:
 	cd ${WORLD_LIB_SRC}; ${WMAKE} all
 	@echo
 	@echo "***************************************************************"
-	@echo "Step 2: Build World Libexec"
+	@echo "Step 2: Build World Libexec — i386 only (native ld; musl ld.so on aarch64)"
 	@echo "***************************************************************"
-	cd ${WORLD_LIBEXEC_SRC}; ${WMAKE} all
+	@if [ "${_ARCH}" != "aarch64" ]; then \
+	    cd ${WORLD_LIBEXEC_SRC}; ${WMAKE} all; \
+	  else echo "skip: native libexec/ld superseded by musl ld.so"; fi
 	@echo
 	@echo "***************************************************************"
 	@echo "Step 3: Build World Binaries"
@@ -223,9 +223,10 @@ world:
 	cd ${WORLD_BIN_SRC}; ${WMAKE} all
 	@echo
 	@echo "***************************************************************"
-	@echo "Step 4: Build NetSurf browser (nsfb)"
+	@echo "Step 4: Build NetSurf browser (nsfb) — i386 only for now"
 	@echo "***************************************************************"
-	${MAKE} netsurf
+	@if [ "${_ARCH}" != "aarch64" ]; then ${MAKE} netsurf; \
+	  else echo "skip: NetSurf (needs C++/objgfx stack) not yet ported to aarch64"; fi
 	@echo
 	@echo "***************************************************************"
 	@echo "World Build For ${_ARCH} Completed On `LC_ALL=C date`"

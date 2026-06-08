@@ -32,7 +32,7 @@
  * settty.c.
  */
 
-#include "ubix_syscall.h"
+#include <sys/ubix_syscall.h>
 UBIX_NATIVE_THUNK(_do_ptyalloc, 55);
 UBIX_NATIVE_THUNK(_do_ptyfree, 56);
 UBIX_NATIVE_THUNK(_do_ptyinject, 57);

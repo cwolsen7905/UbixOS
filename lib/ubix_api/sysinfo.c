@@ -31,7 +31,7 @@
 
 #include <api/ubix.h>
 
-#include "ubix_syscall.h"
+#include <sys/ubix_syscall.h>
 UBIX_NATIVE_THUNK(_do_sysinfo, 62);
 
 static int _do_sysinfo(struct ubix_sysinfo *out);

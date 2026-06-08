@@ -55,15 +55,18 @@ LIBGCC != ${CROSS_PREFIX}gcc ${CROSS_M32} -print-libgcc-file-name 2>/dev/null
 # top-level Makefile via WMAKE; default i386 so a bare invocation is unchanged.
 #   MUSL_ARCH         musl per-arch header subdir under contrib/musl/arch/
 #   MUSL_LDEMULATION  ld -m emulation
+#   ARCH_NOSIMD       flags to suppress SIMD codegen (x86 SSE/MMX; n/a elsewhere)
 _ARCH ?= i386
 .if ${_ARCH} == "aarch64"
 MUSL_ARCH        ?= aarch64
 MUSL_LDEMULATION ?= aarch64elf
+ARCH_NOSIMD      ?=
 .else
 MUSL_ARCH        ?= i386
 MUSL_LDEMULATION ?= elf_i386
+ARCH_NOSIMD      ?= -mno-sse -mno-sse2 -mno-mmx -mno-3dnow
 .endif
 
-.export CROSS_PREFIX CROSS_M32 LIBGCC GNU_MAKE MUSL_ARCH MUSL_LDEMULATION
+.export CROSS_PREFIX CROSS_M32 LIBGCC GNU_MAKE MUSL_ARCH MUSL_LDEMULATION ARCH_NOSIMD
 
 .endif # _UBIX_PLATFORM_MK

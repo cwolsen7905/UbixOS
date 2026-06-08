@@ -39,7 +39,7 @@
 #define ULOG_MSG_MAX 188
 
 /* Bare syscall thunk: args reach the kernel where the C ABI puts them. */
-#include "ubix_syscall.h"
+#include <sys/ubix_syscall.h>
 UBIX_NATIVE_THUNK(_do_klog_write, 49);
 extern void _do_klog_write(int level, const char *msg);
 

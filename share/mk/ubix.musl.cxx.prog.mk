@@ -20,7 +20,7 @@ MUSL_INC = ${MUSL_BASE_INC}
 CXX_CFLAGS = ${CROSS_M32} -std=c++20 \
              -nostdlib -nostdinc -nostdinc++ -fno-builtin \
              -fno-rtti -fno-exceptions \
-             -mno-sse -mno-sse2 -mno-mmx -mno-3dnow -MMD -MP \
+             ${ARCH_NOSIMD} -MMD -MP \
              -Wa,--noexecstack -Wall -O \
              -D_LIBCPP_HAS_NO_EXCEPTIONS
 
@@ -41,7 +41,7 @@ OBJDIR ?= ${OBJ_DIR}/obj/bin/${.CURDIR:T}
 .c.o:
 	@mkdir -p ${OBJDIR}
 	$(CC) ${CROSS_M32} -nostdlib -nostdinc -fno-builtin \
-		-mno-sse -mno-sse2 -mno-mmx -mno-3dnow -MMD -MP -Wall -O \
+		${ARCH_NOSIMD} -MMD -MP -Wall -O \
 		$(MUSL_INC) -I${SRCTOP}/include -MT ${.TARGET:T} -c -o ${OBJDIR}/${.TARGET:T} ${.IMPSRC}
 
 .S.o:

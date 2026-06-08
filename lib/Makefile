@@ -1,6 +1,16 @@
 # Makefile (C) 2002 The uBixOS Project
 
+# aarch64 (Track B port) builds only the core libraries the CLI world needs:
+# ubix_api (the native-syscall thunks every bin/ program links).  The graphics
+# (objgfx), crypto/net (bearssl/pw/http), and NetSurf library stacks still
+# hardcode i386 and are desktop-era — they stay i386-only until ported.  crt.a
+# is an x86_64-elf libgcc shim (real aarch64 libgcc is complete) and is not on
+# the bin/ link line, so it is omitted too.
+.if ${_ARCH} == "aarch64"
+all: ubix_api-code
+.else
 all: crt-code ubix_api-code ubix-code objgfx-code libaudio-code libbearssl-code libpw-code libhttp-code libwapcaplet-code libparserutils-code libcss-code libhubbub-code libdom-code libnsgif-code libnsbmp-code libnsfb-code libnsutils-code libutf8proc-code #csu-code
+.endif
 # bin tools
 # depend kernel tools
 

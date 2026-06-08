@@ -21,7 +21,7 @@ EXTRA_CFLAGS  ?=
 MUSL_INC = ${MUSL_BASE_INC} -I${SRCTOP}/include
 
 MUSL_CFLAGS = ${CROSS_M32} -nostdlib -nostdinc -fno-builtin \
-              -mno-sse -mno-sse2 -mno-mmx -mno-3dnow -MMD -MP \
+              ${ARCH_NOSIMD} -MMD -MP \
               -Wa,--noexecstack -Wall -O
 
 OBJDIR ?= ${OBJ_DIR}/obj/bin/${.CURDIR:T}

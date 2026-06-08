@@ -15,7 +15,7 @@
 /*
  * do_ttyctrl(cmd, val) — bare syscall thunk, args already on stack.
  */
-#include "ubix_syscall.h"
+#include <sys/ubix_syscall.h>
 UBIX_NATIVE_THUNK(_do_ttyctrl, 42);
 
 static int _do_ttyctrl(int cmd, int val);

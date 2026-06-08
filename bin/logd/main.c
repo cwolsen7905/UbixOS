@@ -46,91 +46,90 @@
 #include <time.h>
 #include <unistd.h>
 #include <sched.h>
+#include <sys/ubix_syscall.h>
 
 /* Match the kernel definition exactly */
-#define KLOG_MSG_MAX   188
+#define KLOG_MSG_MAX 188
 #define KLOG_RING_SIZE 256
 
-#define KLOG_EMERG    0
-#define KLOG_ALERT    1
-#define KLOG_CRIT     2
-#define KLOG_ERR      3
-#define KLOG_WARNING  4
-#define KLOG_NOTICE   5
-#define KLOG_INFO     6
-#define KLOG_DEBUG    7
+#define KLOG_EMERG 0
+#define KLOG_ALERT 1
+#define KLOG_CRIT 2
+#define KLOG_ERR 3
+#define KLOG_WARNING 4
+#define KLOG_NOTICE 5
+#define KLOG_INFO 6
+#define KLOG_DEBUG 7
 
-struct klog_entry {
-	uint32_t  ke_seq;
-	uint32_t  ke_ticks;
-	uint32_t  ke_time;   /* Unix timestamp (seconds) */
-	uint8_t   ke_level;
-	char      ke_msg[KLOG_MSG_MAX];
+struct klog_entry
+{
+	uint32_t ke_seq;
+	uint32_t ke_ticks;
+	uint32_t ke_time; /* Unix timestamp (seconds) */
+	uint8_t ke_level;
+	char ke_msg[KLOG_MSG_MAX];
 } __attribute__((packed));
 
 /*
- * Native syscall stubs — must be bare asm with no C prologue so that
- * esp+4 still points at the first argument when int $0x81 fires.
- * The kernel syscall dispatcher reads args from [esp+4..] on the user stack.
+ * Native syscall thunks (see <sys/ubix_syscall.h>): bare, no C prologue, so the
+ * kernel reads the arguments where the platform C ABI already left them (i386
+ * user stack / aarch64 x0..x5).
  */
-asm(
-	".text                              \n"
-	".globl _klog_read_stub             \n"
-	".type  _klog_read_stub, @function  \n"
-	"_klog_read_stub:                   \n"
-	"  movl $47, %eax                   \n"
-	"  int  $0x81                       \n"
-	"  ret                              \n"
-);
+UBIX_NATIVE_THUNK(_klog_read_stub, 47);
 extern int _klog_read_stub(struct klog_entry *buf, int max, uint32_t start_seq);
 #define sys_klog_read _klog_read_stub
 
-asm(
-	".text                               \n"
-	".globl _klog_write_stub             \n"
-	".type  _klog_write_stub, @function  \n"
-	"_klog_write_stub:                   \n"
-	"  movl $49, %eax                    \n"
-	"  int  $0x81                        \n"
-	"  ret                               \n"
-);
+UBIX_NATIVE_THUNK(_klog_write_stub, 49);
 extern void _klog_write_stub(uint8_t level, const char *msg);
 #define sys_klog_write _klog_write_stub
 
-#define LOG_PATH    "/var/log/messages"
-#define BATCH_SIZE  32
+#define LOG_PATH "/var/log/messages"
+#define BATCH_SIZE 32
 
 static const char *level_name(uint8_t level)
 {
-	switch (level) {
-	case KLOG_EMERG:   return "EMERG";
-	case KLOG_ALERT:   return "ALERT";
-	case KLOG_CRIT:    return "CRIT";
-	case KLOG_ERR:     return "ERR";
-	case KLOG_WARNING: return "WARN";
-	case KLOG_NOTICE:  return "NOTICE";
-	case KLOG_INFO:    return "INFO";
-	case KLOG_DEBUG:   return "DEBUG";
-	default:           return "?";
+	switch (level)
+	{
+		case KLOG_EMERG:
+			return "EMERG";
+		case KLOG_ALERT:
+			return "ALERT";
+		case KLOG_CRIT:
+			return "CRIT";
+		case KLOG_ERR:
+			return "ERR";
+		case KLOG_WARNING:
+			return "WARN";
+		case KLOG_NOTICE:
+			return "NOTICE";
+		case KLOG_INFO:
+			return "INFO";
+		case KLOG_DEBUG:
+			return "DEBUG";
+		default:
+			return "?";
 	}
 }
 
 int main(int argc, char **argv)
 {
 	struct klog_entry batch[BATCH_SIZE];
-	uint32_t          next_seq = 0;
-	FILE             *log;
-	int               n, i;
+	uint32_t next_seq = 0;
+	FILE *log;
+	int n, i;
 
-	(void)argc; (void)argv;
+	(void)argc;
+	(void)argv;
 
 	sys_klog_write(KLOG_NOTICE, "logd: starting");
 
 	log = fopen(LOG_PATH, "a");
-	if (log == NULL) {
+	if (log == NULL)
+	{
 		/* Can't open log file — try to create the directory path */
 		log = fopen(LOG_PATH, "w");
-		if (log == NULL) {
+		if (log == NULL)
+		{
 			sys_klog_write(KLOG_ERR, "logd: failed to open " LOG_PATH);
 			for (;;)
 				sched_yield();
@@ -141,21 +140,22 @@ int main(int argc, char **argv)
 	fprintf(log, "--- logd started ---\n");
 	fflush(log);
 
-	for (;;) {
+	for (;;)
+	{
 		n = sys_klog_read(batch, BATCH_SIZE, next_seq);
 
-		for (i = 0; i < n; i++) {
+		for (i = 0; i < n; i++)
+		{
 			struct klog_entry *e = &batch[i];
 			char tsbuf[20] = "                   ";
-			if (e->ke_time != 0) {
+			if (e->ke_time != 0)
+			{
 				time_t t = (time_t)e->ke_time;
 				struct tm *tm = localtime(&t);
 				if (tm != NULL)
-					strftime(tsbuf, sizeof(tsbuf),
-					    "%Y-%m-%d %H:%M:%S", tm);
+					strftime(tsbuf, sizeof(tsbuf), "%Y-%m-%d %H:%M:%S", tm);
 			}
-			fprintf(log, "%s <%s> %s\n",
-			    tsbuf, level_name(e->ke_level), e->ke_msg);
+			fprintf(log, "%s <%s> %s\n", tsbuf, level_name(e->ke_level), e->ke_msg);
 			if (e->ke_seq >= next_seq)
 				next_seq = e->ke_seq + 1;
 		}
