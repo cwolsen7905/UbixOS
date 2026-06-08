@@ -465,12 +465,26 @@ sigprocmask/sigreturn/sigsuspend), sockets (socket/bind/connect/.../sendmsg), pl
 nanosleep/pipe/pipe2/rfork/sysctl/getcwd/gettimeofday/sched_yield/machine_set_tls.
 So full table-sharing is a porting phase, not a swap.
 
-**Plan**: converge incrementally — port handlers (they're what the world needs
-anyway: stat+getdents for `ls`, mmap for larger programs, signals for job control),
-shrinking the gap until `syscalls_posix.c` links on aarch64; then drop aarch64's
-`switch` for the shared table behind a generic dispatch engine + the arch
-trampoline.  Done so far: `sys_sysarch` (i386 GDT/LDT TLS) is `#if __i386__`-guarded
-so `gen_calls.c` compiles on aarch64 (TLS there is TPIDR_EL0, set at EL0).
+**Status: DONE** (commit e3c7af66f).  aarch64 now dispatches through the shared
+`systemCalls[]` (native) + `systemCalls_posix[]` (POSIX) tables via a generic
+engine; new syscalls are added once in the table, not hand-mapped per arch.
+- `sys/kern/syscall_dispatch.c` — `ksyscall_dispatch(td, tbl, count, num, args)`:
+  validates, copies the entry's `sc_args` register-width words into a `uap`, calls
+  the handler, returns `td_retval[0]`.  Arch-neutral; the only per-arch piece is
+  the trampoline that gathers arg words (i386: off the stack in asm; aarch64: x0-x7).
+- `sys/arch/aarch64/kern/syscall.c` — both vector switches fall through to the
+  engine.  Arch-special calls stay intercepted (fork needs the trapframe; execve
+  uses the dynamic loader; mmap/brk use the arch VA; exit).
+- `sys/arch/aarch64/kern/syscall_md.c` — defines the handlers not yet linkable on
+  aarch64 so the tables link: benign reals (sched_yield/nanosleep/munmap/getcwd/
+  gettimeofday/set_tls/...) + `-ENOSYS` stubs for unported subsystems (sockets,
+  signals, pty/display/input).  Replace a stub with a real port to enable that call
+  on both arches.
+- `sys_sysarch` is `#if __i386__`-guarded (aarch64 TLS is TPIDR_EL0, set at EL0).
+- i386 keeps its asm dispatch for now; the engine is shared-ready (i386 could adopt
+  it by feeding stack-gathered args to `ksyscall_dispatch`).
+Follow-up (cosmetic): prune the now-redundant explicit cases in syscall.c that the
+table handles identically (open/read/close/lseek/getdents/statx/...).
 
   (iv) pipe — self-contained cleanup, does not block aarch64 linking.
 
