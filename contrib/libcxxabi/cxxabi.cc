@@ -33,15 +33,17 @@ void __cxa_guard_abort(int *g)   { (void)g; }
 // ---------------------------------------------------------------------------
 // Standard heap allocation operators
 // ---------------------------------------------------------------------------
-void *operator new(unsigned size)              { return malloc(size); }
-void *operator new[](unsigned size)            { return malloc(size); }
+// size_t is the only correct type for operator new (32-bit on i386, 64-bit on
+// aarch64); using `unsigned` only happened to work where size_t == unsigned.
+void *operator new(size_t size)                { return malloc(size); }
+void *operator new[](size_t size)              { return malloc(size); }
 void  operator delete(void *ptr)               { free(ptr); }
 void  operator delete[](void *ptr)             { free(ptr); }
-void  operator delete(void *ptr, unsigned)     { free(ptr); }
-void  operator delete[](void *ptr, unsigned)   { free(ptr); }
+void  operator delete(void *ptr, size_t)       { free(ptr); }
+void  operator delete[](void *ptr, size_t)     { free(ptr); }
 
 // Placement new/delete — no allocation
-void *operator new(unsigned, void *ptr)        { return ptr; }
-void *operator new[](unsigned, void *ptr)      { return ptr; }
+void *operator new(size_t, void *ptr)          { return ptr; }
+void *operator new[](size_t, void *ptr)        { return ptr; }
 void  operator delete(void *, void *)          {}
 void  operator delete[](void *, void *)        {}

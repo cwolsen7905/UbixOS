@@ -9,10 +9,20 @@ MUSL_OBJ = ${OBJ_DIR}/obj/musl
 
 OBJDIR   = ${OBJ_DIR}/obj/libcxxabi
 
+# Per-arch knobs: i386 disables x86 SIMD + uses its musl arch headers; aarch64
+# has no such SIMD flags and uses its own.  CROSS_M32 is empty on aarch64.
+.if ${_ARCH} == "aarch64"
+ARCH_SIMD     =
+ARCH_MUSL_INC = -I${MUSL_SRC}/arch/aarch64
+.else
+ARCH_SIMD     = -mno-sse -mno-sse2 -mno-mmx -mno-3dnow
+ARCH_MUSL_INC = -I${MUSL_SRC}/arch/i386
+.endif
+
 INCLUDE  = -I./include \
            -I${MUSL_SRC}/include \
            -I${MUSL_OBJ}/obj/include \
-           -I${MUSL_SRC}/arch/i386 \
+           ${ARCH_MUSL_INC} \
            -I${MUSL_SRC}/arch/generic
 
 OBJS     = cxxabi.o
@@ -26,7 +36,7 @@ OUTPUT   = ${OBJ_DIR}/lib/libcxxabi.a
 .cc.o:
 	@mkdir -p ${OBJDIR}
 	$(CXX) ${CROSS_M32} -Wall -nostdinc -fno-builtin -fno-rtti -fno-exceptions \
-		-mno-sse -mno-sse2 -mno-mmx -mno-3dnow \
+		${ARCH_SIMD} \
 		-fomit-frame-pointer -O ${INCLUDE} -c -o ${OBJDIR}/${.TARGET:T} ${.IMPSRC}
 
 all: ${OUTPUT}

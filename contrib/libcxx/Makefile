@@ -19,20 +19,30 @@ LIBCXX_DEFS = \
 	-D_LIBCPP_HAS_NO_EXCEPTIONS \
 	-D_LIBCPP_REMOVE_TRANSITIVE_INCLUDES
 
+# Per-arch knobs (see contrib/libcxxabi/Makefile): no x86 SIMD on aarch64, and
+# each arch uses its own musl arch headers.
+.if ${_ARCH} == "aarch64"
+ARCH_SIMD     =
+ARCH_MUSL_INC = -I${MUSL_SRC}/arch/aarch64
+.else
+ARCH_SIMD     = -mno-sse -mno-sse2 -mno-mmx -mno-3dnow
+ARCH_MUSL_INC = -I${MUSL_SRC}/arch/i386
+.endif
+
 INCLUDE = \
 	-I${LIBCXX_SRC}/include \
 	-I${LIBCXX_SRC}/src \
 	-I${SRCTOP}/contrib/libcxxabi/include \
 	-I${MUSL_SRC}/include \
 	-I${MUSL_OBJ}/obj/include \
-	-I${MUSL_SRC}/arch/i386 \
+	${ARCH_MUSL_INC} \
 	-I${MUSL_SRC}/arch/generic
 
 CXXFLAGS = ${CROSS_M32} -std=c++20 \
 	-Wall -Wno-error \
 	-nostdinc -nostdinc++ \
 	-fno-builtin -fno-rtti -fno-exceptions \
-	-mno-sse -mno-sse2 -mno-mmx -mno-3dnow \
+	${ARCH_SIMD} \
 	-fomit-frame-pointer -O2 \
 	${LIBCXX_DEFS} ${INCLUDE}
 

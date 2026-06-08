@@ -301,12 +301,10 @@ world:
 	${MAKE} musl-libc
 	@echo
 	@echo "***************************************************************"
-	@echo "Step 1a/1b: Build libcxxabi + libcxx (C++) — i386 only for now"
+	@echo "Step 1a/1b: Build libcxxabi + libcxx (C++)"
 	@echo "***************************************************************"
-	@if [ "${_ARCH}" != "aarch64" ]; then \
-	    ( cd ${CURDIR}/contrib/libcxxabi; ${MAKE} all ) && \
-	    ( cd ${CURDIR}/contrib/libcxx;    ${MAKE} all ); \
-	  else echo "skip: C++ runtime not yet ported to aarch64"; fi
+	( cd ${CURDIR}/contrib/libcxxabi; ${MAKE} all ) && \
+	( cd ${CURDIR}/contrib/libcxx;    ${MAKE} all )
 	@echo
 	@echo "***************************************************************"
 	@echo "Step 1: Build World Libraries"
