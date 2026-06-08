@@ -309,6 +309,19 @@ are exactly the multiplexing B removes, so they would be discarded.
   virtio-blk; virtio-blk + the dynamic linker then give the full disk-backed
   `/bin` world + the `views`/`objGFX` desktop (step 5).
 
+  **✅ ramfs DONE** (commit d69e2db4a): the root-fs gate's preferred answer — a
+  new arch-neutral in-memory fs (`sys/fs/ramfs/`) that is both the initramfs root
+  and the future tmpfs (`/tmp`,`/run`), reusable on i386 too.  kmalloc'd node
+  tree, files grow on write, per-mount root in `mp->fsInfo`, node ptr in `fd->res`
+  (64-bit safe).  Ops: open(+create-on-write)/read/write/mkdir/opendir/readdir +
+  a `ramfs_populate()` API for laying down the initramfs.  QEMU-verified on
+  aarch64 (mount /ram, populate+read 38 B, create+write+re-read 25 B) — which
+  also **validates the generic VFS write/create path** with no block device
+  (gotcha found + fixed: `vfsInitFS` uses non-zero==success).  **Remaining for
+  step 4:** mount ramfs as `/`, embed the boot ELFs + `ramfs_populate` them, add
+  exec-from-file (`execve` loads an ELF from a path), then the bootstrap
+  unification.
+
   (iv) pipe — self-contained cleanup, does not block aarch64 linking.
 
   **TTY scope note (iii) — original assessment:** this is the gnarliest extraction — the
