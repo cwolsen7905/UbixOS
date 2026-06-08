@@ -701,6 +701,7 @@ int sys_wait4(struct thread *td, struct sys_wait4_args *args)
 
 int sys_sysarch(struct thread *td, struct sys_sysarch_args *args)
 {
+#if defined(__i386__)
 
 	void **segbase = 0x0;
 	u_int32_t base_addr = 0x0;
@@ -749,6 +750,12 @@ int sys_sysarch(struct thread *td, struct sys_sysarch_args *args)
 		kprintf("sysarch(%i,NULL)", args->op);
 		td->td_retval[0] = -1;
 	}
+#else
+	/* aarch64 sets the EL0 TLS base via TPIDR_EL0 at user level (msr), not a
+	 * sysarch/GDT call — nothing to do here. */
+	(void)args;
+	td->td_retval[0] = -1;
+#endif
 	return (0);
 }
 

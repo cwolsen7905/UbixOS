@@ -443,6 +443,35 @@ are exactly the multiplexing B removes, so they would be discarded.
   desktop; and the **generic-kmain unification** once this real init sequence
   exists (so `boot.c` and i386's `kmain` share one bootstrap).
 
+### Syscall dispatch: unification path
+
+aarch64 currently hand-maps each POSIX syscall in a `switch` (`sys/arch/aarch64/
+kern/syscall.c`), while i386 is table-driven (`systemCalls_posix[]` in
+`syscalls_posix.c`, `{sc_args, name, handler, status}` indexed by number).  The
+**handlers are already shared** — aarch64's cases build the FreeBSD `uap` struct
+and call the same generic `sys_open`/`sys_read`/... — so only the *dispatch* is
+duplicated.
+
+The only irreducibly per-arch part is the **ABI trampoline** (args arrive on the
+user stack on i386 vs. in x0–x5 on aarch64).  Above that, one generic engine can
+serve both: look up `tbl[num]`, copy `sc_args` register-width slots into a `uap`
+buffer (`ARG_COUNT = sizeof(uap)/sizeof(register_t)` is correct on both 32- and
+64-bit), call the handler, return `td_retval[0]`.
+
+**Measured blocker** (trial-linked `syscalls_posix.c` + `gen_calls.c` on aarch64):
+~40 referenced handlers are unported — stat family (stat/lstat/fstat/fstatat/statx/
+statfs), mmap family (mmap/munmap/madvise/msync/obreak), signals (sigaction/
+sigprocmask/sigreturn/sigsuspend), sockets (socket/bind/connect/.../sendmsg), plus
+nanosleep/pipe/pipe2/rfork/sysctl/getcwd/gettimeofday/sched_yield/machine_set_tls.
+So full table-sharing is a porting phase, not a swap.
+
+**Plan**: converge incrementally — port handlers (they're what the world needs
+anyway: stat+getdents for `ls`, mmap for larger programs, signals for job control),
+shrinking the gap until `syscalls_posix.c` links on aarch64; then drop aarch64's
+`switch` for the shared table behind a generic dispatch engine + the arch
+trampoline.  Done so far: `sys_sysarch` (i386 GDT/LDT TLS) is `#if __i386__`-guarded
+so `gen_calls.c` compiles on aarch64 (TLS there is TPIDR_EL0, set at EL0).
+
   (iv) pipe — self-contained cleanup, does not block aarch64 linking.
 
   **TTY scope note (iii) — original assessment:** this is the gnarliest extraction — the
