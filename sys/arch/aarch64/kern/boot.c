@@ -127,12 +127,12 @@ void kmain_aarch64(void)
 			__asm__ volatile("msr daifclr, #2");
 			kprintf("IRQs enabled; timer-driven preemption active.\n");
 
-			kprintf("\n--- disk-backed dynamic test ---\n");
-			aarch64_run_dynamic("/bin/cat"); /* cat + ld.so + libc.so all from disk */
-			kprintf("--- end disk-backed dynamic test ---\n");
+			kprintf("\n--- disk-backed shell ---\n");
+			aarch64_run_dynamic("/bin/shell"); /* the real shell + ld.so + libc, from disk */
+			kprintf("--- shell exited ---\n");
 
 			for (;;)
-				__asm__ volatile("wfi"); /* full disk boot of /bin/init is next */
+				__asm__ volatile("wfi"); /* full init/login chain is next */
 		}
 	}
 

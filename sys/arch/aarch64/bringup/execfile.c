@@ -370,9 +370,9 @@ void aarch64_run_dynamic(const char *path)
  * new entry — which does not return.  The old address space's user pages leak
  * for now (a pmap_destroy is the follow-up); the kernel stack is reused.
  *
- * argv/envp are not yet marshalled onto the new stack (the initial frame is the
- * minimal argc=0 + AT_PAGESZ auxv); programs that read arguments come with the
- * dynamic-linker work.
+ * Uses the dynamic loader (load_dynamic), so it handles both PIE/dynamic and
+ * static images — the real world is dynamically linked, so the shell execs PIE
+ * binaries through here.  argv/envp marshalling is the minimal argv[0]=path.
  *
  * @return -1 on any failure to load (on success it does not return).
  */
@@ -381,6 +381,7 @@ int aarch64_exec_replace(const char *path)
 	char *buf;
 	int sz;
 	u_int64_t *l1, entry, usp, kstack_top;
+	char namebuf[256];
 
 	buf = read_elf_file(path, &sz);
 	if (buf == NULL)
@@ -389,15 +390,22 @@ int aarch64_exec_replace(const char *path)
 		return (-1);
 	}
 
-	l1 = build_user_image(buf, &entry, &usp);
-	kfree(buf);
-	if (l1 == NULL)
-		return (-1);
+	/* Copy the name out of the old address space now — @path is a user pointer
+	 * there and the old AS is unmapped the instant we switch TTBR0. */
+	strncpy(namebuf, path, sizeof(namebuf) - 1);
+	namebuf[sizeof(namebuf) - 1] = '\0';
 
-	/* Repoint the current task at the new image, then make it live.  Set the
-	 * name *before* pmap_switch — @path is a user pointer in the old address
-	 * space, which becomes unmapped the instant we load the new TTBR0. */
-	strncpy(_current->name, path, sizeof(_current->name) - 1);
+	l1 = pmap_create_user_space();
+	if (load_dynamic(buf, l1, namebuf, &entry, &usp) != 0)
+	{
+		kfree(buf);
+		kprintf("execve: %s failed to load\n", path);
+		return (-1);
+	}
+	kfree(buf);
+
+	/* Repoint the current task at the new image, then make it live. */
+	strncpy(_current->name, namebuf, sizeof(_current->name) - 1);
 	_current->md.md_ttbr0 = (u_int64_t)(uintptr_t)l1;
 	_current->md.md_entry = entry;
 	_current->md.md_usp = usp;
@@ -475,7 +483,10 @@ int aarch64_wait4(int want_pid, int *status)
 		kTask_t *child = find_and_reap_child(want_pid, &have_child);
 		if (child != NULL)
 		{
-			if (status != NULL)
+			/* Guard against pidStatus(pid) (ubix_api), which shares SVC #7 with
+			 * wait4 but passes only x0 — x1 (status) is garbage; only write a
+			 * pointer that is in the user VA range. */
+			if (status != NULL && (uintptr_t)status >= 0x100000000UL)
 				*status = 0; /* exit code not yet propagated; report 0 */
 			return ((int)child->id);
 		}
@@ -489,7 +500,10 @@ int aarch64_wait4(int want_pid, int *status)
 		if (child != NULL)
 		{
 			sched_wakeup(_current);
-			if (status != NULL)
+			/* Guard against pidStatus(pid) (ubix_api), which shares SVC #7 with
+			 * wait4 but passes only x0 — x1 (status) is garbage; only write a
+			 * pointer that is in the user VA range. */
+			if (status != NULL && (uintptr_t)status >= 0x100000000UL)
 				*status = 0;
 			return ((int)child->id);
 		}

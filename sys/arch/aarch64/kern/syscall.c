@@ -21,6 +21,7 @@
 #include <sys/sysproto_posix.h> /* sys_open/read/close/lseek + uap structs */
 #include <sys/descrip.h>        /* getfd, struct file */
 #include <mpi/mpi.h>            /* MPI mailboxes (native syscalls 50-53) */
+#include <string.h>             /* strncpy (getcwd) */
 
 #define SYS_EXIT 1
 #define SYS_READ 3
@@ -28,9 +29,11 @@
 #define SYS_WRITE 4
 #define SYS_OPEN 5
 #define SYS_CLOSE 6
-#define SYS_WAIT4 7    /* FreeBSD ABI (the number musl actually emits) */
-#define SYS_EXECVE 59  /* FreeBSD ABI (the number musl actually emits) */
-#define SYS_WRITEV 121 /* FreeBSD ABI; the dynamic linker uses it for diagnostics */
+#define SYS_WAIT4 7         /* FreeBSD ABI (the number musl actually emits) */
+#define SYS_EXECVE 59       /* FreeBSD ABI (the number musl actually emits) */
+#define SYS_IOCTL 54        /* FreeBSD ABI; musl isatty() probes the tty with it */
+#define SYS_WRITEV 121      /* FreeBSD ABI; the dynamic linker uses it for diagnostics */
+#define SYS_SCHED_YIELD 331 /* UbixOS ABI (musl's sched_yield maps here) */
 #define SYS_BRK 17
 #define SYS_GETPID 20
 #define SYS_MPROTECT 74
@@ -56,6 +59,7 @@
 #define NATIVE_MPI_DESTROY 51
 #define NATIVE_MPI_POST 52
 #define NATIVE_MPI_FETCH 53
+#define NATIVE_GETCWD 41 /* ubix_getcwd(buf, size) */
 
 /**
  * Terminate the current task (shared by exit / exit_group): a scheduled user
@@ -172,6 +176,20 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args)
 				return (u_int64_t)mpi_fetchMessage((char *)(uintptr_t)args[0],
 				                                   (mpi_message_t *)(uintptr_t)args[1]);
 
+			case NATIVE_GETCWD:
+			{
+				/* ubix_getcwd(buf, size): copy the task's cwd (default "/"). */
+				char *ubuf = (char *)(uintptr_t)args[0];
+				u_int64_t size = args[1];
+				const char *cwd =
+				    (_current != 0 && _current->oInfo.cwd[0] != '\0') ? _current->oInfo.cwd : "/";
+				if (ubuf == 0 || size == 0)
+					return (u_int64_t)-1;
+				strncpy(ubuf, cwd, (size_t)size - 1);
+				ubuf[size - 1] = '\0';
+				return 0;
+			}
+
 			default:
 				kprintf("[kernel] unimplemented native EL0 syscall #%lu\n", n);
 				return (u_int64_t)-1;
@@ -224,6 +242,15 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args)
 			/* wait4(pid, status, options, rusage): cooperative reap.  options/
 			 * rusage are ignored (no WNOHANG/WUNTRACED yet). */
 			return (u_int64_t)aarch64_wait4((int)args[0], (int *)(uintptr_t)args[1]);
+
+		case SYS_IOCTL:
+			/* Pretend success so musl isatty()/tcgetattr() treat the console as a
+			 * tty.  No real termios yet. */
+			return 0;
+
+		case SYS_SCHED_YIELD:
+			sched_yield();
+			return 0;
 
 		case SYS_GETPID:
 			return (_current != 0) ? (u_int64_t)_current->id : 0;
