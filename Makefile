@@ -469,6 +469,7 @@ run-debug-i386:
 run-aarch64:
 	qemu-system-aarch64 -machine virt,gic-version=2 -accel hvf -cpu host -m 512 \
 	  -kernel ${OBJ_DIR}/boot/kernel \
+	  -global virtio-mmio.force-legacy=false \
 	  ${_ARM_DISK_FLAGS} \
 	  -device virtio-net-device,netdev=net0 -netdev user,id=net0 \
 	  -device virtio-gpu-device \
@@ -477,9 +478,11 @@ run-aarch64:
 	  -serial file:serial.log
 
 # Headless aarch64 run: serial to stdout — the bring-up console.  Ctrl-A X quits.
+# force-legacy=false selects the modern (v2) virtio-mmio transport the driver needs.
 run-debug-aarch64:
 	qemu-system-aarch64 -machine virt,gic-version=2 -accel hvf -cpu host -m 512 \
 	  -kernel ${OBJ_DIR}/boot/kernel \
+	  -global virtio-mmio.force-legacy=false \
 	  ${_ARM_DISK_FLAGS} \
 	  -device virtio-net-device,netdev=net0 -netdev user,id=net0 \
 	  -nographic

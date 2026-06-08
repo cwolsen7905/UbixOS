@@ -15,6 +15,7 @@
 #include <fs/vfs/vfs.h>     /* vfs_init */
 #include <fs/vfs/mount.h>   /* vfs_mount */
 #include <fs/ramfs/ramfs.h> /* ramfs_init, ramfs_populate (initramfs root) */
+#include <sys/bus.h>        /* struct ubx_device — virtio-blk smoke test */
 
 /* The static boot triad — init forks login, login execs sh — laid into the
  * ramfs root as /bin/{init,login,sh}.  Stands in for the real (dynamically
@@ -105,6 +106,31 @@ void kmain_aarch64(void)
 	aarch64_user_elf_demo();
 	aarch64_procfs_demo(); /* mount /proc before the program (which reads it) */
 	aarch64_ramfs_demo();  /* registers ramfs + exercises it at /ram */
+
+	/* virtio-blk smoke test: bring up the MMIO block device + read sector 0. */
+	{
+		struct ubx_device *blk = aarch64_virtio_blk_init();
+		if (blk != 0)
+		{
+			static u_int8_t sec[512];
+			if (blk->dev_blk_ops->read(blk, 0, 1, sec) == 0)
+				kprintf("virtio-blk: sector 0 reads OK: bytes %x %x %x %x | '%c%c%c%c%c%c%c%c'\n",
+				        sec[0],
+				        sec[1],
+				        sec[2],
+				        sec[3],
+				        sec[0],
+				        sec[1],
+				        sec[2],
+				        sec[3],
+				        sec[4],
+				        sec[5],
+				        sec[6],
+				        sec[7]);
+			else
+				kprintf("virtio-blk: sector 0 read FAILED\n");
+		}
+	}
 
 	/* --- initramfs bootstrap: the shape of a real boot ---------------------
 	 * Mount a ramfs root, lay /bin/init into it (the embedded program stands in

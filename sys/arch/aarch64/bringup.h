@@ -116,4 +116,8 @@ int aarch64_wait4(int want_pid, int *status); /* cooperative reap of an exited c
 void aarch64_run_init(const char *path);      /* run /bin/init + become the idle loop (no return) */
 void aarch64_run_dynamic(const char *path);   /* load+run a dynamically-linked (PIE) program */
 
+/* virtio_blk.c — virtio-mmio block device (returns a ubx_device with blk ops). */
+struct ubx_device;
+struct ubx_device *aarch64_virtio_blk_init(void);
+
 #endif /* _AARCH64_BRINGUP_H */
