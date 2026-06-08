@@ -279,6 +279,21 @@ are exactly the multiplexing B removes, so they would be discarded.
   + read `/proc/meminfo`) is reachable.  Use **procfs** for the read test (it
   needs no block device or `ubx_device_find`), not devfs.
 
+  **✅ STEP 2 DONE** (commit 1f8d7235a): all 8 resolved via 5 lower-layer hooks
+  (`g_device_find`/`g_fs_rename`/`g_fs_truncate`/`g_tty_print`/`g_tty_getchar`,
+  installed by isa_bus/fat/tty) + linking `klog.c`/`vm_filecache.c`.  The full
+  VFS read path links into the aarch64 kernel (295 KB); i386 boots unchanged.
+
+  **✅ STEP 3 (kernel-side) DONE** (commit ef39c0c56): a bring-up demo registers
+  procfs, `vfs_mount`s it at `/proc`, and `fopen()`/`fread()`s `/proc/meminfo`
+  — QEMU-verified output (`MemTotal: 1572864 kB / MemFree: 514180 kB`).  **The
+  generic VFS file layer works end-to-end on aarch64.**  Remaining for step 3:
+  route the SVC dispatcher (open=5/read=3/close=6/lseek=478/fstat=189 → the real
+  `sys_*` via the FreeBSD `sysent` ABI: build a `uap` struct from x0..x5, point
+  at the current `td`, return `td_retval[0]`) + per-process `o_files[]` init, so
+  a *user* program (not just the kernel) does file I/O — also aarch64-verifiable
+  (a musl program that reads `/proc/meminfo`).
+
   (iv) pipe — self-contained cleanup, does not block aarch64 linking.
 
   **TTY scope note (iii) — original assessment:** this is the gnarliest extraction — the
