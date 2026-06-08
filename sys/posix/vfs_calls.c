@@ -78,6 +78,10 @@ int sys_close(struct thread *td, struct sys_close_args *args)
 
 	getfd(td, &fd, args->fd);
 
+	/* Path B (fileops): dispatch through f_ops once the fd type registers it. */
+	if (fd != NULL && fd->f_ops != NULL && fd->f_ops->close != NULL)
+		return (fd->f_ops->close(fd, td));
+
 	// kprintf("[sC:%i:0x%X:0x%X]", args->fd, fd, fd->fd);
 
 #ifdef DEBUG_VFS_CALLS
@@ -193,6 +197,11 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 	int rp_cnt = 0;
 
 	getfd(td, &fd, args->fd);
+
+	/* Path B (fileops): once an fd type registers f_ops, read dispatches through
+	 * it; until then f_ops is NULL and the per-type logic below runs unchanged. */
+	if (fd != NULL && fd->f_ops != NULL && fd->f_ops->read != NULL)
+		return (fd->f_ops->read(fd, td, (void *)args->buf, args->nbyte));
 
 	/* Socket fd: route through lwIP */
 	if (fd != NULL && fd->fd_type == 2)
@@ -539,6 +548,10 @@ int sys_write(struct thread *td, struct sys_write_args *uap)
 	size_t nbytes;
 
 	getfd(td, &fd, uap->fd);
+
+	/* Path B (fileops): dispatch through f_ops once the fd type registers it. */
+	if (fd != NULL && fd->f_ops != NULL && fd->f_ops->write != NULL)
+		return (fd->f_ops->write(fd, td, (const void *)uap->buf, uap->nbyte));
 
 	/* Socket fd: route through lwIP */
 	if (fd != NULL && fd->fd_type == 2)

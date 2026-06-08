@@ -50,9 +50,17 @@ struct uio;
 struct ucred;
 //TMP
 
-/* Function Protos */
-typedef int fo_rdwr_t(struct file *fp, struct uio *uio, struct ucred *active_cred, int flags, struct thread *td);
-typedef int fo_stat_t(struct file *fp, struct stat *sb, struct ucred *active_cred, struct thread *td);
+/*
+ * fileops vector — per-fd-type read/write/close handlers (path B of the
+ * cross-arch file-syscall plan).  Each handler follows the kernel syscall
+ * convention: it sets td->td_retval[0] (bytes transferred, etc.) and returns 0
+ * on success or a positive errno (e.g. EINTR).  Dispatching sys_read/write/close
+ * through these lets the generic syscall core stop referencing the TTY/socket/
+ * pipe subsystems directly — each fd-type module registers its own ops, so an
+ * arch that lacks (say) lwIP or the TTY layer simply never links those ops.
+ */
+typedef int fo_read_t(struct file *fp, struct thread *td, void *buf, size_t nbyte);
+typedef int fo_write_t(struct file *fp, struct thread *td, const void *buf, size_t nbyte);
 typedef int fo_close_t(struct file *fp, struct thread *td);
 
 struct ucred {
@@ -91,9 +99,8 @@ struct file {
 };
 
 struct fileOps {
-    fo_rdwr_t *read;
-    fo_rdwr_t *write;
-    fo_stat_t *stat;
+    fo_read_t *read;
+    fo_write_t *write;
     fo_close_t *close;
 };
 
