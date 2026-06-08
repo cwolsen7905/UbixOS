@@ -16,17 +16,36 @@
 #include <fs/vfs/mount.h>   /* vfs_mount */
 #include <fs/ramfs/ramfs.h> /* ramfs_init, ramfs_populate (initramfs root) */
 
-/* The embedded boot program — stands in for /bin/init until the dynamic linker
- * + the real init/login/shell chain land. */
-extern char _binary_hello_musl_elf_start[];
-extern char _binary_hello_musl_elf_end[];
+/* The static boot triad — init forks login, login execs sh — laid into the
+ * ramfs root as /bin/{init,login,sh}.  Stands in for the real (dynamically
+ * linked) init/login/shell until the dynamic linker lands. */
+extern char _binary_init_elf_start[];
+extern char _binary_init_elf_end[];
+extern char _binary_login_elf_start[];
+extern char _binary_login_elf_end[];
+extern char _binary_sh_elf_start[];
+extern char _binary_sh_elf_end[];
 
-/* The fork/execve/wait4 "init" demo (/bin/init) + the freestanding program it
- * execs as its child (/bin/child) — proves the process-chain primitives. */
-extern char _binary_init_demo_elf_start[];
-extern char _binary_init_demo_elf_end[];
+/* The freestanding demo program, laid into /bin/hello so the shell has a real
+ * command to fork/execve. */
 extern char _binary_hello_elf_start[];
 extern char _binary_hello_elf_end[];
+
+/**
+ * Lay an embedded ELF blob into the ramfs root at @path.
+ *
+ * @return 0 on success, non-zero on failure (logged).
+ */
+static int install_bin(const char *path, const char *start, const char *end)
+{
+	u_int32_t len = (u_int32_t)(end - start);
+	if (ramfs_populate("/", path, start, len) != 0)
+	{
+		kprintf("bootstrap: failed to populate %s\n", path);
+		return (-1);
+	}
+	return (0);
+}
 
 /**
  * Return the current exception level (0-3) from CurrentEL[3:2].
@@ -78,34 +97,29 @@ void kmain_aarch64(void)
 	 * for init until the dynamic linker + the real init/login/shell land), then
 	 * exec it *from the filesystem path* — what the generic kmain will do once
 	 * unified.  ramfs is already registered by the demo above. */
-	kprintf("\n--- initramfs bootstrap ---\n");
+	/* --- userland bootstrap: the real boot chain ---------------------------
+	 * Mount a ramfs root, lay the static boot triad + a demo command into it,
+	 * then run /bin/init — which forks /bin/login, login execs /bin/sh.  This is
+	 * the terminal boot action: aarch64_run_init() schedules init and turns this
+	 * (boot) thread into the cooperative idle loop, so it never returns.  EL0 is
+	 * IRQ-masked for now, so scheduling is cooperative (the console read yields);
+	 * preemptible EL0 + the timer come with the lower-EL IRQ vector work. */
+	kprintf("\n--- uBixOS aarch64 userland bootstrap ---\n");
 	if (vfs_mount(0, 0, 0, VFS_TYPE_RAMFS, "/", "rw") == 0)
 	{
-		u_int32_t init_len = (u_int32_t)(_binary_init_demo_elf_end - _binary_init_demo_elf_start);
-		u_int32_t child_len = (u_int32_t)(_binary_hello_elf_end - _binary_hello_elf_start);
-		int ok = (ramfs_populate("/", "/bin/init", _binary_init_demo_elf_start, init_len) == 0) &&
-		         (ramfs_populate("/", "/bin/child", _binary_hello_elf_start, child_len) == 0);
+		int ok = install_bin("/bin/init", _binary_init_elf_start, _binary_init_elf_end) == 0 &&
+		         install_bin("/bin/login", _binary_login_elf_start, _binary_login_elf_end) == 0 &&
+		         install_bin("/bin/sh", _binary_sh_elf_start, _binary_sh_elf_end) == 0 &&
+		         install_bin("/bin/hello", _binary_hello_elf_start, _binary_hello_elf_end) == 0;
 		if (ok)
-			aarch64_exec_file("/bin/init"); /* init forks /bin/child, execve's it, wait4's it */
-		else
-			kprintf("bootstrap: failed to populate /bin/init + /bin/child\n");
+			aarch64_run_init("/bin/init"); /* never returns */
 	}
 	else
 	{
 		kprintf("bootstrap: failed to mount ramfs root\n");
 	}
 
-	/* Spawn never-yielding CPU-bound tasks, then enable the timer — it must
-	 * preempt them (proves preemptive scheduling). */
-	aarch64_preempt_demo();
-
-	gic_init();
-	timer_init();
-
-	/* Unmask IRQs (clear DAIF.I); the 100 Hz timer now drives the scheduler. */
-	__asm__ volatile("msr daifclr, #2");
-	kprintf("IRQs enabled; timer-driven preemption active.\n");
-
+	kprintf("bootstrap failed; parking.\n");
 	for (;;)
 		__asm__ volatile("wfi");
 }

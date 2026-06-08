@@ -92,6 +92,39 @@ int aarch64_run_elf_image(const void *image, const char *name)
 }
 
 /**
+ * Schedule the ELF at @image as @name (a real long-lived task — console fds set
+ * up) and turn the calling (boot) thread into the cooperative idle/reaper loop.
+ * Unlike run_elf_image this never returns: it is the terminal boot action that
+ * hands the machine to the userland init -> login -> shell chain, which drives
+ * task switching via the console read's sched_yield (EL0 is IRQ-masked here, so
+ * scheduling is cooperative).
+ */
+static void run_init_image(const void *image, const char *name)
+{
+	u_int64_t *l1, entry, usp;
+	kTask_t *t;
+
+	l1 = build_user_image(image, &entry, &usp);
+	if (l1 == NULL)
+	{
+		kprintf("init: %s failed to load\n", name);
+		return;
+	}
+
+	t = schedNewTask();
+	t->md.md_ttbr0 = (u_int64_t)(uintptr_t)l1;
+	t->md.md_entry = entry;
+	t->md.md_usp = usp;
+	strncpy(t->name, name, sizeof(t->name) - 1);
+	aarch64_console_setup_fds(&t->td); /* stdin/stdout/stderr -> console */
+	sched_ready(t);
+
+	kprintf("init: %s scheduled as pid %d; entering cooperative idle loop.\n", name, t->id);
+	for (;;)
+		sched_yield(); /* boot thread is now the idle task; init runs the system */
+}
+
+/**
  * Read the ELF at @path off the VFS into a freshly kmalloc'd kernel buffer.
  * Shared by exec_file (new task) and exec_replace (execve): the file is read
  * while the *old* address space is still active, before any TTBR0 switch.
@@ -254,4 +287,24 @@ void aarch64_exec_file(const char *path)
 	st = aarch64_run_elf_image(buf, path);
 	kfree(buf);
 	kprintf("exec: %s returned (state=%d).\n", path, st);
+}
+
+/**
+ * Read the ELF at @path off the VFS and run it as the system's init: schedule
+ * it, then become the cooperative idle loop (never returns).  The terminal boot
+ * action — init forks login, login execs the shell, all off the ramfs root.
+ */
+void aarch64_run_init(const char *path)
+{
+	char *buf;
+	int sz;
+
+	buf = read_elf_file(path, &sz);
+	if (buf == NULL)
+	{
+		kprintf("init: %s not loadable\n", path);
+		return;
+	}
+	run_init_image(buf, path);
+	kfree(buf); /* only reached if the image failed to load */
 }

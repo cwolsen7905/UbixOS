@@ -113,5 +113,6 @@ int aarch64_run_elf_image(const void *image, const char *name);
 void aarch64_exec_file(const char *path);
 int aarch64_exec_replace(const char *path);   /* execve: replace current image, restart EL0 */
 int aarch64_wait4(int want_pid, int *status); /* cooperative reap of an exited child */
+void aarch64_run_init(const char *path);      /* run /bin/init + become the idle loop (no return) */
 
 #endif /* _AARCH64_BRINGUP_H */

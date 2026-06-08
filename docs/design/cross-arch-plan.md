@@ -361,9 +361,31 @@ are exactly the multiplexing B removes, so they would be discarded.
        `rt_sigprocmask`(340) stubbed to 0 (musl brackets `fork()` with it).
      Open: EL0 tasks still run IRQ-masked (cooperative); preemptible EL0 needs the
      `0x480` "lower-EL IRQ" vector + IRQ-enabled SPSR — deferred.
-  3. **Dynamic linker** — the *real* `init`/`login`/`shell` are dynamically
-     linked (`ld-musl-aarch64.so.1`); either run them via the dynamic linker
-     (load the interp + libc.so) or build static initramfs variants.
+  3. ✅ **Static boot triad (init → login → shell)** — DONE, QEMU-verified
+     interactive.  A static musl `init`/`login`/`sh` trio (`tools/aarch64-user/`)
+     laid into the ramfs root drives a real boot chain off the primitives above:
+     `init` (pid 8) forks `/bin/login`; login prompts, rejects bad creds, accepts
+     `root`/`user` (the i386 default), and execs `/bin/sh`; sh runs `help` and
+     forks/execve's `/bin/hello` ("Hello from a COMPILED aarch64 user ELF!"); on
+     `exit`, init respawns login.  Verified session:
+     ```
+     uBixOS aarch64 login: baduser / Password: badpass -> Login incorrect
+     uBixOS aarch64 login: root    / Password: user     -> Welcome to uBixOS (aarch64).
+     # help -> builtins; # hello -> runs /bin/hello; # exit -> login respawns
+     ```
+     - `aarch64_run_init` (execfile.c): schedule init with console fds, then the
+       boot thread becomes the cooperative idle/reaper loop (never returns) — the
+       terminal boot action.  The preempt demo + timer are dropped from this path
+       (the never-yielding spinners would starve the cooperative EL0 chain).
+     - No fork fd-table copy needed: `sys_read` falls through to `g_console_ops`
+       whenever `fd->fd == NULL` (true for `schedNewTask`'s default fds the fork
+       child inherits), and `write` hits the UART directly regardless of fd.
+     - Chosen over the dynamic linker (user steer) to land a real prompt fast.
+     Follow-ups: read `/etc/userdb` + no-echo password (no termios yet); argv to
+     the shell's children; replace the trio with the real dynamic world.
+  4. **Dynamic linker** — the *real* `init`/`login`/`shell` are dynamically
+     linked (`ld-musl-aarch64.so.1`); run them via the dynamic linker (load the
+     interp + libc.so).  Unblocks the whole disk-backed world.
   Then **virtio-blk** for the disk-backed `/bin` world + the `views`/`objGFX`
   desktop; and the **generic-kmain unification** once this real init sequence
   exists (so `boot.c` and i386's `kmain` share one bootstrap).
