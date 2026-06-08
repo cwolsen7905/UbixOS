@@ -128,11 +128,7 @@ void kmain_aarch64(void)
 			kprintf("IRQs enabled; timer-driven preemption active.\n");
 
 			kprintf("\n--- disk-backed shell ---\n");
-			aarch64_run_dynamic("/bin/shell"); /* the real shell + ld.so + libc, from disk */
-			kprintf("--- shell exited ---\n");
-
-			for (;;)
-				__asm__ volatile("wfi"); /* full init/login chain is next */
+			aarch64_run_dynamic_init("/bin/shell"); /* real shell from disk; never returns */
 		}
 	}
 

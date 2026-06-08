@@ -116,7 +116,8 @@ int aarch64_exec_replace(const char *path,
                          char *const *envp);  /* execve: replace current image, restart EL0 */
 int aarch64_wait4(int want_pid, int *status); /* cooperative reap of an exited child */
 void aarch64_run_init(const char *path);      /* run /bin/init + become the idle loop (no return) */
-void aarch64_run_dynamic(const char *path);   /* load+run a dynamically-linked (PIE) program */
+void aarch64_run_dynamic(const char *path);      /* load+run a PIE program, wait (capped) */
+void aarch64_run_dynamic_init(const char *path); /* run a PIE program as the system (no return) */
 
 /* virtio_blk.c — virtio-mmio block device (returns a ubx_device with blk ops). */
 struct ubx_device;

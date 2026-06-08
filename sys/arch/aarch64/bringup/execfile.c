@@ -350,33 +350,34 @@ static int load_dynamic(const void *image,
 }
 
 /**
- * Load + run a dynamically-linked program off the VFS as a scheduled task, and
- * cooperatively wait for it (bring-up test of the dynamic-linker path).
+ * Load a dynamically-linked program off the VFS, build its image + SysV stack,
+ * and schedule it as a console task with argv[0]=@path.
+ *
+ * @return the scheduled task, or NULL on failure.
  */
-void aarch64_run_dynamic(const char *path)
+static kTask_t *spawn_dynamic(const char *path)
 {
 	char *buf;
-	int sz, i;
+	int sz;
 	u_int64_t *l1, entry, usp;
 	kTask_t *t;
+	char *argv[1];
 
 	kprintf("dyn: loading %s (dynamic)...\n", path);
 	buf = read_elf_file(path, &sz);
 	if (buf == NULL)
 	{
 		kprintf("dyn: %s not loadable\n", path);
-		return;
+		return (NULL);
 	}
 
 	l1 = pmap_create_user_space();
+	argv[0] = (char *)path;
+	if (load_dynamic(buf, l1, argv, 1, NULL, 0, &entry, &usp) != 0)
 	{
-		char *argv[1] = {(char *)path};
-		if (load_dynamic(buf, l1, argv, 1, NULL, 0, &entry, &usp) != 0)
-		{
-			kfree(buf);
-			kprintf("dyn: %s failed to load\n", path);
-			return;
-		}
+		kfree(buf);
+		kprintf("dyn: %s failed to load\n", path);
+		return (NULL);
 	}
 	kfree(buf);
 
@@ -387,10 +388,39 @@ void aarch64_run_dynamic(const char *path)
 	strncpy(t->name, path, sizeof(t->name) - 1);
 	aarch64_console_setup_fds(&t->td);
 	sched_ready(t);
+	return (t);
+}
 
+/**
+ * Load + run a dynamically-linked program off the VFS as a scheduled task, and
+ * cooperatively wait for it (bring-up test of the dynamic-linker path).
+ */
+void aarch64_run_dynamic(const char *path)
+{
+	kTask_t *t = spawn_dynamic(path);
+	int i;
+
+	if (t == NULL)
+		return;
 	for (i = 0; i < 200000 && t->state != DEAD && t->state != ZOMBIE; i++)
 		sched_yield();
 	kprintf("dyn: %s returned (state=%d).\n", path, t->state);
+}
+
+/**
+ * Run a dynamically-linked program off the VFS as the system: schedule it, then
+ * turn the boot thread into the cooperative idle/reaper loop (never returns).
+ * Used to hand the machine to a disk-backed shell / init.
+ */
+void aarch64_run_dynamic_init(const char *path)
+{
+	kTask_t *t = spawn_dynamic(path);
+
+	if (t == NULL)
+		return;
+	kprintf("dyn: %s is now the system (pid %d); idle loop.\n", path, t->id);
+	for (;;)
+		sched_yield();
 }
 
 /**
