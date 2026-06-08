@@ -146,11 +146,12 @@ clean-ups landed alongside the malloc fix:
    footprint (measured 2026-06-07 by linking the layer):** all the files compile
    for aarch64 (after the `<machine/signal.h>` fix), but `sys/posix/vfs_calls.c`
    + `sys/kern/descrip.c` multiplex TTY/socket/device fds, so linking them pulls
-   in five subsystems not yet on aarch64: (a) **kernel lib** `sprintf/snprintf/
-   strcmp/strlen/...` — NOT just "link `sys/lib`": `sys/lib/string.c` + `kprintf.c`
-   duplicate the aarch64 bring-up `lib/string.c` + its kprintf, so this needs the
-   bring-up lib reconciled with `sys/lib` (pick one source of memcpy/kprintf)
-   first; (b) **TTY + job-control**
+   in five subsystems not yet on aarch64: (a) ✅ **kernel lib** `sprintf/snprintf/
+   strcmp/strlen/...` — DONE (commit 03b6bec43): `sys/lib/kprintf.c` is now the
+   shared formatting engine (i386 console + quad-division arch-gated), aarch64
+   `kprintf`/`kpanic` format through the shared `kvprintf` (bring-up
+   `uart_vprintf` deleted), and `strcmp/strncmp/memcmp`/`hex2ascii_data` added to
+   the aarch64 arch `string.c`; (b) **TTY + job-control**
    `tty_inject/find/change/print`, `signal_post_pgrp/tty`; (c) **lwIP sockets**
    `lwip_close/recv/select/send`; (d) **i386 device layer** `kbd_getEvent`,
    `rs232_putc`, `serial_rx_getbyte`, `vesa_text_*`, `ubx_device_find`; (e)
@@ -160,6 +161,18 @@ clean-ups landed alongside the malloc fix:
    standalone (over devfs/procfs — no disk needed), deferring TTY/socket/ISA.
 4. **virtio drivers** — virtio-blk (root disk), virtio-gpu + virtio-input
    (the desktop framebuffer + pointer), then the `views`/`objGFX` display stack.
+
+**Cross-cutting: unify the kernel bootstrap.** `sys/init/main.c` (`kmain`) is the
+i386 boot entry, but most of what it does is *not* architecture-specific —
+subsystem init ordering, mounting root, spawning `init`, the banner/version, etc.
+aarch64 currently has its own bring-up entry (`arch/aarch64/kern/boot.c`) that
+runs a demo sequence instead.  Like the scheduler (`sched_dispatch.c`) and VMM
+(`vmm_uregion.c`) splits, the bootstrap should be refactored into a **generic
+`kmain` core + a small set of arch hooks** (early console, MMU/paging bring-up,
+trap/IRQ controller init, timer) so the OS bootstrap is uniform across
+architectures and aarch64 boots the *real* init sequence rather than a demo
+runner.  This lands as part of the "run the world" phase (once file syscalls +
+exec-from-disk exist, there is a real `init` to spawn).
 
 ### Earlier blocker analysis (reviewed 2026-06-06; items 1–2 now resolved)
 
