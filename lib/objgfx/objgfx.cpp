@@ -444,15 +444,15 @@ void ogSurface::AARawLine(uint32_t x1, uInt32 y1, uInt32 x2, uInt32 y2, uInt32 c
 			* X advances every time Y advances 1 pixel, truncating the result so that
 			* we won't overrun the endpoint along the X axis 
 			*/
-#ifndef __UBIXOS__
-			erradj = ((uInt64) dx << 32) / (uInt64)dy;
-#else
+#if defined(__UBIXOS__) && defined(__i386__)
 			asm volatile (  // fixed
 				" xor %%eax, %%eax        \n"
 				" div %%ecx              \n"
 				: "=a" (erradj)
 				: "d" (dx), "c" (dy)
 				);
+#else
+			erradj = ((uInt64) dx << 32) / (uInt64)dy;
 #endif
 
 			while (--dy) {
@@ -475,15 +475,15 @@ void ogSurface::AARawLine(uint32_t x1, uInt32 y1, uInt32 x2, uInt32 y2, uInt32 c
 			* that Y advances each time X advances 1 pixel, truncating the result so
 			* that we won't overrun the endpoint along the X axis. 
 			*/
-#ifndef __UBIXOS__
-			erradj = ((uInt64)dy << 32) / (uInt64)dx;
-#else
+#if defined(__UBIXOS__) && defined(__i386__)
 			asm volatile(  // fixed
 				" xor %%eax, %%eax        \n"
 				" div %%ecx              \n"
 				: "=a" (erradj)
 				: "d" (dy), "c" (dx)
 				);
+#else
+			erradj = ((uInt64)dy << 32) / (uInt64)dx;
 #endif
 			// draw all pixels other than the first and last 
 			while (--dx) {

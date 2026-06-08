@@ -96,7 +96,21 @@ ogPixCon::ogPixCon(ogPixelFmt srcPixFmt, ogPixelFmt dstPixFmt) {
   return;
 } // ogPixCon::ogPixCon()
 
-uint32_t 
+/*
+ * ConvPix — remap a pixel from the source format to the destination format.
+ *
+ * srcMasker keeps only the meaningful source channel bits.  srcShifter packs
+ * the four source field SIZES (byte3=field0 .. byte0=field3, in srcFieldPos
+ * descending order) and dstShifter packs the matching destination shift amounts
+ * (dstShifters[channelIdx[i]]).  Each field is extracted low-to-high, left-
+ * aligned into a 32-bit lane, then shifted down into its destination position.
+ *
+ * The i386 build keeps the original hand-written x86 assembly (proven, and the
+ * shrd/shr sequence is exactly this algorithm); every other arch uses the
+ * portable C reimplementation below, which is bit-for-bit equivalent.
+ */
+#if defined(__i386__)
+uint32_t
 ogPixCon::ConvPix(uint32_t pixel) {
   __asm__ __volatile__(
        "  xor   %%ebx, %%ebx       \n"    // xor     ebx, ebx
@@ -141,4 +155,27 @@ ogPixCon::ConvPix(uint32_t pixel) {
   );
   return pixel;
 }; // ogPixCon::ConvPix
+#else
+uint32_t
+ogPixCon::ConvPix(uint32_t pixel) {
+  uint32_t src = pixel & srcMasker;
+  uint8_t  sz0 = (uint8_t)(srcShifter >> 24);
+  uint8_t  sz1 = (uint8_t)(srcShifter >> 16);
+  uint8_t  sz2 = (uint8_t)(srcShifter >> 8);
+  uint8_t  sz3 = (uint8_t)(srcShifter);
+  uint8_t  d0  = (uint8_t)(dstShifter >> 24);
+  uint8_t  d1  = (uint8_t)(dstShifter >> 16);
+  uint8_t  d2  = (uint8_t)(dstShifter >> 8);
+  uint8_t  d3  = (uint8_t)(dstShifter);
+
+  /* Extract each field from the low bits of src, left-aligned into its lane
+   * (a size-0 field yields 0, matching the x86 shrd-by-0 -> dest-unchanged). */
+  uint32_t f3 = sz3 ? (src << (32 - sz3)) : 0u; src >>= sz3;
+  uint32_t f2 = sz2 ? (src << (32 - sz2)) : 0u; src >>= sz2;
+  uint32_t f1 = sz1 ? (src << (32 - sz1)) : 0u; src >>= sz1;
+  uint32_t f0 = sz0 ? (src << (32 - sz0)) : 0u;
+
+  return (f3 >> d3) | (f2 >> d2) | (f1 >> d1) | (f0 >> d0);
+}; // ogPixCon::ConvPix
+#endif
 

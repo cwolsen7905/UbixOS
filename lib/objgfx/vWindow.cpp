@@ -2,6 +2,8 @@ extern "C" {
 #include <stdio.h>
 }
 
+#include <stdint.h>
+#include <sys/ubix_syscall.h>
 #include <objgfx/vWindow.h>
 
 vWindow::vWindow(void) {
@@ -24,31 +26,17 @@ bool vWindow::vCreate(void) {
 
 extern "C" {
 
-void vSDECmd(uint32_t command, uint32_t rwAddr);
-
-asm(
-  ".globl vSDECmd\n"
-  "vSDECmd:\n"
-  "movl $40,%eax\n"
-  "int $0x81\n"
-  "ret\n"
-  );
-
+/* Legacy SDE command thunk (native syscall 40).  Used only by the old SDE
+ * widget path, not the modern views compositor; ported via the portable thunk
+ * macro so objgfx links on every arch.  rwAddr is a pointer, so it is passed
+ * register-width (uintptr_t) rather than a 32-bit int. */
+void vSDECmd(uint32_t command, uintptr_t rwAddr);
 }
 
-void vWindow::vSDECommand(uint32_t command) {
-  uint32_t rwAddr = (uint32_t)realWindow;
+UBIX_NATIVE_THUNK(vSDECmd, 40);
 
-  /*
-  asm(
-    "pushl %%ebx\n"
-    "pushl %%ecx\n"
-    "int %0\n"
-    "add $0x8, %%esp\n"
-    :
-    : "i" (0x81),"a" (40),"b" (command),"c" (rwAddr)
-  );
-  */
+void vWindow::vSDECommand(uint32_t command) {
+  uintptr_t rwAddr = (uintptr_t)realWindow;
 
   vSDECmd(command, rwAddr);
 
