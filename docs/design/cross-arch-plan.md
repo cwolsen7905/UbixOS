@@ -235,7 +235,24 @@ are exactly the multiplexing B removes, so they would be discarded.
   with no `lwip_*` in its object; `fo_close_t` gained the fd-number arg; (iii)
   TTY; (iv) pipe; (v) delete the read/write/close switch.
 
-  **TTY scope note (iii):** this is the gnarliest extraction — the
+  **(iii) ✅ DONE** (commits 97888f72b write, 9293dd62d read): the console
+  read/write state machine moved to `tty_fo_read`/`tty_fo_write` in
+  `sys/posix/tty.c` behind `g_console_ops`; tty fds dispatch via `f_ops` (set at
+  `/dev/tty[X]` open), placeholder controlling-terminal fds via the
+  `g_console_ops` fall-through.  `vfs_calls.c` now references **none** of the
+  socket or tty/console state-machine symbols and compiles for aarch64; its only
+  remaining external deps are generic (fd table, VFS file layer, lib, sched).
+  i386 boot-verified: mounts root, prints `Login:`, blocks stably at the prompt.
+  **Two small tty couplings remain in `vfs_calls.c`, deferred to the
+  aarch64-foundational step:** (a) `g_console_ops` is *defined* in `tty.c` (move
+  the definition to a generic file — e.g. `descrip.c` — so it resolves on
+  aarch64; `tty.c` keeps only the install); (b) `tty_find` is still called from
+  `kern_openat`'s `/dev/tty[X]` open special-casing (move that device-open
+  handling behind the tty layer / a devfs registration).  (iv) pipe — cleanup,
+  doesn't block aarch64.  (v) `sys_select`/`sys_ioctl` in `descrip.c` still
+  couple socket/tty (poll-fileop + console hook).
+
+  **TTY scope note (iii) — original assessment:** this is the gnarliest extraction — the
   FD_TYPE_TTYV/serial/VGA branches + the Ctrl+Alt+Fn VT-switch (`vesa_text_slot`/
   `tty_switch_slot`/`tty_change`/`vesa_text_mode`/`kbd_gui_mode`/`tty_foreground`)
   + SIGTTIN/SIGTTOU job control are the *bulk* of `sys_read` (~200 lines) and the
