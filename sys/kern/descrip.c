@@ -56,10 +56,9 @@
 static int close_fdslot(struct thread *td, int fd);
 static int duplicate_descriptor(struct thread *td, int from, int to);
 
-/* Forward-declare lwip_select to avoid pulling in sockets.h macros. */
+/* (lwip_select is no longer called directly — see the g_socket_select hook.) */
 struct timeval;
 struct fd_set;
-int lwip_select(int, struct fd_set *, struct fd_set *, struct fd_set *, struct timeval *);
 
 /* Console/TTY fileops (path B): defined here in the generic fd layer so it
  * resolves on every arch; installed with &tty_ops by tty_init() (sys/posix/tty.c)
@@ -70,6 +69,13 @@ void *(*g_tty_find)(u_int16_t slot) = 0x0;
  * arches that don't link them, where the corresponding ioctls become no-ops. */
 void (*g_tty_inject)(void *term, char ch) = 0x0;
 int (*g_dev_char_ioctl)(struct file *fp, u_int32_t com, void *data) = 0x0;
+/* sys_select/sys_poll hooks (path B): g_socket_select is lwIP's select (the only
+ * socket symbol — the fd_set math is generic); g_console_stdin_ready drains the
+ * controlling-terminal input and reports whether a line is ready.  Installed by
+ * the socket + tty layers; NULL where those aren't linked (no socket fds can
+ * exist there, and the console poll is simply skipped). */
+int (*g_socket_select)(int nfds, struct fd_set *r, struct fd_set *w, struct fd_set *e, struct timeval *tv) = 0x0;
+int (*g_console_stdin_ready)(void) = 0x0;
 
 int fcntl(struct thread *td, struct sys_fcntl_args *uap)
 {
@@ -729,48 +735,21 @@ int sys_select(struct thread *td, struct sys_select_args *args)
 		total = 0;
 
 		/* Check TTY stdin readiness */
-		if (has_stdin_rd && _current->term)
+		/* TTY stdin readiness: the tty layer drains the console + reports a
+		 * complete line (path B hook; no-op where there's no TTY layer). */
+		if (has_stdin_rd && g_console_stdin_ready != NULL && g_console_stdin_ready())
 		{
-			int stdin_ready = 0;
-			if (_current->term->t_type == TTY_TYPE_SERIAL)
-			{
-				/* Drain serial rx ring so stdinSize is current */
-				int raw;
-				while ((raw = serial_rx_getbyte()) >= 0)
-					tty_inject(_current->term, (char)raw);
-				stdin_ready = (_current->term->stdinSize > 0);
-			}
-			else
-			{
-				/* VGA console: drain ring through tty_inject (echoes chars
-				 * to screen) and report ready only when a full canonical
-				 * line has been flushed to tty_foreground->stdin[]. */
-				kbd_event_t _kev;
-				while (kbd_getEvent(&_kev) == 0)
-				{
-					if (_kev.pressed)
-					{
-						u_int32_t _kc = _kev.keycode;
-						if (_kc != 0 && _kc < 0x100 && tty_foreground != NULL)
-							tty_inject(tty_foreground, (char)(u_int8_t)_kc);
-					}
-				}
-				stdin_ready = (tty_foreground != NULL && tty_foreground->stdinSize > 0);
-			}
-			if (stdin_ready)
-			{
-				if (args->in)
-					FD_SET(0, args->in);
-				total++;
-			}
+			if (args->in)
+				FD_SET(0, args->in);
+			total++;
 		}
 
-		/* Check sockets (non-blocking) */
-		if (max_lwip > 0)
+		/* Check sockets (non-blocking) via the socket-select hook. */
+		if (max_lwip > 0 && g_socket_select != NULL)
 		{
 			fd_set tmp_r = lwip_rfds;
 			fd_set tmp_w = lwip_wfds;
-			int r = lwip_select(max_lwip, &tmp_r, &tmp_w, NULL, &zero_tv);
+			int r = g_socket_select(max_lwip, &tmp_r, &tmp_w, NULL, &zero_tv);
 			if (r > 0)
 			{
 				for (i = 0; i < nd; i++)
@@ -869,43 +848,26 @@ int sys_poll(struct thread *td, struct sys_poll_args *args)
 	{
 		total = 0;
 
-		/* stdin readiness */
-		for (i = 0; i < nfds; i++)
+		/* stdin readiness: the tty layer drains the console + reports a complete
+		 * line (path B hook; no-op where there's no TTY layer). */
+		if (g_console_stdin_ready != NULL && g_console_stdin_ready())
 		{
-			if (args->fds[i].fd != 0)
-				continue;
-			if (!(args->fds[i].events & (POLLIN | POLLRDNORM)))
-				continue;
-			if (_current->term == NULL)
-				continue;
-			if (_current->term->t_type == TTY_TYPE_SERIAL)
+			for (i = 0; i < nfds; i++)
 			{
-				int raw;
-				while ((raw = serial_rx_getbyte()) >= 0)
-					tty_inject(_current->term, (char)raw);
-			}
-			else
-			{
-				kbd_event_t kev;
-				while (kbd_getEvent(&kev) == 0)
+				if (args->fds[i].fd == 0 && (args->fds[i].events & (POLLIN | POLLRDNORM)))
 				{
-					if (kev.pressed && kev.keycode != 0 && kev.keycode < 0x100 && tty_foreground != NULL)
-						tty_inject(tty_foreground, (char)(u_int8_t)kev.keycode);
+					args->fds[i].revents |= POLLIN;
+					total++;
 				}
-			}
-			if (tty_foreground != NULL && tty_foreground->stdinSize > 0)
-			{
-				args->fds[i].revents |= POLLIN;
-				total++;
 			}
 		}
 
-		/* socket readiness */
-		if (max_lwip > 0)
+		/* socket readiness via the socket-select hook. */
+		if (max_lwip > 0 && g_socket_select != NULL)
 		{
 			fd_set tmp_r = lwip_rfds;
 			fd_set tmp_w = lwip_wfds;
-			int r = lwip_select(max_lwip, &tmp_r, &tmp_w, NULL, &zero_tv);
+			int r = g_socket_select(max_lwip, &tmp_r, &tmp_w, NULL, &zero_tv);
 			if (r > 0)
 			{
 				for (i = 0; i < nfds; i++)

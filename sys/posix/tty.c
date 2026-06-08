@@ -115,6 +115,41 @@ static void tty_init_termios(tty_term *t)
 }
 
 /*
+ * console_stdin_ready — g_console_stdin_ready hook (path B): drain the calling
+ * process's controlling-terminal input (serial rx ring or kbd ring, through the
+ * line discipline) and report whether a complete canonical line is waiting in
+ * stdin[].  Used by sys_select / sys_poll so the generic fd layer never touches
+ * the serial/kbd/tty symbols directly.
+ *
+ * @return non-zero if stdin has a line ready.
+ */
+static int console_stdin_ready(void)
+{
+	tty_term *t = _current->term;
+
+	if (t == NULL)
+		return (0);
+
+	if (t->t_type == TTY_TYPE_SERIAL)
+	{
+		int raw;
+		while ((raw = serial_rx_getbyte()) >= 0)
+			tty_inject(t, (char)raw);
+		return (t->stdinSize > 0);
+	}
+
+	/* VGA console: drain the kbd ring through the line discipline (which echoes);
+	 * ready only once a full line has flushed to the foreground term's stdin[]. */
+	kbd_event_t kev;
+	while (kbd_getEvent(&kev) == 0)
+	{
+		if (kev.pressed && kev.keycode != 0 && kev.keycode < 0x100 && tty_foreground != NULL)
+			tty_inject(tty_foreground, (char)(u_int8_t)kev.keycode);
+	}
+	return (tty_foreground != NULL && tty_foreground->stdinSize > 0);
+}
+
+/*
  * tty_fo_read — fileops read handler for FD_TYPE_TTY / FD_TYPE_TTYV and the
  * controlling-terminal placeholder fds.  Moved out of sys/posix/vfs_calls.c
  * (path B) so the generic syscall core no longer references the console-read
@@ -357,6 +392,7 @@ int tty_init()
 	g_console_ops = &tty_ops;
 	g_tty_find = (void *(*)(u_int16_t))tty_find;
 	g_tty_inject = (void (*)(void *, char))tty_inject;
+	g_console_stdin_ready = console_stdin_ready;
 
 	/* Allocate memory for terminals */
 	terms = (tty_term *)kmalloc(sizeof(tty_term) * TTY_MAX_TERMS);

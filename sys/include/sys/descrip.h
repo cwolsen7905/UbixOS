@@ -121,6 +121,15 @@ extern void *(*g_tty_find)(u_int16_t slot);
 extern void (*g_tty_inject)(void *term, char ch);
 extern int (*g_dev_char_ioctl)(struct file *fp, u_int32_t com, void *data);
 
+/* sys_select/sys_poll hooks: g_socket_select is lwIP's select (installed by the
+ * socket layer); g_console_stdin_ready drains the controlling terminal and
+ * returns non-zero when a line is ready (installed by tty_init).  NULL where
+ * those layers aren't linked. */
+struct fd_set;
+struct timeval;
+extern int (*g_socket_select)(int nfds, struct fd_set *r, struct fd_set *w, struct fd_set *e, struct timeval *tv);
+extern int (*g_console_stdin_ready)(void);
+
 #ifdef _BALLS
 struct stat {
   __dev_t st_dev; /* inode's device */

@@ -27,6 +27,7 @@
  */
 
 #include <sys/types.h>
+#include <sys/descrip.h> /* g_socket_select hook (path B) */
 #include <ubixos/sched.h>
 #include <ubixos/endtask.h>
 #include <ubixos/sem.h>
@@ -128,6 +129,13 @@ static void net_tcpip_init_done(void *arg) {
 }
 
 int net_init(void) {
+	/* Path B: install lwIP's select() so the generic sys_select/sys_poll route
+	 * socket-readiness here without referencing lwip_* directly. */
+	{
+		extern int lwip_select(int, struct fd_set *, struct fd_set *, struct fd_set *, struct timeval *);
+		g_socket_select = lwip_select;
+	}
+
 	if (!e1000_ready && !ne2k_ready) {
 		klog(KLOG_WARNING, "net: no NIC available, skipping network init");
 		return 0;
