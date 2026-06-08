@@ -225,11 +225,29 @@ are exactly the multiplexing B removes, so they would be discarded.
   `kbd_gui_mode`/`vesa_text_mode`/`tty_change`/`tty_switch_slot`) is i386-console
   specific — move it behind the tty `f_ops->ioctl` (or an arch console hook).
 - **Risk control:** this touches the critical i386 syscall path → keep i386
-  byte/behaviour-identical and boot-verify each step.  Increment: (i) add FILE
-  `f_ops` + route read/write/close through `f_ops` with the existing switch as
-  fallback; (ii) move TTY to its `f_ops`; (iii) socket; (iv) pipe; (v) delete the
-  switch.  i386-verified at every step; aarch64 linkability improves as each type
-  leaves the core.
+  byte/behaviour-identical and boot-verify each step.  Increment: (i) ✅ DONE
+  (commit c3efef87b) — real `fo_read_t`/`fo_write_t`/`fo_close_t` vector +
+  dormant dispatch seam in `sys_read`/`write`/`close` (f_ops NULL everywhere, so
+  the existing switch still runs; i386 boots unchanged); (ii) move socket
+  read/write/close to `socket_fileops.c` + register `f_ops` at socket creation;
+  (iii) TTY; (iv) pipe; (v) delete the read/write/close switch.
+
+  **Refinement (mapped 2026-06-07):** `read`/`write`/`close` f_ops-ize cleanly,
+  but two more syscalls couple the same subsystems and need handling before
+  aarch64 can link `descrip.c`/`vfs_calls.c` clean:
+  - **`sys_select`** (`sys/kern/descrip.c:616`) is inherently multi-fd — it
+    references `lwip_select` + `FD_TYPE_SOCKET` directly to build the lwIP fd
+    sets.  Needs a per-type `poll`/`selectable` fileop (or the socket branch
+    behind a hook), not the read/write/close vector.
+  - **`sys_ioctl`** holds the i386 console-VT-switch globals (`kbd_gui_mode`,
+    `vesa_text_mode`, `tty_change`, `tty_switch_slot`, `vesa_text_slot`) — move
+    behind the tty `f_ops->ioctl` / an arch console hook.
+
+  **Testing caveat:** socket/tty/pipe runtime is NOT exercised by the
+  boot-to-`Login:` smoke test (which mainly drives the FILE path).  Those
+  extractions need real coverage — a socket echo, a shell pipeline (`echo|cat`),
+  a VT switch — before they can be trusted; doing them is a focused effort, not a
+  session-tail sprint.
 
 ### Earlier blocker analysis (reviewed 2026-06-06; items 1–2 now resolved)
 
