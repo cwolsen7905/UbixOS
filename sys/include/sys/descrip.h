@@ -131,6 +131,13 @@ struct timeval;
 extern int (*g_socket_select)(int nfds, struct fd_set *r, struct fd_set *w, struct fd_set *e, struct timeval *tv);
 extern int (*g_console_stdin_ready)(void);
 
+/* Lower-VFS-layer hooks (file.c/mount.c); NULL where the provider isn't linked. */
+extern void *(*g_device_find)(int major, int minor);
+extern int (*g_fs_rename)(void *fs, const char *src, const char *dst);
+extern int (*g_fs_truncate)(void *file, u_int32_t length);
+extern void (*g_tty_print)(const char *buf, void *term);
+extern int (*g_tty_getchar)(void);
+
 #ifdef _BALLS
 struct stat {
   __dev_t st_dev; /* inode's device */

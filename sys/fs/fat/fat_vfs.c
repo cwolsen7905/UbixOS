@@ -31,6 +31,7 @@
 #include <fs/vfs/vfs.h>
 #include <fs/vfs/file.h>
 #include <sys/bus.h>
+#include <sys/descrip.h> /* g_fs_rename/g_fs_truncate hooks (path B) */
 #include <ubixos/sched.h>
 #include <ubixos/kpanic.h>
 #include <lib/kmalloc.h>
@@ -285,6 +286,10 @@ int unlink_fat(char *path, void *vmp)
 
 int fat_init(void)
 {
+	/* Path B: the generic file layer routes rename()/truncate() here. */
+	g_fs_rename = (int (*)(void *, const char *, const char *))fat_dir_rename;
+	g_fs_truncate = (int (*)(void *, u_int32_t))fat_file_truncate;
+
 	struct fileSystem ubixFileSystem = {
 	    NULL,
 	    NULL,

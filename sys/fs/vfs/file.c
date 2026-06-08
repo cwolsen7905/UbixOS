@@ -60,7 +60,8 @@ int sys_fwrite(struct thread *td, struct sys_fwrite_args *uap)
 
 	if (uap->fd == 0x0)
 	{
-		tty_print((char *)uap->buf, _current->term);
+		if (g_tty_print != NULL)
+			g_tty_print((char *)uap->buf, _current->term);
 	}
 	else
 	{
@@ -83,7 +84,8 @@ void sysFwrite(char *ptr, int size, userFileDescriptor *userFd)
 {
 	if (userFd == 0x0)
 	{
-		tty_print(ptr, _current->term);
+		if (g_tty_print != NULL)
+			g_tty_print(ptr, _current->term);
 	}
 	else
 	{
@@ -120,24 +122,15 @@ int sys_fgetc(struct thread *td, struct sys_fgetc_args *args)
 			return (0);
 		}
 
-		/* TTY-backed stdin */
-		while (1)
+		/* TTY-backed stdin: the tty layer blocks until a char is ready (path B
+		 * hook); -1 on arches without a TTY layer. */
+		if (g_tty_getchar != NULL)
 		{
-			if (_current->term == tty_foreground)
-			{
-				c = getchar();
-				if (c != 0x0)
-				{
-					td->td_retval[0] = c;
-					return (0);
-				}
-				sched_yield();
-			}
-			else
-			{
-				sched_yield();
-			}
+			td->td_retval[0] = g_tty_getchar();
+			return (0);
 		}
+		td->td_retval[0] = -1;
+		return (-1);
 	}
 	else
 	{
@@ -313,7 +306,7 @@ int sys_ftruncate(struct thread *td, struct sys_ftruncate_args *args)
 	 * for our current workloads. */
 	if (fd->res != NULL && fd->mp != NULL && fd->mp->fs != NULL && fd->mp->fs->vfsType == 0xFA)
 	{
-		if (fat_file_truncate((struct fat_file *)fd->res, (u_int32_t)args->length) != 0)
+		if (g_fs_truncate == NULL || g_fs_truncate(fd->res, (u_int32_t)args->length) != 0)
 		{
 			td->td_retval[0] = -EIO;
 			return (EIO);
@@ -506,8 +499,8 @@ int sys_rename(struct thread *td, struct sys_rename_args *args)
 	}
 
 	{
-		struct fat_fs *fs = (struct fat_fs *)src_mp->fsInfo;
-		if (fat_dir_rename(fs, src_fs, dst_fs) != 0)
+		/* FAT rename via the fs hook (path B); -1/error where unsupported. */
+		if (g_fs_rename == NULL || g_fs_rename(src_mp->fsInfo, src_fs, dst_fs) != 0)
 		{
 			td->td_retval[0] = -EIO;
 			return (EIO);

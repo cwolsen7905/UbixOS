@@ -34,6 +34,7 @@
 #include <lib/kprintf.h>
 #include <string.h>
 #include <sys/bus.h>
+#include <sys/descrip.h> /* g_device_find hook (path B) */
 
 /************************************************************************
 
@@ -76,8 +77,9 @@ int vfs_mount( int major, int minor, int partition, int vfsType, char *mountPoin
   /* Copy Mount Point Into Buffer */
   snprintf( mp->mountPoint, sizeof(mp->mountPoint), "%s", mountPoint );
 
-  /* Set Pointer To Physical Drive */
-  device = ubx_device_find( major, minor );
+  /* Set Pointer To Physical Drive (via the device-lookup hook; NULL on arches
+   * without the device model, e.g. a deviceless procfs/devfs mount). */
+  device = g_device_find ? (struct ubx_device *)g_device_find( major, minor ) : NULL;
 
   /* Set Up Mp Defaults */
   mp->device = device;

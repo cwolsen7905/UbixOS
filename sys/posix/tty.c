@@ -115,6 +115,25 @@ static void tty_init_termios(tty_term *t)
 }
 
 /*
+ * console_getchar — g_tty_getchar hook (path B): block until this process's
+ * controlling terminal is the foreground VTY and a character is available, then
+ * return it.  Backs the legacy sys_fgetc stdin path.
+ */
+static int console_getchar(void)
+{
+	for (;;)
+	{
+		if (_current->term == tty_foreground)
+		{
+			char c = getchar();
+			if (c != 0x0)
+				return ((int)c);
+		}
+		sched_yield();
+	}
+}
+
+/*
  * console_stdin_ready — g_console_stdin_ready hook (path B): drain the calling
  * process's controlling-terminal input (serial rx ring or kbd ring, through the
  * line discipline) and report whether a complete canonical line is waiting in
@@ -394,6 +413,8 @@ int tty_init()
 	g_tty_inject = (void (*)(void *, char))tty_inject;
 	g_tty_signal = (void (*)(void *, int))signal_post_tty;
 	g_console_stdin_ready = console_stdin_ready;
+	g_tty_print = (void (*)(const char *, void *))tty_print;
+	g_tty_getchar = console_getchar;
 
 	/* Allocate memory for terminals */
 	terms = (tty_term *)kmalloc(sizeof(tty_term) * TTY_MAX_TERMS);

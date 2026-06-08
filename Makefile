@@ -98,7 +98,15 @@ AARCH64_GENERIC_SRCS = \
 	sys/lib/kmalloc.c \
 	sys/lib/kprintf.c \
 	sys/lib/strlen.c \
-	sys/kern/elf64_load.c
+	sys/vmm/vm_filecache.c \
+	sys/kern/elf64_load.c \
+	sys/kern/klog.c \
+	sys/kern/descrip.c \
+	sys/kern/access.c \
+	sys/fs/vfs/mount.c \
+	sys/fs/vfs/file.c \
+	sys/fs/procfs/procfs.c \
+	sys/posix/vfs_calls.c
 
 kernel-aarch64:
 	@mkdir -p ${OBJ_DIR}/boot ${OBJ_DIR}/obj/sys

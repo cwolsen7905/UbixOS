@@ -77,6 +77,17 @@ int (*g_dev_char_ioctl)(struct file *fp, u_int32_t com, void *data) = 0x0;
  * exist there, and the console poll is simply skipped). */
 int (*g_socket_select)(int nfds, struct fd_set *r, struct fd_set *w, struct fd_set *e, struct timeval *tv) = 0x0;
 int (*g_console_stdin_ready)(void) = 0x0;
+/* Lower-VFS-layer hooks (path B): keep file.c/mount.c's optional couplings out
+ * of the generic build.  All NULL where the providing layer isn't linked.
+ *   g_device_find     major/minor -> block device   (installed by isa_bus_init)
+ *   g_fs_rename/_trunc FAT rename/truncate shortcuts (installed by fat_init)
+ *   g_tty_print       blocking console write          (installed by tty_init)
+ *   g_tty_getchar     blocking console getchar        (installed by tty_init) */
+void *(*g_device_find)(int major, int minor) = 0x0;
+int (*g_fs_rename)(void *fs, const char *src, const char *dst) = 0x0;
+int (*g_fs_truncate)(void *file, u_int32_t length) = 0x0;
+void (*g_tty_print)(const char *buf, void *term) = 0x0;
+int (*g_tty_getchar)(void) = 0x0;
 
 int fcntl(struct thread *td, struct sys_fcntl_args *uap)
 {

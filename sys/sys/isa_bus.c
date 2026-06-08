@@ -27,6 +27,8 @@
  */
 
 #include <sys/isa_bus.h>
+#include <sys/bus.h>
+#include <sys/descrip.h> /* g_device_find hook (path B) */
 #include <isa/atkbd.h>
 #include <isa/mouse.h>
 
@@ -69,6 +71,9 @@ isa_bus_init(void)
 	struct ubx_driver		*single[2];
 	struct ubx_device		*dev;
 	int				 i;
+
+	/* Path B: let the generic VFS mount resolve block devices via this hook. */
+	g_device_find = (void *(*)(int, int))ubx_device_find;
 
 	for (ent = isa_drv_table; ent->ide_driver != NULL; ent++) {
 		dev = ubx_device_alloc(NULL, ent->ide_driver->drv_name);
