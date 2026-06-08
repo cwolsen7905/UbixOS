@@ -137,14 +137,25 @@ clean-ups landed alongside the malloc fix:
 
 **Remaining path to boot-to-desktop**, in order:
 
-1. **ELF exec + `fork` (Phase 13e)** — load a compiled aarch64 binary into a
-   per-process address space and run it as a scheduled `kTask_t`. Trapframe and
-   syscall dispatch already exist; this adds the ELF64 loader and wires
-   exec/fork to the pmap + scheduler.
-2. **Userland port** — de-hardcode i386 in `lib/Makefile`/`musl-libc`, build
-   musl + libc + `bin/` for aarch64. The single biggest remaining chunk; gates
-   any real `world` (and therefore login + desktop).
-3. **virtio drivers** — virtio-blk (root disk), virtio-gpu + virtio-input
+1. ✅ **ELF exec + `fork` (Phase 13e)** — done; the loader runs scheduled EL0
+   tasks, fork works.
+2. ✅ **Userland port (U3)** — done for the core CLI world: `bmake world
+   TARGET=aarch64` builds 26 programs (boot triad + coreutils + net tools).
+3. **File-syscall surface (next)** — route the SVC dispatcher's open/read/close/
+   lseek/fstat to the real implementations so programs can do file I/O. **Scoped
+   footprint (measured 2026-06-07 by linking the layer):** all the files compile
+   for aarch64 (after the `<machine/signal.h>` fix), but `sys/posix/vfs_calls.c`
+   + `sys/kern/descrip.c` multiplex TTY/socket/device fds, so linking them pulls
+   in five subsystems not yet on aarch64: (a) **kernel lib** `sprintf/snprintf/
+   strcmp/...` — trivial, just link `sys/lib`; (b) **TTY + job-control**
+   `tty_inject/find/change/print`, `signal_post_pgrp/tty`; (c) **lwIP sockets**
+   `lwip_close/recv/select/send`; (d) **i386 device layer** `kbd_getEvent`,
+   `rs232_putc`, `serial_rx_getbyte`, `vesa_text_*`, `ubx_device_find`; (e)
+   **FAT + i386 VMM** `fat_dir_rename/file_truncate`, `vmm_free_virtual_page`.
+   → The clean approach is to **separate the pure file-path from the TTY/socket/
+   device multiplexing** in vfs_calls.c/descrip.c so the file path links
+   standalone (over devfs/procfs — no disk needed), deferring TTY/socket/ISA.
+4. **virtio drivers** — virtio-blk (root disk), virtio-gpu + virtio-input
    (the desktop framebuffer + pointer), then the `views`/`objGFX` display stack.
 
 ### Earlier blocker analysis (reviewed 2026-06-06; items 1–2 now resolved)
