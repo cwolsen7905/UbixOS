@@ -228,9 +228,22 @@ are exactly the multiplexing B removes, so they would be discarded.
   byte/behaviour-identical and boot-verify each step.  Increment: (i) ✅ DONE
   (commit c3efef87b) — real `fo_read_t`/`fo_write_t`/`fo_close_t` vector +
   dormant dispatch seam in `sys_read`/`write`/`close` (f_ops NULL everywhere, so
-  the existing switch still runs; i386 boots unchanged); (ii) move socket
-  read/write/close to `socket_fileops.c` + register `f_ops` at socket creation;
-  (iii) TTY; (iv) pipe; (v) delete the read/write/close switch.
+  the existing switch still runs; i386 boots unchanged); (ii) ✅ DONE (commit
+  62abb2247) — socket read/write/close moved to file-local `socket_ops` in
+  `sys/net/net/sys_arch.c` (with the lwIP code, not linked on aarch64),
+  registered at `socket()`/`accept()`; `vfs_calls.c` now compiles for aarch64
+  with no `lwip_*` in its object; `fo_close_t` gained the fd-number arg; (iii)
+  TTY; (iv) pipe; (v) delete the read/write/close switch.
+
+  **TTY scope note (iii):** this is the gnarliest extraction — the
+  FD_TYPE_TTYV/serial/VGA branches + the Ctrl+Alt+Fn VT-switch (`vesa_text_slot`/
+  `tty_switch_slot`/`tty_change`/`vesa_text_mode`/`kbd_gui_mode`/`tty_foreground`)
+  + SIGTTIN/SIGTTOU job control are the *bulk* of `sys_read` (~200 lines) and the
+  most-exercised path (every console read).  It IS boot-verifiable (login reads
+  the console tty), but moving the whole blocking-read/VT state machine into a
+  `tty_ops` (in `sys/posix/tty.c`) is a careful job — do it as its own focused
+  step, not bundled.  Pipe (iv) is self-contained (no external symbols — it does
+  not block aarch64 linking, so it is cleanup, lowest priority).
 
   **Refinement (mapped 2026-06-07):** `read`/`write`/`close` f_ops-ize cleanly,
   but two more syscalls couple the same subsystems and need handling before
