@@ -22,6 +22,7 @@
 #include <sys/descrip.h>        /* getfd, struct file */
 #include <mpi/mpi.h>            /* MPI mailboxes (native syscalls 50-53) */
 #include <string.h>             /* strncpy (getcwd) */
+#include <fs/vfs/stat.h>        /* struct statx (sys_statx) */
 
 #define SYS_EXIT 1
 #define SYS_READ 3
@@ -29,11 +30,15 @@
 #define SYS_WRITE 4
 #define SYS_OPEN 5
 #define SYS_CLOSE 6
-#define SYS_WAIT4 7         /* FreeBSD ABI (the number musl actually emits) */
-#define SYS_EXECVE 59       /* FreeBSD ABI (the number musl actually emits) */
-#define SYS_IOCTL 54        /* FreeBSD ABI; musl isatty() probes the tty with it */
-#define SYS_WRITEV 121      /* FreeBSD ABI; the dynamic linker uses it for diagnostics */
-#define SYS_SCHED_YIELD 331 /* UbixOS ABI (musl's sched_yield maps here) */
+#define SYS_WAIT4 7           /* FreeBSD ABI (the number musl actually emits) */
+#define SYS_EXECVE 59         /* FreeBSD ABI (the number musl actually emits) */
+#define SYS_IOCTL 54          /* FreeBSD ABI; musl isatty() probes the tty with it */
+#define SYS_WRITEV 121        /* FreeBSD ABI; the dynamic linker uses it for diagnostics */
+#define SYS_SCHED_YIELD 331   /* UbixOS ABI (musl's sched_yield maps here) */
+#define SYS_GETDENTS 272      /* FreeBSD getdirentries; musl getdents maps here */
+#define SYS_OPENAT 499        /* FreeBSD ABI; musl openat (relative to a dir fd) */
+#define SYS_CLOCK_GETTIME 232 /* FreeBSD ABI */
+#define SYS_STATX 383         /* Linux slot; musl uses it for stat/fstat */
 #define SYS_BRK 17
 #define SYS_GETPID 20
 #define SYS_MPROTECT 74
@@ -244,6 +249,55 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args)
 			/* wait4(pid, status, options, rusage): cooperative reap.  options/
 			 * rusage are ignored (no WNOHANG/WUNTRACED yet). */
 			return (u_int64_t)aarch64_wait4((int)args[0], (int *)(uintptr_t)args[1]);
+
+		case SYS_OPENAT:
+		{
+			/* openat(dirfd, path, flags, mode): absolute paths (and AT_FDCWD with a
+			 * '/' cwd) resolve the same as open — dirfd-relative paths are TODO. */
+			struct sys_open_args ua;
+			ua.path = (char *)(uintptr_t)args[1];
+			ua.flags = (int)args[2];
+			ua.mode = (int)args[3];
+			sys_open(&_current->td, &ua);
+			return (u_int64_t)_current->td.td_retval[0];
+		}
+
+		case SYS_CLOCK_GETTIME:
+		{
+			/* clock_gettime(clk, timespec*): no wall clock yet — report zero. */
+			u_int64_t *ts2 = (u_int64_t *)(uintptr_t)args[1];
+			if (ts2 != 0)
+			{
+				ts2[0] = 0;
+				ts2[1] = 0;
+			}
+			return 0;
+		}
+
+		case SYS_STATX:
+		{
+			/* statx(dirfd, path, flags, mask, struct statx*): generic VFS stat. */
+			struct sys_statx_args ua;
+			ua.dirfd = (int)args[0];
+			ua.path = (const char *)(uintptr_t)args[1];
+			ua.flags = (int)args[2];
+			ua.mask = (unsigned int)args[3];
+			ua.stx = (struct statx *)(uintptr_t)args[4];
+			sys_statx(&_current->td, &ua);
+			return (u_int64_t)_current->td.td_retval[0];
+		}
+
+		case SYS_GETDENTS:
+		{
+			/* getdents(fd, buf, count): the generic handler emits linux_dirent64. */
+			struct sys_getdirentries_args ua;
+			ua.fd = (int)args[0];
+			ua.buf = (char *)(uintptr_t)args[1];
+			ua.count = (u_int)args[2];
+			ua.basep = 0;
+			sys_getdirentries(&_current->td, &ua);
+			return (u_int64_t)_current->td.td_retval[0];
+		}
 
 		case SYS_IOCTL:
 			/* Pretend success so musl isatty()/tcgetattr() treat the console as a

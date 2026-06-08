@@ -113,6 +113,7 @@ AARCH64_GENERIC_SRCS = \
 	sys/fs/fat/fat_file.c \
 	sys/fs/fat/fat_sector.c \
 	sys/fs/fat/fat_vfs.c \
+	sys/fs/vfs/stat.c \
 	sys/mpi/system.c \
 	sys/mpi/message.c \
 	sys/posix/vfs_calls.c
