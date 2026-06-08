@@ -43,6 +43,12 @@
 #define SYS_MUNMAP 73         /* FreeBSD ABI */
 #define SYS_NANOSLEEP 240     /* FreeBSD ABI */
 #define SYS_UNAME 164         /* FreeBSD ABI */
+#define SYS_GETUID 24         /* FreeBSD ABI */
+#define SYS_GETEUID 25        /* FreeBSD ABI */
+#define SYS_GETGID 47         /* FreeBSD ABI */
+#define SYS_GETEGID 43        /* FreeBSD ABI */
+#define SYS_SETUID 23         /* FreeBSD ABI */
+#define SYS_SETGID 181        /* FreeBSD ABI */
 #define SYS_BRK 17
 #define SYS_GETPID 20
 #define SYS_MPROTECT 74
@@ -345,6 +351,29 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args)
 
 		case SYS_SCHED_YIELD:
 			sched_yield();
+			return 0;
+
+		case SYS_GETUID:
+			return (_current != 0) ? (u_int64_t)_current->uid : 0;
+		case SYS_GETEUID:
+			return (_current != 0) ? (u_int64_t)_current->euid : 0;
+		case SYS_GETGID:
+			return (_current != 0) ? (u_int64_t)_current->gid : 0;
+		case SYS_GETEGID:
+			return (_current != 0) ? (u_int64_t)_current->egid : 0;
+		case SYS_SETUID:
+			if (_current != 0)
+			{
+				_current->uid = (u_int32_t)args[0];
+				_current->euid = (u_int16_t)args[0];
+			}
+			return 0;
+		case SYS_SETGID:
+			if (_current != 0)
+			{
+				_current->gid = (u_int32_t)args[0];
+				_current->egid = (u_int16_t)args[0];
+			}
 			return 0;
 
 		case SYS_GETPID:

@@ -110,6 +110,7 @@ void aarch64_ramfs_demo(void);
 
 /* execfile.c — load + run an ELF image / a file off the VFS (exec-from-file). */
 int aarch64_run_elf_image(const void *image, const char *name);
+void aarch64_spawn_elf_image(const void *image, const char *name); /* schedule a daemon, no wait */
 void aarch64_exec_file(const char *path);
 int aarch64_exec_replace(const char *path,
                          char *const *argv,

@@ -31,6 +31,8 @@ extern char _binary_spin_elf_start[];
 extern char _binary_spin_elf_end[];
 extern char _binary_mpitest_elf_start[];
 extern char _binary_mpitest_elf_end[];
+extern char _binary_authd_min_elf_start[];
+extern char _binary_authd_min_elf_end[];
 
 /* The freestanding demo program, laid into /bin/hello so the shell has a real
  * command to fork/execve. */
@@ -127,8 +129,13 @@ void kmain_aarch64(void)
 			__asm__ volatile("msr daifclr, #2");
 			kprintf("IRQs enabled; timer-driven preemption active.\n");
 
-			kprintf("\n--- disk-backed shell ---\n");
-			aarch64_run_dynamic_init("/bin/shell"); /* real shell from disk; never returns */
+			/* Real login chain: start a bring-up authd (provides the "authd" MPI
+			 * mailbox; plaintext root/user until libpw/BearSSL are ported), then
+			 * run /bin/login off the disk — it authenticates via authd and execs
+			 * /bin/shell.  The authentic init-less boot: login prompt -> shell. */
+			kprintf("\n--- disk-backed login ---\n");
+			aarch64_spawn_elf_image(_binary_authd_min_elf_start, "authd");
+			aarch64_run_dynamic_init("/bin/login"); /* login -> shell; never returns */
 		}
 	}
 

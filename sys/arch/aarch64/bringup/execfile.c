@@ -117,6 +117,31 @@ int aarch64_run_elf_image(const void *image, const char *name)
 }
 
 /**
+ * Schedule a static embedded ELF as a long-lived background task (console fds
+ * set up) and return immediately — used to start a daemon (e.g. authd) before
+ * handing the foreground to login/shell.
+ */
+void aarch64_spawn_elf_image(const void *image, const char *name)
+{
+	u_int64_t *l1, entry, usp;
+	kTask_t *t;
+
+	l1 = build_user_image(image, &entry, &usp);
+	if (l1 == NULL)
+	{
+		kprintf("spawn: %s failed to load\n", name);
+		return;
+	}
+	t = schedNewTask();
+	t->md.md_ttbr0 = (u_int64_t)(uintptr_t)l1;
+	t->md.md_entry = entry;
+	t->md.md_usp = usp;
+	strncpy(t->name, name, sizeof(t->name) - 1);
+	aarch64_console_setup_fds(&t->td);
+	sched_ready(t);
+}
+
+/**
  * Schedule the ELF at @image as @name (a real long-lived task — console fds set
  * up) and turn the calling (boot) thread into the cooperative idle/reaper loop.
  * Unlike run_elf_image this never returns: it is the terminal boot action that
