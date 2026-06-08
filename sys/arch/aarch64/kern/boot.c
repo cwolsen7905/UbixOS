@@ -21,6 +21,13 @@
 extern char _binary_hello_musl_elf_start[];
 extern char _binary_hello_musl_elf_end[];
 
+/* The fork/execve/wait4 "init" demo (/bin/init) + the freestanding program it
+ * execs as its child (/bin/child) — proves the process-chain primitives. */
+extern char _binary_init_demo_elf_start[];
+extern char _binary_init_demo_elf_end[];
+extern char _binary_hello_elf_start[];
+extern char _binary_hello_elf_end[];
+
 /**
  * Return the current exception level (0-3) from CurrentEL[3:2].
  */
@@ -74,11 +81,14 @@ void kmain_aarch64(void)
 	kprintf("\n--- initramfs bootstrap ---\n");
 	if (vfs_mount(0, 0, 0, VFS_TYPE_RAMFS, "/", "rw") == 0)
 	{
-		u_int32_t len = (u_int32_t)(_binary_hello_musl_elf_end - _binary_hello_musl_elf_start);
-		if (ramfs_populate("/", "/bin/init", _binary_hello_musl_elf_start, len) == 0)
-			aarch64_exec_file("/bin/init");
+		u_int32_t init_len = (u_int32_t)(_binary_init_demo_elf_end - _binary_init_demo_elf_start);
+		u_int32_t child_len = (u_int32_t)(_binary_hello_elf_end - _binary_hello_elf_start);
+		int ok = (ramfs_populate("/", "/bin/init", _binary_init_demo_elf_start, init_len) == 0) &&
+		         (ramfs_populate("/", "/bin/child", _binary_hello_elf_start, child_len) == 0);
+		if (ok)
+			aarch64_exec_file("/bin/init"); /* init forks /bin/child, execve's it, wait4's it */
 		else
-			kprintf("bootstrap: failed to populate /bin/init\n");
+			kprintf("bootstrap: failed to populate /bin/init + /bin/child\n");
 	}
 	else
 	{

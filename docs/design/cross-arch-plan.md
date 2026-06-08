@@ -342,9 +342,25 @@ are exactly the multiplexing B removes, so they would be discarded.
      (CNTP) which **HVF traps** → boot faulted + preemption never worked; switched
      to the **virtual** timer (CNTV/PPI 27).  **Boot is now clean (0 exceptions)
      and preemption actually time-slices.**
-  2. **fork + exec + wait wiring** — `init` forks `login`, `login` execs `shell`.
-     fork works; `execve` from a path (the exec-from-file logic, as a syscall) +
-     `wait4`/reap need wiring (and run_elf_image's read-after-reap fixed).
+  2. ✅ **fork + execve + wait4 wiring** — DONE. The full process-chain primitives
+     now work on aarch64, QEMU-verified end-to-end: `/bin/init` (a musl `init_demo`)
+     `fork()`s, the child `execve("/bin/child")`s (the freestanding ELF), it runs +
+     exits, and `init` `wait4()`s + reaps it — `init: child reaped OK`.
+     - `aarch64_fork` now sets parent/ppid/children so `wait4` can find the child.
+     - `aarch64_exec_replace` (execve): reads the ELF off the FS (path + I/O run in
+       the old AS), builds the new image in a fresh address space (shared
+       `build_user_image` with `run_elf_image`), repoints the current task's md
+       state, `pmap_switch`es, then `aarch64_exec_to_el0` (new el0.S helper that
+       re-bases SP_EL1 to the kstack top + ERETs into the new entry).  Old AS pages
+       leak for now (a `pmap_destroy` is the follow-up).  argv/envp not yet
+       marshalled (minimal argc=0 + AT_PAGESZ frame) — comes with the linker work.
+     - `aarch64_wait4`: cooperative reap (scan children, splice/free the exited one,
+       else `sched_yield` — EL0 is IRQ-masked so yielding lets the child finish).
+     - ABI note: musl on this port emits **FreeBSD** numbers (execve=59, wait4=7,
+       fork=2), *not* the `syscall.h.in` values (11/114) — wired to the real ones.
+       `rt_sigprocmask`(340) stubbed to 0 (musl brackets `fork()` with it).
+     Open: EL0 tasks still run IRQ-masked (cooperative); preemptible EL0 needs the
+     `0x480` "lower-EL IRQ" vector + IRQ-enabled SPSR — deferred.
   3. **Dynamic linker** — the *real* `init`/`login`/`shell` are dynamically
      linked (`ld-musl-aarch64.so.1`); either run them via the dynamic linker
      (load the interp + libc.so) or build static initramfs variants.

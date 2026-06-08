@@ -145,6 +145,12 @@ int aarch64_fork(u_int64_t *parent_tf)
 	child->md.md_usp = parent_tf[TF_SLOT_SP_EL0]; /* same user SP (copied space); marks a user task */
 	child->md.md_entry = 0;                       /* unused — the trapframe drives the return */
 
+	/* Parent linkage so wait4() can find + reap this child (and so the generic
+	 * sched() reaper notifies the right parent). */
+	child->parent = _current;
+	child->ppid = _current->id;
+	_current->children++;
+
 	/* Build the child kernel stack: a copy of the parent trapframe at the top
 	 * (with x0 = 0), and below it a ctx frame that ret_from_fork's into it. */
 	top = (u_int8_t *)child->kernelStack + KSTACK_SIZE;

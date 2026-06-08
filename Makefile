@@ -147,6 +147,21 @@ kernel-aarch64:
 	fi
 	@cd ${OBJ_DIR} && ${CROSS_PREFIX}objcopy -I binary -O elf64-littleaarch64 -B aarch64 \
 	    hello_musl.elf ${OBJ_DIR}/obj/sys/hello_musl_embed.o || exit 1
+	@echo "embedding the fork/execve/wait4 init demo (built only if musl libc exists)"
+	@if [ -f ${OBJ_DIR}/lib/libc.a ]; then \
+	    ${CROSS_PREFIX}gcc -static -no-pie -fno-pie -ffreestanding -fno-stack-protector -O2 \
+	        -nostdinc -isystem ${CURDIR}/contrib/musl/include -isystem ${CURDIR}/contrib/musl/arch/aarch64 \
+	        -isystem ${CURDIR}/contrib/musl/arch/generic -isystem ${OBJ_DIR}/obj/musl/obj/include \
+	        -nostdlib -Wl,-Ttext-segment=0x100000000 \
+	        ${OBJ_DIR}/obj/musl/lib/crt1.o ${OBJ_DIR}/obj/musl/lib/crti.o \
+	        ${CURDIR}/tools/aarch64-user/init_demo.c \
+	        ${OBJ_DIR}/lib/libc.a ${LIBGCC} ${OBJ_DIR}/obj/musl/lib/crtn.o \
+	        -o ${OBJ_DIR}/init_demo.elf || exit 1; \
+	else \
+	    head -c 16 /dev/zero > ${OBJ_DIR}/init_demo.elf; \
+	fi
+	@cd ${OBJ_DIR} && ${CROSS_PREFIX}objcopy -I binary -O elf64-littleaarch64 -B aarch64 \
+	    init_demo.elf ${OBJ_DIR}/obj/sys/init_demo_embed.o || exit 1
 	${CROSS_PREFIX}ld -T ${CURDIR}/sys/compile/ldscript.aarch64 -o ${OBJ_DIR}/boot/kernel ${OBJ_DIR}/obj/sys/*.o
 	@echo "aarch64 bring-up kernel linked: ${OBJ_DIR}/boot/kernel"
 

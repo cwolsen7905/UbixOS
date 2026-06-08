@@ -16,7 +16,7 @@
 /* uart.c — PL011 console + the arch kprintf (formats via the shared kvprintf). */
 void uart_putc(char c);
 void uart_puts(const char *s);
-int uart_getc(void);    /* non-blocking PL011 RX: byte, or -1 if empty */
+int uart_getc(void);     /* non-blocking PL011 RX: byte, or -1 if empty */
 int uart_rx_ready(void); /* non-zero if a byte is waiting (peek) */
 
 /* console.c — wire the PL011 into the VFS console fileops (g_console_ops etc.). */
@@ -66,6 +66,9 @@ void aarch64_aspace_demo(void);
 /* el0.S — drop to EL0 / return from it + the EL0 demo payload. */
 void aarch64_enter_el0(u_int64_t entry, u_int64_t ustack);
 void aarch64_eret_to_el0(u_int64_t entry, u_int64_t usp); /* scheduled task: no longjmp save */
+void aarch64_exec_to_el0(u_int64_t entry,
+                         u_int64_t usp,
+                         u_int64_t kstack_top); /* execve restart: re-base SP_EL1 + ERET */
 void aarch64_el0_return(void);
 extern char user_demo_code_start[];
 extern char user_demo_code_end[];
@@ -108,5 +111,7 @@ void aarch64_ramfs_demo(void);
 /* execfile.c — load + run an ELF image / a file off the VFS (exec-from-file). */
 int aarch64_run_elf_image(const void *image, const char *name);
 void aarch64_exec_file(const char *path);
+int aarch64_exec_replace(const char *path);   /* execve: replace current image, restart EL0 */
+int aarch64_wait4(int want_pid, int *status); /* cooperative reap of an exited child */
 
 #endif /* _AARCH64_BRINGUP_H */

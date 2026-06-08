@@ -14,10 +14,10 @@
 
 #include "bringup.h"
 #include <sys/types.h>
-#include <ubixos/sched.h>   /* _current, sched_yield */
-#include <ubixos/endtask.h> /* endTask */
-#include <vmm/vmm.h>             /* address-space helpers */
-#include <vmm/uregion.h>         /* vmm_uregion_mmap_anon, vmm_uregion_brk */
+#include <ubixos/sched.h>       /* _current, sched_yield */
+#include <ubixos/endtask.h>     /* endTask */
+#include <vmm/vmm.h>            /* address-space helpers */
+#include <vmm/uregion.h>        /* vmm_uregion_mmap_anon, vmm_uregion_brk */
 #include <sys/sysproto_posix.h> /* sys_open/read/close/lseek + uap structs */
 #include <sys/descrip.h>        /* getfd, struct file */
 
@@ -27,6 +27,8 @@
 #define SYS_WRITE 4
 #define SYS_OPEN 5
 #define SYS_CLOSE 6
+#define SYS_WAIT4 7   /* FreeBSD ABI (the number musl actually emits) */
+#define SYS_EXECVE 59 /* FreeBSD ABI (the number musl actually emits) */
 #define SYS_BRK 17
 #define SYS_GETPID 20
 #define SYS_MPROTECT 74
@@ -34,6 +36,7 @@
 #define SYS_MMAP 477
 #define SYS_LSEEK 478
 #define SYS_SET_TID_ADDRESS 258
+#define SYS_RT_SIGPROCMASK 340 /* musl blocks/restores signals around fork() */
 
 /* Per-process anonymous-mmap region base (block 8 — clear of code/stack). */
 #define MMAP_BASE 0x200000000UL
@@ -174,6 +177,16 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args)
 			/* args is the trapframe; the child resumes here returning 0. */
 			return (u_int64_t)aarch64_fork(args);
 
+		case SYS_EXECVE:
+			/* execve(path, argv, envp): replace the current image + restart EL0.
+			 * Does not return on success; -1 (to x0) on a load failure. */
+			return (u_int64_t)aarch64_exec_replace((const char *)(uintptr_t)args[0]);
+
+		case SYS_WAIT4:
+			/* wait4(pid, status, options, rusage): cooperative reap.  options/
+			 * rusage are ignored (no WNOHANG/WUNTRACED yet). */
+			return (u_int64_t)aarch64_wait4((int)args[0], (int *)(uintptr_t)args[1]);
+
 		case SYS_GETPID:
 			return (_current != 0) ? (u_int64_t)_current->id : 0;
 
@@ -181,6 +194,12 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args)
 			/* musl registers a clear-on-exit TID address at startup; the return
 			 * value is the caller's thread id. */
 			return (_current != 0) ? (u_int64_t)_current->id : 1;
+
+		case SYS_RT_SIGPROCMASK:
+			/* No-op: EL0 signal delivery is not wired yet, so blocking/restoring
+			 * the signal mask around fork() has no effect.  Returning 0 keeps
+			 * musl's fork() happy (and quiet). */
+			return 0;
 
 		case SYS_OPEN:
 		{

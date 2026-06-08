@@ -58,6 +58,27 @@ aarch64_eret_to_el0:
 	.size aarch64_eret_to_el0, . - aarch64_eret_to_el0
 
 /*
+ * void aarch64_exec_to_el0(uint64_t entry [x0], uint64_t usp [x1],
+ *                          uint64_t kstack_top [x2]);
+ *   execve restart: reset SP_EL1 to the task's kernel-stack top (abandoning the
+ *   exec syscall's handler frame — execve never returns to the old image) and
+ *   ERET to EL0 at the new image's entry with SP_EL0 = the fresh user stack.
+ *   Like aarch64_eret_to_el0 but re-bases SP_EL1 so the new image's later traps
+ *   land at the top of the kernel stack rather than mid-frame.  Never returns.
+ */
+	.global aarch64_exec_to_el0
+	.type aarch64_exec_to_el0, %function
+aarch64_exec_to_el0:
+	mov	sp, x2			/* re-base SP_EL1 to the kernel-stack top */
+	msr	sp_el0, x1
+	msr	elr_el1, x0
+	mov	x10, #0x3C0		/* SPSR: M=EL0t, DAIF masked (cooperative EL0) */
+	msr	spsr_el1, x10
+	isb
+	eret
+	.size aarch64_exec_to_el0, . - aarch64_exec_to_el0
+
+/*
  * void aarch64_el0_return(void);
  *   Restore the state saved by aarch64_enter_el0 and `ret` into its caller —
  *   abandoning the current (exception-handler) stack.  Never returns normally.
