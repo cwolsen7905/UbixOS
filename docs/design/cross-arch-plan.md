@@ -174,6 +174,63 @@ architectures and aarch64 boots the *real* init sequence rather than a demo
 runner.  This lands as part of the "run the world" phase (once file syscalls +
 exec-from-disk exist, there is a real `init` to spawn).
 
+### File-syscall enablement on aarch64 — execution plan (path B: the clean fileops refactor)
+
+**Goal:** aarch64 programs do real file I/O (`open`/`read`/`close`/`lseek`/`fstat`)
+over devfs/procfs (no disk yet), through the **shared** kernel file syscalls — not
+a per-arch fork, and without the ~20 throwaway device/tty/socket stubs that the
+pragmatic "path A" would need.  Decision (2026-06-07): do it right (B); A's stubs
+are exactly the multiplexing B removes, so they would be discarded.
+
+**Foundational work (needed regardless of A vs B — do first, validates the rest):**
+1. **Link the file layer** into the aarch64 kernel: add to `AARCH64_GENERIC_SRCS`
+   `sys/kern/descrip.c`, `sys/kern/access.c`, `sys/fs/vfs/{mount,inode,file,stat}.c`,
+   `sys/fs/devfs/devfs.c`, `sys/posix/vfs_calls.c`.  (`vfs.c` + `bcache.c` already
+   linked; the `<machine/signal.h>` fix already landed.)
+2. **Per-process fd table init**: the fd array is `o_files[O_FILES]` in
+   `sys/include/sys/thread.h:42` (alloc via `falloc`/`getfd`/`fdestroy`,
+   `sys/kern/descrip.c`).  aarch64 task creation (schedNewTask / md_new_task path)
+   must zero/init it — the bring-up tasks currently don't.
+3. **Mount a no-disk fs at boot**: devfs at `/dev` (and/or procfs at `/proc`) so
+   there are readable files without virtio-blk.
+4. **Route the SVC dispatcher** (`arch/aarch64/kern/syscall.c`) for FreeBSD numbers
+   open=5, read=3, write=4, close=6, lseek=478, fstat=189 to the real `sys_*`.
+   ABI adaptation: the generic syscalls use `int sys_foo(struct thread *td,
+   struct foo_args *uap)` returning 0/errno with the value in `td->td_retval[0]`;
+   the aarch64 entry has the number in x8 and args in x0..x5.  Build a `uap` struct
+   from x0..x5, point at the current `td`, call `sys_foo`, return `td_retval[0]`
+   (or `-errno`).
+5. **Test**: a musl program (or a demo) opens + reads a devfs/procfs file (e.g.
+   `/proc/meminfo`) and writes it back out.
+
+**The clean separation (the actual B work — what removes the need for stubs):**
+- *Why the core won't link today:* `vfs_calls.c` `sys_read`/`sys_write`/`sys_close`
+  `switch` on `fd->fd_type` (FILE/TTY/SOCKET/PIPE/DIR) and call `tty_*`/`lwip_*`/
+  pipe directly; `descrip.c` close + `sys_ioctl` reach i386 console globals —
+  `tty_foreground` (global, `sys/posix/tty.c:44`), `tty_switch_slot` (`volatile
+  int`, `sys/isa/atkbd.c:103`), `kbd_gui_mode`, `vesa_text_slot`, `vesa_text_mode()`,
+  `tty_change()`, `kbd_getEvent`, `rs232_putc`, `serial_rx_getbyte`,
+  `ubx_device_find`.  So the *file* path can't link without the whole i386
+  console/TTY/socket stack.
+- *The lever:* `struct file` **already has `f_ops`** (`sys/include/sys/descrip.h:82`,
+  the FreeBSD fileops vector).  Make `sys_read`/`write`/`close`/`lseek` dispatch
+  **uniformly through `fd->f_ops->{read,write,close,...}`** and have each fd-type
+  module register its ops:
+  - core (`descrip.c` fd table + `vfs_calls.c` dispatch) then references only
+    `f_ops` — no `tty_*`/`lwip_*` symbols;
+  - `tty.c` / the lwIP socket layer / `pipe.c` provide their own `f_ops` and link
+    only where those subsystems exist (i386 now; aarch64 once TTY/lwIP land);
+  - aarch64 links core + the VFS-file `f_ops` + devfs → file I/O, **zero stubs**.
+- The `sys_ioctl` console-control branch (the Ctrl+Alt+Fn VT switch:
+  `kbd_gui_mode`/`vesa_text_mode`/`tty_change`/`tty_switch_slot`) is i386-console
+  specific — move it behind the tty `f_ops->ioctl` (or an arch console hook).
+- **Risk control:** this touches the critical i386 syscall path → keep i386
+  byte/behaviour-identical and boot-verify each step.  Increment: (i) add FILE
+  `f_ops` + route read/write/close through `f_ops` with the existing switch as
+  fallback; (ii) move TTY to its `f_ops`; (iii) socket; (iv) pipe; (v) delete the
+  switch.  i386-verified at every step; aarch64 linkability improves as each type
+  leaves the core.
+
 ### Earlier blocker analysis (reviewed 2026-06-06; items 1–2 now resolved)
 
 **No new architectural blocker** — the structure holds and the historically
