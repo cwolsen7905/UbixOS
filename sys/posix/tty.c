@@ -42,6 +42,14 @@
 #include <sys/descrip.h> /* struct file, struct fileOps (path B fileops) */
 #include <sys/errno.h>
 #include <lib/kmalloc.h>
+#include <isa/kbd.h>      /* kbd_gui_mode */
+#include <isa/atkbd.h>    /* tty_switch_slot, vesa_text_slot */
+#include <lib/vesa.h>     /* vesa_text_mode */
+#include <fs/vfs/file.h>  /* getchar */
+
+/* True when an unblocked signal is pending (makes the blocking tty read loops
+ * interruptible).  Mirrors the definition in sys/posix/vfs_calls.c. */
+#define SIG_PENDING_UNBLOCKED(td) ((td)->sig_pending & ~(td)->sigmask.__bits[0])
 
 static tty_term *terms = 0x0;
 tty_term *tty_foreground = 0x0;
@@ -104,6 +112,170 @@ static void tty_init_termios(tty_term *t)
 	t->t_winsize.ws_ypixel = 0;
 	t->t_cols = 80;
 	t->t_rows = 25;
+}
+
+/*
+ * tty_fo_read — fileops read handler for FD_TYPE_TTY / FD_TYPE_TTYV and the
+ * controlling-terminal placeholder fds.  Moved out of sys/posix/vfs_calls.c
+ * (path B) so the generic syscall core no longer references the console-read
+ * symbols (getchar / serial_rx_getbyte / the Ctrl+Alt+Fn VT-switch globals /
+ * tty_inject / signal_post_pgrp).  Three cases, by source: a TTYV fd reads its
+ * bound tty_term (fp->data); a serial controlling terminal drains the rx ring
+ * through the line discipline; the VGA controlling terminal blocks until it is
+ * the foreground VTY (servicing deferred VT switches) then drains the keyboard.
+ * Line-oriented: returns on '\n'/'\r', a full buffer, or EOF.  Sets
+ * td_retval[0] = bytes read; returns 0 / errno.
+ */
+static int tty_fo_read(struct file *fp, struct thread *td, void *vbuf, size_t nbyte)
+{
+	volatile char *buf = vbuf;
+	int x = 0;
+	char c = 0x0;
+
+	/* Specific virtual terminal fd: read from the bound tty_term. */
+	if (fp != NULL && fp->fd_type == FD_TYPE_TTYV)
+	{
+		tty_term *t = (tty_term *)fp->data;
+		/* Background process reading from its controlling tty stops on SIGTTIN. */
+		if (t != NULL && t->t_pgrp != 0 && (pid_t)_current->pgrp != t->t_pgrp)
+		{
+			signal_post_pgrp((pid_t)_current->pgrp, SIGTTIN);
+			td->td_retval[0] = -EINTR;
+			return (EINTR);
+		}
+		for (;;)
+		{
+			if (SIG_PENDING_UNBLOCKED(td))
+			{
+				td->td_retval[0] = -EINTR;
+				return (EINTR);
+			}
+			if (t->stdinSize > 0)
+			{
+				int i;
+				c = t->stdin[0];
+				t->stdinSize--;
+				for (i = 0; i < t->stdinSize; i++)
+					t->stdin[i] = t->stdin[i + 1];
+				buf[x++] = c;
+				if (c == '\n' || x >= (int)nbyte)
+					break;
+			}
+			else if (t->t_eof)
+			{
+				t->t_eof = 0;
+				break;
+			}
+			else if (!t->t_inuse)
+			{
+				/* pty released out from under us (master owner died): EOF so an
+				 * orphaned shell unwinds instead of yielding forever. */
+				break;
+			}
+			else
+			{
+				sched_yield();
+			}
+		}
+		td->td_retval[0] = x;
+		return (0);
+	}
+
+	/* Serial controlling terminal: drain rx ring → line discipline → stdin[]. */
+	if (_current->term != NULL && _current->term->t_type == TTY_TYPE_SERIAL)
+	{
+		while (x < (int)nbyte)
+		{
+			int raw;
+			while ((raw = serial_rx_getbyte()) >= 0)
+				tty_inject(_current->term, (char)raw);
+
+			if (_current->term->stdinSize > 0)
+			{
+				int i;
+				c = _current->term->stdin[0];
+				_current->term->stdinSize--;
+				for (i = 0; i < _current->term->stdinSize; i++)
+					_current->term->stdin[i] = _current->term->stdin[i + 1];
+				buf[x++] = c;
+				if (c == '\n' || x >= (int)nbyte)
+					break;
+			}
+			else if (_current->term->t_eof)
+			{
+				_current->term->t_eof = 0;
+				break;
+			}
+			else
+			{
+				if (SIG_PENDING_UNBLOCKED(td))
+				{
+					td->td_retval[0] = -EINTR;
+					return (EINTR);
+				}
+				sched_yield();
+			}
+		}
+		td->td_retval[0] = x;
+		return (0);
+	}
+
+	/* VGA controlling terminal: block until this terminal is the active
+	 * foreground, servicing deferred Ctrl+Alt+Fn switches, then drain the kbd. */
+	{
+		tty_term *t_bg = _current->ct_tty ? _current->ct_tty : _current->term;
+		if (t_bg != NULL && t_bg->t_pgrp != 0 && (pid_t)_current->pgrp != t_bg->t_pgrp)
+		{
+			signal_post_pgrp((pid_t)_current->pgrp, SIGTTIN);
+			td->td_retval[0] = -EINTR;
+			return (EINTR);
+		}
+	}
+	for (;;)
+	{
+		if (SIG_PENDING_UNBLOCKED(td))
+		{
+			td->td_retval[0] = -EINTR;
+			return (EINTR);
+		}
+		if (vesa_text_slot >= 0)
+		{
+			int slot = vesa_text_slot;
+			vesa_text_slot = -1;
+			tty_change((u_int16_t)slot);
+			vesa_text_mode();
+			kbd_gui_mode = 0;
+		}
+		if (tty_switch_slot >= 0)
+		{
+			int slot = tty_switch_slot;
+			tty_switch_slot = -1;
+			tty_change((u_int16_t)slot);
+		}
+		if (kbd_gui_mode || _current->term != tty_foreground)
+		{
+			sched_yield();
+			continue;
+		}
+		c = getchar();
+		if (c != 0x0)
+		{
+			buf[x++] = c;
+			if (c == '\n' || c == '\r' || x >= (int)nbyte)
+				break;
+		}
+		else if (tty_foreground != NULL && tty_foreground->t_eof)
+		{
+			tty_foreground->t_eof = 0;
+			break;
+		}
+		else
+		{
+			sched_yield();
+		}
+	}
+	td->td_retval[0] = x;
+	return (0);
 }
 
 /*
@@ -170,9 +342,9 @@ static int tty_fo_write(struct file *fp, struct thread *td, const void *vbuf, si
  * where the generic core's console fall-through simply returns an error.
  */
 static struct fileOps tty_ops = {
-    .read = 0x0,
+    .read = tty_fo_read,
     .write = tty_fo_write,
-    .close = 0x0,
+    .close = 0x0, /* close has no tty symbols — stays inline in vfs_calls.c */
 };
 struct fileOps *g_console_ops = 0x0;
 

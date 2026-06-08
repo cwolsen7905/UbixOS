@@ -169,19 +169,12 @@ int sys_close(struct thread *td, struct sys_close_args *args)
 
 int sys_read(struct thread *td, struct sys_read_args *args)
 {
-	int x = 0;
-	char c = 0x0;
-	char bf[2];
-	volatile char *buf = args->buf;
-
 	struct file *fd = 0x0;
 
 	struct pipeInfo *p_fd = 0x0;
 	struct pipeBuf *rp_fd = 0x0;
 
 	size_t nbytes;
-
-	int rp_cnt = 0;
 
 	getfd(td, &fd, args->fd);
 
@@ -259,178 +252,21 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 		td->td_retval[0] = -1;
 		return (-1);
 	}
-	else if (fd->fd_type == FD_TYPE_TTYV)
-	{
-		/* Specific virtual terminal fd: read from the bound tty_term. */
-		tty_term *t = (tty_term *)fd->data;
-		/* Phase 12: background process reading from its controlling tty */
-		if (t != NULL && t->t_pgrp != 0 && (pid_t)_current->pgrp != t->t_pgrp)
-		{
-			signal_post_pgrp((pid_t)_current->pgrp, SIGTTIN);
-			td->td_retval[0] = -EINTR;
-			return (EINTR);
-		}
-		for (;;)
-		{
-			if (SIG_PENDING_UNBLOCKED(td))
-			{
-				td->td_retval[0] = -EINTR;
-				return (EINTR);
-			}
-			if (t->stdinSize > 0)
-			{
-				int i;
-				c = t->stdin[0];
-				t->stdinSize--;
-				for (i = 0; i < t->stdinSize; i++)
-				{
-					t->stdin[i] = t->stdin[i + 1];
-				}
-				buf[x++] = c;
-				if (c == '\n' || x >= (int)args->nbyte)
-				{
-					break;
-				}
-			}
-			else if (t->t_eof)
-			{
-				t->t_eof = 0;
-				break; /* return x bytes (0 if line was empty = EOF) */
-			}
-			else if (!t->t_inuse)
-			{
-				/* The pty was released out from under us (its master owner died
-				 * — see tty_hangup_by_owner): report EOF so an orphaned shell
-				 * reading here unwinds and exits instead of yielding forever. */
-				break;
-			}
-			else
-			{
-				sched_yield();
-			}
-		}
-		td->td_retval[0] = x;
-	}
 	else if (fd->fd != NULL)
 	{
 		/* Regular file with a fileDescriptor_t: read via VFS */
 		td->td_retval[0] = fread(args->buf, 1, args->nbyte, fd->fd);
 	}
-	/* else: fd->fd == NULL = TTY placeholder (original fds 0-3 or dup2'd copy) */
-	else if (_current->term != NULL && _current->term->t_type == TTY_TYPE_SERIAL)
+	else if (g_console_ops != NULL && g_console_ops->read != NULL)
 	{
-		/* Serial TTY (ttyd session): drain rx ring through line discipline,
-		 * then read completed characters from the term's stdin buffer.
-		 * Mirrors the VGA path: kbd_ring → tty_inject → stdin[]. */
-		while (x < (int)args->nbyte)
-		{
-			int raw;
-			while ((raw = serial_rx_getbyte()) >= 0)
-			{
-				tty_inject(_current->term, (char)raw);
-			}
-
-			if (_current->term->stdinSize > 0)
-			{
-				int i;
-				c = _current->term->stdin[0];
-				_current->term->stdinSize--;
-				for (i = 0; i < _current->term->stdinSize; i++)
-				{
-					_current->term->stdin[i] = _current->term->stdin[i + 1];
-				}
-				buf[x++] = c;
-				if (c == '\n' || x >= (int)args->nbyte)
-				{
-					break;
-				}
-			}
-			else if (_current->term->t_eof)
-			{
-				_current->term->t_eof = 0;
-				break; /* return x bytes (0 if line was empty = EOF) */
-			}
-			else
-			{
-				if (SIG_PENDING_UNBLOCKED(td))
-				{
-					td->td_retval[0] = -EINTR;
-					return (EINTR);
-				}
-				sched_yield();
-			}
-		}
-		td->td_retval[0] = x;
+		/* Controlling-terminal placeholder (fds 0/3 or dup2'd copies): the tty read
+		 * path (serial / VGA + the Ctrl+Alt+Fn VT switch) lives in the tty fileops
+		 * (path B).  Specific /dev/tty(X) fds already dispatched via f_ops above. */
+		return (g_console_ops->read(fd, td, (void *)args->buf, args->nbyte));
 	}
 	else
 	{
-		/* Phase 12: background process reading from its controlling tty */
-		{
-			tty_term *t_bg = _current->ct_tty ? _current->ct_tty : _current->term;
-			if (t_bg != NULL && t_bg->t_pgrp != 0 && (pid_t)_current->pgrp != t_bg->t_pgrp)
-			{
-				signal_post_pgrp((pid_t)_current->pgrp, SIGTTIN);
-				td->td_retval[0] = -EINTR;
-				return (EINTR);
-			}
-		}
-		/* VGA TTY: block until this terminal is the active foreground,
-		 * then drain keyboard ring → line discipline → stdin[].
-		 *
-		 * When another VTY is switched in (Alt+Fx) or the GUI compositor
-		 * has mapped the framebuffer (kbd_gui_mode=1), yield here rather
-		 * than returning 0 bytes — returning 0 causes login to spin and
-		 * spam "Login:" at full CPU speed.
-		 *
-		 * vesa_text_slot: deferred Ctrl+Alt+Fn from the keyboard ISR.
-		 * The ISR cannot call biosCall (spawns a V86 task, needs sched_yield),
-		 * so it sets the flag and we perform the switch here in task context. */
-		for (;;)
-		{
-			if (SIG_PENDING_UNBLOCKED(td))
-			{
-				td->td_retval[0] = -EINTR;
-				return (EINTR);
-			}
-			if (vesa_text_slot >= 0)
-			{
-				int slot = vesa_text_slot;
-				vesa_text_slot = -1;
-				tty_change((u_int16_t)slot);
-				vesa_text_mode();
-				kbd_gui_mode = 0;
-			}
-			if (tty_switch_slot >= 0)
-			{
-				int slot = tty_switch_slot;
-				tty_switch_slot = -1;
-				tty_change((u_int16_t)slot);
-			}
-			if (kbd_gui_mode || _current->term != tty_foreground)
-			{
-				sched_yield();
-				continue;
-			}
-			c = getchar();
-			if (c != 0x0)
-			{
-				buf[x++] = c;
-				if (c == '\n' || c == '\r' || x >= (int)args->nbyte)
-				{
-					break;
-				}
-			}
-			else if (tty_foreground != NULL && tty_foreground->t_eof)
-			{
-				tty_foreground->t_eof = 0;
-				break; /* return x bytes (0 if line was empty = EOF) */
-			}
-			else
-			{
-				sched_yield();
-			}
-		}
-		td->td_retval[0] = x;
+		td->td_retval[0] = -1;
 	}
 	return (0);
 }
@@ -438,10 +274,6 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 int sys_pread(struct thread *td, struct sys_pread_args *args)
 {
 	int offset = 0;
-	int x = 0;
-	char c = 0x0;
-	char bf[2];
-	volatile char *buf = args->buf;
 
 	struct file *fd = 0x0;
 
@@ -460,49 +292,15 @@ int sys_pread(struct thread *td, struct sys_pread_args *args)
 		td->td_retval[0] = fread(args->buf, args->nbyte, 1, fd->fd);
 		fd->fd->offset = offset;
 	}
+	else if (g_console_ops != NULL && g_console_ops->read != NULL)
+	{
+		/* Console placeholder fds (<=3): tty read via the fileops (path B); the
+		 * pread offset is meaningless for a terminal, as before. */
+		return (g_console_ops->read(fd, td, (void *)args->buf, args->nbyte));
+	}
 	else
 	{
-		bf[1] = '\0';
-		if (_current->term == tty_foreground)
-		{
-			c = getchar();
-		}
-
-		for (x = 0; x < args->nbyte && c != '\n';)
-		{
-			if (_current->term == tty_foreground)
-			{
-
-				if (c != 0x0)
-				{
-					buf[x++] = c;
-					bf[0] = c;
-					kprintf(bf);
-				}
-
-				if (c == '\n')
-				{
-					buf[x++] = c;
-					break;
-				}
-
-				sched_yield();
-				c = getchar();
-			}
-			else
-			{
-				sched_yield();
-			}
-		}
-		if (c == '\n')
-		{
-			buf[x++] = '\n';
-		}
-
-		bf[0] = '\n';
-		kprintf(bf);
-
-		td->td_retval[0] = x;
+		td->td_retval[0] = -1;
 	}
 	return (0);
 }
@@ -513,8 +311,6 @@ int sys_write(struct thread *td, struct sys_write_args *uap)
 
 	struct pipeInfo *p_fd = 0x0;
 	struct pipeBuf *p_buf = 0x0;
-
-	size_t nbytes;
 
 	getfd(td, &fd, uap->fd);
 
