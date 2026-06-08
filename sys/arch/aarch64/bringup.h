@@ -111,7 +111,9 @@ void aarch64_ramfs_demo(void);
 /* execfile.c — load + run an ELF image / a file off the VFS (exec-from-file). */
 int aarch64_run_elf_image(const void *image, const char *name);
 void aarch64_exec_file(const char *path);
-int aarch64_exec_replace(const char *path);   /* execve: replace current image, restart EL0 */
+int aarch64_exec_replace(const char *path,
+                         char *const *argv,
+                         char *const *envp);  /* execve: replace current image, restart EL0 */
 int aarch64_wait4(int want_pid, int *status); /* cooperative reap of an exited child */
 void aarch64_run_init(const char *path);      /* run /bin/init + become the idle loop (no return) */
 void aarch64_run_dynamic(const char *path);   /* load+run a dynamically-linked (PIE) program */

@@ -236,7 +236,9 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args)
 		case SYS_EXECVE:
 			/* execve(path, argv, envp): replace the current image + restart EL0.
 			 * Does not return on success; -1 (to x0) on a load failure. */
-			return (u_int64_t)aarch64_exec_replace((const char *)(uintptr_t)args[0]);
+			return (u_int64_t)aarch64_exec_replace((const char *)(uintptr_t)args[0],
+			                                       (char *const *)(uintptr_t)args[1],
+			                                       (char *const *)(uintptr_t)args[2]);
 
 		case SYS_WAIT4:
 			/* wait4(pid, status, options, rusage): cooperative reap.  options/

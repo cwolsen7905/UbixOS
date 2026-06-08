@@ -49,6 +49,8 @@
 #define AT_ENTRY 9
 #define AT_RANDOM 25
 
+#define MAXARG 48 /* cap on argv/envp entries marshalled into a new image */
+
 /**
  * Load ELF @image into a fresh user address space and build the minimal SysV
  * initial stack musl's __libc_start_main expects (argc/argv/envp/auxv incl.
@@ -199,37 +201,57 @@ static char *read_elf_file(const char *path, int *out_size)
  *
  * @return the user-space stack pointer (16-byte aligned, points at argc).
  */
-static u_int64_t build_dyn_stack(
-    uintptr_t phys_page, u_int64_t page_uva, const char *argv0, const elf64_load_info_t *mi, u_int64_t interp_base)
+static u_int64_t build_dyn_stack(uintptr_t phys_page,
+                                 u_int64_t page_uva,
+                                 char **argv,
+                                 int argc,
+                                 char **envp,
+                                 int envc,
+                                 const elf64_load_info_t *mi,
+                                 u_int64_t interp_base)
 {
 	u_int8_t *page = (u_int8_t *)phys_page;
 	u_int8_t *p = page + PAGE_SIZE;
-	u_int64_t argv0_uva, random_uva;
+	u_int64_t argv_uva[MAXARG], envp_uva[MAXARG], random_uva;
 	u_int64_t *vec;
-	size_t slen = strlen(argv0) + 1;
-	int k = 0;
+	int i, k = 0, nvec;
 #define UVA(ptr) (page_uva + (u_int64_t)((u_int8_t *)(ptr) - page))
 
-	/* argv[0] string + 16 random bytes for the stack canary, near the top. */
-	p -= slen;
-	memcpy(p, argv0, slen);
-	argv0_uva = UVA(p);
+	/* argv + envp strings, then 16 random bytes for the stack canary, near top. */
+	for (i = 0; i < argc; i++)
+	{
+		size_t l = strlen(argv[i]) + 1;
+		p -= l;
+		memcpy(p, argv[i], l);
+		argv_uva[i] = UVA(p);
+	}
+	for (i = 0; i < envc; i++)
+	{
+		size_t l = strlen(envp[i]) + 1;
+		p -= l;
+		memcpy(p, envp[i], l);
+		envp_uva[i] = UVA(p);
+	}
 
 	p -= 16;
 	memcpy(p, "uBixOS-aarch64!\x01", 16); /* AT_RANDOM: bring-up entropy (not a CSPRNG yet) */
 	random_uva = UVA(p);
 
-	/* The vector: argc, argv[0], NULL, envp NULL, then 8 auxv pairs (incl AT_NULL).
-	 * 4 + 16 = 20 u64 = 160 bytes (16-aligned), so SP stays 16-aligned. */
+	/* Vector: argc, argv[..], NULL, envp[..], NULL, then 8 auxv pairs.  Align the
+	 * base down to 16 so SP is 16-byte aligned at the program entry. */
+	nvec = 1 + argc + 1 + envc + 1 + 16;
 	p = (u_int8_t *)((uintptr_t)p & ~(uintptr_t)15);
-	p -= 20 * sizeof(u_int64_t);
+	p -= (u_int64_t)nvec * sizeof(u_int64_t);
 	p = (u_int8_t *)((uintptr_t)p & ~(uintptr_t)15);
 	vec = (u_int64_t *)p;
 
-	vec[k++] = 1;         /* argc */
-	vec[k++] = argv0_uva; /* argv[0] */
-	vec[k++] = 0;         /* argv terminator */
-	vec[k++] = 0;         /* envp terminator */
+	vec[k++] = (u_int64_t)argc;
+	for (i = 0; i < argc; i++)
+		vec[k++] = argv_uva[i];
+	vec[k++] = 0; /* argv terminator */
+	for (i = 0; i < envc; i++)
+		vec[k++] = envp_uva[i];
+	vec[k++] = 0; /* envp terminator */
 	vec[k++] = AT_PHDR;
 	vec[k++] = mi->phdr_va;
 	vec[k++] = AT_PHENT;
@@ -263,7 +285,14 @@ static u_int64_t build_dyn_stack(
  *
  * @return 0 on success, -1 on failure.
  */
-static int load_dynamic(const void *image, u_int64_t *l1, const char *argv0, u_int64_t *out_entry, u_int64_t *out_usp)
+static int load_dynamic(const void *image,
+                        u_int64_t *l1,
+                        char **argv,
+                        int argc,
+                        char **envp,
+                        int envc,
+                        u_int64_t *out_entry,
+                        u_int64_t *out_usp)
 {
 	const Elf64_Ehdr *eh = (const Elf64_Ehdr *)image;
 	elf64_load_info_t mi;
@@ -312,7 +341,8 @@ static int load_dynamic(const void *image, u_int64_t *l1, const char *argv0, u_i
 			if (i == DYN_STACK_PAGES - 1)
 				top_frame = f;
 		}
-		*out_usp = build_dyn_stack(top_frame, DYN_STACK_TOP - PAGE_SIZE, argv0, &mi, interp_base);
+		*out_usp =
+		    build_dyn_stack(top_frame, DYN_STACK_TOP - PAGE_SIZE, argv, argc, envp, envc, &mi, interp_base);
 	}
 
 	*out_entry = start_entry;
@@ -339,11 +369,14 @@ void aarch64_run_dynamic(const char *path)
 	}
 
 	l1 = pmap_create_user_space();
-	if (load_dynamic(buf, l1, path, &entry, &usp) != 0)
 	{
-		kfree(buf);
-		kprintf("dyn: %s failed to load\n", path);
-		return;
+		char *argv[1] = {(char *)path};
+		if (load_dynamic(buf, l1, argv, 1, NULL, 0, &entry, &usp) != 0)
+		{
+			kfree(buf);
+			kprintf("dyn: %s failed to load\n", path);
+			return;
+		}
 	}
 	kfree(buf);
 
@@ -361,27 +394,54 @@ void aarch64_run_dynamic(const char *path)
 }
 
 /**
- * execve(@path): replace the *current* task's image with the ELF at @path and
- * restart it at EL0 — the real exec, as opposed to run_elf_image's new task.
+ * Copy a NULL-terminated user vector of user strings (argv/envp) into freshly
+ * kmalloc'd kernel strings.  Run in the caller's (old) address space before any
+ * TTBR0 switch, so the user pointers are valid.  Caller kfrees each kvec[i].
  *
- * Reads the file (path + VFS I/O run in the old address space) into a kernel
- * buffer, builds the new image in a fresh address space, repoints the current
- * task's md state at it, switches TTBR0, then aarch64_exec_to_el0()s into the
- * new entry — which does not return.  The old address space's user pages leak
- * for now (a pmap_destroy is the follow-up); the kernel stack is reused.
+ * @return the number of entries copied (0..max).
+ */
+static int copy_user_strvec(char *const *uvec, char **kvec, int max)
+{
+	int n = 0;
+
+	if (uvec == NULL)
+		return 0;
+	while (n < max && uvec[n] != NULL)
+	{
+		const char *us = uvec[n];
+		size_t len = 0;
+		char *ks;
+		while (us[len] != '\0' && len < 4096)
+			len++;
+		ks = (char *)kmalloc((u_int32_t)len + 1);
+		if (ks == NULL)
+			break;
+		memcpy(ks, us, len);
+		ks[len] = '\0';
+		kvec[n++] = ks;
+	}
+	return n;
+}
+
+/**
+ * execve(@path, @uargv, @uenvp): replace the *current* task's image with the ELF
+ * at @path and restart it at EL0.  argv/envp are user vectors, copied to kernel
+ * memory before the address-space switch and marshalled onto the new stack.
  *
- * Uses the dynamic loader (load_dynamic), so it handles both PIE/dynamic and
- * static images — the real world is dynamically linked, so the shell execs PIE
- * binaries through here.  argv/envp marshalling is the minimal argv[0]=path.
+ * Reads the file + builds the new image in a fresh address space (via the
+ * dynamic loader, so PIE/dynamic and static both work), repoints the current
+ * task, switches TTBR0, then aarch64_exec_to_el0()s into the new entry — which
+ * does not return.  The old address space's user pages leak for now.
  *
  * @return -1 on any failure to load (on success it does not return).
  */
-int aarch64_exec_replace(const char *path)
+int aarch64_exec_replace(const char *path, char *const *uargv, char *const *uenvp)
 {
 	char *buf;
-	int sz;
+	int sz, argc, envc, i;
 	u_int64_t *l1, entry, usp, kstack_top;
 	char namebuf[256];
+	char *kargv[MAXARG], *kenvp[MAXARG];
 
 	buf = read_elf_file(path, &sz);
 	if (buf == NULL)
@@ -390,19 +450,33 @@ int aarch64_exec_replace(const char *path)
 		return (-1);
 	}
 
-	/* Copy the name out of the old address space now — @path is a user pointer
-	 * there and the old AS is unmapped the instant we switch TTBR0. */
+	/* Copy name + argv + envp out of the old address space now — they are user
+	 * pointers there and the old AS is unmapped the instant we switch TTBR0. */
 	strncpy(namebuf, path, sizeof(namebuf) - 1);
 	namebuf[sizeof(namebuf) - 1] = '\0';
+	argc = copy_user_strvec(uargv, kargv, MAXARG);
+	envc = copy_user_strvec(uenvp, kenvp, MAXARG);
+	if (argc == 0)
+	{
+		kargv[0] = namebuf; /* always pass at least argv[0] */
+		argc = 1;
+	}
 
 	l1 = pmap_create_user_space();
-	if (load_dynamic(buf, l1, namebuf, &entry, &usp) != 0)
+	if (load_dynamic(buf, l1, kargv, argc, kenvp, envc, &entry, &usp) != 0)
 	{
 		kfree(buf);
 		kprintf("execve: %s failed to load\n", path);
 		return (-1);
 	}
 	kfree(buf);
+	/* The argv/envp strings are now copied onto the new user stack; free the
+	 * kernel temporaries (but not namebuf, which is on our stack). */
+	for (i = 0; i < argc; i++)
+		if (kargv[i] != namebuf)
+			kfree(kargv[i]);
+	for (i = 0; i < envc; i++)
+		kfree(kenvp[i]);
 
 	/* Repoint the current task at the new image, then make it live. */
 	strncpy(_current->name, namebuf, sizeof(_current->name) - 1);
