@@ -147,7 +147,10 @@ clean-ups landed alongside the malloc fix:
    for aarch64 (after the `<machine/signal.h>` fix), but `sys/posix/vfs_calls.c`
    + `sys/kern/descrip.c` multiplex TTY/socket/device fds, so linking them pulls
    in five subsystems not yet on aarch64: (a) **kernel lib** `sprintf/snprintf/
-   strcmp/...` — trivial, just link `sys/lib`; (b) **TTY + job-control**
+   strcmp/strlen/...` — NOT just "link `sys/lib`": `sys/lib/string.c` + `kprintf.c`
+   duplicate the aarch64 bring-up `lib/string.c` + its kprintf, so this needs the
+   bring-up lib reconciled with `sys/lib` (pick one source of memcpy/kprintf)
+   first; (b) **TTY + job-control**
    `tty_inject/find/change/print`, `signal_post_pgrp/tty`; (c) **lwIP sockets**
    `lwip_close/recv/select/send`; (d) **i386 device layer** `kbd_getEvent`,
    `rs232_putc`, `serial_rx_getbyte`, `vesa_text_*`, `ubx_device_find`; (e)
