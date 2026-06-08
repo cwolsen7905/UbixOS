@@ -509,7 +509,6 @@ int sys_pread(struct thread *td, struct sys_pread_args *args)
 
 int sys_write(struct thread *td, struct sys_write_args *uap)
 {
-	char *buffer = 0x0;
 	struct file *fd = 0x0;
 
 	struct pipeInfo *p_fd = 0x0;
@@ -572,82 +571,12 @@ int sys_write(struct thread *td, struct sys_write_args *uap)
 
 		td->td_retval[0] = uap->nbyte;
 	}
-	else if (fd != NULL && fd->fd_type == FD_TYPE_TTYV)
+	else if (fd != NULL && fd->fd == NULL && g_console_ops != NULL && g_console_ops->write != NULL)
 	{
-		/* Specific virtual terminal fd: write to the bound tty_term. */
-		tty_term *t = (tty_term *)fd->data;
-		/* Phase 12: background process writing to its controlling tty */
-		if (t != NULL && t->t_pgrp != 0 && (pid_t)_current->pgrp != t->t_pgrp &&
-		    (t->t_termios.c_lflag & TOSTOP))
-		{
-			signal_post_pgrp((pid_t)_current->pgrp, SIGTTOU);
-			td->td_retval[0] = -EINTR;
-			return (EINTR);
-		}
-		buffer = kmalloc(uap->nbyte + 1);
-		if (!buffer)
-		{
-			td->td_retval[0] = -1;
-			return (-1);
-		}
-		memset(buffer, '\0', uap->nbyte + 1);
-		memcpy(buffer, uap->buf, uap->nbyte);
-		if (t != NULL && t->t_type == TTY_TYPE_SERIAL)
-		{
-			size_t i;
-			for (i = 0; i < uap->nbyte; i++)
-			{
-				rs232_putc(buffer[i]);
-			}
-		}
-		else if (t != NULL)
-		{
-			tty_print(buffer, t);
-		}
-		kfree(buffer);
-		td->td_retval[0] = uap->nbyte;
-	}
-	else if (fd != NULL && fd->fd == NULL)
-	{
-		/* TTY placeholder: original fds 1/2 or any dup2'd copy thereof */
-		/* Phase 12: background process writing to its controlling tty */
-		{
-			tty_term *t_bg = _current->ct_tty ? _current->ct_tty : _current->term;
-			if (t_bg != NULL && t_bg->t_pgrp != 0 && (pid_t)_current->pgrp != t_bg->t_pgrp &&
-			    (t_bg->t_termios.c_lflag & TOSTOP))
-			{
-				signal_post_pgrp((pid_t)_current->pgrp, SIGTTOU);
-				td->td_retval[0] = -EINTR;
-				return (EINTR);
-			}
-		}
-		buffer = kmalloc(uap->nbyte + 1);
-		if (!buffer)
-		{
-			td->td_retval[0] = -1;
-			return (-1);
-		}
-		memset(buffer, '\0', uap->nbyte + 1);
-		memcpy(buffer, uap->buf, uap->nbyte);
-		{
-			tty_term *t_out = _current->ct_tty ? _current->ct_tty : _current->term;
-			if (t_out != NULL && t_out->t_type == TTY_TYPE_SERIAL)
-			{
-				size_t i;
-				for (i = 0; i < uap->nbyte; i++)
-					rs232_putc(buffer[i]);
-			}
-			else if (t_out != NULL)
-			{
-				tty_print(buffer, t_out);
-			}
-			else
-			{
-				kprintf("%s", buffer);
-			}
-		}
-		kfree(buffer);
-		td->td_retval[0] = uap->nbyte;
+		/* Controlling-terminal placeholder (fds 1/2 or dup2'd copies): the tty
+		 * write path lives in the tty fileops (path B, sys/posix/tty.c).
+		 * Specific /dev/tty(X) fds already dispatched via f_ops at the top. */
+		return (g_console_ops->write(fd, td, (const void *)uap->buf, uap->nbyte));
 	}
 	else
 	{
@@ -863,6 +792,7 @@ int kern_openat(struct thread *thr, int afd, char *path, int flags, int mode)
 			_current->ct_tty->t_pgrp = (int)_current->pgrp;
 		nfp->fd = NULL;
 		nfp->fd_type = FD_TYPE_TTY;
+		nfp->f_ops = g_console_ops; /* path B: tty write dispatches through fileops */
 		thr->td_retval[0] = fd;
 		return (0);
 	}
@@ -880,6 +810,7 @@ int kern_openat(struct thread *thr, int afd, char *path, int flags, int mode)
 		nfp->fd = NULL;
 		nfp->fd_type = FD_TYPE_TTYV;
 		nfp->data = t;
+		nfp->f_ops = g_console_ops; /* path B: tty write dispatches through fileops */
 		thr->td_retval[0] = fd;
 		return (0);
 	}
@@ -934,6 +865,7 @@ int kern_openat(struct thread *thr, int afd, char *path, int flags, int mode)
 				nfp->fd = NULL;
 				nfp->fd_type = FD_TYPE_TTYV;
 				nfp->data = t;
+				nfp->f_ops = g_console_ops; /* path B: tty write dispatches through fileops */
 				/* POSIX: session leader opening a terminal without
 				 * O_NOCTTY implicitly acquires it as controlling tty. */
 				if (!(oflags & O_NOCTTY) && _current->ct_tty == NULL)

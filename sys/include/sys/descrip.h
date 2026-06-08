@@ -104,6 +104,11 @@ struct fileOps {
     fo_close_t *close;
 };
 
+/* Console/TTY fileops, installed by tty_init() (sys/posix/tty.c).  NULL on
+ * architectures without a TTY layer; the generic syscall core registers it on
+ * tty fds and uses it for the controlling-terminal placeholder fall-through. */
+extern struct fileOps *g_console_ops;
+
 #ifdef _BALLS
 struct stat {
   __dev_t st_dev; /* inode's device */

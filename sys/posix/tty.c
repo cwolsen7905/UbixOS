@@ -39,6 +39,9 @@
 #include <fs/devfs/devfs.h>
 #include <string.h>
 #include <i386/signal.h>
+#include <sys/descrip.h> /* struct file, struct fileOps (path B fileops) */
+#include <sys/errno.h>
+#include <lib/kmalloc.h>
 
 static tty_term *terms = 0x0;
 tty_term *tty_foreground = 0x0;
@@ -103,9 +106,81 @@ static void tty_init_termios(tty_term *t)
 	t->t_rows = 25;
 }
 
+/*
+ * tty_fo_write — fileops write handler for FD_TYPE_TTY / FD_TYPE_TTYV and the
+ * controlling-terminal placeholder fds (fp->fd == NULL).  Moved out of
+ * sys/posix/vfs_calls.c (path B fileops) so the generic syscall core no longer
+ * references the console output symbols (rs232_putc / tty_print).  A TTYV fd
+ * writes to its bound tty_term (fp->data); everything else writes to the
+ * process's controlling terminal (ct_tty, else term).  Sets td_retval[0],
+ * returns 0 / errno.
+ */
+static int tty_fo_write(struct file *fp, struct thread *td, const void *vbuf, size_t nbyte)
+{
+	char *buffer;
+	tty_term *t;
+
+	if (fp != NULL && fp->fd_type == FD_TYPE_TTYV)
+		t = (tty_term *)fp->data;
+	else
+		t = _current->ct_tty ? _current->ct_tty : _current->term;
+
+	/* Phase 12: a background process writing to its controlling tty with TOSTOP
+	 * set stops on SIGTTOU. */
+	if (t != NULL && t->t_pgrp != 0 && (pid_t)_current->pgrp != t->t_pgrp && (t->t_termios.c_lflag & TOSTOP))
+	{
+		signal_post_pgrp((pid_t)_current->pgrp, SIGTTOU);
+		td->td_retval[0] = -EINTR;
+		return (EINTR);
+	}
+
+	buffer = kmalloc(nbyte + 1);
+	if (!buffer)
+	{
+		td->td_retval[0] = -1;
+		return (-1);
+	}
+	memset(buffer, '\0', nbyte + 1);
+	memcpy(buffer, vbuf, nbyte);
+
+	if (t != NULL && t->t_type == TTY_TYPE_SERIAL)
+	{
+		size_t i;
+		for (i = 0; i < nbyte; i++)
+			rs232_putc(buffer[i]);
+	}
+	else if (t != NULL)
+	{
+		tty_print(buffer, t);
+	}
+	else
+	{
+		kprintf("%s", buffer);
+	}
+	kfree(buffer);
+	td->td_retval[0] = nbyte;
+	return (0);
+}
+
+/*
+ * Console/TTY fileops vector.  read/close stay inline in vfs_calls.c for now
+ * (read is the larger VT-switch state machine — path B step iii-read; close has
+ * no tty symbols).  Installed into g_console_ops by tty_init(); g_console_ops is
+ * NULL on architectures without a TTY layer (this file is not linked there),
+ * where the generic core's console fall-through simply returns an error.
+ */
+static struct fileOps tty_ops = {
+    .read = 0x0,
+    .write = tty_fo_write,
+    .close = 0x0,
+};
+struct fileOps *g_console_ops = 0x0;
+
 int tty_init()
 {
 	int i = 0x0;
+
+	g_console_ops = &tty_ops;
 
 	/* Allocate memory for terminals */
 	terms = (tty_term *)kmalloc(sizeof(tty_term) * TTY_MAX_TERMS);
