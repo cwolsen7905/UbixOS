@@ -20,6 +20,7 @@
 #include <sys/bus.h>        /* struct ubx_device — virtio-blk block device */
 #include <mpi/mpi.h>        /* mpi_mbox_exists — wait for the ubistry daemon */
 #include <ubixos/sched.h>   /* sched_yield */
+#include <ubixos/tty.h>     /* tty_init — pty pool for the GUI terminal */
 
 /* The static boot triad — init forks login, login execs sh — laid into the
  * ramfs root as /bin/{init,login,sh}.  Stands in for the real (dynamically
@@ -101,6 +102,7 @@ void kmain_aarch64(void)
 	vitals_init();
 	vfs_init();             /* VFS core: filesystem registry + buffer cache */
 	aarch64_console_init(); /* PL011 -> VFS console fileops (stdin/stdout/stderr) */
+	tty_init();             /* pty pool + VT100 engine (g_tty_ops) for the GUI terminal */
 
 	aarch64_vmm_demo();
 	aarch64_pmap_demo();

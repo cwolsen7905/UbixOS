@@ -118,6 +118,18 @@ static u_int64_t sc_write(u_int64_t fd, u_int64_t buf, u_int64_t len)
 }
 
 /**
+ * Return the current task's open-file entry for @fd, or NULL if out of range /
+ * unset.  Used by the write path to decide whether an fd needs real fileops
+ * dispatch (pty / socket) versus the bring-up UART shortcut.
+ */
+static struct file *aarch64_lookup_fd(int fd)
+{
+	if (_current == 0 || fd < 0 || fd >= O_FILES)
+		return (0);
+	return (struct file *)_current->td.o_files[fd];
+}
+
+/**
  * mmap(addr, len, prot, flags, fd, off): private mapping, anonymous or
  * file-backed.  Arch glue around the generic policy (vmm_uregion_mmap_anon):
  * owns the VA-layout choice (where this address space's mmap region starts) and
@@ -273,24 +285,52 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args)
 	switch (number)
 	{
 		case SYS_WRITE:
-			/* The hand-rolled UART write already emits to the console for any fd;
-			 * no fd-table lookup needed (and the early EL0 demos have no fd table
-			 * yet).  The console fileop write path is reached via the file layer
-			 * for real file/pipe fds. */
+		{
+			/* A pty slave (FD_TYPE_TTYV) or socket fd must dispatch through the
+			 * real sys_write so the fileops decide the destination — the pty feeds
+			 * the VT100 cell grid (the GUI terminal), a socket goes to lwIP.  Plain
+			 * console/placeholder/no-table fds keep the bring-up UART path
+			 * (sc_write), which is also what the early EL0 demos rely on. */
+			struct file *f = aarch64_lookup_fd((int)args[0]);
+			if (f != 0 && (f->fd_type == FD_TYPE_TTYV || f->fd_type == FD_TYPE_SOCKET))
+			{
+				struct sys_write_args ua;
+				ua.fd = (int)args[0];
+				ua.buf = (void *)(uintptr_t)args[1];
+				ua.nbyte = (size_t)args[2];
+				sys_write(&_current->td, &ua);
+				return (u_int64_t)_current->td.td_retval[0];
+			}
 			return sc_write(args[0], args[1], args[2]);
+		}
 
 		case SYS_WRITEV:
 		{
-			/* writev(fd, iov, iovcnt): emit each iovec to the console.  The musl
-			 * dynamic linker uses it for its diagnostics (and stdio later). */
 			struct iovec_lp64
 			{
 				u_int64_t iov_base;
 				u_int64_t iov_len;
 			} *iov = (struct iovec_lp64 *)(uintptr_t)args[1];
+			struct file *f = aarch64_lookup_fd((int)args[0]);
+			int is_fileop = (f != 0 && (f->fd_type == FD_TYPE_TTYV || f->fd_type == FD_TYPE_SOCKET));
 			u_int64_t total = 0;
 			for (int i = 0; i < (int)args[2]; i++)
-				total += sc_write(args[0], iov[i].iov_base, iov[i].iov_len);
+			{
+				if (is_fileop)
+				{
+					struct sys_write_args ua;
+					ua.fd = (int)args[0];
+					ua.buf = (void *)(uintptr_t)iov[i].iov_base;
+					ua.nbyte = (size_t)iov[i].iov_len;
+					sys_write(&_current->td, &ua);
+					if (_current->td.td_retval[0] > 0)
+						total += (u_int64_t)_current->td.td_retval[0];
+				}
+				else
+				{
+					total += sc_write(args[0], iov[i].iov_base, iov[i].iov_len);
+				}
+			}
 			return total;
 		}
 

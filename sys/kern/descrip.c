@@ -64,6 +64,9 @@ struct fd_set;
  * resolves on every arch; installed with &tty_ops by tty_init() (sys/posix/tty.c)
  * and left NULL on arches without a TTY layer. */
 struct fileOps *g_console_ops = 0x0;
+/* Pty (FD_TYPE_TTYV) fileops; see sys/include/sys/descrip.h.  NULL until the tty
+ * layer installs it (it does so only where it differs from g_console_ops). */
+struct fileOps *g_tty_ops = 0x0;
 void *(*g_tty_find)(u_int16_t slot) = 0x0;
 /* sys_ioctl hooks (path B): installed by the tty + devfs/device layers; NULL on
  * arches that don't link them, where the corresponding ioctls become no-ops. */
@@ -101,36 +104,36 @@ int fcntl(struct thread *td, struct sys_fcntl_args *uap)
 
 	switch (uap->cmd)
 	{
-	case F_DUPFD:
-	{
-		int start = (uap->arg < 5) ? 5 : uap->arg;
-		for (i = start; i < O_FILES; i++)
+		case F_DUPFD:
 		{
-			if (td->o_files[i] == 0x0)
+			int start = (uap->arg < 5) ? 5 : uap->arg;
+			for (i = start; i < O_FILES; i++)
 			{
-				if (duplicate_descriptor(td, uap->fd, i) != 0)
-					return (-EMFILE);
-				td->td_retval[0] = i;
-				break;
+				if (td->o_files[i] == 0x0)
+				{
+					if (duplicate_descriptor(td, uap->fd, i) != 0)
+						return (-EMFILE);
+					td->td_retval[0] = i;
+					break;
+				}
 			}
+			if (td->td_retval[0] == 0)
+				return (-EMFILE);
+			break;
 		}
-		if (td->td_retval[0] == 0)
-			return (-EMFILE);
-		break;
-	}
-	case F_GETFL:
-		td->td_retval[0] = fp->f_flag;
-		break;
-	case F_SETFD:
-		/* store close-on-exec and other fd flags; silently accept */
-		td->td_retval[0] = 0;
-		break;
-	case F_SETFL:
-		fp->f_flag &= ~FCNTLFLAGS;
-		fp->f_flag |= FFLAGS(uap->arg & ~O_ACCMODE) & FCNTLFLAGS;
-		break;
-	default:
-		kprintf("fcntl: unhandled cmd=%i fd=%i\n", uap->cmd, uap->fd);
+		case F_GETFL:
+			td->td_retval[0] = fp->f_flag;
+			break;
+		case F_SETFD:
+			/* store close-on-exec and other fd flags; silently accept */
+			td->td_retval[0] = 0;
+			break;
+		case F_SETFL:
+			fp->f_flag &= ~FCNTLFLAGS;
+			fp->f_flag |= FFLAGS(uap->arg & ~O_ACCMODE) & FCNTLFLAGS;
+			break;
+		default:
+			kprintf("fcntl: unhandled cmd=%i fd=%i\n", uap->cmd, uap->fd);
 	}
 
 	return (0x0);
@@ -233,46 +236,46 @@ static int close_fdslot(struct thread *td, int fd)
 
 	switch (f->fd_type)
 	{
-	case FD_TYPE_DIR:
-		if (f->data != NULL)
-			vfs_closedir((kDIR_t *)f->data);
-		return fdestroy(td, f, fd);
+		case FD_TYPE_DIR:
+			if (f->data != NULL)
+				vfs_closedir((kDIR_t *)f->data);
+			return fdestroy(td, f, fd);
 
-	case FD_TYPE_TTY:
-	case FD_TYPE_TTYV:
-		return fdestroy(td, f, fd);
+		case FD_TYPE_TTY:
+		case FD_TYPE_TTYV:
+			return fdestroy(td, f, fd);
 
-	case FD_TYPE_PIPE:
-		if (f->data != NULL)
-		{
-			struct pipeInfo *pi = (struct pipeInfo *)f->data;
-			/* Use the struct file's pipe_end tag rather than comparing fd
-			 * numbers — dup2/fork copies keep the same tag but get new
-			 * fd slots, so the original rFD/wFD numbers stop matching. */
-			if (f->pipe_end == PIPE_END_READ)
-				pi->rfdCNT--;
-			else if (f->pipe_end == PIPE_END_WRITE)
-				pi->wfdCNT--;
-			if (pi->rfdCNT <= 0 && pi->wfdCNT <= 0)
+		case FD_TYPE_PIPE:
+			if (f->data != NULL)
 			{
-				struct pipeBuf *pbuf = pi->headPB;
-				while (pbuf != NULL)
+				struct pipeInfo *pi = (struct pipeInfo *)f->data;
+				/* Use the struct file's pipe_end tag rather than comparing fd
+				 * numbers — dup2/fork copies keep the same tag but get new
+				 * fd slots, so the original rFD/wFD numbers stop matching. */
+				if (f->pipe_end == PIPE_END_READ)
+					pi->rfdCNT--;
+				else if (f->pipe_end == PIPE_END_WRITE)
+					pi->wfdCNT--;
+				if (pi->rfdCNT <= 0 && pi->wfdCNT <= 0)
 				{
-					struct pipeBuf *next = pbuf->next;
-					kfree(pbuf->buffer);
-					kfree(pbuf);
-					pbuf = next;
+					struct pipeBuf *pbuf = pi->headPB;
+					while (pbuf != NULL)
+					{
+						struct pipeBuf *next = pbuf->next;
+						kfree(pbuf->buffer);
+						kfree(pbuf);
+						pbuf = next;
+					}
+					kfree(pi);
+					f->data = NULL;
 				}
-				kfree(pi);
-				f->data = NULL;
 			}
-		}
-		return fdestroy(td, f, fd);
+			return fdestroy(td, f, fd);
 
-	default:
-		if (f->fd != NULL)
-			fclose(f->fd);
-		return fdestroy(td, f, fd);
+		default:
+			if (f->fd != NULL)
+				fclose(f->fd);
+			return fdestroy(td, f, fd);
 	}
 }
 
@@ -416,217 +419,220 @@ int sys_ioctl(struct thread *td, struct sys_ioctl_args *args)
 	 * tty fd inherited from parent), was opened via /dev/tty (FD_TYPE_TTY),
 	 * or is a specific vty (FD_TYPE_TTYV).
 	 */
-	int on_tty = (tty_fp != NULL && (tty_fp->fd == NULL || tty_fp->fd_type == FD_TYPE_TTY || tty_fp->fd_type == FD_TYPE_TTYV)) && term != NULL;
+	int on_tty = (tty_fp != NULL &&
+	              (tty_fp->fd == NULL || tty_fp->fd_type == FD_TYPE_TTY || tty_fp->fd_type == FD_TYPE_TTYV)) &&
+	             term != NULL;
 
 	switch (args->com)
 	{
-	case TIOCGETA:
-		if (on_tty)
-		{
-			struct termios *t = (struct termios *)args->data;
-			*t = term->t_termios;
-			td->td_retval[0] = 0;
-		}
-		else
-		{
-			td->td_retval[0] = -1;
-		}
-		return (0);
-
-	case TIOCSETA:
-	case TIOCSETAW:
-		if (on_tty)
-		{
-			struct termios *t = (struct termios *)args->data;
-			term->t_termios = *t;
-			term->t_raw = (t->c_lflag & ICANON) ? 0 : 1;
-			term->t_echo = (t->c_lflag & ECHO) ? 1 : 0;
-			td->td_retval[0] = 0;
-		}
-		else
-		{
-			td->td_retval[0] = -1;
-		}
-		return (0);
-
-	case TIOCSETAF:
-		/* Flush pending input before applying new attributes. */
-		if (on_tty)
-		{
-			struct termios *t = (struct termios *)args->data;
-			term->stdinSize = 0;
-			term->t_linelen = 0;
-			term->t_termios = *t;
-			term->t_raw = (t->c_lflag & ICANON) ? 0 : 1;
-			term->t_echo = (t->c_lflag & ECHO) ? 1 : 0;
-			td->td_retval[0] = 0;
-		}
-		else
-		{
-			td->td_retval[0] = -1;
-		}
-		return (0);
-
-	case TIOCDRAIN:
-		/* Output is synchronous — drain is always complete. */
-		td->td_retval[0] = 0;
-		return (0);
-
-	case TIOCFLUSH:
-		if (on_tty)
-		{
-			int flags = args->data ? *(int *)args->data : (FREAD | FWRITE);
-			if (flags & FREAD)
+		case TIOCGETA:
+			if (on_tty)
 			{
+				struct termios *t = (struct termios *)args->data;
+				*t = term->t_termios;
+				td->td_retval[0] = 0;
+			}
+			else
+			{
+				td->td_retval[0] = -1;
+			}
+			return (0);
+
+		case TIOCSETA:
+		case TIOCSETAW:
+			if (on_tty)
+			{
+				struct termios *t = (struct termios *)args->data;
+				term->t_termios = *t;
+				term->t_raw = (t->c_lflag & ICANON) ? 0 : 1;
+				term->t_echo = (t->c_lflag & ECHO) ? 1 : 0;
+				td->td_retval[0] = 0;
+			}
+			else
+			{
+				td->td_retval[0] = -1;
+			}
+			return (0);
+
+		case TIOCSETAF:
+			/* Flush pending input before applying new attributes. */
+			if (on_tty)
+			{
+				struct termios *t = (struct termios *)args->data;
 				term->stdinSize = 0;
 				term->t_linelen = 0;
+				term->t_termios = *t;
+				term->t_raw = (t->c_lflag & ICANON) ? 0 : 1;
+				term->t_echo = (t->c_lflag & ECHO) ? 1 : 0;
+				td->td_retval[0] = 0;
 			}
-			/* FWRITE: output is synchronous, nothing to flush. */
+			else
+			{
+				td->td_retval[0] = -1;
+			}
+			return (0);
+
+		case TIOCDRAIN:
+			/* Output is synchronous — drain is always complete. */
 			td->td_retval[0] = 0;
-		}
-		else
-		{
-			td->td_retval[0] = -1;
-		}
-		return (0);
+			return (0);
 
-	case TIOCGWINSZ:
-		if (on_tty)
-		{
-			struct winsize *win = (struct winsize *)args->data;
-			*win = term->t_winsize;
+		case TIOCFLUSH:
+			if (on_tty)
+			{
+				int flags = args->data ? *(int *)args->data : (FREAD | FWRITE);
+				if (flags & FREAD)
+				{
+					term->stdinSize = 0;
+					term->t_linelen = 0;
+				}
+				/* FWRITE: output is synchronous, nothing to flush. */
+				td->td_retval[0] = 0;
+			}
+			else
+			{
+				td->td_retval[0] = -1;
+			}
+			return (0);
+
+		case TIOCGWINSZ:
+			if (on_tty)
+			{
+				struct winsize *win = (struct winsize *)args->data;
+				*win = term->t_winsize;
+				td->td_retval[0] = 0;
+			}
+			else
+			{
+				td->td_retval[0] = -1;
+			}
+			return (0);
+
+		case TIOCSWINSZ:
+			if (on_tty)
+			{
+				struct winsize *win = (struct winsize *)args->data;
+				term->t_winsize = *win;
+				if (g_tty_signal != NULL)
+					g_tty_signal(term, SIGWINCH);
+				td->td_retval[0] = 0;
+			}
+			else
+			{
+				td->td_retval[0] = -1;
+			}
+			return (0);
+
+		case TIOCSCTTY:
+			/* Claim this tty as the controlling terminal for this session. */
+			if (on_tty)
+			{
+				_current->ct_tty = term;
+				term->t_pgrp = (int)_current->pgrp;
+				td->td_retval[0] = 0;
+			}
+			else
+			{
+				td->td_retval[0] = -1;
+			}
+			return (0);
+
+		case TIOCGPGRP:
+			if (on_tty)
+			{
+				*(int *)args->data = term->t_pgrp;
+				td->td_retval[0] = 0;
+			}
+			else
+			{
+				td->td_retval[0] = -1;
+			}
+			return (0);
+
+		case TIOCSPGRP:
+			if (on_tty)
+			{
+				term->t_pgrp = *(int *)args->data;
+				td->td_retval[0] = 0;
+			}
+			else
+			{
+				td->td_retval[0] = -1;
+			}
+			return (0);
+
+		case FIONREAD:
+			if (on_tty)
+			{
+				*(int *)args->data = term->stdinSize;
+				td->td_retval[0] = 0;
+			}
+			else
+			{
+				td->td_retval[0] = -1;
+			}
+			return (0);
+
+		case TIOCEXCL:
+			if (on_tty)
+			{
+				term->t_exclusive = 1;
+				td->td_retval[0] = 0;
+			}
+			else
+				td->td_retval[0] = -1;
+			return (0);
+
+		case TIOCNXCL:
+			if (on_tty)
+			{
+				term->t_exclusive = 0;
+				td->td_retval[0] = 0;
+			}
+			else
+				td->td_retval[0] = -1;
+			return (0);
+
+		case TIOCNOTTY:
+			_current->ct_tty = NULL;
 			td->td_retval[0] = 0;
-		}
-		else
-		{
-			td->td_retval[0] = -1;
-		}
-		return (0);
+			return (0);
 
-	case TIOCSWINSZ:
-		if (on_tty)
-		{
-			struct winsize *win = (struct winsize *)args->data;
-			term->t_winsize = *win;
-			if (g_tty_signal != NULL)
-				g_tty_signal(term, SIGWINCH);
+		case TIOCOUTQ:
+			/* Output is synchronous — queue is always empty. */
+			if (args->data)
+				*(int *)args->data = 0;
 			td->td_retval[0] = 0;
-		}
-		else
-		{
-			td->td_retval[0] = -1;
-		}
-		return (0);
+			return (0);
 
-	case TIOCSCTTY:
-		/* Claim this tty as the controlling terminal for this session. */
-		if (on_tty)
-		{
-			_current->ct_tty = term;
-			term->t_pgrp = (int)_current->pgrp;
+		case TIOCSTI:
+			/* Inject one byte into the tty line discipline (via the tty hook). */
+			if (on_tty && args->data && g_tty_inject != NULL)
+			{
+				g_tty_inject(term, *(char *)args->data);
+				td->td_retval[0] = 0;
+			}
+			else
+			{
+				td->td_retval[0] = -1;
+			}
+			return (0);
+
+		case TIOCCONS:
+			/* Redirect console to this tty — stub, accept silently. */
 			td->td_retval[0] = 0;
-		}
-		else
-		{
-			td->td_retval[0] = -1;
-		}
-		return (0);
+			return (0);
 
-	case TIOCGPGRP:
-		if (on_tty)
+		default:
 		{
-			*(int *)args->data = term->t_pgrp;
-			td->td_retval[0] = 0;
+			/* Route char-device ioctls (e.g. audio) to the driver via the devfs
+			 * hook; -1 when the fd is not a char device or the ioctl is unhandled. */
+			struct file *fp = NULL;
+			getfd(td, &fp, args->fd);
+			td->td_retval[0] =
+			    (g_dev_char_ioctl != NULL) ? g_dev_char_ioctl(fp, (u_int32_t)args->com, args->data) : -1;
+			return (0);
 		}
-		else
-		{
-			td->td_retval[0] = -1;
-		}
-		return (0);
-
-	case TIOCSPGRP:
-		if (on_tty)
-		{
-			term->t_pgrp = *(int *)args->data;
-			td->td_retval[0] = 0;
-		}
-		else
-		{
-			td->td_retval[0] = -1;
-		}
-		return (0);
-
-	case FIONREAD:
-		if (on_tty)
-		{
-			*(int *)args->data = term->stdinSize;
-			td->td_retval[0] = 0;
-		}
-		else
-		{
-			td->td_retval[0] = -1;
-		}
-		return (0);
-
-	case TIOCEXCL:
-		if (on_tty)
-		{
-			term->t_exclusive = 1;
-			td->td_retval[0] = 0;
-		}
-		else
-			td->td_retval[0] = -1;
-		return (0);
-
-	case TIOCNXCL:
-		if (on_tty)
-		{
-			term->t_exclusive = 0;
-			td->td_retval[0] = 0;
-		}
-		else
-			td->td_retval[0] = -1;
-		return (0);
-
-	case TIOCNOTTY:
-		_current->ct_tty = NULL;
-		td->td_retval[0] = 0;
-		return (0);
-
-	case TIOCOUTQ:
-		/* Output is synchronous — queue is always empty. */
-		if (args->data)
-			*(int *)args->data = 0;
-		td->td_retval[0] = 0;
-		return (0);
-
-	case TIOCSTI:
-		/* Inject one byte into the tty line discipline (via the tty hook). */
-		if (on_tty && args->data && g_tty_inject != NULL)
-		{
-			g_tty_inject(term, *(char *)args->data);
-			td->td_retval[0] = 0;
-		}
-		else
-		{
-			td->td_retval[0] = -1;
-		}
-		return (0);
-
-	case TIOCCONS:
-		/* Redirect console to this tty — stub, accept silently. */
-		td->td_retval[0] = 0;
-		return (0);
-
-	default:
-	{
-		/* Route char-device ioctls (e.g. audio) to the driver via the devfs
-		 * hook; -1 when the fd is not a char device or the ioctl is unhandled. */
-		struct file *fp = NULL;
-		getfd(td, &fp, args->fd);
-		td->td_retval[0] = (g_dev_char_ioctl != NULL) ? g_dev_char_ioctl(fp, (u_int32_t)args->com, args->data) : -1;
-		return (0);
-	}
 	}
 }
 

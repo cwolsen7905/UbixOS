@@ -26,6 +26,13 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+/*
+ * This file holds the VT100 line-discipline engine + the pseudo-terminal pool
+ * (arch-neutral, used by the GUI terminal on every arch) AND the i386 VGA text
+ * console + serial controlling terminal (i386 only).  The i386-specific pieces
+ * are guarded by `#if defined(__i386__)`; on aarch64 only the neutral VT100/pty
+ * core compiles, driving the GUI terminal's pty over the virtio-gpu desktop.
+ */
 #include <ubixos/tty.h>
 #include <ubixos/kpanic.h>
 #include <ubixos/signal.h>
@@ -33,26 +40,31 @@
 #include <ubixos/spinlock.h>
 #include <lib/kprintf.h>
 #include <lib/kmalloc.h>
+#include <fs/devfs/devfs.h>
+#include <string.h>
+#include <sys/descrip.h> /* struct file, struct fileOps (path B fileops) */
+#include <sys/errno.h>
+#if defined(__i386__)
+#include <i386/signal.h> /* SIGINT/SIGTTIN/... signal numbers */
 #include <sys/io.h>
 #include <sys/video.h>
 #include <isa/rs232.h>
-#include <fs/devfs/devfs.h>
-#include <string.h>
-#include <i386/signal.h>
-#include <sys/descrip.h> /* struct file, struct fileOps (path B fileops) */
-#include <sys/errno.h>
-#include <lib/kmalloc.h>
-#include <isa/kbd.h>      /* kbd_gui_mode */
-#include <isa/atkbd.h>    /* tty_switch_slot, vesa_text_slot */
-#include <lib/vesa.h>     /* vesa_text_mode */
-#include <fs/vfs/file.h>  /* getchar */
+#include <isa/kbd.h>     /* kbd_gui_mode */
+#include <isa/atkbd.h>   /* tty_switch_slot, vesa_text_slot */
+#include <lib/vesa.h>    /* vesa_text_mode */
+#include <fs/vfs/file.h> /* getchar */
+#else
+#include <aarch64/signal.h> /* SIGINT/SIGTTIN/... signal numbers */
+#endif
 
 /* True when an unblocked signal is pending (makes the blocking tty read loops
  * interruptible).  Mirrors the definition in sys/posix/vfs_calls.c. */
 #define SIG_PENDING_UNBLOCKED(td) ((td)->sig_pending & ~(td)->sigmask.__bits[0])
 
 static tty_term *terms = 0x0;
+#if defined(__i386__)
 tty_term *tty_foreground = 0x0;
+#endif
 static struct spinLock tty_spinLock = SPIN_LOCK_INITIALIZER;
 
 /* Scratch for tty_resize content preservation (too big for the kernel stack). */
@@ -61,6 +73,7 @@ static char g_tty_resize_tmp[TTY_MAX_COLS * TTY_MAX_ROWS * 2];
 /* Protects stdin[]/stdinSize from concurrent access by the rs232 ISR and task
  * context readers.  Use irq_save/restore so the same lock is safe from both
  * ISR and task context without deadlocking on a single-CPU system. */
+#if defined(__i386__)
 static inline u_int32_t irq_save_disable(void)
 {
 	u_int32_t flags;
@@ -71,6 +84,49 @@ static inline void irq_restore(u_int32_t flags)
 {
 	asm volatile("pushl %0; popfl" : : "r"(flags) : "memory");
 }
+#else
+/* aarch64: mask/restore IRQs via DAIF.  The pty's stdin[] ring is only touched
+ * from syscall context here (no serial ISR feeds it as on i386), but keep the
+ * same guard discipline so tty_inject is identical across arches. */
+static inline u_int64_t irq_save_disable(void)
+{
+	u_int64_t daif;
+	__asm__ volatile("mrs %0, daif; msr daifset, #2" : "=r"(daif) : : "memory");
+	return (daif);
+}
+static inline void irq_restore(u_int64_t daif)
+{
+	__asm__ volatile("msr daif, %0" : : "r"(daif) : "memory");
+}
+
+/* The VT100 line discipline's echo has SERIAL (rs232_putc) and VGA (backSpace)
+ * arms alongside the pty arm (tty_print).  On aarch64 a pty is always
+ * TTY_TYPE_PTY, so those arms are never taken — but they must still link.  No-op
+ * shims keep tty_inject byte-identical across arches without per-site #ifdefs. */
+static inline void rs232_putc(char c)
+{
+	(void)c;
+}
+static inline void backSpace(void)
+{
+}
+
+/* The POSIX signal subsystem (sys/posix/signal.c) is not yet linked on aarch64,
+ * but the line discipline references job-control signal delivery.  Provide no-op
+ * definitions so the pty links; the terminal renders + accepts input + runs
+ * commands without job control (Ctrl-C / SIGWINCH delivery is a follow-up when
+ * signals are ported).  On i386 the real ones in signal.c are used instead. */
+void signal_post_tty(tty_term *term, int sig)
+{
+	(void)term;
+	(void)sig;
+}
+void signal_post_pgrp(pid_t pgrp, int sig)
+{
+	(void)pgrp;
+	(void)sig;
+}
+#endif
 
 /*
  * Load FreeBSD-sane termios defaults and an 80x25 window onto a terminal.
@@ -114,6 +170,7 @@ static void tty_init_termios(tty_term *t)
 	t->t_rows = 25;
 }
 
+#if defined(__i386__)
 /*
  * console_getchar — g_tty_getchar hook (path B): block until this process's
  * controlling terminal is the foreground VTY and a character is available, then
@@ -167,6 +224,7 @@ static int console_stdin_ready(void)
 	}
 	return (tty_foreground != NULL && tty_foreground->stdinSize > 0);
 }
+#endif /* __i386__ */
 
 /*
  * tty_fo_read — fileops read handler for FD_TYPE_TTY / FD_TYPE_TTYV and the
@@ -235,6 +293,7 @@ static int tty_fo_read(struct file *fp, struct thread *td, void *vbuf, size_t nb
 		return (0);
 	}
 
+#if defined(__i386__)
 	/* Serial controlling terminal: drain rx ring → line discipline → stdin[]. */
 	if (_current->term != NULL && _current->term->t_type == TTY_TYPE_SERIAL)
 	{
@@ -330,6 +389,14 @@ static int tty_fo_read(struct file *fp, struct thread *td, void *vbuf, size_t nb
 	}
 	td->td_retval[0] = x;
 	return (0);
+#else  /* !__i386__ */
+	/* aarch64 has no VGA/serial controlling terminal here — its console lives in
+	 * the arch console layer.  A non-TTYV read is unsupported: report EOF. */
+	(void)buf;
+	(void)c;
+	td->td_retval[0] = x;
+	return (0);
+#endif /* __i386__ */
 }
 
 /*
@@ -369,13 +436,16 @@ static int tty_fo_write(struct file *fp, struct thread *td, const void *vbuf, si
 	memset(buffer, '\0', nbyte + 1);
 	memcpy(buffer, vbuf, nbyte);
 
+#if defined(__i386__)
 	if (t != NULL && t->t_type == TTY_TYPE_SERIAL)
 	{
 		size_t i;
 		for (i = 0; i < nbyte; i++)
 			rs232_putc(buffer[i]);
 	}
-	else if (t != NULL)
+	else
+#endif
+	    if (t != NULL)
 	{
 		tty_print(buffer, t);
 	}
@@ -408,13 +478,21 @@ int tty_init()
 {
 	int i = 0x0;
 
-	g_console_ops = &tty_ops;
+	/* The pty (FD_TYPE_TTYV) fileops — used by the GUI terminal on every arch. */
+	g_tty_ops = &tty_ops;
 	g_tty_find = (void *(*)(u_int16_t))tty_find;
 	g_tty_inject = (void (*)(void *, char))tty_inject;
 	g_tty_signal = (void (*)(void *, int))signal_post_tty;
+#if defined(__i386__)
+	/* i386 also drives its VGA/serial controlling terminal through this layer, so
+	 * it owns the console hooks.  On aarch64 the arch console (console.c) installs
+	 * g_console_ops / g_tty_print / g_tty_getchar / g_console_stdin_ready, so this
+	 * layer must NOT overwrite them. */
+	g_console_ops = &tty_ops;
 	g_console_stdin_ready = console_stdin_ready;
 	g_tty_print = (void (*)(const char *, void *))tty_print;
 	g_tty_getchar = console_getchar;
+#endif
 
 	/* Allocate memory for terminals */
 	terms = (tty_term *)kmalloc(sizeof(tty_term) * TTY_MAX_TERMS);
@@ -459,6 +537,7 @@ int tty_init()
 		memset(terms[i].t_esc_params, 0, sizeof(terms[i].t_esc_params));
 	}
 
+#if defined(__i386__)
 	/* Read tty0 current position (to migrate from kprintf). */
 	outportByte(0x3D4, 0x0e);
 	terms[0].tty_y = inportByte(0x3D5);
@@ -479,12 +558,15 @@ int tty_init()
 	devfs_makeNode("ttyv2", 'c', 4, 2);
 	devfs_makeNode("ttyv3", 'c', 4, 3);
 	devfs_makeNode("com1", 'c', 4, 4);
+#endif /* __i386__ */
 
 	/* Return to let kernel know initialization is complete */
-	kprintf("tty0: ready\n");
+	kprintf("tty: ready (%d terminal slots, pty pool from %d)\n", TTY_MAX_TERMS, TTY_PTY_BASE);
 
 	return (0x0);
 }
+
+#if defined(__i386__)
 
 /*
  This will change the specified tty. It ultimately copies the screen
@@ -522,6 +604,7 @@ int tty_change(u_int16_t tty)
 
 	return (0x0);
 }
+#endif /* __i386__ */
 
 /* ANSI colour: black red green yellow blue magenta cyan white → VGA indices */
 static const u_int8_t ansi_to_vga[8] = {0, 4, 2, 6, 1, 5, 3, 7};
@@ -977,6 +1060,9 @@ int tty_print(char *string, tty_term *term)
 	term->tty_x = (u_int16_t)(bufferOffset & 0xFFu);
 	term->tty_y = (u_int16_t)(bufferOffset >> 8u);
 
+#if defined(__i386__)
+	/* Move the VGA hardware cursor when writing the foreground console.  pty
+	 * terminals carry their cursor in tty_x/tty_y (read by tty_snapshot). */
 	if (term == tty_foreground)
 	{
 		outportByte(0x3D4, 0x0f);
@@ -984,6 +1070,7 @@ int tty_print(char *string, tty_term *term)
 		outportByte(0x3D4, 0x0e);
 		outportByte(0x3D5, term->tty_y);
 	}
+#endif
 
 	spinUnlock(&tty_spinLock);
 	return (0x0);

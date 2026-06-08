@@ -109,6 +109,13 @@ struct fileOps {
  * tty fds and uses it for the controlling-terminal placeholder fall-through. */
 extern struct fileOps *g_console_ops;
 
+/* Pseudo-terminal (FD_TYPE_TTYV) fileops — the VT100 cell-grid read/write the
+ * GUI terminal's pty slave fd uses.  On i386 this equals g_console_ops (the same
+ * tty layer drives both the VGA console and ptys), so it is left NULL there and
+ * the /dev/ttyvN open falls back to g_console_ops.  On aarch64 g_console_ops is
+ * the arch UART console, so the pty layer installs its own fileops here. */
+extern struct fileOps *g_tty_ops;
+
 /* tty_find hook (returns a tty_term* for a slot index; void* to avoid coupling
  * the fd layer to the TTY types).  Installed by tty_init(); NULL on arches
  * without a TTY layer, where /dev/console and /dev/ttyvN opens return ENODEV. */

@@ -23,6 +23,7 @@
 #include <sys/thread.h>
 #include <vmm/paging.h> /* PAGE_SIZE */
 #include <ubixos/sched.h>
+#include <ubixos/tty.h> /* pty_alloc / tty_inject_user / tty_snapshot / tty_resize */
 #include <lib/kprintf.h>
 
 /* Per-process anonymous-mmap region base (matches MMAP_BASE in syscall.c); the
@@ -105,6 +106,50 @@ int sys_fbpresent(struct thread *td, struct sys_fbpresent_args *args)
 	(void)args;
 	virtio_gpu_flush();
 	td->td_retval[0] = 0;
+	return (0);
+}
+
+/*
+ * Pseudo-terminal syscalls (native 55-58, 61) for the GUI terminal.  The pty
+ * pool + VT100 engine are arch-neutral (sys/posix/tty.c, now compiled for
+ * aarch64); these thin handlers mirror the i386 ones in sys/kern/fb.c.  i386
+ * links its copies from fb.c; aarch64 links these.
+ */
+
+/** sys_ptyalloc (55) — allocate a pty slot; returns the slot or -1. */
+int sys_ptyalloc(struct thread *td, struct sys_ptyalloc_args *uap)
+{
+	(void)uap;
+	td->td_retval[0] = pty_alloc();
+	return (0);
+}
+
+/** sys_ptyfree (56) — release a pty slot. */
+int sys_ptyfree(struct thread *td, struct sys_ptyfree_args *uap)
+{
+	pty_free(uap->slot);
+	td->td_retval[0] = 0;
+	return (0);
+}
+
+/** sys_ptyinject (57) — push a keystroke buffer through a pty's line discipline. */
+int sys_ptyinject(struct thread *td, struct sys_ptyinject_args *uap)
+{
+	td->td_retval[0] = tty_inject_user(uap->slot, uap->buf, uap->n);
+	return (0);
+}
+
+/** sys_ptysnap (58) — copy a pty's cell grid + cursor to userland. */
+int sys_ptysnap(struct thread *td, struct sys_ptysnap_args *uap)
+{
+	td->td_retval[0] = tty_snapshot(uap->slot, uap->dst, uap->x, uap->y);
+	return (0);
+}
+
+/** sys_ptyresize (61) — set a pty's grid to cols x rows + update its winsize. */
+int sys_ptyresize(struct thread *td, struct sys_ptyresize_args *uap)
+{
+	td->td_retval[0] = tty_resize(uap->slot, uap->cols, uap->rows);
 	return (0);
 }
 

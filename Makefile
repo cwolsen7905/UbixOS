@@ -123,6 +123,7 @@ AARCH64_GENERIC_SRCS = \
 	sys/mpi/message.c \
 	sys/mpi/mpi_syscalls.c \
 	sys/posix/vfs_calls.c \
+	sys/posix/tty.c \
 	sys/kern/ubthread.c \
 	sys/posix/sem.c \
 	sys/net/core/def.c \

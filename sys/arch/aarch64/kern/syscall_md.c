@@ -259,32 +259,8 @@ int sys_sigsuspend(struct thread *td, struct sys_sigsuspend_args *uap)
 	ENOSYS_STUB(td);
 }
 
-/* pty / tty / display / input stack */
-int sys_ptyalloc(struct thread *td, struct sys_ptyalloc_args *uap)
-{
-	(void)uap;
-	ENOSYS_STUB(td);
-}
-int sys_ptyfree(struct thread *td, struct sys_ptyfree_args *uap)
-{
-	(void)uap;
-	ENOSYS_STUB(td);
-}
-int sys_ptyinject(struct thread *td, struct sys_ptyinject_args *uap)
-{
-	(void)uap;
-	ENOSYS_STUB(td);
-}
-int sys_ptyresize(struct thread *td, struct sys_ptyresize_args *uap)
-{
-	(void)uap;
-	ENOSYS_STUB(td);
-}
-int sys_ptysnap(struct thread *td, struct sys_ptysnap_args *uap)
-{
-	(void)uap;
-	ENOSYS_STUB(td);
-}
+/* pty syscalls (ptyalloc/free/inject/snap/resize): real in dev/display.c, backed
+ * by the pty pool in sys/posix/tty.c (now compiled for aarch64). */
 int sys_settty(struct thread *td, struct sys_settty_args *uap)
 {
 	(void)uap;

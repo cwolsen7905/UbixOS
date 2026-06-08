@@ -673,7 +673,10 @@ int kern_openat(struct thread *thr, int afd, char *path, int flags, int mode)
 				nfp->fd = NULL;
 				nfp->fd_type = FD_TYPE_TTYV;
 				nfp->data = t;
-				nfp->f_ops = g_console_ops; /* path B: tty write dispatches through fileops */
+				/* A pty slave dispatches through the VT100 tty fileops (g_tty_ops);
+				 * where that's not separately installed (i386, where the tty layer
+				 * also is the console) fall back to g_console_ops. */
+				nfp->f_ops = g_tty_ops ? g_tty_ops : g_console_ops;
 				/* POSIX: session leader opening a terminal without
 				 * O_NOCTTY implicitly acquires it as controlling tty. */
 				if (!(oflags & O_NOCTTY) && _current->ct_tty == NULL)
