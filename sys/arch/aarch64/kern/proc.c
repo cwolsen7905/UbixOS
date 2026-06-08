@@ -20,6 +20,9 @@
 #include "bringup.h"
 #include <ubixos/sched.h>
 #include <machine/proc.h>
+#include <sys/descrip.h>
+#include <sys/pipe.h>
+#include <lib/kmalloc.h>
 #include <string.h>
 
 #define FRAME_SLOTS 12 /* x19-x28, x29(fp), x30(lr) — must match context.S */
@@ -126,6 +129,71 @@ void md_sched_pre_switch(kTask_t *t)
 }
 
 /**
+ * Duplicate the parent's open-file table into the forked child, mirroring the
+ * i386 fork: free the blank stdio placeholders schedNewTask() seeded into slots
+ * 0-2, then deep-copy every live parent descriptor (the struct file, any backing
+ * fileDescriptor_t + its 4 KB buffer) so the child inherits stdin/stdout/stderr
+ * and every other fd.  Without this the child starts with placeholder fds that
+ * carry no fileops, so a shell's dup/close relocation of its stdio (tcsh's
+ * initdesc) collapses to NULL slots and its first read fails.
+ *
+ * Pipe descriptors share their pipeInfo across the fork; bump the matching
+ * end's refcount so a later close in either process doesn't free it early.
+ */
+static void fork_copy_fdtable(kTask_t *child, struct thread *ptd)
+{
+	int i;
+
+	for (i = 0; i < 3; i++)
+	{
+		if (child->td.o_files[i] != 0x0)
+		{
+			kfree(child->td.o_files[i]);
+			child->td.o_files[i] = 0x0;
+		}
+	}
+
+	for (i = 0; i < O_FILES; i++)
+	{
+		struct file *parent_f = (struct file *)ptd->o_files[i];
+		struct file *child_f;
+
+		if (parent_f == 0x0)
+			continue;
+
+		child_f = (struct file *)kmalloc(sizeof(struct file));
+		if (child_f == 0x0)
+			continue;
+		memcpy(child_f, parent_f, sizeof(struct file));
+		child->td.o_files[i] = (void *)child_f;
+
+		if (parent_f->fd != 0x0)
+		{
+			child_f->fd = (fileDescriptor_t *)kmalloc(sizeof(fileDescriptor_t));
+			if (child_f->fd != 0x0)
+			{
+				memcpy(child_f->fd, parent_f->fd, sizeof(fileDescriptor_t));
+				if (parent_f->fd->buffer != 0x0)
+				{
+					child_f->fd->buffer = kmalloc(4096);
+					if (child_f->fd->buffer != 0x0)
+						memcpy(child_f->fd->buffer, parent_f->fd->buffer, 4096);
+				}
+			}
+		}
+
+		if (parent_f->fd_type == FD_TYPE_PIPE && parent_f->data != 0x0)
+		{
+			struct pipeInfo *pi = (struct pipeInfo *)parent_f->data;
+			if (parent_f->pipe_end == PIPE_END_READ)
+				pi->rfdCNT++;
+			else if (parent_f->pipe_end == PIPE_END_WRITE)
+				pi->wfdCNT++;
+		}
+	}
+}
+
+/**
  * fork(): create a child task that resumes at the same EL0 point as the caller
  * with a copy of its address space.  @parent_tf is the caller's trapframe (the
  * saved x0-x30 + ELR/SPSR/SP_EL0 from the fork SVC).
@@ -159,6 +227,18 @@ int aarch64_fork(u_int64_t *parent_tf)
 	child->parent = _current;
 	child->ppid = _current->id;
 	_current->children++;
+
+	/* Inherit the parent's process context: cwd, process group / session,
+	 * controlling terminal, and credentials. */
+	memcpy(child->oInfo.cwd, _current->oInfo.cwd, sizeof(child->oInfo.cwd));
+	child->pgrp = _current->pgrp;
+	child->sid = _current->sid;
+	child->ct_tty = _current->ct_tty;
+	child->uid = _current->uid;
+	child->gid = _current->gid;
+
+	/* Inherit the open-file table (stdin/stdout/stderr + everything else). */
+	fork_copy_fdtable(child, &_current->td);
 
 	/* Inherit the parent's EL0 TLS thread pointer: the child's address space is a
 	 * copy, so the parent's TCB lives at the same VA.  The child resumes at the

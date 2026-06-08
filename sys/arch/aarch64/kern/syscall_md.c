@@ -101,9 +101,21 @@ int sys_getvfscwd(struct thread *td, struct sys_getvfscwd_args *uap)
 	return (0);
 }
 
+/**
+ * POSIX __getcwd(2) (FreeBSD slot 326).  Mirrors the shared sys_getcwd in
+ * sys/kern/syscall.c: on success returns the byte length of the path including
+ * its NUL terminator, not 0.  musl's getcwd() treats a 0 return as ENOENT, so
+ * copy_cwd()'s 0-on-success convention (fine for the native getvfscwd) would
+ * make every getcwd() fail — which is why tcsh's dinit() printed "No such file
+ * or directory" before falling back to "/".
+ */
 int sys_getcwd(struct thread *td, struct sys_getcwd_args *uap)
 {
+	const char *cwd = (_current != 0 && _current->oInfo.cwd[0] != '\0') ? _current->oInfo.cwd : "/";
+
 	copy_cwd(td, (char *)uap->buf, uap->size);
+	if (td->td_retval[0] == 0)
+		td->td_retval[0] = (int)(strlen(cwd) + 1);
 	return (0);
 }
 

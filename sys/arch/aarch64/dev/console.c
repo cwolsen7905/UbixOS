@@ -144,10 +144,18 @@ int aarch64_console_setup_fds(struct thread *td)
 
 	for (i = 0; i < 3; i++)
 	{
-		struct file *fp = 0x0;
-		int fd = -1;
-		if (falloc(td, &fp, &fd) != 0 || fp == 0x0)
-			return (-1);
+		/* schedNewTask() pre-seeds blank placeholder files in slots 0-2; reuse
+		 * them in place so the console lands on fds 0/1/2 specifically.  falloc()
+		 * picks the lowest *free* slot, which would skip these and create the
+		 * console at 3/4/5 — leaving 0/1/2 blank (no fileops), which breaks a
+		 * shell that relocates its stdio onto high descriptors (tcsh). */
+		struct file *fp = (struct file *)td->o_files[i];
+		if (fp == 0x0)
+		{
+			int fd = -1;
+			if (falloc(td, &fp, &fd) != 0 || fp == 0x0)
+				return (-1);
+		}
 		fp->fd = 0x0; /* TTY placeholder: no underlying VFS descriptor */
 		fp->fd_type = FD_TYPE_TTY;
 		fp->f_ops = g_console_ops;

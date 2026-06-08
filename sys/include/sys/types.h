@@ -55,7 +55,17 @@ typedef unsigned int   u_int;
 typedef unsigned long  u_long;
 
 typedef int pidType;
-typedef int register_t;
+/*
+ * register_t is the natural machine word (FreeBSD semantics): 32-bit on the
+ * i386 ILP32 target, 64-bit on the aarch64 LP64 target.  `long` is exactly
+ * this width on both (4 bytes ILP32, 8 bytes LP64), so i386 is byte-identical.
+ * The syscall argument structs (PADL_/PADR_ padding) and the table dispatcher
+ * (ksyscall_dispatch) size their arguments in units of register_t and index
+ * the saved trapframe register slots as register_t words — so this MUST match
+ * the width of one trapframe register, or every table-dispatched syscall reads
+ * its second and later arguments from the wrong half of a register.
+ */
+typedef long register_t;
 
 typedef int pid_t;
 typedef int size_t; /* standard */
