@@ -143,6 +143,9 @@ void kmain_aarch64(void)
 			aarch64_virtio_net_init();
 			aarch64_net_init();
 
+			/* Bring up the virtio-gpu scanout framebuffer (for views/objGFX). */
+			aarch64_virtio_gpu_init();
+
 			/* Real login chain: start a bring-up authd (provides the "authd" MPI
 			 * mailbox; plaintext root/user until libpw/BearSSL are ported), then
 			 * run /bin/login off the disk — it authenticates via authd and execs

@@ -136,4 +136,12 @@ extern int virtio_net_ready;                                        /* link-up f
 /* net/virtio_netif.c — lwIP bridge + aarch64 network bring-up (tcpip + DHCP). */
 int aarch64_net_init(void);
 
+/* virtio_gpu.c — virtio-mmio 2D GPU (scanout framebuffer for views/objGFX). */
+int aarch64_virtio_gpu_init(void); /* scan + bring up + initial scanout; 0 on success */
+void virtio_gpu_flush(void);       /* present the framebuffer (transfer + flush) */
+extern u_int8_t *virtio_gpu_fb;    /* linear framebuffer (B8G8R8X8) */
+extern u_int32_t virtio_gpu_width;
+extern u_int32_t virtio_gpu_height;
+extern u_int32_t virtio_gpu_pitch;
+
 #endif /* _AARCH64_BRINGUP_H */
