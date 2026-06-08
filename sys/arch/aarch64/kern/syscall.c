@@ -171,10 +171,7 @@ static u_int64_t sc_mmap(u_int64_t addr, u_int64_t len, u_int64_t prot, u_int64_
 				size_t chunk = (len - done < PAGE_SIZE) ? (size_t)(len - done) : PAGE_SIZE;
 				size_t got;
 				if (phys == 0)
-				{
-					kprintf("[FB phys=0 at va off=%x]\n", (u_int32_t)done);
-					break;
-				}
+					break; /* region not fully mapped (shouldn't happen) */
 				got = fread((void *)(uintptr_t)phys, 1, chunk, fp->fd);
 				if (got == 0)
 					break; /* EOF: remaining pages stay zero (bss tail) */

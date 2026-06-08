@@ -576,6 +576,18 @@ int kern_openat(struct thread *thr, int afd, char *path, int flags, int mode)
 	{
 		if (_current->ct_tty == NULL && _current->term == NULL)
 		{
+			/* No TTY layer / controlling terminal (e.g. the aarch64 bring-up,
+			 * which has a single global console but no tty_term registry): if the
+			 * arch provides console fileops, hand back a console descriptor so
+			 * interactive shells that open /dev/tty (tcsh, vi) still work. */
+			if (g_console_ops != NULL)
+			{
+				nfp->fd = NULL;
+				nfp->fd_type = FD_TYPE_TTY;
+				nfp->f_ops = g_console_ops;
+				thr->td_retval[0] = fd;
+				return (0);
+			}
 			fdestroy(thr, nfp, fd);
 			thr->td_retval[0] = -ENXIO;
 			return (ENXIO);
