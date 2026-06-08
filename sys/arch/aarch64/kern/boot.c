@@ -15,7 +15,8 @@
 #include <fs/vfs/vfs.h>     /* vfs_init */
 #include <fs/vfs/mount.h>   /* vfs_mount */
 #include <fs/ramfs/ramfs.h> /* ramfs_init, ramfs_populate (initramfs root) */
-#include <sys/bus.h>        /* struct ubx_device — virtio-blk smoke test */
+#include <fs/fat/fat.h>     /* fat_init — disk-backed root */
+#include <sys/bus.h>        /* struct ubx_device — virtio-blk block device */
 
 /* The static boot triad — init forks login, login execs sh — laid into the
  * ramfs root as /bin/{init,login,sh}.  Stands in for the real (dynamically
@@ -107,28 +108,29 @@ void kmain_aarch64(void)
 	aarch64_procfs_demo(); /* mount /proc before the program (which reads it) */
 	aarch64_ramfs_demo();  /* registers ramfs + exercises it at /ram */
 
-	/* virtio-blk smoke test: bring up the MMIO block device + read sector 0. */
+	/* --- disk-backed root: if a virtio-blk device with a FAT filesystem is
+	 * present, mount it at "/" and run a real program *off the disk* (interp +
+	 * libc + the binary all read via virtio-blk -> bcache -> FAT).  This is the
+	 * disk-backed dynamic world; the embedded ramfs path below is the fallback
+	 * when no disk is attached. */
 	{
 		struct ubx_device *blk = aarch64_virtio_blk_init();
-		if (blk != 0)
+
+		fat_init(); /* register the FAT driver with the VFS */
+		if (blk != 0 && vfs_mount(0, 0, 0, VFS_TYPE_FAT, "/", "rw") == 0)
 		{
-			static u_int8_t sec[512];
-			if (blk->dev_blk_ops->read(blk, 0, 1, sec) == 0)
-				kprintf("virtio-blk: sector 0 reads OK: bytes %x %x %x %x | '%c%c%c%c%c%c%c%c'\n",
-				        sec[0],
-				        sec[1],
-				        sec[2],
-				        sec[3],
-				        sec[0],
-				        sec[1],
-				        sec[2],
-				        sec[3],
-				        sec[4],
-				        sec[5],
-				        sec[6],
-				        sec[7]);
-			else
-				kprintf("virtio-blk: sector 0 read FAILED\n");
+			kprintf("root: FAT on virtio-blk vtblk0\n");
+			gic_init();
+			timer_init();
+			__asm__ volatile("msr daifclr, #2");
+			kprintf("IRQs enabled; timer-driven preemption active.\n");
+
+			kprintf("\n--- disk-backed dynamic test ---\n");
+			aarch64_run_dynamic("/bin/cat"); /* cat + ld.so + libc.so all from disk */
+			kprintf("--- end disk-backed dynamic test ---\n");
+
+			for (;;)
+				__asm__ volatile("wfi"); /* full disk boot of /bin/init is next */
 		}
 	}
 

@@ -56,7 +56,7 @@ _USB_FLAGS!= test -f ${USB_IMAGE} && \
 
 # ── Primary targets ──────────────────────────────────────────────────────────
 
-.PHONY: all kernel kernel-i386 kernel-aarch64 musl-libc world makeuser image usb-image \
+.PHONY: all kernel kernel-i386 kernel-aarch64 musl-libc world makeuser image image-arm usb-image \
         mount-image unmount-image \
         install-kernel install-world install \
         run run-debug run-i386 run-debug-i386 run-aarch64 run-debug-aarch64 \
@@ -107,6 +107,12 @@ AARCH64_GENERIC_SRCS = \
 	sys/fs/vfs/file.c \
 	sys/fs/procfs/procfs.c \
 	sys/fs/ramfs/ramfs.c \
+	sys/fs/fat/fat_bpb.c \
+	sys/fs/fat/fat_clust.c \
+	sys/fs/fat/fat_dir.c \
+	sys/fs/fat/fat_file.c \
+	sys/fs/fat/fat_sector.c \
+	sys/fs/fat/fat_vfs.c \
 	sys/posix/vfs_calls.c
 
 kernel-aarch64:
@@ -321,6 +327,12 @@ makeuser:
 image: makeuser
 	@echo "==> Disk image root filesystem: FS=${FS}"
 	@BUILD=${OBJ_DIR} KERNEL=${OBJ_DIR}/boot/kernel FS=${FS} SRCTOP=${.CURDIR} sh tools/mkimage.sh ${DISK_IMAGE}
+
+# aarch64 disk image: a raw FAT32 image with the dynamically-linked world + the
+# musl dynamic linker, mounted at "/" via virtio-blk.  Run after
+# `bmake world TARGET=aarch64`; attach with run-aarch64 / run-debug-aarch64.
+image-arm:
+	@sh tools/mkimage-arm.sh ${DISK_IMAGE_ARM} ${OBJ_DIR}
 
 # Build a small FAT32 USB test image with a README.  Attach to QEMU via
 # bmake run (auto-detected when usb.img exists) or mount manually with hdiutil.

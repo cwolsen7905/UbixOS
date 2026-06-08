@@ -19,6 +19,7 @@
 #include "bringup.h"
 #include <sys/types.h>
 #include <sys/bus.h>
+#include <sys/descrip.h> /* g_device_find hook (so vfs_mount finds this device) */
 #include <vmm/vmm.h>
 #include <vmm/paging.h>
 #include <lib/kmalloc.h>
@@ -135,6 +136,17 @@ static inline void mmio_wr(u_int32_t off, u_int32_t val)
 static inline void dsb(void)
 {
 	__asm__ volatile("dsb sy" ::: "memory");
+}
+
+/**
+ * g_device_find hook: vfs_mount resolves its (major, minor) to a block device
+ * through this.  There is a single virtio-blk device, so return it for any id.
+ */
+static void *virtio_blk_device_find(int major, int minor)
+{
+	(void)major;
+	(void)minor;
+	return (g_ready ? &g_blk_dev : NULL);
 }
 
 /**
@@ -302,6 +314,7 @@ struct ubx_device *aarch64_virtio_blk_init(void)
 		g_blk_dev.dev_blk_ops = &g_blk_ops;
 		strncpy(g_blk_dev.dev_nameunit, "vtblk0", sizeof(g_blk_dev.dev_nameunit) - 1);
 		g_ready = 1;
+		g_device_find = virtio_blk_device_find; /* let vfs_mount resolve to us */
 
 		kprintf("virtio-blk: vtblk0 at mmio slot %d (0x%lx)\n", slot, (u_int64_t)(uintptr_t)base);
 		return (&g_blk_dev);
