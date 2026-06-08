@@ -31,16 +31,17 @@
 
 #include <sys/types.h>
 
-#define LOCKED   1
+#define LOCKED 1
 #define UNLOCKED 0
 #define SPIN_LOCK_INITIALIZER {NULL, 0}
 #define LLOCK_FLAG 1
 
-//typedef volatile int spinLock_t;
+// typedef volatile int spinLock_t;
 
-struct spinLock {
-    struct spinLock *next;
-    u_int32_t locked;
+struct spinLock
+{
+	struct spinLock *next;
+	u_int32_t locked;
 };
 
 typedef struct spinLock *spinLock_t;
@@ -61,43 +62,69 @@ int spinLockLocked(spinLock_t); /* nonzero if the lock is currently held */
  * must never sleep.  Returns saved EFLAGS; pass it back to spinUnlockIrq.  Do
  * NOT mix this discipline with the yielding spinLock() on the same lock. */
 u_int32_t spinLockIrq(spinLock_t);
-void      spinUnlockIrq(spinLock_t, u_int32_t flags);
+void spinUnlockIrq(spinLock_t, u_int32_t flags);
 
-/* Atomic exchange (of various sizes) */
-static inline u_long xchg_64(volatile u_int32_t *ptr, u_long x) {
-  __asm__ __volatile__("xchgq %1,%0"
-    :"+r" (x),
-    "+m" (*ptr));
+/* Atomic exchange (of various sizes).  i386 uses the native xchg instructions;
+ * other arches (aarch64) use the compiler's __atomic builtins, which lower to
+ * the appropriate LL/SC or swap sequence. */
+#if defined(__i386__)
+static inline u_long xchg_64(volatile u_int32_t *ptr, u_long x)
+{
+	__asm__ __volatile__("xchgq %1,%0" : "+r"(x), "+m"(*ptr));
 
-  return x;
+	return x;
 }
 
-static inline unsigned xchg_32(volatile u_int32_t *ptr, u_int32_t x) {
-  __asm__ __volatile__("xchgl %1,%0"
-    :"+r" (x),
-    "+m" (*ptr));
+static inline unsigned xchg_32(volatile u_int32_t *ptr, u_int32_t x)
+{
+	__asm__ __volatile__("xchgl %1,%0" : "+r"(x), "+m"(*ptr));
 
-  return x;
+	return x;
 }
 
-static inline unsigned short xchg_16(volatile u_int32_t *ptr, u_int16_t x) {
-  __asm__ __volatile__("xchgw %1,%0"
-    :"+r" (x),
-    "+m" (*ptr));
+static inline unsigned short xchg_16(volatile u_int32_t *ptr, u_int16_t x)
+{
+	__asm__ __volatile__("xchgw %1,%0" : "+r"(x), "+m"(*ptr));
 
-  return x;
+	return x;
 }
 
 /* Test and set a bit */
-static inline char atomic_bitsetandtest(void *ptr, int x) {
-  char out;
-  __asm__ __volatile__("lock; bts %2,%1\n"
-    "sbb %0,%0\n"
-    :"=r" (out), "=m" (*(volatile long long *)ptr)
-    :"Ir" (x)
-    :"memory");
+static inline char atomic_bitsetandtest(void *ptr, int x)
+{
+	char out;
+	__asm__ __volatile__("lock; bts %2,%1\n"
+	                     "sbb %0,%0\n"
+	                     : "=r"(out), "=m"(*(volatile long long *)ptr)
+	                     : "Ir"(x)
+	                     : "memory");
 
-  return out;
+	return out;
 }
+#else /* portable (aarch64): __atomic builtins */
+static inline u_long xchg_64(volatile u_int32_t *ptr, u_long x)
+{
+	return __atomic_exchange_n(ptr, (u_int32_t)x, __ATOMIC_SEQ_CST);
+}
+
+static inline unsigned xchg_32(volatile u_int32_t *ptr, u_int32_t x)
+{
+	return __atomic_exchange_n(ptr, x, __ATOMIC_SEQ_CST);
+}
+
+static inline unsigned short xchg_16(volatile u_int32_t *ptr, u_int16_t x)
+{
+	return (unsigned short)__atomic_exchange_n(ptr, x, __ATOMIC_SEQ_CST);
+}
+
+/* Test and set a bit; returns -1 (all ones) if the bit was already set, else 0
+ * (matching the x86 sbb result above). */
+static inline char atomic_bitsetandtest(void *ptr, int x)
+{
+	u_int32_t mask = 1u << (x & 31);
+	u_int32_t old = __atomic_fetch_or((volatile u_int32_t *)ptr, mask, __ATOMIC_SEQ_CST);
+	return (old & mask) ? (char)-1 : 0;
+}
+#endif
 
 #endif

@@ -64,11 +64,12 @@ static void user_trampoline(void)
  */
 static void kthread_trampoline(void)
 {
-	void (*entry)(void) = (void (*)(void))(uintptr_t)_current->md.md_entry;
+	void (*entry)(void *) = (void (*)(void *))(uintptr_t)_current->md.md_entry;
+	void *arg = (void *)(uintptr_t)_current->md.md_arg;
 
 	__asm__ volatile("msr daifclr, #2"); /* enable IRQ for the new thread */
-	entry();
-	for (;;) /* a kernel thread returning is unexpected — park */
+	entry(arg);                          /* arg is 0 for no-arg entries (extra x0 ignored) */
+	for (;;)                             /* a kernel thread returning is unexpected — park */
 		sched_yield();
 }
 
@@ -180,4 +181,30 @@ int aarch64_fork(u_int64_t *parent_tf)
 	sched_ready(child);
 
 	return child->id;
+}
+
+/**
+ * Create a kernel thread that runs @tproc(@arg) at EL1, scheduled by the generic
+ * scheduler.  AArch64 implementation of the MI execThread() (declared in
+ * <ubixos/exec.h>): the i386 version delivers @arg via the cdecl stack; here it
+ * is stashed in md_arg and handed to the thread in x0 by kthread_trampoline.
+ * Used by ubthread_create() / lwIP's sys_thread_new().
+ *
+ * @param stack  requested stack size (ignored — kernel threads use the fixed
+ *               per-task kernel stack allocated by schedNewTask).
+ * @return the new task's pid (an opaque handle to the caller).
+ */
+u_int32_t execThread(void (*tproc)(void), u_int32_t stack, char *arg, const char *name)
+{
+	kTask_t *t = schedNewTask();
+
+	(void)stack;
+	if (t == 0)
+		return (0);
+	t->md.md_entry = (u_int64_t)(uintptr_t)tproc;
+	t->md.md_arg = (u_int64_t)(uintptr_t)arg;
+	if (name != 0)
+		strncpy(t->name, name, sizeof(t->name) - 1);
+	sched_ready(t);
+	return (t->id);
 }

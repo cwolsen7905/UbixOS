@@ -24,6 +24,8 @@
 #include <sys/sysproto_posix.h>
 #include <ubixos/sched.h>
 #include <ubixos/errno.h>
+#include <ubixos/time.h>   /* struct timeval/timezone (kernel gettimeofday) */
+#include <ubixos/vitals.h> /* systemVitals->sysTicks (time source) */
 #include <string.h>
 
 #define ENOSYS_STUB(td)                                                                                                \
@@ -105,15 +107,32 @@ int sys_getcwd(struct thread *td, struct sys_getcwd_args *uap)
 	return (0);
 }
 
-int gettimeofday(struct thread *td, struct gettimeofday_args *uap)
+/**
+ * Kernel-internal gettimeofday(struct timeval *, struct timezone *) — the time
+ * source lwIP's sys_now() builds on (sys/net/net/sys_arch.c), distinct from the
+ * sys_gettimeofday syscall handler (gen_calls.c).  aarch64's i386 sibling lives
+ * in sys/posix/time.c, but that file's time_init() uses x86 CMOS port I/O, so
+ * the function is provided here instead.  No RTC yet: the wall clock starts at
+ * the epoch and advances with the 100 Hz scheduler tick (systemVitals->sysTicks)
+ * — monotonic, which is all lwIP's timers need.
+ *
+ * @return 0 always.
+ */
+int gettimeofday(struct timeval *tp, struct timezone *tzp)
 {
-	u_int32_t *tv = (u_int32_t *)uap->tp; /* struct timeval {sec,usec} — no wall clock yet */
-	if (tv != 0)
+	u_int32_t ticks = (systemVitals != 0) ? systemVitals->sysTicks : 0;
+
+	if (tp != 0)
 	{
-		tv[0] = 0;
-		tv[1] = 0;
+		tp->tv_sec = ticks / 100u;             /* aarch64 timer ticks at 100 Hz */
+		tp->tv_usec = (ticks % 100u) * 10000u; /* 0..990000 µs in 10 ms steps */
 	}
-	OK_STUB(td);
+	if (tzp != 0)
+	{
+		tzp->tz_minuteswest = 0;
+		tzp->tz_dsttime = 0;
+	}
+	return (0);
 }
 
 void machine_set_tls(struct thread *td, uintptr_t base)
@@ -203,57 +222,8 @@ int sys_klog_read(struct thread *td, struct sys_klog_read_args *uap)
 	ENOSYS_STUB(td);
 }
 
-/* sockets */
-int sys_socket(struct thread *td, struct sys_socket_args *uap)
-{
-	(void)uap;
-	ENOSYS_STUB(td);
-}
-int sys_bind(struct thread *td, struct sys_bind_args *uap)
-{
-	(void)uap;
-	ENOSYS_STUB(td);
-}
-int sys_connect(struct thread *td, struct sys_connect_args *uap)
-{
-	(void)uap;
-	ENOSYS_STUB(td);
-}
-int sys_listen(struct thread *td, struct sys_listen_args *uap)
-{
-	(void)uap;
-	ENOSYS_STUB(td);
-}
-int sys_accept(struct thread *td, struct sys_accept_args *uap)
-{
-	(void)uap;
-	ENOSYS_STUB(td);
-}
-int sys_recvfrom(struct thread *td, struct sys_recvfrom_args *uap)
-{
-	(void)uap;
-	ENOSYS_STUB(td);
-}
-int sys_recvmsg(struct thread *td, struct sys_recvmsg_args *uap)
-{
-	(void)uap;
-	ENOSYS_STUB(td);
-}
-int sys_sendmsg(struct thread *td, struct sys_sendmsg_args *uap)
-{
-	(void)uap;
-	ENOSYS_STUB(td);
-}
-int sys_sendto(struct thread *td, struct sys_sendto_args *uap)
-{
-	(void)uap;
-	ENOSYS_STUB(td);
-}
-int sys_setsockopt(struct thread *td, struct sys_setsockopt_args *uap)
-{
-	(void)uap;
-	ENOSYS_STUB(td);
-}
+/* sockets: the real implementations now link from sys/net/net/sys_arch.c (lwIP),
+ * so the stubs that used to live here are gone. */
 
 /* signals */
 int sys_sigaction(struct thread *td, struct sys_sigaction_args *uap)

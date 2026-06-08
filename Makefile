@@ -122,7 +122,42 @@ AARCH64_GENERIC_SRCS = \
 	sys/mpi/system.c \
 	sys/mpi/message.c \
 	sys/mpi/mpi_syscalls.c \
-	sys/posix/vfs_calls.c
+	sys/posix/vfs_calls.c \
+	sys/kern/ubthread.c \
+	sys/posix/sem.c \
+	sys/net/core/def.c \
+	sys/net/core/dns.c \
+	sys/net/core/inet_chksum.c \
+	sys/net/core/init.c \
+	sys/net/core/ip.c \
+	sys/net/core/mem.c \
+	sys/net/core/memp.c \
+	sys/net/core/netif.c \
+	sys/net/core/pbuf.c \
+	sys/net/core/raw.c \
+	sys/net/core/stats.c \
+	sys/net/core/sys.c \
+	sys/net/core/tcp.c \
+	sys/net/core/tcp_in.c \
+	sys/net/core/tcp_out.c \
+	sys/net/core/timeouts.c \
+	sys/net/core/udp.c \
+	sys/net/core/ipv4/autoip.c \
+	sys/net/core/ipv4/dhcp.c \
+	sys/net/core/ipv4/etharp.c \
+	sys/net/core/ipv4/icmp.c \
+	sys/net/core/ipv4/igmp.c \
+	sys/net/core/ipv4/ip4.c \
+	sys/net/core/ipv4/ip4_addr.c \
+	sys/net/core/ipv4/ip4_frag.c \
+	sys/net/api/api_lib.c \
+	sys/net/api/api_msg.c \
+	sys/net/api/err.c \
+	sys/net/api/netbuf.c \
+	sys/net/api/sockets.c \
+	sys/net/api/tcpip.c \
+	sys/net/netif/ethernet.c \
+	sys/net/net/sys_arch.c
 
 kernel-aarch64:
 	@mkdir -p ${OBJ_DIR}/boot ${OBJ_DIR}/obj/sys

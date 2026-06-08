@@ -19,6 +19,7 @@ struct md_proc
 	u_int64_t md_mmap_next; /* bump pointer for anonymous mmap in this address space (0 = uninit) */
 	u_int64_t md_brk;       /* current program break for brk()/sbrk() (0 = uninit) */
 	u_int64_t md_tpidr;     /* EL0 TLS thread pointer (TPIDR_EL0); saved/restored per task */
+	u_int64_t md_arg;       /* first-dispatch argument for a kernel thread (passed in x0) */
 };
 
 struct taskStruct; /* == kTask_t */

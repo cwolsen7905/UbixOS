@@ -133,4 +133,7 @@ int virtio_net_poll_rx(void (*deliver)(const u_int8_t *, u_int32_t)); /* drain R
 extern u_int8_t virtio_net_mac[6];                                  /* device MAC */
 extern int virtio_net_ready;                                        /* link-up flag */
 
+/* net/virtio_netif.c — lwIP bridge + aarch64 network bring-up (tcpip + DHCP). */
+int aarch64_net_init(void);
+
 #endif /* _AARCH64_BRINGUP_H */
