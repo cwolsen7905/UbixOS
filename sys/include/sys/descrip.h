@@ -119,6 +119,7 @@ extern void *(*g_tty_find)(u_int16_t slot);
  * (returns the driver result, or -1 if the fd is not a char device / unhandled).
  * Installed by the tty + devfs layers; NULL where those aren't linked. */
 extern void (*g_tty_inject)(void *term, char ch);
+extern void (*g_tty_signal)(void *term, int sig);
 extern int (*g_dev_char_ioctl)(struct file *fp, u_int32_t com, void *data);
 
 /* sys_select/sys_poll hooks: g_socket_select is lwIP's select (installed by the

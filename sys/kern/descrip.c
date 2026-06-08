@@ -68,6 +68,7 @@ void *(*g_tty_find)(u_int16_t slot) = 0x0;
 /* sys_ioctl hooks (path B): installed by the tty + devfs/device layers; NULL on
  * arches that don't link them, where the corresponding ioctls become no-ops. */
 void (*g_tty_inject)(void *term, char ch) = 0x0;
+void (*g_tty_signal)(void *term, int sig) = 0x0; /* post a signal to a tty's pgrp (SIGWINCH) */
 int (*g_dev_char_ioctl)(struct file *fp, u_int32_t com, void *data) = 0x0;
 /* sys_select/sys_poll hooks (path B): g_socket_select is lwIP's select (the only
  * socket symbol — the fd_set math is generic); g_console_stdin_ready drains the
@@ -496,7 +497,8 @@ int sys_ioctl(struct thread *td, struct sys_ioctl_args *args)
 		{
 			struct winsize *win = (struct winsize *)args->data;
 			term->t_winsize = *win;
-			signal_post_tty(term, SIGWINCH);
+			if (g_tty_signal != NULL)
+				g_tty_signal(term, SIGWINCH);
 			td->td_retval[0] = 0;
 		}
 		else

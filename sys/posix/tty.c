@@ -392,6 +392,7 @@ int tty_init()
 	g_console_ops = &tty_ops;
 	g_tty_find = (void *(*)(u_int16_t))tty_find;
 	g_tty_inject = (void (*)(void *, char))tty_inject;
+	g_tty_signal = (void (*)(void *, int))signal_post_tty;
 	g_console_stdin_ready = console_stdin_ready;
 
 	/* Allocate memory for terminals */
