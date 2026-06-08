@@ -250,20 +250,34 @@ are exactly the multiplexing B removes, so they would be discarded.
   hook (also generic in descrip.c, installed by tty_init, NULL→ENODEV on
   aarch64).  **`vfs_calls.c` now calls none of the tty/socket symbols.**
 
-  **Remaining for the aarch64 file-layer link — `descrip.c` (the (v) work):**
-  - **`sys_ioctl`**: `TIOCSTI` calls `tty_inject` (→ a `g_tty_inject` hook); the
-    `default` case routes char-device ioctls via `ubx_device_find` +
-    `dev->dev_char_ioctl` (→ a `g_dev_char_ioctl` hook, installed by the device
-    layer — must stay installed on i386 so audio ioctls keep working).
-  - **`sys_select`**: directly builds lwIP fd-sets (`lwip_select`, `FD_SET` on
-    `f->socket`) and drains the console (`serial_rx_getbyte`/`kbd_getEvent`/
-    `tty_inject`/`tty_foreground`).  Needs a per-fd-type `poll`/`selectable`
-    fileop (socket + tty provide theirs) so the core stops referencing both
-    subsystems — the largest remaining piece.
-  - **Caveat:** neither `sys_select` nor `sys_ioctl` is exercised by the
-    boot-to-`Login:` smoke test, and the changes risk i386's select/device-ioctl
-    paths — they need real coverage (a select-based program, an audio ioctl), so
-    this is a focused step, not a session-tail sprint.
+  **(v) `descrip.c` — ✅ DONE** (commits 82bd9a98e ioctl, f39097c59 select/poll,
+  d0c918b40 winsize): `sys_ioctl` (g_tty_inject + g_dev_char_ioctl), `sys_select`
+  + `sys_poll` (g_socket_select + g_console_stdin_ready), and TIOCSWINSZ
+  (g_tty_signal) all route through hooks installed by the tty/devfs/net layers.
+  **`descrip.c` now references no tty/socket symbols** and compiles for aarch64
+  (only generic VFS deps remain).  *Caveat unchanged:* select/poll/ioctl aren't
+  boot-exercised — faithful moves, want a select/ioctl program to 100% confirm.
+
+  **Step 2 finding (link probe, 2026-06-07): the syscall CORE is done, but the
+  lower VFS layer (`file.c`/`mount.c`/`inode.c`) has its OWN couplings** — adding
+  the file layer to the aarch64 build compiles cleanly but leaves 8 undefined:
+  - `klog` — generic; just add its source to `AARCH64_GENERIC_SRCS`.
+  - `tty_print` / `tty_foreground` / `getchar` — the **legacy stdio** syscalls in
+    `file.c` (`sys_fwrite`/`sysFwrite`/`sys_fgetc`) keep an inline console path;
+    route through `g_console_ops` (the fd-0 write/read already works with fp=NULL)
+    or retire these legacy calls.
+  - `fat_dir_rename` / `fat_file_truncate` — `file.c` rename/truncate **shortcut
+    straight to FAT** instead of going through the mount's `fs->vfsRename/...`
+    function pointers; route them through the fs-ops vector (the correct fix) so
+    they're FS-agnostic.
+  - `ubx_device_find` — `mount.c` block-device lookup → a device-lookup hook
+    (NULL on aarch64 until the device model is linked).
+  - `vmm_free_virtual_page` — i386 VMM in `inode.c` → a generic page-free hook /
+    the arch pmap interface.
+  This is a second, smaller decoupling round in the file.c layer; once done the
+  file layer links on aarch64 and step 3 (mount procfs + route the SVC dispatcher
+  + read `/proc/meminfo`) is reachable.  Use **procfs** for the read test (it
+  needs no block device or `ubx_device_find`), not devfs.
 
   (iv) pipe — self-contained cleanup, does not block aarch64 linking.
 
