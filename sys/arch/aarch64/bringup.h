@@ -92,4 +92,7 @@ void aarch64_user_elf_demo(void);
 /* muslelfdemo.c — run a musl-linked program (spike U2). */
 void aarch64_musl_elf_demo(void);
 
+/* procfsdemo.c — mount procfs + read /proc/meminfo through the generic VFS. */
+void aarch64_procfs_demo(void);
+
 #endif /* _AARCH64_BRINGUP_H */
