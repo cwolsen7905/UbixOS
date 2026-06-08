@@ -426,9 +426,19 @@ are exactly the multiplexing B removes, so they would be discarded.
        DT_NEEDED bug visible: link the test with `-L … -lc`, not the host path).
      - The interp is loaded by the kernel from `/lib/ld-musl-aarch64.so.1`; the
        PIE main + a copy at `/lib/libc.so` are laid into ramfs.
-     Remaining to run the *real* dynamic world: relink the aarch64 world as PIE
-     (it's currently ET_EXEC at 0x400000, inside the kernel identity map → can't
-     map as user) and lay it + libc.so into the FS (ramfs now, virtio-blk later).
+  5. ✅ **Relinked world runs (PIE) — DONE.** The whole aarch64 world now builds
+     PIE (ET_DYN): `share/mk/ubix.musl.vars.mk` gains per-arch `MUSL_CRT1`
+     (Scrt1.o) + `MUSL_PIE_CFLAGS` (`-fPIC`) + `MUSL_PIE_LDFLAGS` (`-pie`), wired
+     into `ubix.musl.prog.mk` + `ubix.musl.ubix.prog.mk`; i386 stays fixed-address
+     ET_EXEC (the PIE vars are empty there → byte-identical link commands).
+     `-fPIC` (not `-fPIE`) is required — references to libc.so symbols (`optind`,
+     `stdout`) bind externally and `-fPIE` can't relocate them.  QEMU-verified: a
+     real world binary, **busybox `cat`**, runs via the kernel dynamic loader +
+     ld.so and echoes its stdin (`busybox cat line A/B`).
+     - Also: dynamic programs now get a 64-page (256 KB) stack (busybox overflows
+       a single page); the auxv/argv vector lives in the top page.
+     Remaining: stage the *whole* world + libc.so into the FS (virtio-blk) and boot
+     the real init/login/shell instead of the static triad.
   Then **virtio-blk** for the disk-backed `/bin` world + the `views`/`objGFX`
   desktop; and the **generic-kmain unification** once this real init sequence
   exists (so `boot.c` and i386's `kmain` share one bootstrap).

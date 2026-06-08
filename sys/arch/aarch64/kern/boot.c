@@ -40,6 +40,11 @@ extern char _binary_hello_dyn_elf_end[];
 extern char _binary_ld_musl_aarch64_so_1_start[];
 extern char _binary_ld_musl_aarch64_so_1_end[];
 
+/* A real world binary (busybox cat, PIE) — proves the relinked dynamic world
+ * runs via the kernel's dynamic loader, not just a hand-built test. */
+extern char _binary_worldcat_start[];
+extern char _binary_worldcat_end[];
+
 /**
  * Lay an embedded ELF blob into the ramfs root at @path.
  *
@@ -144,6 +149,11 @@ void kmain_aarch64(void)
 			{
 				kprintf("\n--- dynamic-linker test ---\n");
 				aarch64_run_dynamic("/bin/hello_dyn");
+
+				/* And a *real* relinked-PIE world binary (busybox cat): proves the
+				 * world build's dynamic binaries run, not just a hand-built test. */
+				if (install_bin("/bin/cat", _binary_worldcat_start, _binary_worldcat_end) == 0)
+					aarch64_run_dynamic("/bin/cat");
 				kprintf("--- end dynamic-linker test ---\n\n");
 			}
 

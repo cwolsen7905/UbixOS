@@ -27,16 +27,30 @@ _ARCH ?= i386
 #   MUSL_LDSO           runtime dynamic-linker path on the target
 #   MUSL_ARCH_INC       musl per-arch header include
 #   MUSL_LIBGCC_COMPAT  hand-built 32-bit libgcc shim (i386 only; empty elsewhere)
+#   MUSL_CRT1           C-runtime startup object (PIE Scrt1.o vs fixed crt1.o)
+#   MUSL_PIE_CFLAGS     position-independent codegen flags
+#   MUSL_PIE_LDFLAGS    position-independent link flags
+#
+# aarch64 builds PIE (ET_DYN): user VA must be >= 4 GB (the low 4 GB is the kernel
+# identity map), so the kernel's dynamic loader places the image at a high base —
+# a fixed-address ET_EXEC at musl's default 0x400000 cannot be mapped as user.
+# i386 keeps the fixed-address ET_EXEC layout it has always used.
 .if ${_ARCH} == "aarch64"
 MUSL_LDEMULATION   ?= aarch64elf
 MUSL_LDSO          ?= /lib/ld-musl-aarch64.so.1
 MUSL_ARCH_INC      ?= -I${MUSL_SRC}/arch/aarch64
 MUSL_LIBGCC_COMPAT ?=
+MUSL_CRT1          ?= ${MUSL_LIB}/Scrt1.o
+MUSL_PIE_CFLAGS    ?= -fPIC
+MUSL_PIE_LDFLAGS   ?= -pie
 .else
 MUSL_LDEMULATION   ?= elf_i386
 MUSL_LDSO          ?= /lib/ld-musl-i386.so.1
 MUSL_ARCH_INC      ?= -I${MUSL_SRC}/arch/i386
 MUSL_LIBGCC_COMPAT ?= ${OBJ_DIR}/lib/libgcc32.a
+MUSL_CRT1          ?= ${MUSL_LIB}/crt1.o
+MUSL_PIE_CFLAGS    ?=
+MUSL_PIE_LDFLAGS   ?=
 .endif
 
 MUSL_BASE_INC = -I${MUSL_SRC}/include \

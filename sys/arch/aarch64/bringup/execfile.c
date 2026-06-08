@@ -34,7 +34,9 @@
  * are clear of these. */
 #define DYN_MAIN_BASE 0x100000000UL   /* PIE main exe load base   (L1 idx 4) */
 #define DYN_INTERP_BASE 0x140000000UL /* dynamic linker load base (L1 idx 5) */
-#define DYN_STACK_VA 0x180000000UL    /* initial user stack page  (L1 idx 6) */
+#define DYN_STACK_VA 0x180000000UL    /* initial user stack base  (L1 idx 6) */
+#define DYN_STACK_PAGES 64            /* 256 KB stack (busybox et al. need > 1 page) */
+#define DYN_STACK_TOP (DYN_STACK_VA + (u_int64_t)DYN_STACK_PAGES * PAGE_SIZE)
 
 /* SysV auxiliary-vector types (Linux/musl ABI — musl's __libc_start_main reads
  * AT_PHDR/PHENT/PHNUM to find the program headers, AT_BASE for the linker's own
@@ -197,10 +199,8 @@ static char *read_elf_file(const char *path, int *out_size)
  *
  * @return the user-space stack pointer (16-byte aligned, points at argc).
  */
-static u_int64_t build_dyn_stack(uintptr_t phys_page,
-                                 const char *argv0,
-                                 const elf64_load_info_t *mi,
-                                 u_int64_t interp_base)
+static u_int64_t build_dyn_stack(
+    uintptr_t phys_page, u_int64_t page_uva, const char *argv0, const elf64_load_info_t *mi, u_int64_t interp_base)
 {
 	u_int8_t *page = (u_int8_t *)phys_page;
 	u_int8_t *p = page + PAGE_SIZE;
@@ -208,7 +208,7 @@ static u_int64_t build_dyn_stack(uintptr_t phys_page,
 	u_int64_t *vec;
 	size_t slen = strlen(argv0) + 1;
 	int k = 0;
-#define UVA(ptr) (DYN_STACK_VA + (u_int64_t)((u_int8_t *)(ptr) - page))
+#define UVA(ptr) (page_uva + (u_int64_t)((u_int8_t *)(ptr) - page))
 
 	/* argv[0] string + 16 random bytes for the stack canary, near the top. */
 	p -= slen;
@@ -265,7 +265,6 @@ static int load_dynamic(const void *image, u_int64_t *l1, const char *argv0, u_i
 	elf64_load_info_t mi;
 	u_int64_t main_base = (eh->e_type == ET_DYN) ? DYN_MAIN_BASE : 0;
 	u_int64_t start_entry, interp_base = 0;
-	uintptr_t stack_frame;
 
 	if (elf64_load_at(image, l1, main_base, &mi) != 0)
 		return (-1);
@@ -295,12 +294,22 @@ static int load_dynamic(const void *image, u_int64_t *l1, const char *argv0, u_i
 		start_entry = ii.entry; /* enter the dynamic linker, not the main exe */
 	}
 
-	stack_frame = vmm_find_free_page(sysID);
-	if (stack_frame == 0)
-		return (-1);
-	memset((void *)stack_frame, 0, PAGE_SIZE);
-	*out_usp = build_dyn_stack(stack_frame, argv0, &mi, interp_base);
-	pmap_map_user_page(l1, DYN_STACK_VA, (u_int64_t)stack_frame, 0);
+	/* Map a multi-page stack; the auxv/argv vector lives in the top page. */
+	{
+		uintptr_t top_frame = 0;
+		int i;
+		for (i = 0; i < DYN_STACK_PAGES; i++)
+		{
+			uintptr_t f = vmm_find_free_page(sysID);
+			if (f == 0)
+				return (-1);
+			memset((void *)f, 0, PAGE_SIZE);
+			pmap_map_user_page(l1, DYN_STACK_VA + (u_int64_t)i * PAGE_SIZE, (u_int64_t)f, 0);
+			if (i == DYN_STACK_PAGES - 1)
+				top_frame = f;
+		}
+		*out_usp = build_dyn_stack(top_frame, DYN_STACK_TOP - PAGE_SIZE, argv0, &mi, interp_base);
+	}
 
 	*out_entry = start_entry;
 	return (0);

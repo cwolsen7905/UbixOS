@@ -184,6 +184,11 @@ kernel-aarch64:
 	    hello_dyn.elf ${OBJ_DIR}/obj/sys/hello_dyn_embed.o || exit 1
 	@cd ${OBJ_DIR} && ${CROSS_PREFIX}objcopy -I binary -O elf64-littleaarch64 -B aarch64 \
 	    ld-musl-aarch64.so.1 ${OBJ_DIR}/obj/sys/ldmusl_embed.o || exit 1
+	@echo "embedding a real world binary (busybox cat, PIE) to prove the relinked world runs"
+	@if [ -f ${OBJ_DIR}/bin/cat ]; then cp ${OBJ_DIR}/bin/cat ${OBJ_DIR}/worldcat; \
+	 else head -c 16 /dev/zero > ${OBJ_DIR}/worldcat; fi
+	@cd ${OBJ_DIR} && ${CROSS_PREFIX}objcopy -I binary -O elf64-littleaarch64 -B aarch64 \
+	    worldcat ${OBJ_DIR}/obj/sys/worldcat_embed.o || exit 1
 	${CROSS_PREFIX}ld -T ${CURDIR}/sys/compile/ldscript.aarch64 -o ${OBJ_DIR}/boot/kernel ${OBJ_DIR}/obj/sys/*.o
 	@echo "aarch64 bring-up kernel linked: ${OBJ_DIR}/boot/kernel"
 
