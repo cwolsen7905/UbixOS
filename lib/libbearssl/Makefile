@@ -12,13 +12,25 @@ MUSL_SRC = ${SRCTOP}/contrib/musl
 MUSL_OBJ = ${OBJ_DIR}/obj/musl
 BEARSSL  = ${SRCTOP}/contrib/bearssl
 
+# Per-arch knobs: i386 disables x86 SIMD + links elf_i386; aarch64 uses its musl
+# arch headers + the aarch64 ld emulation and has no SSE flags.
+.if ${_ARCH} == "aarch64"
+ARCH_SIMD     =
+ARCH_MUSL_INC = -I${MUSL_SRC}/arch/aarch64
+ARCH_LDEMUL   = aarch64elf
+.else
+ARCH_SIMD     = -mno-sse -mno-sse2 -mno-mmx -mno-3dnow
+ARCH_MUSL_INC = -I${MUSL_SRC}/arch/i386
+ARCH_LDEMUL   = elf_i386
+.endif
+
 # BearSSL needs its own inc/ (public API) and src/ (inner.h, config.h) on the
 # include path, ahead of the musl headers it pulls (<string.h>, <limits.h>).
 INCLUDES = -I${BEARSSL}/inc \
            -I${BEARSSL}/src \
            -I${MUSL_SRC}/include \
            -I${MUSL_OBJ}/obj/include \
-           -I${MUSL_SRC}/arch/i386 \
+           ${ARCH_MUSL_INC} \
            -I${MUSL_SRC}/arch/generic \
            -I${SRCTOP}/include
 
@@ -26,7 +38,7 @@ INCLUDES = -I${BEARSSL}/inc \
 # object.  Deliberately omit the C++ -fno-rtti/-fno-exceptions flags that the
 # inherited lib CFLAGS carry — this is a pure C library.
 CFLAGS = ${CROSS_M32} -nostdinc -fno-builtin -fPIC \
-         -mno-sse -mno-sse2 -mno-mmx -mno-3dnow -MMD -MP \
+         ${ARCH_SIMD} -MMD -MP \
          -Wall -O2
 
 OBJDIR = ${OBJ_DIR}/obj/lib/libbearssl
@@ -57,7 +69,7 @@ all: ${OBJ_DIR}/lib/libbearssl.so
 
 ${OBJ_DIR}/lib/libbearssl.so: $(OBJS)
 	@mkdir -p ${OBJ_DIR}/lib
-	$(LD) -m elf_i386 -shared -soname libbearssl.so \
+	$(LD) -m ${ARCH_LDEMUL} -shared -soname libbearssl.so \
 		${OBJS:S|^|${OBJDIR}/|} \
 		-L${OBJ_DIR}/lib -lc \
 		-o ${OBJ_DIR}/lib/libbearssl.so

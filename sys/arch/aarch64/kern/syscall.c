@@ -24,6 +24,8 @@
 #include <string.h>             /* strncpy (getcwd) */
 #include <fs/vfs/stat.h>        /* struct statx (sys_statx) */
 #include <ubixos/syscalls.h>    /* systemCalls[] / systemCalls_posix[] tables */
+#include <sys/elf_load.h>       /* md_sync_icache (file-backed/exec mmap) */
+#include <fs/vfs/file.h>        /* fread (file-backed mmap) */
 
 /* Generic table-driven dispatch engine (sys/kern/syscall_dispatch.c). */
 register_t ksyscall_dispatch(
@@ -116,15 +118,21 @@ static u_int64_t sc_write(u_int64_t fd, u_int64_t buf, u_int64_t len)
 }
 
 /**
- * mmap(addr, len, prot, flags, fd, off): anonymous private mapping.  Arch glue
- * around the generic policy (vmm_uregion_mmap_anon): owns only the VA-layout
- * choice (where this address space's mmap region starts) and the TTBR0 root;
- * the page-counting / allocate-zero-map work is architecture-neutral.  prot/fd/
- * off are ignored — pages are backed RW, which covers musl's malloc.
+ * mmap(addr, len, prot, flags, fd, off): private mapping, anonymous or
+ * file-backed.  Arch glue around the generic policy (vmm_uregion_mmap_anon):
+ * owns the VA-layout choice (where this address space's mmap region starts) and
+ * the TTBR0 root; the page-counting / allocate-zero-map work is neutral.
+ *
+ * For a file-backed mapping (no MAP_ANON and a valid fd) the region is reserved
+ * + zero-mapped as usual, then the file's [off, off+len) bytes are read into each
+ * page via its physical (identity) alias — the path musl's dynamic linker uses to
+ * map shared libraries (map_library).  prot is advisory here: pages are mapped
+ * EL0-RW (and the loader mprotects code segments via a separate call); the only
+ * prot bit honoured is PROT_EXEC, which marks the page EL0-executable.
  *
  * @return the mapped base VA, or (void*)-1 on failure.
  */
-static u_int64_t sc_mmap(u_int64_t addr, u_int64_t len, u_int64_t flags)
+static u_int64_t sc_mmap(u_int64_t addr, u_int64_t len, u_int64_t prot, u_int64_t flags, u_int64_t fd, u_int64_t off)
 {
 	u_int64_t *l1;
 	uintptr_t next, va;
@@ -137,11 +145,58 @@ static u_int64_t sc_mmap(u_int64_t addr, u_int64_t len, u_int64_t flags)
 	l1 = (u_int64_t *)(uintptr_t)_current->md.md_ttbr0;
 	next = (uintptr_t)_current->md.md_mmap_next;
 
-	/* MAP_FIXED is FreeBSD flag 0x10: the caller (e.g. mallocng's guard page)
-	 * requires the mapping to land exactly at addr. */
+	/* MAP_FIXED is FreeBSD flag 0x10: the caller (e.g. mallocng's guard page,
+	 * or the loader placing a segment) requires the mapping to land at addr. */
 	va = vmm_uregion_mmap_anon(l1, &next, (size_t)len, (flags & 0x10) && addr != 0, (uintptr_t)addr);
 	_current->md.md_mmap_next = (u_int64_t)next;
-	return (va != 0) ? (u_int64_t)va : (u_int64_t)-1;
+	if (va == 0)
+		return (u_int64_t)-1;
+
+	/* File-backed (MAP_ANON is 0x20): read file content into the reserved pages.
+	 * Write through each page's physical alias (PAN-safe), page by page since the
+	 * frames are not physically contiguous. */
+	if ((flags & 0x20) == 0 && (int)fd >= 0)
+	{
+		struct file *fp = 0;
+		if (getfd(&_current->td, &fp, (int)fd) == 0 && fp != 0 && fp->fd != 0)
+		{
+			u_int64_t done;
+
+			/* Syscall 477 is mmap2: the offset arrives in PAGE_SIZE units
+			 * (musl passes off/UNIT), so scale back to a byte offset. */
+			fp->fd->offset = (off_t)(off * PAGE_SIZE);
+			for (done = 0; done < len; done += PAGE_SIZE)
+			{
+				u_int64_t phys = pmap_extract(l1, va + done);
+				size_t chunk = (len - done < PAGE_SIZE) ? (size_t)(len - done) : PAGE_SIZE;
+				size_t got;
+				if (phys == 0)
+				{
+					kprintf("[FB phys=0 at va off=%x]\n", (u_int32_t)done);
+					break;
+				}
+				got = fread((void *)(uintptr_t)phys, 1, chunk, fp->fd);
+				if (got == 0)
+					break; /* EOF: remaining pages stay zero (bss tail) */
+			}
+		}
+	}
+
+	/* PROT_EXEC (0x4): the dynamic linker maps code segments executable. */
+	if ((prot & 0x4) != 0)
+	{
+		u_int64_t done;
+		for (done = 0; done < len; done += PAGE_SIZE)
+		{
+			u_int64_t phys = pmap_extract(l1, va + done);
+			if (phys == 0)
+				continue;
+			pmap_map_user_page(l1, va + done, phys, 1 /* executable */);
+			md_sync_icache((uintptr_t)phys, PAGE_SIZE);
+		}
+	}
+
+	return (u_int64_t)va;
 }
 
 /**
@@ -243,7 +298,8 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args)
 		}
 
 		case SYS_MMAP:
-			return sc_mmap(args[0], args[1], args[3]); /* addr, len, flags (prot/fd/off ignored) */
+			/* addr, len, prot, flags, fd, off — file-backed when no MAP_ANON. */
+			return sc_mmap(args[0], args[1], args[2], args[3], args[4], args[5]);
 
 		case SYS_MPROTECT:
 			return 0; /* mmap pages are already RW; no fine-grained enforcement yet */

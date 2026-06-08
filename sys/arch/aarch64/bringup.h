@@ -55,6 +55,7 @@ void aarch64_vmm_demo(void);
 int pmap_map_page(u_int64_t *l1, u_int64_t va, u_int64_t pa, u_int64_t attrs);
 int pmap_map_user_page(u_int64_t *l1, u_int64_t va, u_int64_t pa, int executable);
 u_int64_t *pmap_create_user_space(void);
+u_int64_t pmap_extract(u_int64_t *l1, u_int64_t va); /* user VA -> phys (file-backed mmap) */
 u_int64_t *pmap_fork_copy(u_int64_t *parent); /* deep-copy user mappings (fork) */
 void pmap_switch(u_int64_t *l1);
 
@@ -119,6 +120,7 @@ int aarch64_wait4(int want_pid, int *status); /* cooperative reap of an exited c
 void aarch64_run_init(const char *path);      /* run /bin/init + become the idle loop (no return) */
 void aarch64_run_dynamic(const char *path);      /* load+run a PIE program, wait (capped) */
 void aarch64_run_dynamic_init(const char *path); /* run a PIE program as the system (no return) */
+void aarch64_spawn_dynamic(const char *path);    /* schedule a PIE daemon, return (no wait) */
 
 /* virtio_blk.c — virtio-mmio block device (returns a ubx_device with blk ops). */
 struct ubx_device;

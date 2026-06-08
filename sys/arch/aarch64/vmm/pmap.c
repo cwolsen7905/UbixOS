@@ -108,6 +108,30 @@ int pmap_map_user_page(u_int64_t *l1, u_int64_t va, u_int64_t pa, int executable
 	return pmap_map_page(l1, va, pa, attrs);
 }
 
+/**
+ * Resolve user VA @va to its physical frame address in the tree at @l1 by
+ * walking L1→L2→L3.  Used by file-backed mmap to write file contents into a
+ * mapped page via its identity (physical) alias — PAN-safe, like the ELF loader.
+ *
+ * @return the physical address @va maps to, or 0 if @va is unmapped.
+ */
+u_int64_t pmap_extract(u_int64_t *l1, u_int64_t va)
+{
+	u_int64_t e = l1[L1_IDX(va)];
+
+	if ((e & PTE_VALID) == 0 || (e & PTE_TYPE_MASK) != PTE_TABLE)
+		return 0;
+	u_int64_t *l2 = (u_int64_t *)(uintptr_t)(e & PTE_ADDR_MASK);
+	e = l2[L2_IDX(va)];
+	if ((e & PTE_VALID) == 0 || (e & PTE_TYPE_MASK) != PTE_TABLE)
+		return 0;
+	u_int64_t *l3 = (u_int64_t *)(uintptr_t)(e & PTE_ADDR_MASK);
+	e = l3[L3_IDX(va)];
+	if ((e & PTE_VALID) == 0)
+		return 0;
+	return (e & PTE_ADDR_MASK) | (va & 0xFFFUL);
+}
+
 /* ---- machine-dependent hooks for the generic ELF64 loader (sys/elf_load.h) ---- */
 
 /**

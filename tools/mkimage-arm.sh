@@ -32,6 +32,9 @@ mmd -i "${IMG}" ::/bin ::/lib ::/etc
 mcopy -i "${IMG}" "${BUILD}/lib/libc.so" ::/lib/libc.so
 mcopy -i "${IMG}" "${BUILD}/lib/libc.so" ::/lib/ld-musl-aarch64.so.1
 [ -f "${BUILD}/lib/ubix_api.so" ] && mcopy -i "${IMG}" "${BUILD}/lib/ubix_api.so" ::/lib/ubix_api.so || true
+# Crypto libs for the real authd (PBKDF2 over BearSSL).
+[ -f "${BUILD}/lib/libpw.so" ] && mcopy -i "${IMG}" "${BUILD}/lib/libpw.so" ::/lib/libpw.so || true
+[ -f "${BUILD}/lib/libbearssl.so" ] && mcopy -i "${IMG}" "${BUILD}/lib/libbearssl.so" ::/lib/libbearssl.so || true
 
 # The whole world (all dynamically-linked PIE binaries).
 for b in "${BUILD}"/bin/*; do

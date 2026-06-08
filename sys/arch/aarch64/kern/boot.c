@@ -134,7 +134,7 @@ void kmain_aarch64(void)
 			 * run /bin/login off the disk — it authenticates via authd and execs
 			 * /bin/shell.  The authentic init-less boot: login prompt -> shell. */
 			kprintf("\n--- disk-backed login ---\n");
-			aarch64_spawn_elf_image(_binary_authd_min_elf_start, "authd");
+			aarch64_spawn_dynamic("/bin/authd");    /* real authd (PBKDF2/BearSSL) from disk */
 			aarch64_run_dynamic_init("/bin/login"); /* login -> shell; never returns */
 		}
 	}
