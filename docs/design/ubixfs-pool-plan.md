@@ -109,9 +109,11 @@ multi-vdev, xattrs/ACLs (znode reserves the slot).
    allocator (`lib/ubixfs_core/ubfs_spa.c`). **Done & verified** (`spa_test`:
    format → commit txgs → reopen at last txg → alloc/free persists → **corrupt
    newest uberblock → falls back to previous txg**, i.e. CoW crash recovery).
-3. **DMU** — dnode CRUD, blkptr-tree read/write, **CoW**, checksum verify, compress.
-   *Testable: create/grow/CoW/read an object on the host; pull the plug mid-write
-   and confirm it rewinds.*
+3. ✅ **DMU** — objects/dnodes, the CoW radix blkptr-tree (grows with the object),
+   Fletcher-verified reads, sparse holes (`lib/ubixfs_core/ubfs_dmu.c`). **Done &
+   verified** (`dmu_test`: 200 KB file → 3-level tree → read-back exact → CoW
+   middle-overwrite consistent → sparse holes → sync/commit/reopen intact).
+   *(Compression still pass-through — LZ4 is a later, per-block strategy.)*
 4. **DSL** — MOS + datasets; create a filesystem dataset and a zvol.
 5. **ZPL + ZVOL** — POSIX layer on objects; raw volume on one object.
 6. **Host CLI** (`tools/ubixfs/`) — `mkpool`, `create` (fs/zvol), `cp` in/out,

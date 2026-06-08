@@ -217,10 +217,11 @@ UBFS_CTASSERT(dataset_fits_bonus, sizeof(ubfs_dataset_phys_t) <= UBFS_DNODE_SIZE
 #define UBFS_OBJSET_SIZE 1024
 typedef struct ubfs_objset
 {
-	ubfs_dnode_t metadnode; /* 512 — its data = the dnode array */
-	uint64_t    type;      /* enum ubfs_ostype */
-	uint64_t    flags;
-	uint8_t     pad[UBFS_OBJSET_SIZE - 512 - 16];
+	ubfs_dnode_t metadnode;   /* 512 — its data = the dnode array */
+	uint64_t     type;        /* enum ubfs_ostype */
+	uint64_t     flags;
+	uint64_t     next_object; /* next free object number (bump allocator) */
+	uint8_t      pad[UBFS_OBJSET_SIZE - 512 - 24];
 } ubfs_objset_t;
 UBFS_CTASSERT(objset_1024, sizeof(ubfs_objset_t) == UBFS_OBJSET_SIZE);
 
