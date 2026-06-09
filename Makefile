@@ -56,7 +56,7 @@ _USB_FLAGS!= test -f ${USB_IMAGE} && \
 
 # ── Primary targets ──────────────────────────────────────────────────────────
 
-.PHONY: all kernel kernel-i386 kernel-aarch64 musl-libc world makeuser image image-arm usb-image \
+.PHONY: all kernel kernel-i386 kernel-aarch64 musl-libc world makeuser image image-i386 image-aarch64 image-arm usb-image \
         mount-image unmount-image \
         install-kernel install-world install \
         run run-debug run-i386 run-debug-i386 run-aarch64 run-debug-aarch64 \
@@ -369,13 +369,23 @@ makeuser:
 	cp tools/userdb etc/userdb
 	@echo "==> etc/userdb updated (PBKDF2-hashed)"
 
-image: makeuser
+# `image` is arch-dispatched so it can never stage one arch's world into the
+# other arch's image.  i386 builds the GRUB/FAT ubixos.img; aarch64 builds the
+# virtio-blk ubixos-arm.img via image-arm.  Without this, `bmake image
+# TARGET=aarch64` (or `bmake TARGET=aarch64`, which runs `all`) would clobber
+# the i386 ubixos.img with aarch64 binaries.
+image: image-${_ARCH}
+
+image-i386: makeuser
 	@echo "==> Disk image root filesystem: FS=${FS}"
 	@BUILD=${OBJ_DIR} KERNEL=${OBJ_DIR}/boot/kernel FS=${FS} SRCTOP=${.CURDIR} sh tools/mkimage.sh ${DISK_IMAGE}
 
 # aarch64 disk image: a raw FAT32 image with the dynamically-linked world + the
 # musl dynamic linker, mounted at "/" via virtio-blk.  Run after
 # `bmake world TARGET=aarch64`; attach with run-aarch64 / run-debug-aarch64.
+# image-aarch64 is the arch-dispatch alias; image-arm is the direct entry point.
+image-aarch64: image-arm
+
 image-arm:
 	@sh tools/mkimage-arm.sh ${DISK_IMAGE_ARM} ${OBJ_DIR}
 
