@@ -407,15 +407,7 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args)
 			return (u_int64_t)_current->td.td_retval[0];
 		}
 
-		case SYS_FCNTL:
-		{
-			struct sys_fcntl_args ua;
-			ua.fd = (int)args[0];
-			ua.cmd = (int)args[1];
-			ua.arg = (long)args[2];
-			sys_fcntl(&_current->td, &ua);
-			return (u_int64_t)_current->td.td_retval[0];
-		}
+			/* fcntl(92) pre-case pruned (Phase 3) — falls through to the table. */
 
 		case SYS_MUNMAP:
 			/* No-op: the anonymous-mmap region is a bump allocator with no reclaim
@@ -442,19 +434,8 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args)
 			return 0;
 		}
 
-		case SYS_IOCTL:
-		{
-			/* Route to the real sys_ioctl so a pty fd's termios + job-control
-			 * ioctls (TIOCGWINSZ/TIOCSWINSZ, TIOCSCTTY, TIOCGPGRP/TIOCSPGRP) work
-			 * — tcsh's tcgetattr/tcsetpgrp now take effect, which is what sets the
-			 * foreground process group that tty-generated signals target. */
-			struct sys_ioctl_args ua;
-			ua.fd = (int)args[0];
-			ua.com = (u_int32_t)args[1];
-			ua.data = (caddr_t)(uintptr_t)args[2];
-			sys_ioctl(&_current->td, &ua);
-			return (u_int64_t)_current->td.td_retval[0];
-		}
+			/* ioctl(54) pre-case pruned (Phase 3) — falls through to the real
+			 * sys_ioctl in the table (pty termios + job-control ioctls). */
 
 		case SYS_SCHED_YIELD:
 			sched_yield();
@@ -489,35 +470,9 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args)
 			 * the real sys_sigprocmask in the POSIX table now that EL0 signal
 			 * delivery is wired, so blocked masks are actually honoured. */
 
-		case SYS_OPEN:
-		{
-			/* FreeBSD sysent ABI: build the uap from x0..x2, run on the current
-			 * thread, hand x0 the td_retval (bytes / fd, or -errno on error). */
-			struct sys_open_args ua;
-			ua.path = (char *)(uintptr_t)args[0];
-			ua.flags = (int)args[1];
-			ua.mode = (int)args[2];
-			sys_open(&_current->td, &ua);
-			return (u_int64_t)_current->td.td_retval[0];
-		}
-
-		case SYS_READ:
-		{
-			struct sys_read_args ua;
-			ua.fd = (int)args[0];
-			ua.buf = (void *)(uintptr_t)args[1];
-			ua.nbyte = (size_t)args[2];
-			sys_read(&_current->td, &ua);
-			return (u_int64_t)_current->td.td_retval[0];
-		}
-
-		case SYS_CLOSE:
-		{
-			struct sys_close_args ua;
-			ua.fd = (int)args[0];
-			sys_close(&_current->td, &ua);
-			return (u_int64_t)_current->td.td_retval[0];
-		}
+			/* open(5)/read(3)/close(6) pre-cases pruned (Phase 3): plain
+			 * build-uap + call-sysent-handler + return td_retval[0] — exactly
+			 * what the shared table does.  They fall through to it. */
 
 		case SYS_EXIT:
 			do_exit(args[0]);
