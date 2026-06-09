@@ -470,14 +470,11 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args)
 			sched_yield();
 			return 0;
 
-		case SYS_GETUID:
-			return (_current != 0) ? (u_int64_t)_current->uid : 0;
-		case SYS_GETEUID:
-			return (_current != 0) ? (u_int64_t)_current->euid : 0;
-		case SYS_GETGID:
-			return (_current != 0) ? (u_int64_t)_current->gid : 0;
-		case SYS_GETEGID:
-			return (_current != 0) ? (u_int64_t)_current->egid : 0;
+			/* getuid/geteuid/getgid/getegid/getpid are no longer intercepted: the
+			 * shared table handlers (sys_getUID/getGID in kern/access.c,
+			 * sys_geteuid/getegid/getpid in posix/gen_calls.c) now all set
+			 * td_retval[0], so the generic dispatch returns the right value on
+			 * both arches.  See Phase 3 in docs/design/console-and-arch-convergence-plan.md. */
 		case SYS_SETUID:
 			if (_current != 0)
 			{
@@ -492,9 +489,6 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args)
 				_current->egid = (u_int16_t)args[0];
 			}
 			return 0;
-
-		case SYS_GETPID:
-			return (_current != 0) ? (u_int64_t)_current->id : 0;
 
 		case SYS_SET_TID_ADDRESS:
 			/* musl registers a clear-on-exit TID address at startup; the return

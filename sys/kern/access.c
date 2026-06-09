@@ -53,17 +53,22 @@ int sys_setUID(struct thread *td, struct sys_setUID_args *args)
 
 int sys_getUID(struct thread *td, void *uap)
 {
-	return (_current->uid);
+	/* sysent convention: the result goes in td_retval[0] (both the i386 and the
+	 * aarch64 dispatchers return that), return 0 for success. */
+	td->td_retval[0] = _current->uid;
+	return (0);
 }
 
 int sys_getEUID(struct thread *td, void *uap)
 {
-	return (_current->uid);
+	td->td_retval[0] = _current->uid;
+	return (0);
 }
 
 int sys_getGID(struct thread *td, void *uap)
 {
-	return (_current->gid);
+	td->td_retval[0] = _current->gid;
+	return (0);
 }
 
 int sys_setGID(struct thread *td, struct sys_setGID_args *uap)
