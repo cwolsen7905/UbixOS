@@ -277,12 +277,34 @@ verification):**
   GUI-process exit) is the legitimate GUI→text transition, not the
   already-removed Ctrl+Alt+Fn machinery.
 
-**Phase 3 — Unify syscall dispatch.**
+**Phase 3 — Unify syscall dispatch. 🟢 Largely done (2026-06-09).**
 Collapse the aarch64 hand-rolled `switch` into a thin trap shim that fills
 `register_t args[]` and calls the shared table-driven `ksyscall_dispatch`. Move
 the arch-special calls (mmap VA layout, brk, fork, execve) behind `md_*` hooks
 the table's handlers call — so they are *implementations of the interface*, not
 dispatcher special-cases. Highest structural value; do with care.
+
+Landed (each boot-verified on both arches, headlessly on real FAT via the new
+`tools/aarch64-user/dirtest.c` harness):
+- **Return convention** (`c32aad5fc`): both dispatchers already return
+  `td_retval[0]`; the C-return getters (`sys_getUID`/`getGID`/`getEUID`) were
+  converted to set it, and 5 getter pre-cases dropped.
+- **The HVF `isv` blocker is gone** (`206f8b8d4`): it was a downstream symptom of
+  the `sc_args=0` table bug (pipe2/readlink), not a real handler problem. Once
+  fixed, the redundant pointer-arg pre-cases route through the table cleanly —
+  pruned statx/open/read/close/fcntl/ioctl/getdents (`206f8b8d4`/`20a1fdee2`/
+  `c02f0914d`) and uname/sched_yield/set_tid_address (`d9839176b`, after making
+  `sys_uname` report the arch machine name).
+- **One time source** (`23414a610`): `md_uptime(sec,nsec)` (aarch64 CNTVCT / i386
+  PIT) backs a single shared `gettimeofday`, `clock_gettime`, and lwIP `sys_now`;
+  the `clock_gettime` pre-case is pruned with its ns resolution preserved.
+
+The aarch64 dispatch `switch` is now only the irreducibly arch-special calls.
+**Remaining (deferred):** `mmap`/`brk`/`munmap` need real `md_*` VA-layout hooks
+(a larger VMM refactor); `nanosleep` (yield-once today) → a real timed sleep is a
+*feature*, not a prune; `fork`/`execve`/`wait4`/`exit` are trampoline-level and
+stay by design; `openat` (maps to `open`) and `setuid`/`setgid` (euid/egid
+reconcile) are minor, low-value cleanups.
 
 **Scoping (2026-06-09): it's a refactor, not a prune.** The dispatch is *already*
 table-driven (the `switch` in `arch/aarch64/kern/syscall.c` falls through to
