@@ -412,27 +412,10 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args)
 			sched_yield();
 			return 0;
 
-		case SYS_UNAME:
-		{
-			/* uname(struct utsname*): musl's utsname is 6 x 65-byte fields. */
-			char *u = (char *)(uintptr_t)args[0];
-			if (u == 0)
-				return (u_int64_t)-1;
-			memset(u, 0, 65 * 6);
-			strncpy(u + 0 * 65, "UbixOS", 64);
-			strncpy(u + 1 * 65, "ubixos", 64);
-			strncpy(u + 2 * 65, "2", 64);
-			strncpy(u + 3 * 65, "uBixOS aarch64", 64);
-			strncpy(u + 4 * 65, "aarch64", 64);
-			return 0;
-		}
-
-			/* ioctl(54) pre-case pruned (Phase 3) — falls through to the real
-			 * sys_ioctl in the table (pty termios + job-control ioctls). */
-
-		case SYS_SCHED_YIELD:
-			sched_yield();
-			return 0;
+			/* uname(164)/sched_yield(331) pre-cases pruned (Phase 3): the table's
+			 * sys_uname now reports the arch machine name (gen_calls.c #if), and
+			 * sys_sched_yield just yields + sets td_retval[0]=0 — both identical to
+			 * the table.  ioctl(54) likewise falls through to the real sys_ioctl. */
 
 			/* getuid/geteuid/getgid/getegid/getpid are no longer intercepted: the
 			 * shared table handlers (sys_getUID/getGID in kern/access.c,
@@ -454,10 +437,8 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args)
 			}
 			return 0;
 
-		case SYS_SET_TID_ADDRESS:
-			/* musl registers a clear-on-exit TID address at startup; the return
-			 * value is the caller's thread id. */
-			return (_current != 0) ? (u_int64_t)_current->id : 1;
+			/* set_tid_address(258) pre-case pruned (Phase 3): the table's
+			 * sys_set_tid_address returns _current->id, identical. */
 
 			/* SYS_RT_SIGPROCMASK (340) is no longer intercepted — it falls through to
 			 * the real sys_sigprocmask in the POSIX table now that EL0 signal

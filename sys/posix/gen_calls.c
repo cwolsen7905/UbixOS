@@ -1045,7 +1045,11 @@ int sys_uname(struct thread *td, struct sys_uname_args *args)
 	strncpy(uts->nodename, "ubixos", sizeof(uts->nodename) - 1);
 	strncpy(uts->release, UBIXOS_VERSION_RELEASE, sizeof(uts->release) - 1);
 	strncpy(uts->version, UBIXOS_VERSION_STRING, sizeof(uts->version) - 1);
+#if defined(__aarch64__)
+	strncpy(uts->machine, "aarch64", sizeof(uts->machine) - 1);
+#else
 	strncpy(uts->machine, "i386", sizeof(uts->machine) - 1);
+#endif
 
 	td->td_retval[0] = 0;
 	return (0);
