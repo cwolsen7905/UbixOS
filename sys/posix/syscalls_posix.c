@@ -95,7 +95,7 @@ struct syscall_entry systemCalls_posix[] = {
     {0, "reboot", sys_invalid, SYSCALL_NOTIMP},                                                                 // 55 - reboot
     {0, "revoke", sys_invalid, SYSCALL_NOTIMP},                                                                 // 56 - revoke
     {0, "symlink", sys_invalid, SYSCALL_NOTIMP},                                                                /* 57 */
-    {0, "readlink", sys_readlink, SYSCALL_VALID},                                                               /* 58 */
+    {ARG_COUNT(sys_readlink_args), "readlink", sys_readlink, SYSCALL_VALID},                                    /* 58 */
     {ARG_COUNT(sys_execve_args), "execve", (sys_call_t *)sys_execve, SYSCALL_VALID},                            // 59 - execv
     {ARG_COUNT(sys_umask_args), "umask", (sys_call_t *)sys_umask, SYSCALL_VALID},                              //  60 - umask
     {0, "chroot", sys_invalid, SYSCALL_NOTIMP},                                                                 //  61 - chroot
@@ -579,7 +579,7 @@ struct syscall_entry systemCalls_posix[] = {
     {0, "connectact", sys_invalid, SYSCALL_NOTIMP},                                                             /* 539 - Invalid */
     {0, "chflagsat", sys_invalid, SYSCALL_NOTIMP},                                                              /* 540 - Invalid */
     {0, "accept4", sys_invalid, SYSCALL_NOTIMP},                                                                /* 541 - Invalid */
-    {0, "pipe2", sys_pipe2, SYSCALL_VALID},                                                                     /* 542 */
+    {ARG_COUNT(sys_pipe2_args), "pipe2", sys_pipe2, SYSCALL_VALID},                                             /* 542 */
     {0, "aio_mlock", sys_invalid, SYSCALL_NOTIMP},                                                              /* 543 - Invalid */
     {0, "procctl", sys_invalid, SYSCALL_NOTIMP},                                                                /* 544 - Invalid */
     {0, "ppoll", sys_invalid, SYSCALL_NOTIMP},                                                                  /* 545 - Invalid */
