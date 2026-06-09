@@ -12,6 +12,7 @@
 
 #include "bringup.h"
 #include <ubixos/sched.h>       /* _current — identify the faulting task in dumps */
+#include <ubixos/endtask.h>     /* endTask — terminate a faulting user process */
 #include <ubixos/signal.h>      /* signal_check / sys_sigreturn + AARCH64_SIGTRAMP_RETADDR */
 #include <sys/trap.h>           /* struct trapframe (aarch64 layout) */
 #include <sys/sysproto_posix.h> /* struct sys_sigreturn_args */
@@ -129,6 +130,33 @@ void aarch64_exception(u_int64_t kind, void *frame)
 	{
 		u_int64_t *g = (u_int64_t *)frame;
 		kprintf("  frame: x30(lr)=0x%lx elr=0x%lx spsr=0x%lx sp_el0=0x%lx\n", g[30], g[32], g[33], g[34]);
+	}
+
+	/*
+	 * Containment: if a *user* task faulted — at EL0 (a bad access in its own
+	 * code) or in the kernel mid-syscall (a bad user pointer the kernel
+	 * dereferenced on its behalf) — terminate just that process and reschedule,
+	 * so a buggy application can't take down the whole OS.  Mirrors do_exit
+	 * (endTask + sched_yield, which never returns here).
+	 *
+	 * A fault with no current user task (md_usp == 0: a kernel thread / early
+	 * boot) is a genuine kernel bug with no safe recovery — keep failing fast by
+	 * parking the CPU after the dump.  Only instruction/data aborts are treated
+	 * as recoverable; other synchronous causes (e.g. a kernel BRK) still park.
+	 */
+	{
+		u_int64_t ec = (esr >> 26) & 0x3f;
+		int is_abort = (ec == 0x20 || ec == 0x21 || /* instruction abort (lower / same EL) */
+		                ec == 0x24 || ec == 0x25);  /* data abort (lower / same EL) */
+
+		if (is_abort && _current != 0 && _current->md.md_usp != 0)
+		{
+			kprintf("  -> terminating offending user task pid=%d (%s); OS continues\n", _current->id,
+			        _current->name);
+			endTask(_current->id);
+			sched_yield();
+			/* not reached — sched_yield switches to another task */
+		}
 	}
 
 	for (;;)

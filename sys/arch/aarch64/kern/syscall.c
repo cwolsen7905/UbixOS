@@ -286,13 +286,15 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args)
 	{
 		case SYS_WRITE:
 		{
-			/* A pty slave (FD_TYPE_TTYV) or socket fd must dispatch through the
-			 * real sys_write so the fileops decide the destination — the pty feeds
-			 * the VT100 cell grid (the GUI terminal), a socket goes to lwIP.  Plain
-			 * console/placeholder/no-table fds keep the bring-up UART path
-			 * (sc_write), which is also what the early EL0 demos rely on. */
+			/* A pty slave (FD_TYPE_TTYV), socket, or pipe fd must dispatch through
+			 * the real sys_write so the fileops decide the destination — the pty
+			 * feeds the VT100 cell grid (the GUI terminal), a socket goes to lwIP,
+			 * a pipe goes into its pipeInfo buffer (the taskbar app launcher relies
+			 * on this).  Plain console/placeholder/no-table fds keep the bring-up
+			 * UART path (sc_write), which is also what the early EL0 demos rely on. */
 			struct file *f = aarch64_lookup_fd((int)args[0]);
-			if (f != 0 && (f->fd_type == FD_TYPE_TTYV || f->fd_type == FD_TYPE_SOCKET))
+			if (f != 0 && (f->fd_type == FD_TYPE_TTYV || f->fd_type == FD_TYPE_SOCKET ||
+			               f->fd_type == FD_TYPE_PIPE))
 			{
 				struct sys_write_args ua;
 				ua.fd = (int)args[0];
@@ -312,7 +314,8 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args)
 				u_int64_t iov_len;
 			} *iov = (struct iovec_lp64 *)(uintptr_t)args[1];
 			struct file *f = aarch64_lookup_fd((int)args[0]);
-			int is_fileop = (f != 0 && (f->fd_type == FD_TYPE_TTYV || f->fd_type == FD_TYPE_SOCKET));
+			int is_fileop = (f != 0 && (f->fd_type == FD_TYPE_TTYV || f->fd_type == FD_TYPE_SOCKET ||
+			                            f->fd_type == FD_TYPE_PIPE));
 			u_int64_t total = 0;
 			for (int i = 0; i < (int)args[2]; i++)
 			{

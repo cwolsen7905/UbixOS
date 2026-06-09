@@ -35,6 +35,10 @@ extern char _binary_spin_elf_start[];
 extern char _binary_spin_elf_end[];
 extern char _binary_mpitest_elf_start[];
 extern char _binary_mpitest_elf_end[];
+extern char _binary_pipetest_elf_start[];
+extern char _binary_pipetest_elf_end[];
+extern char _binary_faulttest_elf_start[];
+extern char _binary_faulttest_elf_end[];
 extern char _binary_authd_min_elf_start[];
 extern char _binary_authd_min_elf_end[];
 
@@ -203,6 +207,8 @@ void kmain_aarch64(void)
 		         install_bin("/bin/sh", _binary_sh_elf_start, _binary_sh_elf_end) == 0 &&
 		         install_bin("/bin/spin", _binary_spin_elf_start, _binary_spin_elf_end) == 0 &&
 		         install_bin("/bin/mpitest", _binary_mpitest_elf_start, _binary_mpitest_elf_end) == 0 &&
+		         install_bin("/bin/pipetest", _binary_pipetest_elf_start, _binary_pipetest_elf_end) == 0 &&
+		         install_bin("/bin/faulttest", _binary_faulttest_elf_start, _binary_faulttest_elf_end) == 0 &&
 		         install_bin("/bin/hello", _binary_hello_elf_start, _binary_hello_elf_end) == 0;
 		if (ok)
 		{
@@ -217,6 +223,20 @@ void kmain_aarch64(void)
 			kprintf("\n--- MPI self-test ---\n");
 			aarch64_run_elf_image(_binary_mpitest_elf_start, "mpitest");
 			kprintf("--- end MPI self-test ---\n");
+
+			/* pipe(2) self-test: pipe + fork round-trip (the taskbar app
+			 * launcher depends on pipe).  Static ET_EXEC like mpitest. */
+			kprintf("\n--- pipe self-test ---\n");
+			aarch64_run_elf_image(_binary_pipetest_elf_start, "pipetest");
+			kprintf("--- end pipe self-test ---\n");
+
+			/* Fault-containment self-test: faulttest dereferences a bad
+			 * pointer; the kernel must terminate just that process and keep
+			 * running.  If this line's "end" marker prints, the OS survived a
+			 * userland-triggered fault (the robustness backstop works). */
+			kprintf("\n--- fault-containment self-test ---\n");
+			aarch64_run_elf_image(_binary_faulttest_elf_start, "faulttest");
+			kprintf("--- end fault-containment self-test (OS survived) ---\n");
 
 			/* Dynamic-linker bring-up test: lay the musl dynamic linker (= libc.so)
 			 * at its INTERP path + a PIE program, then run it through the kernel's

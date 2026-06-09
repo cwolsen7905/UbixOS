@@ -205,16 +205,9 @@ int sys_rfork(struct thread *td, struct sys_rfork_args *uap)
 
 /* ---- not-yet-ported subsystems: fail cleanly with -ENOSYS ------------- */
 
-int sys_pipe2(struct thread *td, struct sys_pipe2_args *uap)
-{
-	(void)uap;
-	ENOSYS_STUB(td);
-}
-int pipe(struct thread *td, struct pipe_args *uap)
-{
-	(void)uap;
-	ENOSYS_STUB(td);
-}
+/* pipe (42) + pipe2 (542) are real now: sys/posix/pipe.c + kern_pipe.c are
+ * linked into AARCH64_GENERIC_SRCS, and the pipe read/write/close data path in
+ * vfs_calls.c was already linked.  Their table entries call the real handlers. */
 int sys_sysctl(struct thread *td, struct sys_sysctl_args *uap)
 {
 	(void)uap;
