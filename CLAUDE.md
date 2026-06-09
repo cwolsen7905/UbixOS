@@ -4,7 +4,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What This Is
 
-UbixOS is a hobby/research x86 (i386) operating system written in C and C++ (plus x86 assembly), developed since 2002. It boots via GRUB2 using the multiboot protocol, runs on bare metal or QEMU, and uses a FAT32 disk image as its primary filesystem.
+uBixOS is a hobby/research operating system written in C and C++ (plus assembly), developed since 2002. It began as an x86 (i386) OS — booting via GRUB2/multiboot on bare metal or QEMU with a FAT32 root — and is now **dual-architecture**: a second **AArch64 (arm64)** port boots on QEMU `virt` and is the **primary forward target** (heading for Raspberry Pi / Orange Pi).
+
+**Product identity — read before making any architecture decision:** uBixOS is *console-first, graphical-optional, one tree, profile-driven, MMU-class only*. The kernel and base system are display-agnostic; the graphical stack (`views` compositor + `objGFX`) is a userland *layer*, not the foundation. "IoT" and "desktop" are the same MMU-class hardware running different userland profiles; MCU-class (no-MMU) and locked phone hardware are out of scope. See **`docs/design/console-and-arch-convergence-plan.md`** for the full identity + the current console/arch-convergence plan, and `docs/design/cross-arch-plan.md` for the arm64 roadmap.
+
+**Always build and keep BOTH architectures green** — never break i386 while advancing aarch64. Build each with `bmake kernel world TARGET=i386` and `bmake kernel world TARGET=aarch64`.
 
 ## Build System
 
@@ -251,6 +255,8 @@ The single source of truth for the OS version is **`sys/include/ubixos/version.h
 
 ## Current State
 
+### i386
+
 The system boots to a login prompt under QEMU:
 
 1. GRUB2 (i686-elf-grub) loads the kernel via multiboot from a FAT32 disk image.
@@ -259,7 +265,20 @@ The system boots to a login prompt under QEMU:
 4. Default credentials: `root` / `user` (from `tools/userdb`).
 5. Shell prompt shows the POSIX cwd (e.g. `uBixCube@/bin/#`).
 
-**Key lessons learned**:
+The i386 build also runs the full graphical desktop (`views` + `vlogin` + GUI terminal + apps).
+
+### aarch64 (primary forward target)
+
+Boots on QEMU `virt` (HVF on Apple Silicon) to a full **graphical desktop** matching the i386 GUI:
+
+- Kernel → virtio-blk FAT32 root → `init` → `views` compositor → graphical login (`vlogin`) → themed desktop (per-user wallpaper + taskbar, settings via `ubistry`).
+- Working GUI **terminal** running tcsh, with POSIX signals + tty job control (Ctrl-C / SIGWINCH) over a pty/VT100 line discipline.
+- **vDoom** runs (windowed). Sockets/lwIP (DHCP), mmap/fork/execve, and musl dynamic linking are all functional.
+- Cooperative scheduling, EL0 via a 100 Hz timer; LP64. musl emits FreeBSD syscall numbers.
+- **Still bring-up**: a hand-rolled syscall `switch` (falls through to the shared table) and a `sys/arch/aarch64/bringup/` dir holding demos + the real exec path. The convergence backlog (unify syscall dispatch, factor fork/exec, graduate `bringup/`, console rework) is tracked in `docs/design/console-and-arch-convergence-plan.md`.
+- Build/run: `bmake kernel world TARGET=aarch64`; image via `tools/mkimage-arm.sh` (or `bmake image-arm`); `bmake run-aarch64 TARGET=aarch64` (graphical, virtio-gpu) or `bmake run-debug-aarch64 TARGET=aarch64` (serial-only, `-nographic`). HVF "Assertion failed: (isv)" means a real bad-pointer store — debug under `-accel tcg` to get the faulting address.
+
+**Key lessons learned (i386)**:
 - Use `x86_64-elf-gcc -m32` — the `i386-elf-gcc` Homebrew formula is unmaintained.
 - All code must be compiled with `-mno-sse -mno-sse2 -mno-mmx -mno-3dnow`. GCC can silently emit XMM instructions for struct copies which trigger `#UD` fault 6.
 - `kprintf` outputs to both VGA and COM1 serial. Run `bmake run` and check `serial.log` for kernel debug output.
