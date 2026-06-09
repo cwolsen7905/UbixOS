@@ -231,12 +231,51 @@ bring-up demos over the PL011 sink. The `tty_foreground` reroute is preserved
 (Phase 2 removes it). The suspend/resume API is in place but not yet wired to
 `views`' framebuffer claim — that is Phase 2 work.
 
-**Phase 2 — Drop the multi-VT / ttyd stack.**
+**Phase 2 — Drop the multi-VT / ttyd stack. 🟢 Mostly done (2026-06-09).**
 Delete `ttyd`, the VGA console slots, `tty_change`/`tty_foreground`, the Alt-Fn
 switching and `vesa_text_*` dance. Collapse the tty slot array to "one system
 console + pty pool" (retire `TTY_PTY_BASE`). Pre-desktop login uses the single
 system console; the desktop owns the display via `views`. Removes a large block
 of i386-only complexity and the leaky `tty.c` guards shrink. *Mostly deletion.*
+
+Landed (each boot-verified on both arches):
+- **2.1** (commit `ca1bc2c69`) — removed the user-switchable VT switching:
+  the Alt-Fn (`tty_switch_slot`) and Ctrl+Alt+Fn (`vesa_text_slot`) keyboard-ISR
+  handlers in `atkbd.c`/`hid_kbd.c`, their `sys_read` poll-loop consumers, and
+  the `tty_change()` VGA-buffer-swap function.
+- **2.2** (commit `bc035eccb`) — retired `ttyd`, `/etc/ttys`, and
+  `/etc/init.d/30-ttyd`. `init` now launches a single system-console primary
+  directly: `start_console()` forks a child that claims slot 0 with `settty(0)`
+  and respawns `CONSOLE_PRIMARY` (`/bin/views`), matching the aarch64 model
+  (its kernel `boot.c` already spawns `/bin/views` directly). One system
+  console, no getty-per-VT, no switchable text VTs.
+- **2.3 partial** (commit `cde4288ed`) — removed the dead `/dev/ttyv1-3`
+  multi-VT device nodes (no getty serves them). Kept `ttyv0` (system console)
+  and `com1` (serial console).
+- Also (commit `9a2df0986`) — arch-dispatched the `image` target so
+  `bmake image TARGET=aarch64` writes `ubixos-arm.img`, not the i386
+  `ubixos.img`. Previously `bmake TARGET=aarch64` (which runs `all`) silently
+  clobbered the i386 image with aarch64 binaries, which then failed every i386
+  exec with `e_type != ET_EXEC` and looked like a kernel regression.
+
+**Deferred from Phase 2 (do with the console-read-path rework, with interactive
+verification):**
+- **Slot-array collapse** — renumber so it is just "slot 0 = VGA system console,
+  slot 1 = COM1 serial, pty pool from slot 2" (retire `TTY_PTY_BASE 5`). This is
+  entangled: `sys_settty` (`sys/kern/fb.c`) hard-codes "slots 0-3 = VGA, 4+ =
+  serial", the pty pool starts at slot 5, and renumbering shifts the
+  **GUI-terminal pty pool** — which the headless boot smoke-test does *not*
+  exercise. Needs an interactive terminal test (open the GUI terminal, type, run
+  `echo | cat`) before it can be trusted.
+- **`tty_foreground` → `&terms[0]`** — unsafe to fold blindly: `tty_foreground`
+  is `NULL` until `tty_init`, and `kprint` keys off that to route early-boot
+  output to raw VGA instead of dereferencing an unallocated `terms[0]`.
+- **`kbd_gui_mode`** — still load-bearing: it is what stops the VGA console's
+  `sys_read` loop from draining the keyboard while `views` owns the screen.
+  Cannot go until the VGA console-read path itself is reworked.
+- **`vesa_text_mode()`** — *not* retired; the remaining caller (`systemtask`, on
+  GUI-process exit) is the legitimate GUI→text transition, not the
+  already-removed Ctrl+Alt+Fn machinery.
 
 **Phase 3 — Unify syscall dispatch.**
 Collapse the aarch64 hand-rolled `switch` into a thin trap shim that fills
@@ -271,7 +310,12 @@ behind a build flag. Put `MMAP_BASE` / `BRK_BASE` / stack base into a per-arch
 
 - **Phase 1 done** (2026-06-09) — the `kconsole` registered-sink abstraction;
   see the Phase 1 entry above. Verified on both arches.
-- **Plan drafted** (this doc). Phases 2+ not started.
+- **Phase 2 mostly done** (2026-06-09) — VT switching, `ttyd`/`/etc/ttys`, and
+  the `/dev/ttyv1-3` nodes are gone; `init` launches the console primary
+  directly. The deeper slot-array collapse + `kbd_gui_mode`/`tty_foreground`
+  fold are deferred (entangled with the VGA console-read path + GUI-terminal pty
+  pool; need interactive verification). See the Phase 2 entry above.
+- **Phases 3+ not started.**
 - Prereqs already in place from prior work: dual-arch `signal.c` + tty job
   control (see `project_aarch64_signals`), the `g_*` hook pattern, `md_proc`,
   the `machine/` forwarding headers.
