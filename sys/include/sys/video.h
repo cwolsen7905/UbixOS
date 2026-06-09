@@ -37,6 +37,7 @@ extern int printColor;
 
 void clearScreen();
 void kprint(char *string);
+void kprint_putc(int c);
 void backSpace();
 
 #endif /* END _SYS_VIDEO_H */

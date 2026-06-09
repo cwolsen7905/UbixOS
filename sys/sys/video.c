@@ -105,6 +105,67 @@ void kprint(char *string) {
     return;
 }
 
+/**
+ * Emit a single character to the VGA text console — the per-character primitive
+ * behind the i386 primary kconsole sink.
+ *
+ * Mirrors kprint()'s semantics for one character: '\n' advances to the next
+ * line, the buffer scrolls on overflow, and the hardware cursor is updated.
+ * Like kprint(), output is rerouted to the foreground tty when one is active.
+ * The cursor is read-modify-written per call, which is fine at kprintf rates.
+ */
+void kprint_putc(int c) {
+
+    unsigned int bufferOffset = 0x0, i = 0x0;
+    char ch[2];
+
+    /* Short circuit if we're in tty mode */
+    if (NULL != tty_foreground) {
+        ch[0] = (char) c;
+        ch[1] = '\0';
+        tty_print(ch, tty_find(0));
+        return;
+    }
+
+    /* We Need To Get The Y Position */
+    outportByte(0x3D4, 0x0e);
+    bufferOffset = inportByte(0x3D5);
+    bufferOffset <<= 8; /* Shift Address Left 8 Bits */
+    /* Then We Need To Add The X Position */
+    outportByte(0x3D4, 0x0f);
+    bufferOffset += inportByte(0x3D5);
+    bufferOffset <<= 1; /* Shift Address Left 1 Bits */
+
+    switch (c) {
+        case '\n':
+            bufferOffset = (bufferOffset / 160) * 160 + 160;
+            break;
+        default:
+            videoBuffer[bufferOffset++] = (unsigned char) c;
+            videoBuffer[bufferOffset++] = printColor;
+            break;
+    } /* switch */
+    /* Check To See If We Are Out Of Bounds */
+    if (bufferOffset >= 160 * 25) {
+        for (i = 0; i < 160 * 24; i++) {
+            videoBuffer[i] = videoBuffer[i + 160];
+        } /* for */
+        for (i = 0; i < 80; i++) {
+            videoBuffer[(160 * 24) + (i * 2)] = 0x20;
+            videoBuffer[(160 * 24) + (i * 2) + 1] = printColor;
+        } /* for */
+        bufferOffset -= 160;
+    } /* if */
+
+    bufferOffset >>= 1; /* Set the new cursor position  */
+    outportByte(0x3D4, 0x0f);
+    outportByte(0x3D5, ((bufferOffset & 0x0ff) & 0xFF));
+    outportByte(0x3D4, 0x0e);
+    outportByte(0x3D5, ((bufferOffset >> 8) & 0xFF));
+
+    return;
+}
+
 void kprint_len(char *string, int len) {
 
     unsigned int bufferOffset = 0x0, character = 0x0, i = 0x0;

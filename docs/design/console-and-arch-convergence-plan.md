@@ -196,12 +196,40 @@ it.
 
 ## Phased plan (each phase boots on **both** arches)
 
-**Phase 1 — Console-device abstraction.**
+**Phase 1 — Console-device abstraction. ✅ DONE (2026-06-09).**
 Introduce `struct kconsole` + `kconsole_register` + suspend/resume. Make
 `kprintf` walk registered sinks. i386 registers a serial sink + a (suspendable)
 VGA/primary sink; aarch64 registers a PL011 serial sink. Remove the per-arch
 `#if` from `kprintf.c`. *Behaviour-preserving; lowest risk; prerequisite for
 Phase 2.*
+
+Landed as:
+- `sys/include/lib/kconsole.h` / `sys/lib/kconsole.c` — the registered-sink
+  layer (FreeBSD `consdev`-style `void (*putc)(int)`): `kconsole_register`,
+  `kconsole_emit`, `kconsole_suspend_primary` / `kconsole_resume_primary`, and a
+  generic per-arch `kconsole_arch_init()` contract.
+- `sys/lib/kprintf.c` — the per-arch console `#if` is gone; one arch-neutral
+  `kprintf` that formats then calls `kconsole_emit`. (The only remaining `#if`
+  is the i386 64-bit quad-division helpers — an ISA concern, not console.)
+- `sys/arch/i386/dev/console.c` — COM1 sink (`KC_SERIAL`, CR/LF) + VGA sink
+  (`KC_PRIMARY | KC_SUSPENDABLE`, honours the legacy `printOff` mute). The VGA
+  sink calls the new `kprint_putc()` in `sys/sys/video.c`, which preserves the
+  cursor / scroll / `tty_foreground` reroute behaviour of `kprint()`.
+- `sys/arch/aarch64/dev/uart.c` — PL011 sink (`KC_SERIAL`); its old `kprintf`
+  is deleted (the entry point is now the shared one).
+- Registration: `kconsole_arch_init()` runs early in `kmain` (i386) and
+  `kmain_aarch64`, before the first `kprintf`.
+
+**Design note — line endings stay per-sink.** Stock FreeBSD centralises
+`\n`→CR/LF in `cnputc`; uBixOS does not, because the VGA sink gives `\n`
+full-newline semantics (column reset + line advance) and a centralised stray
+`\r` would render as a glyph. So the serial sinks translate and the VGA sink
+does not — each console device owns its own line discipline.
+
+*Verified:* i386 boots to `Login:` (COM1 + VGA sinks); aarch64 boots through all
+bring-up demos over the PL011 sink. The `tty_foreground` reroute is preserved
+(Phase 2 removes it). The suspend/resume API is in place but not yet wired to
+`views`' framebuffer claim — that is Phase 2 work.
 
 **Phase 2 — Drop the multi-VT / ttyd stack.**
 Delete `ttyd`, the VGA console slots, `tty_change`/`tty_foreground`, the Alt-Fn
@@ -241,7 +269,9 @@ behind a build flag. Put `MMAP_BASE` / `BRK_BASE` / stack base into a per-arch
 
 ## Status
 
-- **Plan drafted** (this doc). No phases started.
+- **Phase 1 done** (2026-06-09) — the `kconsole` registered-sink abstraction;
+  see the Phase 1 entry above. Verified on both arches.
+- **Plan drafted** (this doc). Phases 2+ not started.
 - Prereqs already in place from prior work: dual-arch `signal.c` + tty job
   control (see `project_aarch64_signals`), the `g_*` hook pattern, `md_proc`,
   the `machine/` forwarding headers.

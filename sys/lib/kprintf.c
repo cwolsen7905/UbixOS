@@ -27,42 +27,23 @@
  */
 
 #include <lib/kprintf.h>
+#include <lib/kconsole.h>
 #include <lib/libkern.h>
 #include <string.h>
-#if !defined(__aarch64__)
-#include <sys/video.h> /* i386 VGA text console (kprint) */
-#include <sys/io.h>    /* i386 port I/O for the COM1 console */
-#endif
 #include <ubixos/kpanic.h>
 
 /*
  * The pure formatting engine (kvprintf / sprintf / snprintf / ksprintn / imax)
- * below is architecture-neutral and shared by every arch.  The console plumbing
- * (COM1 serial + VGA, the kprintf entry point) and the 64-bit "quad" division
- * helpers are i386-only and arch-gated — aarch64 supplies its own console
- * kprintf (sys/arch/aarch64/dev/uart.c, which formats through kvprintf) and
- * divides 64-bit values natively.
+ * below is architecture-neutral and shared by every arch, and so now is the
+ * kprintf entry point: it formats into a buffer and hands the result to
+ * kconsole_emit(), which walks the per-arch registered sinks (sys/lib/kconsole.c).
+ * Each arch registers its sinks at boot — COM1 + VGA on i386, the PL011 on
+ * aarch64 — so kprintf itself carries no per-arch #if.
+ *
+ * The only thing still arch-gated here is the 64-bit "quad" division helpers:
+ * i386 (-m32) has no native 64-bit divide and links these, whereas aarch64
+ * divides 64-bit values natively.  That is an ISA concern, not a console one.
  */
-#if !defined(__aarch64__)
-/* COM1 serial port output for debugging */
-static void serial_putc(char c)
-{
-	/* Wait for transmit holding register empty (bit 5 of LSR) */
-	while ((inportByte(0x3F8 + 5) & 0x20) == 0)
-		;
-	outportByte(0x3F8, c);
-}
-
-static void serial_puts(const char *s)
-{
-	while (*s)
-	{
-		if (*s == '\n')
-			serial_putc('\r');
-		serial_putc(*s++);
-	}
-}
-#endif /* !__aarch64__ */
 
 static char *ksprintn(char *nbuf, uintmax_t num, int base, int *lenp, int upper);
 
@@ -311,21 +292,16 @@ u_quad_t a, b;
 int printOff = 0x0;
 int ogprintOff = 0x1; /* retained for ABI; ogPrintf is retired */
 
-#if !defined(__aarch64__) /* i386 console kprintf (COM1 + VGA); aarch64 has its own in uart.c */
-static int serial_initialized = 0;
-
-static void serial_init(void)
-{
-	outportByte(0x3F8 + 1, 0x00); /* disable interrupts */
-	outportByte(0x3F8 + 3, 0x80); /* enable DLAB (set baud rate divisor) */
-	outportByte(0x3F8 + 0, 0x01); /* divisor lo: 115200 baud */
-	outportByte(0x3F8 + 1, 0x00); /* divisor hi */
-	outportByte(0x3F8 + 3, 0x03); /* 8 bits, no parity, one stop bit */
-	outportByte(0x3F8 + 2, 0xC7); /* enable FIFO, clear, 14-byte threshold */
-	outportByte(0x3F8 + 4, 0x03); /* RTS+DTR */
-	serial_initialized = 1;
-}
-
+/**
+ * Kernel formatted print.
+ *
+ * Formats through the shared kvprintf engine into a stack buffer, then emits
+ * the result to every registered console sink (kconsole_emit).  Arch-neutral:
+ * which devices receive the output is decided by the sinks each arch registers
+ * at boot, not by a per-arch branch here.
+ *
+ * @return the number of characters formatted (kvprintf semantics).
+ */
 int kprintf(const char *fmt, ...)
 {
 	va_list ap;
@@ -337,16 +313,10 @@ int kprintf(const char *fmt, ...)
 	buf[retval < (int)(sizeof(buf) - 1) ? retval : (int)(sizeof(buf) - 1)] = '\0';
 	va_end(ap);
 
-	if (!serial_initialized)
-		serial_init();
-	serial_puts(buf);
-
-	if (printOff == 0x0)
-		kprint(buf);
+	kconsole_emit(buf);
 
 	return (retval);
 }
-#endif /* !__aarch64__ */
 
 int sprintf(char *buf, const char *fmt, ...)
 {

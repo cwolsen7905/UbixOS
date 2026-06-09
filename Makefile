@@ -97,6 +97,7 @@ AARCH64_GENERIC_SRCS = \
 	sys/vmm/vmm_uregion.c \
 	sys/lib/kmalloc.c \
 	sys/lib/kprintf.c \
+	sys/lib/kconsole.c \
 	sys/lib/strlen.c \
 	sys/vmm/vm_filecache.c \
 	sys/kern/elf64_load.c \

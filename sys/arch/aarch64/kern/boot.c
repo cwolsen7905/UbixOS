@@ -87,6 +87,8 @@ static u_int64_t current_el(void)
  */
 void kmain_aarch64(void)
 {
+	kconsole_arch_init(); /* register the PL011 serial sink before the first kprintf */
+
 	kprintf("\nuBixOS aarch64 (QEMU virt) - boot OK\n");
 	kprintf("CurrentEL=%lu\n", current_el());
 

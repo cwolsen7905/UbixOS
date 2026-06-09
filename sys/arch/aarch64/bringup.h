@@ -11,9 +11,11 @@
 
 #include <stdarg.h>
 #include <sys/types.h>
-#include <lib/kprintf.h> /* canonical int kprintf(const char *, ...) */
+#include <lib/kprintf.h>  /* canonical int kprintf(const char *, ...) */
+#include <lib/kconsole.h> /* registered-sink console (kconsole_arch_init) */
 
-/* uart.c — PL011 console + the arch kprintf (formats via the shared kvprintf). */
+/* uart.c — PL011 console plumbing + the PL011 kconsole serial sink.  kprintf
+ * itself is the shared arch-neutral entry point in sys/lib/kprintf.c. */
 void uart_putc(char c);
 void uart_puts(const char *s);
 int uart_getc(void);     /* non-blocking PL011 RX: byte, or -1 if empty */

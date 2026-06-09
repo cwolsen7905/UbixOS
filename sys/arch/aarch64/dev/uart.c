@@ -11,6 +11,7 @@
  */
 
 #include "bringup.h"
+#include <lib/kconsole.h>
 
 /* QEMU `virt` PL011 UART0. */
 #define PL011_BASE 0x09000000UL
@@ -65,21 +66,27 @@ void uart_puts(const char *s)
 }
 
 /**
- * Console printf — formats via the shared kvprintf engine, then emits the
- * result on the PL011.
- *
- * @return the number of characters formatted.
+ * PL011 sink putc — emits one character, mapping '\n' to CR/LF for
+ * terminal-friendly serial output.
  */
-int kprintf(const char *fmt, ...)
+static void pl011_putc(int c)
 {
-	char buf[512];
-	va_list ap;
-	int n;
+	if (c == '\n')
+		uart_putc('\r');
+	uart_putc((char)c);
+}
 
-	va_start(ap, fmt);
-	n = kvprintf(fmt, NULL, buf, 10, ap, sizeof(buf) - 1);
-	va_end(ap);
-	buf[n < (int)sizeof(buf) - 1 ? n : (int)sizeof(buf) - 1] = '\0';
-	uart_puts(buf); /* uart_puts already maps '\n' -> CRLF */
-	return n;
+static struct kconsole g_pl011_console = {pl011_putc, "pl011", KC_SERIAL, 0};
+
+/**
+ * Register the aarch64 console sink (the PL011 serial port).
+ *
+ * Called early in kmain_aarch64, before the first kprintf.  aarch64 has no
+ * in-kernel primary visible console (the graphical desktop is owned by views in
+ * userland), so only the always-on serial sink is registered here; an on-screen
+ * fbcon sink is a later phase.
+ */
+void kconsole_arch_init(void)
+{
+	kconsole_register(&g_pl011_console);
 }

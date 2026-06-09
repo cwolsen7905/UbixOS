@@ -42,6 +42,7 @@
 #include <ubixos/systemtask.h>
 #include <fs/vfs/mount.h>
 #include <lib/kprintf.h>
+#include <lib/kconsole.h>
 #include <lib/kmalloc.h>
 #include <i386/pcpu.h>
 #include <ubixos/sched.h>
@@ -173,6 +174,9 @@ int kmain(u_int32_t rootdev)
 	 * Must be the first thing in kmain — every later kernel path reads _current.
 	 */
 	pcpu_install_gs(0);
+
+	/* Register the console sinks (COM1 + VGA) before the first kprintf. */
+	kconsole_arch_init();
 
 	/* Do A Clear Screen Just To Make The TEXT Buffer Nice And Empty */
 	clearScreen();
