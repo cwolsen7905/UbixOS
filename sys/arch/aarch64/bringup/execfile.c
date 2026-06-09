@@ -603,17 +603,19 @@ static kTask_t *find_and_reap_child(int want_pid, int *have_child)
 }
 
 /**
- * wait4(@want_pid, @status): block until a child (any if @want_pid == -1) exits,
- * then reap it.  Mirrors the generic sys_wait4 blocking protocol: sleep in the
- * WAIT state (off the run queue) so the timer-driven sched() reaper wakes us
- * (WAIT->READY) when a child goes ZOMBIE — busy-yielding instead would leave us
- * runnable and the reaper's wake would double-enqueue us, corrupting the run
- * queue under preemption.  The re-scan after sched_sleep closes the lost-wakeup
- * window (child exited between our scan and the sleep).
+ * wait4(@want_pid, @status, @options): reap a child (any if @want_pid == -1).
+ * With WNOHANG set in @options, return 0 immediately if no child has exited yet
+ * (waitpid(..., WNOHANG) — used by the GUI terminal to poll its shell without
+ * blocking its render loop).  Otherwise block: sleep in the WAIT state (off the
+ * run queue) so the timer-driven sched() reaper wakes us (WAIT->READY) when a
+ * child goes ZOMBIE — busy-yielding instead would leave us runnable and the
+ * reaper's wake would double-enqueue us, corrupting the run queue under
+ * preemption.  The re-scan after sched_sleep closes the lost-wakeup window.
  *
- * @return the reaped child's pid, or -ECHILD if there is no such child.
+ * @return the reaped child's pid, 0 if WNOHANG and nothing exited, or -ECHILD.
  */
-int aarch64_wait4(int want_pid, int *status)
+#define WAIT4_WNOHANG 1 /* POSIX WNOHANG */
+int aarch64_wait4(int want_pid, int *status, int options)
 {
 	for (;;)
 	{
@@ -630,6 +632,11 @@ int aarch64_wait4(int want_pid, int *status)
 		}
 		if (!have_child)
 			return (-ECHILD);
+
+		/* Non-blocking poll: a live (un-exited) child exists but the caller does
+		 * not want to wait.  Report "nothing reaped yet". */
+		if (options & WAIT4_WNOHANG)
+			return (0);
 
 		/* Block until a child exits.  Re-check after sleeping (the reaper may
 		 * have flagged the child between our scan and the sleep). */

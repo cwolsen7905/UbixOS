@@ -116,7 +116,7 @@ void aarch64_exec_file(const char *path);
 int aarch64_exec_replace(const char *path,
                          char *const *argv,
                          char *const *envp);  /* execve: replace current image, restart EL0 */
-int aarch64_wait4(int want_pid, int *status); /* cooperative reap of an exited child */
+int aarch64_wait4(int want_pid, int *status, int options); /* cooperative reap (WNOHANG-aware) */
 void aarch64_run_init(const char *path);      /* run /bin/init + become the idle loop (no return) */
 void aarch64_run_dynamic(const char *path);      /* load+run a PIE program, wait (capped) */
 void aarch64_run_dynamic_init(const char *path); /* run a PIE program as the system (no return) */

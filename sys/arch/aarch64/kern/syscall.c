@@ -356,9 +356,12 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args)
 			                                       (char *const *)(uintptr_t)args[2]);
 
 		case SYS_WAIT4:
-			/* wait4(pid, status, options, rusage): cooperative reap.  options/
-			 * rusage are ignored (no WNOHANG/WUNTRACED yet). */
-			return (u_int64_t)aarch64_wait4((int)args[0], (int *)(uintptr_t)args[1]);
+			/* wait4(pid, status, options, rusage): cooperative reap.  options is
+			 * honoured for WNOHANG (non-blocking poll); rusage is ignored.  Note
+			 * pidStatus (ubix_api) shares this SVC but passes only x0, so x2 may be
+			 * garbage — aarch64_wait4 blocks by default, and a stray WNOHANG bit
+			 * just makes a poll non-blocking, which pidStatus callers retry. */
+			return (u_int64_t)aarch64_wait4((int)args[0], (int *)(uintptr_t)args[1], (int)args[2]);
 
 		case SYS_OPENAT:
 		{
