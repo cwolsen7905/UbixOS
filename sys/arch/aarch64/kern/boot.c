@@ -39,6 +39,8 @@ extern char _binary_pipetest_elf_start[];
 extern char _binary_pipetest_elf_end[];
 extern char _binary_faulttest_elf_start[];
 extern char _binary_faulttest_elf_end[];
+extern char _binary_dirtest_elf_start[];
+extern char _binary_dirtest_elf_end[];
 extern char _binary_authd_min_elf_start[];
 extern char _binary_authd_min_elf_end[];
 
@@ -136,6 +138,14 @@ void kmain_aarch64(void)
 		{
 			kprintf("root: FAT on virtio-blk vtblk0\n");
 
+			/* Phase-3 HVF-bisect harness: read the real FAT /bin (opendir/
+			 * getdents + stat — the pointer-arg POSIX calls `ls` uses) before
+			 * the desktop launches, so a syscall pruned onto the shared table can
+			 * be observed here headlessly. */
+			kprintf("\n--- dir-syscall self-test (FAT /bin) ---\n");
+			aarch64_run_elf_image(_binary_dirtest_elf_start, "dirtest");
+			kprintf("--- end dir-syscall self-test ---\n");
+
 			/* Mount devfs at /dev so the shell can open /dev/null, /dev/tty,
 			 * etc.  devfs_init() registers the FS + queues the pseudo-devices;
 			 * the mount replays them into /dev. */
@@ -209,6 +219,7 @@ void kmain_aarch64(void)
 		         install_bin("/bin/mpitest", _binary_mpitest_elf_start, _binary_mpitest_elf_end) == 0 &&
 		         install_bin("/bin/pipetest", _binary_pipetest_elf_start, _binary_pipetest_elf_end) == 0 &&
 		         install_bin("/bin/faulttest", _binary_faulttest_elf_start, _binary_faulttest_elf_end) == 0 &&
+		         install_bin("/bin/dirtest", _binary_dirtest_elf_start, _binary_dirtest_elf_end) == 0 &&
 		         install_bin("/bin/hello", _binary_hello_elf_start, _binary_hello_elf_end) == 0;
 		if (ok)
 		{

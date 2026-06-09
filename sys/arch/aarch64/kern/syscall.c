@@ -392,18 +392,8 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args)
 			return 0;
 		}
 
-		case SYS_STATX:
-		{
-			/* statx(dirfd, path, flags, mask, struct statx*): generic VFS stat. */
-			struct sys_statx_args ua;
-			ua.dirfd = (int)args[0];
-			ua.path = (const char *)(uintptr_t)args[1];
-			ua.flags = (int)args[2];
-			ua.mask = (unsigned int)args[3];
-			ua.stx = (struct statx *)(uintptr_t)args[4];
-			sys_statx(&_current->td, &ua);
-			return (u_int64_t)_current->td.td_retval[0];
-		}
+			/* SYS_STATX pre-case pruned (Phase 3 bisect) — falls through to the
+			 * shared table (statx at 383, ARG_COUNT(sys_statx_args) = 5 words). */
 
 		case SYS_GETDENTS:
 		{
