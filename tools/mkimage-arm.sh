@@ -47,8 +47,18 @@ done
 [ -f tools/userdb ] && mcopy -i "${IMG}" tools/userdb ::/etc/userdb || true
 
 # DOOM IWAD — vdoom defaults to /bin/doom1.wad (matches the i386 image); without
-# it the game can't start.
-[ -f tools/doom1.wad ] && mcopy -o -i "${IMG}" tools/doom1.wad ::/bin/doom1.wad || true
+# it the game opens a black window.  Search the same locations as mkimage.sh so
+# the arm image picks up a WAD in ~/Downloads even when it is not in tools/.
+_doom_wad=""
+for _candidate in "tools/doom1.wad" "$HOME/Downloads/doom1.wad"; do
+	[ -f "$_candidate" ] && { _doom_wad="$_candidate"; break; }
+done
+if [ -n "$_doom_wad" ]; then
+	mcopy -o -i "${IMG}" "$_doom_wad" ::/bin/doom1.wad
+	echo "mkimage-arm: installed DOOM IWAD: $_doom_wad -> /bin/doom1.wad"
+else
+	echo "mkimage-arm: doom1.wad not found (tools/ or ~/Downloads) — vdoom will be a black window"
+fi
 
 # TrueType fonts for objGFX's scalable-font backend (vlogin/taskbar/term load
 # /var/fonts/DejaVuSans*.ttf) + desktop wallpapers.
