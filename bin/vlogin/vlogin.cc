@@ -625,7 +625,7 @@ int main(int argc, char **argv)
 					}
 				}
 			}
-			else if (kc == '\b')
+			else if (kc == '\b' || kc == 0x7F) /* BS or DEL — both keyboards send 0x7F */
 			{
 				std::string &field = in_pass ? password : username;
 				if (!field.empty())
