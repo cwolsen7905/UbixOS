@@ -48,6 +48,41 @@ brew install x86_64-elf-binutils x86_64-elf-gcc bmake qemu mtools i686-elf-grub
 > **Apple Silicon vs Intel path:**  
 > Homebrew installs to `/opt/homebrew` on Apple Silicon and `/usr/local` on Intel. `mkimage.sh` hardcodes the GRUB library path to `/opt/homebrew/…`. If you are on an Intel Mac, edit the `GRUB_LIB` variable near the top of `tools/mkimage.sh`.
 
+### AArch64 cross-toolchain (for `TARGET=aarch64`)
+
+Building the arm64 port additionally needs an `aarch64-elf-` cross GCC + binutils:
+
+```sh
+brew install aarch64-elf-gcc aarch64-elf-binutils
+```
+
+The Makefile defaults `CROSS_PREFIX=aarch64-elf-` for `TARGET=aarch64`, so once
+these are on `PATH` no override is needed: `bmake kernel world TARGET=aarch64`.
+
+> **Pre-release macOS (Homebrew `:dunno` / "no bottle available"):**  
+> On a macOS version newer than your Homebrew knows about (e.g. a beta), the
+> `aarch64-elf-*` formulae fail two ways: plain install reports `no bottle
+> available`, and `--build-from-source` aborts with
+> `unknown or unsupported macOS version: :dunno` because Homebrew can't classify
+> the OS. Two workarounds:
+>
+> 1. **Fake the version for the build** — set `HOMEBREW_FAKE_MACOS` to the
+>    highest release your Homebrew supports (check
+>    `brew ruby -e 'puts MacOSVersion::SYMBOLS'`), e.g. on a box where Tahoe (26)
+>    is the newest known:
+>    ```sh
+>    HOMEBREW_FAKE_MACOS=26 brew install aarch64-elf-gcc aarch64-elf-binutils
+>    ```
+> 2. **Use the prebuilt Arm cask instead** (a signed `.pkg`, no formula version
+>    gate — needs your password for the installer):
+>    ```sh
+>    brew install --cask gcc-aarch64-embedded
+>    ```
+>    This installs the `aarch64-none-elf-` prefix under
+>    `/Applications/ArmGNUToolchain/<ver>/aarch64-none-elf/bin`. Either add that
+>    dir to `PATH` and build with `CROSS_PREFIX=aarch64-none-elf-`, or symlink the
+>    tools to the repo-default `aarch64-elf-` prefix in `/opt/homebrew/bin`.
+
 ---
 
 ### Build
