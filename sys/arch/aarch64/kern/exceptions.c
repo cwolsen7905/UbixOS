@@ -27,6 +27,7 @@ enum
 
 #define ESR_EC_SVC64 0x15    /* ESR_EL1 EC for an AArch64 SVC instruction */
 #define ESR_EC_IABT_LOW 0x20 /* instruction abort taken from a lower EL (EL0) */
+#define ESR_EC_DABT_LOW 0x24 /* data abort taken from a lower EL (EL0) */
 #define SPSR_M_MASK 0x0full  /* PSTATE mode bits; 0b0000 == EL0t (was at EL0) */
 
 /**
@@ -105,7 +106,24 @@ void aarch64_exception(u_int64_t kind, void *frame)
 			return;
 		}
 
-		/* Any other EL0 sync cause (fault, undef) falls through to the dump. */
+		/* An instruction/data abort from EL0 is a fault in the process's own
+		 * code (a bad pointer, stack overflow, …).  Deliver SIGSEGV with proper
+		 * Unix semantics: a process with a handler catches it; otherwise SIG_DFL
+		 * terminates just that process.  Either way the OS keeps running and we
+		 * never ERET back to the faulting instruction (signal_check rewrites tf
+		 * to the handler, or endTasks + sched_yields away). */
+		if ((ec == ESR_EC_DABT_LOW || ec == ESR_EC_IABT_LOW) && _current != 0)
+		{
+			u_int64_t far = READ_SYSREG(far_el1);
+			kprintf("EL0 fault: pid=%d (%s) SIGSEGV at 0x%lx (esr=0x%lx)\n", _current->id, _current->name,
+			        far, esr);
+			_current->td.frame = tf;
+			signal_post_fault(SIGSEGV, (void *)(uintptr_t)far, SEGV_MAPERR);
+			signal_check(tf);
+			return; /* ERET into the handler, or the task was terminated */
+		}
+
+		/* Any other EL0 sync cause (undef, …) falls through to the dump. */
 	}
 
 	u_int64_t esr = READ_SYSREG(esr_el1);
