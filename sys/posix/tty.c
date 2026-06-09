@@ -523,11 +523,10 @@ int tty_init()
 	/* Set up the foreground ttys information */
 	tty_foreground->tty_pointer = (char *)0xB8000;
 
-	/* Register VGA virtual TTY nodes in devfs */
+	/* The system VGA console (slot 0) + the COM1 serial console (slot 4).
+	 * The legacy ttyv1-3 multi-VT nodes are gone — there are no switchable
+	 * text VTs in the console-first model (one system console + the pty pool). */
 	devfs_makeNode("ttyv0", 'c', 4, 0);
-	devfs_makeNode("ttyv1", 'c', 4, 1);
-	devfs_makeNode("ttyv2", 'c', 4, 2);
-	devfs_makeNode("ttyv3", 'c', 4, 3);
 	devfs_makeNode("com1", 'c', 4, 4);
 #endif /* __i386__ */
 
