@@ -378,19 +378,10 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args)
 			return (u_int64_t)_current->td.td_retval[0];
 		}
 
-		case SYS_CLOCK_GETTIME:
-		{
-			/* clock_gettime(clk, timespec*): back both REALTIME and MONOTONIC with
-			 * the ARM generic timer's free-running virtual counter (time since
-			 * boot).  An advancing clock is required by timing-driven userland —
-			 * e.g. the DOOM main loop never advances a game tic without it. */
-			u_int64_t *ts2 = (u_int64_t *)(uintptr_t)args[1];
-			if (ts2 != 0)
-			{
-				timer_monotonic(&ts2[0], &ts2[1]);
-			}
-			return 0;
-		}
+			/* clock_gettime(232) pre-case pruned (Phase 3): the table's
+			 * sys_clock_gettime now builds on the unified md_uptime time source
+			 * (aarch64 = the CNTVCT counter), so it keeps the nanosecond-resolution
+			 * advancing clock DOOM needs — without a per-arch pre-case. */
 
 			/* SYS_STATX pre-case pruned (Phase 3 bisect) — falls through to the
 			 * shared table (statx at 383, ARG_COUNT(sys_statx_args) = 5 words). */

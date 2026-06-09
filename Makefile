@@ -120,6 +120,7 @@ AARCH64_GENERIC_SRCS = \
 	sys/kern/syscall_dispatch.c \
 	sys/posix/syscalls_posix.c \
 	sys/posix/gen_calls.c \
+	sys/posix/time.c \
 	sys/mpi/system.c \
 	sys/mpi/message.c \
 	sys/mpi/mpi_syscalls.c \

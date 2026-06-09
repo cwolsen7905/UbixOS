@@ -119,33 +119,13 @@ int sys_getcwd(struct thread *td, struct sys_getcwd_args *uap)
 	return (0);
 }
 
-/**
- * Kernel-internal gettimeofday(struct timeval *, struct timezone *) — the time
- * source lwIP's sys_now() builds on (sys/net/net/sys_arch.c), distinct from the
- * sys_gettimeofday syscall handler (gen_calls.c).  aarch64's i386 sibling lives
- * in sys/posix/time.c, but that file's time_init() uses x86 CMOS port I/O, so
- * the function is provided here instead.  No RTC yet: the wall clock starts at
- * the epoch and advances with the 100 Hz scheduler tick (systemVitals->sysTicks)
- * — monotonic, which is all lwIP's timers need.
- *
- * @return 0 always.
+/*
+ * gettimeofday is now the shared sys/posix/time.c implementation (built on the
+ * single md_uptime time source — aarch64's is the CNTVCT counter in timer.c).
+ * The old aarch64-local 100 Hz gettimeofday lived here only because time.c's
+ * x86 CMOS time_init was unbuildable on aarch64; that code is now #if-guarded,
+ * so time.c links on both arches and there is one gettimeofday.
  */
-int gettimeofday(struct timeval *tp, struct timezone *tzp)
-{
-	u_int32_t ticks = (systemVitals != 0) ? systemVitals->sysTicks : 0;
-
-	if (tp != 0)
-	{
-		tp->tv_sec = ticks / 100u;             /* aarch64 timer ticks at 100 Hz */
-		tp->tv_usec = (ticks % 100u) * 10000u; /* 0..990000 µs in 10 ms steps */
-	}
-	if (tzp != 0)
-	{
-		tzp->tz_minuteswest = 0;
-		tzp->tz_dsttime = 0;
-	}
-	return (0);
-}
 
 void machine_set_tls(struct thread *td, uintptr_t base)
 {

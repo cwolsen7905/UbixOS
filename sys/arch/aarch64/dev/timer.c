@@ -32,11 +32,12 @@ static u_int64_t read_cntfrq(void)
 }
 
 /**
- * Sample the always-running virtual counter (CNTVCT_EL0) as a monotonic
- * time-since-boot.  The counter advances at CNTFRQ_EL0 Hz independently of the
- * 100 Hz scheduler tick, so it backs userland clock_gettime()/gettimeofday()
- * with a clock that actually advances (without it, timing-driven programs such
- * as the DOOM main loop never advance a game tic).
+ * md_uptime (aarch64): sample the always-running virtual counter (CNTVCT_EL0)
+ * as monotonic time-since-boot — the machine-dependent time source the shared
+ * gettimeofday / clock_gettime / lwIP sys_now all build on.  The counter
+ * advances at CNTFRQ_EL0 Hz independently of the 100 Hz scheduler tick, so it
+ * backs userland clocks with one that actually advances (without it,
+ * timing-driven programs such as the DOOM main loop never advance a game tic).
  *
  * The split avoids 64-bit overflow: whole seconds plus a sub-second remainder
  * scaled to nanoseconds.
@@ -44,7 +45,7 @@ static u_int64_t read_cntfrq(void)
  * @param sec   out: whole seconds since boot.
  * @param nsec  out: nanosecond remainder in [0, 1e9).
  */
-void timer_monotonic(u_int64_t *sec, u_int64_t *nsec)
+void md_uptime(u_int64_t *sec, u_int64_t *nsec)
 {
 	u_int64_t cnt, freq;
 	__asm__ volatile("mrs %0, cntvct_el0" : "=r"(cnt));

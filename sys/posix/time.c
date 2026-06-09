@@ -44,6 +44,7 @@ static int month[12] = {0,
                         DAY * (31 + 29 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31),
                         DAY * (31 + 29 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31 + 30)};
 
+#if !defined(__aarch64__)
 static int timeCmosRead(int addr)
 {
 	outportByteP(0x70, addr);
@@ -89,6 +90,22 @@ int time_init()
 	return (0x0);
 }
 
+/*
+ * md_uptime (i386): monotonic time since boot from the PIT scheduler tick
+ * (systemVitals->sysTicks at 200 Hz = 5 ms resolution).  i386 has no finer
+ * free-running counter wired up, so the sub-second remainder is in 5 ms steps.
+ */
+void md_uptime(u_int64_t *sec, u_int64_t *nsec)
+{
+	u_int32_t ticks = (systemVitals != 0) ? systemVitals->sysTicks : 0;
+
+	if (sec != 0)
+		*sec = ticks / 200u;
+	if (nsec != 0)
+		*nsec = (u_int64_t)(ticks % 200u) * 5000000ULL; /* 5 ms in ns */
+}
+#endif /* !__aarch64__ */
+
 u_int32_t timeMake(struct timeStruct *time)
 {
 	u_int32_t res;
@@ -115,16 +132,18 @@ u_int32_t timeMake(struct timeStruct *time)
 
 int gettimeofday(struct timeval *tp, struct timezone *tzp)
 {
-	u_int32_t ticks = systemVitals->sysTicks;
+	u_int64_t sec, nsec;
 
 	/*
-	 * Wall clock = boot wall-clock second (timeStart, set from the CMOS RTC
-	 * in time_init) + seconds elapsed since boot (sysTicks runs at 200 Hz).
-	 * Without timeStart the clock reads ~1970, which breaks anything that
-	 * needs real time — e.g. TLS X.509 certificate-validity checks.
+	 * One way to get time: the wall clock = boot wall-clock second (timeStart,
+	 * set per arch — i386 from the CMOS RTC in time_init, aarch64 epoch) plus the
+	 * monotonic uptime from the single arch time source md_uptime (i386 PIT tick,
+	 * aarch64 CNTVCT counter).  Without timeStart the clock reads ~1970, which
+	 * breaks anything that needs real time — e.g. TLS cert-validity checks.
 	 */
-	tp->tv_sec = systemVitals->timeStart + ticks / 200u;
-	tp->tv_usec = (ticks % 200u) * 5000u; /* 0..995000 µs in 5 ms steps */
+	md_uptime(&sec, &nsec);
+	tp->tv_sec = systemVitals->timeStart + (u_int32_t)sec;
+	tp->tv_usec = (suseconds_t)(nsec / 1000u);
 
 	if (tzp != NULL)
 	{

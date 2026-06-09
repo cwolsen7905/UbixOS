@@ -49,6 +49,7 @@
 #include <sys/sysproto.h>
 #include <ubixos/errno.h>
 #include <ubixos/time.h>
+#include <ubixos/vitals.h> /* systemVitals->timeStart for the wall-clock offset */
 #include <isa/pit.h>
 #include <vmm/vmm.h>
 #include <vmm/mmap.h>
@@ -259,8 +260,7 @@ int sys_tkill(struct thread *td, struct sys_tkill_args *uap)
 
 int sys_clock_gettime(struct thread *td, struct sys_clock_gettime_args *uap)
 {
-	struct timeval tv;
-	struct timezone tz;
+	u_int64_t sec, nsec;
 
 	if (uap->tp == 0x0)
 	{
@@ -268,18 +268,25 @@ int sys_clock_gettime(struct thread *td, struct sys_clock_gettime_args *uap)
 		return (-1);
 	}
 
-	gettimeofday(&tv, &tz);
-
 	/*
-	 * musl libc on i386 uses 64-bit time_t, so its struct timespec is:
-	 *   { int64_t tv_sec; int32_t tv_nsec; int32_t _pad; }  (16 bytes, LE)
-	 * Write the four 32-bit words in order: sec_lo, sec_hi, nsec, pad.
+	 * One source: md_uptime (i386 PIT tick / aarch64 CNTVCT) at full resolution,
+	 * plus the boot wall-clock offset.  This preserves the nanosecond resolution
+	 * the aarch64 timer gives (DOOM's main loop relies on a finely-advancing
+	 * clock) without a per-arch syscall pre-case.
+	 *
+	 * musl uses 64-bit time_t, so struct timespec is
+	 *   { int64_t tv_sec; int64_t tv_nsec }  (16 bytes, LE) on aarch64 and
+	 *   { int64_t tv_sec; int32_t tv_nsec; int32_t _pad } on i386 — both written
+	 * as four 32-bit words: sec_lo, sec_hi, nsec_lo, nsec_hi(=0, nsec < 1e9).
 	 */
+	md_uptime(&sec, &nsec);
+	sec += systemVitals->timeStart;
+
 	int32_t *p = (int32_t *)uap->tp;
-	p[0] = (int32_t)tv.tv_sec;           /* tv_sec low  32 bits */
-	p[1] = 0;                            /* tv_sec high 32 bits */
-	p[2] = (int32_t)(tv.tv_usec * 1000); /* tv_nsec              */
-	p[3] = 0;                            /* padding              */
+	p[0] = (int32_t)(sec & 0xFFFFFFFFu);  /* tv_sec low  32 bits */
+	p[1] = (int32_t)(sec >> 32);          /* tv_sec high 32 bits */
+	p[2] = (int32_t)(nsec & 0xFFFFFFFFu); /* tv_nsec low (nsec < 1e9 fits) */
+	p[3] = 0;                             /* tv_nsec high / padding = 0 */
 
 	td->td_retval[0] = 0;
 	return (0);

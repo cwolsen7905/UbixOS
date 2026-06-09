@@ -38,7 +38,7 @@ void aarch64_irq_dispatch(void); /* called from the EL1 IRQ vector */
 /* timer.c — ARM generic timer (EL1 physical, PPI 30). */
 void timer_init(void);
 void timer_tick(void);
-void timer_monotonic(u_int64_t *sec, u_int64_t *nsec);
+/* md_uptime (the aarch64 time source) is declared in <ubixos/time.h>. */
 
 /* mmu.c — enable the MMU with a TTBR0 identity map (39-bit VA). */
 void aarch64_mmu_init(void);

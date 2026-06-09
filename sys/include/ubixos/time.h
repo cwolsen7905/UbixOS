@@ -66,4 +66,16 @@ int gettimeofday(struct timeval *tp, struct timezone *tzp);
 int time_init();
 u_int32_t timeMake(struct timeStruct *time);
 
+/*
+ * md_uptime — THE machine-dependent monotonic time source: nanosecond-resolution
+ * time since boot, at each arch's best clock (aarch64: the CNTVCT virtual
+ * counter; i386: the PIT tick).  This is the single source every other time
+ * facility builds on — gettimeofday (wall = boot offset + uptime), clock_gettime,
+ * and lwIP's sys_now — so there is one way to get time.  Implemented per arch.
+ *
+ * @param sec   out: whole seconds since boot.
+ * @param nsec  out: nanosecond remainder in [0, 1e9).
+ */
+void md_uptime(u_int64_t *sec, u_int64_t *nsec);
+
 #endif
