@@ -36,6 +36,7 @@ void aarch64_irq_dispatch(void); /* called from the EL1 IRQ vector */
 /* timer.c — ARM generic timer (EL1 physical, PPI 30). */
 void timer_init(void);
 void timer_tick(void);
+void timer_monotonic(u_int64_t *sec, u_int64_t *nsec);
 
 /* mmu.c — enable the MMU with a TTBR0 identity map (39-bit VA). */
 void aarch64_mmu_init(void);
@@ -56,7 +57,7 @@ int pmap_map_page(u_int64_t *l1, u_int64_t va, u_int64_t pa, u_int64_t attrs);
 int pmap_map_user_page(u_int64_t *l1, u_int64_t va, u_int64_t pa, int executable);
 u_int64_t *pmap_create_user_space(void);
 u_int64_t pmap_extract(u_int64_t *l1, u_int64_t va); /* user VA -> phys (file-backed mmap) */
-u_int64_t *pmap_fork_copy(u_int64_t *parent); /* deep-copy user mappings (fork) */
+u_int64_t *pmap_fork_copy(u_int64_t *parent);        /* deep-copy user mappings (fork) */
 void pmap_switch(u_int64_t *l1);
 
 /* vectors.S — a fork child's first-dispatch landing pad (ERETs to EL0). */
@@ -115,23 +116,23 @@ void aarch64_spawn_elf_image(const void *image, const char *name); /* schedule a
 void aarch64_exec_file(const char *path);
 int aarch64_exec_replace(const char *path,
                          char *const *argv,
-                         char *const *envp);  /* execve: replace current image, restart EL0 */
+                         char *const *envp);               /* execve: replace current image, restart EL0 */
 int aarch64_wait4(int want_pid, int *status, int options); /* cooperative reap (WNOHANG-aware) */
-void aarch64_run_init(const char *path);      /* run /bin/init + become the idle loop (no return) */
-void aarch64_run_dynamic(const char *path);      /* load+run a PIE program, wait (capped) */
-void aarch64_run_dynamic_init(const char *path); /* run a PIE program as the system (no return) */
-void aarch64_spawn_dynamic(const char *path);    /* schedule a PIE daemon, return (no wait) */
+void aarch64_run_init(const char *path);                   /* run /bin/init + become the idle loop (no return) */
+void aarch64_run_dynamic(const char *path);                /* load+run a PIE program, wait (capped) */
+void aarch64_run_dynamic_init(const char *path);           /* run a PIE program as the system (no return) */
+void aarch64_spawn_dynamic(const char *path);              /* schedule a PIE daemon, return (no wait) */
 
 /* virtio_blk.c — virtio-mmio block device (returns a ubx_device with blk ops). */
 struct ubx_device;
 struct ubx_device *aarch64_virtio_blk_init(void);
 
 /* virtio_net.c — virtio-mmio network device (polling; lwIP bridge calls these). */
-int aarch64_virtio_net_init(void);                                  /* scan + bring up; 0 on success */
-int virtio_net_send(const void *frame, u_int32_t len);              /* TX one Ethernet frame */
+int aarch64_virtio_net_init(void);                                    /* scan + bring up; 0 on success */
+int virtio_net_send(const void *frame, u_int32_t len);                /* TX one Ethernet frame */
 int virtio_net_poll_rx(void (*deliver)(const u_int8_t *, u_int32_t)); /* drain RX used-ring */
-extern u_int8_t virtio_net_mac[6];                                  /* device MAC */
-extern int virtio_net_ready;                                        /* link-up flag */
+extern u_int8_t virtio_net_mac[6];                                    /* device MAC */
+extern int virtio_net_ready;                                          /* link-up flag */
 
 /* net/virtio_netif.c — lwIP bridge + aarch64 network bring-up (tcpip + DHCP). */
 int aarch64_net_init(void);

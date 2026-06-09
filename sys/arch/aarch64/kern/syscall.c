@@ -377,12 +377,14 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args)
 
 		case SYS_CLOCK_GETTIME:
 		{
-			/* clock_gettime(clk, timespec*): no wall clock yet — report zero. */
+			/* clock_gettime(clk, timespec*): back both REALTIME and MONOTONIC with
+			 * the ARM generic timer's free-running virtual counter (time since
+			 * boot).  An advancing clock is required by timing-driven userland —
+			 * e.g. the DOOM main loop never advances a game tic without it. */
 			u_int64_t *ts2 = (u_int64_t *)(uintptr_t)args[1];
 			if (ts2 != 0)
 			{
-				ts2[0] = 0;
-				ts2[1] = 0;
+				timer_monotonic(&ts2[0], &ts2[1]);
 			}
 			return 0;
 		}

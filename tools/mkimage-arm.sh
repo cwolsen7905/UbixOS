@@ -46,6 +46,10 @@ done
 # Credentials for login (root / user), matching the i386 image.
 [ -f tools/userdb ] && mcopy -i "${IMG}" tools/userdb ::/etc/userdb || true
 
+# DOOM IWAD — vdoom defaults to /bin/doom1.wad (matches the i386 image); without
+# it the game can't start.
+[ -f tools/doom1.wad ] && mcopy -o -i "${IMG}" tools/doom1.wad ::/bin/doom1.wad || true
+
 # TrueType fonts for objGFX's scalable-font backend (vlogin/taskbar/term load
 # /var/fonts/DejaVuSans*.ttf) + desktop wallpapers.
 mmd -i "${IMG}" ::/var ::/var/fonts ::/var/background 2>/dev/null || true

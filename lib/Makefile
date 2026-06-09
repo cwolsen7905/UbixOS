@@ -2,12 +2,14 @@
 
 # aarch64 (Track B port) builds the core libraries the CLI world needs —
 # ubix_api (the native-syscall thunks every bin/ program links) — plus objgfx
-# (the C++ rendering library) now that the desktop (#5) is being ported.  The
-# crypto/net (bearssl/pw/http) and NetSurf library stacks still hardcode i386
-# and stay i386-only until ported.  crt.a is an x86_64-elf libgcc shim (real
-# aarch64 libgcc is complete) and is not on the bin/ link line, so it is omitted.
+# (the C++ rendering library) now that the desktop (#5) is being ported, and
+# libaudio (a thin ioctl shim that links into vdoom; it runs silent until a
+# sound device exists on the virt platform).  The crypto/net (bearssl/pw/http)
+# and NetSurf library stacks still hardcode i386 and stay i386-only until
+# ported.  crt.a is an x86_64-elf libgcc shim (real aarch64 libgcc is complete)
+# and is not on the bin/ link line, so it is omitted.
 .if ${_ARCH} == "aarch64"
-all: ubix_api-code objgfx-code
+all: ubix_api-code objgfx-code libaudio-code
 .else
 all: crt-code ubix_api-code ubix-code objgfx-code libaudio-code libbearssl-code libpw-code libhttp-code libwapcaplet-code libparserutils-code libcss-code libhubbub-code libdom-code libnsgif-code libnsbmp-code libnsfb-code libnsutils-code libutf8proc-code #csu-code
 .endif
