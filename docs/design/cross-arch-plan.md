@@ -519,6 +519,31 @@ prune is deferred until that handler is identified (bisect under TCG, not HVF).
   a VT switch — before they can be trusted; doing them is a focused effort, not a
   session-tail sprint.
 
+### Userland-fault containment — done; graceful `EFAULT` recovery DEFERRED (2026-06-09)
+
+**Done (commits `3616dc31e`, `610c15d54`):** a buggy app can no longer take down
+the OS on aarch64.  The EL1 synchronous-exception handler (`arch/aarch64/kern/
+exceptions.c`) now contains userland-triggered faults:
+
+- **EL0 fault** (instruction/data abort in the process's own code) → deliver
+  **SIGSEGV** via `signal_post_fault` + `signal_check` (a handler may catch it;
+  `SIG_DFL` terminates just that process).  Verified by `tools/aarch64-user/
+  faulttest.c`.
+- **EL1 fault** (kernel hit a bad user pointer mid-syscall — e.g. the `pipe2`
+  `sc_args=0` bug before it was fixed) → terminate that process (`endTask` +
+  `sched_yield`); the syscall is abandoned.
+- **No current user task** (a genuine kernel bug) → dump + park (fail fast).
+
+**DEFERRED — "A": graceful `copyin`/`copyout` so an EL1 syscall fault returns
+`EFAULT` instead of killing the process.**  The clean end state: the kernel
+accesses user memory only through `copyin`/`copyout`/`copyinstr`, which register
+a fault-fixup (an `onfault` recovery PC on `struct thread`, or a static
+exception table); the EL1 data-abort handler, if the faulting PC has a fixup,
+sets ELR to it so the accessor returns `-EFAULT` and the syscall fails cleanly
+rather than the process dying.  Then convert the syscall arg-marshalling and the
+read/write user-buffer paths to use them.  Self-contained; resume from this note.
+This finishes the robustness thread that the SIGSEGV/`endTask` backstop started.
+
 ### Earlier blocker analysis (reviewed 2026-06-06; items 1–2 now resolved)
 
 **No new architectural blocker** — the structure holds and the historically
