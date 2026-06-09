@@ -395,17 +395,10 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args)
 			/* SYS_STATX pre-case pruned (Phase 3 bisect) — falls through to the
 			 * shared table (statx at 383, ARG_COUNT(sys_statx_args) = 5 words). */
 
-		case SYS_GETDENTS:
-		{
-			/* getdents(fd, buf, count): the generic handler emits linux_dirent64. */
-			struct sys_getdirentries_args ua;
-			ua.fd = (int)args[0];
-			ua.buf = (char *)(uintptr_t)args[1];
-			ua.count = (u_int)args[2];
-			ua.basep = 0;
-			sys_getdirentries(&_current->td, &ua);
-			return (u_int64_t)_current->td.td_retval[0];
-		}
+			/* getdents(272) pre-case pruned (Phase 3): the table aliases 272 to
+			 * sys_getdirentries (musl patches __NR_getdents to 272), so it falls
+			 * through.  ARG_COUNT copies a 4th word (basep) from x3, but
+			 * sys_getdirentries never dereferences basep, so the garbage is inert. */
 
 			/* fcntl(92) pre-case pruned (Phase 3) — falls through to the table. */
 
