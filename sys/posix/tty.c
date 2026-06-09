@@ -110,23 +110,10 @@ static inline void rs232_putc(char c)
 static inline void backSpace(void)
 {
 }
-
-/* The POSIX signal subsystem (sys/posix/signal.c) is not yet linked on aarch64,
- * but the line discipline references job-control signal delivery.  Provide no-op
- * definitions so the pty links; the terminal renders + accepts input + runs
- * commands without job control (Ctrl-C / SIGWINCH delivery is a follow-up when
- * signals are ported).  On i386 the real ones in signal.c are used instead. */
-void signal_post_tty(tty_term *term, int sig)
-{
-	(void)term;
-	(void)sig;
-}
-void signal_post_pgrp(pid_t pgrp, int sig)
-{
-	(void)pgrp;
-	(void)sig;
-}
 #endif
+
+/* signal_post_tty / signal_post_pgrp are provided by sys/posix/signal.c, now
+ * compiled for aarch64 too — the line discipline below calls the real ones. */
 
 /*
  * Load FreeBSD-sane termios defaults and an 80x25 window onto a terminal.

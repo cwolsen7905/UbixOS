@@ -32,25 +32,28 @@
 #include <sys/signal.h>
 #include <sys/thread.h>
 #include <ubixos/tty.h>
+#include <machine/signal.h> /* signal numbers + (aarch64) arch sigcontext/sigframe */
 
 struct sys_sigsuspend_args;
 
+#if !defined(__aarch64__)
 /*
  * Saved CPU context pushed onto the user stack when delivering a signal.
  * sys_sigreturn receives a pointer to this struct and restores the registers.
  */
-struct ubx_sigcontext {
-    u_int32_t sc_eax;
-    u_int32_t sc_ecx;
-    u_int32_t sc_edx;
-    u_int32_t sc_ebx;
-    u_int32_t sc_esp;
-    u_int32_t sc_ebp;
-    u_int32_t sc_esi;
-    u_int32_t sc_edi;
-    u_int32_t sc_eip;
-    u_int32_t sc_eflags;
-    sigset_t sc_mask;   /* saved sigmask, restored by sys_sigreturn */
+struct ubx_sigcontext
+{
+	u_int32_t sc_eax;
+	u_int32_t sc_ecx;
+	u_int32_t sc_edx;
+	u_int32_t sc_ebx;
+	u_int32_t sc_esp;
+	u_int32_t sc_ebp;
+	u_int32_t sc_esi;
+	u_int32_t sc_edi;
+	u_int32_t sc_eip;
+	u_int32_t sc_eflags;
+	sigset_t sc_mask; /* saved sigmask, restored by sys_sigreturn */
 };
 
 /*
@@ -62,12 +65,13 @@ struct ubx_sigcontext {
  * [new_esp + 22]  sf_pad[2]
  * [new_esp + 24]  sf_sc                            (struct ubx_sigcontext)
  */
-struct ubx_sigframe {
-    u_int32_t             sf_retaddr;        /*  0 */
-    u_int32_t             sf_signum;         /*  4 */
-    u_int8_t              sf_trampoline[14]; /*  8 */
-    u_int8_t              sf_pad[2];         /* 22 */
-    struct ubx_sigcontext sf_sc;            /* 24 */
+struct ubx_sigframe
+{
+	u_int32_t sf_retaddr;        /*  0 */
+	u_int32_t sf_signum;         /*  4 */
+	u_int8_t sf_trampoline[14];  /*  8 */
+	u_int8_t sf_pad[2];          /* 22 */
+	struct ubx_sigcontext sf_sc; /* 24 */
 };
 
 /*
@@ -76,19 +80,22 @@ struct ubx_sigframe {
  * si_pid/si_uid (kill-origin) and si_addr (fault-origin) alias at offset 12
  * inside the union — same as musl's __si_common vs __sigfault overlap.
  */
-struct ubx_musl_siginfo {
-    int      si_signo;          /* [0]  signal number */
-    int      si_errno;          /* [4]  errno (usually 0) */
-    int      si_code;           /* [8]  SI_USER / SI_KERNEL / ... */
-    union {
-        u_int8_t  __pad[116];    /* [12] pad to 128 bytes total */
-        struct {
-            pid_t    si_pid;    /* [12] sender pid (kill-origin) */
-            uid_t    si_uid;    /* [16] sender uid */
-            int      si_status; /* [20] exit status (SIGCHLD) */
-        } __kill;
-        void    *si_addr;       /* [12] fault address (SIGSEGV/SIGBUS) */
-    } u;
+struct ubx_musl_siginfo
+{
+	int si_signo; /* [0]  signal number */
+	int si_errno; /* [4]  errno (usually 0) */
+	int si_code;  /* [8]  SI_USER / SI_KERNEL / ... */
+	union
+	{
+		u_int8_t __pad[116]; /* [12] pad to 128 bytes total */
+		struct
+		{
+			pid_t si_pid;  /* [12] sender pid (kill-origin) */
+			uid_t si_uid;  /* [16] sender uid */
+			int si_status; /* [20] exit status (SIGCHLD) */
+		} __kill;
+		void *si_addr; /* [12] fault address (SIGSEGV/SIGBUS) */
+	} u;
 };
 
 /*
@@ -103,16 +110,18 @@ struct ubx_musl_siginfo {
  * [+158] sf_pad[2]
  * [+160] sf_sc        saved CPU context
  */
-struct ubx_sigframe_info {
-    u_int32_t                sf_retaddr;
-    u_int32_t                sf_signo;
-    u_int32_t                sf_info_ptr;
-    u_int32_t                sf_uctx_ptr;
-    struct ubx_musl_siginfo sf_info;        /* 128 bytes */
-    u_int8_t                 sf_trampoline[14];
-    u_int8_t                 sf_pad[2];
-    struct ubx_sigcontext   sf_sc;
+struct ubx_sigframe_info
+{
+	u_int32_t sf_retaddr;
+	u_int32_t sf_signo;
+	u_int32_t sf_info_ptr;
+	u_int32_t sf_uctx_ptr;
+	struct ubx_musl_siginfo sf_info; /* 128 bytes */
+	u_int8_t sf_trampoline[14];
+	u_int8_t sf_pad[2];
+	struct ubx_sigcontext sf_sc;
 };
+#endif /* !__aarch64__ */
 
 struct thread;
 
@@ -153,8 +162,7 @@ void signal_check(struct trapframe *frame);
  * iret enters the user-space handler.  Called by signal_check for custom
  * handlers.
  */
-void signal_deliver_frame(int sig, struct sigaction *sa, struct trapframe *frame,
-    struct thread *td);
+void signal_deliver_frame(int sig, struct sigaction *sa, struct trapframe *frame, struct thread *td);
 
 /*
  * Deliver pending signals when returning from a timer interrupt to ring-3.

@@ -166,12 +166,9 @@ int sysGetFreePage(struct thread *td, u_int32_t *count)
 	OK_STUB(td);
 }
 
-void signal_post_kill(int sender_pid, int target_pid, int sig)
-{
-	(void)sender_pid;
-	(void)target_pid;
-	(void)sig;
-}
+/* signal_post_kill + the sys_sig* calls below are now the real, arch-neutral
+ * implementations in sys/posix/signal.c (compiled for aarch64); the aarch64 EL0
+ * signal-frame delivery + sigreturn live there too, behind __aarch64__. */
 
 /* ---- arch-special entries (intercepted by syscall.c; unreached) -------- */
 
@@ -237,27 +234,8 @@ int sys_klog_read(struct thread *td, struct sys_klog_read_args *uap)
 /* sockets: the real implementations now link from sys/net/net/sys_arch.c (lwIP),
  * so the stubs that used to live here are gone. */
 
-/* signals */
-int sys_sigaction(struct thread *td, struct sys_sigaction_args *uap)
-{
-	(void)uap;
-	ENOSYS_STUB(td);
-}
-int sys_sigprocmask(struct thread *td, struct sys_sigprocmask_args *uap)
-{
-	(void)uap;
-	OK_STUB(td); /* no signal delivery yet; pretend the mask op succeeded */
-}
-int sys_sigreturn(struct thread *td, struct sys_sigreturn_args *uap)
-{
-	(void)uap;
-	ENOSYS_STUB(td);
-}
-int sys_sigsuspend(struct thread *td, struct sys_sigsuspend_args *uap)
-{
-	(void)uap;
-	ENOSYS_STUB(td);
-}
+/* signals: sys_sigaction / sys_sigprocmask / sys_sigreturn / sys_sigsuspend are
+ * the real arch-neutral + aarch64 implementations in sys/posix/signal.c. */
 
 /* pty syscalls (ptyalloc/free/inject/snap/resize): real in dev/display.c, backed
  * by the pty pool in sys/posix/tty.c (now compiled for aarch64). */

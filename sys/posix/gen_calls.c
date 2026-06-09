@@ -297,7 +297,7 @@ int sys_clock_gettime(struct thread *td, struct sys_clock_gettime_args *uap)
 struct futex_wait_ctx
 {
 	volatile int *uaddr;
-	int           val;
+	int val;
 };
 
 /**
@@ -351,7 +351,7 @@ int sys_membarrier(struct thread *td, void *uap)
  */
 int sys_futex(struct thread *td, struct sys_futex_args *uap)
 {
-	int  cmd = uap->op & FUTEX_CMD_MASK;
+	int cmd = uap->op & FUTEX_CMD_MASK;
 	int *uaddr = uap->uaddr;
 
 	if (uaddr == NULL)
@@ -362,61 +362,61 @@ int sys_futex(struct thread *td, struct sys_futex_args *uap)
 
 	switch (cmd)
 	{
-	case FUTEX_WAIT:
-	case FUTEX_WAIT_BITSET: /* bitset/abs-time nuance ignored — treat as WAIT */
-	{
-		struct futex_wait_ctx ctx;
-		u_int32_t             ticks = 0;
-		int                   timed_out;
-
-		/* Value already changed → don't sleep (classic futex race guard). */
-		if (*uaddr != uap->val)
+		case FUTEX_WAIT:
+		case FUTEX_WAIT_BITSET: /* bitset/abs-time nuance ignored — treat as WAIT */
 		{
-			td->td_retval[0] = EAGAIN;
-			return (-1);
-		}
+			struct futex_wait_ctx ctx;
+			u_int32_t ticks = 0;
+			int timed_out;
 
-		/* Optional RELATIVE timeout.  musl i386 timespec is { int64 tv_sec;
-		 * long tv_nsec }; read it with a matching local layout so we do not
-		 * depend on the kernel's struct timespec.  PIT_TIMER ticks/second. */
-		if (uap->timeout != NULL)
-		{
-			struct
+			/* Value already changed → don't sleep (classic futex race guard). */
+			if (*uaddr != uap->val)
 			{
-				long long tv_sec;
-				long      tv_nsec;
-			} ts;
+				td->td_retval[0] = EAGAIN;
+				return (-1);
+			}
 
-			memcpy(&ts, uap->timeout, sizeof(ts));
-			ticks = (u_int32_t)((long long)ts.tv_sec * PIT_TIMER +
-			                    ts.tv_nsec / (1000000000L / PIT_TIMER));
-			if (ticks == 0)
-				ticks = 1; /* non-NULL but sub-tick → wait at least one tick */
+			/* Optional RELATIVE timeout.  musl i386 timespec is { int64 tv_sec;
+			 * long tv_nsec }; read it with a matching local layout so we do not
+			 * depend on the kernel's struct timespec.  PIT_TIMER ticks/second. */
+			if (uap->timeout != NULL)
+			{
+				struct
+				{
+					long long tv_sec;
+					long tv_nsec;
+				} ts;
+
+				memcpy(&ts, uap->timeout, sizeof(ts));
+				ticks = (u_int32_t)((long long)ts.tv_sec * PIT_TIMER +
+				                    ts.tv_nsec / (1000000000L / PIT_TIMER));
+				if (ticks == 0)
+					ticks = 1; /* non-NULL but sub-tick → wait at least one tick */
+			}
+
+			ctx.uaddr = (volatile int *)uaddr;
+			ctx.val = uap->val;
+
+			timed_out = sched_wait_event_timeout(uaddr, futex_wait_cond, &ctx, ticks);
+			if (timed_out)
+			{
+				td->td_retval[0] = ETIMEDOUT;
+				return (-1);
+			}
+			td->td_retval[0] = 0;
+			return (0);
 		}
 
-		ctx.uaddr = (volatile int *)uaddr;
-		ctx.val   = uap->val;
+		case FUTEX_WAKE:
+		case FUTEX_REQUEUE:     /* wake instead of requeue (v1) */
+		case FUTEX_CMP_REQUEUE: /* wake instead of requeue (v1) */
+			sched_wakeup_chan(uaddr);
+			td->td_retval[0] = (uap->val > 0) ? uap->val : 0; /* >=0: not -ENOSYS */
+			return (0);
 
-		timed_out = sched_wait_event_timeout(uaddr, futex_wait_cond, &ctx, ticks);
-		if (timed_out)
-		{
-			td->td_retval[0] = ETIMEDOUT;
+		default:
+			td->td_retval[0] = ENOSYS; /* PI mutexes, WAKE_OP, … → musl fallback */
 			return (-1);
-		}
-		td->td_retval[0] = 0;
-		return (0);
-	}
-
-	case FUTEX_WAKE:
-	case FUTEX_REQUEUE:     /* wake instead of requeue (v1) */
-	case FUTEX_CMP_REQUEUE: /* wake instead of requeue (v1) */
-		sched_wakeup_chan(uaddr);
-		td->td_retval[0] = (uap->val > 0) ? uap->val : 0; /* >=0: not -ENOSYS */
-		return (0);
-
-	default:
-		td->td_retval[0] = ENOSYS; /* PI mutexes, WAKE_OP, … → musl fallback */
-		return (-1);
 	}
 }
 
@@ -521,7 +521,12 @@ int sys_exit_group(struct thread *td, struct sys_exit_group_args *uap)
 
 int sys_invalid(struct thread *td, void *args)
 {
+#if defined(__aarch64__)
+	/* x8 holds the syscall number on aarch64 (tf_eax is the i386 equivalent). */
+	kprintf("ISC[%lu:%i]", (unsigned long)(td->frame != 0 ? td->frame->tf_x[8] : 0), _current->id);
+#else
 	kprintf("ISC[%i:%i]", td->frame->tf_eax, _current->id);
+#endif
 	td->td_retval[0] = -1;
 	return (0);
 }

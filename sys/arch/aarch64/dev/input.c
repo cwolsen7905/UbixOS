@@ -34,8 +34,10 @@ int virtio_input_poll(void (*deliver)(int dev, u_int16_t type, u_int16_t code, u
 #define BTN_LEFT 0x110
 #define BTN_RIGHT 0x111
 #define BTN_MIDDLE 0x112
+#define KEY_LEFTCTRL 29
 #define KEY_LEFTSHIFT 42
 #define KEY_RIGHTSHIFT 54
+#define KEY_RIGHTCTRL 97
 #define KEY_KP_UP 103
 #define KEY_KP_LEFT 105
 #define KEY_KP_RIGHT 106
@@ -78,6 +80,7 @@ static u_int32_t g_mouse_head, g_mouse_tail;
 
 /* Cooking state accumulated across a device packet (ended by EV_SYN). */
 static int g_shift;
+static int g_ctrl;
 static u_int8_t g_buttons;
 static int g_dx, g_dy;
 static int g_mouse_dirty;
@@ -125,6 +128,12 @@ static void cook_key(u_int16_t code, u_int32_t value)
 		return;
 	}
 
+	if (code == KEY_LEFTCTRL || code == KEY_RIGHTCTRL)
+	{
+		g_ctrl = (value != 0);
+		return;
+	}
+
 	switch (code)
 	{
 		case KEY_KP_UP:
@@ -141,6 +150,15 @@ static void cook_key(u_int16_t code, u_int32_t value)
 			break;
 		default:
 			kc = (code < 90) ? g_keymap[code][g_shift ? 1 : 0] : 0;
+			/* Ctrl + letter → ASCII control code (Ctrl-C = 0x03, Ctrl-D = 0x04,
+			 * …) so the tty line discipline sees VINTR/VEOF/VSUSP and raises the
+			 * matching signal. */
+			if (g_ctrl && kc != 0)
+			{
+				u_int32_t lc = (kc >= 'A' && kc <= 'Z') ? kc + 32 : kc;
+				if (lc >= 'a' && lc <= 'z')
+					kc = lc - 'a' + 1;
+			}
 			break;
 	}
 

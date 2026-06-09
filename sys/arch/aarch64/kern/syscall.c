@@ -450,9 +450,18 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args)
 		}
 
 		case SYS_IOCTL:
-			/* Pretend success so musl isatty()/tcgetattr() treat the console as a
-			 * tty.  No real termios yet. */
-			return 0;
+		{
+			/* Route to the real sys_ioctl so a pty fd's termios + job-control
+			 * ioctls (TIOCGWINSZ/TIOCSWINSZ, TIOCSCTTY, TIOCGPGRP/TIOCSPGRP) work
+			 * — tcsh's tcgetattr/tcsetpgrp now take effect, which is what sets the
+			 * foreground process group that tty-generated signals target. */
+			struct sys_ioctl_args ua;
+			ua.fd = (int)args[0];
+			ua.com = (u_int32_t)args[1];
+			ua.data = (caddr_t)(uintptr_t)args[2];
+			sys_ioctl(&_current->td, &ua);
+			return (u_int64_t)_current->td.td_retval[0];
+		}
 
 		case SYS_SCHED_YIELD:
 			sched_yield();
@@ -489,11 +498,9 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args)
 			 * value is the caller's thread id. */
 			return (_current != 0) ? (u_int64_t)_current->id : 1;
 
-		case SYS_RT_SIGPROCMASK:
-			/* No-op: EL0 signal delivery is not wired yet, so blocking/restoring
-			 * the signal mask around fork() has no effect.  Returning 0 keeps
-			 * musl's fork() happy (and quiet). */
-			return 0;
+			/* SYS_RT_SIGPROCMASK (340) is no longer intercepted — it falls through to
+			 * the real sys_sigprocmask in the POSIX table now that EL0 signal
+			 * delivery is wired, so blocked masks are actually honoured. */
 
 		case SYS_OPEN:
 		{

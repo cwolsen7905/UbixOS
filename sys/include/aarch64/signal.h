@@ -44,6 +44,39 @@
 #define SIGPWR 30
 #define SIGUNUSED 31
 
-/* TODO(aarch64): struct sigcontext / mcontext (GPRs, pc, pstate, sp). */
+#include <sys/types.h>
+
+/*
+ * Magic EL0 return address planted in LR (x30) when a signal handler is
+ * invoked.  The handler `ret`s to it; it sits outside the 39-bit EL0 VA range,
+ * so the instruction fetch faults and the EL0 sync handler recognises it as
+ * "the handler returned" and performs sigreturn.  This avoids needing any
+ * executable user memory — aarch64 user stacks are mapped execute-never, so the
+ * i386 trick of running a trampoline on the stack is not available.
+ */
+#define AARCH64_SIGTRAMP_RETADDR 0x0000008000005160UL
+
+/*
+ * Saved EL0 CPU context pushed onto the user stack when delivering a signal.
+ * sys_sigreturn restores the trapframe from it.  It is placed at the (16-byte
+ * aligned) new user SP, so scp == SP — sigreturn recovers the pointer directly
+ * from the user SP at the trampoline fault, with no register or kernel state to
+ * thread through (and therefore nesting-safe: each frame lives at its own SP).
+ */
+struct ubx_sigcontext
+{
+	u_int64_t sc_x[31];  /* x0..x30 */
+	u_int64_t sc_sp;     /* user stack pointer (sp_el0) */
+	u_int64_t sc_pc;     /* return PC (elr_el1) */
+	u_int64_t sc_pstate; /* saved PSTATE (spsr_el1) */
+	sigset_t sc_mask;    /* saved signal mask, restored by sigreturn */
+};
+
+/* The frame planted on the user stack at delivery (sigcontext only — the
+ * handler takes its signo argument in x0, not from the frame). */
+struct ubx_sigframe
+{
+	struct ubx_sigcontext sf_sc;
+};
 
 #endif /* _AARCH64_SIGNAL_H */

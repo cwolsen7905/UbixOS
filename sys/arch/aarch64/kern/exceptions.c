@@ -11,7 +11,10 @@
  */
 
 #include "bringup.h"
-#include <ubixos/sched.h> /* _current — identify the faulting task in dumps */
+#include <ubixos/sched.h>       /* _current — identify the faulting task in dumps */
+#include <ubixos/signal.h>      /* signal_check / sys_sigreturn + AARCH64_SIGTRAMP_RETADDR */
+#include <sys/trap.h>           /* struct trapframe (aarch64 layout) */
+#include <sys/sysproto_posix.h> /* struct sys_sigreturn_args */
 
 enum
 {
@@ -21,7 +24,9 @@ enum
 	EXC_EL0_SYNC = 3,
 };
 
-#define ESR_EC_SVC64 0x15 /* ESR_EL1 EC for an AArch64 SVC instruction */
+#define ESR_EC_SVC64 0x15    /* ESR_EL1 EC for an AArch64 SVC instruction */
+#define ESR_EC_IABT_LOW 0x20 /* instruction abort taken from a lower EL (EL0) */
+#define SPSR_M_MASK 0x0full  /* PSTATE mode bits; 0b0000 == EL0t (was at EL0) */
 
 /**
  * Read a system register by name into a u_int64_t.
@@ -50,25 +55,53 @@ void aarch64_exception(u_int64_t kind, void *frame)
 {
 	(void)frame;
 
-	/* IRQs: hand off to the GIC dispatcher and resume (ERET in the stub). */
+	/* IRQs: hand off to the GIC dispatcher and resume (ERET in the stub).  If we
+	 * preempted EL0 (timer tick), deliver any pending signal on the way out so a
+	 * Ctrl-C reaches a CPU-bound foreground program, not just one blocked in a
+	 * syscall. */
 	if (kind == EXC_IRQ)
 	{
+		struct trapframe *tf = (struct trapframe *)frame;
 		aarch64_irq_dispatch();
+		if (_current != 0 && (tf->tf_spsr & SPSR_M_MASK) == 0)
+		{
+			_current->td.frame = tf;
+			signal_check(tf);
+		}
 		return;
 	}
 
-	/* Synchronous exception from EL0 — the only expected cause is an SVC. */
+	/* Synchronous exception from EL0 — normally an SVC, or a returning signal
+	 * handler faulting on the magic trampoline address. */
 	if (kind == EXC_EL0_SYNC)
 	{
 		u_int64_t esr = READ_SYSREG(esr_el1);
+		u_int64_t ec = (esr >> 26) & 0x3f;
+		struct trapframe *tf = (struct trapframe *)frame;
 		u_int64_t *gpr = (u_int64_t *)frame; /* saved x0..x30 (KERNEL_ENTRY layout) */
 
-		if (((esr >> 26) & 0x3f) == ESR_EC_SVC64)
+		if (_current != 0)
+			_current->td.frame = tf;
+
+		if (ec == ESR_EC_SVC64)
 		{
-			/* x8 = syscall number; x0..x5 (gpr[0..5]) are the arguments.
-			 * The return value lands in x0 via KERNEL_EXIT (exit never returns). */
+			/* x8 = syscall number; x0..x5 (gpr[0..5]) are the arguments.  The
+			 * return value lands in x0 via KERNEL_EXIT (exit never returns). */
 			gpr[0] = aarch64_syscall(gpr[8], gpr);
-			return; /* ERET back to EL0 */
+			if (_current != 0)
+				signal_check(tf); /* may rewrite tf to enter a handler */
+			return;                   /* ERET back to EL0 */
+		}
+
+		/* A returning signal handler `ret`s to AARCH64_SIGTRAMP_RETADDR; the
+		 * instruction fetch faults here.  The user SP is back at the sigframe, so
+		 * scp == sp_el0 — restore the interrupted context and resume it. */
+		if (ec == ESR_EC_IABT_LOW && tf->tf_elr == AARCH64_SIGTRAMP_RETADDR && _current != 0)
+		{
+			struct sys_sigreturn_args a = {.scp = (struct ubx_sigcontext *)(uintptr_t)tf->tf_sp};
+			sys_sigreturn(&_current->td, &a);
+			signal_check(tf); /* deliver another queued signal, if any */
+			return;
 		}
 
 		/* Any other EL0 sync cause (fault, undef) falls through to the dump. */

@@ -31,31 +31,51 @@
 
 #include <machine/cpu.h>
 
-struct trapframe {
-    int tf_gs;
-    int tf_fs;
-    int tf_es;
-    int tf_ds;
-    int tf_edi;
-    int tf_esi;
-    int tf_ebp;
-    int tf_isp;
-    int tf_ebx;
-    int tf_edx;
-    int tf_ecx;
-    int tf_eax;
-    int tf_trapno;
-    /* below portion defined in 386 hardware */
-    int tf_err;
-    int tf_eip;
-    int tf_cs;
-    int tf_eflags;
-    /* below only when crossing rings (e.g. user to kernel) */
-    int tf_esp;
-    int tf_ss;
+#if defined(__aarch64__)
+/*
+ * AArch64 EL0 trapframe — must match the byte layout that vectors.S's
+ * KERNEL_ENTRY/KERNEL_EXIT macros save and restore (a 288-byte, 16-aligned
+ * frame): x0..x30 at 0..240, an 8-byte gap, then elr_el1, spsr_el1, sp_el0.
+ * Generic code (signal_check) only passes a `struct trapframe *` through
+ * opaquely; the aarch64 signal frame code in signal.c uses the named fields.
+ */
+struct trapframe
+{
+	u_int64_t tf_x[31]; /* x0..x30 (offsets 0..240) */
+	u_int64_t tf_pad0;  /* offset 248 — unused gap left by KERNEL_ENTRY */
+	u_int64_t tf_elr;   /* offset 256 — elr_el1 (return PC) */
+	u_int64_t tf_spsr;  /* offset 264 — spsr_el1 (saved PSTATE) */
+	u_int64_t tf_sp;    /* offset 272 — sp_el0 (user stack pointer) */
+	u_int64_t tf_pad1;  /* offset 280 — 16-byte alignment to 288 */
 };
+#else
+struct trapframe
+{
+	int tf_gs;
+	int tf_fs;
+	int tf_es;
+	int tf_ds;
+	int tf_edi;
+	int tf_esi;
+	int tf_ebp;
+	int tf_isp;
+	int tf_ebx;
+	int tf_edx;
+	int tf_ecx;
+	int tf_eax;
+	int tf_trapno;
+	/* below portion defined in 386 hardware */
+	int tf_err;
+	int tf_eip;
+	int tf_cs;
+	int tf_eflags;
+	/* below only when crossing rings (e.g. user to kernel) */
+	int tf_esp;
+	int tf_ss;
+};
+#endif
 
 void die_if_kernel(char *str, struct trapframe *regs, long err);
-void trap( struct trapframe * );
+void trap(struct trapframe *);
 
 #endif /* END _SYS_TRAP_H */

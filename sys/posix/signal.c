@@ -36,7 +36,7 @@
 #include <ubixos/sched_internal.h>
 #include <ubixos/endtask.h>
 #include <ubixos/tty.h>
-#include <i386/signal.h>
+#include <machine/signal.h>
 #include <lib/kprintf.h>
 #include <string.h>
 #include <assert.h>
@@ -45,18 +45,18 @@
  * Signals with SIG_DFL action = terminate the process.
  * Bit N-1 represents signal N (same encoding as sig_pending).
  * --------------------------------------------------------------------- */
-#define SIGTERM_MASK                                                                                                                                                                                                                                           \
-	((1u << 0) |  /* SIGHUP  1  */                                                                                                                                                                                                                         \
-	 (1u << 1) |  /* SIGINT  2  */                                                                                                                                                                                                                         \
-	 (1u << 2) |  /* SIGQUIT 3  */                                                                                                                                                                                                                         \
-	 (1u << 3) |  /* SIGILL  4  */                                                                                                                                                                                                                         \
-	 (1u << 4) |  /* SIGTRAP 5  */                                                                                                                                                                                                                         \
-	 (1u << 5) |  /* SIGABRT 6  */                                                                                                                                                                                                                         \
-	 (1u << 6) |  /* SIGBUS  7  */                                                                                                                                                                                                                         \
-	 (1u << 7) |  /* SIGFPE  8  */                                                                                                                                                                                                                         \
-	 (1u << 8) |  /* SIGKILL 9  */                                                                                                                                                                                                                         \
-	 (1u << 10) | /* SIGSEGV 11 */                                                                                                                                                                                                                         \
-	 (1u << 12) | /* SIGPIPE 13 */                                                                                                                                                                                                                         \
+#define SIGTERM_MASK                                                                                                   \
+	((1u << 0) |  /* SIGHUP  1  */                                                                                 \
+	 (1u << 1) |  /* SIGINT  2  */                                                                                 \
+	 (1u << 2) |  /* SIGQUIT 3  */                                                                                 \
+	 (1u << 3) |  /* SIGILL  4  */                                                                                 \
+	 (1u << 4) |  /* SIGTRAP 5  */                                                                                 \
+	 (1u << 5) |  /* SIGABRT 6  */                                                                                 \
+	 (1u << 6) |  /* SIGBUS  7  */                                                                                 \
+	 (1u << 7) |  /* SIGFPE  8  */                                                                                 \
+	 (1u << 8) |  /* SIGKILL 9  */                                                                                 \
+	 (1u << 10) | /* SIGSEGV 11 */                                                                                 \
+	 (1u << 12) | /* SIGPIPE 13 */                                                                                 \
 	 (1u << 14))  /* SIGTERM 15 */
 
 /* Signals whose SIG_DFL action is to stop the process.
@@ -64,8 +64,8 @@
  * as EINTR in the TTY read/write paths.  Adding them here would stop
  * boot-time daemons permanently when no job-control shell exists to
  * send SIGCONT.  Re-add once a full job-control shell is wired up. */
-#define SIGSTOP_MASK                                                                                                                                                                                                                                           \
-	((1u << (SIGTSTP - 1)) | /* 20 — Ctrl+Z */                                                                                                                                                                                                             \
+#define SIGSTOP_MASK                                                                                                   \
+	((1u << (SIGTSTP - 1)) | /* 20 — Ctrl+Z */                                                                     \
 	 (1u << (SIGSTOP - 1)))  /* 19 — unconditional stop */
 
 /* Pending stop signals cleared by SIGCONT. */
@@ -266,7 +266,12 @@ void signal_check(struct trapframe *frame)
 	if (unblocked == 0)
 		return;
 
-	kprintf("signal_check: pid=%d name=%s pending=0x%X mask=0x%X unblocked=0x%X\n", _current->id, _current->name, pending, td->sigmask.__bits[0], unblocked);
+	kprintf("signal_check: pid=%d name=%s pending=0x%X mask=0x%X unblocked=0x%X\n",
+	        _current->id,
+	        _current->name,
+	        pending,
+	        td->sigmask.__bits[0],
+	        unblocked);
 
 	/* Pick the lowest-numbered pending unblocked signal. */
 	for (sig = 1; sig <= 31; sig++)
@@ -300,7 +305,10 @@ void signal_check(struct trapframe *frame)
 			}
 			if ((1u << (sig - 1)) & SIGTERM_MASK)
 			{
-				kprintf("signal: SIG_DFL terminate sig=%d pid=%d name=%s\n", sig, _current->id, _current->name);
+				kprintf("signal: SIG_DFL terminate sig=%d pid=%d name=%s\n",
+				        sig,
+				        _current->id,
+				        _current->name);
 				endTask(_current->id);
 				sched_yield();
 				/* not reached */
@@ -317,6 +325,8 @@ void signal_check(struct trapframe *frame)
 		return;
 	}
 }
+
+#if defined(__i386__)
 
 /**
  * write_trampoline - emit the sigreturn trampoline into a stack frame
@@ -356,7 +366,8 @@ static void write_trampoline(u_int8_t *buf, u_int32_t sc_addr)
  * handler can return to the interrupted syscall or user code correctly.
  * It also applies the handler's mask and deferred signal semantics.
  */
-static void save_sigcontext(struct ubx_sigcontext *sc, struct trapframe *frame, struct thread *td, struct sigaction *sa, int sig)
+static void save_sigcontext(
+    struct ubx_sigcontext *sc, struct trapframe *frame, struct thread *td, struct sigaction *sa, int sig)
 {
 	u_int32_t sc_num = frame->tf_err & 0xFFFF;
 	u_int32_t sc_err = (frame->tf_err >> 16) & 0xFFFF;
@@ -386,7 +397,7 @@ static void save_sigcontext(struct ubx_sigcontext *sc, struct trapframe *frame, 
 	if ((sa->sa_flags & SA_RESTART) && sc_err == EINTR && sc_num != 0)
 	{
 		sc->sc_eip = (u_int32_t)frame->tf_eip - 2; /* point back to int $0x80 */
-		sc->sc_eax = sc_num;                      /* restore original syscall# */
+		sc->sc_eax = sc_num;                       /* restore original syscall# */
 	}
 
 	td->sigmask.__bits[0] |= sa->sa_mask.__bits[0];
@@ -416,11 +427,11 @@ void signal_deliver_frame(int sig, struct sigaction *sa, struct trapframe *frame
 
 		new_esp = ((u_int32_t)frame->tf_esp - (u_int32_t)sizeof(struct ubx_sigframe_info)) & ~3u;
 		fp = (struct ubx_sigframe_info *)new_esp;
-		sc_addr = new_esp + (u_int32_t)__builtin_offsetof(struct ubx_sigframe_info, sf_sc);
-		info_addr = new_esp + (u_int32_t)__builtin_offsetof(struct ubx_sigframe_info, sf_info);
+		sc_addr = new_esp + (u_int32_t) __builtin_offsetof(struct ubx_sigframe_info, sf_sc);
+		info_addr = new_esp + (u_int32_t) __builtin_offsetof(struct ubx_sigframe_info, sf_info);
 
 		write_trampoline(fp->sf_trampoline, sc_addr);
-		fp->sf_retaddr = new_esp + (u_int32_t)__builtin_offsetof(struct ubx_sigframe_info, sf_trampoline);
+		fp->sf_retaddr = new_esp + (u_int32_t) __builtin_offsetof(struct ubx_sigframe_info, sf_trampoline);
 		fp->sf_signo = (u_int32_t)sig;
 		fp->sf_info_ptr = info_addr;
 		fp->sf_uctx_ptr = 0;
@@ -448,10 +459,10 @@ void signal_deliver_frame(int sig, struct sigaction *sa, struct trapframe *frame
 
 		new_esp = ((u_int32_t)frame->tf_esp - (u_int32_t)sizeof(struct ubx_sigframe)) & ~3u;
 		fp = (struct ubx_sigframe *)new_esp;
-		sc_addr = new_esp + (u_int32_t)__builtin_offsetof(struct ubx_sigframe, sf_sc);
+		sc_addr = new_esp + (u_int32_t) __builtin_offsetof(struct ubx_sigframe, sf_sc);
 
 		write_trampoline(fp->sf_trampoline, sc_addr);
-		fp->sf_retaddr = new_esp + (u_int32_t)__builtin_offsetof(struct ubx_sigframe, sf_trampoline);
+		fp->sf_retaddr = new_esp + (u_int32_t) __builtin_offsetof(struct ubx_sigframe, sf_trampoline);
 		fp->sf_signum = (u_int32_t)sig;
 
 		save_sigcontext(&fp->sf_sc, frame, td, sa, sig);
@@ -474,7 +485,11 @@ int sys_sigreturn(struct thread *td, struct sys_sigreturn_args *args)
 	struct ubx_sigcontext *scp = args->scp;
 	struct trapframe *frame = td->frame;
 
-	kprintf("sys_sigreturn: pid=%d scp=%p eip=0x%X esp=0x%X\n", _current->id, scp, scp ? scp->sc_eip : 0, scp ? scp->sc_esp : 0);
+	kprintf("sys_sigreturn: pid=%d scp=%p eip=0x%X esp=0x%X\n",
+	        _current->id,
+	        scp,
+	        scp ? scp->sc_eip : 0,
+	        scp ? scp->sc_esp : 0);
 
 	if (scp == NULL)
 	{
@@ -501,6 +516,91 @@ int sys_sigreturn(struct thread *td, struct sys_sigreturn_args *args)
 	td->td_retval[1] = (int)scp->sc_edx;
 	return (0);
 }
+
+#elif defined(__aarch64__)
+
+/**
+ * signal_deliver_frame - construct an EL0 signal-handler frame (aarch64)
+ *
+ * Carves a 16-byte-aligned sigcontext off the user stack, saves the interrupted
+ * EL0 register state into it, then redirects the trapframe so KERNEL_EXIT ERETs
+ * straight into the handler: x0 = signo (x1/x2 = NULL siginfo/ucontext for
+ * SA_SIGINFO), LR = the magic return address (its later fetch faults and the
+ * EL0 sync handler turns that into sigreturn), SP = the new frame, PC = handler.
+ *
+ * SA_RESTART is not yet honoured: an interrupted syscall returns its result
+ * (e.g. -EINTR) and the program retries — sufficient for Ctrl-C/SIGWINCH.
+ */
+void signal_deliver_frame(int sig, struct sigaction *sa, struct trapframe *frame, struct thread *td)
+{
+	u_int64_t new_sp = (frame->tf_sp - (u_int64_t)sizeof(struct ubx_sigframe)) & ~(u_int64_t)15;
+	struct ubx_sigframe *fp = (struct ubx_sigframe *)(uintptr_t)new_sp;
+	struct ubx_sigcontext *sc = &fp->sf_sc;
+
+	for (int i = 0; i < 31; i++)
+		sc->sc_x[i] = frame->tf_x[i];
+	sc->sc_sp = frame->tf_sp;
+	sc->sc_pc = frame->tf_elr;
+	sc->sc_pstate = frame->tf_spsr;
+
+	/* When interrupted from sigsuspend, embed the pre-sigsuspend mask. */
+	if (td->td_pflags & TDP_OLDMASK)
+	{
+		memcpy(&sc->sc_mask, &td->td_oldsigmask, sizeof(sigset_t));
+		td->td_pflags &= ~TDP_OLDMASK;
+	}
+	else
+	{
+		memcpy(&sc->sc_mask, &td->sigmask, sizeof(sigset_t));
+	}
+
+	/* Block sa_mask (and, unless SA_NODEFER, this signal) for the handler. */
+	td->sigmask.__bits[0] |= sa->sa_mask.__bits[0];
+	if (!(sa->sa_flags & SA_NODEFER))
+		td->sigmask.__bits[0] |= (1u << (sig - 1));
+
+	frame->tf_x[0] = (u_int64_t)(unsigned)sig;
+	frame->tf_x[1] = 0;
+	frame->tf_x[2] = 0;
+	frame->tf_x[30] = AARCH64_SIGTRAMP_RETADDR;
+	frame->tf_sp = new_sp;
+	frame->tf_elr =
+	    (sa->sa_flags & SA_SIGINFO) ? (u_int64_t)(uintptr_t)sa->sa_sigaction : (u_int64_t)(uintptr_t)sa->sa_handler;
+}
+
+/**
+ * sys_sigreturn - restore the interrupted EL0 context after a handler (aarch64)
+ *
+ * Invoked from the EL0 sync handler when a returning signal handler faults on
+ * the magic LR; @args->scp points at the sigcontext (== the user SP at the
+ * fault).  Restores the saved registers/PC/PSTATE/SP into td->frame so the
+ * trap-return epilogue ERETs back to the originally-interrupted code.
+ */
+int sys_sigreturn(struct thread *td, struct sys_sigreturn_args *args)
+{
+	struct ubx_sigcontext *scp = args->scp;
+	struct trapframe *frame = td->frame;
+
+	if (scp == NULL || frame == NULL)
+	{
+		td->td_retval[0] = -1;
+		return (-1);
+	}
+
+	for (int i = 0; i < 31; i++)
+		frame->tf_x[i] = scp->sc_x[i];
+	frame->tf_sp = scp->sc_sp;
+	frame->tf_elr = scp->sc_pc;
+	frame->tf_spsr = scp->sc_pstate;
+
+	memcpy(&td->sigmask, &scp->sc_mask, sizeof(sigset_t));
+
+	/* x0 (tf_x[0]) carries the resumed user return value, restored above. */
+	td->td_retval[0] = (int)frame->tf_x[0];
+	return (0);
+}
+
+#endif /* arch signal-frame delivery */
 
 /**
  * sys_sigprocmask - manipulate the calling thread's signal mask
@@ -627,7 +727,10 @@ void signal_ast_check(void)
 			if ((1u << (sig - 1)) & SIGTERM_MASK)
 			{
 				td->sig_pending &= ~(1u << (sig - 1));
-				kprintf("signal: AST SIG_DFL terminate sig=%d pid=%d name=%s\n", sig, _current->id, _current->name);
+				kprintf("signal: AST SIG_DFL terminate sig=%d pid=%d name=%s\n",
+				        sig,
+				        _current->id,
+				        _current->name);
 				endTask(_current->id);
 				sched_yield();
 				/* not reached */
