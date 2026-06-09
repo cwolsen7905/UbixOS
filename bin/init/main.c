@@ -34,12 +34,22 @@
 #include <sys/sys.h>
 #include <sys/sched.h>
 #include <sys/mpi.h>
+#include <sys/wait.h>
+#include <api/ubix.h>
 
 #define INITD_PATH    "/etc/init.d"
 #define INITD_MAXSVCS 64
 #define INITD_PATHMAX 256
 
-static char *argv_login[2] = { "login", NULL, };
+/* The system-console primary: the program init runs on the single boot/system
+ * console (slot 0).  This is the desktop compositor on the desktop profile —
+ * the console-first, graphical-optional model has no switchable text VTs, so
+ * init launches one primary here instead of a getty-per-VT (the retired ttyd).
+ * A console (base) profile would point this at /bin/login; Phase 4 makes it a
+ * profile knob. */
+#define CONSOLE_PRIMARY "/bin/views"
+
+static char *argv_console[2] = { CONSOLE_PRIMARY, NULL, };
 static char *envp_login[6] = { "HOME=/", "PWD=/", "PATH=/bin:/sbin:/usr/bin:/usr/sbin", "USER=root", "GROUP=admin", NULL, };
 
 /*
@@ -114,8 +124,43 @@ start_initd_services(void)
   }
 }
 
+/*
+ * Launch the system-console primary (CONSOLE_PRIMARY) on slot 0 and keep it
+ * alive.  Runs in a forked child so init can return to its idle/reaper loop;
+ * the child claims the system console with settty(0) and respawns the program
+ * whenever it exits (e.g. logout), the way the retired ttyd's getty loop did —
+ * but for a single console, with no switchable VTs.
+ */
+static void
+start_console(void)
+{
+  int pid;
+
+  pid = fork();
+  if (pid != 0)
+    return; /* init (parent) continues to its idle loop */
+
+  if (settty(0) != 0) {
+    printf("init: settty(0) failed\n");
+    exit(1);
+  }
+
+  for (;;) {
+    int p = fork();
+    if (p == 0) {
+      execve(CONSOLE_PRIMARY, argv_console, envp_login);
+      printf("init: failed to exec %s\n", CONSOLE_PRIMARY);
+      exit(1);
+    }
+    if (p < 0) {
+      printf("init: fork for console primary failed\n");
+      exit(1);
+    }
+    waitpid(p, NULL, 0);
+  }
+}
+
 int main(int argc,char **argv, char **envp) {
-  int i=0x0;
   mpi_message_t myMsg;
 
 
@@ -135,37 +180,12 @@ int main(int argc,char **argv, char **envp) {
 
   start_initd_services();
 
-  /* Start TTYD */
-  #ifdef _IGNORE
-  i = fork();
+  /* Launch the system-console primary (the desktop compositor) on slot 0.
+   * The old multi-VT ttyd / etc/ttys is retired — one system console, no
+   * switchable text VTs.  (ubistry, authd, … are started via /etc/init.d.) */
+  start_console();
 
-  printf("Forked: %i", i);
-
-  if (0x0 == i) {
-    printf("Starting TTYD\n");
-    execve("/bin/ttyd", argv_login, envp_login);
-    printf("Error: Could not start TTYD\n");
-    exit(0x0);
-  }
-  #endif
-
-  #ifdef _IGNORE
-  i = fork();
-  if (0x0 == i) {
-    printf("Starting Ubix Registry (ubistry)\n");
-    exec("/bin/ubistry",0x0);
-    printf("Error: Error Starting ubistry\n");
-    exit(0x0);
-  }
-
-  /*
-  while (pidStatus(i) > 0x0) {
-    sched_yield();
-  } 
-  */
-  #endif
-
-  /* Idle loop — terminals are managed by ttyd (etc/init.d/30-ttyd). */
+  /* Idle / reaper loop. */
   for (;;) {
     if (mpi_fetchMessage("init", &myMsg) == 0x0) {
       /* reserved for future init control messages */
