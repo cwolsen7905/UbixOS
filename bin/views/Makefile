@@ -5,12 +5,8 @@
 # directory name to SUBDIRS to include it in the build and clean targets.
 
 # aarch64 is being brought up bottom-up (desktop #5): the compositor first, then
-# the client apps.  taskbar/term/settings join the aarch64 list as each is ported.
-.if ${_ARCH} == "aarch64"
-SUBDIRS = views taskbar term
-.else
+# the client apps.  views/taskbar/term/settings are all ported.
 SUBDIRS = views taskbar term settings
-.endif
 
 # bin/Makefile recurses into this group with a bare ${MAKE} (no target), so the
 # default target must build every SUBDIR — not just the first .for-generated one.
