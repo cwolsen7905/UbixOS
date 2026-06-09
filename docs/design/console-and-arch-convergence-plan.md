@@ -284,6 +284,37 @@ the arch-special calls (mmap VA layout, brk, fork, execve) behind `md_*` hooks
 the table's handlers call — so they are *implementations of the interface*, not
 dispatcher special-cases. Highest structural value; do with care.
 
+**Scoping (2026-06-09): it's a refactor, not a prune.** The dispatch is *already*
+table-driven (the `switch` in `arch/aarch64/kern/syscall.c` falls through to
+`ksyscall_dispatch`), but the ~25 explicit pre-cases are **not** all redundant.
+Three real obstacles, each must be cleared before a pre-case can be deleted:
+
+1. **Return-convention mismatch (the big one).** `ksyscall_dispatch`
+   (`sys/kern/syscall_dispatch.c`) returns `td->td_retval[0]`; the i386 asm
+   dispatch returns the handler's **C return value** (in `eax`).  Many handlers
+   use the C-return convention and never set `td_retval[0]` — e.g. `sys_getUID`
+   (`sys/kern/access.c`: `return _current->uid`), and the other getters.  Routed
+   through `ksyscall_dispatch` they'd return 0, so the aarch64 pre-cases return
+   the value directly to compensate.  Fix: pick ONE convention (FreeBSD sysent:
+   set `td_retval[0]`, return 0/-errno), convert the C-return handlers, and make
+   the i386 dispatch also return `td_retval[0]`.  Then both dispatchers are
+   identical and the getters' pre-cases delete cleanly.
+2. **Syscall-number gaps.** Some pre-cases paper over a wrong/absent table slot
+   — e.g. aarch64 `getdents` is FreeBSD **272**, but `getdirentries` sits at table
+   slot **196**; deleting that pre-case would dispatch 272 to the wrong/empty
+   entry.  Put the handler at the number musl actually emits (or alias it).
+3. **HVF `isv` host assertion.** A prior trial prune (statx / clock_gettime /
+   fcntl / munmap / nanosleep / sched_yield) tripped `assert(isv)` in HVF during
+   `ls`.  Likely a downstream effect of #1/#2 feeding a handler a bad arg/return,
+   but unconfirmed — bisect under `-accel tcg` (which reports the faulting
+   address) by routing one syscall at a time through the table and exercising
+   `ls`/`getdents`/`stat` in the terminal.
+
+Irreducibly arch-special (keep, ideally behind `md_*` hooks): the ABI trampoline,
+fork (needs the trapframe), execve (dynamic loader), mmap/brk/munmap (arch VA),
+the `write`/`writev` UART-vs-fileops shortcut, exit.  Start with #1 (it's the
+foundation and unblocks the bulk of the prune); #2 and #3 follow.
+
 **Phase 3.5 — `fbcon` as a `kconsole` sink.**
 Build the deferred `fbcon.md` spec, generalised over a linear-framebuffer
 descriptor (i386 VESA LFB / aarch64 virtio-gpu) with a small built-in 8x16
