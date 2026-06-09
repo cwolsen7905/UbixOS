@@ -91,7 +91,6 @@ typedef struct tty_termNode
 } tty_term;
 
 int tty_init();
-int tty_change(u_int16_t);
 tty_term *tty_find(u_int16_t);
 int tty_print(char *, tty_term *);
 void tty_inject(tty_term *tty, char ch); /* push one char through line discipline */

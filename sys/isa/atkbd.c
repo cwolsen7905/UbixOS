@@ -93,15 +93,6 @@ static struct spinLock atkbdSpinLock = SPIN_LOCK_INITIALIZER;
 
 volatile u_int32_t reboot_at_tick = 0;
 
-/* Deferred GUI→text VTY switch.  Set to target slot (0-3) by the keyboard ISR
- * when Ctrl+Alt+Fn is pressed in GUI mode; cleared by the VGA sys_read loop
- * after it has called vesa_text_mode() and tty_change() in task context. */
-volatile int vesa_text_slot = -1;
-
-/* Deferred text-mode VTY switch.  Set by keyboard ISR when Alt+Fn is pressed;
- * consumed in task context by the sys_read and sys_select loops. */
-volatile int tty_switch_slot = -1;
-
 static unsigned int keyboardMap[255][8] = {
     /*           Ascii, Shift, Ctrl, Alt, Num, Caps, Shift Caps, Shift Num */
     {0, 0, 0, 0, 0, 0, 0, 0},
@@ -340,30 +331,8 @@ void keyboardHandler(struct trapframe *frame)
 		return;
 	}
 
-	/* Ctrl+Alt+F1..F4 (scancodes 0x3B-0x3E): switch from GUI to text VTY.
-	 * Must be checked before the keyMap lookup because Ctrl+Alt is not
-	 * a mapped modifier combination.  Safe to set vesa_text_slot here and
-	 * return — the actual biosCall happens in vfs_calls.c sys_read context. */
-	if ((controlKeys & controlKey) && (controlKeys & altKey) &&
-	    key >= 0x3B && key <= 0x3E) {
-		vesa_text_slot = key - 0x3B;   /* F1→0, F2→1, F3→2, F4→3 */
-		spinUnlock(&atkbdSpinLock);
-		return;
-	}
-
 	kc = keyboardMap[key][keyMap];
 	if (kc == 0) {
-		spinUnlock(&atkbdSpinLock);
-		return;
-	}
-
-	/* Virtual console switch — Alt+F1..F4 only (0x3000-0x3003).
-	 * Bare F-keys produce 0xF100-0xF500 and fall through to kbd_ring.
-	 * Limit to VGA slots 0-3; slot 4 is serial and must not be switched.
-	 * Defer the actual tty_change (9 KB memcpy) to task context; the ISR
-	 * only records the target slot.  Consumed in sys_read / sys_select. */
-	if ((kc >> 8) == 0x30 && (kc & 0xFF) <= 3) {
-		tty_switch_slot = (int)(kc & 0xFF);
 		spinUnlock(&atkbdSpinLock);
 		return;
 	}

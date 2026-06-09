@@ -172,7 +172,7 @@ static void hid_kbd_callback(void *arg, u_int8_t *data, int len)
 {
 	struct hid_kbd_softc *sc = (struct hid_kbd_softc *)arg;
 	struct hid_kbd_report *cur, *last;
-	int shifted, ctrl, alt, i, j, found;
+	int shifted, ctrl, i, j, found;
 	u_int32_t kc;
 
 	if (len < 3)
@@ -182,7 +182,6 @@ static void hid_kbd_callback(void *arg, u_int8_t *data, int len)
 	last = &sc->kd_last;
 	shifted = (cur->modifier & HID_MOD_SHIFT) ? 1 : 0;
 	ctrl    = (cur->modifier & (HID_MOD_LCTRL | HID_MOD_RCTRL)) ? 1 : 0;
-	alt     = (cur->modifier & (HID_MOD_LALT  | HID_MOD_RALT))  ? 1 : 0;
 
 	/* Key-press: keycodes in cur but not in last */
 	for (i = 0; i < 6; i++)
@@ -208,18 +207,6 @@ static void hid_kbd_callback(void *arg, u_int8_t *data, int len)
 
 			if (kc == 0)
 				continue;
-
-			/* Ctrl+Alt+F1..F4: deferred GUI→text VTY switch */
-			if (ctrl && alt && cur->keycode[i] >= 0x3A && cur->keycode[i] <= 0x3D) {
-				vesa_text_slot = cur->keycode[i] - 0x3A;
-				continue;
-			}
-
-			/* Alt+F1..F4: deferred VTY switch — mirrors AT keyboard ISR */
-			if (alt && cur->keycode[i] >= 0x3A && cur->keycode[i] <= 0x3D) {
-				tty_switch_slot = cur->keycode[i] - 0x3A;
-				continue;
-			}
 
 			/* Ctrl-C/Ctrl-\/Ctrl-Z: handled by tty_inject via ISIG */
 			kbd_ring_push(kc, 1);

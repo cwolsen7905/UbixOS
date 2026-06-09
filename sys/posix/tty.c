@@ -50,8 +50,6 @@
 #include <sys/video.h>
 #include <isa/rs232.h>
 #include <isa/kbd.h>     /* kbd_gui_mode */
-#include <isa/atkbd.h>   /* tty_switch_slot, vesa_text_slot */
-#include <lib/vesa.h>    /* vesa_text_mode */
 #include <fs/vfs/file.h> /* getchar */
 #else
 #include <aarch64/signal.h> /* SIGINT/SIGTTIN/... signal numbers */
@@ -338,20 +336,6 @@ static int tty_fo_read(struct file *fp, struct thread *td, void *vbuf, size_t nb
 			td->td_retval[0] = -EINTR;
 			return (EINTR);
 		}
-		if (vesa_text_slot >= 0)
-		{
-			int slot = vesa_text_slot;
-			vesa_text_slot = -1;
-			tty_change((u_int16_t)slot);
-			vesa_text_mode();
-			kbd_gui_mode = 0;
-		}
-		if (tty_switch_slot >= 0)
-		{
-			int slot = tty_switch_slot;
-			tty_switch_slot = -1;
-			tty_change((u_int16_t)slot);
-		}
 		if (kbd_gui_mode || _current->term != tty_foreground)
 		{
 			sched_yield();
@@ -555,42 +539,6 @@ int tty_init()
 
 #if defined(__i386__)
 
-/*
- This will change the specified tty. It ultimately copies the screen
- to the foreground buffer copies the new ttys buffer to the screen and
- adjusts a couple pointers and we are good to go.
- */
-int tty_change(u_int16_t tty)
-{
-
-	if (tty >= TTY_MAX_TERMS)
-		kpanic("Error: Changing to an invalid tty. File: %s, Line: %i\n", __FILE__, __LINE__);
-
-	/* Copy display buffer to tty buffer */
-	memcpy(tty_foreground->tty_buffer, (char *)0xB8000, (80 * 25 * 2));
-
-	/* Copy new tty buffer to display buffer */
-	memcpy((char *)0xB8000, terms[tty].tty_buffer, (80 * 25 * 2));
-
-	/*
-	 Set the tty_pointer to the internal buffer so I can continue
-	 writing to what it believes is the screen
-	 */
-	tty_foreground->tty_pointer = tty_foreground->tty_buffer;
-
-	terms[tty].tty_pointer = (char *)0xB8000;
-
-	/* set new foreground tty */
-	tty_foreground = &terms[tty];
-
-	/* Adjust cursor when we change consoles */
-	outportByte(0x3D4, 0x0F);
-	outportByte(0x3D5, tty_foreground->tty_x);
-	outportByte(0x3D4, 0x0E);
-	outportByte(0x3D5, tty_foreground->tty_y);
-
-	return (0x0);
-}
 #endif /* __i386__ */
 
 /* ANSI colour: black red green yellow blue magenta cyan white → VGA indices */

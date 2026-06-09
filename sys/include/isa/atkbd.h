@@ -45,8 +45,6 @@ void atkbd_isr();
 extern struct ubx_driver atkbd_ubx_driver;
 
 extern volatile u_int32_t reboot_at_tick; /* non-zero when countdown active */
-extern volatile int      vesa_text_slot;  /* >=0: deferred GUI→text VTY switch */
-extern volatile int      tty_switch_slot; /* >=0: deferred text VTY switch (Alt+Fn) */
 
 struct trapframe;
 void keyboardHandler(struct trapframe *);
