@@ -188,5 +188,12 @@ ${CROSS}gcc $M32 $PIE_LD -nostdlib \
 	"$ML/crtn.o" \
 	-o "$BUILD/bin/nsfb"
 
-echo "==> Built $BUILD/bin/nsfb"
+# Strip nsfb for the image: with debug info NetSurf links to ~10.7 MB, which
+# blows the kernel loader's EXEC_MAX (read_elf_file rejects it as "not
+# loadable").  Keep an unstripped .dbg copy beside it for gdb; ship the ~2 MB
+# stripped binary.
+cp "$BUILD/bin/nsfb" "$BUILD/bin/nsfb.dbg"
+${CROSS}strip "$BUILD/bin/nsfb"
+
+echo "==> Built $BUILD/bin/nsfb (stripped; symbols in nsfb.dbg)"
 file "$BUILD/bin/nsfb" 2>/dev/null || true

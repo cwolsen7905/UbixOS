@@ -43,8 +43,11 @@ for _l in libcss libdom libhubbub libparserutils libwapcaplet libnsfb \
 	[ -f "${BUILD}/lib/${_l}.so" ] && mcopy -i "${IMG}" "${BUILD}/lib/${_l}.so" "::/lib/${_l}.so" || true
 done
 
-# The whole world (all dynamically-linked PIE binaries).
+# The whole world (all dynamically-linked PIE binaries).  Skip *.dbg sidecars
+# (unstripped debug copies, e.g. nsfb.dbg) — they are gdb-only and would bloat
+# the image (and re-trip the kernel loader's EXEC_MAX).
 for b in "${BUILD}"/bin/*; do
+	case "${b}" in *.dbg) continue ;; esac
 	[ -f "${b}" ] && mcopy -i "${IMG}" "${b}" "::/bin/$(basename "${b}")"
 done
 
