@@ -180,6 +180,7 @@ void kmain_aarch64(void)
 			/* Bring up the virtio-gpu scanout framebuffer + input devices
 			 * (for views/objGFX). */
 			aarch64_virtio_gpu_init();
+			aarch64_fbcon_init();        /* on-screen kernel console (boot log/panic) */
 			aarch64_virtio_input_init();
 			aarch64_virtio_sound_init(); /* /dev/audio (virtio-sound PCM playback) */
 

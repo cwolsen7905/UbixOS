@@ -25,6 +25,7 @@
 #include <ubixos/sched.h>
 #include <ubixos/tty.h> /* pty_alloc / tty_inject_user / tty_snapshot / tty_resize */
 #include <lib/kprintf.h>
+#include <lib/kconsole.h> /* kconsole_suspend_primary on fb claim */
 
 /* Per-process anonymous-mmap region base (matches MMAP_BASE in syscall.c); the
  * client's shared window buffers are bump-allocated from the same region. */
@@ -91,6 +92,10 @@ int sys_mapfb(struct thread *td, struct sys_mapfb_args *args)
 	        virtio_gpu_width,
 	        virtio_gpu_height,
 	        virtio_gpu_pitch);
+
+	/* The compositor now owns the scanout — stop the framebuffer console from
+	 * drawing over it (the always-on serial sink keeps logging). */
+	kconsole_suspend_primary();
 
 	td->td_retval[0] = 0;
 	return (0);
