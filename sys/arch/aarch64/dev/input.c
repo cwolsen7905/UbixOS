@@ -38,6 +38,8 @@ int virtio_input_poll(void (*deliver)(int dev, u_int16_t type, u_int16_t code, u
 #define KEY_LEFTSHIFT 42
 #define KEY_RIGHTSHIFT 54
 #define KEY_RIGHTCTRL 97
+#define KEY_LEFTALT 56
+#define KEY_RIGHTALT 100
 #define KEY_KP_UP 103
 #define KEY_KP_LEFT 105
 #define KEY_KP_RIGHT 106
@@ -122,15 +124,28 @@ static void cook_key(u_int16_t code, u_int32_t value)
 {
 	u_int32_t kc;
 
+	/* Modifiers: track state for the Ctrl/Shift ASCII folding AND emit the
+	 * compositor modifier keycode (KEY_LSHIFT/LCTRL/LALT) as its own event, so
+	 * GUI apps that treat a modifier as a real key — DOOM maps Ctrl->fire,
+	 * Alt->strafe, Shift->run — receive it.  The terminal ignores these codes
+	 * (term's key_to_seq drops KEY_LSHIFT..KEY_LALT).  Mirrors i386 atkbd.c. */
 	if (code == KEY_LEFTSHIFT || code == KEY_RIGHTSHIFT)
 	{
 		g_shift = (value != 0);
+		kbd_push(KEY_LSHIFT, (u_int8_t)(value != 0));
 		return;
 	}
 
 	if (code == KEY_LEFTCTRL || code == KEY_RIGHTCTRL)
 	{
 		g_ctrl = (value != 0);
+		kbd_push(KEY_LCTRL, (u_int8_t)(value != 0));
+		return;
+	}
+
+	if (code == KEY_LEFTALT || code == KEY_RIGHTALT)
+	{
+		kbd_push(KEY_LALT, (u_int8_t)(value != 0));
 		return;
 	}
 
