@@ -112,7 +112,7 @@ multiboot_entry:
    * (we cannot write to globals until BSS is zeroed).
    */
   movl    %ebx, %esi
-  movl    $(kStack + 0x1000), %esp
+  movl    $(kStack + 0x10000), %esp
   xorl    %ebp, %ebp
 
   /* Clear the BSS */
@@ -141,7 +141,7 @@ load_gdt:
   mov     %eax, %gs
   mov     %eax, %ss
   mov     $kStack, %eax
-  addl    $0x1000, %eax
+  addl    $0x10000, %eax
   mov     %esp, %edx
   mov     %eax, %esp
   mov     %eax, %ebp
@@ -254,4 +254,7 @@ old_boot:
 _multiboot_info:
   .long 0
 
-.comm kStack, 0x1000
+/* 64 KB boot stack (was 4 KB): the kernel runs the UbixFS lite-ZFS core on this
+ * stack, whose block-tree traversal nests several 4 KB block[BS] frames — 4 KB
+ * overflowed into adjacent globals (same failure fixed on aarch64). */
+.comm kStack, 0x10000

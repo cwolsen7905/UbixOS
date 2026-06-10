@@ -41,6 +41,9 @@
 #include <ubixos/random.h>
 #include <ubixos/systemtask.h>
 #include <fs/vfs/mount.h>
+#include <fs/vfs/vfs.h>         /* VFS_TYPE_UBIXFS */
+#include <fs/vfs/file.h>        /* fopen/fread/fwrite + vfs_opendir/readdir */
+#include <fs/ubixfs/ubfs_vfs.h> /* ubfs_vfs_init — UbixFS pool driver (plan K4) */
 #include <lib/kprintf.h>
 #include <lib/kconsole.h>
 #include <lib/kmalloc.h>
@@ -228,6 +231,59 @@ int kmain(u_int32_t rootdev)
 			        sys_minor);
 		else
 			kprintf("Mounted root (FAT) from major=%i minor=%i\n", sys_major, sys_minor);
+
+		/* UbixFS pool (plan K4 — i386 parity with aarch64): if a pool image is
+		 * staged on the FAT root, mount it read-write at /pool (a file-backed
+		 * loopback pool — ubixfs over /pool.img over FAT, the same arch-neutral
+		 * driver).  Read-back proves the VFS dispatch; the boot.log write proves
+		 * the write path + txg commit persist across reboot. */
+		{
+			fileDescriptor_t *probe = fopen("/pool.img", "r");
+			if (probe != NULL)
+			{
+				fclose(probe);
+				ubfs_vfs_init();
+				if (vfs_mount(0, 0, 0, VFS_TYPE_UBIXFS, "/pool", "rw") == 0)
+				{
+					fileDescriptor_t *pf = fopen("/pool/hello.txt", "r");
+					char b[96];
+					int n;
+					if (pf != NULL)
+					{
+						n = (int)fread(b, 1, sizeof(b) - 1, pf);
+						if (n > 0)
+						{
+							b[n] = '\0';
+							kprintf("ubixfs: read /pool/hello.txt (%d bytes): %s", n, b);
+						}
+						fclose(pf);
+					}
+					pf = fopen("/pool/boot.log", "r");
+					if (pf != NULL)
+					{
+						n = (int)fread(b, 1, sizeof(b) - 1, pf);
+						if (n > 0)
+						{
+							b[n] = '\0';
+							kprintf("ubixfs: /pool/boot.log from a prior boot: %s", b);
+						}
+						fclose(pf);
+					}
+					else
+					{
+						kprintf("ubixfs: /pool/boot.log absent (first writable boot)\n");
+					}
+					pf = fopen("/pool/boot.log", "w");
+					if (pf != NULL)
+					{
+						const char *msg = "uBixOS i386 booted; UbixFS write path live.\n";
+						fwrite((void *)msg, 1, 44, pf);
+						fclose(pf);
+						kprintf("ubixfs: wrote /pool/boot.log + committed\n");
+					}
+				}
+			}
+		}
 	}
 
 	/* Seed the kernel CSPRNG now that systemVitals is live. */

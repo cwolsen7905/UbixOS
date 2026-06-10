@@ -33,9 +33,9 @@ KPARTS = \
 	${OBJ_DIR}/obj/sys/api/*.o \
 	${OBJ_DIR}/obj/sys/core/*.o \
 	${OBJ_DIR}/obj/sys/ipv4/*.o \
+	${OBJ_DIR}/obj/sys/ubixfs/*.o \
 	${OBJ_DIR}/obj/sys/usb/*.o
 # ${OBJ_DIR}/obj/sys/ipv6/*.o
-# ${OBJ_DIR}/obj/sys/ubixfs/*.o
 
 _OBJS_FULL = ${OBJS:S|^|${OBJDIR}/|}
 
