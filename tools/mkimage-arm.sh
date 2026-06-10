@@ -51,8 +51,22 @@ for b in "${BUILD}"/bin/*; do
 	[ -f "${b}" ] && mcopy -i "${IMG}" "${b}" "::/bin/$(basename "${b}")"
 done
 
-# Credentials for login (root / user), matching the i386 image.
-[ -f tools/userdb ] && mcopy -i "${IMG}" tools/userdb ::/etc/userdb || true
+# System config files (etc/), mirroring mkimage.sh.  resolv.conf is the
+# critical one: musl's gethostbyname()/getaddrinfo() read /etc/resolv.conf for
+# the nameserver, and with no file they fall back to 127.0.0.1 — so every
+# hostname lookup (NetSurf, wget, ping <host>) fails.  Also brings the shell rc
+# (csh.cshrc/csh.login), motd, termcap, fstab to parity with the i386 image.
+for f in etc/*; do
+	[ -f "$f" ] && mcopy -o -i "${IMG}" "$f" ::/etc/
+done
+if [ -d etc/init.d ]; then
+	mmd -i "${IMG}" ::/etc/init.d 2>/dev/null || true
+	for f in etc/init.d/*; do [ -f "$f" ] && mcopy -o -i "${IMG}" "$f" ::/etc/init.d/; done
+fi
+
+# Credentials for login (root / user), matching the i386 image.  Staged after
+# etc/* so tools/userdb (the build's canonical copy) wins over any etc/userdb.
+[ -f tools/userdb ] && mcopy -o -i "${IMG}" tools/userdb ::/etc/userdb || true
 
 # DOOM IWAD — vdoom defaults to /bin/doom1.wad (matches the i386 image); without
 # it the game opens a black window.  Search the same locations as mkimage.sh so
