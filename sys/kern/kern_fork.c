@@ -10,6 +10,7 @@
  */
 
 #include <ubixos/sched.h>
+#include <ubixos/tty.h>
 #include <sys/thread.h>
 #include <sys/descrip.h>
 #include <sys/pipe.h>
@@ -80,4 +81,53 @@ void fork_copy_fdtable(kTask_t *child, struct thread *ptd)
 				pi->wfdCNT++;
 		}
 	}
+}
+
+/**
+ * Inherit the parent (@_current) process context into a forked @child: the QoS
+ * floor, cwd, parent pid, process group / session, controlling terminal,
+ * attached terminal, and credentials.  The arch-neutral field copies the two
+ * fork paths shared.  Pure field assignments with no address-space dependency,
+ * so it is safe to call before or after the arch's address-space copy.
+ *
+ * The child starts at its QoS floor (base_priority), not the parent's possibly
+ * boosted current priority.  If the parent owns its attached terminal, the
+ * ownership transfers to the child (mirrors the i386 fork's tty-owner handoff).
+ */
+void proc_fork_inherit_context(kTask_t *child)
+{
+	child->base_priority = _current->base_priority;
+	child->priority = _current->base_priority;
+
+	memcpy(child->oInfo.cwd, _current->oInfo.cwd, sizeof(child->oInfo.cwd));
+	child->ppid = _current->id;
+	child->pgrp = _current->pgrp;
+	child->sid = _current->sid;
+	child->ct_tty = _current->ct_tty;
+
+	child->term = _current->term;
+	if (_current->term != NULL && _current->term->owner == _current->id)
+		_current->term->owner = child->id;
+
+	child->uid = _current->uid;
+	child->gid = _current->gid;
+}
+
+/**
+ * Initialise a forked @child's signal-delivery state from the parent thread
+ * @ptd: POSIX requires the child start with no pending signals, but it inherits
+ * the parent's signal dispositions (sigact) and signal mask.
+ *
+ * MUST be called AFTER the arch's address-space copy: on i386 the COW walk can
+ * transiently double-map the physical page backing sig_pending (kernel heap and
+ * vmm_get_free_kernel_page share the VMM_KERN_START..VMM_KERN_END range),
+ * overwriting it with garbage — so the clean slate has to be established last.
+ */
+void proc_fork_signal_init(kTask_t *child, struct thread *ptd)
+{
+	child->td.sig_pending = 0;
+	memset(child->td.sig_code, 0, sizeof(child->td.sig_code));
+	memset(child->td.sig_extra, 0, sizeof(child->td.sig_extra));
+	memcpy(child->td.sigact, ptd->sigact, sizeof(child->td.sigact));
+	memcpy(&child->td.sigmask, &ptd->sigmask, sizeof(child->td.sigmask));
 }

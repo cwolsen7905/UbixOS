@@ -160,17 +160,15 @@ int aarch64_fork(u_int64_t *parent_tf)
 	/* Parent linkage so wait4() can find + reap this child (and so the generic
 	 * sched() reaper notifies the right parent). */
 	child->parent = _current;
-	child->ppid = _current->id;
 	_current->children++;
 
-	/* Inherit the parent's process context: cwd, process group / session,
-	 * controlling terminal, and credentials. */
-	memcpy(child->oInfo.cwd, _current->oInfo.cwd, sizeof(child->oInfo.cwd));
-	child->pgrp = _current->pgrp;
-	child->sid = _current->sid;
-	child->ct_tty = _current->ct_tty;
-	child->uid = _current->uid;
-	child->gid = _current->gid;
+	/* Inherit the parent's process context (cwd, ppid, pgrp/sid, ctty, attached
+	 * terminal, creds, QoS floor) and its signal dispositions + mask.  MI helpers
+	 * shared with i386 sys_fork (sys/kern/kern_fork.c).  pmap_fork_copy() already
+	 * ran above, so the signal-state clear is safely after the address-space copy
+	 * (see proc_fork_signal_init). */
+	proc_fork_inherit_context(child);
+	proc_fork_signal_init(child, &_current->td);
 
 	/* Inherit the open-file table (stdin/stdout/stderr + everything else). */
 	fork_copy_fdtable(child, &_current->td);

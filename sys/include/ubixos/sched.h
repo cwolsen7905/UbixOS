@@ -197,9 +197,14 @@ void schedEndTask(pidType pid);
 kTask_t *schedNewTask();
 kTask_t *schedFindTask(u_int32_t id);
 
-/* MI fork helper (sys/kern/kern_fork.c): deep-copy the parent thread's open-file
- * table into a freshly-created child task.  Shared by the per-arch fork paths. */
+/* MI fork helpers (sys/kern/kern_fork.c) shared by the per-arch fork paths.
+ * fork_copy_fdtable: deep-copy the parent's open-file table into the child.
+ * proc_fork_inherit_context: inherit cwd/pgrp/sid/ct_tty/term/creds/QoS.
+ * proc_fork_signal_init: clear pending signals, inherit dispositions + mask
+ * (call AFTER the arch address-space copy — see the function comment). */
 void fork_copy_fdtable(kTask_t *child, struct thread *ptd);
+void proc_fork_inherit_context(kTask_t *child);
+void proc_fork_signal_init(kTask_t *child, struct thread *ptd);
 
 /*
  * _current — the thread running on the calling CPU.

@@ -168,41 +168,17 @@ int sys_fork(struct thread *td, struct sys_fork_args *args) {
 
   newProcess = schedNewTask();
 
-  /*
-   * Inherit QoS class from parent: fork propagates the base_priority floor
-   * (process-level QoS) but starts at that floor, not the parent's current
-   * (possibly temporarily boosted) priority.
-   */
-  newProcess->base_priority = _current->base_priority;
-  newProcess->priority      = _current->base_priority;
+  /* Inherit the parent's process context: QoS floor, cwd, ppid, pgrp/sid,
+   * controlling + attached terminal, and credentials.  MI helper shared with
+   * the aarch64 fork path (sys/kern/kern_fork.c). */
+  proc_fork_inherit_context(newProcess);
 
-  /*
-   * Initalize New Task Information From Parrent
-   */
-
-  /* Set CWD */
-  memcpy(newProcess->oInfo.cwd, _current->oInfo.cwd, 1024);
-
-  /* Set PPID */
-  newProcess->ppid = _current->id;
-
-  /* Set PGRP, SID, and controlling terminal (inherited from parent) */
-  newProcess->pgrp   = _current->pgrp;
-  newProcess->sid    = _current->sid;
-  newProcess->ct_tty = _current->ct_tty;
-
-  /* Copy the open-file table (deep copy + pipe refcounts) — the MI helper
-   * shared with the aarch64 fork path (sys/kern/kern_fork.c). */
+  /* Copy the open-file table (deep copy + pipe refcounts) — MI helper. */
   fork_copy_fdtable(newProcess, td);
 
-  /* Set Up Task State */
+  /* Set Up Task State (i386 TSS frame from the parent trapframe). */
   newProcess->md.md_tss.eip = td->frame->tf_eip;
   newProcess->oInfo.vmStart = _current->oInfo.vmStart;
-  newProcess->term = _current->term;
-  if (_current->term != NULL && _current->term->owner == _current->id)
-    _current->term->owner = newProcess->id;
-  newProcess->uid = _current->uid;
-  newProcess->gid = _current->gid;
   newProcess->md.md_tss.back_link = 0x0;
   newProcess->md.md_tss.esp1 = 0x0;
   newProcess->md.md_tss.ss1 = 0x0;
@@ -245,24 +221,11 @@ int sys_fork(struct thread *td, struct sys_fork_args *args) {
    */
   newProcess->tls_base = _current->tls_base;
 
-  /*
-   * Signal state must be cleared AFTER vmm_copy_virtual_space.
-   * vmm_get_free_kernel_page and the parent's kernel heap share the same VA
-   * range (VMM_KERN_START..VMM_KERN_END).  A temporary double-mapping of
-   * the physical page backing sig_pending can occur during the COW walk,
-   * causing sig_pending to be overwritten with garbage.  Zeroing here
-   * guarantees a clean slate regardless of what vmm_copy_virtual_space did.
-   */
-  /*
-   * Clear delivery state (pending signals, queued info) — POSIX requires
-   * the child start with no pending signals.  Signal dispositions (sigact)
-   * and the signal mask are inherited, not cleared.
-   */
-  newProcess->td.sig_pending = 0;
-  memset(newProcess->td.sig_code,  0, sizeof(newProcess->td.sig_code));
-  memset(newProcess->td.sig_extra, 0, sizeof(newProcess->td.sig_extra));
-  memcpy(newProcess->td.sigact, td->sigact, sizeof(newProcess->td.sigact));
-  memcpy(&newProcess->td.sigmask, &td->sigmask, sizeof(newProcess->td.sigmask));
+  /* Clear pending signals + inherit dispositions/mask — MI helper, called
+   * AFTER vmm_copy_virtual_space: the COW walk can transiently double-map the
+   * page backing sig_pending (kernel heap and vmm_get_free_kernel_page share
+   * VMM_KERN_START..VMM_KERN_END), so the clean slate must be established last. */
+  proc_fork_signal_init(newProcess, td);
 
   newProcess->parent = _current;
   _current->children++;
