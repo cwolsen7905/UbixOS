@@ -11,6 +11,7 @@ OBJS = \
 	descrip.o \
 	endtask.o \
 	fb.o \
+	kern_fork.o \
 	kern_sysctl.o \
 	klog.o \
 	random.o \

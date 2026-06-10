@@ -191,41 +191,9 @@ int sys_fork(struct thread *td, struct sys_fork_args *args) {
   newProcess->sid    = _current->sid;
   newProcess->ct_tty = _current->ct_tty;
 
-  /* Copy File Descriptor Table */
-  //memcpy(newProcess->files, _current->files, sizeof(fileDescriptor_t *) * MAX_OFILES);
-
-  /* Free the placeholder fds schedNewTask allocated for slots 0-2 */
-  for (int i = 0; i < 3; i++) {
-    if (newProcess->td.o_files[i]) {
-      kfree(newProcess->td.o_files[i]);
-      newProcess->td.o_files[i] = NULL;
-    }
-  }
-
-  /* Inherit all fds from parent (including stdin/stdout/stderr) */
-  for (int i = 0; i < O_FILES; i++)
-    if (td->o_files[i]) {
-      struct file *parent_f = (struct file *)td->o_files[i];
-      newProcess->td.o_files[i] = (struct file *)kmalloc(sizeof(struct file));
-      memcpy(newProcess->td.o_files[i], parent_f, sizeof(struct file));
-      if (parent_f->fd) {
-        ((struct file *)newProcess->td.o_files[i])->fd = kmalloc(sizeof(fileDescriptor_t));
-        memcpy(((struct file *)newProcess->td.o_files[i])->fd, parent_f->fd, sizeof(fileDescriptor_t));
-        if (parent_f->fd->buffer) {
-          ((struct file *)newProcess->td.o_files[i])->fd->buffer = kmalloc(4096);
-          memcpy(((struct file *)newProcess->td.o_files[i])->fd->buffer, parent_f->fd->buffer, 4096);
-        }
-      }
-      /* Pipes share their pipeInfo across processes; bump the matching
-       * refcount so neither end is freed while the child still references it. */
-      if (parent_f->fd_type == FD_TYPE_PIPE && parent_f->data != NULL) {
-        struct pipeInfo *pi = (struct pipeInfo *)parent_f->data;
-        if (parent_f->pipe_end == PIPE_END_READ)
-          pi->rfdCNT++;
-        else if (parent_f->pipe_end == PIPE_END_WRITE)
-          pi->wfdCNT++;
-      }
-    }
+  /* Copy the open-file table (deep copy + pipe refcounts) — the MI helper
+   * shared with the aarch64 fork path (sys/kern/kern_fork.c). */
+  fork_copy_fdtable(newProcess, td);
 
   /* Set Up Task State */
   newProcess->md.md_tss.eip = td->frame->tf_eip;

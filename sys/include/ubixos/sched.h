@@ -197,6 +197,10 @@ void schedEndTask(pidType pid);
 kTask_t *schedNewTask();
 kTask_t *schedFindTask(u_int32_t id);
 
+/* MI fork helper (sys/kern/kern_fork.c): deep-copy the parent thread's open-file
+ * table into a freshly-created child task.  Shared by the per-arch fork paths. */
+void fork_copy_fdtable(kTask_t *child, struct thread *ptd);
+
 /*
  * _current — the thread running on the calling CPU.
  *
