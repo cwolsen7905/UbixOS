@@ -136,10 +136,18 @@ export BUILD_LDFLAGS="$HOST_PNG_LIBS"
 # genuine compile errors so a clean `bmake world` is not spammed.
 LOG="$BUILD/netsurf-build.log"
 cd "$NS"
-# NetSurf's object dir (build/<OS>-framebuffer) is keyed on the host OS + target,
-# NOT the UbixOS arch, so i386 and aarch64 builds share it.  Wipe it first so a
-# previous arch's objects can't get mixed into this arch's link (EM: 3 vs EM:183).
-rm -rf "$NS"/build/*-framebuffer
+# Per-arch incremental object cache.  NetSurf names its object dir
+# build/<uname-s>-framebuffer — keyed on the host OS + frontend, NOT the UbixOS
+# arch — so i386 and aarch64 would share (and cross-contaminate) one dir,
+# producing EM:3-vs-EM:183 link errors.  Rather than wipe it every run (a full
+# ~154-object recompile), stash each arch's objdir under its arch-homed build
+# tree ($BUILD == build/<arch>) and swap the matching one in.  First build per
+# arch is full; subsequent same-arch builds recompile only what changed.
+HOSTOS=$(uname -s)
+ACTIVE="$NS/build/${HOSTOS}-framebuffer"
+STASH="$BUILD/netsurf-fb-obj"
+rm -rf "$NS"/build/*-framebuffer          # evict any other arch's resident objects
+[ -d "$STASH" ] && mv "$STASH" "$ACTIVE"  # restore this arch's cache for an incremental build
 echo "==> Compiling NetSurf (log: $LOG)"
 "$GMAKE" -j"$JOBS" -k \
 	TARGET=framebuffer \
@@ -197,3 +205,9 @@ ${CROSS}strip "$BUILD/bin/nsfb"
 
 echo "==> Built $BUILD/bin/nsfb (stripped; symbols in nsfb.dbg)"
 file "$BUILD/bin/nsfb" 2>/dev/null || true
+
+# Stash this arch's compiled objdir so the next same-arch build is incremental
+# (gmake recompiles only changed sources instead of all ~154 objects).  The
+# stash lives under the arch-homed build tree, so the two arches never collide.
+rm -rf "$STASH"
+[ -d "$OBJDIR" ] && mv "$OBJDIR" "$STASH"
