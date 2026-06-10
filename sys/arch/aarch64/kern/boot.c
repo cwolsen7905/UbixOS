@@ -176,15 +176,68 @@ void kmain_aarch64(void)
 			if (vfs_mount(0, 0, 0, VFS_TYPE_DEVFS, "/dev", "rw") == 0)
 				kprintf("dev: devfs mounted at /dev\n");
 
-			/* UbixFS pool (plan K2/K3): the file-backed loopback driver
-			 * (sys/fs/ubixfs/ubfs_vfs.c) is built and registrable, but the boot
-			 * auto-mount is DISABLED.  Mounting a staged /pool.img corrupts the
-			 * physical page allocator (vmmMemoryMap is overwritten with a small
-			 * value -> the next vmm_find_free_pages_contig faults) — a heap-memory
-			 * bug that is independent of the pool's read/write I/O (which is
-			 * coherence-clean).  See docs/design/ubixfs-pool-plan.md for the full
-			 * findings; re-enable here + restore the mkimage-arm.sh /pool.img
-			 * staging once it is fixed. */
+			/* UbixFS pool (plan K2/K3): if a pool image is staged on the FAT root,
+			 * register the driver and mount it read-write at /pool (a file-backed
+			 * loopback pool — ubixfs over /pool.img over FAT).  Read-back proves the
+			 * VFS dispatch (mount/open/read/readdir); the boot.log write proves the
+			 * write path + txg commit persist across reboot. */
+			if (aarch64_file_exists("/pool.img"))
+			{
+				ubfs_vfs_init();
+				if (vfs_mount(0, 0, 0, VFS_TYPE_UBIXFS, "/pool", "rw") == 0)
+				{
+					fileDescriptor_t *pf = fopen("/pool/hello.txt", "r");
+					kDIR_t *pd;
+					char b[96];
+					int n;
+					if (pf != 0)
+					{
+						n = (int)fread(b, 1, sizeof(b) - 1, pf);
+						if (n > 0)
+						{
+							b[n] = '\0';
+							kprintf("ubixfs: read /pool/hello.txt (%d bytes): %s", n, b);
+						}
+						fclose(pf);
+					}
+					pd = vfs_opendir("/pool/etc");
+					if (pd != 0)
+					{
+						struct kdirent e;
+						kprintf("ubixfs: readdir /pool/etc:");
+						while (vfs_readdir(pd, &e) == 0)
+							kprintf(" %s", e.d_name);
+						kprintf("\n");
+						vfs_closedir(pd);
+					}
+
+					/* K3 write + persistence: report a marker left by a prior boot,
+					 * then write a fresh one the next boot will read back. */
+					pf = fopen("/pool/boot.log", "r");
+					if (pf != 0)
+					{
+						n = (int)fread(b, 1, sizeof(b) - 1, pf);
+						if (n > 0)
+						{
+							b[n] = '\0';
+							kprintf("ubixfs: /pool/boot.log from a prior boot: %s", b);
+						}
+						fclose(pf);
+					}
+					else
+					{
+						kprintf("ubixfs: /pool/boot.log absent (first writable boot)\n");
+					}
+					pf = fopen("/pool/boot.log", "w");
+					if (pf != 0)
+					{
+						const char *msg = "uBixOS booted; UbixFS write path live.\n";
+						int w = (int)fwrite((void *)msg, 1, 39, pf);
+						fclose(pf);
+						kprintf("ubixfs: wrote /pool/boot.log (%d bytes) + committed\n", w);
+					}
+				}
+			}
 
 			gic_init();
 			timer_init();

@@ -152,44 +152,41 @@ multi-vdev, xattrs/ACLs (inode reserves the slot).
      **RAM-backed vdev**: format → dsl create → mkroot → mkdir/create/write →
      read-back → readdir → sync + reopen, logging PASS/FAIL to the console. Proves
      the lite-ZFS core is kernel-viable with no disk in play — de-risks K2/K3.
-   - **K2 — read-only VFS mount (file-backed/loopback). ⚠️ CODE DONE, AUTO-MOUNT
-     DISABLED (aarch64).** A `struct fileSystem` driver (`VFS_TYPE_UBIXFS 0x55`,
-     `sys/fs/ubixfs/ubfs_vfs.c`): a `ubfs_vdev_io_t` adapter that reads 4 KB pool
-     blocks from a **backing image file** (`/pool.img`) through the kernel file API
-     (`fopen`/`fread`), so no block-device or partition plumbing is touched —
-     ubixfs over a loopback file over FAT. `vfsInitFS` = `fopen → pool_open →
-     dsl_open → lookup("root") → open_dataset → fs_init` (handle in `mp->fsInfo`);
-     `vfsOpenFile/Read` + `vfsOpenDir/ReadDir/CloseDir` map onto
-     `ubfs_fs_lookup/read/getattr/readdir`. The mount, read, and readdir all
-     *functionally* work (`mounted /pool.img (512 blocks) at /pool`, `read
-     /pool/hello.txt`, `readdir /pool/etc`).
+   - **K2 — read-only VFS mount (file-backed/loopback). ✅ DONE (aarch64).** A
+     `struct fileSystem` driver (`VFS_TYPE_UBIXFS 0x55`, `sys/fs/ubixfs/ubfs_vfs.c`):
+     a `ubfs_vdev_io_t` adapter that reads 4 KB pool blocks from a **backing image
+     file** (`/pool.img`) through the kernel file API (`fopen`/`fread`), so no
+     block-device or partition plumbing is touched — ubixfs over a loopback file
+     over FAT. `vfsInitFS` = `fopen → pool_open → dsl_open → lookup("root") →
+     open_dataset → fs_init` (handle in `mp->fsInfo`); `vfsOpenFile/Read` +
+     `vfsOpenDir/ReadDir/CloseDir` map onto `ubfs_fs_lookup/read/getattr/readdir`.
+     `mkimage-arm.sh` stages a host-built `/pool.img`; the kernel mounts it at
+     `/pool` and the boot reaches `Login:`/`vlogin` (base + desktop, both green).
+     *Raw-partition path (bcache/virtio-blk vdev on a second disk) still waits on
+     multi-device virtio-blk — same `ubfs_vdev_io_t`, different backing.*
+   - **K3 — write path + sync. ✅ DONE (aarch64).** `vfsWrite/MakeDir/Unlink` →
+     `ubfs_fs_write/mkdir/unlink` + txg commit (`dsl_sync_dataset`/`dsl_sync`,
+     commit-per-mutation, proven non-destructive so handles stay live). Verified by
+     a two-boot test: boot 1 writes `/pool/boot.log` + commits; boot 2 reads the
+     prior-boot marker back — **persistence across reboot**, boot reaches `Login:`.
+     Two real fixes landed with it: **`virtio_blk_write`** (was an unimplemented
+     stub — now a `VIRTIO_BLK_T_OUT` mirror of the read path) and **`write_fat`**
+     error propagation (it ignored `fat_file_write`'s return → a failed device
+     write read back as success).
 
-     **BLOCKER (the K2/K3 bug):** mounting a pool corrupts the **physical page
-     allocator** — `vmmMemoryMap` (the `vmm_page_info_t *` global) is overwritten
-     with a small value (`0x1a6d`-ish), so the next `vmm_find_free_pages_contig`
-     (e.g. virtio-gpu framebuffer alloc) faults `ldrh [vmmMemoryMap+8]`. Findings:
-     (a) the pool's read AND write I/O are coherence-clean (a write→read-back
-     verify passes); (b) the corruption is independent of the write path (read-only
-     mounts crash too); (c) it correlates with `/pool.img` being present, yet
-     `vmmMemoryMap` is already corrupt *before* the boot mount block runs (so the
-     trigger is earlier — `aarch64_file_exists`/the FAT open of the 2 MB pool file,
-     or the core's `pool_open` reads); (d) the value `0x1a6d` is a small integer,
-     not a pointer, written over an 8-byte global in the `g_phys_buckets …
-     numPages … vmmMemoryMap` BSS cluster. Next step: an early-boot hardware
-     watchpoint on `&vmmMemoryMap` (lldb/gdb on the QEMU stub) to catch the writer.
-     Until then the **boot auto-mount and the `mkimage-arm.sh /pool.img` staging
-     are disabled**; the driver code stays built + registrable. *Raw-partition
-     path (bcache/virtio-blk vdev on a second disk) still waits on multi-device
-     virtio-blk.*
-   - **K3 — write path + sync. ⚠️ CODE DONE, gated behind K2.** `vfsWrite/MakeDir/
-     Unlink` → `ubfs_fs_write/mkdir/unlink` + txg commit (`dsl_sync_dataset`/
-     `dsl_sync`, commit-per-mutation, proven non-destructive so handles stay live).
-     Required two real fixes that landed independently: **`virtio_blk_write`** (was
-     an unimplemented stub — `VIRTIO_BLK_T_OUT` mirror of the read path) and
-     **`write_fat`** error propagation (it ignored `fat_file_write`'s return, so a
-     failed device write read back as success → silent corruption). With those, a
-     two-boot test *did* persist a marker across reboot — but only because the
-     base image's heap layout hid the K2 corruption; it is gated until K2 is fixed.
+     **Root-cause note (the bug that gated K2/K3 for a while):** mounting a pool
+     faulted the physical page allocator (`vmmMemoryMap`/`numPages` overwritten with
+     block data → `vmm_find_free_pages_contig` faults). It was **not** an FS bug:
+     the **16 KB aarch64 boot stack** (`ldscript.aarch64`, placed right above the
+     BSS globals and growing down toward `__bss_end`) was too small for the
+     lite-ZFS core's block-tree traversal, which nests several 4 KB `block[BS]`
+     stack frames — a deep `ubfs_fs_lookup`/write chain grew the SP past
+     `__bss_end` into `vmmMemoryMap`, and a `backing_read`/`backing_write` filled
+     that stack buffer with block bytes. **Fix: boot stack 16 KB → 64 KB.** (The
+     per-thread kstack is 8 KB — a related risk for when the FS runs in a process
+     context, K4+.) Localised with `kprintf` checkpoints + a `backing_read` buffer
+     guard that exposed every block buffer sitting at a low `0x4028xxxx` stack
+     address.
    - **K4 — i386 parity** (shared `sys/fs/ubixfs/` via `sys/Makefile`), then make a
      ubixfs pool a *mountable root* candidate (the path off FAT).
 8. **Later:** snapshots, GRUB module, ACLs, RAID/mirror.

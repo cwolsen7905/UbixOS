@@ -30,9 +30,13 @@ SECTIONS
 	. = ALIGN(16);
 	__bss_end = .;
 
-	/* 16 KB boot stack; _stack_top is the initial SP (stack grows down). */
+	/* Boot stack; _stack_top is the initial SP (grows down toward __bss_end).
+	 * 64 KB, not 16 KB: the kernel runs a real filesystem (the UbixFS lite-ZFS
+	 * core) on this stack, and its block-tree traversal nests several 4 KB
+	 * `block[BS]` frames — 16 KB overflowed past __bss_end and corrupted the
+	 * adjacent page-allocator globals (vmmMemoryMap/numPages). */
 	. = ALIGN(16);
-	. += 0x4000;
+	. += 0x10000;
 	_stack_top = .;
 
 	/* End of the kernel image, page-aligned: the physical page bitmap

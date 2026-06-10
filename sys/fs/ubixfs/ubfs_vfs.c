@@ -131,8 +131,14 @@ static int backing_read(void *ctx, uint64_t blk, void *buf)
 		return (-1);
 	}
 	fd->offset = (off_t)(blk * UBFS_BLOCK_SIZE);
-	if (fread(buf, 1, UBFS_BLOCK_SIZE, fd) != UBFS_BLOCK_SIZE)
-		return (-1);
+	{
+		size_t got = fread(buf, 1, UBFS_BLOCK_SIZE, fd);
+		if (got != UBFS_BLOCK_SIZE)
+		{
+			kprintf("ubixfs: backing_read SHORT blk=%u got=%u\n", (u_int32_t)blk, (u_int32_t)got);
+			return (-1);
+		}
+	}
 	return (0);
 }
 
