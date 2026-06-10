@@ -375,11 +375,13 @@ behind a build flag. Put `MMAP_BASE` / `BRK_BASE` / stack base into a per-arch
   dispositions/QoS/attached-tty on fork (previously did neither). **Boot-tested
   both arches** (i386 image built this session): i386 VESA desktop + SIGCHLD
   reaping, aarch64 graphical desktop.
-- ⬜ **Graduate `bringup/`** — moving `execfile.c`/`ksupport.c` to `kern/` is a
-  low-risk file move; **gating the `*demo.c` files is blocked on the
-  desktop-launch race** (removing the demos' boot-time work exposes a timing
-  dependency in the ubistry→authd→views chain — see the 2026-06-10 boot-race
-  note). Fix that race first.
+- 🟢 **Graduate `bringup/` — demos gated** (`977a5be73`) — the `*demo.c` calls
+  are behind `AARCH64_BRINGUP_DEMOS` (off by default); `procfs`/`ramfs` demos
+  stay (real side effects).  The blocker turned out NOT to be a race but the
+  scheduler bootstrap (`sched_init`+`set_current`) being buried in
+  `aarch64_sched_demo` — moved to `kmain_aarch64`.  4/4 desktop with demos
+  gated.  *Remaining:* moving `execfile.c`/`ksupport.c` out of `bringup/` into
+  `kern/` (a low-risk file rename — cosmetic).
 - 🟢 **exec convergence — neutral glue done** (`1e961e755`) —
   `exec_set_name_cmdline()` in `sys/kern/kern_exec.c` (basename→name +
   argv-join→cmdline) shared by `sys_exec` + `aarch64_exec_replace`. aarch64 now
