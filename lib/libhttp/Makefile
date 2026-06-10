@@ -8,15 +8,27 @@ MUSL_SRC = ${SRCTOP}/contrib/musl
 MUSL_OBJ = ${OBJ_DIR}/obj/musl
 BEARSSL  = ${SRCTOP}/contrib/bearssl
 
+# Per-arch knobs: i386 disables x86 SIMD + links elf_i386; aarch64 uses its musl
+# arch headers + the aarch64 ld emulation, no SSE flags.
+.if ${_ARCH} == "aarch64"
+ARCH_SIMD     =
+ARCH_MUSL_INC = -I${MUSL_SRC}/arch/aarch64
+ARCH_LDEMUL   = aarch64elf
+.else
+ARCH_SIMD     = -mno-sse -mno-sse2 -mno-mmx -mno-3dnow
+ARCH_MUSL_INC = -I${MUSL_SRC}/arch/i386
+ARCH_LDEMUL   = elf_i386
+.endif
+
 INCLUDES = -I${SRCTOP}/include \
            -I${BEARSSL}/inc \
            -I${MUSL_SRC}/include \
            -I${MUSL_OBJ}/obj/include \
-           -I${MUSL_SRC}/arch/i386 \
+           ${ARCH_MUSL_INC} \
            -I${MUSL_SRC}/arch/generic
 
 CFLAGS = ${CROSS_M32} -nostdinc -fno-builtin -fPIC \
-         -mno-sse -mno-sse2 -mno-mmx -mno-3dnow -MMD -MP \
+         ${ARCH_SIMD} -MMD -MP \
          -Wall -O2
 
 OBJDIR = ${OBJ_DIR}/obj/lib/libhttp
@@ -37,7 +49,7 @@ all: ${OBJ_DIR}/lib/libhttp.so
 # Links libbearssl.so (TLS) and libc; both resolved from /lib at load time.
 ${OBJ_DIR}/lib/libhttp.so: $(OBJS)
 	@mkdir -p ${OBJ_DIR}/lib
-	$(LD) -m elf_i386 -shared -soname libhttp.so \
+	$(LD) -m ${ARCH_LDEMUL} -shared -soname libhttp.so \
 		${OBJS:S|^|${OBJDIR}/|} \
 		-L${OBJ_DIR}/lib -lbearssl -lc \
 		-o ${OBJ_DIR}/lib/libhttp.so

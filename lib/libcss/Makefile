@@ -17,17 +17,29 @@ CSS      = ${SRCTOP}/contrib/libcss
 LPU      = ${SRCTOP}/contrib/libparserutils
 LWC      = ${SRCTOP}/contrib/libwapcaplet
 
+# Per-arch knobs (NetSurf C libs): i386 disables x86 SIMD + links elf_i386;
+# aarch64 uses its musl arch headers + the aarch64 ld emulation, no SSE flags.
+.if ${_ARCH} == "aarch64"
+ARCH_SIMD     =
+ARCH_MUSL_INC = -I${MUSL_SRC}/arch/aarch64
+ARCH_LDEMUL   = aarch64elf
+.else
+ARCH_SIMD     = -mno-sse -mno-sse2 -mno-mmx -mno-3dnow
+ARCH_MUSL_INC = -I${MUSL_SRC}/arch/i386
+ARCH_LDEMUL   = elf_i386
+.endif
+
 INCLUDES = -I${CSS}/include -I${CSS}/src \
            -I${LPU}/include -I${LWC}/include \
            -I${MUSL_SRC}/include \
            -I${MUSL_OBJ}/obj/include \
-           -I${MUSL_SRC}/arch/i386 \
+           ${ARCH_MUSL_INC} \
            -I${MUSL_SRC}/arch/generic
 
 # -fcommon: libcss has a tentative global (_ALIGNED) in a shared header that
 # modern GCC's default -fno-common would reject as a multiple definition.
 CFLAGS = ${CROSS_M32} -nostdinc -fno-builtin -fPIC -fcommon \
-         -mno-sse -mno-sse2 -mno-mmx -mno-3dnow -MMD -MP \
+         ${ARCH_SIMD} -MMD -MP \
          -Wall -O2
 
 OBJDIR = ${OBJ_DIR}/obj/lib/libcss
@@ -50,7 +62,7 @@ ${OBJDIR}/${s:S|/|_|g:.c=.o}: ${CSS}/src/${s}
 # Links libparserutils.so + libwapcaplet.so (resolved from /lib at load).
 ${OBJ_DIR}/lib/libcss.so: ${OBJS:S|^|${OBJDIR}/|}
 	@mkdir -p ${OBJ_DIR}/lib
-	$(LD) -m elf_i386 -shared -soname libcss.so \
+	$(LD) -m ${ARCH_LDEMUL} -shared -soname libcss.so \
 		${OBJS:S|^|${OBJDIR}/|} \
 		-L${OBJ_DIR}/lib -lparserutils -lwapcaplet -lc \
 		-o ${OBJ_DIR}/lib/libcss.so

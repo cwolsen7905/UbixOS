@@ -330,10 +330,9 @@ world:
 	cd ${WORLD_BIN_SRC}; ${WMAKE} all
 	@echo
 	@echo "***************************************************************"
-	@echo "Step 4: Build NetSurf browser (nsfb) — i386 only for now"
+	@echo "Step 4: Build NetSurf browser (nsfb)"
 	@echo "***************************************************************"
-	@if [ "${_ARCH}" != "aarch64" ]; then ${MAKE} netsurf; \
-	  else echo "skip: NetSurf (needs C++/objgfx stack) not yet ported to aarch64"; fi
+	${MAKE} netsurf
 	@echo
 	@echo "***************************************************************"
 	@echo "World Build For ${_ARCH} Completed On `LC_ALL=C date`"
@@ -343,7 +342,7 @@ world:
 # can be rebuilt on its own; depends on the world libraries (Step 1) being built.
 # Driven by a shell script because NetSurf uses its own GNU-make buildsystem.
 netsurf:
-	SRCTOP=${.CURDIR} BUILD=${OBJ_DIR} ${.CURDIR}/tools/build-netsurf.sh
+	SRCTOP=${.CURDIR} BUILD=${OBJ_DIR} _ARCH=${_ARCH} CROSS_PREFIX="${CROSS_PREFIX}" ${.CURDIR}/tools/build-netsurf.sh
 
 # ── Disk image ───────────────────────────────────────────────────────────────
 

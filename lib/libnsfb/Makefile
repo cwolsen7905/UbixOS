@@ -10,15 +10,27 @@ MUSL_SRC = ${SRCTOP}/contrib/musl
 MUSL_OBJ = ${OBJ_DIR}/obj/musl
 NSFB     = ${SRCTOP}/contrib/libnsfb
 
+# Per-arch knobs (NetSurf C libs): i386 disables x86 SIMD + links elf_i386;
+# aarch64 uses its musl arch headers + the aarch64 ld emulation, no SSE flags.
+.if ${_ARCH} == "aarch64"
+ARCH_SIMD     =
+ARCH_MUSL_INC = -I${MUSL_SRC}/arch/aarch64
+ARCH_LDEMUL   = aarch64elf
+.else
+ARCH_SIMD     = -mno-sse -mno-sse2 -mno-mmx -mno-3dnow
+ARCH_MUSL_INC = -I${MUSL_SRC}/arch/i386
+ARCH_LDEMUL   = elf_i386
+.endif
+
 INCLUDES = -I${NSFB} -I${NSFB}/include -I${NSFB}/src \
            -I${MUSL_SRC}/include -I${MUSL_OBJ}/obj/include \
-           -I${MUSL_SRC}/arch/i386 -I${MUSL_SRC}/arch/generic \
+           ${ARCH_MUSL_INC} -I${MUSL_SRC}/arch/generic \
            -I${SRCTOP}/include
 # (uBixOS userland headers LAST so musl's sys/* wins over include/sys/* — the
 #  ubix surface needs <sys/mpi.h>, <sys/kbd.h>, <sys/mouse.h>, <views/...>.)
 
 CFLAGS = ${CROSS_M32} -nostdinc -fno-builtin -fPIC -fcommon \
-         -mno-sse -mno-sse2 -mno-mmx -mno-3dnow -MMD -MP -Wall -Wno-incompatible-pointer-types -O2
+         ${ARCH_SIMD} -MMD -MP -Wall -Wno-incompatible-pointer-types -O2
 
 OBJDIR = ${OBJ_DIR}/obj/lib/libnsfb
 # common.c and 32bpp-common.c are #include templates, not compilation units.
@@ -35,7 +47,7 @@ OBJS   = cursor.o dump.o libnsfb.o palette.o surface.o ram.o ubix.o \
 all: ${OBJ_DIR}/lib/libnsfb.so
 ${OBJ_DIR}/lib/libnsfb.so: $(OBJS)
 	@mkdir -p ${OBJ_DIR}/lib
-	$(LD) -m elf_i386 -shared -soname libnsfb.so ${OBJS:S|^|${OBJDIR}/|} -L${OBJ_DIR}/lib -lc -o ${OBJ_DIR}/lib/libnsfb.so
+	$(LD) -m ${ARCH_LDEMUL} -shared -soname libnsfb.so ${OBJS:S|^|${OBJDIR}/|} -L${OBJ_DIR}/lib -lc -o ${OBJ_DIR}/lib/libnsfb.so
 
 clean:
 	$(REMOVE) ${OBJDIR} ${OBJ_DIR}/lib/libnsfb.so

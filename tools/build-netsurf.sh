@@ -28,8 +28,24 @@ NSBUILD="$SRCTOP/contrib/netsurf-buildsystem"
 PCDIR="$BUILD/netsurf-pc"
 MUSL="$SRCTOP/contrib/musl"
 ML="$BUILD/obj/musl/lib"
-CROSS=x86_64-elf-
 JOBS="${JOBS:-4}"
+
+# Per-arch toolchain knobs (the `netsurf` make target passes _ARCH/CROSS_PREFIX).
+ARCH="${_ARCH:-i386}"
+CROSS="${CROSS_PREFIX:-x86_64-elf-}"
+if [ "$ARCH" = "aarch64" ]; then
+	ARCH_MUSL="$MUSL/arch/aarch64"; ARCH_SIMD=""; M32=""
+	ARCH_LDEMUL="aarch64elf"; INTERP="/lib/ld-musl-aarch64.so.1"; LIBGCC32=""
+	# The aarch64 world is PIE (the kernel's dynamic loader expects ET_DYN), so
+	# build nsfb PIE too: Scrt1.o + -pie + -fPIC.
+	PIE_CF="-fPIC"; PIE_LD="-pie"; CRT1="$ML/Scrt1.o"
+else
+	ARCH_MUSL="$MUSL/arch/i386"
+	ARCH_SIMD="-mno-sse -mno-sse2 -mno-mmx -mno-3dnow"; M32="-m32"
+	ARCH_LDEMUL="elf_i386"; INTERP="/lib/ld-musl-i386.so.1"; LIBGCC32="$BUILD/lib/libgcc32.a"
+	# i386 world is fixed-address ET_EXEC.
+	PIE_CF=""; PIE_LD=""; CRT1="$ML/crt1.o"
+fi
 
 # GNU make (NetSurf needs it; macOS /usr/bin/make is GNU make).
 GMAKE=make
@@ -48,9 +64,11 @@ for b in /opt/homebrew/opt/bison/bin /usr/local/opt/bison/bin; do
 done
 if [ ! -x "$NSGENBIND_BIN" ]; then
 	echo "==> Building nsgenbind (host JS-binding generator)"
+	# CC=cc forces NetSurf's buildsystem to detect the host clang (Apple LLVM)
+	# rather than hunting for a <triplet>-gcc that doesn't exist on macOS.
 	( cd "$NSGENBIND_SRC"
-	  PATH="${BISON_PATH:+$BISON_PATH:}$PATH" \
-	    "$GMAKE" NSSHARED="$NSBUILD" >"$BUILD/nsgenbind-build.log" 2>&1 )
+	  PATH="${BISON_PATH:+$BISON_PATH:}/usr/bin:$PATH" \
+	    "$GMAKE" NSSHARED="$NSBUILD" CC=cc >"$BUILD/nsgenbind-build.log" 2>&1 )
 	GEN=$(ls -d "$NSGENBIND_SRC"/build-*/nsgenbind 2>/dev/null | head -1)
 	[ -n "$GEN" ] || { echo "ERROR: nsgenbind build failed (see $BUILD/nsgenbind-build.log)" >&2; exit 1; }
 	mkdir -p "$BUILD/netsurf-tools"
@@ -103,10 +121,10 @@ HOST_PNG_LIBS="$(pkg-config --libs libpng 2>/dev/null || echo -lpng)"
 
 # CFLAGS MUST be exported (not passed as a make arg) so it augments rather than
 # clobbers NetSurf's own CFLAGS (which carry the pkg-config includes).
-MUSL_INC="-I$MUSL/include -I$BUILD/obj/musl/obj/include -I$MUSL/arch/i386 -I$MUSL/arch/generic"
+MUSL_INC="-I$MUSL/include -I$BUILD/obj/musl/obj/include -I$ARCH_MUSL -I$MUSL/arch/generic"
 export PKG_CONFIG_LIBDIR="$PCDIR"
 export PKG_CONFIG_PATH="$PCDIR"
-export CFLAGS="-m32 -mno-sse -mno-sse2 -mno-mmx -mno-3dnow -nostdinc $MUSL_INC -I$SRCTOP/include -I$SRCTOP/contrib/zlib -I$SRCTOP/contrib/bearssl/inc -I$SRCTOP/contrib/stb -fcommon"
+export CFLAGS="$M32 $ARCH_SIMD $PIE_CF -nostdinc $MUSL_INC -I$SRCTOP/include -I$SRCTOP/contrib/zlib -I$SRCTOP/contrib/bearssl/inc -I$SRCTOP/contrib/stb -fcommon"
 export LDFLAGS="-L$BUILD/lib -lhttp -lbearssl -lz"
 export BUILD_CFLAGS="$HOST_PNG_CFLAGS"
 export BUILD_LDFLAGS="$HOST_PNG_LIBS"
@@ -118,6 +136,10 @@ export BUILD_LDFLAGS="$HOST_PNG_LIBS"
 # genuine compile errors so a clean `bmake world` is not spammed.
 LOG="$BUILD/netsurf-build.log"
 cd "$NS"
+# NetSurf's object dir (build/<OS>-framebuffer) is keyed on the host OS + target,
+# NOT the UbixOS arch, so i386 and aarch64 builds share it.  Wipe it first so a
+# previous arch's objects can't get mixed into this arch's link (EM: 3 vs EM:183).
+rm -rf "$NS"/build/*-framebuffer
 echo "==> Compiling NetSurf (log: $LOG)"
 "$GMAKE" -j"$JOBS" -k \
 	TARGET=framebuffer \
@@ -144,24 +166,24 @@ OBJDIR=$(ls -d "$NS"/build/*-framebuffer 2>/dev/null | head -1)
 [ -n "$OBJDIR" ] || { echo "ERROR: NetSurf object dir not found under $NS/build" >&2; exit 1; }
 OBJS=$(ls "$OBJDIR"/*.o 2>/dev/null)
 [ -n "$OBJS" ] || { echo "ERROR: no objects compiled in $OBJDIR" >&2; exit 1; }
-LIBGCC=$(${CROSS}gcc -m32 -print-libgcc-file-name)
+LIBGCC=$(${CROSS}gcc $M32 -print-libgcc-file-name)
 
 mkdir -p "$BUILD/bin"
 echo "==> Linking nsfb from $OBJDIR"
-${CROSS}gcc -m32 -nostdlib \
-	-Wl,-m,elf_i386 \
+${CROSS}gcc $M32 $PIE_LD -nostdlib \
+	-Wl,-m,$ARCH_LDEMUL \
 	-Wl,--export-dynamic \
-	-Wl,-dynamic-linker,/lib/ld-musl-i386.so.1 \
+	-Wl,-dynamic-linker,$INTERP \
 	-Wl,-rpath,/lib \
 	-Wl,-z,noexecstack \
-	"$ML/crt1.o" "$ML/crti.o" \
+	"$CRT1" "$ML/crti.o" \
 	$OBJS \
 	-Wl,--start-group \
 	-L"$BUILD/lib" \
 	-lcss -ldom -lhubbub -lparserutils -lwapcaplet \
 	-lnsgif -lnsbmp -lnsfb -lnsutils -lutf8proc \
 	-lhttp -lbearssl -lz \
-	"$BUILD/lib/ubix_api.a" -lc "$BUILD/lib/libgcc32.a" "$LIBGCC" \
+	"$BUILD/lib/ubix_api.a" -lc $LIBGCC32 "$LIBGCC" \
 	-Wl,--end-group \
 	"$ML/crtn.o" \
 	-o "$BUILD/bin/nsfb"

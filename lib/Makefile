@@ -12,9 +12,11 @@
 # de-hardcoded.  crt.a is an x86_64-elf libgcc shim (real aarch64 libgcc is
 # complete) and is not on the bin/ link line, so it is omitted.
 .if ${_ARCH} == "aarch64"
-all: ubix_api-code objgfx-code libaudio-code libbearssl-code libpw-code
+all: ubix_api-code objgfx-code libaudio-code libbearssl-code libpw-code libhttp-code zlib-code \
+     libwapcaplet-code libparserutils-code libcss-code libhubbub-code libdom-code \
+     libnsgif-code libnsbmp-code libnsfb-code libnsutils-code libutf8proc-code
 .else
-all: crt-code ubix_api-code ubix-code objgfx-code libaudio-code libbearssl-code libpw-code libhttp-code libwapcaplet-code libparserutils-code libcss-code libhubbub-code libdom-code libnsgif-code libnsbmp-code libnsfb-code libnsutils-code libutf8proc-code #csu-code
+all: crt-code ubix_api-code ubix-code objgfx-code libaudio-code libbearssl-code libpw-code libhttp-code zlib-code libwapcaplet-code libparserutils-code libcss-code libhubbub-code libdom-code libnsgif-code libnsbmp-code libnsfb-code libnsutils-code libutf8proc-code #csu-code
 .endif
 # bin tools
 # depend kernel tools
@@ -30,6 +32,10 @@ ubix_api-code: ubix_api
 
 objgfx-code: objgfx
 	(cd objgfx;$(MAKE))
+
+# zlib (libz.so) — NetSurf's compression dependency.
+zlib-code: zlib
+	(cd zlib;$(MAKE))
 
 ubix-code: ubix
 	(cd ubix;$(MAKE))
