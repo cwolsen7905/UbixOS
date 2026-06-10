@@ -375,13 +375,19 @@ behind a build flag. Put `MMAP_BASE` / `BRK_BASE` / stack base into a per-arch
   dispositions/QoS/attached-tty on fork (previously did neither). **Boot-tested
   both arches** (i386 image built this session): i386 VESA desktop + SIGCHLD
   reaping, aarch64 graphical desktop.
-- 🟢 **Graduate `bringup/` — demos gated** (`977a5be73`) — the `*demo.c` calls
-  are behind `AARCH64_BRINGUP_DEMOS` (off by default); `procfs`/`ramfs` demos
-  stay (real side effects).  The blocker turned out NOT to be a race but the
-  scheduler bootstrap (`sched_init`+`set_current`) being buried in
-  `aarch64_sched_demo` — moved to `kmain_aarch64`.  4/4 desktop with demos
-  gated.  *Remaining:* moving `execfile.c`/`ksupport.c` out of `bringup/` into
-  `kern/` (a low-risk file rename — cosmetic).
+- ✅ **Graduate `bringup/` done** (`977a5be73` + `6d0d9e1e4`) — the `*demo.c`
+  calls are behind `AARCH64_BRINGUP_DEMOS` (off by default; `procfs`/`ramfs`
+  demos stay for their real side effects), and the production code
+  (`execfile.c`/`ksupport.c`) moved out of `bringup/` into `kern/`, so `bringup/`
+  is now pure scaffolding.  The gating blocker was NOT a race but the scheduler
+  bootstrap (`sched_init`+`set_current`) buried in `aarch64_sched_demo` — moved
+  to `kmain_aarch64`.  4/4 desktop with demos gated.
+- ✅ **SVC dispatch at its irreducible minimum** — the aarch64 syscall switch is
+  down to the genuinely arch-special calls (write/writev UART path, mmap/brk/
+  munmap/mprotect over the arch VA, fork/execve/wait4/exit needing the trapframe,
+  openat, nanosleep, setuid/setgid); everything else falls through to the shared
+  `systemCalls_posix[]` table.  Further "routing" would just re-implement
+  arch-specific behaviour in the table — so this is the convergence end-state.
 - 🟢 **exec convergence — neutral glue done** (`1e961e755`) —
   `exec_set_name_cmdline()` in `sys/kern/kern_exec.c` (basename→name +
   argv-join→cmdline) shared by `sys_exec` + `aarch64_exec_replace`. aarch64 now
@@ -402,8 +408,13 @@ behind a build flag. Put `MMAP_BASE` / `BRK_BASE` / stack base into a per-arch
   fold are deferred (entangled with the VGA console-read path + GUI-terminal pty
   pool; need interactive verification). See the Phase 2 entry above.
 - **Phase 3 largely done** (2026-06-09) — see the Phase 3 entry.
-- **Phase 5 started** (2026-06-10) — VA layout centralised + `fork_copy_fdtable`
-  factored (both verified, both arches green). See the Phase 5 progress notes.
+- **Phase 5 essentially complete** (2026-06-10) — VA layout centralised; fork
+  body converged (`fork_copy_fdtable` + context/signal helpers); exec name/cmdline
+  glue factored (loaders stay arch-specific by design); demos gated + `bringup/`
+  graduated; SVC switch at its irreducible arch-special minimum. All verified,
+  both arches green. The remaining deferred items (COW fork, TTBR1 kernel/user
+  split) are aarch64 VMM *refinements*, not convergence — tracked in
+  cross-arch-plan.md.
 - Prereqs already in place from prior work: dual-arch `signal.c` + tty job
   control (see `project_aarch64_signals`), the `g_*` hook pattern, `md_proc`,
   the `machine/` forwarding headers.
