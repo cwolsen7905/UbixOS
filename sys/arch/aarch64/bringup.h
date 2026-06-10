@@ -60,6 +60,7 @@ int pmap_map_user_page(u_int64_t *l1, u_int64_t va, u_int64_t pa, int executable
 u_int64_t *pmap_create_user_space(void);
 u_int64_t pmap_extract(u_int64_t *l1, u_int64_t va); /* user VA -> phys (file-backed mmap) */
 u_int64_t *pmap_fork_copy(u_int64_t *parent);        /* deep-copy user mappings (fork) */
+void pmap_free_user_space(u_int64_t *l1);            /* free a replaced image's user pages + tables (exec) */
 void pmap_switch(u_int64_t *l1);
 
 /* vectors.S — a fork child's first-dispatch landing pad (ERETs to EL0). */

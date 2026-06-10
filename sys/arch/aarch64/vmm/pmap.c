@@ -238,6 +238,54 @@ u_int64_t *pmap_fork_copy(u_int64_t *parent)
 }
 
 /**
+ * Free the user mappings of @l1 and the tables that describe them, returning the
+ * physical frames to the allocator.  Only the per-process user region (L1 index
+ * >= USER_L1_MIN) is touched — the kernel identity entries (0..3), which point
+ * at shared kernel tables, are left alone — and the @l1 top-level page itself is
+ * freed last.  free_page() is COW/MMIO-safe: it bounds-checks frames above RAM
+ * (the GPU scanout etc. are no-ops) and decrements the COW counter for shared
+ * frames rather than freeing them.
+ *
+ * Used by execve to reclaim the replaced image's pages (which are this process's
+ * private fork-copies / load_dynamic frames); without it every exec leaked the
+ * whole old address space.  Must run AFTER switching off @l1 (it is no longer
+ * the active TTBR0) and never on the shared kernel L1.
+ */
+void pmap_free_user_space(u_int64_t *l1)
+{
+	u_int64_t i1, i2, i3;
+
+	if (l1 == 0 || l1 == aarch64_kernel_l1())
+		return;
+
+	for (i1 = USER_L1_MIN; i1 < 512; i1++)
+	{
+		u_int64_t *l2;
+
+		if ((l1[i1] & PTE_VALID) == 0 || (l1[i1] & PTE_TYPE_MASK) != PTE_TABLE)
+			continue;
+		l2 = (u_int64_t *)(uintptr_t)(l1[i1] & PTE_ADDR_MASK);
+
+		for (i2 = 0; i2 < 512; i2++)
+		{
+			u_int64_t *l3;
+
+			if ((l2[i2] & PTE_VALID) == 0 || (l2[i2] & PTE_TYPE_MASK) != PTE_TABLE)
+				continue;
+			l3 = (u_int64_t *)(uintptr_t)(l2[i2] & PTE_ADDR_MASK);
+
+			for (i3 = 0; i3 < 512; i3++)
+				if (l3[i3] & PTE_VALID)
+					free_page((uintptr_t)(l3[i3] & PTE_ADDR_MASK));
+
+			free_page((uintptr_t)l3); /* the L3 table */
+		}
+		free_page((uintptr_t)l2); /* the L2 table */
+	}
+	free_page((uintptr_t)l1); /* the top-level L1 copy */
+}
+
+/**
  * Make @l1 the active TTBR0 address space and flush stale translations.
  */
 void pmap_switch(u_int64_t *l1)

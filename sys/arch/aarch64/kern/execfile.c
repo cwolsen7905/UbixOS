@@ -497,7 +497,7 @@ int aarch64_exec_replace(const char *path, char *const *uargv, char *const *uenv
 {
 	char *buf;
 	int sz, argc, envc, i;
-	u_int64_t *l1, entry, usp, kstack_top;
+	u_int64_t *l1, entry, usp, kstack_top, old_ttbr0;
 	char namebuf[256];
 	char *kargv[MAXARG], *kenvp[MAXARG];
 
@@ -543,12 +543,19 @@ int aarch64_exec_replace(const char *path, char *const *uargv, char *const *uenv
 
 	/* Repoint the current task at the new image, then make it live.  (name +
 	 * cmdline were already set by exec_set_name_cmdline above.) */
+	old_ttbr0 = _current->md.md_ttbr0;
 	_current->md.md_ttbr0 = (u_int64_t)(uintptr_t)l1;
 	_current->md.md_entry = entry;
 	_current->md.md_usp = usp;
 	_current->md.md_mmap_next = 0; /* fresh mmap/brk regions for the new image */
 	_current->md.md_brk = 0;
 	pmap_switch(l1);
+
+	/* Reclaim the replaced image's user pages now that we run on the new TTBR0
+	 * (the old space's frames are this process's private fork-copies / load
+	 * frames — free_page is MMIO/COW-safe).  Without this every exec leaked the
+	 * whole old address space. */
+	pmap_free_user_space((u_int64_t *)(uintptr_t)old_ttbr0);
 
 	kstack_top = (u_int64_t)(uintptr_t)((u_int8_t *)_current->kernelStack + INITIAL_KSTACK_SIZE);
 	aarch64_exec_to_el0(entry, usp, kstack_top); /* does not return */
