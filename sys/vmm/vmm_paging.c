@@ -133,14 +133,25 @@ int vmm_paging_init()
 	page_table = (u_int32_t *)(kernelPageDirectory[1023] & 0xFFFFF000);
 
 	{
-		u_int32_t kstk1 = vmm_find_free_page(sysID);
-		u_int32_t kstk2 = vmm_find_free_page(sysID);
-		if (!kstk1 || !kstk2)
+		/*
+		 * 64 KB kernel boot stack (16 pages) at the top of VA, 0xFFFF0000..
+		 * 0xFFFFFFFF (ESP starts at 0xFFFFFFFF in start.S and grows down).  Was
+		 * only 8 KB (2 pages): the kernel runs the UbixFS lite-ZFS core on this
+		 * stack at boot (main.c mounts the pool), and the core's block-tree
+		 * traversal nests several 4 KB block[BS] frames — 8 KB overflowed into the
+		 * unmapped page below and triple-faulted.  This is the i386 twin of the
+		 * aarch64 64 KB boot-stack fix (sys/compile/ldscript.aarch64).
+		 */
+		int s;
+		for (s = 0; s < 16; s++)
 		{
-			K_PANIC("vmm_paging_init: no free pages for kernel stack");
+			u_int32_t pg = vmm_find_free_page(sysID);
+			if (!pg)
+			{
+				K_PANIC("vmm_paging_init: no free pages for kernel stack");
+			}
+			page_table[1023 - s] = (pg | KERNEL_PAGE_DEFAULT | PAGE_STACK);
 		}
-		page_table[1023] = (kstk1 | KERNEL_PAGE_DEFAULT | PAGE_STACK);
-		page_table[1022] = (kstk2 | KERNEL_PAGE_DEFAULT | PAGE_STACK);
 	}
 
 	/*

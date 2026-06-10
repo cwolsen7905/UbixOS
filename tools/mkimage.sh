@@ -254,6 +254,28 @@ if [ -n "$_doom_wad" ]; then
 else
     echo "    WARNING: doom1.wad not found; copy it to tools/doom1.wad to include it"
 fi
+
+# UbixFS pool (plan K4): stage a small file-backed (loopback) pool as /pool.img,
+# which the kernel mounts read-write at /pool — the same arch-neutral driver as
+# aarch64 (mkimage-arm.sh).  Built with the host `ubfs` CLI from the same
+# portable core the kernel links.
+echo "==> Installing UbixFS pool (/pool.img)"
+if ( cd tools/ubixfs && bmake ubfs ) >/dev/null 2>&1 && [ -x tools/ubixfs/ubfs ]; then
+    UBFS=tools/ubixfs/ubfs
+    POOL=$(mktemp -t ubixpool).img
+    "$UBFS" mkpool "$POOL" 2M >/dev/null
+    printf 'Hello from a UbixFS pool!\nThis file lives in a lite-ZFS dataset.\n' >"$POOL.hello"
+    printf 'uBixOS native copy-on-write filesystem (lite-ZFS): pool + datasets,\nper-block Fletcher checksums, transaction-group commit.\n' >"$POOL.readme"
+    "$UBFS" mkdir "$POOL" /etc >/dev/null
+    "$UBFS" cp "$POOL.hello"  "$POOL:/hello.txt"  >/dev/null
+    "$UBFS" cp "$POOL.readme" "$POOL:/etc/readme" >/dev/null
+    mcopy -o -i "$IMG"@@1M "$POOL" ::/pool.img
+    rm -f "$POOL" "$POOL.hello" "$POOL.readme"
+    echo "    Installed: /pool.img (kernel mounts it at /pool)"
+else
+    echo "    WARNING: host ubfs tool unavailable; skipped /pool.img"
+fi
+
 # Parse tools/userdb (binary struct array) to get username + home path per user.
 # struct userdb_entry: char[32] user, char[32] pass, int uid, int gid,
 #                      char[128] shell, char[256] realname, char[256] path
