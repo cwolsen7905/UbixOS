@@ -33,3 +33,11 @@
 #define TIOCGPGRP  0x40047477U  /* _IOR('t', 119, int) */
 #undef  TIOCSPGRP
 #define TIOCSPGRP  0x80047476U  /* _IOW('t', 118, int) */
+
+/* line discipline — Linux 0x5424/0x5423 → FreeBSD (job-control shells call
+ * TIOCGETD/TIOCSETD when grabbing the controlling tty; the kernel only knows
+ * the FreeBSD encodings). */
+#undef  TIOCGETD
+#define TIOCGETD  0x4004741AU  /* _IOR('t', 26, int) */
+#undef  TIOCSETD
+#define TIOCSETD  0x8004741BU  /* _IOW('t', 27, int) */

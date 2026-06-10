@@ -407,6 +407,14 @@ int sys_ioctl(struct thread *td, struct sys_ioctl_args *args)
 	struct file *tty_fp = NULL;
 	getfd(td, &tty_fp, args->fd);
 
+	/* ioctl request codes are 32-bit (the _IOC encoding never exceeds 32 bits).
+	 * musl declares ioctl()'s request as `int`, so a command with IOC_IN set
+	 * (0x80000000 — e.g. TIOCSPGRP, TIOCSETD) is negative and the aarch64 syscall
+	 * path sign-extends it into the 64-bit com register (0xFFFFFFFF8.......).
+	 * Truncate to 32 bits so it matches the case labels.  No-op on i386, where
+	 * u_long is already 32-bit. */
+	args->com = (u_int32_t)args->com;
+
 	/* FD_TYPE_TTYV fds carry their own tty_term in fd->data. */
 	tty_term *term;
 	if (tty_fp != NULL && tty_fp->fd_type == FD_TYPE_TTYV)
@@ -596,6 +604,27 @@ int sys_ioctl(struct thread *td, struct sys_ioctl_args *args)
 		case TIOCNOTTY:
 			_current->ct_tty = NULL;
 			td->td_retval[0] = 0;
+			return (0);
+
+		case TIOCGETD:
+			/* Report the line discipline.  We run a single built-in tty/VT100
+			 * discipline, reported as TTYDISC (0).  A job-control shell (tcsh's
+			 * setdisc()) calls TIOCGETD before claiming the tty; failing it makes
+			 * the shell abort job-control setup with "no access to tty". */
+			if (on_tty)
+			{
+				if (args->data)
+					*(int *)args->data = 0; /* TTYDISC */
+				td->td_retval[0] = 0;
+			}
+			else
+				td->td_retval[0] = -1;
+			return (0);
+
+		case TIOCSETD:
+			/* Accept a line-discipline change (we only have the one discipline,
+			 * so this is a no-op success on a tty). */
+			td->td_retval[0] = on_tty ? 0 : -1;
 			return (0);
 
 		case TIOCOUTQ:

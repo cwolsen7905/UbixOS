@@ -162,6 +162,8 @@ struct winsize {
 #define TIOCGPGRP       _IOR('t', 119, int)    /* get foreground pgrp */
 #define TIOCSPGRP       _IOW('t', 118, int)    /* set foreground pgrp */
 #define TIOCSCTTY       _IO('t',  97)          /* become controlling terminal */
+#define TIOCGETD        _IOR('t', 26, int)     /* get line discipline */
+#define TIOCSETD        _IOW('t', 27, int)     /* set line discipline */
 #define FIONREAD        _IOR('f', 127, int)    /* get # bytes to read */
 
 #endif /* _SYS_IOCTL_H */
