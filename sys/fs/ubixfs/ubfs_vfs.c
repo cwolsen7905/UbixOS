@@ -19,9 +19,11 @@
 #include <string.h>
 #include <lib/kprintf.h>
 #include <lib/kmalloc.h>
+#include <sys/bus.h> /* struct ubx_device (raw block-device vdev) */
 #include <fs/vfs/vfs.h>
 #include <fs/vfs/mount.h>
 #include <fs/vfs/file.h>
+#include <fs/vfs/bcache.h> /* bcache_read/write (raw vdev) */
 #include <fs/ubixfs/ubfs_vfs.h>
 
 #include <ubfs_fs.h>
@@ -36,11 +38,19 @@
 /* Backing-image path for the next mount (set via ubfs_vfs_set_backing). */
 static char g_backing[256] = "/pool.img";
 
+/* Vdev backend for the next mount: 0 = loopback file, 1 = raw block device.
+ * Consumed + reset by vfsInitFS.  See ubfs_vfs_set_raw(). */
+static int g_raw_next;
+
+/* Sectors per 4 KB pool block on a 512-byte-sector device. */
+#define UBFS_SECTORS_PER_BLOCK (UBFS_BLOCK_SIZE / 512u)
+
 /* Per-mount state, stored in vfs_mountPoint::fsInfo. */
 struct ubfs_mount
 {
-	fileDescriptor_t *backing; /* open backing image (loopback vdev) */
-	int writable;              /* backing opened read-write (mount perms 'w') */
+	fileDescriptor_t *backing; /* open backing image (loopback vdev); NULL if raw */
+	struct ubx_device *rawdev; /* block device (raw vdev); NULL if loopback */
+	int writable;              /* opened read-write (mount perms 'w') */
 	ubfs_vdev_io_t io;
 	ubfs_pool_t *pool;
 	ubfs_dsl_t dsl;
@@ -165,6 +175,43 @@ static int backing_write(void *ctx, uint64_t blk, const void *buf)
 	return (0);
 }
 
+/* ── raw vdev: read/write 4 KB pool blocks via the buffer cache (8 × 512 B) ──── */
+
+/**
+ * Read one pool block @blk (8 sectors) from the block device into @buf.  The LBA
+ * is partition-relative; the block driver adds the partition offset (i386 hd.c).
+ *
+ * @return 0 on success, -1 on a device error.
+ */
+static int raw_read(void *ctx, uint64_t blk, void *buf)
+{
+	struct ubx_device *dev = (struct ubx_device *)ctx;
+	u_int32_t base = (u_int32_t)blk * UBFS_SECTORS_PER_BLOCK;
+	u_int32_t s;
+
+	for (s = 0; s < UBFS_SECTORS_PER_BLOCK; s++)
+		if (bcache_read(dev, base + s, (u_int8_t *)buf + s * 512) != 0)
+			return (-1);
+	return (0);
+}
+
+/**
+ * Write one pool block @blk (8 sectors) from @buf to the block device.
+ *
+ * @return 0 on success, -1 on a device error.
+ */
+static int raw_write(void *ctx, uint64_t blk, const void *buf)
+{
+	struct ubx_device *dev = (struct ubx_device *)ctx;
+	u_int32_t base = (u_int32_t)blk * UBFS_SECTORS_PER_BLOCK;
+	u_int32_t s;
+
+	for (s = 0; s < UBFS_SECTORS_PER_BLOCK; s++)
+		if (bcache_write(dev, base + s, (const u_int8_t *)buf + s * 512) != 0)
+			return (-1);
+	return (0);
+}
+
 /* ── VFS operations ─────────────────────────────────────────────────────────── */
 
 /**
@@ -180,37 +227,59 @@ static int ubfs_vfs_initfs(struct vfs_mountPoint *mp)
 	if (m == 0)
 		return (0);
 	memset(m, 0, sizeof(*m));
-
-	/* A writable mount opens the backing image "r+" (read-write, no truncate);
-	 * the pool is fixed-size and CoW-rewrites blocks in place, so it never grows
-	 * the file.  A read-only mount opens "r" and exposes no write ops. */
 	m->writable = (mp->perms == 'w');
-	m->backing = fopen(g_backing, m->writable ? "r+" : "r");
-	if (m->backing == 0)
-	{
-		kprintf("ubixfs: cannot open backing image %s\n", g_backing);
-		kfree(m);
-		return (0);
-	}
 
-	m->io.ctx = m->backing;
-	m->io.read = backing_read;
-	m->io.write = backing_write;
-	m->io.size_blocks = (uint64_t)m->backing->size / UBFS_BLOCK_SIZE;
+	if (g_raw_next)
+	{
+		/* Raw vdev: the pool lives on a block-device partition (the path toward a
+		 * mountable root).  Read 4 KB blocks via bcache over mp->device; the core
+		 * bounds its own reads to the pool's on-disk size, so size_blocks here is a
+		 * generous safety cap. */
+		g_raw_next = 0;
+		if (mp->device == 0)
+		{
+			kprintf("ubixfs: raw mount has no block device\n");
+			kfree(m);
+			return (0);
+		}
+		m->rawdev = mp->device;
+		m->io.ctx = mp->device;
+		m->io.read = raw_read;
+		m->io.write = raw_write;
+		m->io.size_blocks = 0x10000000u; /* 1 TB cap; core bounds to pool asize */
+	}
+	else
+	{
+		/* Loopback vdev: the pool is a file ("r+" rw — no truncate; the pool is
+		 * fixed-size and CoW-rewrites in place, so it never grows the file). */
+		m->backing = fopen(g_backing, m->writable ? "r+" : "r");
+		if (m->backing == 0)
+		{
+			kprintf("ubixfs: cannot open backing image %s\n", g_backing);
+			kfree(m);
+			return (0);
+		}
+		m->io.ctx = m->backing;
+		m->io.read = backing_read;
+		m->io.write = backing_write;
+		m->io.size_blocks = (uint64_t)m->backing->size / UBFS_BLOCK_SIZE;
+	}
 
 	if (ubfs_pool_open(&m->io, &m->pool) < 0)
 	{
-		kprintf("ubixfs: %s is not a UbixFS pool\n", g_backing);
-		fclose(m->backing);
+		kprintf("ubixfs: not a UbixFS pool (%s)\n", m->rawdev ? "raw" : g_backing);
+		if (m->backing)
+			fclose(m->backing);
 		kfree(m);
 		return (0);
 	}
 	if (ubfs_dsl_open(m->pool, &m->dsl) < 0 || ubfs_dsl_lookup(&m->dsl, ROOT_DS, &m->ds_obj) < 0 ||
 	    ubfs_dsl_open_dataset(&m->dsl, m->ds_obj, &m->dp, &m->os) < 0)
 	{
-		kprintf("ubixfs: %s has no '%s' filesystem dataset\n", g_backing, ROOT_DS);
+		kprintf("ubixfs: no '%s' filesystem dataset\n", ROOT_DS);
 		ubfs_pool_close(m->pool);
-		fclose(m->backing);
+		if (m->backing)
+			fclose(m->backing);
 		kfree(m);
 		return (0);
 	}
@@ -218,9 +287,8 @@ static int ubfs_vfs_initfs(struct vfs_mountPoint *mp)
 
 	mp->fsInfo = m;
 	g_mount = m;
-	kprintf("ubixfs: mounted %s (%u blocks, %s) at %s\n",
-	        g_backing,
-	        (u_int32_t)m->io.size_blocks,
+	kprintf("ubixfs: mounted %s pool (%s) at %s\n",
+	        m->rawdev ? "raw" : "loopback",
 	        m->writable ? "rw" : "ro",
 	        mp->mountPoint);
 	return (1);
@@ -478,6 +546,14 @@ void ubfs_vfs_set_backing(const char *path)
 		return;
 	strncpy(g_backing, path, sizeof(g_backing) - 1);
 	g_backing[sizeof(g_backing) - 1] = '\0';
+}
+
+/**
+ * Select the vdev backend (raw block device vs loopback file) for the next mount.
+ */
+void ubfs_vfs_set_raw(int on)
+{
+	g_raw_next = (on != 0);
 }
 
 /**

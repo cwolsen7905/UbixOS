@@ -27,4 +27,14 @@ int ubfs_vfs_init(void);
  */
 void ubfs_vfs_set_backing(const char *path);
 
+/**
+ * Select the vdev backend for the next UbixFS mount.
+ *
+ * @param on  non-zero = raw: the pool lives on a block-device partition, read via
+ *            bcache over mp->device (the path toward a mountable root); zero
+ *            (default) = loopback: the pool is a file (ubfs_vfs_set_backing).
+ *            The flag is consumed by the next vfsInitFS and reset to loopback.
+ */
+void ubfs_vfs_set_raw(int on);
+
 #endif /* _FS_UBIXFS_UBFS_VFS_H */

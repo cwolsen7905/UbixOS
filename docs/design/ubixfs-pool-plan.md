@@ -203,9 +203,27 @@ multi-vdev, xattrs/ACLs (inode reserves the slot).
      `vmm_paging.c` mapped only 8 KB (2 pages) for the i386 `kmain` stack at the
      top of VA (`ESP=0xFFFFFFFF`); `ubfs_pool_open`'s 4 KB `cfgblk` frame
      underflowed it → triple-fault. Now 64 KB (16 pages, `0xFFFF0000..0xFFFFFFFF`).
-     *Remaining:* make a ubixfs pool a *mountable root* candidate (off FAT) + the
-     raw-partition vdev (bcache/virtio-blk on a 2nd disk; waits on multi-device
-     virtio-blk).
+   - **K5 — mountable root (a ubixfs pool as `/`, off FAT). IN PROGRESS (i386
+     first).** The loopback file-backed pool *cannot* be `/` (it needs a host FS
+     underneath for `fopen`), so the root needs the pool on a **raw partition**,
+     read via `bcache`/the block device directly. i386 is the tractable first
+     target: its IDE driver (`sys/pci/hd.c`) already parses the MBR and registers a
+     **separate `ubx_device` per partition** (each with its own `parOffset`), so a
+     raw `bcache` vdev just reads partition-relative LBAs (`bcache_read(dev, blk*8
+     + s, …)`, 8×512 B per 4 KB block) with no multi-device work. aarch64 has a
+     single virtio-blk device with no MBR — it needs MBR/partition + multi-device
+     virtio-blk support first, so it follows. Increments:
+     - **M1 — raw bcache vdev.** `ubfs_vfs_initfs` dispatches on `mp->device`:
+       non-NULL → raw vdev (`bcache_read/write` over the partition device);
+       NULL → the existing loopback (`fopen /pool.img`). Add a 3rd MBR partition
+       (a raw pool) in `mkimage.sh`, `dd` a host-built pool into it, mount it at
+       `/poolraw` read-only, verify reads.
+     - **M2 — populate a pool with the world** (`bin/lib/libexec/etc` via the host
+       `ubfs cp`), mount it read-write at a mountpoint, run a binary off it.
+     - **M3 — mount the pool as `/`** (hybrid: FAT `/boot` for the kernel +
+       `/pool.img`-free; pool partition = root); init/login/world run off the pool.
+       Watch the 8 KB per-thread kstack — the FS now runs in process context.
+     - **M4 — aarch64**: MBR partitioning + multi-device virtio-blk, then the same.
 8. **Later:** snapshots, GRUB module, ACLs, RAID/mirror.
 
 ## Code layout & cleanup
