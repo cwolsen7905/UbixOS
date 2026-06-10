@@ -380,7 +380,15 @@ behind a build flag. Put `MMAP_BASE` / `BRK_BASE` / stack base into a per-arch
   desktop-launch race** (removing the demos' boot-time work exposes a timing
   dependency in the ubistry→authd→views chain — see the 2026-06-10 boot-race
   note). Fix that race first.
-- ⬜ **exec convergence** — `aarch64_exec_replace` vs `i386_exec.c`.
+- 🟢 **exec convergence — neutral glue done** (`1e961e755`) —
+  `exec_set_name_cmdline()` in `sys/kern/kern_exec.c` (basename→name +
+  argv-join→cmdline) shared by `sys_exec` + `aarch64_exec_replace`. aarch64 now
+  gets a clean process name + cmdline (was the bare path, no args). **The ELF
+  loaders stay arch-specific by design** — i386 maps ELF32 segments via the i386
+  vmm; aarch64 loads ELF64 PIE via pmap. These are different ELF classes + VM
+  APIs; a shared loader would be worse architecture, not convergence. So exec is
+  "converged" to the extent it should be; no shared `md_setup_exec_frame()` hook
+  is warranted.
 
 ## Status
 
