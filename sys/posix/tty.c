@@ -1305,6 +1305,11 @@ void pty_free(int slot)
 {
 	if (slot < TTY_PTY_BASE || slot >= TTY_MAX_TERMS)
 		return;
+	/* Releasing a pty is a terminal hangup: SIGHUP its foreground process group
+	 * (falling back to the most recent task attached to it) before clearing the
+	 * slot, so a job — e.g. a browser the user launched from the shell — does not
+	 * outlive the terminal it was started in.  Must run before t_pgrp is cleared. */
+	signal_post_tty(&terms[slot], SIGHUP);
 	terms[slot].t_inuse = 0;
 	terms[slot].t_pgrp = 0;
 	terms[slot].owner = 0;
@@ -1333,9 +1338,8 @@ void tty_hangup_by_owner(pidType pid)
 		if (!t->t_inuse || t->owner != pid)
 			continue;
 
-		/* Post SIGHUP first (signal_post_tty's fallback finds the slave via its
-		 * ct_tty pointer), then free the slot — the master is gone. */
-		signal_post_tty(t, SIGHUP);
+		/* The master is gone — free the slot; pty_free() sends the SIGHUP
+		 * (signal_post_tty's fallback finds the slave via its ct_tty pointer). */
 		pty_free(slot);
 	}
 }
