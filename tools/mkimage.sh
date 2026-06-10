@@ -29,18 +29,15 @@ KERNEL="${KERNEL:-$BUILD/boot/kernel}"
 GRUB_CFG="tools/grub.cfg"
 
 # Root filesystem selector (passed by the `image` target; default fat).
+# The native CoW root is the lite-ZFS pool (docs/design/ubixfs-pool-plan.md);
+# its kernel VFS driver is not wired into the image yet, so fat is the only
+# supported root for now.  (The earlier ubixfs2/BeFS design was superseded.)
 FS="${FS:-fat}"
 case "$FS" in
 fat) ;; # the path below builds a FAT32 root
-ubixfs2)
-    echo "ERROR: FS=ubixfs2 is not wired into the image yet." >&2
-    echo "       The ubixfs2 host tools (tools/ubixfs2/u2fs) and the GRUB ubixfs2" >&2
-    echo "       module are in progress; until they land, build with FS=fat." >&2
-    echo "       Plan: docs/design/ubixfs2-plan.md" >&2
-    exit 1
-    ;;
 *)
-    echo "ERROR: unknown FS '$FS' (expected: fat, ubixfs2)" >&2
+    echo "ERROR: unknown FS '$FS' (only 'fat' is wired into the image today)." >&2
+    echo "       Native CoW root in progress: docs/design/ubixfs-pool-plan.md" >&2
     exit 1
     ;;
 esac

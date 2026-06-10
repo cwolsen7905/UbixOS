@@ -348,12 +348,10 @@ netsurf:
 
 # ── Disk image ───────────────────────────────────────────────────────────────
 
-# Root filesystem for the disk image.  Override on the command line, e.g.
-#   bmake image FS=ubixfs2
-# Default is fat (the only fully-supported root today; macOS-mountable).
-# ubixfs2 is the in-progress permission-capable native FS (see
-# docs/design/ubixfs2-plan.md); /boot stays FAT regardless so GRUB + the macOS
-# dev loop keep working during bring-up.
+# Root filesystem for the disk image.  Default fat (the only fully-supported
+# root today; macOS-mountable).  The native CoW root is the lite-ZFS pool
+# (docs/design/ubixfs-pool-plan.md) — its kernel VFS driver is not wired in yet.
+# /boot stays FAT regardless so GRUB + the macOS dev loop keep working.
 FS ?= fat
 
 # Build a fresh bootable disk image from scratch (GRUB + kernel + world).
