@@ -359,6 +359,24 @@ Extract the arch-neutral fork/exec phases into generic code with
 behind a build flag. Put `MMAP_BASE` / `BRK_BASE` / stack base into a per-arch
 `vmm_layout.h`.
 
+*Progress (2026-06-10):*
+- ✅ **VA layout centralised** (`b4b73d62f`) — `MMAP_BASE`/`BRK_BASE` +
+  `DYN_*`/`USER_STACK_*` consolidated into `<aarch64/vmm_layout.h>`; syscall.c +
+  execfile.c drop their local defines, no value change.
+- ✅ **`fork_copy_fdtable` factored** (`a928a1b3e`) — the open-file-table
+  deep-copy (was inline in i386 `sys_fork` + a static in `aarch64_fork`) is now
+  one MI helper in `sys/kern/kern_fork.c`. Byte-identical to the i386 inline, so
+  i386 behaviour preserved; aarch64 boots to desktop.
+- ⬜ **Fork body** (context inheritance + signal state) — blocked on i386's
+  "clear sig-state *after* `vmm_copy_virtual_space`" ordering hazard and wanting
+  an i386 boot test before touching the mature i386 path.
+- ⬜ **Graduate `bringup/`** — moving `execfile.c`/`ksupport.c` to `kern/` is a
+  low-risk file move; **gating the `*demo.c` files is blocked on the
+  desktop-launch race** (removing the demos' boot-time work exposes a timing
+  dependency in the ubistry→authd→views chain — see the 2026-06-10 boot-race
+  note). Fix that race first.
+- ⬜ **exec convergence** — `aarch64_exec_replace` vs `i386_exec.c`.
+
 ## Status
 
 - **Phase 1 done** (2026-06-09) — the `kconsole` registered-sink abstraction;
@@ -368,7 +386,9 @@ behind a build flag. Put `MMAP_BASE` / `BRK_BASE` / stack base into a per-arch
   directly. The deeper slot-array collapse + `kbd_gui_mode`/`tty_foreground`
   fold are deferred (entangled with the VGA console-read path + GUI-terminal pty
   pool; need interactive verification). See the Phase 2 entry above.
-- **Phases 3+ not started.**
+- **Phase 3 largely done** (2026-06-09) — see the Phase 3 entry.
+- **Phase 5 started** (2026-06-10) — VA layout centralised + `fork_copy_fdtable`
+  factored (both verified, both arches green). See the Phase 5 progress notes.
 - Prereqs already in place from prior work: dual-arch `signal.c` + tty job
   control (see `project_aarch64_signals`), the `g_*` hook pattern, `md_proc`,
   the `machine/` forwarding headers.
