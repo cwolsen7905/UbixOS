@@ -367,9 +367,14 @@ behind a build flag. Put `MMAP_BASE` / `BRK_BASE` / stack base into a per-arch
   deep-copy (was inline in i386 `sys_fork` + a static in `aarch64_fork`) is now
   one MI helper in `sys/kern/kern_fork.c`. Byte-identical to the i386 inline, so
   i386 behaviour preserved; aarch64 boots to desktop.
-- ⬜ **Fork body** (context inheritance + signal state) — blocked on i386's
-  "clear sig-state *after* `vmm_copy_virtual_space`" ordering hazard and wanting
-  an i386 boot test before touching the mature i386 path.
+- ✅ **Fork body converged** (`fc6c2da6f`) — `proc_fork_inherit_context()` +
+  `proc_fork_signal_init()` in kern_fork.c; both `sys_fork`/`aarch64_fork` call
+  them. i386 keeps only TSS-frame + `vmm_copy_virtual_space`; aarch64 keeps
+  `pmap_fork_copy` + the kstack frame. signal_init runs after the AS copy
+  (i386 hazard respected). aarch64 now also clears pending signals + inherits
+  dispositions/QoS/attached-tty on fork (previously did neither). **Boot-tested
+  both arches** (i386 image built this session): i386 VESA desktop + SIGCHLD
+  reaping, aarch64 graphical desktop.
 - ⬜ **Graduate `bringup/`** — moving `execfile.c`/`ksupport.c` to `kern/` is a
   low-risk file move; **gating the `*demo.c` files is blocked on the
   desktop-launch race** (removing the demos' boot-time work exposes a timing
