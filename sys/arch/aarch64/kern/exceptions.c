@@ -64,11 +64,20 @@ void aarch64_exception(u_int64_t kind, void *frame)
 	if (kind == EXC_IRQ)
 	{
 		struct trapframe *tf = (struct trapframe *)frame;
-		aarch64_irq_dispatch();
-		if (_current != 0 && (tf->tf_spsr & SPSR_M_MASK) == 0)
+		int ticked = aarch64_irq_dispatch();
+		int from_el0 = (tf->tf_spsr & SPSR_M_MASK) == 0;
+
+		/* Non-preemptible kernel: only a timer tick that interrupted EL0 (user
+		 * mode) triggers a reschedule.  An EL1 (kernel) context — e.g. a driver
+		 * busy-polling a virtio ring during boot — must run to its next voluntary
+		 * sched_yield()/block instead of being preempted mid-spin: the aarch64
+		 * resume of a preempted EL1 spin is what wedges the desktop launch.
+		 * Kernel threads already cooperate (RX poll yields, tcpip blocks). */
+		if (ticked && from_el0 && _current != 0)
 		{
 			_current->td.frame = tf;
-			signal_check(tf);
+			signal_check(tf); /* deliver Ctrl-C etc. to a CPU-bound foreground task */
+			sched();          /* preempt the user task */
 		}
 		return;
 	}

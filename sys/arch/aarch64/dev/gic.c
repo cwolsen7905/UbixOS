@@ -54,14 +54,18 @@ void gic_enable_intid(unsigned intid)
 /**
  * IRQ dispatch (called from the EL1 IRQ vector): ack via IAR, route by INTID,
  * then signal end-of-interrupt via EOIR.
+ *
+ * @return non-zero if a timer tick occurred (the caller, aarch64_exception,
+ *         reschedules on a tick — but only when EL0 was interrupted, so the
+ *         kernel itself runs non-preemptibly).
  */
-void aarch64_irq_dispatch(void)
+int aarch64_irq_dispatch(void)
 {
 	u_int32_t iar = GICC(GICC_IAR);
 	u_int32_t intid = iar & 0x3FF;
 
 	if (intid >= GICC_SPURIOUS)
-		return; /* spurious — no EOI */
+		return (0); /* spurious — no EOI */
 
 	if (intid == 27) /* EL1 virtual (generic) timer PPI */
 		timer_tick();
@@ -70,9 +74,10 @@ void aarch64_irq_dispatch(void)
 
 	GICC(GICC_EOIR) = iar; /* EOI before any context switch */
 
-	/* Timer tick drives the scheduler (preemption).  Called AFTER EOI so the GIC
-	 * priority is dropped before switch_to resumes a different task — otherwise
-	 * the preempted-away interrupt stays active and the next task gets no ticks. */
-	if (intid == 27)
-		sched();
+	/* The reschedule is driven by the caller (after EOI, so the GIC priority is
+	 * already dropped) and ONLY when the tick interrupted EL0 — see
+	 * aarch64_exception.  This makes the kernel non-preemptible: an EL1 context
+	 * busy-polling a virtio ring during bring-up runs to its next voluntary
+	 * sched_yield() instead of being preempted mid-spin and left unresumed. */
+	return (intid == 27);
 }

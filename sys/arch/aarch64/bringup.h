@@ -33,7 +33,7 @@ extern char vectors_el1[]; /* vector table base (vectors.S) */
 /* gic.c — GICv2 interrupt controller. */
 void gic_init(void);
 void gic_enable_intid(unsigned intid);
-void aarch64_irq_dispatch(void); /* called from the EL1 IRQ vector */
+int aarch64_irq_dispatch(void); /* EL1 IRQ vector; returns non-zero on a timer tick */
 
 /* timer.c — ARM generic timer (EL1 physical, PPI 30). */
 void timer_init(void);
