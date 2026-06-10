@@ -237,12 +237,12 @@ int kmain(u_int32_t rootdev)
 		 * loopback pool — ubixfs over /pool.img over FAT, the same arch-neutral
 		 * driver).  Read-back proves the VFS dispatch; the boot.log write proves
 		 * the write path + txg commit persist across reboot. */
+		ubfs_vfs_init();
 		{
 			fileDescriptor_t *probe = fopen("/pool.img", "r");
 			if (probe != NULL)
 			{
 				fclose(probe);
-				ubfs_vfs_init();
 				if (vfs_mount(0, 0, 0, VFS_TYPE_UBIXFS, "/pool", "rw") == 0)
 				{
 					fileDescriptor_t *pf = fopen("/pool/hello.txt", "r");
@@ -283,6 +283,32 @@ int kmain(u_int32_t rootdev)
 					}
 				}
 			}
+		}
+
+		/* UbixFS RAW pool (plan K5/M1): mount the pool that lives on its own
+		 * block-device partition (type 0x9C, ad0s3 = major 1, minor 3 — see hd.c's
+		 * per-partition device registration) at /poolraw, via the bcache raw vdev.
+		 * This is the path toward a mountable root (no loopback file under FAT). */
+		ubfs_vfs_set_raw(1);
+		if (vfs_mount(1, 3, 0, VFS_TYPE_UBIXFS, "/poolraw", "rw") == 0)
+		{
+			fileDescriptor_t *pf = fopen("/poolraw/hello.txt", "r");
+			char rb[96];
+			int n;
+			if (pf != NULL)
+			{
+				n = (int)fread(rb, 1, sizeof(rb) - 1, pf);
+				if (n > 0)
+				{
+					rb[n] = '\0';
+					kprintf("ubixfs: read /poolraw/hello.txt (%d bytes): %s", n, rb);
+				}
+				fclose(pf);
+			}
+		}
+		else
+		{
+			kprintf("ubixfs: raw pool mount (/poolraw) failed or absent\n");
 		}
 	}
 

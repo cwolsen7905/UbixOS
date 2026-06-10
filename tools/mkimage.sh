@@ -19,9 +19,10 @@
 set -e
 
 IMG="${1:-ubixos.img}"
-IMG_SIZE_MB=512
+IMG_SIZE_MB=544
 FAT_SIZE_MB=448     # FAT32 partition (type 0x0C)
 SWAP_SIZE_MB=64     # raw swap partition (type 0x82)
+POOL_SIZE_MB=16     # UbixFS pool partition (type 0x9C; raw block-device mount)
 # BUILD/KERNEL honor the environment so the arch-homed build dir (build/i386)
 # can be passed in by the `image` target; default to the flat layout otherwise.
 BUILD="${BUILD:-build}"
@@ -67,7 +68,7 @@ echo "==> Creating disk image: $IMG (${IMG_SIZE_MB} MB)"
 qemu-img create -f raw "$IMG" "${IMG_SIZE_MB}M"
 
 # ── Partition table: FAT32 + raw swap ──────────────────────────────────────
-python3 - "$IMG" "$FAT_SIZE_MB" "$SWAP_SIZE_MB" <<'PYEOF'
+python3 - "$IMG" "$FAT_SIZE_MB" "$SWAP_SIZE_MB" "$POOL_SIZE_MB" <<'PYEOF'
 import sys, struct
 img_path    = sys.argv[1]
 fat_size_mb = int(sys.argv[2])
@@ -80,21 +81,32 @@ fat_sectors = fat_size_mb * 1024 * 1024 // SECTOR
 fat_end     = fat_start + fat_sectors - 1
 swap_start  = fat_end + 1
 swap_end    = swap_start + int(sys.argv[3]) * 1024 * 1024 // SECTOR - 1
+pool_start  = swap_end + 1
+pool_end    = pool_start + int(sys.argv[4]) * 1024 * 1024 // SECTOR - 1
 fat_entry  = struct.pack('<BBBBBBBBII',
     0x80, *lba_to_chs(fat_start),  0x0C, *lba_to_chs(fat_end),
     fat_start,  fat_sectors)
 swap_entry = struct.pack('<BBBBBBBBII',
     0x00, *lba_to_chs(swap_start), 0x82, *lba_to_chs(swap_end),
     swap_start, swap_end - swap_start + 1)
+pool_entry = struct.pack('<BBBBBBBBII',
+    0x00, *lba_to_chs(pool_start), 0x9C, *lba_to_chs(pool_end),
+    pool_start, pool_end - pool_start + 1)
 with open(img_path, 'r+b') as f:
     f.seek(446)
     f.write(fat_entry)
     f.write(swap_entry)
-    f.write(b'\x00' * 32)   # entries 2 and 3 unused
+    f.write(pool_entry)
+    f.write(b'\x00' * 16)   # entry 3 unused
     f.write(b'\x55\xAA')
+    # Stash the pool partition start LBA for the dd step below.
+with open(img_path + '.poollba', 'w') as g:
+    g.write(str(pool_start))
 print(f"  FAT32: LBA {fat_start}-{fat_end} ({fat_size_mb} MB)")
 print(f"  Swap:  LBA {swap_start}-{swap_end} ({sys.argv[3]} MB, type 0x82)")
+print(f"  Pool:  LBA {pool_start}-{pool_end} ({sys.argv[4]} MB, type 0x9C)")
 PYEOF
+POOL_LBA=$(cat "$IMG.poollba"); rm -f "$IMG.poollba"
 
 # ── Format FAT32 partition (size-limited to FAT_SIZE_MB) ───────────────────
 FAT_SECTORS=$(( FAT_SIZE_MB * 1024 * 1024 / 512 ))
@@ -270,8 +282,15 @@ if ( cd tools/ubixfs && bmake ubfs ) >/dev/null 2>&1 && [ -x tools/ubixfs/ubfs ]
     "$UBFS" cp "$POOL.hello"  "$POOL:/hello.txt"  >/dev/null
     "$UBFS" cp "$POOL.readme" "$POOL:/etc/readme" >/dev/null
     mcopy -o -i "$IMG"@@1M "$POOL" ::/pool.img
+    echo "    Installed: /pool.img (loopback, kernel mounts it at /pool)"
+    # Also write the same pool into the raw pool PARTITION (type 0x9C) so the
+    # kernel can mount it via the raw block-device vdev at /poolraw (mountable-root
+    # path).  POOL_LBA is the partition start sector (from the MBR step above).
+    if [ -n "${POOL_LBA:-}" ]; then
+        dd if="$POOL" of="$IMG" bs=512 seek="$POOL_LBA" conv=notrunc 2>/dev/null
+        echo "    Installed: pool partition at LBA $POOL_LBA (raw, kernel mounts it at /poolraw)"
+    fi
     rm -f "$POOL" "$POOL.hello" "$POOL.readme"
-    echo "    Installed: /pool.img (kernel mounts it at /pool)"
 else
     echo "    WARNING: host ubfs tool unavailable; skipped /pool.img"
 fi
