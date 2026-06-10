@@ -187,23 +187,25 @@ multi-vdev, xattrs/ACLs (inode reserves the slot).
      context, K4+.) Localised with `kprintf` checkpoints + a `backing_read` buffer
      guard that exposed every block buffer sitting at a low `0x4028xxxx` stack
      address.
-   - **K4 — i386 parity. ⚠️ BUILD WIRING DONE; auto-mount blocked.** The driver +
-     core now compile + link into the **i386** kernel: `sys/fs/ubixfs/Makefile`
-     builds the new driver (`ubfs_vfs.c` + `ubfs_kshim.c` + the 6 `lib/ubixfs_core`
-     files via `.PATH` + the compat/core/include `-I`s), replacing the dead v1
-     BeFS driver (`thread/ubixfs/directory/block/dir_cache.c`, still in-tree but
-     unbuilt); `sys/compile/Makefile` re-enables the `obj/sys/ubixfs/*.o` link glob.
-     `sys/init/main.c` registers the driver + mounts `/pool` rw after the FAT root
-     (guarded by a `/pool.img` probe — dormant on default images, which don't stage
-     it). The i386 boot stack was bumped 4 KB → 64 KB (`start.S`, the aarch64
-     fix's twin). **Blocker:** with a pool staged, the i386 mount *hangs* (no
-     fault) inside `vfsInitFS` **before** the first `backing_read` — so in the
-     backing `fopen("r+")` / `ubfs_pool_open` setup, not the block reads. Note
-     i386 `kmain` runs on the `0xFFFFFFFF` top-of-VA stack (`start.S:157`), not
-     `kStack` — so the bump above may be the wrong stack; root-cause is still open
-     (stack-region size at the top of VA vs a 32-bit core issue — the core had
-     never been built for a 32-bit target before). Default i386 images boot clean
-     (mount skipped). Then make a ubixfs pool a *mountable root* candidate (off FAT).
+   - **K4 — i386 parity. ✅ DONE.** The driver + core compile + link into the
+     **i386** kernel: `sys/fs/ubixfs/Makefile` builds the new driver (`ubfs_vfs.c`
+     + `ubfs_kshim.c` + the 6 `lib/ubixfs_core` files via `.PATH` + the
+     compat/core/include `-I`s), replacing the dead v1 BeFS driver
+     (`thread/ubixfs/directory/block/dir_cache.c`, still in-tree but unbuilt);
+     `sys/compile/Makefile` re-enables the `obj/sys/ubixfs/*.o` link glob;
+     `sys/init/main.c` registers + mounts `/pool` rw after the FAT root (guarded
+     by a `/pool.img` probe); `mkimage.sh` stages `/pool.img` like `mkimage-arm.sh`.
+     Verified end to end (fresh `bmake image`): i386 boots → mounts → reads
+     `/pool/hello.txt` → writes `/pool/boot.log` + commits → continues to the VESA
+     desktop, and a second boot reads the prior marker (persistence). **Two stack
+     fixes** (the portable core nests 4 KB `block[BS]` frames — the same class of
+     bug fixed on aarch64): `start.S` boot stack 4 KB → 64 KB, and — the real one —
+     `vmm_paging.c` mapped only 8 KB (2 pages) for the i386 `kmain` stack at the
+     top of VA (`ESP=0xFFFFFFFF`); `ubfs_pool_open`'s 4 KB `cfgblk` frame
+     underflowed it → triple-fault. Now 64 KB (16 pages, `0xFFFF0000..0xFFFFFFFF`).
+     *Remaining:* make a ubixfs pool a *mountable root* candidate (off FAT) + the
+     raw-partition vdev (bcache/virtio-blk on a 2nd disk; waits on multi-device
+     virtio-blk).
 8. **Later:** snapshots, GRUB module, ACLs, RAID/mirror.
 
 ## Code layout & cleanup
