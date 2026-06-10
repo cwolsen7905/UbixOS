@@ -41,3 +41,9 @@
 #define TIOCGETD  0x4004741AU  /* _IOR('t', 26, int) */
 #undef  TIOCSETD
 #define TIOCSETD  0x8004741BU  /* _IOW('t', 27, int) */
+
+/* bytes-ready — Linux 0x541B → FreeBSD.  busybox vi/less peek with FIONREAD to
+ * tell a lone ESC from a cursor-key CSI; the Linux value misses the kernel's
+ * FreeBSD case, so arrow keys break (ESC parsed as a command). */
+#undef  FIONREAD
+#define FIONREAD  0x4004667FU  /* _IOR('f', 127, int) */
