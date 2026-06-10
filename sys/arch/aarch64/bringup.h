@@ -149,6 +149,9 @@ extern u_int32_t virtio_gpu_pitch;
 
 /* virtio_input.c — virtio-mmio keyboard/mouse (Linux input events). */
 int aarch64_virtio_input_init(void); /* scan + bring up all input devices; count */
+
+/* virtio_sound.c — virtio-mmio PCM playback exposed as /dev/audio. */
+int aarch64_virtio_sound_init(void); /* scan + bring up + start a 44.1kHz output stream */
 int virtio_input_poll(void (*deliver)(int dev, u_int16_t type, u_int16_t code, u_int32_t value));
 
 #endif /* _AARCH64_BRINGUP_H */

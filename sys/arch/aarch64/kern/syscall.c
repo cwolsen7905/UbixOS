@@ -293,9 +293,14 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args)
 			 * on this).  Plain console/placeholder/no-table fds keep the bring-up
 			 * UART path (sc_write), which is also what the early EL0 demos rely on. */
 			struct file *f = aarch64_lookup_fd((int)args[0]);
-			if (f != 0 &&
-			    (f->fd_type == FD_TYPE_TTYV || f->fd_type == FD_TYPE_SOCKET || f->fd_type == FD_TYPE_PIPE))
+			if (f != 0 && (f->fd_type == FD_TYPE_TTYV || f->fd_type == FD_TYPE_SOCKET ||
+			               f->fd_type == FD_TYPE_PIPE || f->fd != 0))
 			{
+				/* Anything with a real underlying descriptor (a VFS/devfs file
+				 * such as /dev/audio, a regular file) or a pty/socket/pipe goes
+				 * through sys_write so the fileops/VFS pick the destination.  Only
+				 * the bare console placeholder fds (fd==NULL, FD_TYPE_TTY) keep the
+				 * bring-up UART path (sc_write) the early EL0 demos rely on. */
 				struct sys_write_args ua;
 				ua.fd = (int)args[0];
 				ua.buf = (void *)(uintptr_t)args[1];

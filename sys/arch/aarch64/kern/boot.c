@@ -181,6 +181,7 @@ void kmain_aarch64(void)
 			 * (for views/objGFX). */
 			aarch64_virtio_gpu_init();
 			aarch64_virtio_input_init();
+			aarch64_virtio_sound_init(); /* /dev/audio (virtio-sound PCM playback) */
 
 			/* Graphical desktop chain (#5): start authd (the "authd" MPI mailbox
 			 * for credential checks), then run the views compositor off disk — it
