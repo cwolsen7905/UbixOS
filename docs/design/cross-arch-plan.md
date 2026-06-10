@@ -111,6 +111,21 @@ VA layout, demos gated).  **Remaining cross-arch work: 15a virtio-sound**, plus
 the deferred kernel refinements (TTBR1 kernel/user split — kernel still in
 TTBR0; COW fork; routing the SVC entry fully onto the generic syscall tables).
 
+**COW fork attempted + reverted (2026-06-10).** A working COW implementation
+(PTE_COW software bit + pmap_fork_copy sharing writable pages RO+COW + a
+pmap_cow_fault data-abort handler; aarch64 leaks user pages so no refcount was
+needed) booted to the desktop in headless tests but **broke the graphical login**:
+`views` calls `sys_mapfb` to map the virtio-gpu scanout buffer, *then* forks
+`vlogin`.  pmap_fork_copy COW-marked views' writable pages **including the
+framebuffer**, so views' next composite write COW-faulted and got a private RAM
+copy while the GPU kept scanning out the original — screen froze on the
+background, no login form.  (i386 escapes this: its LFB is MMIO *above* RAM and
+its COW already guards `phys >= numPages`; the virtio-gpu fb is in-RAM, so that
+guard doesn't catch it.)  **To land COW: exclude device/shared mappings from
+COW in pmap_fork_copy** — i.e. don't COW-mark the sys_mapfb framebuffer or
+vmm_share_region buffers (share them writable as-is).  Tag those PTEs (a
+software bit set by sys_mapfb / share_region) and skip them in the COW walk.
+
 ### Progress update (2026-06-07)
 
 Track A is **effectively complete**: the TLS quarantine (the last substantive
