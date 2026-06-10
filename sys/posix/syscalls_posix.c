@@ -52,7 +52,7 @@ struct syscall_entry systemCalls_posix[] = {
     {ARG_COUNT(sys_chdir_args), "cgdur", (sys_call_t *)sys_chdir, SYSCALL_VALID},                               /* 12 */
     {ARG_COUNT(sys_fchdir_args), "fchdir", sys_fchdir, SYSCALL_VALID},                                          /* 13 */
     {0, "mknod", sys_invalid, SYSCALL_NOTIMP},                                                                  /* 14 */
-    {0, "chmod", sys_invalid, SYSCALL_NOTIMP},                                                                  /* 15 */
+    {ARG_COUNT(chmod_args), "chmod", (sys_call_t *)chmod, SYSCALL_VALID},                                  /* 15 */
     {0, "chown", sys_invalid, SYSCALL_NOTIMP},                                                                  /* 16 */
     {ARG_COUNT(obreak_args), "break", (sys_call_t *)obreak, SYSCALL_VALID},                                     /* 17 */
     {0, "No Call", sys_invalid, SYSCALL_INVALID},                                                               /* 18 */
@@ -94,7 +94,7 @@ struct syscall_entry systemCalls_posix[] = {
     {ARG_COUNT(sys_ioctl_args), "ioctl", sys_ioctl, SYSCALL_VALID},                                             // 54 - ioctl
     {0, "reboot", sys_invalid, SYSCALL_NOTIMP},                                                                 // 55 - reboot
     {0, "revoke", sys_invalid, SYSCALL_NOTIMP},                                                                 // 56 - revoke
-    {0, "symlink", sys_invalid, SYSCALL_NOTIMP},                                                                /* 57 */
+    {ARG_COUNT(symlink_args), "symlink", (sys_call_t *)symlink, SYSCALL_VALID},                            /* 57 */
     {ARG_COUNT(sys_readlink_args), "readlink", sys_readlink, SYSCALL_VALID},                                    /* 58 */
     {ARG_COUNT(sys_execve_args), "execve", (sys_call_t *)sys_execve, SYSCALL_VALID},                            // 59 - execv
     {ARG_COUNT(sys_umask_args), "umask", (sys_call_t *)sys_umask, SYSCALL_VALID},                              //  60 - umask

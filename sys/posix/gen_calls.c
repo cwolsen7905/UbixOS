@@ -202,6 +202,31 @@ int mprotect(struct thread *td, struct mprotect_args *uap)
 	return (0);
 }
 
+/*
+ * chmod(path, mode) — the FAT/devfs roots store no permission bits, so there is
+ * nothing to change; report success (a real -1 would break build tools / cp -p /
+ * install that chmod a file they just created).  Path validation is intentionally
+ * skipped to match the rest of the FAT-era POSIX surface.
+ */
+int chmod(struct thread *td, struct chmod_args *uap)
+{
+	(void)uap;
+	td->td_retval[0] = 0;
+	return (0);
+}
+
+/*
+ * symlink(target, path) — the FAT root has no symbolic links.  POSIX uses EPERM
+ * for "the filesystem does not support symlinks", so report that honestly rather
+ * than silently succeeding.
+ */
+int symlink(struct thread *td, struct symlink_args *uap)
+{
+	(void)uap;
+	td->td_retval[0] = -EPERM;
+	return (EPERM);
+}
+
 int sys_kill(struct thread *td, struct sys_kill_args *uap)
 {
 	/*

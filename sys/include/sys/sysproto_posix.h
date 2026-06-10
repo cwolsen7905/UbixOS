@@ -407,6 +407,28 @@ struct access_args
 	char flags_r_[PADR_(int)];
 };
 
+struct chmod_args
+{
+	char path_l_[PADL_(char *)];
+	char *path;
+	char path_r_[PADR_(char *)];
+
+	char mode_l_[PADL_(int)];
+	int mode;
+	char mode_r_[PADR_(int)];
+};
+
+struct symlink_args
+{
+	char target_l_[PADL_(char *)];
+	char *target;
+	char target_r_[PADR_(char *)];
+
+	char path_l_[PADL_(char *)];
+	char *path;
+	char path_r_[PADR_(char *)];
+};
+
 struct sys_fstatfs_args
 {
 	char fd_l_[PADL_(int)];
@@ -1277,6 +1299,8 @@ int setitimer(struct thread *td, struct setitimer_args *uap);
 int access(struct thread *td, struct access_args *uap);
 int fstatfs(struct thread *td, struct sys_fstatfs_args *uap);
 int mprotect(struct thread *td, struct mprotect_args *uap);
+int chmod(struct thread *td, struct chmod_args *uap);
+int symlink(struct thread *td, struct symlink_args *uap);
 
 int sys_statfs(struct thread *td, struct sys_statfs_args *args);
 int sys_fstatfs(struct thread *td, struct sys_fstatfs_args *);
