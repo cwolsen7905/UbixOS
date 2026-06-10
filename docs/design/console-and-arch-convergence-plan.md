@@ -337,20 +337,23 @@ fork (needs the trapframe), execve (dynamic loader), mmap/brk/munmap (arch VA),
 the `write`/`writev` UART-vs-fileops shortcut, exit.  Start with #1 (it's the
 foundation and unblocks the bulk of the prune); #2 and #3 follow.
 
-**Phase 3.5 — `fbcon` as a `kconsole` sink.**
-Build the deferred `fbcon.md` spec, generalised over a linear-framebuffer
-descriptor (i386 VESA LFB / aarch64 virtio-gpu) with a small built-in 8x16
-bitmap font, registered as a `KC_PRIMARY | KC_SUSPENDABLE` sink. Gives on-screen
-boot log, safe/recovery-mode text, and on-screen panic — independent of `views`.
-This is what makes the *base* (non-graphical) profile usable on a
-screen-equipped SBC.
+**Phase 3.5 — `fbcon` as a `kconsole` sink. ✅ DONE (aarch64, 2026-06-10, `6db8e3dc1`).**
+`sys/arch/aarch64/dev/fbcon.c`: an 8x8-glyph `KC_PRIMARY | KC_SUSPENDABLE`
+kconsole sink rendering into the virtio-gpu scanout, registered after GPU init,
+suspended by `sys_mapfb` when `views` claims the screen.  On-screen boot log /
+panic / base-profile console, independent of `views`, with serial always on.
+i386 keeps VGA text + COM1 (its VESA LFB is owned by `views`; a kernel fb
+console would conflict) — done for the arch that needs it.
 
-**Phase 4 — Image profiles.**
-Formalise the userland split into image profiles built from one tree: a **base**
-profile (no `views`; `init` runs a console shell — the headless/IoT/safe-mode
-config) and a **desktop** profile (base + `views` + `vlogin` + apps). Same
-kernel; the profile selects what `mkimage*` stages and what `init` launches. The
-existing `mkimage-arm.sh` / `mkimage.sh` grow a profile knob.
+**Phase 4 — Image profiles. ✅ DONE (aarch64, 2026-06-10, `a7837bcdb`).**
+`mkimage-arm.sh PROFILE=base|desktop`: a **base** image ships the CLI world only
+(no compositor/apps/desktop libs/resources); a **desktop** image is the full
+stack.  `boot.c` branches on `/bin/views` being staged — present → the
+desktop chain, absent → the BASE console chain (`authd` + `/bin/login` on the
+kernel console, fbcon + serial).  Same kernel.  Verified: base image boots to the
+console login; desktop image unchanged.  *Follow-up:* the parallel i386 profile
+(init-side branch in `mkimage.sh`), and on-screen keyboard input for a
+screen-equipped (non-serial) base console.
 
 **Phase 5 — Factor fork/exec + graduate `bringup/` + centralise VA layout.**
 Extract the arch-neutral fork/exec phases into generic code with
