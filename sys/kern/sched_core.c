@@ -30,6 +30,7 @@
 #include <ubixos/sched.h>
 #include <ubixos/sched_internal.h>
 #include <ubixos/kpanic.h>
+#include <machine/signal.h> /* SIGCHLD — child-stop notification to the parent */
 #include <ubixos/spinlock.h>
 #include <ubixos/wait.h>
 #include <lib/kmalloc.h>
@@ -532,11 +533,19 @@ void sched_stop(kTask_t *t, int sig)
 	rq_dequeue_locked(t);
 	t->state = STOPPED;
 	t->t_stopped_sig = sig;
-	/* Wake parent so it can collect the stop event via WUNTRACED. */
-	if (t->parent != NULL && t->parent->state == WAIT)
+	/* POSIX: a child stopping generates SIGCHLD for the parent, exactly as an
+	 * exit does (see the reaper in sched_dispatch.c).  Without it a job-control
+	 * shell blocked in sigsuspend never wakes to collect the stop via
+	 * wait4(WUNTRACED), so the terminal wedges.  Post SIGCHLD and make the parent
+	 * runnable so it delivers the signal and re-polls wait4. */
+	if (t->parent != NULL && t->parent->state != DEAD && t->parent->state != ZOMBIE)
 	{
-		t->parent->state = READY;
-		rq_enqueue_locked(t->parent);
+		t->parent->td.sig_pending |= (1u << (SIGCHLD - 1));
+		if (t->parent->state != READY)
+		{
+			t->parent->state = READY;
+			rq_enqueue_locked(t->parent);
+		}
 	}
 	spinUnlock(&schedulerSpinLock);
 	restore_flags(flags);

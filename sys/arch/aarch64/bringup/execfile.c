@@ -613,7 +613,38 @@ static kTask_t *find_and_reap_child(int want_pid, int *have_child)
  *
  * @return the reaped child's pid, 0 if WNOHANG and nothing exited, or -ECHILD.
  */
-#define WAIT4_WNOHANG 1 /* POSIX WNOHANG */
+/**
+ * Scan the current task's children for one that has STOPPED (Ctrl-Z / SIGSTOP)
+ * and whose stop has not yet been reported to wait4 (t_stopped_sig != 0).  Does
+ * NOT reap — a stopped child is collected later, once it continues and exits.
+ *
+ * @return the stopped child, or NULL if none has a pending (unreported) stop.
+ */
+static kTask_t *find_stopped_child(int want_pid)
+{
+	u_int32_t flags;
+	kTask_t *t, *found = NULL;
+
+	save_flags(flags);
+	cli();
+	for (t = taskList; t != NULL; t = t->next)
+	{
+		if (t->parent != _current)
+			continue;
+		if (want_pid != -1 && (int)t->id != want_pid)
+			continue;
+		if (t->state == STOPPED && t->t_stopped_sig != 0)
+		{
+			found = t;
+			break;
+		}
+	}
+	restore_flags(flags);
+	return (found);
+}
+
+#define WAIT4_WNOHANG 1   /* POSIX WNOHANG */
+#define WAIT4_WUNTRACED 2 /* POSIX WUNTRACED — also report stopped children */
 int aarch64_wait4(int want_pid, int *status, int options)
 {
 	for (;;)
@@ -629,6 +660,25 @@ int aarch64_wait4(int want_pid, int *status, int options)
 				*status = 0; /* exit code not yet propagated; report 0 */
 			return ((int)child->id);
 		}
+
+		/* WUNTRACED: report a child that stopped (Ctrl-Z / SIGSTOP) without
+		 * reaping it, so a job-control shell (tcsh) learns its foreground job
+		 * suspended and can reclaim the controlling terminal.  The stop is
+		 * edge-triggered: t_stopped_sig is cleared once reported, and a later
+		 * SIGCONT resumes the child via its STOPPED state.  Without this, wait4
+		 * never returns for a stopped child and the terminal wedges. */
+		if (options & WAIT4_WUNTRACED)
+		{
+			kTask_t *st = find_stopped_child(want_pid);
+			if (st != NULL)
+			{
+				if (status != NULL && (uintptr_t)status >= 0x100000000UL)
+					*status = (st->t_stopped_sig << 8) | 0x7f; /* W_STOPCODE(sig) */
+				st->t_stopped_sig = 0;
+				return ((int)st->id);
+			}
+		}
+
 		if (!have_child)
 			return (-ECHILD);
 
