@@ -37,6 +37,11 @@ mcopy -i "${IMG}" "${BUILD}/lib/libc.so" ::/lib/ld-musl-aarch64.so.1
 [ -f "${BUILD}/lib/libbearssl.so" ] && mcopy -i "${IMG}" "${BUILD}/lib/libbearssl.so" ::/lib/libbearssl.so || true
 # objGFX rendering library — needed by the views compositor + every GUI app.
 [ -f "${BUILD}/lib/libobjgfx.so" ] && mcopy -i "${IMG}" "${BUILD}/lib/libobjgfx.so" ::/lib/libobjgfx.so || true
+# NetSurf browser (nsfb) shared-library stack + its zlib/http deps.
+for _l in libcss libdom libhubbub libparserutils libwapcaplet libnsfb \
+          libnsgif libnsbmp libnsutils libutf8proc libz libhttp; do
+	[ -f "${BUILD}/lib/${_l}.so" ] && mcopy -i "${IMG}" "${BUILD}/lib/${_l}.so" "::/lib/${_l}.so" || true
+done
 
 # The whole world (all dynamically-linked PIE binaries).
 for b in "${BUILD}"/bin/*; do
@@ -72,6 +77,28 @@ done
 # from /var/db/ubistry.db at startup.
 mmd -i "${IMG}" ::/var/db 2>/dev/null || true
 [ -f tools/ubistry.db ] && mcopy -o -i "${IMG}" tools/ubistry.db ::/var/db/ubistry.db || true
+
+# NetSurf browser runtime resources (Messages, CSS, icons) at the path baked into
+# nsfb's resource search list, plus the stb_truetype faces (8.3 names so the FAT
+# driver never disambiguates colliding long-name aliases).  Mirrors mkimage.sh.
+if [ -d contrib/netsurf-res ]; then
+	mmd -i "${IMG}" ::/usr ::/usr/local ::/usr/local/share ::/usr/local/share/netsurf 2>/dev/null || true
+	mcopy -s -i "${IMG}" contrib/netsurf-res/* ::/usr/local/share/netsurf/
+	install_face() { [ -f "tools/$1" ] && mcopy -o -i "${IMG}" "tools/$1" "::/usr/local/share/netsurf/$2"; }
+	install_face DejaVuSans.ttf                 SANS.TTF
+	install_face DejaVuSans-Bold.ttf            SANSB.TTF
+	install_face DejaVuSans-Oblique.ttf         SANSI.TTF
+	install_face DejaVuSans-BoldOblique.ttf     SANSBI.TTF
+	install_face DejaVuSerif.ttf                SERIF.TTF
+	install_face DejaVuSerif-Bold.ttf           SERIFB.TTF
+	install_face DejaVuSerif-Italic.ttf         SERIFI.TTF
+	install_face DejaVuSerif-BoldItalic.ttf     SERIFBI.TTF
+	install_face DejaVuSansMono.ttf             MONO.TTF
+	install_face DejaVuSansMono-Bold.ttf        MONOB.TTF
+	install_face DejaVuSansMono-Oblique.ttf     MONOI.TTF
+	install_face DejaVuSansMono-BoldOblique.ttf MONOBI.TTF
+	echo "mkimage-arm: installed NetSurf resources (/usr/local/share/netsurf)"
+fi
 
 echo "mkimage-arm: done — contents:"
 mdir -i "${IMG}" ::/bin | tail -n +4 | head -20
