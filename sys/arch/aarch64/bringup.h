@@ -125,6 +125,7 @@ void aarch64_run_init(const char *path);                   /* run /bin/init + be
 void aarch64_run_dynamic(const char *path);                /* load+run a PIE program, wait (capped) */
 void aarch64_run_dynamic_init(const char *path);           /* run a PIE program as the system (no return) */
 void aarch64_spawn_dynamic(const char *path);              /* schedule a PIE daemon, return (no wait) */
+int aarch64_file_exists(const char *path);                 /* boot profile selector: is @path staged? */
 
 /* virtio_blk.c — virtio-mmio block device (returns a ubx_device with blk ops). */
 struct ubx_device;

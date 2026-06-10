@@ -15,6 +15,16 @@ IMG=${1:-ubixos-arm.img}
 BUILD=${2:-build/aarch64}
 SIZE_MB=64
 
+# Image profile (docs/design/console-and-arch-convergence-plan.md Phase 4):
+#   desktop — full graphical stack (views + objGFX + vlogin + apps).
+#   base    — headless/IoT/safe-mode: CLI world only, no compositor.  The kernel
+#             branches on /bin/views being present, so a base image (no views)
+#             boots straight to the text-console login.
+PROFILE="${PROFILE:-desktop}"
+# Binaries that belong only to the desktop profile (skipped for base).
+DESKTOP_BINS=" views vlogin vdoom tessera nsfb settings nsfbtest fbtest "
+echo "mkimage-arm: profile=${PROFILE}"
+
 if [ ! -f "${BUILD}/lib/libc.so" ]; then
 	echo "mkimage-arm: ${BUILD}/lib/libc.so missing — run 'bmake world TARGET=aarch64' first" >&2
 	exit 1
@@ -35,20 +45,29 @@ mcopy -i "${IMG}" "${BUILD}/lib/libc.so" ::/lib/ld-musl-aarch64.so.1
 # Crypto libs for the real authd (PBKDF2 over BearSSL).
 [ -f "${BUILD}/lib/libpw.so" ] && mcopy -i "${IMG}" "${BUILD}/lib/libpw.so" ::/lib/libpw.so || true
 [ -f "${BUILD}/lib/libbearssl.so" ] && mcopy -i "${IMG}" "${BUILD}/lib/libbearssl.so" ::/lib/libbearssl.so || true
-# objGFX rendering library — needed by the views compositor + every GUI app.
-[ -f "${BUILD}/lib/libobjgfx.so" ] && mcopy -i "${IMG}" "${BUILD}/lib/libobjgfx.so" ::/lib/libobjgfx.so || true
-# NetSurf browser (nsfb) shared-library stack + its zlib/http deps.
-for _l in libcss libdom libhubbub libparserutils libwapcaplet libnsfb \
-          libnsgif libnsbmp libnsutils libutf8proc libz libhttp; do
-	[ -f "${BUILD}/lib/${_l}.so" ] && mcopy -i "${IMG}" "${BUILD}/lib/${_l}.so" "::/lib/${_l}.so" || true
-done
+# Desktop-only shared libraries: objGFX (compositor + every GUI app) and the
+# NetSurf stack.  The base profile ships none of them.
+if [ "${PROFILE}" = desktop ]; then
+	[ -f "${BUILD}/lib/libobjgfx.so" ] && mcopy -i "${IMG}" "${BUILD}/lib/libobjgfx.so" ::/lib/libobjgfx.so || true
+	for _l in libcss libdom libhubbub libparserutils libwapcaplet libnsfb \
+	          libnsgif libnsbmp libnsutils libutf8proc libz libhttp; do
+		[ -f "${BUILD}/lib/${_l}.so" ] && mcopy -i "${IMG}" "${BUILD}/lib/${_l}.so" "::/lib/${_l}.so" || true
+	done
+fi
 
 # The whole world (all dynamically-linked PIE binaries).  Skip *.dbg sidecars
 # (unstripped debug copies, e.g. nsfb.dbg) — they are gdb-only and would bloat
 # the image (and re-trip the kernel loader's EXEC_MAX).
 for b in "${BUILD}"/bin/*; do
 	case "${b}" in *.dbg) continue ;; esac
-	[ -f "${b}" ] && mcopy -i "${IMG}" "${b}" "::/bin/$(basename "${b}")"
+	[ -f "${b}" ] || continue
+	_bn=$(basename "${b}")
+	# Base profile: skip the graphical apps (their absence — chiefly /bin/views —
+	# is what makes the kernel boot to the text console instead of the desktop).
+	if [ "${PROFILE}" != desktop ]; then
+		case "${DESKTOP_BINS}" in *" ${_bn} "*) continue ;; esac
+	fi
+	mcopy -i "${IMG}" "${b}" "::/bin/${_bn}"
 done
 
 # System config files (etc/), mirroring mkimage.sh.  resolv.conf is the
@@ -67,6 +86,9 @@ fi
 # Credentials for login (root / user), matching the i386 image.  Staged after
 # etc/* so tools/userdb (the build's canonical copy) wins over any etc/userdb.
 [ -f tools/userdb ] && mcopy -o -i "${IMG}" tools/userdb ::/etc/userdb || true
+
+# --- desktop-profile assets (the base profile ships none of these) ----------
+if [ "${PROFILE}" = desktop ]; then
 
 # DOOM IWAD — vdoom defaults to /bin/doom1.wad (matches the i386 image); without
 # it the game opens a black window.  Search the same locations as mkimage.sh so
@@ -116,6 +138,8 @@ if [ -d contrib/netsurf-res ]; then
 	install_face DejaVuSansMono-BoldOblique.ttf MONOBI.TTF
 	echo "mkimage-arm: installed NetSurf resources (/usr/local/share/netsurf)"
 fi
+
+fi # end desktop-profile assets
 
 echo "mkimage-arm: done — contents:"
 mdir -i "${IMG}" ::/bin | tail -n +4 | head -20

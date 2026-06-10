@@ -176,6 +176,22 @@ static void run_init_image(const void *image, const char *name)
  * @param out_size  receives the byte count read.
  * @return the kernel buffer (caller kfrees), or NULL on any error.
  */
+/**
+ * Does @path exist on the mounted root?  Used by the boot profile selector
+ * (desktop vs base console) to branch on whether the desktop is staged.
+ *
+ * @return 1 if the file opens, 0 otherwise.
+ */
+int aarch64_file_exists(const char *path)
+{
+	fileDescriptor_t *fd = fopen(path, "r");
+
+	if (fd == NULL)
+		return (0);
+	fclose(fd);
+	return (1);
+}
+
 static char *read_elf_file(const char *path, int *out_size)
 {
 	fileDescriptor_t *fd;

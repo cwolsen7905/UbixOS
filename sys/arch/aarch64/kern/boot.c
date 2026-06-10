@@ -184,30 +184,43 @@ void kmain_aarch64(void)
 			aarch64_virtio_input_init();
 			aarch64_virtio_sound_init(); /* /dev/audio (virtio-sound PCM playback) */
 
-			/* Graphical desktop chain (#5): start authd (the "authd" MPI mailbox
-			 * for credential checks), then run the views compositor off disk — it
-			 * owns the virtio-gpu framebuffer (sys_mapfb), composites the desktop,
-			 * and forks /bin/vlogin for the graphical login.  (The text-console
-			 * chain is aarch64_run_dynamic_init("/bin/login"), still available as a
-			 * fallback.) */
-			kprintf("\n--- disk-backed desktop ---\n");
-
-			/* Start the ubistry registry daemon and wait (bounded) for its
-			 * mailbox before launching the desktop, so views/vlogin read real
-			 * settings (wallpaper/theme/per-user prefs) instead of falling back
-			 * to defaults.  ubistry creates its mailbox only after loading
-			 * /var/db/ubistry.db, so the mailbox existing = fully ready. */
-			aarch64_spawn_dynamic("/bin/ubistry");
+			/* Image profile selector: the desktop profile stages /bin/views, the
+			 * base (headless/IoT/safe-mode) profile does not.  Branch on what is
+			 * present — same kernel, the mkimage profile decides what runs. */
+			if (aarch64_file_exists("/bin/views"))
 			{
-				int tries = 100000;
-				while (!mpi_mbox_exists("ubistry") && --tries > 0)
-					sched_yield();
-				if (tries == 0)
-					kprintf("desktop: ubistry not ready — using defaults\n");
-			}
+				/* DESKTOP profile: start authd (the "authd" MPI mailbox for
+				 * credential checks), then run the views compositor off disk — it
+				 * owns the virtio-gpu framebuffer (sys_mapfb), composites the
+				 * desktop, and forks /bin/vlogin for the graphical login. */
+				kprintf("\n--- disk-backed desktop ---\n");
 
-			aarch64_spawn_dynamic("/bin/authd");    /* real authd (PBKDF2/BearSSL) from disk */
-			aarch64_run_dynamic_init("/bin/views"); /* compositor -> forks vlogin; never returns */
+				/* Start the ubistry registry daemon and wait (bounded) for its
+				 * mailbox before launching the desktop, so views/vlogin read real
+				 * settings (wallpaper/theme/per-user prefs) instead of falling back
+				 * to defaults.  ubistry creates its mailbox only after loading
+				 * /var/db/ubistry.db, so the mailbox existing = fully ready. */
+				aarch64_spawn_dynamic("/bin/ubistry");
+				{
+					int tries = 100000;
+					while (!mpi_mbox_exists("ubistry") && --tries > 0)
+						sched_yield();
+					if (tries == 0)
+						kprintf("desktop: ubistry not ready — using defaults\n");
+				}
+
+				aarch64_spawn_dynamic("/bin/authd");    /* real authd (PBKDF2/BearSSL) from disk */
+				aarch64_run_dynamic_init("/bin/views"); /* compositor -> forks vlogin; never returns */
+			}
+			else
+			{
+				/* BASE profile: no compositor.  Authenticate against authd and run
+				 * the text-console login on the kernel console (fbcon on screen +
+				 * PL011 serial); login forks the shell.  Never returns. */
+				kprintf("\n--- disk-backed base console ---\n");
+				aarch64_spawn_dynamic("/bin/authd"); /* login authenticates via the authd mailbox */
+				aarch64_run_dynamic_init("/bin/login");
+			}
 		}
 	}
 

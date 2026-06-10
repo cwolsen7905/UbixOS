@@ -386,10 +386,13 @@ image-i386: makeuser
 # musl dynamic linker, mounted at "/" via virtio-blk.  Run after
 # `bmake world TARGET=aarch64`; attach with run-aarch64 / run-debug-aarch64.
 # image-aarch64 is the arch-dispatch alias; image-arm is the direct entry point.
+# PROFILE=base|desktop (default desktop) selects the image profile: a base image
+# omits the graphical stack and boots to the text-console login.
+PROFILE ?= desktop
 image-aarch64: image-arm
 
 image-arm:
-	@sh tools/mkimage-arm.sh ${DISK_IMAGE_ARM} ${OBJ_DIR}
+	@PROFILE=${PROFILE} sh tools/mkimage-arm.sh ${DISK_IMAGE_ARM} ${OBJ_DIR}
 
 # Build a small FAT32 USB test image with a README.  Attach to QEMU via
 # bmake run (auto-detected when usb.img exists) or mount manually with hdiutil.
