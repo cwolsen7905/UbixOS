@@ -167,6 +167,22 @@ AARCH64_GENERIC_SRCS = \
 	sys/net/netif/ethernet.c \
 	sys/net/net/sys_arch.c
 
+# UbixFS pooled-CoW filesystem: the portable lite-ZFS core (lib/ubixfs_core,
+# unmodified) + the kernel glue.  Compiled with extra include paths so the
+# hosted-style core resolves <stdint.h>/<stdlib.h> from the freestanding compat
+# shims, its own headers from lib/ubixfs_core, and the on-disk format from the
+# shared include/ tree.  See docs/design/ubixfs-pool-plan.md (step K1).
+UBIXFS_KERN_SRCS = \
+	lib/ubixfs_core/fletcher.c \
+	lib/ubixfs_core/ubfs_spa.c \
+	lib/ubixfs_core/ubfs_dmu.c \
+	lib/ubixfs_core/ubfs_dsl.c \
+	lib/ubixfs_core/ubfs_dir.c \
+	lib/ubixfs_core/ubfs_fs.c \
+	sys/fs/ubixfs/ubfs_kshim.c \
+	sys/fs/ubixfs/ubixfs_selftest.c
+UBIXFS_KERN_INCS = -I${CURDIR}/sys/fs/ubixfs/compat -I${CURDIR}/lib/ubixfs_core -I${CURDIR}/include
+
 kernel-aarch64:
 	@mkdir -p ${OBJ_DIR}/boot ${OBJ_DIR}/obj/sys
 	@for f in `find ${CURDIR}/sys/arch/aarch64 -name '*.S'`; do \
@@ -183,6 +199,11 @@ kernel-aarch64:
 	    o=${OBJ_DIR}/obj/sys/`basename $$f .c`.o; \
 	    echo "${CROSS_PREFIX}gcc [gen] $$f"; \
 	    ${CROSS_PREFIX}gcc ${AARCH64_KCFLAGS} -std=c99 -c ${CURDIR}/$$f -o $$o || exit 1; \
+	done
+	@for f in ${UBIXFS_KERN_SRCS}; do \
+	    o=${OBJ_DIR}/obj/sys/`basename $$f .c`.o; \
+	    echo "${CROSS_PREFIX}gcc [ubfs] $$f"; \
+	    ${CROSS_PREFIX}gcc ${AARCH64_KCFLAGS} ${UBIXFS_KERN_INCS} -std=c99 -c ${CURDIR}/$$f -o $$o || exit 1; \
 	done
 	@echo "${CROSS_PREFIX}gcc [user] tools/aarch64-user/hello.c -> hello.elf (embedded)"
 	@${CROSS_PREFIX}gcc -march=armv8-a -mgeneral-regs-only -static -nostdlib -nostartfiles \

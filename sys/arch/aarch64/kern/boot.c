@@ -111,6 +111,7 @@ void kmain_aarch64(void)
 	vmm_mem_map_init();
 	vitals_init();
 	vfs_init();             /* VFS core: filesystem registry + buffer cache */
+	ubixfs_selftest();      /* UbixFS lite-ZFS core viability check (RAM vdev; plan K1) */
 	aarch64_console_init(); /* PL011 -> VFS console fileops (stdin/stdout/stderr) */
 	tty_init();             /* pty pool + VT100 engine (g_tty_ops) for the GUI terminal */
 

@@ -55,6 +55,19 @@ char *strncpy(char *dst, const char *src, size_t n)
 }
 
 /**
+ * Copy the NUL-terminated C string @src (including its terminator) to @dst.
+ *
+ * @dst must be large enough to hold the string and its terminator.
+ */
+char *strcpy(char *dst, const char *src)
+{
+	size_t i = 0;
+	while ((dst[i] = src[i]) != '\0')
+		i++;
+	return dst;
+}
+
+/**
  * Lexicographic compare of NUL-terminated strings @a and @b.
  *
  * @return <0, 0, or >0 as @a is less than, equal to, or greater than @b.

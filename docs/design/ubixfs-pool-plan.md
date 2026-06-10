@@ -136,9 +136,32 @@ multi-vdev, xattrs/ACLs (inode reserves the slot).
    runs all four milestone harnesses (spa/dmu/dsl/fs) + the CLI. *(`create`
    fs/volume + volume cp are a thin follow-up once VOL lands; v1 exposes the one
    default fs dataset, which is all `mkimage.sh FS=ubixfs` needs.)*
-7. **Kernel driver** (`sys/fs/ubixfs/`) — reuse the same C core; hybrid boot
-   (FAT `/boot`, kernel mounts the pool). Coordinate the build with the
-   cross-arch agent.
+7. **Kernel driver** (`sys/fs/ubixfs/`) — reuse the *same* C core unmodified;
+   hybrid boot (FAT `/boot`, kernel mounts the pool). Built in verifiable
+   increments (aarch64 first — the primary forward target — then i386):
+
+   - **K1 — core compiles + runs in the kernel (in-kernel self-test). ✅ DONE
+     (aarch64).** The freestanding-build crux: `AARCH64_KCFLAGS` is
+     `-nostdinc -ffreestanding`, so the core's `<stdint.h>/<stddef.h>/<stdlib.h>`
+     are absent. Solution: thin compat shims in `sys/fs/ubixfs/compat/` (stdint/
+     stddef map to kernel `<sys/types.h>`; `stdlib.h` declares `malloc/free`,
+     glued to `kmalloc/kfree` in `ubfs_kshim.c`), `<string.h>` from `sys/include`.
+     A dedicated Makefile loop compiles the 6 core files + shim + self-test with
+     `-Isys/fs/ubixfs/compat -Ilib/ubixfs_core`. The self-test
+     (`ubixfs_selftest.c`, adapted from `tools/ubixfs/fs_test.c`) drives a
+     **RAM-backed vdev**: format → dsl create → mkroot → mkdir/create/write →
+     read-back → readdir → sync + reopen, logging PASS/FAIL to the console. Proves
+     the lite-ZFS core is kernel-viable with no disk in play — de-risks K2/K3.
+   - **K2 — read-only VFS mount.** A `struct fileSystem` driver (`VFS_TYPE_UBIXFS
+     0x55`): a `ubfs_vdev_io_t` adapter over `bcache_read/write` (8 × 512 B sectors
+     per 4 KB block), `vfsInitFS` = `pool_open → dsl_open → lookup("root") →
+     open_dataset → fs_init`, and `vfsOpenFile/Read` + `vfsOpenDir/ReadDir/
+     CloseDir` + `stat` mapped onto `ubfs_fs_lookup/read/getattr/readdir`. Mount a
+     host-built pool image (second virtio-blk disk) read-only; verify `cat`/`ls`.
+   - **K3 — write path + sync.** `vfsWrite/MakeDir/Unlink` → `ubfs_fs_write/mkdir/
+     unlink` + txg commit (`dsl_sync_dataset`/`dsl_sync`); persistence across reboot.
+   - **K4 — i386 parity** (shared `sys/fs/ubixfs/` via `sys/Makefile`), then make a
+     ubixfs pool a *mountable root* candidate (the path off FAT).
 8. **Later:** snapshots, GRUB module, ACLs, RAID/mirror.
 
 ## Code layout & cleanup

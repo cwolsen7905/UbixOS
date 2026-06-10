@@ -155,6 +155,9 @@ int aarch64_virtio_input_init(void); /* scan + bring up all input devices; count
 /* fbcon.c — kernel framebuffer text console (KC_PRIMARY kconsole sink). */
 void aarch64_fbcon_init(void); /* register the on-screen console over virtio-gpu */
 
+/* sys/fs/ubixfs/ubixfs_selftest.c — UbixFS core in-kernel self-test (plan K1). */
+void ubixfs_selftest(void); /* drive the lite-ZFS core over a RAM vdev; logs PASS/FAIL */
+
 /* virtio_sound.c — virtio-mmio PCM playback exposed as /dev/audio. */
 int aarch64_virtio_sound_init(void); /* scan + bring up + start a 44.1kHz output stream */
 int virtio_input_poll(void (*deliver)(int dev, u_int16_t type, u_int16_t code, u_int32_t value));
