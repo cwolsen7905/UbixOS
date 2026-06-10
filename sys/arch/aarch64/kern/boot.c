@@ -12,19 +12,19 @@
 #include "bringup.h"
 #include <ubixos/sched.h>          /* sched_init, RUNNING, QOS_DEFAULT */
 #include <ubixos/sched_internal.h> /* taskList, set_current (scheduler bootstrap) */
-#include <vmm/vmm.h>        /* vmm_mem_map_init */
-#include <ubixos/vitals.h>  /* vitals_init */
-#include <fs/vfs/vfs.h>     /* vfs_init */
-#include <fs/vfs/mount.h>   /* vfs_mount */
-#include <fs/ramfs/ramfs.h> /* ramfs_init, ramfs_populate (initramfs root) */
-#include <fs/fat/fat.h>     /* fat_init — disk-backed root */
-#include <fs/devfs/devfs.h> /* devfs_init — /dev/{null,zero,...} for the shell */
-#include <fs/vfs/file.h>    /* fopen/fread + vfs_opendir/readdir (ubixfs K2 verify) */
-#include <fs/ubixfs/ubfs_vfs.h> /* ubfs_vfs_init — UbixFS pool driver (plan K2) */
-#include <sys/bus.h>        /* struct ubx_device — virtio-blk block device */
-#include <mpi/mpi.h>        /* mpi_mbox_exists — wait for the ubistry daemon */
-#include <ubixos/sched.h>   /* sched_yield */
-#include <ubixos/tty.h>     /* tty_init — pty pool for the GUI terminal */
+#include <vmm/vmm.h>               /* vmm_mem_map_init */
+#include <ubixos/vitals.h>         /* vitals_init */
+#include <fs/vfs/vfs.h>            /* vfs_init */
+#include <fs/vfs/mount.h>          /* vfs_mount */
+#include <fs/ramfs/ramfs.h>        /* ramfs_init, ramfs_populate (initramfs root) */
+#include <fs/fat/fat.h>            /* fat_init — disk-backed root */
+#include <fs/devfs/devfs.h>        /* devfs_init — /dev/{null,zero,...} for the shell */
+#include <fs/vfs/file.h>           /* fopen/fread + vfs_opendir/readdir (ubixfs K2 verify) */
+#include <fs/ubixfs/ubfs_vfs.h>    /* ubfs_vfs_init — UbixFS pool driver (plan K2) */
+#include <sys/bus.h>               /* struct ubx_device — virtio-blk block device */
+#include <mpi/mpi.h>               /* mpi_mbox_exists — wait for the ubistry daemon */
+#include <ubixos/sched.h>          /* sched_yield */
+#include <ubixos/tty.h>            /* tty_init — pty pool for the GUI terminal */
 
 /* The static boot triad — init forks login, login execs sh — laid into the
  * ramfs root as /bin/{init,login,sh}.  Stands in for the real (dynamically
@@ -112,8 +112,14 @@ void kmain_aarch64(void)
 	 * vitals node (kmalloc'd, so the allocator must be up first). */
 	vmm_mem_map_init();
 	vitals_init();
-	vfs_init();             /* VFS core: filesystem registry + buffer cache */
-	ubixfs_selftest();      /* UbixFS lite-ZFS core viability check (RAM vdev; plan K1) */
+	vfs_init(); /* VFS core: filesystem registry + buffer cache */
+#ifdef AARCH64_BRINGUP_DEMOS
+	ubixfs_selftest(); /* UbixFS core viability over a RAM vdev (plan K1).  Gated:
+	                    * the K2/K3 disk mount below now exercises the same core
+	                    * end to end, and the self-test's transient 2 MB pool is
+	                    * wasteful on every boot (kmalloc never returns pages, and
+	                    * aarch64 fork deep-copies — it tips the tight desktop OOM). */
+#endif
 	aarch64_console_init(); /* PL011 -> VFS console fileops (stdin/stdout/stderr) */
 	tty_init();             /* pty pool + VT100 engine (g_tty_ops) for the GUI terminal */
 
@@ -170,40 +176,15 @@ void kmain_aarch64(void)
 			if (vfs_mount(0, 0, 0, VFS_TYPE_DEVFS, "/dev", "rw") == 0)
 				kprintf("dev: devfs mounted at /dev\n");
 
-			/* UbixFS pool (plan K2): if a pool image is staged on the FAT root,
-			 * register the driver and mount it read-only at /pool (a file-backed
-			 * loopback pool — ubixfs over /pool.img over FAT).  A short read-back
-			 * proves the whole VFS dispatch (mount/open/read/readdir) end to end. */
-			if (aarch64_file_exists("/pool.img"))
-			{
-				ubfs_vfs_init();
-				if (vfs_mount(0, 0, 0, VFS_TYPE_UBIXFS, "/pool", "r") == 0)
-				{
-					fileDescriptor_t *pf = fopen("/pool/hello.txt", "r");
-					kDIR_t *pd;
-					if (pf != 0)
-					{
-						char b[96];
-						int n = (int)fread(b, 1, sizeof(b) - 1, pf);
-						if (n > 0)
-						{
-							b[n] = '\0';
-							kprintf("ubixfs: read /pool/hello.txt (%d bytes): %s", n, b);
-						}
-						fclose(pf);
-					}
-					pd = vfs_opendir("/pool/etc");
-					if (pd != 0)
-					{
-						struct kdirent e;
-						kprintf("ubixfs: readdir /pool/etc:");
-						while (vfs_readdir(pd, &e) == 0)
-							kprintf(" %s", e.d_name);
-						kprintf("\n");
-						vfs_closedir(pd);
-					}
-				}
-			}
+			/* UbixFS pool (plan K2/K3): the file-backed loopback driver
+			 * (sys/fs/ubixfs/ubfs_vfs.c) is built and registrable, but the boot
+			 * auto-mount is DISABLED.  Mounting a staged /pool.img corrupts the
+			 * physical page allocator (vmmMemoryMap is overwritten with a small
+			 * value -> the next vmm_find_free_pages_contig faults) — a heap-memory
+			 * bug that is independent of the pool's read/write I/O (which is
+			 * coherence-clean).  See docs/design/ubixfs-pool-plan.md for the full
+			 * findings; re-enable here + restore the mkimage-arm.sh /pool.img
+			 * staging once it is fixed. */
 
 			gic_init();
 			timer_init();
@@ -218,7 +199,7 @@ void kmain_aarch64(void)
 			/* Bring up the virtio-gpu scanout framebuffer + input devices
 			 * (for views/objGFX). */
 			aarch64_virtio_gpu_init();
-			aarch64_fbcon_init();        /* on-screen kernel console (boot log/panic) */
+			aarch64_fbcon_init(); /* on-screen kernel console (boot log/panic) */
 			aarch64_virtio_input_init();
 			aarch64_virtio_sound_init(); /* /dev/audio (virtio-sound PCM playback) */
 

@@ -201,15 +201,59 @@ static int virtio_blk_read(struct ubx_device *dev, u_int32_t lba, u_int32_t coun
 }
 
 /**
- * Write is not needed for read-only root bring-up; stub it as a failure.
+ * Write @count sectors starting at @lba from @buf via virtio-blk, one sector per
+ * request (polling the used ring).  Matches struct ubx_blk_ops::write.
+ *
+ * Mirrors virtio_blk_read with a VIRTIO_BLK_T_OUT request; the data descriptor
+ * is device-readable (no VIRTQ_DESC_F_WRITE), and the payload is staged through
+ * the same g_data bounce buffer the read path uses.
+ *
+ * @return 0 on success, -1 on a device error.
  */
 static int virtio_blk_write(struct ubx_device *dev, u_int32_t lba, u_int32_t count, void *buf)
 {
 	(void)dev;
-	(void)lba;
-	(void)count;
-	(void)buf;
-	return (-1);
+	if (!g_ready)
+		return (-1);
+
+	for (u_int32_t i = 0; i < count; i++)
+	{
+		memcpy(g_data, (const u_int8_t *)buf + (u_int64_t)i * 512, 512);
+
+		g_hdr->type = VIRTIO_BLK_T_OUT;
+		g_hdr->reserved = 0;
+		g_hdr->sector = (u_int64_t)lba + i;
+		*g_status = 0xFF;
+
+		/* Three-descriptor chain: header (R) -> data (R) -> status (W). */
+		g_desc[0].addr = (u_int64_t)(uintptr_t)g_hdr;
+		g_desc[0].len = sizeof(struct virtio_blk_req);
+		g_desc[0].flags = VIRTQ_DESC_F_NEXT;
+		g_desc[0].next = 1;
+		g_desc[1].addr = (u_int64_t)(uintptr_t)g_data;
+		g_desc[1].len = 512;
+		g_desc[1].flags = VIRTQ_DESC_F_NEXT;
+		g_desc[1].next = 2;
+		g_desc[2].addr = (u_int64_t)(uintptr_t)g_status;
+		g_desc[2].len = 1;
+		g_desc[2].flags = VIRTQ_DESC_F_WRITE;
+		g_desc[2].next = 0;
+
+		g_avail->ring[g_avail->idx % QSIZE] = 0; /* head descriptor index */
+		dsb();
+		g_avail->idx++;
+		dsb();
+		mmio_wr(VMMIO_QUEUE_NOTIFY, 0);
+
+		while (g_used->idx == g_last_used)
+			dsb(); /* poll for completion */
+		g_last_used++;
+		dsb();
+
+		if (*g_status != VIRTIO_BLK_S_OK)
+			return (-1);
+	}
+	return (0);
 }
 
 /**

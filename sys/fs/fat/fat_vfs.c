@@ -172,22 +172,29 @@ int read_fat(fileDescriptor_t *fd, char *data, off_t offset, long size)
 int write_fat(fileDescriptor_t *fd, char *data, off_t offset, long size)
 {
 	struct fat_file *f = (struct fat_file *)fd->res;
+	int rc;
 
 	(void)fat_fs_from_mp(fd->mp); /* assert mp->fsInfo is set */
 
 	if (size <= 0)
 		return (0);
 
+	/* Propagate I/O failures: an unreported write error lets a caller (e.g. the
+	 * UbixFS loopback vdev) believe a block reached disk when it did not, then
+	 * read back stale data and corrupt itself.  Seek/write/flush each return -1
+	 * on a device error. */
 	fat_acquire(f->fs);
-	fat_file_seek(f, (u_int32_t)offset);
-	fat_file_write(f, data, (u_int32_t)size);
-	fat_file_flush(f);
+	rc = fat_file_seek(f, (u_int32_t)offset);
+	if (rc == 0)
+		rc = fat_file_write(f, data, (u_int32_t)size);
+	if (rc == 0)
+		rc = fat_file_flush(f);
 	fat_release(f->fs);
 
 	/* Update fd->size to reflect any growth. */
 	fd->size = f->file_size;
 
-	return ((int)size);
+	return (rc == 0 ? (int)size : -1);
 }
 
 int fat_opendir(const char *path, kDIR_t *dir)

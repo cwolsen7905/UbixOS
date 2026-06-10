@@ -40,6 +40,7 @@ static char g_backing[256] = "/pool.img";
 struct ubfs_mount
 {
 	fileDescriptor_t *backing; /* open backing image (loopback vdev) */
+	int writable;              /* backing opened read-write (mount perms 'w') */
 	ubfs_vdev_io_t io;
 	ubfs_pool_t *pool;
 	ubfs_dsl_t dsl;
@@ -72,6 +73,44 @@ struct ubfs_dir
 	struct ubfs_collected ents[UBFS_DIR_MAX];
 };
 
+/* The most-recently mounted instance, for the argument-less vfsSync hook. */
+static struct ubfs_mount *g_mount;
+
+/**
+ * Commit the open transaction group: flush the dataset's dirty objects, update
+ * the MOS, and advance the uberblock.  Non-destructive — the in-memory dataset
+ * stays usable for the next operation (the open-txg model), so this is called
+ * after every mutation so changes persist without an explicit sync().
+ *
+ * @return 0 on success, -1 on a backing-write failure.
+ */
+static int ubfs_commit(struct ubfs_mount *m)
+{
+	if (ubfs_dsl_sync_dataset(&m->dsl, m->ds_obj, &m->os) < 0)
+		return (-1);
+	return (ubfs_dsl_sync(&m->dsl));
+}
+
+/**
+ * Strip the mount-point prefix from @path so it is relative to the pool root.
+ *
+ * vfsMakeDir is handed the full path ("/pool/etc") while vfsUnlink/RemDir get an
+ * already-relative one ("/etc"); stripping mp->mountPoint handles both (a path
+ * that does not start with the prefix is returned unchanged).
+ */
+static const char *pool_relative(struct vfs_mountPoint *mp, const char *path)
+{
+	size_t mlen = strlen(mp->mountPoint);
+
+	if (mlen > 1 && strncmp(path, mp->mountPoint, mlen) == 0)
+	{
+		path += mlen;
+		if (path[0] == '\0')
+			return ("/");
+	}
+	return (path);
+}
+
 /* ── file-backed vdev: read 4 KB pool blocks from the backing image ─────────── */
 
 /**
@@ -81,10 +120,16 @@ struct ubfs_dir
  */
 static int backing_read(void *ctx, uint64_t blk, void *buf)
 {
+	struct ubfs_mount *m = g_mount;
 	fileDescriptor_t *fd = (fileDescriptor_t *)ctx;
 
 	if (fd == 0)
 		return (-1);
+	if (m != 0 && blk >= m->io.size_blocks)
+	{
+		kprintf("ubixfs: backing_read out of range blk=%u/%u\n", (u_int32_t)blk, (u_int32_t)m->io.size_blocks);
+		return (-1);
+	}
 	fd->offset = (off_t)(blk * UBFS_BLOCK_SIZE);
 	if (fread(buf, 1, UBFS_BLOCK_SIZE, fd) != UBFS_BLOCK_SIZE)
 		return (-1);
@@ -98,10 +143,16 @@ static int backing_read(void *ctx, uint64_t blk, void *buf)
  */
 static int backing_write(void *ctx, uint64_t blk, const void *buf)
 {
+	struct ubfs_mount *m = g_mount;
 	fileDescriptor_t *fd = (fileDescriptor_t *)ctx;
 
 	if (fd == 0)
 		return (-1);
+	if (m != 0 && blk >= m->io.size_blocks)
+	{
+		kprintf("ubixfs: backing_write out of range blk=%u/%u\n", (u_int32_t)blk, (u_int32_t)m->io.size_blocks);
+		return (-1);
+	}
 	fd->offset = (off_t)(blk * UBFS_BLOCK_SIZE);
 	if (fwrite((void *)buf, 1, UBFS_BLOCK_SIZE, fd) != UBFS_BLOCK_SIZE)
 		return (-1);
@@ -124,7 +175,11 @@ static int ubfs_vfs_initfs(struct vfs_mountPoint *mp)
 		return (0);
 	memset(m, 0, sizeof(*m));
 
-	m->backing = fopen(g_backing, "r");
+	/* A writable mount opens the backing image "r+" (read-write, no truncate);
+	 * the pool is fixed-size and CoW-rewrites blocks in place, so it never grows
+	 * the file.  A read-only mount opens "r" and exposes no write ops. */
+	m->writable = (mp->perms == 'w');
+	m->backing = fopen(g_backing, m->writable ? "r+" : "r");
 	if (m->backing == 0)
 	{
 		kprintf("ubixfs: cannot open backing image %s\n", g_backing);
@@ -156,7 +211,12 @@ static int ubfs_vfs_initfs(struct vfs_mountPoint *mp)
 	ubfs_fs_init(&m->fs, &m->os, 0);
 
 	mp->fsInfo = m;
-	kprintf("ubixfs: mounted %s (%u blocks) at %s\n", g_backing, (u_int32_t)m->io.size_blocks, mp->mountPoint);
+	g_mount = m;
+	kprintf("ubixfs: mounted %s (%u blocks, %s) at %s\n",
+	        g_backing,
+	        (u_int32_t)m->io.size_blocks,
+	        m->writable ? "rw" : "ro",
+	        mp->mountPoint);
 	return (1);
 }
 
@@ -177,7 +237,24 @@ static int ubfs_vfs_open(const char *path, fileDescriptor_t *fd)
 	m = (struct ubfs_mount *)fd->mp->fsInfo;
 
 	if (ubfs_fs_lookup(&m->fs, path, &obj) < 0)
-		return (0);
+	{
+		/* Not found: create it if this is a writable open ("w"/"a"/"r+" on a
+		 * writable mount); otherwise the open fails. */
+		if (!m->writable || (fd->mode & (fileWrite | fileTrunc)) == 0)
+			return (0);
+		if (ubfs_fs_create(&m->fs, path, 0644, 0, 0, &obj) < 0)
+			return (0);
+		ubfs_commit(m);
+	}
+	else if (m->writable && (fd->mode & fileTrunc))
+	{
+		/* Exists + "w" (truncate): the core has no truncate primitive, so drop
+		 * and recreate — matches how the host `ubfs cp` overwrites. */
+		ubfs_fs_unlink(&m->fs, path);
+		if (ubfs_fs_create(&m->fs, path, 0644, 0, 0, &obj) < 0)
+			return (0);
+		ubfs_commit(m);
+	}
 
 	f = (struct ubfs_file *)kmalloc(sizeof(*f));
 	if (f == 0)
@@ -205,6 +282,32 @@ static int ubfs_vfs_read(fileDescriptor_t *fd, char *data, off_t offset, long si
 		return (-1);
 	f = (struct ubfs_file *)fd->res;
 	return ((int)ubfs_fs_read(&f->m->fs, f->obj, (uint64_t)offset, data, (uint64_t)size));
+}
+
+/**
+ * vfsWrite: write @size bytes at @offset from @data into the open file, then
+ * commit the transaction group so the change persists.
+ *
+ * @return the number of bytes written, or a negative error.
+ */
+static int ubfs_vfs_write(fileDescriptor_t *fd, char *data, off_t offset, long size)
+{
+	struct ubfs_file *f;
+
+	if (fd == 0 || fd->res == 0)
+		return (-1);
+	f = (struct ubfs_file *)fd->res;
+	if (!f->m->writable)
+		return (-1);
+
+	if (ubfs_fs_write(&f->m->fs, f->obj, (uint64_t)offset, data, (uint64_t)size) < 0)
+		return (-1);
+	if (ubfs_commit(f->m) < 0)
+		return (-1);
+
+	if ((u_int32_t)(offset + size) > fd->size)
+		fd->size = (u_int32_t)(offset + size);
+	return ((int)size);
 }
 
 /**
@@ -304,6 +407,63 @@ static int ubfs_vfs_closedir(kDIR_t *dir)
 }
 
 /**
+ * vfsMakeDir: create directory @path (handed the full path) and commit.
+ *
+ * @return 0 on success, -1 on failure.
+ */
+static int ubfs_vfs_mkdir(char *path, void *vfd)
+{
+	fileDescriptor_t *fd = (fileDescriptor_t *)vfd;
+	struct ubfs_mount *m;
+	uint64_t obj;
+
+	if (fd == 0 || fd->mp == 0 || fd->mp->fsInfo == 0)
+		return (-1);
+	m = (struct ubfs_mount *)fd->mp->fsInfo;
+	if (!m->writable)
+		return (-1);
+
+	if (ubfs_fs_mkdir(&m->fs, pool_relative(fd->mp, path), 0755, 0, 0, &obj) < 0)
+		return (-1);
+	return (ubfs_commit(m));
+}
+
+/**
+ * vfsUnlink / vfsRemDir: remove @path (a mount-relative path) and commit.  The
+ * core's unlink handles both files and empty directories.
+ *
+ * @return 0 on success, -1 on failure.
+ */
+static int ubfs_vfs_unlink(char *path, void *vmp)
+{
+	struct vfs_mountPoint *mp = (struct vfs_mountPoint *)vmp;
+	struct ubfs_mount *m;
+
+	if (mp == 0 || mp->fsInfo == 0)
+		return (-1);
+	m = (struct ubfs_mount *)mp->fsInfo;
+	if (!m->writable)
+		return (-1);
+
+	if (ubfs_fs_unlink(&m->fs, pool_relative(mp, path)) < 0)
+		return (-1);
+	return (ubfs_commit(m));
+}
+
+/**
+ * vfsSync: commit the most-recently mounted pool (the hook takes no mount arg).
+ * Mutations already commit eagerly, so this is a belt-and-braces flush.
+ *
+ * @return 0 on success or if nothing is mounted, -1 on a commit failure.
+ */
+static int ubfs_vfs_sync(void)
+{
+	if (g_mount == 0 || !g_mount->writable)
+		return (0);
+	return (ubfs_commit(g_mount));
+}
+
+/**
  * Set the backing-image path used by the next UbixFS mount.
  */
 void ubfs_vfs_set_backing(const char *path)
@@ -326,12 +486,12 @@ int ubfs_vfs_init(void)
 	    0,                         /* next */
 	    (void *)ubfs_vfs_initfs,   /* vfsInitFS */
 	    (void *)ubfs_vfs_read,     /* vfsRead */
-	    0,                         /* vfsWrite (K3) */
+	    (void *)ubfs_vfs_write,    /* vfsWrite */
 	    (void *)ubfs_vfs_open,     /* vfsOpenFile */
-	    0,                         /* vfsUnlink (K3) */
-	    0,                         /* vfsMakeDir (K3) */
-	    0,                         /* vfsRemDir (K3) */
-	    0,                         /* vfsSync (K3) */
+	    (void *)ubfs_vfs_unlink,   /* vfsUnlink */
+	    (void *)ubfs_vfs_mkdir,    /* vfsMakeDir */
+	    (void *)ubfs_vfs_unlink,   /* vfsRemDir (unlink handles empty dirs) */
+	    (void *)ubfs_vfs_sync,     /* vfsSync */
 	    VFS_TYPE_UBIXFS,           /* vfsType */
 	    (void *)ubfs_vfs_opendir,  /* vfsOpenDir */
 	    (void *)ubfs_vfs_readdir,  /* vfsReadDir */
