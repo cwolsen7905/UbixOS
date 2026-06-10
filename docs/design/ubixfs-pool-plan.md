@@ -152,12 +152,20 @@ multi-vdev, xattrs/ACLs (inode reserves the slot).
      **RAM-backed vdev**: format → dsl create → mkroot → mkdir/create/write →
      read-back → readdir → sync + reopen, logging PASS/FAIL to the console. Proves
      the lite-ZFS core is kernel-viable with no disk in play — de-risks K2/K3.
-   - **K2 — read-only VFS mount.** A `struct fileSystem` driver (`VFS_TYPE_UBIXFS
-     0x55`): a `ubfs_vdev_io_t` adapter over `bcache_read/write` (8 × 512 B sectors
-     per 4 KB block), `vfsInitFS` = `pool_open → dsl_open → lookup("root") →
-     open_dataset → fs_init`, and `vfsOpenFile/Read` + `vfsOpenDir/ReadDir/
-     CloseDir` + `stat` mapped onto `ubfs_fs_lookup/read/getattr/readdir`. Mount a
-     host-built pool image (second virtio-blk disk) read-only; verify `cat`/`ls`.
+   - **K2 — read-only VFS mount (file-backed/loopback). ✅ DONE (aarch64).** A
+     `struct fileSystem` driver (`VFS_TYPE_UBIXFS 0x55`, `sys/fs/ubixfs/ubfs_vfs.c`):
+     a `ubfs_vdev_io_t` adapter that reads 4 KB pool blocks from a **backing image
+     file** (`/pool.img`) through the kernel file API (`fopen`/`fread`), so no
+     block-device or partition plumbing is touched — ubixfs over a loopback file
+     over FAT. `vfsInitFS` = `fopen → pool_open → dsl_open → lookup("root") →
+     open_dataset → fs_init` (handle in `mp->fsInfo`); `vfsOpenFile/Read` +
+     `vfsOpenDir/ReadDir/CloseDir` map onto `ubfs_fs_lookup/read/getattr/readdir`.
+     `mkimage-arm.sh` stages a host-built `/pool.img`; the kernel mounts it at
+     `/pool`. Verified: `mounted /pool.img (512 blocks) at /pool`, `read
+     /pool/hello.txt`, `readdir /pool/etc`. *The raw-partition path (a
+     `bcache`/virtio-blk vdev on a second disk) is deferred to a later increment
+     once virtio-blk grows multi-device support — the loopback driver is the same
+     `ubfs_vdev_io_t`, just a different backing.*
    - **K3 — write path + sync.** `vfsWrite/MakeDir/Unlink` → `ubfs_fs_write/mkdir/
      unlink` + txg commit (`dsl_sync_dataset`/`dsl_sync`); persistence across reboot.
    - **K4 — i386 parity** (shared `sys/fs/ubixfs/` via `sys/Makefile`), then make a

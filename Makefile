@@ -180,6 +180,7 @@ UBIXFS_KERN_SRCS = \
 	lib/ubixfs_core/ubfs_dir.c \
 	lib/ubixfs_core/ubfs_fs.c \
 	sys/fs/ubixfs/ubfs_kshim.c \
+	sys/fs/ubixfs/ubfs_vfs.c \
 	sys/fs/ubixfs/ubixfs_selftest.c
 UBIXFS_KERN_INCS = -I${CURDIR}/sys/fs/ubixfs/compat -I${CURDIR}/lib/ubixfs_core -I${CURDIR}/include
 

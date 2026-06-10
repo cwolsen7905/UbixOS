@@ -42,6 +42,7 @@
 #define VFS_TYPE_RAMFS   0x03
 #define VFS_TYPE_FAT     0xFA
 #define VFS_TYPE_UFS     0xAA
+#define VFS_TYPE_UBIXFS  0x55 /* UbixFS pooled copy-on-write filesystem (lite-ZFS) */
 
 #define MAY_EXEC 1
 #define MAY_WRITE 2

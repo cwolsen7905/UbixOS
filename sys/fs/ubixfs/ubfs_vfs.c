@@ -1,0 +1,348 @@
+/*-
+ * Copyright (c) 2002-2026 The UbixOS Project.
+ *
+ * UbixFS kernel VFS driver (pooled copy-on-write / lite-ZFS) — step K2: a
+ * read-only, file-backed (loopback) mount.  The portable core (lib/ubixfs_core)
+ * does all pool/dataset/file work; this file is the thin VFS glue:
+ *
+ *   - a ubfs_vdev_io_t adapter that reads 4 KB pool blocks from a backing image
+ *     file (an ordinary file on an already-mounted FS) via the kernel file API
+ *     (fopen/fread), so no block-device or partition plumbing is needed yet;
+ *   - vfsInitFS = open backing -> pool_open -> dsl_open -> lookup("root") ->
+ *     open_dataset -> fs_init, with the handle stashed in mp->fsInfo;
+ *   - vfsOpenFile/Read + vfsOpenDir/ReadDir/CloseDir mapped onto the core's
+ *     ubfs_fs_lookup / ubfs_fs_read / ubfs_fs_getattr / ubfs_fs_readdir.
+ *
+ * Write (vfsWrite/MakeDir/RemDir/Sync) is K3.  See docs/design/ubixfs-pool-plan.md.
+ */
+#include <sys/types.h>
+#include <string.h>
+#include <lib/kprintf.h>
+#include <lib/kmalloc.h>
+#include <fs/vfs/vfs.h>
+#include <fs/vfs/mount.h>
+#include <fs/vfs/file.h>
+#include <fs/ubixfs/ubfs_vfs.h>
+
+#include <ubfs_fs.h>
+#include <ubfs_dsl.h>
+
+/* The dataset every fresh pool carries (created by the host `ubfs mkpool`). */
+#define ROOT_DS "root"
+
+/* Max directory entries materialised per opendir (K2 caps; grown if needed). */
+#define UBFS_DIR_MAX 256
+
+/* Backing-image path for the next mount (set via ubfs_vfs_set_backing). */
+static char g_backing[256] = "/pool.img";
+
+/* Per-mount state, stored in vfs_mountPoint::fsInfo. */
+struct ubfs_mount
+{
+	fileDescriptor_t *backing; /* open backing image (loopback vdev) */
+	ubfs_vdev_io_t io;
+	ubfs_pool_t *pool;
+	ubfs_dsl_t dsl;
+	ubfs_dmu_os_t os;
+	ubfs_dataset_phys_t dp;
+	ubfs_fs_t fs;
+	uint64_t ds_obj;
+};
+
+/* Per-open-file state, stored in fileDescriptor_t::res. */
+struct ubfs_file
+{
+	struct ubfs_mount *m;
+	uint64_t obj;
+};
+
+/* One materialised directory entry. */
+struct ubfs_collected
+{
+	char name[256];
+	uint64_t obj;
+	u_int8_t type;
+};
+
+/* Per-opendir state, stored in kDIR_t::dirHandle. */
+struct ubfs_dir
+{
+	int count;
+	int idx;
+	struct ubfs_collected ents[UBFS_DIR_MAX];
+};
+
+/* ── file-backed vdev: read 4 KB pool blocks from the backing image ─────────── */
+
+/**
+ * Read one UBFS_BLOCK_SIZE pool block @blk from the backing file into @buf.
+ *
+ * @return 0 on success, -1 on a short read or missing backing file.
+ */
+static int backing_read(void *ctx, uint64_t blk, void *buf)
+{
+	fileDescriptor_t *fd = (fileDescriptor_t *)ctx;
+
+	if (fd == 0)
+		return (-1);
+	fd->offset = (off_t)(blk * UBFS_BLOCK_SIZE);
+	if (fread(buf, 1, UBFS_BLOCK_SIZE, fd) != UBFS_BLOCK_SIZE)
+		return (-1);
+	return (0);
+}
+
+/**
+ * Write one block @blk to the backing file (K3 write path; unused at K2).
+ *
+ * @return 0 on success, -1 otherwise.
+ */
+static int backing_write(void *ctx, uint64_t blk, const void *buf)
+{
+	fileDescriptor_t *fd = (fileDescriptor_t *)ctx;
+
+	if (fd == 0)
+		return (-1);
+	fd->offset = (off_t)(blk * UBFS_BLOCK_SIZE);
+	if (fwrite((void *)buf, 1, UBFS_BLOCK_SIZE, fd) != UBFS_BLOCK_SIZE)
+		return (-1);
+	return (0);
+}
+
+/* ── VFS operations ─────────────────────────────────────────────────────────── */
+
+/**
+ * vfsInitFS: open the backing image and import the pool's root filesystem.
+ *
+ * @return 1 on success, 0 on failure (the VFS treats 0 as a failed mount).
+ */
+static int ubfs_vfs_initfs(struct vfs_mountPoint *mp)
+{
+	struct ubfs_mount *m;
+
+	m = (struct ubfs_mount *)kmalloc(sizeof(*m));
+	if (m == 0)
+		return (0);
+	memset(m, 0, sizeof(*m));
+
+	m->backing = fopen(g_backing, "r");
+	if (m->backing == 0)
+	{
+		kprintf("ubixfs: cannot open backing image %s\n", g_backing);
+		kfree(m);
+		return (0);
+	}
+
+	m->io.ctx = m->backing;
+	m->io.read = backing_read;
+	m->io.write = backing_write;
+	m->io.size_blocks = (uint64_t)m->backing->size / UBFS_BLOCK_SIZE;
+
+	if (ubfs_pool_open(&m->io, &m->pool) < 0)
+	{
+		kprintf("ubixfs: %s is not a UbixFS pool\n", g_backing);
+		fclose(m->backing);
+		kfree(m);
+		return (0);
+	}
+	if (ubfs_dsl_open(m->pool, &m->dsl) < 0 || ubfs_dsl_lookup(&m->dsl, ROOT_DS, &m->ds_obj) < 0 ||
+	    ubfs_dsl_open_dataset(&m->dsl, m->ds_obj, &m->dp, &m->os) < 0)
+	{
+		kprintf("ubixfs: %s has no '%s' filesystem dataset\n", g_backing, ROOT_DS);
+		ubfs_pool_close(m->pool);
+		fclose(m->backing);
+		kfree(m);
+		return (0);
+	}
+	ubfs_fs_init(&m->fs, &m->os, 0);
+
+	mp->fsInfo = m;
+	kprintf("ubixfs: mounted %s (%u blocks) at %s\n", g_backing, (u_int32_t)m->io.size_blocks, mp->mountPoint);
+	return (1);
+}
+
+/**
+ * vfsOpenFile: resolve @path within the pool and attach an open-file handle.
+ *
+ * @return 1 on success, 0 if the path does not exist.
+ */
+static int ubfs_vfs_open(const char *path, fileDescriptor_t *fd)
+{
+	struct ubfs_mount *m;
+	struct ubfs_file *f;
+	ubfs_inode_t in;
+	uint64_t obj;
+
+	if (fd == 0 || fd->mp == 0 || fd->mp->fsInfo == 0)
+		return (0);
+	m = (struct ubfs_mount *)fd->mp->fsInfo;
+
+	if (ubfs_fs_lookup(&m->fs, path, &obj) < 0)
+		return (0);
+
+	f = (struct ubfs_file *)kmalloc(sizeof(*f));
+	if (f == 0)
+		return (0);
+	f->m = m;
+	f->obj = obj;
+
+	fd->res = f;
+	fd->ino = (u_int32_t)obj;
+	fd->perms = 0x1;
+	fd->size = (ubfs_fs_getattr(&m->fs, obj, &in) == 0) ? (u_int32_t)in.size : 0;
+	return (1);
+}
+
+/**
+ * vfsRead: read @size bytes at @offset from the open file into @data.
+ *
+ * @return the number of bytes read (clamped to file size), or a negative error.
+ */
+static int ubfs_vfs_read(fileDescriptor_t *fd, char *data, off_t offset, long size)
+{
+	struct ubfs_file *f;
+
+	if (fd == 0 || fd->res == 0)
+		return (-1);
+	f = (struct ubfs_file *)fd->res;
+	return ((int)ubfs_fs_read(&f->m->fs, f->obj, (uint64_t)offset, data, (uint64_t)size));
+}
+
+/**
+ * vfsClose: release the open-file handle.
+ */
+static int ubfs_vfs_close(fileDescriptor_t *fd)
+{
+	if (fd != 0 && fd->res != 0)
+	{
+		kfree(fd->res);
+		fd->res = 0;
+	}
+	return (0);
+}
+
+/* readdir collector: materialise entries into the ubfs_dir array. */
+static int collect_cb(void *arg, const char *name, uint64_t obj, u_int8_t type)
+{
+	struct ubfs_dir *d = (struct ubfs_dir *)arg;
+
+	if (d->count >= UBFS_DIR_MAX)
+		return (0);
+	strncpy(d->ents[d->count].name, name, sizeof(d->ents[0].name) - 1);
+	d->ents[d->count].name[sizeof(d->ents[0].name) - 1] = '\0';
+	d->ents[d->count].obj = obj;
+	d->ents[d->count].type = type;
+	d->count++;
+	return (0);
+}
+
+/**
+ * vfsOpenDir: resolve @path to a directory and materialise its entries.
+ *
+ * @return 1 on success, 0 if @path is not a directory in the pool.
+ */
+static int ubfs_vfs_opendir(const char *path, kDIR_t *dir)
+{
+	struct ubfs_mount *m;
+	struct ubfs_dir *d;
+	ubfs_inode_t in;
+	uint64_t obj;
+
+	if (dir == 0 || dir->mp == 0 || dir->mp->fsInfo == 0)
+		return (0);
+	m = (struct ubfs_mount *)dir->mp->fsInfo;
+
+	if (ubfs_fs_lookup(&m->fs, path, &obj) < 0)
+		return (0);
+	if (ubfs_fs_getattr(&m->fs, obj, &in) < 0 || (in.mode & UBFS_S_IFMT) != UBFS_S_IFDIR)
+		return (0);
+
+	d = (struct ubfs_dir *)kmalloc(sizeof(*d));
+	if (d == 0)
+		return (0);
+	d->count = 0;
+	d->idx = 0;
+	ubfs_fs_readdir(&m->fs, obj, collect_cb, d);
+
+	dir->dirHandle = d;
+	return (1);
+}
+
+/**
+ * vfsReadDir: hand back the next materialised entry.
+ *
+ * @return 0 on a returned entry, -1 at end of directory.
+ */
+static int ubfs_vfs_readdir(kDIR_t *dir, struct kdirent *ent)
+{
+	struct ubfs_dir *d;
+
+	if (dir == 0 || dir->dirHandle == 0)
+		return (-1);
+	d = (struct ubfs_dir *)dir->dirHandle;
+	if (d->idx >= d->count)
+		return (-1);
+
+	ent->d_ino = (u_int32_t)d->ents[d->idx].obj;
+	ent->d_type = (d->ents[d->idx].type == UBFS_DT_DIR) ? KDT_DIR : KDT_REG;
+	strncpy(ent->d_name, d->ents[d->idx].name, sizeof(ent->d_name) - 1);
+	ent->d_name[sizeof(ent->d_name) - 1] = '\0';
+	d->idx++;
+	return (0);
+}
+
+/**
+ * vfsCloseDir: free the materialised entry list.
+ */
+static int ubfs_vfs_closedir(kDIR_t *dir)
+{
+	if (dir != 0 && dir->dirHandle != 0)
+	{
+		kfree(dir->dirHandle);
+		dir->dirHandle = 0;
+	}
+	return (0);
+}
+
+/**
+ * Set the backing-image path used by the next UbixFS mount.
+ */
+void ubfs_vfs_set_backing(const char *path)
+{
+	if (path == 0)
+		return;
+	strncpy(g_backing, path, sizeof(g_backing) - 1);
+	g_backing[sizeof(g_backing) - 1] = '\0';
+}
+
+/**
+ * Register the UbixFS driver (VFS_TYPE_UBIXFS) with the VFS.
+ *
+ * @return 0 on success, 1 if registration failed.
+ */
+int ubfs_vfs_init(void)
+{
+	struct fileSystem fs = {
+	    0,                         /* prev */
+	    0,                         /* next */
+	    (void *)ubfs_vfs_initfs,   /* vfsInitFS */
+	    (void *)ubfs_vfs_read,     /* vfsRead */
+	    0,                         /* vfsWrite (K3) */
+	    (void *)ubfs_vfs_open,     /* vfsOpenFile */
+	    0,                         /* vfsUnlink (K3) */
+	    0,                         /* vfsMakeDir (K3) */
+	    0,                         /* vfsRemDir (K3) */
+	    0,                         /* vfsSync (K3) */
+	    VFS_TYPE_UBIXFS,           /* vfsType */
+	    (void *)ubfs_vfs_opendir,  /* vfsOpenDir */
+	    (void *)ubfs_vfs_readdir,  /* vfsReadDir */
+	    (void *)ubfs_vfs_closedir, /* vfsCloseDir */
+	    (void *)ubfs_vfs_close,    /* vfsClose */
+	};
+
+	if (vfsRegisterFS(fs) != 0)
+	{
+		kprintf("ubixfs: failed to register VFS driver\n");
+		return (1);
+	}
+	return (0);
+}

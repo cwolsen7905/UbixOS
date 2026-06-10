@@ -19,6 +19,8 @@
 #include <fs/ramfs/ramfs.h> /* ramfs_init, ramfs_populate (initramfs root) */
 #include <fs/fat/fat.h>     /* fat_init — disk-backed root */
 #include <fs/devfs/devfs.h> /* devfs_init — /dev/{null,zero,...} for the shell */
+#include <fs/vfs/file.h>    /* fopen/fread + vfs_opendir/readdir (ubixfs K2 verify) */
+#include <fs/ubixfs/ubfs_vfs.h> /* ubfs_vfs_init — UbixFS pool driver (plan K2) */
 #include <sys/bus.h>        /* struct ubx_device — virtio-blk block device */
 #include <mpi/mpi.h>        /* mpi_mbox_exists — wait for the ubistry daemon */
 #include <ubixos/sched.h>   /* sched_yield */
@@ -167,6 +169,41 @@ void kmain_aarch64(void)
 			devfs_init();
 			if (vfs_mount(0, 0, 0, VFS_TYPE_DEVFS, "/dev", "rw") == 0)
 				kprintf("dev: devfs mounted at /dev\n");
+
+			/* UbixFS pool (plan K2): if a pool image is staged on the FAT root,
+			 * register the driver and mount it read-only at /pool (a file-backed
+			 * loopback pool — ubixfs over /pool.img over FAT).  A short read-back
+			 * proves the whole VFS dispatch (mount/open/read/readdir) end to end. */
+			if (aarch64_file_exists("/pool.img"))
+			{
+				ubfs_vfs_init();
+				if (vfs_mount(0, 0, 0, VFS_TYPE_UBIXFS, "/pool", "r") == 0)
+				{
+					fileDescriptor_t *pf = fopen("/pool/hello.txt", "r");
+					kDIR_t *pd;
+					if (pf != 0)
+					{
+						char b[96];
+						int n = (int)fread(b, 1, sizeof(b) - 1, pf);
+						if (n > 0)
+						{
+							b[n] = '\0';
+							kprintf("ubixfs: read /pool/hello.txt (%d bytes): %s", n, b);
+						}
+						fclose(pf);
+					}
+					pd = vfs_opendir("/pool/etc");
+					if (pd != 0)
+					{
+						struct kdirent e;
+						kprintf("ubixfs: readdir /pool/etc:");
+						while (vfs_readdir(pd, &e) == 0)
+							kprintf(" %s", e.d_name);
+						kprintf("\n");
+						vfs_closedir(pd);
+					}
+				}
+			}
 
 			gic_init();
 			timer_init();

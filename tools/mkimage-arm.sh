@@ -141,6 +141,26 @@ fi
 
 fi # end desktop-profile assets
 
+# UbixFS pool (plan K2): stage a small file-backed (loopback) pool as /pool.img,
+# which the kernel mounts read-only at /pool.  Built with the host `ubfs` CLI
+# from the same portable core the kernel links.  Both profiles carry it — it is
+# the native copy-on-write filesystem demo and the path off FAT.
+if ( cd tools/ubixfs && bmake ubfs ) >/dev/null 2>&1 && [ -x tools/ubixfs/ubfs ]; then
+	UBFS=tools/ubixfs/ubfs
+	POOL=$(mktemp -t ubixpool).img
+	"${UBFS}" mkpool "${POOL}" 2M >/dev/null
+	printf 'Hello from a UbixFS pool!\nThis file lives in a lite-ZFS dataset.\n' >"${POOL}.hello"
+	printf 'uBixOS native copy-on-write filesystem (lite-ZFS): pool + datasets,\nper-block Fletcher checksums, transaction-group commit.\n' >"${POOL}.readme"
+	"${UBFS}" mkdir "${POOL}" /etc >/dev/null
+	"${UBFS}" cp "${POOL}.hello"  "${POOL}:/hello.txt"   >/dev/null
+	"${UBFS}" cp "${POOL}.readme" "${POOL}:/etc/readme"  >/dev/null
+	mcopy -o -i "${IMG}" "${POOL}" ::/pool.img
+	rm -f "${POOL}" "${POOL}.hello" "${POOL}.readme"
+	echo "mkimage-arm: staged UbixFS pool at /pool.img (kernel mounts it at /pool)"
+else
+	echo "mkimage-arm: skipped /pool.img (host ubfs tool unavailable)"
+fi
+
 echo "mkimage-arm: done — contents:"
 mdir -i "${IMG}" ::/bin | tail -n +4 | head -20
 echo "  (boot with: bmake run-debug-aarch64 TARGET=aarch64)"
