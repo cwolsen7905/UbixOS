@@ -20,23 +20,16 @@
 #include <fs/vfs/file.h>
 #include <string.h>
 
-#define USER_STACK_VA 0x100200000UL /* above the program segments (0x100000000+) */
-#define USER_STACK_TOP (USER_STACK_VA + PAGE_SIZE)
+/* User-VA layout (USER_STACK_*, DYN_MAIN_BASE/INTERP_BASE/STACK_*) lives in
+ * <aarch64/vmm_layout.h> — the single source of truth shared with kern/syscall.c
+ * (MMAP_BASE/BRK_BASE). */
+#include <aarch64/vmm_layout.h>
+
 #define INITIAL_FRAME 8 /* u64 slots: argc, argv[0]=NULL, envp[0]=NULL, auxv{6,PAGE_SIZE}{0,0}, pad */
 #define AT_PAGESZ 6     /* auxv: aarch64 musl reads PAGE_SIZE from here (else malloc fails) */
 
 #define EXEC_MAX (4 * 1024 * 1024) /* cap on an ELF image we'll load (libc.so ~1 MB) */
 #define INITIAL_KSTACK_SIZE 8192   /* kernelStack size (matches schedNewTask kmalloc) */
-
-/* Dynamic-executable layout: a PIE main + the dynamic linker (also PIE) each get
- * their own 1 GB block (user VA must be >= 4 GB — the low 4 GB is the kernel's
- * identity map, see pmap USER_L1_MIN).  brk (0x1C0000000) + mmap (0x200000000)
- * are clear of these. */
-#define DYN_MAIN_BASE 0x100000000UL   /* PIE main exe load base   (L1 idx 4) */
-#define DYN_INTERP_BASE 0x140000000UL /* dynamic linker load base (L1 idx 5) */
-#define DYN_STACK_VA 0x180000000UL    /* initial user stack base  (L1 idx 6) */
-#define DYN_STACK_PAGES 64            /* 256 KB stack (busybox et al. need > 1 page) */
-#define DYN_STACK_TOP (DYN_STACK_VA + (u_int64_t)DYN_STACK_PAGES * PAGE_SIZE)
 
 /* SysV auxiliary-vector types (Linux/musl ABI — musl's __libc_start_main reads
  * AT_PHDR/PHENT/PHNUM to find the program headers, AT_BASE for the linker's own

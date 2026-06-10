@@ -18,6 +18,7 @@
 #include <ubixos/endtask.h>     /* endTask */
 #include <vmm/vmm.h>            /* address-space helpers */
 #include <vmm/uregion.h>        /* vmm_uregion_mmap_anon, vmm_uregion_brk */
+#include <aarch64/vmm_layout.h> /* MMAP_BASE / BRK_BASE (user-VA layout) */
 #include <sys/sysproto_posix.h> /* sys_open/read/close/lseek + uap structs */
 #include <sys/descrip.h>        /* getfd, struct file */
 #include <mpi/mpi.h>            /* MPI mailboxes (native syscalls 50-53) */
@@ -65,10 +66,9 @@ register_t ksyscall_dispatch(
 #define SYS_SET_TID_ADDRESS 258
 #define SYS_RT_SIGPROCMASK 340 /* musl blocks/restores signals around fork() */
 
-/* Per-process anonymous-mmap region base (block 8 — clear of code/stack). */
-#define MMAP_BASE 0x200000000UL
-/* Per-process brk heap base (block 7 — clear of code/stack/mmap). */
-#define BRK_BASE 0x1C0000000UL
+/* MMAP_BASE / BRK_BASE (and the exec loader's DYN_ and USER_STACK_ regions) now
+ * live in <aarch64/vmm_layout.h> — the single source of truth for the user-VA
+ * layout. */
 
 /* musl routes the Linux-compat primitives (exit_group, set_thread_area, futex)
  * through the UbixOS-native int $0x81 table by ORing in this flag (matches the
@@ -293,8 +293,8 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args)
 			 * on this).  Plain console/placeholder/no-table fds keep the bring-up
 			 * UART path (sc_write), which is also what the early EL0 demos rely on. */
 			struct file *f = aarch64_lookup_fd((int)args[0]);
-			if (f != 0 && (f->fd_type == FD_TYPE_TTYV || f->fd_type == FD_TYPE_SOCKET ||
-			               f->fd_type == FD_TYPE_PIPE))
+			if (f != 0 &&
+			    (f->fd_type == FD_TYPE_TTYV || f->fd_type == FD_TYPE_SOCKET || f->fd_type == FD_TYPE_PIPE))
 			{
 				struct sys_write_args ua;
 				ua.fd = (int)args[0];
