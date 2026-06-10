@@ -104,6 +104,7 @@ AARCH64_GENERIC_SRCS = \
 	sys/kern/klog.c \
 	sys/kern/descrip.c \
 	sys/kern/kern_fork.c \
+	sys/kern/kern_exec.c \
 	sys/kern/access.c \
 	sys/fs/vfs/mount.c \
 	sys/fs/vfs/file.c \

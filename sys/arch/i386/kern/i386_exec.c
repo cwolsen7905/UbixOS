@@ -760,26 +760,11 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 		return (-1);
 	}
 
-	{
-		const char *base = file, *p;
-		for (p = file; *p; p++)
-			if (*p == '/')
-				base = p + 1;
-		strncpy(_current->name, base, sizeof(_current->name) - 1);
-		size_t pos = 0;
-		int j;
-		for (j = 1; j <= argc && pos < sizeof(_current->cmdline) - 1; j++) {
-			const char *arg = (const char *)argv_out[j];
-			if (j > 1)
-				_current->cmdline[pos++] = ' ';
-			size_t alen = strlen(arg);
-			if (pos + alen >= sizeof(_current->cmdline))
-				alen = sizeof(_current->cmdline) - pos - 1;
-			memcpy(_current->cmdline + pos, arg, alen);
-			pos += alen;
-		}
-		_current->cmdline[pos] = '\0';
-	}
+	/* Task name (basename of file) + cmdline (argv joined) — MI helper shared
+	 * with aarch64_exec_replace.  args_copyin stores argc at argv_out[0] and the
+	 * argument pointers at [1..argc], so the standard char** vector starts at
+	 * &argv_out[1] (char* and u_int32_t are the same width on i386). */
+	exec_set_name_cmdline(_current, file, (char **)&argv_out[1], argc);
 
 	u_int32_t *envp_out = 0x0;
 	char *envs_out = 0x0;

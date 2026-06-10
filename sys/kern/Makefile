@@ -11,6 +11,7 @@ OBJS = \
 	descrip.o \
 	endtask.o \
 	fb.o \
+	kern_exec.o \
 	kern_fork.o \
 	kern_sysctl.o \
 	klog.o \

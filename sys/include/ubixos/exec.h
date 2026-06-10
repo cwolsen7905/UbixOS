@@ -37,4 +37,8 @@ void execFile(char *file, char **argv, char **envp, int console);
 
 int sys_exec(struct thread *, char *, char **, char **);
 
+/* MI execve helper (sys/kern/kern_exec.c): set a task's name (basename of path)
+ * and cmdline (argv joined) on exec.  Shared by the per-arch exec paths. */
+void exec_set_name_cmdline(kTask_t *t, const char *path, char **argv, int argc);
+
 #endif /* END _UBIXOS_EXEC_H */

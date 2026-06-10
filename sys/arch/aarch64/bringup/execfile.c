@@ -9,6 +9,7 @@
  */
 #include "bringup.h"
 #include <ubixos/sched.h>
+#include <ubixos/exec.h>           /* exec_set_name_cmdline (MI exec helper) */
 #include <ubixos/sched_internal.h> /* taskList, pid_hash_remove */
 #include <ubixos/wait.h>           /* save_flags/cli/restore_flags */
 #include <ubixos/errno.h>          /* ECHILD */
@@ -519,6 +520,11 @@ int aarch64_exec_replace(const char *path, char *const *uargv, char *const *uenv
 		argc = 1;
 	}
 
+	/* Task name (basename of path) + cmdline (argv joined) — MI helper shared
+	 * with i386 sys_exec.  Done here while kargv[] is still live (it is freed
+	 * below once load_dynamic has copied it onto the new user stack). */
+	exec_set_name_cmdline(_current, namebuf, kargv, argc);
+
 	l1 = pmap_create_user_space();
 	if (load_dynamic(buf, l1, kargv, argc, kenvp, envc, &entry, &usp) != 0)
 	{
@@ -535,8 +541,8 @@ int aarch64_exec_replace(const char *path, char *const *uargv, char *const *uenv
 	for (i = 0; i < envc; i++)
 		kfree(kenvp[i]);
 
-	/* Repoint the current task at the new image, then make it live. */
-	strncpy(_current->name, namebuf, sizeof(_current->name) - 1);
+	/* Repoint the current task at the new image, then make it live.  (name +
+	 * cmdline were already set by exec_set_name_cmdline above.) */
 	_current->md.md_ttbr0 = (u_int64_t)(uintptr_t)l1;
 	_current->md.md_entry = entry;
 	_current->md.md_usp = usp;
