@@ -275,12 +275,21 @@ echo "==> Installing UbixFS pool (/pool.img)"
 if ( cd tools/ubixfs && bmake ubfs ) >/dev/null 2>&1 && [ -x tools/ubixfs/ubfs ]; then
     UBFS=tools/ubixfs/ubfs
     POOL=$(mktemp -t ubixpool).img
-    "$UBFS" mkpool "$POOL" 2M >/dev/null
+    "$UBFS" mkpool "$POOL" 8M >/dev/null
     printf 'Hello from a UbixFS pool!\nThis file lives in a lite-ZFS dataset.\n' >"$POOL.hello"
     printf 'uBixOS native copy-on-write filesystem (lite-ZFS): pool + datasets,\nper-block Fletcher checksums, transaction-group commit.\n' >"$POOL.readme"
     "$UBFS" mkdir "$POOL" /etc >/dev/null
     "$UBFS" cp "$POOL.hello"  "$POOL:/hello.txt"  >/dev/null
     "$UBFS" cp "$POOL.readme" "$POOL:/etc/readme" >/dev/null
+    # M2: put a few REAL world binaries + a lib in the pool so the raw mount
+    # serves actual executables (the mountable-root candidate).  A handful only —
+    # the host cp reopens+syncs the pool per file; the full world copy is M3.
+    "$UBFS" mkdir "$POOL" /bin >/dev/null
+    "$UBFS" mkdir "$POOL" /lib >/dev/null
+    for _b in cat ls echo true; do
+        [ -f "$BUILD/bin/$_b" ] && "$UBFS" cp "$BUILD/bin/$_b" "$POOL:/bin/$_b" >/dev/null
+    done
+    [ -f "$BUILD/lib/libc.so" ] && "$UBFS" cp "$BUILD/lib/libc.so" "$POOL:/lib/libc.so" >/dev/null
     mcopy -o -i "$IMG"@@1M "$POOL" ::/pool.img
     echo "    Installed: /pool.img (loopback, kernel mounts it at /pool)"
     # Also write the same pool into the raw pool PARTITION (type 0x9C) so the

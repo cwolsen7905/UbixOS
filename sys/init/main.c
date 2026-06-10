@@ -292,17 +292,38 @@ int kmain(u_int32_t rootdev)
 		ubfs_vfs_set_raw(1);
 		if (vfs_mount(1, 3, 0, VFS_TYPE_UBIXFS, "/poolraw", "rw") == 0)
 		{
-			fileDescriptor_t *pf = fopen("/poolraw/hello.txt", "r");
+			fileDescriptor_t *pf;
+			kDIR_t *pd;
 			char rb[96];
 			int n;
+
+			/* M2: the raw pool now holds real world binaries — list /poolraw/bin
+			 * and read one back, checking the ELF magic, to prove the partition
+			 * pool serves actual executables (the mountable-root candidate). */
+			pd = vfs_opendir("/poolraw/bin");
+			if (pd != NULL)
+			{
+				struct kdirent e;
+				kprintf("ubixfs: /poolraw/bin:");
+				while (vfs_readdir(pd, &e) == 0)
+					kprintf(" %s", e.d_name);
+				kprintf("\n");
+				vfs_closedir(pd);
+			}
+			pf = fopen("/poolraw/bin/cat", "r");
 			if (pf != NULL)
 			{
-				n = (int)fread(rb, 1, sizeof(rb) - 1, pf);
-				if (n > 0)
-				{
-					rb[n] = '\0';
-					kprintf("ubixfs: read /poolraw/hello.txt (%d bytes): %s", n, rb);
-				}
+				n = (int)fread(rb, 1, 4, pf);
+				if (n == 4 && rb[0] == 0x7F && rb[1] == 'E' && rb[2] == 'L' && rb[3] == 'F')
+					kprintf("ubixfs: /poolraw/bin/cat is a valid ELF (%d bytes on disk)\n",
+					        (int)pf->size);
+				else
+					kprintf("ubixfs: /poolraw/bin/cat read %d bytes, magic %02X %02X %02X %02X\n",
+					        n,
+					        (u_int8_t)rb[0],
+					        (u_int8_t)rb[1],
+					        (u_int8_t)rb[2],
+					        (u_int8_t)rb[3]);
 				fclose(pf);
 			}
 		}
