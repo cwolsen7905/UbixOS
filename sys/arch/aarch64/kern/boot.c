@@ -10,6 +10,8 @@
  */
 
 #include "bringup.h"
+#include <ubixos/sched.h>          /* sched_init, RUNNING, QOS_DEFAULT */
+#include <ubixos/sched_internal.h> /* taskList, set_current (scheduler bootstrap) */
 #include <vmm/vmm.h>        /* vmm_mem_map_init */
 #include <ubixos/vitals.h>  /* vitals_init */
 #include <fs/vfs/vfs.h>     /* vfs_init */
@@ -112,6 +114,17 @@ void kmain_aarch64(void)
 	aarch64_console_init(); /* PL011 -> VFS console fileops (stdin/stdout/stderr) */
 	tty_init();             /* pty pool + VT100 engine (g_tty_ops) for the GUI terminal */
 
+	/* Bootstrap the generic scheduler: initialise the task list and adopt the
+	 * boot context as the running task.  This is load-bearing for everything that
+	 * schedules a task (the desktop chain, dirtest, the demos) — it must run
+	 * regardless of whether the bring-up demos below are built in. */
+	sched_init();
+	set_current(taskList);
+	taskList->state = RUNNING;
+	taskList->priority = QOS_DEFAULT; /* share the CPU at the default QoS */
+	taskList->base_priority = QOS_DEFAULT;
+
+#ifdef AARCH64_BRINGUP_DEMOS
 	aarch64_vmm_demo();
 	aarch64_pmap_demo();
 	aarch64_aspace_demo();
@@ -122,6 +135,7 @@ void kmain_aarch64(void)
 	aarch64_proc_demo();
 	aarch64_fork_demo();
 	aarch64_user_elf_demo();
+#endif
 	aarch64_procfs_demo(); /* mount /proc before the program (which reads it) */
 	aarch64_ramfs_demo();  /* registers ramfs + exercises it at /ram */
 

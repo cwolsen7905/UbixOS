@@ -77,13 +77,8 @@ void aarch64_sched_demo(void)
 {
 	kprintf("sched demo: generic sched_core driving aarch64 threads...\n");
 
-	/* Bootstrap the task list and adopt the boot context as the current task. */
-	sched_init();
-	set_current(taskList);
-	taskList->state = RUNNING;
-	taskList->priority = QOS_DEFAULT; /* drop from REALTIME so A/B share the CPU */
-	taskList->base_priority = QOS_DEFAULT;
-
+	/* The scheduler is bootstrapped in kmain_aarch64 (sched_init + set_current)
+	 * so it is available with or without the demos; just spawn the test threads. */
 	g_a = spawn(demo_thread_a, "demoA");
 	g_b = spawn(demo_thread_b, "demoB");
 
