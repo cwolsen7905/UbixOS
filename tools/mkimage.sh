@@ -20,9 +20,14 @@ set -e
 
 IMG="${1:-ubixos.img}"
 IMG_SIZE_MB=656
-FAT_SIZE_MB=448     # FAT32 partition (type 0x0C)
+# /boot-only FAT (kernel + GRUB ≈ 0.5 MB of real content; 33 MB is the FAT32
+# floor — ≥65525 clusters).  The world no longer lives here: the UbixFS pool is
+# the root filesystem (mounted at / by the kernel), so the pool gets the bulk of
+# the disk and FAT carries only what the firmware/GRUB must read pre-mount.
+FAT_SIZE_MB=33      # FAT32 /boot partition (type 0x0C) — kernel + GRUB only
 SWAP_SIZE_MB=64     # raw swap partition (type 0x82)
-POOL_SIZE_MB=128    # UbixFS pool partition (type 0x9C; raw mount, holds the world)
+POOL_SIZE_MB=550    # UbixFS pool partition (type 0x9C; raw mount) — the root /
+POOL_FS_MB=540      # pool filesystem size inside that partition
 # BUILD/KERNEL honor the environment so the arch-homed build dir (build/i386)
 # can be passed in by the `image` target; default to the flat layout otherwise.
 BUILD="${BUILD:-build}"
@@ -178,41 +183,45 @@ cp "$GRUB_LIB"/*.mod "$GRUB_LIB"/*.lst "$TMPMOD"/ 2>/dev/null || true
 mmd -i "$IMG"@@1M ::/boot/grub/i386-pc
 mcopy -i "$IMG"@@1M "$TMPMOD"/*.mod "$TMPMOD"/*.lst ::/boot/grub/i386-pc/ 2>/dev/null || true
 
-echo "==> Installing world files (bin/ lib/ libexec/)"
-mmd -i "$IMG"@@1M ::/bin
-mmd -i "$IMG"@@1M ::/lib
-mmd -i "$IMG"@@1M ::/libexec
+# ── Build the complete root (everything except /boot) in a host staging dir,
+#    then load it into the UbixFS pool.  The pool IS the root filesystem — the
+#    kernel mounts it at / — so the world lives there, not on FAT (FAT carries
+#    only /boot above).  Building into a host dir first keeps one staging path
+#    that feeds the pool via the host `ubfs` CLI (the same portable core the
+#    kernel links). ────────────────────────────────────────────────────────────
+echo "==> Building host UbixFS tool"
+if ! ( cd tools/ubixfs && bmake ubfs ) >/dev/null 2>&1 || [ ! -x tools/ubixfs/ubfs ]; then
+    echo "ERROR: host ubfs tool unavailable — cannot build the pool root." >&2
+    exit 1
+fi
+UBFS=tools/ubixfs/ubfs
+STAGE=$(mktemp -d -t ubixroot)
 
-for f in "$BUILD/bin"/*;    do [ -f "$f" ] && mcopy -i "$IMG"@@1M "$f" ::/bin/;    done
-for f in "$BUILD/lib"/*;    do [ -f "$f" ] && mcopy -i "$IMG"@@1M "$f" ::/lib/;    done
-# musl dynamic linker: FAT32 has no symlinks, so install libc.so a second time
-# under the LDSO_PATHNAME that the kernel ld.so and ELF binaries expect.
-[ -f "$BUILD/lib/libc.so" ] && \
-    mcopy -o -i "$IMG"@@1M "$BUILD/lib/libc.so" ::/lib/ld-musl-i386.so.1
-for f in "$BUILD/libexec"/*; do [ -f "$f" ] && mcopy -i "$IMG"@@1M "$f" ::/libexec/; done
+echo "==> Staging world (bin/ lib/ libexec/)"
+mkdir -p "$STAGE/bin" "$STAGE/lib" "$STAGE/libexec"
+for f in "$BUILD/bin"/*;     do [ -f "$f" ] && cp "$f" "$STAGE/bin/";     done
+for f in "$BUILD/lib"/*;     do [ -f "$f" ] && cp "$f" "$STAGE/lib/";     done
+# musl dynamic linker: the pool FS has no symlinks, so install libc.so a second
+# time under the LDSO_PATHNAME the kernel ld.so + ELF binaries expect.
+[ -f "$BUILD/lib/libc.so" ] && cp "$BUILD/lib/libc.so" "$STAGE/lib/ld-musl-i386.so.1"
+for f in "$BUILD/libexec"/*; do [ -f "$f" ] && cp "$f" "$STAGE/libexec/"; done
 
-echo "==> Installing TCC compiler (lib/tcc/ and usr/bin/)"
-mmd -i "$IMG"@@1M ::/lib/tcc 2>/dev/null || true
-mmd -i "$IMG"@@1M ::/lib/tcc/include 2>/dev/null || true
-for f in "$BUILD/lib/tcc"/*;    do [ -f "$f" ] && mcopy -i "$IMG"@@1M "$f" ::/lib/tcc/;    done
-for f in "$BUILD/lib/tcc/include"/*; do [ -f "$f" ] && mcopy -i "$IMG"@@1M "$f" ::/lib/tcc/include/; done
-mmd -i "$IMG"@@1M ::/usr 2>/dev/null || true
-mmd -i "$IMG"@@1M ::/usr/bin 2>/dev/null || true
-[ -f "$BUILD/bin/tcc" ] && mcopy -i "$IMG"@@1M "$BUILD/bin/tcc" ::/usr/bin/tcc
+echo "==> Staging TCC compiler (lib/tcc/ and usr/bin/)"
+mkdir -p "$STAGE/lib/tcc/include" "$STAGE/usr/bin"
+for f in "$BUILD/lib/tcc"/*;         do [ -f "$f" ] && cp "$f" "$STAGE/lib/tcc/";         done
+for f in "$BUILD/lib/tcc/include"/*; do [ -f "$f" ] && cp "$f" "$STAGE/lib/tcc/include/"; done
+[ -f "$BUILD/bin/tcc" ] && cp "$BUILD/bin/tcc" "$STAGE/usr/bin/tcc"
 
 # NetSurf browser runtime resources (Messages, CSS, icons) at a path baked into
 # nsfb's resource search list (/usr/local/share/netsurf).
 if [ -d contrib/netsurf-res ]; then
-  echo "==> Installing NetSurf resources (/usr/local/share/netsurf)"
-  mmd -i "$IMG"@@1M ::/usr/local 2>/dev/null || true
-  mmd -i "$IMG"@@1M ::/usr/local/share 2>/dev/null || true
-  mmd -i "$IMG"@@1M ::/usr/local/share/netsurf 2>/dev/null || true
-  mcopy -s -i "$IMG"@@1M contrib/netsurf-res/* ::/usr/local/share/netsurf/
-  # TrueType faces for the stb_truetype font backend (font_stbtt.c).
-  # Install under unique 8.3 names so the FAT driver never has to disambiguate
-  # colliding "DejaVu..." long-name aliases (which corrupted reads -> crash).
+  echo "==> Staging NetSurf resources (/usr/local/share/netsurf)"
+  mkdir -p "$STAGE/usr/local/share/netsurf"
+  cp -R contrib/netsurf-res/* "$STAGE/usr/local/share/netsurf/"
+  # TrueType faces for the stb_truetype font backend (font_stbtt.c), under unique
+  # 8.3 names (kept for parity with the backend's resource names).
   install_face() { # src 8.3-name
-    [ -f "tools/$1" ] && mcopy -o -i "$IMG"@@1M "tools/$1" "::/usr/local/share/netsurf/$2"
+    [ -f "tools/$1" ] && cp "tools/$1" "$STAGE/usr/local/share/netsurf/$2"
   }
   install_face DejaVuSans.ttf               SANS.TTF
   install_face DejaVuSans-Bold.ttf          SANSB.TTF
@@ -228,31 +237,22 @@ if [ -d contrib/netsurf-res ]; then
   install_face DejaVuSansMono-BoldOblique.ttf MONOBI.TTF
 fi
 
-echo "==> Installing system headers (include/)"
-mmd -i "$IMG"@@1M ::/include 2>/dev/null || true
-for f in include/*.h; do [ -f "$f" ] && mcopy -i "$IMG"@@1M "$f" ::/include/; done
-# sys/ sub-directory of headers
-mmd -i "$IMG"@@1M ::/include/sys 2>/dev/null || true
-for f in include/sys/*.h; do [ -f "$f" ] && mcopy -i "$IMG"@@1M "$f" ::/include/sys/; done
-# machine/ sub-directory
-mmd -i "$IMG"@@1M ::/include/machine 2>/dev/null || true
-for f in include/machine/*.h; do [ -f "$f" ] && mcopy -i "$IMG"@@1M "$f" ::/include/machine/; done
+echo "==> Staging system headers (include/)"
+mkdir -p "$STAGE/include/sys" "$STAGE/include/machine"
+for f in include/*.h;         do [ -f "$f" ] && cp "$f" "$STAGE/include/";         done
+for f in include/sys/*.h;     do [ -f "$f" ] && cp "$f" "$STAGE/include/sys/";     done
+for f in include/machine/*.h; do [ -f "$f" ] && cp "$f" "$STAGE/include/machine/"; done
 
-echo "==> Installing source examples (src/)"
-mmd -i "$IMG"@@1M ::/src 2>/dev/null || true
-for f in tools/src/*; do [ -f "$f" ] && mcopy -i "$IMG"@@1M "$f" ::/src/; done
+echo "==> Staging source examples (src/)"
+mkdir -p "$STAGE/src"
+for f in tools/src/*; do [ -f "$f" ] && cp "$f" "$STAGE/src/"; done
 
-echo "==> Installing system files (etc/)"
-mmd -i "$IMG"@@1M ::/etc
-for f in etc/*; do
-  [ -f "$f" ] && mcopy -i "$IMG"@@1M "$f" ::/etc/
-done
-mmd -i "$IMG"@@1M ::/etc/init.d
-for f in etc/init.d/*; do
-  [ -f "$f" ] && mcopy -i "$IMG"@@1M "$f" ::/etc/init.d/
-done
+echo "==> Staging system files (etc/)"
+mkdir -p "$STAGE/etc/init.d"
+for f in etc/*;        do [ -f "$f" ] && cp "$f" "$STAGE/etc/";        done
+for f in etc/init.d/*; do [ -f "$f" ] && cp "$f" "$STAGE/etc/init.d/"; done
 
-echo "==> Installing DOOM WAD (optional)"
+echo "==> Staging DOOM WAD (optional)"
 _doom_wad=""
 for _candidate in "tools/doom1.wad" "$HOME/Downloads/doom1.wad"; do
     if [ -f "$_candidate" ]; then
@@ -261,34 +261,10 @@ for _candidate in "tools/doom1.wad" "$HOME/Downloads/doom1.wad"; do
     fi
 done
 if [ -n "$_doom_wad" ]; then
-    mcopy -o -i "$IMG"@@1M "$_doom_wad" ::/bin/doom1.wad
+    cp "$_doom_wad" "$STAGE/bin/doom1.wad"
     echo "    Installed: $_doom_wad -> /bin/doom1.wad"
 else
     echo "    WARNING: doom1.wad not found; copy it to tools/doom1.wad to include it"
-fi
-
-# UbixFS pool (plan K4): stage a small file-backed (loopback) pool as /pool.img,
-# which the kernel mounts read-write at /pool — the same arch-neutral driver as
-# aarch64 (mkimage-arm.sh).  Built with the host `ubfs` CLI from the same
-# portable core the kernel links.
-echo "==> Installing UbixFS pool (/pool.img)"
-if ( cd tools/ubixfs && bmake ubfs ) >/dev/null 2>&1 && [ -x tools/ubixfs/ubfs ]; then
-    UBFS=tools/ubixfs/ubfs
-    POOL=$(mktemp -t ubixpool).img
-    "$UBFS" mkpool "$POOL" 8M >/dev/null
-    printf 'Hello from a UbixFS pool!\nThis file lives in a lite-ZFS dataset.\n' >"$POOL.hello"
-    printf 'uBixOS native copy-on-write filesystem (lite-ZFS): pool + datasets,\nper-block Fletcher checksums, transaction-group commit.\n' >"$POOL.readme"
-    "$UBFS" mkdir "$POOL" /etc >/dev/null
-    "$UBFS" cp "$POOL.hello"  "$POOL:/hello.txt"  >/dev/null
-    "$UBFS" cp "$POOL.readme" "$POOL:/etc/readme" >/dev/null
-    mcopy -o -i "$IMG"@@1M "$POOL" ::/pool.img
-    echo "    Installed: /pool.img (loopback demo, kernel mounts it at /pool)"
-    rm -f "$POOL" "$POOL.hello" "$POOL.readme"
-    # The complete root pool (raw partition, the mountable-root candidate) is built
-    # at the very END of this script, once the FAT root is fully populated — see
-    # "Building UbixFS root pool".
-else
-    echo "    WARNING: host ubfs tool unavailable; skipped /pool.img"
 fi
 
 # Parse tools/userdb (binary struct array) to get username + home path per user.
@@ -309,66 +285,50 @@ for i in range(len(data) // ENTRY.size):
 PYEOF
 )
 
-echo "==> Creating /home (user home directories from userdb)"
-mmd -i "$IMG"@@1M ::/home 2>/dev/null || true
+echo "==> Staging /home (user home directories from userdb)"
+mkdir -p "$STAGE/home"
 for entry in $USERDB_ENTRIES; do
     _user="${entry%%:*}"; _home="${entry#*:}"
     echo "    /home/$_user ($entry)"
-    mmd -i "$IMG"@@1M "::$_home" 2>/dev/null || true
+    mkdir -p "$STAGE$_home"
     for _f in tools/skel/.*; do
         case "$_f" in */.|*/..) continue;; esac
-        [ -f "$_f" ] && mcopy -o -i "$IMG"@@1M "$_f" "::$_home/"
+        [ -f "$_f" ] && cp "$_f" "$STAGE$_home/"
     done
 done
 
-echo "==> Creating /mnt (automountd mount point root)"
-mmd -i "$IMG"@@1M ::/mnt 2>/dev/null || true
+# Empty mount points + scratch.
+mkdir -p "$STAGE/mnt" "$STAGE/tmp"
 
-echo "==> Creating /tmp (scratch space for editors, builds, etc.)"
-mmd -i "$IMG"@@1M ::/tmp 2>/dev/null || true
+echo "==> Staging assets (var/)"
+mkdir -p "$STAGE/var/log" "$STAGE/var/background" "$STAGE/var/fonts" "$STAGE/var/db"
+for f in tools/backgrounds/*.bmp tools/backgrounds/*.png; do [ -f "$f" ] && cp "$f" "$STAGE/var/background/"; done
+for f in tools/*.DPF; do [ -f "$f" ] && cp "$f" "$STAGE/var/fonts/"; done
+for f in tools/*.ttf; do [ -f "$f" ] && cp "$f" "$STAGE/var/fonts/"; done
+[ -f tools/ubistry.db ] && cp tools/ubistry.db "$STAGE/var/db/ubistry.db"
 
-echo "==> Installing assets (var/)"
-mmd -i "$IMG"@@1M ::/var 2>/dev/null || true
-mmd -i "$IMG"@@1M ::/var/log 2>/dev/null || true
-mmd -i "$IMG"@@1M ::/var/background 2>/dev/null || true
-for f in tools/backgrounds/*.bmp tools/backgrounds/*.png; do [ -f "$f" ] && mcopy -o -i "$IMG"@@1M "$f" ::/var/background/; done
-mmd -i "$IMG"@@1M ::/var/fonts 2>/dev/null || true
-for f in tools/*.DPF; do [ -f "$f" ] && mcopy -o -i "$IMG"@@1M "$f" ::/var/fonts/; done
-for f in tools/*.ttf; do [ -f "$f" ] && mcopy -o -i "$IMG"@@1M "$f" ::/var/fonts/; done
-mmd -i "$IMG"@@1M ::/var/db 2>/dev/null || true
-[ -f tools/ubistry.db ] && mcopy -o -i "$IMG"@@1M tools/ubistry.db ::/var/db/ubistry.db
-
-# UbixFS root pool (plan K5/M3): build the mountable-root candidate in the raw
-# partition (type 0x9C).  The pool must contain everything the FAT root holds
-# EXCEPT /boot (kernel + GRUB stay on FAT, which the firmware/GRUB reads).  Rather
-# than duplicate the long mcopy logic above (and risk drift), mirror the finished
-# FAT root into a host staging dir and cpr it into the pool — one source of truth,
-# byte-faithful (fonts already 8.3-renamed, ld-musl already a real file, etc.).
-if [ -x "${UBFS:-}" ] && [ -n "${POOL_LBA:-}" ]; then
-    echo "==> Building UbixFS root pool (mirror of FAT root, minus /boot) -> raw partition"
+# ── Load the staged root into the UbixFS pool partition (type 0x9C).  The pool
+#    IS the root filesystem — the kernel mounts it at / and execs init off it.
+#    /boot (kernel + GRUB) is the only thing on FAT.  cpr each top-level tree (one
+#    pool mount/sync per tree); the host `ubfs` tool is the same portable core the
+#    kernel links, so the on-disk format matches byte-for-byte. ────────────────
+if [ -n "${POOL_LBA:-}" ]; then
+    echo "==> Building UbixFS pool root -> raw partition LBA $POOL_LBA"
     WPOOL=$(mktemp -t ubixroot).img
-    MIRROR=$(mktemp -d -t ubixmirror)
-    "$UBFS" mkpool "$WPOOL" 120M >/dev/null
-    # Extract the finished FAT root (every top-level dir except boot, the loopback
-    # demo pool.img, and the empty devfs/procfs mountpoints) to a host dir.
-    for _d in bin lib libexec usr include src etc home mnt tmp var; do
-        mcopy -s -i "$IMG"@@1M "::/$_d" "$MIRROR/" 2>/dev/null || true
-    done
-    for _f in .login .tcshrc; do
-        mcopy -i "$IMG"@@1M "::/$_f" "$MIRROR/$_f" 2>/dev/null || true
-    done
-    # cpr each top-level tree into the pool (one mount/sync per tree).
-    for _d in "$MIRROR"/*; do
+    "$UBFS" mkpool "$WPOOL" "${POOL_FS_MB}M" >/dev/null
+    for _d in "$STAGE"/*; do
         [ -d "$_d" ] && "$UBFS" cpr "$_d" "$WPOOL:/$(basename "$_d")" >/dev/null 2>&1
     done
-    for _f in "$MIRROR"/.login "$MIRROR"/.tcshrc; do
-        [ -f "$_f" ] && "$UBFS" cp "$_f" "$WPOOL:/$(basename "$_f")" >/dev/null 2>&1
+    # Any dotfiles staged at the root of the tree.
+    for _df in "$STAGE"/.[!.]*; do
+        [ -f "$_df" ] && "$UBFS" cp "$_df" "$WPOOL:/$(basename "$_df")" >/dev/null 2>&1
     done
-    _mib=$(du -m "$MIRROR" 2>/dev/null | tail -1 | cut -f1)
+    _mib=$(du -m "$STAGE" 2>/dev/null | tail -1 | cut -f1)
     dd if="$WPOOL" of="$IMG" bs=512 seek="$POOL_LBA" conv=notrunc 2>/dev/null
-    rm -rf "$WPOOL" "$MIRROR"
-    echo "    Installed: complete root pool (~${_mib} MiB of FAT root) -> raw partition LBA $POOL_LBA"
+    rm -f "$WPOOL"
+    echo "    Installed: complete root (~${_mib} MiB) -> UbixFS pool / (LBA $POOL_LBA)"
 fi
+rm -rf "$STAGE"
 
 echo ""
 echo "Done: $IMG"
