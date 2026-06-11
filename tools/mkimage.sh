@@ -284,28 +284,9 @@ if ( cd tools/ubixfs && bmake ubfs ) >/dev/null 2>&1 && [ -x tools/ubixfs/ubfs ]
     mcopy -o -i "$IMG"@@1M "$POOL" ::/pool.img
     echo "    Installed: /pool.img (loopback demo, kernel mounts it at /pool)"
     rm -f "$POOL" "$POOL.hello" "$POOL.readme"
-
-    # M3: build a COMPLETE bootable world pool for the RAW partition (type 0x9C) —
-    # the mountable-root candidate.  cpr the whole world (fast: one mount/sync per
-    # tree), then add the bits cpr/the FS layout can't: the dynamic linker (a copy
-    # of libc.so — mkimage synthesizes it; cpr skips the symlink) and /etc (userdb
-    # for login, etc.).  dd it into the partition.
-    if [ -n "${POOL_LBA:-}" ]; then
-        WPOOL=$(mktemp -t ubixworld).img
-        "$UBFS" mkpool "$WPOOL" 96M >/dev/null
-        for _d in bin lib libexec; do
-            [ -d "$BUILD/$_d" ] && "$UBFS" cpr "$BUILD/$_d" "$WPOOL:/$_d" >/dev/null 2>&1
-        done
-        [ -f "$BUILD/lib/libc.so" ] && "$UBFS" cp "$BUILD/lib/libc.so" "$WPOOL:/lib/ld-musl-i386.so.1" >/dev/null
-        "$UBFS" mkdir "$WPOOL" /etc >/dev/null
-        for _f in etc/*; do
-            [ -f "$_f" ] && "$UBFS" cp "$_f" "$WPOOL:/etc/$(basename "$_f")" >/dev/null
-        done
-        [ -f tools/userdb ] && "$UBFS" cp tools/userdb "$WPOOL:/etc/userdb" >/dev/null
-        dd if="$WPOOL" of="$IMG" bs=512 seek="$POOL_LBA" conv=notrunc 2>/dev/null
-        rm -f "$WPOOL"
-        echo "    Installed: full world pool -> raw partition LBA $POOL_LBA (/poolraw; mountable-root candidate)"
-    fi
+    # The complete root pool (raw partition, the mountable-root candidate) is built
+    # at the very END of this script, once the FAT root is fully populated — see
+    # "Building UbixFS root pool".
 else
     echo "    WARNING: host ubfs tool unavailable; skipped /pool.img"
 fi
@@ -356,6 +337,38 @@ for f in tools/*.DPF; do [ -f "$f" ] && mcopy -o -i "$IMG"@@1M "$f" ::/var/fonts
 for f in tools/*.ttf; do [ -f "$f" ] && mcopy -o -i "$IMG"@@1M "$f" ::/var/fonts/; done
 mmd -i "$IMG"@@1M ::/var/db 2>/dev/null || true
 [ -f tools/ubistry.db ] && mcopy -o -i "$IMG"@@1M tools/ubistry.db ::/var/db/ubistry.db
+
+# UbixFS root pool (plan K5/M3): build the mountable-root candidate in the raw
+# partition (type 0x9C).  The pool must contain everything the FAT root holds
+# EXCEPT /boot (kernel + GRUB stay on FAT, which the firmware/GRUB reads).  Rather
+# than duplicate the long mcopy logic above (and risk drift), mirror the finished
+# FAT root into a host staging dir and cpr it into the pool — one source of truth,
+# byte-faithful (fonts already 8.3-renamed, ld-musl already a real file, etc.).
+if [ -x "${UBFS:-}" ] && [ -n "${POOL_LBA:-}" ]; then
+    echo "==> Building UbixFS root pool (mirror of FAT root, minus /boot) -> raw partition"
+    WPOOL=$(mktemp -t ubixroot).img
+    MIRROR=$(mktemp -d -t ubixmirror)
+    "$UBFS" mkpool "$WPOOL" 120M >/dev/null
+    # Extract the finished FAT root (every top-level dir except boot, the loopback
+    # demo pool.img, and the empty devfs/procfs mountpoints) to a host dir.
+    for _d in bin lib libexec usr include src etc home mnt tmp var; do
+        mcopy -s -i "$IMG"@@1M "::/$_d" "$MIRROR/" 2>/dev/null || true
+    done
+    for _f in .login .tcshrc; do
+        mcopy -i "$IMG"@@1M "::/$_f" "$MIRROR/$_f" 2>/dev/null || true
+    done
+    # cpr each top-level tree into the pool (one mount/sync per tree).
+    for _d in "$MIRROR"/*; do
+        [ -d "$_d" ] && "$UBFS" cpr "$_d" "$WPOOL:/$(basename "$_d")" >/dev/null 2>&1
+    done
+    for _f in "$MIRROR"/.login "$MIRROR"/.tcshrc; do
+        [ -f "$_f" ] && "$UBFS" cp "$_f" "$WPOOL:/$(basename "$_f")" >/dev/null 2>&1
+    done
+    _mib=$(du -m "$MIRROR" 2>/dev/null | tail -1 | cut -f1)
+    dd if="$WPOOL" of="$IMG" bs=512 seek="$POOL_LBA" conv=notrunc 2>/dev/null
+    rm -rf "$WPOOL" "$MIRROR"
+    echo "    Installed: complete root pool (~${_mib} MiB of FAT root) -> raw partition LBA $POOL_LBA"
+fi
 
 echo ""
 echo "Done: $IMG"

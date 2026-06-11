@@ -307,6 +307,9 @@ int kmain(u_int32_t rootdev)
 			    "/poolraw/lib/ld-musl-i386.so.1",
 			    "/poolraw/lib/libc.so",
 			    "/poolraw/etc/userdb",
+			    "/poolraw/bin/views",
+			    "/poolraw/usr/local/share/netsurf/SANS.TTF",
+			    "/poolraw/var/db/ubistry.db",
 			};
 			unsigned bi;
 			(void)pd;
