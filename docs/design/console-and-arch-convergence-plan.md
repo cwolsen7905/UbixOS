@@ -403,6 +403,18 @@ behind a build flag. Put `MMAP_BASE` / `BRK_BASE` / stack base into a per-arch
 
 ## Status
 
+- **Userland bootstrap converged** (2026-06-11) — both arches now run the SAME
+  boot story: the kernel hands off to PID 1 (`/bin/init`), which starts the
+  `/etc/init.d` services (automountd, logd, ubistry, authd, netcfg, …) and runs
+  the system-console primary via `start_console()`. aarch64's `boot.c` no longer
+  hand-launches the desktop (the bespoke spawn-ubistry/wait/spawn-authd/run-views
+  block is replaced by `aarch64_run_dynamic_init("/bin/init")`); the kernel keeps
+  only device init. `init` now picks the console primary by what's staged —
+  `/bin/views` (desktop) or `/bin/login` (base) — so one `init` serves every
+  arch + profile. Fixed `aarch64 sys_settty` (was an ENOSYS stub that made
+  `start_console` bail) → no-op success (the kernel already wires fd 0/1/2 to the
+  PL011/fbcon console). Side benefit: automountd now runs on aarch64 (mounts
+  /dev + /proc from fstab). Verified: both arches boot the desktop through init.
 - **Phase 1 done** (2026-06-09) — the `kconsole` registered-sink abstraction;
   see the Phase 1 entry above. Verified on both arches.
 - **Phase 2 mostly done** (2026-06-09) — VT switching, `ttyd`/`/etc/ttys`, and
