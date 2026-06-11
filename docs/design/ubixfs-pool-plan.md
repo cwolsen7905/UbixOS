@@ -26,7 +26,7 @@ Legend: ✅ done & verified · 🟡 partial / in progress · ⬜ not started
 | 7 · K5/M1 | Raw bcache vdev (pool on its own MBR partition) | ✅ | i386 (`ad0s3`); dispatches on `mp->device` |
 | 7 · K5/M2 | Populate pool with the world; run a binary off it | ✅ | i386; real-world binaries served |
 | 7 · K5/M3 | Mount the pool as `/` (hybrid: FAT `/boot`) | ✅ | i386 desktop boots off the pool.  FAT shrunk 448→33 MB (/boot only), pool 128→550 MB root.  Fixed: boot-stack PD sync (2→16 pages in `vmm_create_virtual_space`) + `ubfs_vfs_close(void*)` per the VFS contract |
-| 7 · K5/M4 | aarch64 raw root (MBR + multi-device virtio-blk) | ⬜ | follows i386; needs partition + multi-dev virtio-blk |
+| 7 · K5/M4 | aarch64 raw root (MBR + partition devices) | ✅ | aarch64 desktop boots off the pool (vtblk0s3).  Shared `sys/dev/partition.c` (MBR parse + offsetting partition devices, FAT-BPB hardened); virtio_blk registers vtblk0sN; mkimage-arm emits a real MBR |
 | 8 | Snapshots, GRUB module, ACLs, RAID/mirror | ⬜ | format hooks already in place (`birth_txg`, indirection, free chokepoint) |
 
 In-OS `ubpool`/`ubfs` admin commands (zpool/zfs analog) exist via native ABI
