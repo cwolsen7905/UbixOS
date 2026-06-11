@@ -16,6 +16,7 @@
  */
 #include <ubfs_fs.h>
 #include <ubfs_dsl.h>
+#include <dirent.h>
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -283,9 +284,12 @@ static int cmd_ls(const char *img, const char *path)
 	return 0;
 }
 
-static int cp_in(const char *hostfile, const char *img, const char *fspath)
+/* Copy one host file into an ALREADY-mounted pool (no per-file sync/close).  The
+ * shared guts of `cp` (single file) and `cpr` (recursive); cpr opens the pool
+ * once and copies the whole tree, since each mount_pool/mount_sync cycle is
+ * expensive (full open + commit). */
+static int copy_one(struct mount *m, const char *hostfile, const char *fspath)
 {
-	struct mount m;
 	int hfd, r = 0;
 	struct stat st;
 	uint64_t obj;
@@ -297,7 +301,7 @@ static int cp_in(const char *hostfile, const char *img, const char *fspath)
 	if (hfd < 0)
 	{
 		perror(hostfile);
-		return 1;
+		return -1;
 	}
 	fstat(hfd, &st);
 	data = malloc((size_t)st.st_size ? (size_t)st.st_size : 1);
@@ -305,37 +309,110 @@ static int cp_in(const char *hostfile, const char *img, const char *fspath)
 	{
 		perror("read");
 		close(hfd);
-		return 1;
+		free(data);
+		return -1;
 	}
 	close(hfd);
 
-	if (mount_pool(&m, img, 1) < 0)
-	{
-		free(data);
-		return 1;
-	}
-	/* ensure parent dirs exist */
 	slash = strrchr(fspath, '/');
 	if (slash && slash != fspath)
 	{
 		size_t n = (size_t)(slash - fspath);
 		memcpy(parent, fspath, n);
 		parent[n] = '\0';
-		mkdirs(&m.fs, parent);
+		mkdirs(&m->fs, parent);
 	}
-	/* overwrite if it already exists */
-	if (ubfs_fs_lookup(&m.fs, fspath, &obj) == 0)
-		ubfs_fs_unlink(&m.fs, fspath);
-	if (ubfs_fs_create(&m.fs, fspath, st.st_mode & 07777, 0, 0, &obj) < 0)
+	if (ubfs_fs_lookup(&m->fs, fspath, &obj) == 0)
+		ubfs_fs_unlink(&m->fs, fspath);
+	if (ubfs_fs_create(&m->fs, fspath, st.st_mode & 07777, 0, 0, &obj) < 0)
 		r = -1;
-	else if (st.st_size > 0 && ubfs_fs_write(&m.fs, obj, 0, data, (uint64_t)st.st_size) < 0)
+	else if (st.st_size > 0 && ubfs_fs_write(&m->fs, obj, 0, data, (uint64_t)st.st_size) < 0)
 		r = -1;
+	free(data);
+	return r;
+}
+
+static int cp_in(const char *hostfile, const char *img, const char *fspath)
+{
+	struct mount m;
+	int r;
+
+	if (mount_pool(&m, img, 1) < 0)
+		return 1;
+	r = copy_one(&m, hostfile, fspath);
 	if (r == 0)
 		r = mount_sync(&m);
 	mount_close(&m);
-	free(data);
 	if (r < 0)
 		fprintf(stderr, "cp -> %s failed\n", fspath);
+	return r < 0 ? 1 : 0;
+}
+
+/* Recursively copy a host directory tree into the pool (regular files + dirs;
+ * symlinks/other are skipped).  Reuses the open mount in @m. */
+static int copy_tree(struct mount *m, const char *hostdir, const char *fsdir)
+{
+	DIR *d = opendir(hostdir);
+	struct dirent *de;
+	uint64_t obj;
+	int r = 0;
+
+	if (!d)
+	{
+		perror(hostdir);
+		return -1;
+	}
+	if (ubfs_fs_lookup(&m->fs, fsdir, &obj) != 0)
+		mkdirs(&m->fs, fsdir);
+
+	while ((de = readdir(d)) != NULL)
+	{
+		char hpath[2048], fpath[1024];
+		struct stat st;
+
+		if (!strcmp(de->d_name, ".") || !strcmp(de->d_name, ".."))
+			continue;
+		snprintf(hpath, sizeof(hpath), "%s/%s", hostdir, de->d_name);
+		snprintf(fpath, sizeof(fpath), "%s/%s", fsdir, de->d_name);
+		if (lstat(hpath, &st) != 0)
+			continue;
+		if (S_ISDIR(st.st_mode))
+		{
+			if (copy_tree(m, hpath, fpath) < 0)
+				r = -1;
+		}
+		else if (S_ISREG(st.st_mode))
+		{
+			if (copy_one(m, hpath, fpath) < 0)
+			{
+				fprintf(stderr, "cpr: %s failed\n", fpath);
+				r = -1;
+			}
+		}
+	}
+	closedir(d);
+	return r;
+}
+
+/* cpr <hostdir> <img>:<fsdir> — recursive copy, one mount/sync cycle. */
+static int cmd_cpr(const char *hostdir, const char *dest)
+{
+	char img[1024];
+	const char *fsdir;
+	struct mount m;
+	int r;
+
+	if (!imgref(dest, img, &fsdir))
+	{
+		fprintf(stderr, "cpr: destination must be an image ref (img:/path)\n");
+		return 1;
+	}
+	if (mount_pool(&m, img, 1) < 0)
+		return 1;
+	r = copy_tree(&m, hostdir, fsdir);
+	if (r == 0)
+		r = mount_sync(&m);
+	mount_close(&m);
 	return r < 0 ? 1 : 0;
 }
 
@@ -397,6 +474,7 @@ static void usage(void)
 	        "  ubfs mkdir  <img> <path>\n"
 	        "  ubfs cp     <hostfile> <img>:<path>   (copy in)\n"
 	        "  ubfs cp     <img>:<path> <hostfile>   (copy out)\n"
+	        "  ubfs cpr    <hostdir>  <img>:<path>   (recursive copy in)\n"
 	        "  ubfs ls     <img> <path>\n"
 	        "  ubfs rm     <img> <path>\n");
 }
@@ -414,6 +492,8 @@ int main(int argc, char **argv)
 		return cmd_mkdir(argv[2], argv[3]);
 	if (!strcmp(argv[1], "cp") && argc == 4)
 		return cmd_cp(argv[2], argv[3]);
+	if (!strcmp(argv[1], "cpr") && argc == 4)
+		return cmd_cpr(argv[2], argv[3]);
 	if (!strcmp(argv[1], "ls") && argc == 4)
 		return cmd_ls(argv[2], argv[3]);
 	if (!strcmp(argv[1], "rm") && argc == 4)
