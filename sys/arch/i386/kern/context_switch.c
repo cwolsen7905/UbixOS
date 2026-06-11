@@ -102,7 +102,7 @@ static u_int32_t g_boot_kstack_discard;
  */
 void md_new_task(kTask_t *t)
 {
-	t->md.md_tss.esp0 = (u_int32_t)t->kernelStack + 8192;
+	t->md.md_tss.esp0 = (u_int32_t)t->kernelStack + 65536; /* 64 KB kstack; matches schedNewTask kmalloc */
 	t->md.md_tss.ss0 = 0x10;
 }
 
@@ -373,7 +373,7 @@ asm(".globl cpu_switch \n"
      * (enter_vm86), never from this slot.  Forcing also makes the switch robust
      * against a leaked VM86 real-mode %gs reaching this point (the old #GP).
      */
-    ASM_PCPU_LOAD_GS         /* %gs = SEL_PCPU */
+    ASM_PCPU_LOAD_GS /* %gs = SEL_PCPU */
     "  popl %ebp           \n"
     "  popl %edi           \n"
     "  popl %esi           \n"

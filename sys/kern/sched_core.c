@@ -119,7 +119,13 @@ kTask_t *schedNewTask()
 
 	memset(tmpTask, 0x0, sizeof(kTask_t));
 
-	tmpTask->kernelStack = (u_int32_t *)kmalloc(8192);
+	/* 64 KB per-thread kernel stack (was 8 KB).  A process that reads/writes a
+	 * ubixfs pool (e.g. exec off a ubixfs root) runs the lite-ZFS core on this
+	 * stack, and the core nests several 4 KB block[BS] frames — 8 KB would
+	 * overflow, the same failure already fixed on the boot/kmain stacks.  Keep in
+	 * sync with i386 esp0 (context_switch.c) + aarch64 KSTACK_SIZE /
+	 * INITIAL_KSTACK_SIZE (all must equal this allocation size). */
+	tmpTask->kernelStack = (u_int32_t *)kmalloc(65536);
 	if (tmpTask->kernelStack == 0x0)
 		kpanic("Error: schedNewTask() - kmalloc failed allocating kernel stack\n");
 	/* Arch-specific md init (i386: TSS ring-0 stack; aarch64: clear sw-context). */
@@ -679,7 +685,7 @@ void sched_io_wakeup(kTask_t *t)
 void sched_set_priority(kTask_t *t, u_int8_t pri)
 {
 	u_int32_t flags;
-	int       was_ready;
+	int was_ready;
 
 	if (t == NULL)
 		return;
@@ -736,7 +742,7 @@ int sched_wait_event_timeout(void *chan, int (*cond)(void *arg), void *arg, u_in
 {
 	u_int32_t flags;
 	u_int32_t deadline;
-	int       timed_out = 0;
+	int timed_out = 0;
 
 	if (_current == NULL)
 		return 0;
@@ -766,7 +772,10 @@ int sched_wait_event_timeout(void *chan, int (*cond)(void *arg), void *arg, u_in
 		 * sched_wakeup_chan(); a stale firing is a no-op (sleep_wake_cb checks
 		 * the state). */
 		if (ticks != 0)
-			callout_reset(&_current->sleep_callout, (u_int32_t)(deadline - systemVitals->sysTicks), sleep_wake_cb, _current);
+			callout_reset(&_current->sleep_callout,
+			              (u_int32_t)(deadline - systemVitals->sysTicks),
+			              sleep_wake_cb,
+			              _current);
 		_current->state = WAIT;
 		spinUnlock(&schedulerSpinLock);
 		restore_flags(flags);
@@ -808,7 +817,7 @@ void sched_wait_event(void *chan, int (*cond)(void *arg), void *arg)
 void sched_wakeup_chan(void *chan)
 {
 	u_int32_t flags;
-	kTask_t  *t;
+	kTask_t *t;
 
 	if (chan == NULL)
 		return;

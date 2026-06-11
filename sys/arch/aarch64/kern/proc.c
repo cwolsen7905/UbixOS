@@ -25,9 +25,9 @@
 #include <lib/kmalloc.h>
 #include <string.h>
 
-#define FRAME_SLOTS 12 /* x19-x28, x29(fp), x30(lr) — must match context.S */
-#define LR_SLOT 11     /* x30 (lr) is the 12th slot */
-#define KSTACK_SIZE 8192
+#define FRAME_SLOTS 12     /* x19-x28, x29(fp), x30(lr) — must match context.S */
+#define LR_SLOT 11         /* x30 (lr) is the 12th slot */
+#define KSTACK_SIZE 65536  /* 64 KB; matches schedNewTask kmalloc + INITIAL_KSTACK_SIZE */
 #define TRAPFRAME_SIZE 288 /* must match KERNEL_ENTRY in vectors.S */
 #define TF_SLOT_SP_EL0 34  /* sp_el0 at offset 272 in the trapframe */
 
