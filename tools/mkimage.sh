@@ -19,10 +19,10 @@
 set -e
 
 IMG="${1:-ubixos.img}"
-IMG_SIZE_MB=544
+IMG_SIZE_MB=656
 FAT_SIZE_MB=448     # FAT32 partition (type 0x0C)
 SWAP_SIZE_MB=64     # raw swap partition (type 0x82)
-POOL_SIZE_MB=16     # UbixFS pool partition (type 0x9C; raw block-device mount)
+POOL_SIZE_MB=128    # UbixFS pool partition (type 0x9C; raw mount, holds the world)
 # BUILD/KERNEL honor the environment so the arch-homed build dir (build/i386)
 # can be passed in by the `image` target; default to the flat layout otherwise.
 BUILD="${BUILD:-build}"
@@ -281,25 +281,31 @@ if ( cd tools/ubixfs && bmake ubfs ) >/dev/null 2>&1 && [ -x tools/ubixfs/ubfs ]
     "$UBFS" mkdir "$POOL" /etc >/dev/null
     "$UBFS" cp "$POOL.hello"  "$POOL:/hello.txt"  >/dev/null
     "$UBFS" cp "$POOL.readme" "$POOL:/etc/readme" >/dev/null
-    # M2: put a few REAL world binaries + a lib in the pool so the raw mount
-    # serves actual executables (the mountable-root candidate).  A handful only —
-    # the host cp reopens+syncs the pool per file; the full world copy is M3.
-    "$UBFS" mkdir "$POOL" /bin >/dev/null
-    "$UBFS" mkdir "$POOL" /lib >/dev/null
-    for _b in cat ls echo true; do
-        [ -f "$BUILD/bin/$_b" ] && "$UBFS" cp "$BUILD/bin/$_b" "$POOL:/bin/$_b" >/dev/null
-    done
-    [ -f "$BUILD/lib/libc.so" ] && "$UBFS" cp "$BUILD/lib/libc.so" "$POOL:/lib/libc.so" >/dev/null
     mcopy -o -i "$IMG"@@1M "$POOL" ::/pool.img
-    echo "    Installed: /pool.img (loopback, kernel mounts it at /pool)"
-    # Also write the same pool into the raw pool PARTITION (type 0x9C) so the
-    # kernel can mount it via the raw block-device vdev at /poolraw (mountable-root
-    # path).  POOL_LBA is the partition start sector (from the MBR step above).
-    if [ -n "${POOL_LBA:-}" ]; then
-        dd if="$POOL" of="$IMG" bs=512 seek="$POOL_LBA" conv=notrunc 2>/dev/null
-        echo "    Installed: pool partition at LBA $POOL_LBA (raw, kernel mounts it at /poolraw)"
-    fi
+    echo "    Installed: /pool.img (loopback demo, kernel mounts it at /pool)"
     rm -f "$POOL" "$POOL.hello" "$POOL.readme"
+
+    # M3: build a COMPLETE bootable world pool for the RAW partition (type 0x9C) —
+    # the mountable-root candidate.  cpr the whole world (fast: one mount/sync per
+    # tree), then add the bits cpr/the FS layout can't: the dynamic linker (a copy
+    # of libc.so — mkimage synthesizes it; cpr skips the symlink) and /etc (userdb
+    # for login, etc.).  dd it into the partition.
+    if [ -n "${POOL_LBA:-}" ]; then
+        WPOOL=$(mktemp -t ubixworld).img
+        "$UBFS" mkpool "$WPOOL" 96M >/dev/null
+        for _d in bin lib libexec; do
+            [ -d "$BUILD/$_d" ] && "$UBFS" cpr "$BUILD/$_d" "$WPOOL:/$_d" >/dev/null 2>&1
+        done
+        [ -f "$BUILD/lib/libc.so" ] && "$UBFS" cp "$BUILD/lib/libc.so" "$WPOOL:/lib/ld-musl-i386.so.1" >/dev/null
+        "$UBFS" mkdir "$WPOOL" /etc >/dev/null
+        for _f in etc/*; do
+            [ -f "$_f" ] && "$UBFS" cp "$_f" "$WPOOL:/etc/$(basename "$_f")" >/dev/null
+        done
+        [ -f tools/userdb ] && "$UBFS" cp tools/userdb "$WPOOL:/etc/userdb" >/dev/null
+        dd if="$WPOOL" of="$IMG" bs=512 seek="$POOL_LBA" conv=notrunc 2>/dev/null
+        rm -f "$WPOOL"
+        echo "    Installed: full world pool -> raw partition LBA $POOL_LBA (/poolraw; mountable-root candidate)"
+    fi
 else
     echo "    WARNING: host ubfs tool unavailable; skipped /pool.img"
 fi

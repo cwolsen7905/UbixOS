@@ -297,33 +297,32 @@ int kmain(u_int32_t rootdev)
 			char rb[96];
 			int n;
 
-			/* M2: the raw pool now holds real world binaries — list /poolraw/bin
-			 * and read one back, checking the ELF magic, to prove the partition
-			 * pool serves actual executables (the mountable-root candidate). */
-			pd = vfs_opendir("/poolraw/bin");
-			if (pd != NULL)
+			/* M3: the raw pool now holds the COMPLETE bootable world.  Confirm the
+			 * boot-critical files are present + readable off the raw vdev (init,
+			 * the dynamic linker, the user DB) — i.e. the pool is a mountable-root
+			 * candidate, not just a few binaries. */
+			static const char *boot_files[] = {
+			    "/poolraw/bin/init",
+			    "/poolraw/bin/login",
+			    "/poolraw/lib/ld-musl-i386.so.1",
+			    "/poolraw/lib/libc.so",
+			    "/poolraw/etc/userdb",
+			};
+			unsigned bi;
+			(void)pd;
+			for (bi = 0; bi < sizeof(boot_files) / sizeof(boot_files[0]); bi++)
 			{
-				struct kdirent e;
-				kprintf("ubixfs: /poolraw/bin:");
-				while (vfs_readdir(pd, &e) == 0)
-					kprintf(" %s", e.d_name);
-				kprintf("\n");
-				vfs_closedir(pd);
-			}
-			pf = fopen("/poolraw/bin/cat", "r");
-			if (pf != NULL)
-			{
+				pf = fopen(boot_files[bi], "r");
+				if (pf == NULL)
+				{
+					kprintf("ubixfs:   MISSING %s\n", boot_files[bi]);
+					continue;
+				}
 				n = (int)fread(rb, 1, 4, pf);
-				if (n == 4 && rb[0] == 0x7F && rb[1] == 'E' && rb[2] == 'L' && rb[3] == 'F')
-					kprintf("ubixfs: /poolraw/bin/cat is a valid ELF (%d bytes on disk)\n",
-					        (int)pf->size);
-				else
-					kprintf("ubixfs: /poolraw/bin/cat read %d bytes, magic %02X %02X %02X %02X\n",
-					        n,
-					        (u_int8_t)rb[0],
-					        (u_int8_t)rb[1],
-					        (u_int8_t)rb[2],
-					        (u_int8_t)rb[3]);
+				kprintf("ubixfs:   %-32s %7d bytes %s\n",
+				        boot_files[bi],
+				        (int)pf->size,
+				        (n == 4 && rb[0] == 0x7F && rb[1] == 'E') ? "(ELF)" : "");
 				fclose(pf);
 			}
 		}
