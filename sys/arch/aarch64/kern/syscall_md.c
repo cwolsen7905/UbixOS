@@ -226,10 +226,20 @@ int sys_klog_read(struct thread *td, struct sys_klog_read_args *uap)
 
 /* pty syscalls (ptyalloc/free/inject/snap/resize): real in dev/display.c, backed
  * by the pty pool in sys/posix/tty.c (now compiled for aarch64). */
+/**
+ * settty (slot 48) — claim the system console as the controlling terminal.
+ *
+ * On i386 this claims the serial TTY (the slot-based VGA/serial console model).
+ * aarch64 has no slot-based serial claim: the kernel already wires fd 0/1/2 to
+ * the PL011 + fbcon console fileops for every process (aarch64_console_init), and
+ * fork inherits them — so PID 1's start_console() just needs this to succeed so
+ * it can exec the console primary (views/login).  No-op success.
+ */
 int sys_settty(struct thread *td, struct sys_settty_args *uap)
 {
 	(void)uap;
-	ENOSYS_STUB(td);
+	td->td_retval[0] = 0;
+	return (0);
 }
 /* sys_getkbd + sys_getmouse: real implementations in sys/arch/aarch64/dev/input.c. */
 /* sys_mapfb + sys_fbpresent + sys_shareregion: real in sys/arch/aarch64/dev/display.c. */

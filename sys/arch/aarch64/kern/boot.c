@@ -291,43 +291,15 @@ void kmain_aarch64(void)
 			aarch64_virtio_input_init();
 			aarch64_virtio_sound_init(); /* /dev/audio (virtio-sound PCM playback) */
 
-			/* Image profile selector: the desktop profile stages /bin/views, the
-			 * base (headless/IoT/safe-mode) profile does not.  Branch on what is
-			 * present — same kernel, the mkimage profile decides what runs. */
-			if (aarch64_file_exists("/bin/views"))
-			{
-				/* DESKTOP profile: start authd (the "authd" MPI mailbox for
-				 * credential checks), then run the views compositor off disk — it
-				 * owns the virtio-gpu framebuffer (sys_mapfb), composites the
-				 * desktop, and forks /bin/vlogin for the graphical login. */
-				kprintf("\n--- disk-backed desktop ---\n");
-
-				/* Start the ubistry registry daemon and wait (bounded) for its
-				 * mailbox before launching the desktop, so views/vlogin read real
-				 * settings (wallpaper/theme/per-user prefs) instead of falling back
-				 * to defaults.  ubistry creates its mailbox only after loading
-				 * /var/db/ubistry.db, so the mailbox existing = fully ready. */
-				aarch64_spawn_dynamic("/bin/ubistry");
-				{
-					int tries = 100000;
-					while (!mpi_mbox_exists("ubistry") && --tries > 0)
-						sched_yield();
-					if (tries == 0)
-						kprintf("desktop: ubistry not ready — using defaults\n");
-				}
-
-				aarch64_spawn_dynamic("/bin/authd");    /* real authd (PBKDF2/BearSSL) from disk */
-				aarch64_run_dynamic_init("/bin/views"); /* compositor -> forks vlogin; never returns */
-			}
-			else
-			{
-				/* BASE profile: no compositor.  Authenticate against authd and run
-				 * the text-console login on the kernel console (fbcon on screen +
-				 * PL011 serial); login forks the shell.  Never returns. */
-				kprintf("\n--- disk-backed base console ---\n");
-				aarch64_spawn_dynamic("/bin/authd"); /* login authenticates via the authd mailbox */
-				aarch64_run_dynamic_init("/bin/login");
-			}
+			/* Hand off to the SAME userland bootstrap as i386: exec /bin/init
+			 * (PID 1), which starts the services from /etc/init.d (automountd,
+			 * logd, ubistry, authd, netcfg, …) and then runs the system-console
+			 * primary — the views compositor on a desktop image, or /bin/login on
+			 * a base image (init picks by what was staged).  The kernel no longer
+			 * hand-launches the desktop; both arches converge on one init path.
+			 * Never returns. */
+			kprintf("\n--- disk-backed userland: exec /bin/init ---\n");
+			aarch64_run_dynamic_init("/bin/init");
 		}
 	}
 
