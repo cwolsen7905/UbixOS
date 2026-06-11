@@ -7,6 +7,33 @@
 > opaque handles + ops-vtables — no C++ runtime dependency). Snapshots are
 > **deferred but hooked** (see below) so they're never impossible to add.
 
+## Status Matrix
+
+Legend: ✅ done & verified · 🟡 partial / in progress · ⬜ not started
+
+| Step | Item | Status | Notes |
+|------|------|--------|-------|
+| 1 | Spec + Fletcher4 (`include/fs/ubixfs/ondisk.h`) | ✅ | size-asserted on-disk structs |
+| 2 | vdev + SPA (label, uberblock ring, txg commit, allocator) | ✅ | host `spa_test` incl. corrupt-uberblock crash recovery |
+| 3 | DMU (objects, CoW blkptr tree, sparse holes) | ✅ | host `dmu_test` (3-level tree, CoW overwrite) |
+| 4 | DSL (MOS, datasets, fs + volume kinds) | ✅ | host `dsl_test`; uberblock→MOS→dataset→objset indirection (snapshot hook) |
+| 5 | ubfs_fs POSIX layer (files/dirs/perms/symlink) | ✅ | host `fs_test`; inode in dnode bonus |
+| 6 | Host CLI (`ubfs` mkpool/mkdir/cp/ls/rm + `cpr`) | ✅ | `bmake test` runs all host harnesses |
+| 7 · K1 | Core compiles + in-kernel self-test (RAM vdev) | ✅ | aarch64; freestanding compat shims |
+| 7 · K2 | Read-only VFS mount (loopback `/pool.img`) | ✅ | aarch64; `VFS_TYPE_UBIXFS 0x55` |
+| 7 · K3 | Write path + txg sync (persists across reboot) | ✅ | aarch64; fixed `virtio_blk_write` + `write_fat` |
+| 7 · K4 | i386 parity (driver + core link into i386 kernel) | ✅ | replaces dead v1 BeFS driver |
+| 7 · K5/M1 | Raw bcache vdev (pool on its own MBR partition) | ✅ | i386 (`ad0s3`); dispatches on `mp->device` |
+| 7 · K5/M2 | Populate pool with the world; run a binary off it | ✅ | i386; real-world binaries served |
+| 7 · K5/M3 | Mount the pool as `/` (hybrid: FAT `/boot`) | ✅ | i386 desktop boots off the pool.  FAT shrunk 448→33 MB (/boot only), pool 128→550 MB root.  Fixed: boot-stack PD sync (2→16 pages in `vmm_create_virtual_space`) + `ubfs_vfs_close(void*)` per the VFS contract |
+| 7 · K5/M4 | aarch64 raw root (MBR + multi-device virtio-blk) | ⬜ | follows i386; needs partition + multi-dev virtio-blk |
+| 8 | Snapshots, GRUB module, ACLs, RAID/mirror | ⬜ | format hooks already in place (`birth_txg`, indirection, free chokepoint) |
+
+In-OS `ubpool`/`ubfs` admin commands (zpool/zfs analog) exist via native ABI
+syscall 67. See `project_ubixfs_kernel_driver` in memory for the running state.
+
+---
+
 ## Vision
 
 - A **pool** built on one block device (vdev); room reserved for more vdevs later.
