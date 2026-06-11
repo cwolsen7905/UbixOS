@@ -139,6 +139,10 @@ struct syscall_entry systemCalls[] = {
      "thread_exit_unmap",
      (sys_call_t *)sys_thread_exit_unmap,
      SYSCALL_VALID}, // 66 - unmap own stack + exit (musl __unmapself)
+    {ARG_COUNT(sys_ubfs_query_args),
+     "ubfs_query",
+     (sys_call_t *)sys_ubfs_query,
+     SYSCALL_VALID}, // 67 - UbixFS pool/dataset query (ubpool/ubfs)
 };
 
 int totalCalls = sizeof(systemCalls) / sizeof(struct syscall_entry);

@@ -37,4 +37,13 @@ void ubfs_vfs_set_backing(const char *path);
  */
 void ubfs_vfs_set_raw(int on);
 
+/**
+ * Fill @buf (a struct ubix_pool_info[], <api/ubfs_pool.h>) with up to @max
+ * mounted-pool records.  Backs the native pool-query syscall + the in-OS
+ * `ubpool`/`ubfs` commands.
+ *
+ * @return the number of pools written.
+ */
+int ubfs_vfs_query(void *buf, int max);
+
 #endif /* _FS_UBIXFS_UBFS_VFS_H */

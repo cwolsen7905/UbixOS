@@ -19,15 +19,18 @@
 #include <string.h>
 #include <lib/kprintf.h>
 #include <lib/kmalloc.h>
-#include <sys/bus.h> /* struct ubx_device (raw block-device vdev) */
+#include <sys/bus.h>       /* struct ubx_device (raw block-device vdev) */
+#include <ubixos/vitals.h> /* systemVitals->mountPoints (pool enumeration) */
 #include <fs/vfs/vfs.h>
 #include <fs/vfs/mount.h>
 #include <fs/vfs/file.h>
 #include <fs/vfs/bcache.h> /* bcache_read/write (raw vdev) */
 #include <fs/ubixfs/ubfs_vfs.h>
+#include <api/ubfs_pool.h> /* struct ubix_pool_info (ubpool/ubfs query) */
 
 #include <ubfs_fs.h>
 #include <ubfs_dsl.h>
+#include <ubfs_spa.h> /* ubfs_pool_config / ubfs_pool_free_blocks */
 
 /* The dataset every fresh pool carries (created by the host `ubfs mkpool`). */
 #define ROOT_DS "root"
@@ -554,6 +557,50 @@ void ubfs_vfs_set_backing(const char *path)
 void ubfs_vfs_set_raw(int on)
 {
 	g_raw_next = (on != 0);
+}
+
+/**
+ * Fill @buf (a struct ubix_pool_info[]) with up to @max mounted-pool records by
+ * walking the VFS mount list for UbixFS mounts.  Backs the native pool-query
+ * syscall (the in-OS `ubpool`/`ubfs` commands).  @buf is a userland pointer the
+ * thread's address space maps (the uBixOS native-syscall convention).
+ *
+ * @return the number of pools written.
+ */
+int ubfs_vfs_query(void *buf, int max)
+{
+	struct ubix_pool_info *out = (struct ubix_pool_info *)buf;
+	struct vfs_mountPoint *mp;
+	int n = 0;
+
+	if (out == 0 || max <= 0 || systemVitals == 0)
+		return (0);
+
+	for (mp = systemVitals->mountPoints; mp != 0 && n < max; mp = mp->next)
+	{
+		struct ubfs_mount *m;
+		const ubfs_vdev_config_t *cfg;
+
+		if (mp->fs == 0 || mp->fs->vfsType != VFS_TYPE_UBIXFS || mp->fsInfo == 0)
+			continue;
+		m = (struct ubfs_mount *)mp->fsInfo;
+		cfg = ubfs_pool_config(m->pool);
+
+		memset(&out[n], 0, sizeof(out[n]));
+		if (cfg != 0)
+		{
+			strncpy(out[n].pool, cfg->name, sizeof(out[n].pool) - 1);
+			out[n].total_blocks = cfg->asize;
+		}
+		strncpy(out[n].mountpoint, mp->mountPoint, sizeof(out[n].mountpoint) - 1);
+		strncpy(out[n].dataset, m->dp.name, sizeof(out[n].dataset) - 1);
+		out[n].free_blocks = ubfs_pool_free_blocks(m->pool);
+		out[n].dataset_used = m->dp.used;
+		out[n].block_size = UBFS_BLOCK_SIZE;
+		out[n].flags = (uint32_t)((m->rawdev ? UBIX_POOL_RAW : 0) | (m->writable ? UBIX_POOL_RW : 0));
+		n++;
+	}
+	return (n);
 }
 
 /**

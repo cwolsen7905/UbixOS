@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -30,6 +30,7 @@
 #include <ubixos/syscall.h>
 #include <ubixos/sched.h>
 #include <sys/sysproto.h>
+#include <fs/ubixfs/ubfs_vfs.h> /* ubfs_vfs_query — native pool-query syscall 67 */
 #include <ubixos/endtask.h>
 #include <ubixos/spinlock.h>
 #include <ubixos/vitals.h>
@@ -75,7 +76,11 @@ void sys_call(struct trapframe *frame)
 		td->td_retval[1] = frame->tf_edx;
 
 		if (systemCalls[code].sc_status == SYSCALL_DUMMY)
-			kprintf("Syscall->abi: [%i], PID: [%i], Code: %i, Call: %s\n", td->abi, _current->id, frame->tf_eax, systemCalls[code].sc_name);
+			kprintf("Syscall->abi: [%i], PID: [%i], Code: %i, Call: %s\n",
+			        td->abi,
+			        _current->id,
+			        frame->tf_eax,
+			        systemCalls[code].sc_name);
 		/*
 		    if (td->abi == ELFOSABI_UBIXOS)
 		     error = (int) systemCalls[code].sc_entry( frame->tf_ebx, frame->tf_ecx, frame->tf_edx );
@@ -94,16 +99,16 @@ void sys_call(struct trapframe *frame)
 		// kprintf("ERROR: 0x%X",error);
 		switch (error)
 		{
-		case 0:
-			frame->tf_eax = td->td_retval[0];
-			frame->tf_edx = td->td_retval[1];
-			frame->tf_eflags &= ~PSL_C;
-			break;
-		default:
-			frame->tf_eax = td->td_retval[0];
-			frame->tf_edx = td->td_retval[1];
-			frame->tf_eflags |= PSL_C;
-			break;
+			case 0:
+				frame->tf_eax = td->td_retval[0];
+				frame->tf_edx = td->td_retval[1];
+				frame->tf_eflags &= ~PSL_C;
+				break;
+			default:
+				frame->tf_eax = td->td_retval[0];
+				frame->tf_edx = td->td_retval[1];
+				frame->tf_eflags |= PSL_C;
+				break;
 		}
 	}
 }
@@ -231,6 +236,19 @@ int sys_getvfscwd(struct thread *td, struct sys_getvfscwd_args *args)
 	return (0);
 }
 
+/**
+ * Native syscall 67 — fill the userland buffer with mounted UbixFS pool records
+ * (the in-OS `ubpool`/`ubfs` commands).  @args->buf is a struct ubix_pool_info[]
+ * (<api/ubfs_pool.h>); the driver enumerates the VFS mount list.
+ *
+ * @return 0; the pool count is returned in td_retval[0].
+ */
+int sys_ubfs_query(struct thread *td, struct sys_ubfs_query_args *args)
+{
+	td->td_retval[0] = ubfs_vfs_query(args->buf, (int)args->max);
+	return (0);
+}
+
 int sys_getcwd(struct thread *td, struct sys_getcwd_args *args)
 {
 	const char *cwd = _current->oInfo.cwd;
@@ -283,7 +301,8 @@ int sys_nanosleep(struct thread *td, void *args)
 	}
 
 	/* Convert requested time to PIT ticks (round up). */
-	u_int32_t ticks = (u_int32_t)(tv_sec * PIT_TIMER) + (u_int32_t)((tv_nsec + (1000000000L / PIT_TIMER) - 1) / (1000000000L / PIT_TIMER));
+	u_int32_t ticks = (u_int32_t)(tv_sec * PIT_TIMER) +
+	                  (u_int32_t)((tv_nsec + (1000000000L / PIT_TIMER) - 1) / (1000000000L / PIT_TIMER));
 
 	u_int32_t deadline = systemVitals->sysTicks + ticks;
 	while (!TICKS_AFTER(systemVitals->sysTicks, deadline))

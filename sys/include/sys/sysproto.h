@@ -91,6 +91,17 @@ struct sys_getvfscwd_args
 	char size_r_[PADR_(u_int32_t)];
 };
 
+struct sys_ubfs_query_args
+{
+	char buf_l_[PADL_(void *)];
+	void *buf;
+	char buf_r_[PADR_(void *)];
+	char max_l_[PADL_(u_int32_t)];
+	u_int32_t max;
+	char max_r_[PADR_(u_int32_t)];
+};
+int sys_ubfs_query(struct thread *, struct sys_ubfs_query_args *);
+
 struct sys_pidStatus_args
 {
 	char pid_l_[PADL_(int)];

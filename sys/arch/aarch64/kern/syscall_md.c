@@ -22,6 +22,7 @@
 #include <sys/types.h>
 #include <sys/sysproto.h>
 #include <sys/sysproto_posix.h>
+#include <fs/ubixfs/ubfs_vfs.h> /* ubfs_vfs_query — native pool-query syscall 67 */
 #include <ubixos/sched.h>
 #include <ubixos/errno.h>
 #include <ubixos/time.h>   /* struct timeval/timezone (kernel gettimeofday) */
@@ -98,6 +99,19 @@ static void copy_cwd(struct thread *td, char *buf, u_int32_t size)
 int sys_getvfscwd(struct thread *td, struct sys_getvfscwd_args *uap)
 {
 	copy_cwd(td, uap->buf, uap->size);
+	return (0);
+}
+
+/**
+ * Native syscall 67 — fill the userland buffer with mounted UbixFS pool records
+ * (the in-OS `ubpool`/`ubfs` commands).  Mirrors the i386 handler in
+ * sys/kern/syscall.c; the driver enumerates the VFS mount list.
+ *
+ * @return 0; the pool count is returned in td_retval[0].
+ */
+int sys_ubfs_query(struct thread *td, struct sys_ubfs_query_args *uap)
+{
+	td->td_retval[0] = ubfs_vfs_query(uap->buf, (int)uap->max);
 	return (0);
 }
 
