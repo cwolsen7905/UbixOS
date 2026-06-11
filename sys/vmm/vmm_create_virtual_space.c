@@ -90,8 +90,8 @@ void *vmm_create_virtual_space(pidType pid)
 		{
 
 			/* Set Page To COW In Parent And Child Space */
-			new_page_table[x] = ((parent_page_table[x] & 0xFFFFF000) |
-			                     ((PAGE_DEFAULT & ~PAGE_WRITE) | PAGE_COW));
+			new_page_table[x] =
+			    ((parent_page_table[x] & 0xFFFFF000) | ((PAGE_DEFAULT & ~PAGE_WRITE) | PAGE_COW));
 
 			/* Increment The COW Counter For This Page */
 			if ((parent_page_table[x] & PAGE_COW) == PAGE_COW)
@@ -122,17 +122,29 @@ void *vmm_create_virtual_space(pidType pid)
 		new_page_directory[x] = parent_page_directory[x];
 	}
 
-	/* Allocate Stack Pages */
+	/* Allocate Stack Pages.
+	 *
+	 * kmain runs on the top-of-VA boot stack, mapped at PT[1023] downward in
+	 * vmm_paging.c.  That stack is 64 KB = 16 pages (PT[1023]..PT[1008]); when
+	 * kmain execs init it switches to this freshly created address space and keeps
+	 * running C on the boot stack, so every mapped boot-stack page must be carried
+	 * over.  Copying only the top 2 pages (8 KB) left deep kernel call chains under
+	 * the new CR3 — e.g. the UbixFS lookup's nested 4 KB block frames during
+	 * execFile("/bin/init") — faulting on the unmapped lower stack and hanging the
+	 * boot.  Copy all 16 boot-stack pages (whichever are present). */
 	new_page_table = vmm_get_free_page(pid);
 	memset(new_page_table, 0, PAGE_SIZE);
 
 	new_page_directory[1023] = (vmm_get_physical_addr((u_int32_t)new_page_table) | KERNEL_PAGE_DEFAULT);
 
 	parent_page_table = (u_int32_t *)(PT_BASE_ADDR + (PAGE_SIZE * 1023));
-	new_page_table[1023] = parent_page_table[1023] | PAGE_COW;
-	adjust_cow_counter((parent_page_table[1023] & 0xFFFFF000), 2);
-	new_page_table[1022] = parent_page_table[1022] | PAGE_COW;
-	adjust_cow_counter((parent_page_table[1022] & 0xFFFFF000), 2);
+	for (x = 1023; x >= 1008; x--)
+	{
+		if ((parent_page_table[x] & PAGE_PRESENT) != PAGE_PRESENT)
+			continue;
+		new_page_table[x] = parent_page_table[x] | PAGE_COW;
+		adjust_cow_counter((parent_page_table[x] & 0xFFFFF000), 2);
+	}
 
 	vmm_unmap_page((u_int32_t)new_page_table, VMM_KEEP);
 

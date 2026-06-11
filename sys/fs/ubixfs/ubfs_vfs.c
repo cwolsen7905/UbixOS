@@ -309,7 +309,15 @@ static int ubfs_vfs_open(const char *path, fileDescriptor_t *fd)
 	ubfs_inode_t in;
 	uint64_t obj;
 
-	if (fd == 0 || fd->mp == 0 || fd->mp->fsInfo == 0)
+	if (fd == 0)
+		return (0);
+	/* Zero the per-open handle up front: a freshly allocated fileDescriptor holds
+	 * poison (0xBE…) in ->res, and the VFS calls vfsClose even when vfsOpen fails
+	 * (e.g. a read-only open of a missing optional file).  Leaving ->res poisoned
+	 * makes that close kfree a wild pointer ("descriptor not found").  Every failure
+	 * path below now leaves ->res == NULL, which vfsClose skips. */
+	fd->res = 0;
+	if (fd->mp == 0 || fd->mp->fsInfo == 0)
 		return (0);
 	m = (struct ubfs_mount *)fd->mp->fsInfo;
 
@@ -389,14 +397,19 @@ static int ubfs_vfs_write(fileDescriptor_t *fd, char *data, off_t offset, long s
 
 /**
  * vfsClose: release the open-file handle.
+ *
+ * The uBixOS VFS defines this entry point as int vfsClose(void *) (see the
+ * fileSystem struct in <fs/vfs/vfs.h>), and fclose() invokes it with fd->res —
+ * the per-open handle a driver stashed there, here our struct ubfs_file *.  So
+ * the argument is the handle, not the fileDescriptor_t.  Treating it as a
+ * fileDescriptor_t and freeing its ->res reads past the small ubfs_file
+ * allocation and frees a stray pointer (poison, or — worse — a valid adjacent
+ * block).  Free the handle directly, per the VFS contract.
  */
-static int ubfs_vfs_close(fileDescriptor_t *fd)
+static int ubfs_vfs_close(void *res)
 {
-	if (fd != 0 && fd->res != 0)
-	{
-		kfree(fd->res);
-		fd->res = 0;
-	}
+	if (res != 0)
+		kfree(res);
 	return (0);
 }
 

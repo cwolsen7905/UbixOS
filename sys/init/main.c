@@ -223,21 +223,56 @@ int kmain(u_int32_t rootdev)
 			}
 		}
 
-		kprintf("kmain: calling vfs_mount major=%i minor=%i\n", sys_major, sys_minor);
-		if (vfs_mount(sys_major, sys_minor, 0x0, 0xFA, "/", "rw") != 0x0)
-			kprintf("Problem Mounting root (FAT) from major=%i "
-			        "minor=%i\n",
+		/* UbixFS driver registration must precede any pool mount. */
+		ubfs_vfs_init();
+
+		/* K5/M3 — prefer the UbixFS pool as the root filesystem.  The pool lives on
+		 * its own block-device partition (type 0x9C, ad0s3 = major 1, minor 3 — see
+		 * hd.c's per-partition device registration), mounted via the bcache raw vdev.
+		 * If the partition holds a valid, bootable pool it becomes / (the mountable
+		 * root); otherwise we fall back to the FAT root.  This is safe: on a bad or
+		 * absent pool, vfs_mount's initfs returns failure and the / mountpoint is
+		 * unlinked + freed (see vfs_mount), leaving / free for the FAT fallback. */
+		int root_is_pool = 0;
+		ubfs_vfs_set_raw(1);
+		if (vfs_mount(1, 3, 0x0, VFS_TYPE_UBIXFS, "/", "rw") == 0)
+		{
+			fileDescriptor_t *probe_init = fopen("/bin/init", "r");
+			if (probe_init != NULL)
+			{
+				fclose(probe_init);
+				root_is_pool = 1;
+				kprintf("Mounted root (UbixFS pool) from ad0s3 — mountable root live\n");
+			}
+			else
+			{
+				/* Mounted but no /bin/init (should not happen — mkimage stages a
+				 * complete pool).  We cannot cleanly unmount /, so keep it + warn. */
+				root_is_pool = 1;
+				kprintf("ubixfs: pool is / but /bin/init missing — boot may fail\n");
+			}
+		}
+
+		if (!root_is_pool)
+		{
+			kprintf("kmain: pool root unavailable; mounting FAT root major=%i minor=%i\n",
 			        sys_major,
 			        sys_minor);
-		else
-			kprintf("Mounted root (FAT) from major=%i minor=%i\n", sys_major, sys_minor);
+			if (vfs_mount(sys_major, sys_minor, 0x0, 0xFA, "/", "rw") != 0x0)
+				kprintf("Problem Mounting root (FAT) from major=%i "
+				        "minor=%i\n",
+				        sys_major,
+				        sys_minor);
+			else
+				kprintf("Mounted root (FAT) from major=%i minor=%i\n", sys_major, sys_minor);
+		}
 
-		/* UbixFS pool (plan K4 — i386 parity with aarch64): if a pool image is
-		 * staged on the FAT root, mount it read-write at /pool (a file-backed
-		 * loopback pool — ubixfs over /pool.img over FAT, the same arch-neutral
-		 * driver).  Read-back proves the VFS dispatch; the boot.log write proves
-		 * the write path + txg commit persist across reboot. */
-		ubfs_vfs_init();
+		/* UbixFS loopback pool demo (plan K4 — i386 parity with aarch64): if a
+		 * file-backed pool image is staged on the root, mount it read-write at /pool
+		 * (ubixfs over /pool.img, the same arch-neutral driver).  Read-back proves the
+		 * VFS dispatch; the boot.log write proves the write path + txg commit persist
+		 * across reboot.  Present on the FAT fallback root; absent when the pool itself
+		 * is / (so this silently no-ops there). */
 		{
 			fileDescriptor_t *probe = fopen("/pool.img", "r");
 			if (probe != NULL)
@@ -285,53 +320,61 @@ int kmain(u_int32_t rootdev)
 			}
 		}
 
-		/* UbixFS RAW pool (plan K5/M1): mount the pool that lives on its own
-		 * block-device partition (type 0x9C, ad0s3 = major 1, minor 3 — see hd.c's
-		 * per-partition device registration) at /poolraw, via the bcache raw vdev.
-		 * This is the path toward a mountable root (no loopback file under FAT). */
-		ubfs_vfs_set_raw(1);
-		if (vfs_mount(1, 3, 0, VFS_TYPE_UBIXFS, "/poolraw", "rw") == 0)
+		/* K5/M3 — confirm the root holds a COMPLETE bootable system: init, the
+		 * dynamic linker, login, and the desktop assets (compositor, fonts, settings
+		 * DB).  When the pool is /, read straight off the live root (prefix "").  On
+		 * the FAT fallback, mount the raw pool at /poolraw (the mountable-root
+		 * candidate, ad0s3) and verify it there instead. */
 		{
-			fileDescriptor_t *pf;
-			kDIR_t *pd;
-			char rb[96];
-			int n;
+			const char *prefix = root_is_pool ? "" : "/poolraw";
+			int verify = root_is_pool;
 
-			/* M3: the raw pool now holds the COMPLETE bootable world.  Confirm the
-			 * boot-critical files are present + readable off the raw vdev (init,
-			 * the dynamic linker, the user DB) — i.e. the pool is a mountable-root
-			 * candidate, not just a few binaries. */
-			static const char *boot_files[] = {
-			    "/poolraw/bin/init",
-			    "/poolraw/bin/login",
-			    "/poolraw/lib/ld-musl-i386.so.1",
-			    "/poolraw/lib/libc.so",
-			    "/poolraw/etc/userdb",
-			    "/poolraw/bin/views",
-			    "/poolraw/usr/local/share/netsurf/SANS.TTF",
-			    "/poolraw/var/db/ubistry.db",
-			};
-			unsigned bi;
-			(void)pd;
-			for (bi = 0; bi < sizeof(boot_files) / sizeof(boot_files[0]); bi++)
+			if (!root_is_pool)
 			{
-				pf = fopen(boot_files[bi], "r");
-				if (pf == NULL)
-				{
-					kprintf("ubixfs:   MISSING %s\n", boot_files[bi]);
-					continue;
-				}
-				n = (int)fread(rb, 1, 4, pf);
-				kprintf("ubixfs:   %-32s %7d bytes %s\n",
-				        boot_files[bi],
-				        (int)pf->size,
-				        (n == 4 && rb[0] == 0x7F && rb[1] == 'E') ? "(ELF)" : "");
-				fclose(pf);
+				ubfs_vfs_set_raw(1);
+				verify = (vfs_mount(1, 3, 0x0, VFS_TYPE_UBIXFS, "/poolraw", "rw") == 0);
+				if (!verify)
+					kprintf("ubixfs: raw pool mount (/poolraw) failed or absent\n");
 			}
-		}
-		else
-		{
-			kprintf("ubixfs: raw pool mount (/poolraw) failed or absent\n");
+
+			if (verify)
+			{
+				static const char *rel_files[] = {
+				    "/bin/init",
+				    "/bin/login",
+				    "/lib/ld-musl-i386.so.1",
+				    "/lib/libc.so",
+				    "/etc/userdb",
+				    "/bin/views",
+				    "/usr/local/share/netsurf/SANS.TTF",
+				    "/var/db/ubistry.db",
+				};
+				char path[128];
+				char rb[8];
+				unsigned bi;
+
+				kprintf("ubixfs: root = %s — boot-critical files:\n",
+				        root_is_pool ? "UbixFS pool (ad0s3)" : "FAT (pool at /poolraw)");
+				for (bi = 0; bi < sizeof(rel_files) / sizeof(rel_files[0]); bi++)
+				{
+					fileDescriptor_t *pf;
+					int n;
+
+					snprintf(path, sizeof(path), "%s%s", prefix, rel_files[bi]);
+					pf = fopen(path, "r");
+					if (pf == NULL)
+					{
+						kprintf("ubixfs:   MISSING %s\n", path);
+						continue;
+					}
+					n = (int)fread(rb, 1, 4, pf);
+					kprintf("ubixfs:   %-40s %7d bytes %s\n",
+					        path,
+					        (int)pf->size,
+					        (n == 4 && rb[0] == 0x7F && rb[1] == 'E') ? "(ELF)" : "");
+					fclose(pf);
+				}
+			}
 		}
 	}
 
