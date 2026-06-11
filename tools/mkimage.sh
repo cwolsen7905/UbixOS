@@ -126,7 +126,7 @@ trap 'rm -f "$CORE_IMG"' EXIT
 ${GRUB_MKIMAGE} \
   -O i386-pc \
   -o "$CORE_IMG" \
-  -p '(hd0,msdos1)/boot/grub' \
+  -p '(hd0,msdos1)/grub' \
   biosdisk part_msdos fat multiboot normal echo
 
 # Write GRUB MBR (boot.img) into sector 0, preserving our partition table.
@@ -169,19 +169,22 @@ print(f"  core.img written at sector 1 ({len(core)} bytes)")
 PYEOF
 
 # ── Copy files into the FAT partition ──────────────────────────────────────
+# The FAT partition is the dedicated /boot volume: its ROOT holds grub/ + kernel/
+# directly (GRUB prefix is (hd0,msdos1)/grub), so when the running system mounts
+# it at /boot (see /etc/fstab) the layout reads cleanly as /boot/kernel/kernel
+# and /boot/grub — not a doubled /boot/boot.
 echo "==> Installing GRUB config"
-mmd -i "$IMG"@@1M ::/boot
-mmd -i "$IMG"@@1M ::/boot/grub
-mmd -i "$IMG"@@1M ::/boot/kernel
-mcopy -i "$IMG"@@1M "$GRUB_CFG" ::/boot/grub/grub.cfg
-mcopy -i "$IMG"@@1M "$KERNEL"   ::/boot/kernel/kernel
+mmd -i "$IMG"@@1M ::/grub
+mmd -i "$IMG"@@1M ::/kernel
+mcopy -i "$IMG"@@1M "$GRUB_CFG" ::/grub/grub.cfg
+mcopy -i "$IMG"@@1M "$KERNEL"   ::/kernel/kernel
 
 # Copy GRUB modules so grub.cfg can use insmod at runtime.
 TMPMOD=$(mktemp -d)
 trap 'rm -rf "$TMPMOD"; rm -f "$CORE_IMG"' EXIT
 cp "$GRUB_LIB"/*.mod "$GRUB_LIB"/*.lst "$TMPMOD"/ 2>/dev/null || true
-mmd -i "$IMG"@@1M ::/boot/grub/i386-pc
-mcopy -i "$IMG"@@1M "$TMPMOD"/*.mod "$TMPMOD"/*.lst ::/boot/grub/i386-pc/ 2>/dev/null || true
+mmd -i "$IMG"@@1M ::/grub/i386-pc
+mcopy -i "$IMG"@@1M "$TMPMOD"/*.mod "$TMPMOD"/*.lst ::/grub/i386-pc/ 2>/dev/null || true
 
 # ── Build the complete root (everything except /boot) in a host staging dir,
 #    then load it into the UbixFS pool.  The pool IS the root filesystem — the

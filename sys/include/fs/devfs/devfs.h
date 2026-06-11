@@ -32,21 +32,24 @@
 #include <sys/types.h>
 #include <fs/vfs/file.h>
 
-struct devfs_devices {
-    struct devfs_devices *next;
-    struct devfs_devices *prev;
-    u_int8_t devType;
-    u_int16_t devMajor;
-    u_int16_t devMinor;
-    char devName[32];
+struct devfs_devices
+{
+	struct devfs_devices *next;
+	struct devfs_devices *prev;
+	u_int8_t devType;
+	u_int16_t devMajor;
+	u_int16_t devMinor;
+	char devName[32];
 };
 
-struct devfs_info {
-    struct devfs_devices *deviceList;
+struct devfs_info
+{
+	struct devfs_devices *deviceList;
 };
 
 int devfs_init();
 int devfs_makeNode(char *name, u_int8_t type, u_int16_t major, u_int16_t minor);
+int devfs_resolve(const char *name, u_int16_t *major, u_int16_t *minor);
 /*
  int devfs_open(char *file,fileDescriptor *fd);
  void devFSInit(struct mountPoints *mp);

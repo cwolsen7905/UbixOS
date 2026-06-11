@@ -48,6 +48,7 @@
 #include <sys/klog.h>
 #include <fs/vfs/file.h>
 #include <fs/vfs/mount.h>
+#include <fs/devfs/devfs.h> /* devfs_resolve — device path -> (major, minor) for block mounts */
 /* fat_filelib.h removed — use VFS unlink() for file removal */
 
 /* Socket read/write/close moved to the socket fileops (sys/net/net/sys_arch.c);
@@ -762,11 +763,14 @@ int sys_unlink(struct thread *td, struct sys_unlink_args *uap)
  *
  * type: filesystem type string ("devfs", "procfs", "fat")
  * path: POSIX mount point path (must already exist as a directory)
- * flags/data: ignored for now (pseudo-FSes need no device)
+ * flags: ignored for now
+ * data:  the backing device path for a block-device FS, e.g. "/dev/ad0s1"
+ *        (resolved to a major/minor via devfs).  NULL or "none" => deviceless,
+ *        used by the pseudo-FSes (devfs/procfs) which need no device.  This is
+ *        how fstab "/dev/ad0s1 /boot fat rw" mounts a specific partition.
  *
- * Maps type string to the internal vfsType integer used by vfsRegisterFS,
- * then delegates to vfs_mount(). Block-device FSes (fat) are not yet
- * supported via this path — those come through the automountd Phase 6 flow.
+ * Maps type string to the internal vfsType integer used by vfsRegisterFS, then
+ * delegates to vfs_mount().
  */
 int sys_mount(struct thread *td, struct sys_mount_args *uap)
 {
@@ -806,14 +810,32 @@ int sys_mount(struct thread *td, struct sys_mount_args *uap)
 	strncpy(mpath, uap->path, sizeof(mpath) - 1);
 	mpath[sizeof(mpath) - 1] = '\0';
 
-	if (vfs_mount(0, 0, 0, vfs_type, mpath, fs_perms) != 0)
+	/* Resolve the backing device, if any.  A block-device FS (fat) names its
+	 * partition via data ("/dev/ad0s1"); devfs maps that to (major, minor).  A
+	 * NULL or "none" device is deviceless (devfs/procfs) -> (0, 0). */
+	int major = 0, minor = 0;
+	const char *dev = (const char *)uap->data;
+	if (dev != NULL && dev[0] != '\0' && strcmp(dev, "none") != 0)
+	{
+		u_int16_t mj = 0, mn = 0;
+		if (devfs_resolve(dev, &mj, &mn) != 0)
+		{
+			kprintf("sys_mount: device \"%s\" not found\n", dev);
+			td->td_retval[0] = -ENODEV;
+			return (ENODEV);
+		}
+		major = (int)mj;
+		minor = (int)mn;
+	}
+
+	if (vfs_mount(major, minor, 0, vfs_type, mpath, fs_perms) != 0)
 	{
 		kprintf("sys_mount: vfs_mount(%s, %s) failed\n", uap->type, mpath);
 		td->td_retval[0] = -EIO;
 		return (EIO);
 	}
 
-	kprintf("sys_mount: mounted %s at %s\n", uap->type, mpath);
+	kprintf("sys_mount: mounted %s at %s (dev %i:%i)\n", uap->type, mpath, major, minor);
 	td->td_retval[0] = 0;
 	return (0);
 }

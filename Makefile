@@ -461,7 +461,7 @@ install-kernel:
 	@echo "Kernel Install For ${_ARCH} Started On `LC_ALL=C date`"
 	@echo "***************************************************************"
 	@${MAKE} mount-image
-	cp ${OBJ_DIR}/boot/kernel ${MOUNT_POINT}/boot/kernel/kernel
+	cp ${OBJ_DIR}/boot/kernel ${MOUNT_POINT}/kernel/kernel
 	@${MAKE} unmount-image
 	@echo "***************************************************************"
 	@echo "Kernel Install Completed On `LC_ALL=C date`"
@@ -616,7 +616,7 @@ run-shared:
 
 # Update just the kernel in an existing disk image without a full rebuild.
 kernel-to-image:
-	mcopy -o -i ${DISK_IMAGE}@@1M ${OBJ_DIR}/boot/kernel ::/boot/kernel/kernel
+	mcopy -o -i ${DISK_IMAGE}@@1M ${OBJ_DIR}/boot/kernel ::/kernel/kernel
 
 clean-kernel:
 	(cd sys;${MAKE} clean)

@@ -113,9 +113,15 @@ static int fstab_parse(const char *path, fstab_entry_t *out, int max)
 
 static void mount_entry(const fstab_entry_t *e)
 {
+	/* Pass the fstab device field as the mount data: a block-device FS (fat)
+	 * names its partition there ("/dev/ad0s1"), which the kernel resolves to a
+	 * (major, minor) via devfs.  Pseudo-FSes (devfs/procfs) use "none", which the
+	 * kernel treats as deviceless. */
+	const char *dev = (e->device[0] != '\0') ? e->device : NULL;
+
 	mkdir(e->mountpoint, 0755);
-	if (mount(e->fstype, e->mountpoint, 0, NULL) != 0)
-		fprintf(stderr, "automountd: mount %s at %s failed\n", e->fstype, e->mountpoint);
+	if (mount(e->fstype, e->mountpoint, 0, (void *)dev) != 0)
+		fprintf(stderr, "automountd: mount %s (%s) at %s failed\n", e->fstype, e->device, e->mountpoint);
 	else
 		printf("automountd: mounted %s at %s\n", e->fstype, e->mountpoint);
 }
