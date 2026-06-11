@@ -130,6 +130,7 @@ int aarch64_file_exists(const char *path);                 /* boot profile selec
 /* virtio_blk.c — virtio-mmio block device (returns a ubx_device with blk ops). */
 struct ubx_device;
 struct ubx_device *aarch64_virtio_blk_init(void);
+int aarch64_virtio_blk_pool_minor(void); /* minor of the MBR pool partition (0x9C), or -1 */
 
 /* virtio_net.c — virtio-mmio network device (polling; lwIP bridge calls these). */
 int aarch64_virtio_net_init(void);                                    /* scan + bring up; 0 on success */

@@ -155,11 +155,45 @@ void kmain_aarch64(void)
 	 * when no disk is attached. */
 	{
 		struct ubx_device *blk = aarch64_virtio_blk_init();
+		int root_is_pool = 0;
+		int pool_minor;
 
-		fat_init(); /* register the FAT driver with the VFS */
-		if (blk != 0 && vfs_mount(0, 0, 0, VFS_TYPE_FAT, "/", "rw") == 0)
+		fat_init();      /* register the FAT driver with the VFS */
+		ubfs_vfs_init(); /* register the UbixFS pool driver (needed before any mount) */
+
+		/* K5/M4 — prefer the UbixFS pool as the root filesystem.  The pool lives on
+		 * its own MBR partition (type 0x9C) on the virtio-blk disk; the parser in
+		 * virtio_blk registered it as vtblk0sN, and we mount it via the bcache raw
+		 * vdev — the same path proven on i386.  On a bad/absent pool the mount
+		 * unwinds cleanly (initfs fails -> mountpoint freed), so we fall back to the
+		 * FAT partition, then to ramfs below. */
+		pool_minor = (blk != 0) ? aarch64_virtio_blk_pool_minor() : -1;
+		if (pool_minor > 0)
 		{
-			kprintf("root: FAT on virtio-blk vtblk0\n");
+			ubfs_vfs_set_raw(1);
+			if (vfs_mount(1, pool_minor, 0, VFS_TYPE_UBIXFS, "/", "rw") == 0)
+			{
+				fileDescriptor_t *probe = fopen("/lib/libc.so", "r");
+				if (probe != 0)
+				{
+					fclose(probe);
+					root_is_pool = 1;
+					kprintf("root: UbixFS pool on vtblk0s%i (raw) — mountable root live\n",
+					        pool_minor);
+				}
+				else
+				{
+					kprintf("ubixfs: pool is / but /lib/libc.so missing — falling through\n");
+				}
+			}
+		}
+
+		/* Disk-backed root: pool if it took, otherwise the FAT partition (vtblk0s1,
+		 * minor 1).  FAT now lives in partition 1 (LBA 2048), not the whole disk. */
+		if (blk != 0 && (root_is_pool || vfs_mount(1, 1, 0, VFS_TYPE_FAT, "/", "rw") == 0))
+		{
+			if (!root_is_pool)
+				kprintf("root: FAT on vtblk0s1 (fallback)\n");
 
 			/* Phase-3 HVF-bisect harness: read the real FAT /bin (opendir/
 			 * getdents + stat — the pointer-arg POSIX calls `ls` uses) before
@@ -176,14 +210,15 @@ void kmain_aarch64(void)
 			if (vfs_mount(0, 0, 0, VFS_TYPE_DEVFS, "/dev", "rw") == 0)
 				kprintf("dev: devfs mounted at /dev\n");
 
-			/* UbixFS pool (plan K2/K3): if a pool image is staged on the FAT root,
-			 * register the driver and mount it read-write at /pool (a file-backed
-			 * loopback pool — ubixfs over /pool.img over FAT).  Read-back proves the
-			 * VFS dispatch (mount/open/read/readdir); the boot.log write proves the
-			 * write path + txg commit persist across reboot. */
-			if (aarch64_file_exists("/pool.img"))
+			/* UbixFS loopback pool (plan K2/K3): if a pool image is staged on the
+			 * FAT root, mount it read-write at /pool (a file-backed loopback pool —
+			 * ubixfs over /pool.img over FAT).  Skipped when the pool itself is the
+			 * root (it would be a redundant second ubixfs mount, and /pool.img is not
+			 * staged inside the pool).  Read-back proves the VFS dispatch; the
+			 * boot.log write proves the write path + txg commit persist. */
+			if (!root_is_pool && aarch64_file_exists("/pool.img"))
 			{
-				ubfs_vfs_init();
+				ubfs_vfs_set_raw(0); /* loopback, not raw */
 				if (vfs_mount(0, 0, 0, VFS_TYPE_UBIXFS, "/pool", "rw") == 0)
 				{
 					fileDescriptor_t *pf = fopen("/pool/hello.txt", "r");

@@ -19,7 +19,8 @@
 #include "bringup.h"
 #include <sys/types.h>
 #include <sys/bus.h>
-#include <sys/descrip.h> /* g_device_find hook (so vfs_mount finds this device) */
+#include <sys/descrip.h>   /* g_device_find hook (so vfs_mount finds this device) */
+#include <dev/partition.h> /* MBR partition parsing (vtblk0sN) */
 #include <vmm/vmm.h>
 #include <vmm/paging.h>
 #include <lib/kmalloc.h>
@@ -120,8 +121,13 @@ static u_int8_t *g_data;             /* 512-byte data bounce buffer (DMA) */
 static volatile u_int8_t *g_status;  /* 1-byte status (DMA) */
 static u_int16_t g_last_used;        /* last consumed used-ring index */
 static int g_ready;                  /* non-zero once attached */
-static struct ubx_device g_blk_dev;  /* the registered block device */
+static struct ubx_device g_blk_dev;  /* the whole-disk block device (vtblk0) */
 static struct ubx_blk_ops g_blk_ops; /* its block ops */
+
+/* MBR partitions discovered on the disk (vtblk0sN).  The pool root lives on one
+ * of these (type 0x9C); vfs_mount resolves it by minor via the find hook. */
+static struct ubp_partition g_parts[MBR_MAX_PARTITIONS];
+static int g_npart;
 
 static inline u_int32_t mmio_rd(u_int32_t off)
 {
@@ -139,14 +145,26 @@ static inline void dsb(void)
 }
 
 /**
- * g_device_find hook: vfs_mount resolves its (major, minor) to a block device
- * through this.  There is a single virtio-blk device, so return it for any id.
+ * g_device_find hook: vfs_mount resolves a (major, minor) to a block device
+ * through this.  minor 0 (and the legacy whole-disk mount, major/minor 0/0) maps
+ * to the whole disk; minor N>0 maps to MBR partition N (vtblk0sN), so the pool
+ * root in slot 3 resolves at (major 1, minor 3) — the same scheme as i386 ad0sN.
  */
 static void *virtio_blk_device_find(int major, int minor)
 {
+	int i;
+
 	(void)major;
-	(void)minor;
-	return (g_ready ? &g_blk_dev : NULL);
+	if (!g_ready)
+		return (NULL);
+	if (minor > 0)
+	{
+		for (i = 0; i < g_npart; i++)
+			if (g_parts[i].minor == minor)
+				return (&g_parts[i].dev);
+		return (NULL); /* asked for a partition that does not exist */
+	}
+	return (&g_blk_dev);
 }
 
 /**
@@ -361,9 +379,34 @@ struct ubx_device *aarch64_virtio_blk_init(void)
 		g_device_find = virtio_blk_device_find; /* let vfs_mount resolve to us */
 
 		kprintf("virtio-blk: vtblk0 at mmio slot %d (0x%lx)\n", slot, (u_int64_t)(uintptr_t)base);
+
+		/* Parse the MBR (if any) so the pool partition is mountable as vtblk0sN.
+		 * A bare-FAT image (no MBR) simply yields 0 partitions and the whole-disk
+		 * device stays the only one — preserving the legacy mount path. */
+		g_npart = mbr_parse_partitions(&g_blk_dev, g_parts, MBR_MAX_PARTITIONS);
+		if (g_npart < 0)
+			g_npart = 0;
+		if (g_npart == 0)
+			kprintf("virtio-blk: no MBR partitions (bare disk)\n");
+
 		return (&g_blk_dev);
 	}
 
 	kprintf("virtio-blk: no block device found in the virtio-mmio window\n");
 	return (NULL);
+}
+
+/**
+ * Return the device minor of the UbixFS pool partition (MBR type 0x9C), or -1 if
+ * the disk has no pool partition.  Lets the boot path mount the pool root without
+ * hardcoding a slot, so the disk layout can change independently of the kernel.
+ */
+int aarch64_virtio_blk_pool_minor(void)
+{
+	int i;
+
+	for (i = 0; i < g_npart; i++)
+		if (g_parts[i].type == MBR_TYPE_UBPOOL)
+			return (g_parts[i].minor);
+	return (-1);
 }
