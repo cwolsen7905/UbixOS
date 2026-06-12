@@ -21,6 +21,7 @@
 #include <sys/bus.h>
 #include <sys/descrip.h>   /* g_device_find hook (so vfs_mount finds this device) */
 #include <dev/partition.h> /* MBR partition parsing (vtblk0sN) */
+#include <dev/disk.h>      /* md_disk_list — Disk Utility enumeration hook */
 #include <vmm/vmm.h>
 #include <vmm/paging.h>
 #include <lib/kmalloc.h>
@@ -409,4 +410,28 @@ int aarch64_virtio_blk_pool_minor(void)
 		if (g_parts[i].type == MBR_TYPE_UBPOOL)
 			return (g_parts[i].minor);
 	return (-1);
+}
+
+/**
+ * md_disk_list (sys/kern/disk_query.c hook): the aarch64 disk inventory — the
+ * single virtio-blk drive.  Capacity is the virtio-blk config `capacity` field
+ * (512-byte sectors) at the start of the device-specific config window.
+ */
+int md_disk_list(struct disk_hw *out, int max)
+{
+	u_int32_t lo, hi;
+
+	if (max <= 0 || !g_ready)
+		return (0);
+
+	lo = *(volatile u_int32_t *)(g_base + VMMIO_CONFIG);
+	hi = *(volatile u_int32_t *)(g_base + VMMIO_CONFIG + 4);
+
+	out[0].dev = &g_blk_dev;
+	strncpy(out[0].name, "vtblk0", sizeof(out[0].name) - 1);
+	out[0].name[sizeof(out[0].name) - 1] = '\0';
+	out[0].sectors = ((u_int64_t)hi << 32) | lo;
+	strncpy(out[0].model, "virtio-blk", sizeof(out[0].model) - 1);
+	out[0].model[sizeof(out[0].model) - 1] = '\0';
+	return (1);
 }

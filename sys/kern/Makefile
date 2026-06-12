@@ -9,6 +9,7 @@ OBJS = \
 	access.o \
 	callout.o \
 	descrip.o \
+	disk_query.o \
 	endtask.o \
 	fb.o \
 	kern_exec.o \

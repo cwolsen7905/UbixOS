@@ -35,6 +35,7 @@
 #include <fs/devfs/devfs.h>
 #include <string.h>
 #include <fs/common/gpt.h>
+#include <dev/disk.h> /* md_disk_list — Disk Utility enumeration hook */
 
 static const uuid_t freebsd_ufs_uuid = GPT_ENT_TYPE_FREEBSD_UFS;
 
@@ -142,7 +143,9 @@ int _initHardDisk(int hdD)
 		if (d[0].dp_type == 0xEE)
 		{
 			// MrOlsen (2016-01-14) DEBUG: This was just to help debug
-			// kprintf( "%s - Type: [0x%X - %s], Start: [0x%X], Size: [0x%X]\n", name, d[0].dp_type, (d[0].dp_type >= 0 && d[0].dp_type <= 255) ? part_types[d[0].dp_type] : "Unknown", d[0].dp_start, d[0].dp_size );
+			// kprintf( "%s - Type: [0x%X - %s], Start: [0x%X], Size: [0x%X]\n", name, d[0].dp_type,
+			// (d[0].dp_type >= 0 && d[0].dp_type <= 255) ? part_types[d[0].dp_type] : "Unknown",
+			// d[0].dp_start, d[0].dp_size );
 
 			secbuf = (char *)kmalloc(65536);
 
@@ -171,8 +174,18 @@ int _initHardDisk(int hdD)
 					if (ubx_device_register_block(udev2, 1, minor, &hd_blk_ops) == 0)
 					{
 						snprintf(name, sizeof(name), "ad%ip%i", hdC, hdd->part);
-						kprintf("%s - Type: [0x%X - %s], Start: [%i], Offset: [%i], Size: [%i], MM: [%i:%i]\n", name, d[0].dp_type, (d[0].dp_type >= 0 && d[0].dp_type <= 255) ? part_types[d[0].dp_type] : "Unknown", hdd2->lba_start,
-						        hdd2->parOffset, hdd2->lba_end - hdd2->lba_start, hdC + 1, minor);
+						kprintf("%s - Type: [0x%X - %s], Start: [%i], Offset: [%i], Size: "
+						        "[%i], MM: [%i:%i]\n",
+						        name,
+						        d[0].dp_type,
+						        (d[0].dp_type >= 0 && d[0].dp_type <= 255)
+						            ? part_types[d[0].dp_type]
+						            : "Unknown",
+						        hdd2->lba_start,
+						        hdd2->parOffset,
+						        hdd2->lba_end - hdd2->lba_start,
+						        hdC + 1,
+						        minor);
 						devfs_makeNode(name, 'c', 0x1, minor);
 					}
 				}
@@ -200,19 +213,28 @@ int _initHardDisk(int hdD)
 						udev2->dev_softc = hdd2;
 					minor++;
 
-					if (udev2 != NULL && ubx_device_register_block(udev2, 1, minor, &hd_blk_ops) == 0)
+					if (udev2 != NULL &&
+					    ubx_device_register_block(udev2, 1, minor, &hd_blk_ops) == 0)
 					{
 						sprintf(name, "ad%is%i", hdC, i + 1);
-						kprintf("%s - Type: [0x%X - %s], Start: [0x%X], Size: [0x%X], MM: [%i:%i]\n", name, d[i].dp_type, (d[i].dp_type >= 0 && d[i].dp_type <= 255) ? part_types[d[i].dp_type] : "Unknown", d[i].dp_start,
-						        d[i].dp_size, hdC + 1, minor);
+						kprintf("%s - Type: [0x%X - %s], Start: [0x%X], Size: [0x%X], MM: "
+						        "[%i:%i]\n",
+						        name,
+						        d[i].dp_type,
+						        (d[i].dp_type >= 0 && d[i].dp_type <= 255)
+						            ? part_types[d[i].dp_type]
+						            : "Unknown",
+						        d[i].dp_start,
+						        d[i].dp_size,
+						        hdC + 1,
+						        minor);
 
 						devfs_makeNode(name, 'c', 0x1, minor);
 
 						if (d[i].dp_type == 0x82)
 						{
 							/* Linux swap type — register as UbixOS swap device. */
-							swap_register_dev(hdd2,
-							    d[i].dp_size / SWAP_SECTORS_PER_PAGE);
+							swap_register_dev(hdd2, d[i].dp_size / SWAP_SECTORS_PER_PAGE);
 						}
 
 						if (d[i].dp_type == 0xA5)
@@ -224,21 +246,37 @@ int _initHardDisk(int hdD)
 							{
 								if (bsdd->d_partitions[x].p_size > 0)
 								{
-									snprintf(name, sizeof(name), "ad%is%i%c", hdC, i + 1, 'a' + x);
-									hdd2 = (struct driveInfo *)kmalloc(sizeof(struct driveInfo));
+									snprintf(name,
+									         sizeof(name),
+									         "ad%is%i%c",
+									         hdC,
+									         i + 1,
+									         'a' + x);
+									hdd2 = (struct driveInfo *)kmalloc(
+									    sizeof(struct driveInfo));
 									memcpy(hdd2, hdd, sizeof(struct driveInfo));
-									// hdd2->parOffset = d[i].dp_start + bsdd->d_partitions[x].p_offset;
+									// hdd2->parOffset = d[i].dp_start +
+									// bsdd->d_partitions[x].p_offset;
 									hdd2->lba_start = d[i].dp_start;
-									hdd2->parOffset = bsdd->d_partitions[x].p_offset;
+									hdd2->parOffset =
+									    bsdd->d_partitions[x].p_offset;
 									udev2 = ubx_device_alloc(NULL, "ad");
 									if (udev2 != NULL)
 										udev2->dev_softc = hdd2;
 									minor++;
 									if (udev2 != NULL)
-										ubx_device_register_block(udev2, 1, minor, &hd_blk_ops);
+										ubx_device_register_block(
+										    udev2, 1, minor, &hd_blk_ops);
 									devfs_makeNode(name, 'c', 0x1, minor);
-									kprintf("%s - Type: [%s], Start: [0x%X], Size: [0x%X], MM: [%i:%i]\n", name, fstypenames[bsdd->d_partitions[x].p_fstype], bsdd->d_partitions[x].p_offset, bsdd->d_partitions[x].p_size,
-									        hdC + 1, minor);
+									kprintf(
+									    "%s - Type: [%s], Start: [0x%X], Size: "
+									    "[0x%X], MM: [%i:%i]\n",
+									    name,
+									    fstypenames[bsdd->d_partitions[x].p_fstype],
+									    bsdd->d_partitions[x].p_offset,
+									    bsdd->d_partitions[x].p_size,
+									    hdC + 1,
+									    minor);
 								}
 							}
 						}
@@ -338,41 +376,41 @@ go:
 
 	switch (retVal)
 	{
-	case 0:
-		hdd->hdShift = 0;
-		hdd->hdMulti = 1;
-		break;
-	case 2:
-		hdd->hdShift = 1;
-		hdd->hdMulti = retVal;
-		break;
-	case 4:
-		hdd->hdShift = 2;
-		hdd->hdMulti = retVal;
-		break;
-	case 8:
-		hdd->hdShift = 3;
-		hdd->hdMulti = retVal;
-		break;
-	case 16:
-		hdd->hdShift = 4;
-		hdd->hdMulti = retVal;
-		break;
-	case 32:
-		hdd->hdShift = 5;
-		hdd->hdMulti = retVal;
-		break;
-	case 64:
-		hdd->hdShift = 6;
-		hdd->hdMulti = retVal;
-		break;
-	case 128:
-		hdd->hdShift = 7;
-		hdd->hdMulti = retVal;
-		break;
-	default:
-		kprintf("Error BLOCK Mode Unavailable: [%x]\n", retVal);
-		return (1);
+		case 0:
+			hdd->hdShift = 0;
+			hdd->hdMulti = 1;
+			break;
+		case 2:
+			hdd->hdShift = 1;
+			hdd->hdMulti = retVal;
+			break;
+		case 4:
+			hdd->hdShift = 2;
+			hdd->hdMulti = retVal;
+			break;
+		case 8:
+			hdd->hdShift = 3;
+			hdd->hdMulti = retVal;
+			break;
+		case 16:
+			hdd->hdShift = 4;
+			hdd->hdMulti = retVal;
+			break;
+		case 32:
+			hdd->hdShift = 5;
+			hdd->hdMulti = retVal;
+			break;
+		case 64:
+			hdd->hdShift = 6;
+			hdd->hdMulti = retVal;
+			break;
+		case 128:
+			hdd->hdShift = 7;
+			hdd->hdMulti = retVal;
+			break;
+		default:
+			kprintf("Error BLOCK Mode Unavailable: [%x]\n", retVal);
+			return (1);
 	}
 
 	if (hdd->ata_identify->command_set_enabled1 & ATA_IDENTIFY_COMMAND_SET_SUPPORTED1_48BIT_ENABLE)
@@ -410,11 +448,16 @@ go:
 		hdd->sector_size = 512;
 	}
 
-	kprintf("LBA [0x%X - 0x%X], LBA_HIGH: %i, LBA_LOW: %i, SECTOR_SIZE: %i\n", hdd->ata_identify->command_set_enabled1, hdd->ata_identify->command_set_enabled1 & ATA_IDENTIFY_COMMAND_SET_SUPPORTED1_48BIT_ENABLE, hdd->lba_high, hdd->lba_low,
+	kprintf("LBA [0x%X - 0x%X], LBA_HIGH: %i, LBA_LOW: %i, SECTOR_SIZE: %i\n",
+	        hdd->ata_identify->command_set_enabled1,
+	        hdd->ata_identify->command_set_enabled1 & ATA_IDENTIFY_COMMAND_SET_SUPPORTED1_48BIT_ENABLE,
+	        hdd->lba_high,
+	        hdd->lba_low,
 	        hdd->sector_size);
 
 	/* Wait for BSY to clear before issuing SET MULTIPLE MODE */
-	for (counter = 1000000; counter >= 0; counter--) {
+	for (counter = 1000000; counter >= 0; counter--)
+	{
 		if (!(inportByte(hdd->hdPort + ATA_COMMAND) & ATA_S_BUSY))
 			break;
 	}
@@ -423,24 +466,28 @@ go:
 	outportByte(hdd->hdPort + hdCmd, 0xC6);
 
 	/* Wait for command completion and check for error */
-	for (counter = 1000000; counter >= 0; counter--) {
+	for (counter = 1000000; counter >= 0; counter--)
+	{
 		u_int8_t st = inportByte(hdd->hdPort + ATA_COMMAND);
-		if (!(st & ATA_S_BUSY)) {
+		if (!(st & ATA_S_BUSY))
+		{
 			if (st & 1)
 				kprintf("hdInit: SET MULTIPLE failed (err=0x%X)\n",
-				    inportByte(hdd->hdPort + ATA_COMMAND + 1));
+				        inportByte(hdd->hdPort + ATA_COMMAND + 1));
 			break;
 		}
 	}
 
 	hdd->hdMask = retVal;
-	// hdd->hdSize = (hdd->hdSector[0x7B] * 256 * 256 * 256) + (hdd->hdSector[0x7A] * 256 * 256) + (hdd->hdSector[0x79] * 256) + hdd->hdSector[0x78];
+	// hdd->hdSize = (hdd->hdSector[0x7B] * 256 * 256 * 256) + (hdd->hdSector[0x7A] * 256 * 256) +
+	// (hdd->hdSector[0x79] * 256) + hdd->hdSector[0x78];
 
 	// MrOlsen (2016-01-11) NOTE: Must phase out hdSize
 	hdd->hdSize = hdd->lba_low + hdd->lba_high;
 	hdd->hdEnable = 1;
 
-	kprintf("Drive: [0x%X/0x%X], Size: [%i Sectors/%i MB]\n", hdd->hdPort, hdd->hdDev, hdd->hdSize, hdd->hdSize / 2048);
+	kprintf(
+	    "Drive: [0x%X/0x%X], Size: [%i Sectors/%i MB]\n", hdd->hdPort, hdd->hdDev, hdd->hdSize, hdd->hdSize / 2048);
 	return (0x0);
 }
 
@@ -525,11 +572,11 @@ int hdWrite(struct driveInfo *hdd, void *baseAddr, u_int32_t startSector, u_int3
 
 int hdRead(struct driveInfo *hdd, void *baseAddr, u_int32_t startSector, u_int32_t sectorCount)
 {
-	long  counter          = 0x0;
-	long  retVal           = 0x0;
+	long counter = 0x0;
+	long retVal = 0x0;
 	short transactionCount = 0x0;
-	short remainder        = 0x0;
-	short *tmp             = (short *)baseAddr;
+	short remainder = 0x0;
+	short *tmp = (short *)baseAddr;
 
 	if (hdd->lba_start == 0)
 		startSector += hdd->parOffset;
@@ -548,12 +595,12 @@ int hdRead(struct driveInfo *hdd, void *baseAddr, u_int32_t startSector, u_int32
 		 * Fewer sectors than one hdMulti block: issue a single
 		 * READ SECTORS command for the exact count.
 		 */
-		hdd->hdCalc     = sectorCount;
+		hdd->hdCalc = sectorCount;
 		transactionCount = 1;
 	}
 	else
 	{
-		hdd->hdCalc      = hdd->hdMulti;
+		hdd->hdCalc = hdd->hdMulti;
 		transactionCount = sectorCount >> hdd->hdShift;
 		/*
 		 * If sectorCount is not an exact multiple of hdMulti,
@@ -561,8 +608,7 @@ int hdRead(struct driveInfo *hdd, void *baseAddr, u_int32_t startSector, u_int32
 		 * extra iteration for those trailing sectors so we always
 		 * read exactly sectorCount sectors.
 		 */
-		remainder = (short)(sectorCount -
-		    (u_int32_t)transactionCount * hdd->hdMulti);
+		remainder = (short)(sectorCount - (u_int32_t)transactionCount * hdd->hdMulti);
 		if (remainder > 0)
 			transactionCount++;
 	}
@@ -627,7 +673,7 @@ int hdRead(struct driveInfo *hdd, void *baseAddr, u_int32_t startSector, u_int32
 		{
 			tmp[counter] = inportWord(hdd->hdPort + hdData);
 		}
-		tmp         += (counter + 0);
+		tmp += (counter + 0);
 		startSector += hdd->hdCalc;
 	}
 	return (0);
@@ -659,6 +705,33 @@ struct ubx_driver ide_ubx_driver = {
     .drv_attach = ide_ubx_attach,
     .drv_detach = NULL,
 };
+
+/**
+ * md_disk_list (sys/kern/disk_query.c hook): the i386 disk inventory.  The IDE
+ * boot disk is ad0 (registered at major 1, minor 0); its softc is the driveInfo,
+ * whose ATA-IDENTIFY LBA range gives the sector count.  v1 reports ad0 only
+ * (the single QEMU drive); multi-disk enumeration is a follow-up.
+ */
+int md_disk_list(struct disk_hw *out, int max)
+{
+	struct ubx_device *dev;
+	struct driveInfo *hdd;
+
+	if (max <= 0)
+		return (0);
+	dev = ubx_device_find(1, 0);
+	if (dev == 0x0)
+		return (0);
+	hdd = (struct driveInfo *)dev->dev_softc;
+
+	out[0].dev = dev;
+	strncpy(out[0].name, "ad0", sizeof(out[0].name) - 1);
+	out[0].name[sizeof(out[0].name) - 1] = '\0';
+	out[0].sectors = hdd ? (((u_int64_t)(u_int32_t)hdd->lba_high << 32) | (u_int32_t)hdd->lba_low) : 0;
+	strncpy(out[0].model, "ATA disk", sizeof(out[0].model) - 1);
+	out[0].model[sizeof(out[0].model) - 1] = '\0';
+	return (1);
+}
 
 /***
  $Log: hd.c,v $

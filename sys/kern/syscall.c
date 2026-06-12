@@ -31,6 +31,7 @@
 #include <ubixos/sched.h>
 #include <sys/sysproto.h>
 #include <fs/ubixfs/ubfs_vfs.h> /* ubfs_vfs_query — native pool-query syscall 67 */
+#include <dev/disk.h>           /* disk_query — block-device enumeration syscall 68 */
 #include <ubixos/endtask.h>
 #include <ubixos/spinlock.h>
 #include <ubixos/vitals.h>
@@ -246,6 +247,12 @@ int sys_getvfscwd(struct thread *td, struct sys_getvfscwd_args *args)
 int sys_ubfs_query(struct thread *td, struct sys_ubfs_query_args *args)
 {
 	td->td_retval[0] = ubfs_vfs_query(args->buf, (int)args->max);
+	return (0);
+}
+
+int sys_disk_query(struct thread *td, struct sys_disk_query_args *args)
+{
+	td->td_retval[0] = disk_query(args->buf, (int)args->max);
 	return (0);
 }
 

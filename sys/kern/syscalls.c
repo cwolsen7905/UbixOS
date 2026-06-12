@@ -143,6 +143,10 @@ struct syscall_entry systemCalls[] = {
      "ubfs_query",
      (sys_call_t *)sys_ubfs_query,
      SYSCALL_VALID}, // 67 - UbixFS pool/dataset query (ubpool/ubfs)
+    {ARG_COUNT(sys_disk_query_args),
+     "disk_query",
+     (sys_call_t *)sys_disk_query,
+     SYSCALL_VALID}, // 68 - block-device/partition enumeration (Disk Utility)
 };
 
 int totalCalls = sizeof(systemCalls) / sizeof(struct syscall_entry);

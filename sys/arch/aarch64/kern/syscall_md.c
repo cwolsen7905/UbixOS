@@ -23,6 +23,7 @@
 #include <sys/sysproto.h>
 #include <sys/sysproto_posix.h>
 #include <fs/ubixfs/ubfs_vfs.h> /* ubfs_vfs_query — native pool-query syscall 67 */
+#include <dev/disk.h>           /* disk_query — block-device enumeration syscall 68 */
 #include <ubixos/sched.h>
 #include <ubixos/errno.h>
 #include <ubixos/time.h>   /* struct timeval/timezone (kernel gettimeofday) */
@@ -112,6 +113,12 @@ int sys_getvfscwd(struct thread *td, struct sys_getvfscwd_args *uap)
 int sys_ubfs_query(struct thread *td, struct sys_ubfs_query_args *uap)
 {
 	td->td_retval[0] = ubfs_vfs_query(uap->buf, (int)uap->max);
+	return (0);
+}
+
+int sys_disk_query(struct thread *td, struct sys_disk_query_args *uap)
+{
+	td->td_retval[0] = disk_query(uap->buf, (int)uap->max);
 	return (0);
 }
 
