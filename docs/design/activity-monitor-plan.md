@@ -25,18 +25,25 @@ Legend: ✅ done · 🟡 partial · ⬜ not started
 
 | Phase | Item | Status |
 |-------|------|--------|
-| 1 | `kTask_t.run_ticks` + scheduler-tick hook | ⬜ |
-| 1 | `struct pcpu.busy_ticks` / `idle_ticks` | ⬜ |
-| 1 | `g_jiffies` + `HZ` exported to userland | ⬜ |
-| 2 | `/proc/<pid>/stat` includes `run_ticks` | ⬜ |
-| 2 | `/proc/<pid>/statm` (RSS / VSZ in pages) | ⬜ |
-| 2 | `/proc/stat` (per-CPU + aggregate busy/idle) | ⬜ |
-| 2 | `/proc/uptime` (seconds since boot, idle seconds) | ⬜ |
-| 3 | `bin/activity/` views app — static table v1 | ⬜ |
-| 3 | Sortable columns, sticky header, 1 Hz refresh | ⬜ |
-| 3 | Per-CPU usage strip across the top | ⬜ |
+| 1 | `kTask_t.run_ticks` + scheduler-tick hook | ✅ (smp Phase 3.5, `d9ac76027`) |
+| 1 | per-CPU `busy_ticks` / `idle_ticks` (MI globals, not pcpu) | ✅ (smp Phase 3.5) |
+| 1 | wall-clock export to userland (`md_uptime` via `/proc/uptime`) | ✅ |
+| 2 | `/proc/<pid>/stat` includes `run_ticks` (utime field) | ✅ (Phase 3.5) |
+| 2 | `/proc/<pid>/statm` (RSS / VSZ in pages) | ✅ `30e3618b7` (RSS ≈ size, accurate page-walk deferred) |
+| 2 | `/proc/stat` (per-CPU + aggregate busy/idle) | ✅ (Phase 3.5) |
+| 2 | `/proc/uptime` (seconds since boot, idle seconds) | ✅ `30e3618b7` |
+| 3 | `bin/activity/` views app — table v1 | ✅ `39cbdae75` (build+boot verified; visual render pending click-test) |
+| 3 | Sortable columns, sticky header, 1 Hz refresh | ✅ (in v1; click header to sort) |
+| 3 | Per-CPU usage strip across the top | ⬜ (v2) |
 | 4 | "Force quit" via `kill(2)` | ⬜ |
 | 4 | CPU-history sparkline per row | ⬜ |
+
+**Deferred / notes.** RSS is the task's mapped text+data size (`vm_tsize+vm_dsize`),
+an over-estimate, until an accurate per-arch resident-page walk lands (waited on
+the aarch64 VMM rework — now committed `f46eaa21f`, so a real
+`vmm_count_resident_pages` is a viable follow-up). The headless screenshot test
+was blocked by GUI mouse-driving; v1 was committed build+boot-verified, render
+confirmation left to a click.
 
 ---
 
