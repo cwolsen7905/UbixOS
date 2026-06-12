@@ -1,16 +1,8 @@
-# bin/ls/Makefile — build busybox ls (1.36.1) for UbixOS/i386.
-
+# bin/ls/Makefile — full self-contained POSIX ls (libc only; no busybox/libbb).
 include ../../Makefile.incl
 include ../Makefile.incl
 
-BB_SRC = ${SRCTOP}/contrib/busybox
-
 BINARY = ls
-
-.PATH.c: ${.CURDIR} ${BB_SRC} ${BB_SRC}/coreutils ${BB_SRC}/libbb
-
-EXTRA_CFLAGS = -I${BB_SRC} -w
-
-OBJS = main.o ls.o libbb_stubs.o get_last_path_component.o
+OBJS   = ls.o
 
 .include "${UBIX_MK}/ubix.musl.prog.mk"

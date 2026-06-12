@@ -350,7 +350,28 @@ static int ubfs_vfs_open(const char *path, fileDescriptor_t *fd)
 	fd->res = f;
 	fd->ino = (u_int32_t)obj;
 	fd->perms = 0x1;
-	fd->size = (ubfs_fs_getattr(&m->fs, obj, &in) == 0) ? (u_int32_t)in.size : 0;
+
+	/* Populate fd->inode from the on-disk attributes.  The kernel stat path
+	 * (sys/fs/vfs/stat.c) reads st_mode/size/uid/gid/nlink/times straight from
+	 * fd->inode.u.ufs2_i — without this it sees mode 0 and falls back to
+	 * S_IFREG|0755, so every UbixFS object (directories included) would stat as a
+	 * regular file and `ls DIR` would list the dir as a single file. */
+	if (ubfs_fs_getattr(&m->fs, obj, &in) == 0)
+	{
+		fd->size = (u_int32_t)in.size;
+		fd->inode.u.ufs2_i.di_mode = (u_int16_t)in.mode;
+		fd->inode.u.ufs2_i.di_nlink = (int16_t)in.nlink;
+		fd->inode.u.ufs2_i.di_uid = (u_int32_t)in.uid;
+		fd->inode.u.ufs2_i.di_gid = (u_int32_t)in.gid;
+		fd->inode.u.ufs2_i.di_size = (u_int64_t)in.size;
+		fd->inode.u.ufs2_i.di_atime = (ufs_time_t)in.atime;
+		fd->inode.u.ufs2_i.di_mtime = (ufs_time_t)in.mtime;
+		fd->inode.u.ufs2_i.di_ctime = (ufs_time_t)in.ctime;
+	}
+	else
+	{
+		fd->size = 0;
+	}
 	return (1);
 }
 
