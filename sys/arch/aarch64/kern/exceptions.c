@@ -115,6 +115,25 @@ void aarch64_exception(u_int64_t kind, void *frame)
 			return;
 		}
 
+		/* A write that took a data-abort *permission* fault may be a copy-on-write
+		 * page shared by fork — give this writer a private copy and resume, rather
+		 * than killing it.  ISS: DFSC[5:0] == 0b0011LL is a permission fault (levels
+		 * 1-3); WnR (bit 6) set means the access was a write. */
+		if (ec == ESR_EC_DABT_LOW && _current != 0 && _current->md.md_ttbr0 != 0)
+		{
+			u_int64_t iss = esr & 0x1FFFFFFUL;
+			u_int64_t dfsc = iss & 0x3FUL;
+			int is_write = (iss >> 6) & 0x1;
+
+			if (is_write && (dfsc == 0x0D || dfsc == 0x0E || dfsc == 0x0F))
+			{
+				u_int64_t far = READ_SYSREG(far_el1);
+				if (pmap_cow_fault((u_int64_t *)(uintptr_t)_current->md.md_ttbr0, far, _current->id) ==
+				    0)
+					return; /* ERET and retry the write on the private copy */
+			}
+		}
+
 		/* An instruction/data abort from EL0 is a fault in the process's own
 		 * code (a bad pointer, stack overflow, …).  Deliver SIGSEGV with proper
 		 * Unix semantics: a process with a handler catches it; otherwise SIG_DFL
@@ -124,8 +143,11 @@ void aarch64_exception(u_int64_t kind, void *frame)
 		if ((ec == ESR_EC_DABT_LOW || ec == ESR_EC_IABT_LOW) && _current != 0)
 		{
 			u_int64_t far = READ_SYSREG(far_el1);
-			kprintf("EL0 fault: pid=%d (%s) SIGSEGV at 0x%lx (esr=0x%lx)\n", _current->id, _current->name,
-			        far, esr);
+			kprintf("EL0 fault: pid=%d (%s) SIGSEGV at 0x%lx (esr=0x%lx)\n",
+			        _current->id,
+			        _current->name,
+			        far,
+			        esr);
 			_current->td.frame = tf;
 			signal_post_fault(SIGSEGV, (void *)(uintptr_t)far, SEGV_MAPERR);
 			signal_check(tf);
@@ -138,6 +160,25 @@ void aarch64_exception(u_int64_t kind, void *frame)
 	u_int64_t esr = READ_SYSREG(esr_el1);
 	u_int64_t elr = READ_SYSREG(elr_el1);
 	u_int64_t far = READ_SYSREG(far_el1);
+
+	/* The kernel's side of copy-on-write.  PAN is off, so a syscall touches the
+	 * current process's user buffers through their user VA at EL1; writing a page
+	 * that fork left read-only+COW takes a same-EL data abort (EC 0x25) here.
+	 * Resolve it exactly like an EL0 write — copy the page and retry — instead of
+	 * mistaking the kernel's legitimate write for a fatal kernel bug. */
+	if (kind == EXC_SYNC && _current != 0 && _current->md.md_ttbr0 != 0)
+	{
+		u_int64_t ec = (esr >> 26) & 0x3f;
+		u_int64_t iss = esr & 0x1FFFFFFUL;
+		u_int64_t dfsc = iss & 0x3FUL;
+		int is_write = (iss >> 6) & 0x1;
+
+		if (ec == 0x25 && is_write && (dfsc == 0x0D || dfsc == 0x0E || dfsc == 0x0F))
+		{
+			if (pmap_cow_fault((u_int64_t *)(uintptr_t)_current->md.md_ttbr0, far, _current->id) == 0)
+				return; /* ERET and retry the kernel store on the private copy */
+		}
+	}
 
 	if (kind == EXC_SYNC)
 		kprintf("\n*** aarch64 synchronous exception ***\n");
@@ -178,7 +219,8 @@ void aarch64_exception(u_int64_t kind, void *frame)
 
 		if (is_abort && _current != 0 && _current->md.md_usp != 0)
 		{
-			kprintf("  -> terminating offending user task pid=%d (%s); OS continues\n", _current->id,
+			kprintf("  -> terminating offending user task pid=%d (%s); OS continues\n",
+			        _current->id,
 			        _current->name);
 			endTask(_current->id);
 			sched_yield();

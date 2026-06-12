@@ -43,6 +43,11 @@ void aarch64_rtc_init(void); /* capture boot wall-clock epoch from the PL031 RTC
 
 /* mmu.c — enable the MMU with a TTBR0 identity map (39-bit VA). */
 void aarch64_mmu_init(void);
+
+/* vmm_machdep.c — read real RAM size from the DTB /memory node (x0 at entry).
+ * Raises the page-bitmap ceiling above the 512 MB fallback; run before
+ * vmm_mem_map_init(). */
+void aarch64_probe_memory(u_int64_t dtb_phys);
 u_int64_t *aarch64_kernel_l1(void); /* kernel identity L1 root (basis for new address spaces) */
 
 /* context.S / ctxdemo.c — cooperative context switch + its demo. */
@@ -58,10 +63,16 @@ void aarch64_vmm_demo(void);
 /* pmap.c — 4 KB-granule page-table mapping + its demo. */
 int pmap_map_page(u_int64_t *l1, u_int64_t va, u_int64_t pa, u_int64_t attrs);
 int pmap_map_user_page(u_int64_t *l1, u_int64_t va, u_int64_t pa, int executable);
+int pmap_map_user_page_shared(u_int64_t *l1,
+                              u_int64_t va,
+                              u_int64_t pa,
+                              int executable);                           /* RO shared file-cache page */
+int pmap_map_user_page_wired(u_int64_t *l1, u_int64_t va, u_int64_t pa); /* RW wired device/shared page */
 u_int64_t *pmap_create_user_space(void);
-u_int64_t pmap_extract(u_int64_t *l1, u_int64_t va); /* user VA -> phys (file-backed mmap) */
-u_int64_t *pmap_fork_copy(u_int64_t *parent);        /* deep-copy user mappings (fork) */
-void pmap_free_user_space(u_int64_t *l1);            /* free a replaced image's user pages + tables (exec) */
+u_int64_t pmap_extract(u_int64_t *l1, u_int64_t va);          /* user VA -> phys (file-backed mmap) */
+u_int64_t *pmap_fork_copy(u_int64_t *parent);                 /* COW-share user mappings (fork) */
+int pmap_cow_fault(u_int64_t *l1, u_int64_t va, pidType pid); /* resolve a COW write fault */
+void pmap_free_user_space(u_int64_t *l1);                     /* free a replaced image's user pages + tables (exec) */
 void pmap_switch(u_int64_t *l1);
 
 /* vectors.S — a fork child's first-dispatch landing pad (ERETs to EL0). */

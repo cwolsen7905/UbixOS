@@ -15,6 +15,12 @@
 	.global _start
 	.type _start, %function
 _start:
+	/* QEMU/firmware passes the DTB (flattened device tree) physical address in
+	 * x0 at entry.  Stash it in a callee-saved register the BSS loop won't
+	 * touch, then hand it to kmain_aarch64 as its first argument — the memory
+	 * prober parses the /memory node from it for the real RAM size. */
+	mov	x19, x0
+
 	/* Mask all interrupts until we have handlers (Phase 12). */
 	msr	daifset, #0xf
 
@@ -31,7 +37,8 @@ _start:
 	str	xzr, [x0], #8
 	b	1b
 
-2:	bl	kmain_aarch64
+2:	mov	x0, x19			/* DTB physical address */
+	bl	kmain_aarch64
 
 	/* kmain_aarch64 should not return; if it does, park the CPU. */
 3:	wfi

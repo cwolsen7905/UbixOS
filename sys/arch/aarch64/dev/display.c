@@ -40,6 +40,7 @@ void virtio_gpu_flush(void);
 
 /* pmap mappers (sys/arch/aarch64/vmm/pmap.c). */
 int pmap_map_user_page(u_int64_t *l1, u_int64_t va, u_int64_t pa, int executable);
+int pmap_map_user_page_wired(u_int64_t *l1, u_int64_t va, u_int64_t pa); /* RW, fork-shared, never freed */
 u_int64_t pmap_extract(u_int64_t *l1, u_int64_t va);
 
 /*
@@ -76,8 +77,11 @@ int sys_mapfb(struct thread *td, struct sys_mapfb_args *args)
 
 	pa = (u_int64_t)(uintptr_t)virtio_gpu_fb;
 	end = pa + (u_int64_t)virtio_gpu_pitch * virtio_gpu_height;
+	/* Wired, not a plain user page: the framebuffer is RAM-backed and owned by the
+	 * GPU, so a fork (the compositor forks vlogin) must NOT copy-on-write it — that
+	 * would silently hand the compositor a private copy the scanout never sees. */
 	for (va = FB_USER_BASE; pa < end; pa += PAGE_SIZE, va += PAGE_SIZE)
-		pmap_map_user_page(l1, va, pa, 0);
+		pmap_map_user_page_wired(l1, va, pa);
 
 	out->base = (void *)FB_USER_BASE;
 	out->width = virtio_gpu_width;
@@ -200,7 +204,13 @@ int sys_shareregion(struct thread *td, struct sys_shareregion_args *args)
 			td->td_retval[0] = -1;
 			return (-1);
 		}
-		pmap_map_user_page(dst_l1, dst_va + i * PAGE_SIZE, pa, 0);
+		/* Wire BOTH ends of the shared window buffer.  The frame is now mapped in
+		 * two address spaces; if either the compositor or the client forks, a COW
+		 * would split one side off the shared frame and the two would stop seeing
+		 * each other's writes.  Re-map the source side wired too (it was a plain
+		 * user page), so neither end can be COW-broken. */
+		pmap_map_user_page_wired(src_l1, base + i * PAGE_SIZE, pa);
+		pmap_map_user_page_wired(dst_l1, dst_va + i * PAGE_SIZE, pa);
 	}
 	dst->md.md_mmap_next += n * PAGE_SIZE;
 

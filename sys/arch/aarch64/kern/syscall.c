@@ -17,6 +17,7 @@
 #include <ubixos/sched.h>       /* _current, sched_yield */
 #include <ubixos/endtask.h>     /* endTask */
 #include <vmm/vmm.h>            /* address-space helpers */
+#include <vmm/vm_filecache.h>   /* shared file-page cache (read-only mmap sharing) */
 #include <vmm/uregion.h>        /* vmm_uregion_mmap_anon, vmm_uregion_brk */
 #include <aarch64/vmm_layout.h> /* MMAP_BASE / BRK_BASE (user-VA layout) */
 #include <sys/sysproto_posix.h> /* sys_open/read/close/lseek + uap structs */
@@ -164,34 +165,88 @@ static u_int64_t sc_mmap(u_int64_t addr, u_int64_t len, u_int64_t prot, u_int64_
 	if (va == 0)
 		return (u_int64_t)-1;
 
-	/* File-backed (MAP_ANON is 0x20): read file content into the reserved pages.
-	 * Write through each page's physical alias (PAN-safe), page by page since the
-	 * frames are not physically contiguous. */
+	/* File-backed (MAP_ANON is 0x20): populate each page from the file.  A
+	 * read-only, file-identified page is shared through the file-page cache so a
+	 * library's text/rodata is one physical copy across every process (the dynamic
+	 * linker's hot path); writable/anonymous pages stay private.  Syscall 477 is
+	 * mmap2, so @off arrives in PAGE_SIZE units. */
 	if ((flags & 0x20) == 0 && (int)fd >= 0)
 	{
 		struct file *fp = 0;
 		if (getfd(&_current->td, &fp, (int)fd) == 0 && fp != 0 && fp->fd != 0)
 		{
 			u_int64_t done;
+			int ro = ((prot & 0x2) == 0); /* PROT_WRITE == 0x2 */
+			int ex = ((prot & 0x4) != 0); /* PROT_EXEC  == 0x4 */
+			int cacheable = ro && fp->fd->ino != 0;
+			void *mp = fp->fd->mp;
+			u_int32_t ino = fp->fd->ino;
 
-			/* Syscall 477 is mmap2: the offset arrives in PAGE_SIZE units
-			 * (musl passes off/UNIT), so scale back to a byte offset. */
-			fp->fd->offset = (off_t)(off * PAGE_SIZE);
 			for (done = 0; done < len; done += PAGE_SIZE)
 			{
-				u_int64_t phys = pmap_extract(l1, va + done);
+				u_int64_t va_pg = va + done;
+				off_t foff = (off_t)(off * PAGE_SIZE) + (off_t)done;
+				uintptr_t priv = (uintptr_t)pmap_extract(l1, va_pg) & ~0xFFFUL;
 				size_t chunk = (len - done < PAGE_SIZE) ? (size_t)(len - done) : PAGE_SIZE;
-				size_t got;
-				if (phys == 0)
+
+				if (priv == 0)
 					break; /* region not fully mapped (shouldn't happen) */
-				got = fread((void *)(uintptr_t)phys, 1, chunk, fp->fd);
-				if (got == 0)
-					break; /* EOF: remaining pages stay zero (bss tail) */
+
+				/* Cache hit: share the cached frame, return the reserved one. */
+				if (cacheable)
+				{
+					uintptr_t hit = (uintptr_t)vm_filecache_lookup_ref(mp, ino, foff);
+					if (hit != 0)
+					{
+						pmap_map_user_page_shared(l1, va_pg, (u_int64_t)hit, ex);
+						if (ex)
+							md_sync_icache(hit, PAGE_SIZE);
+						free_page(priv);
+						continue;
+					}
+				}
+
+				/* Miss: read the file into the reserved private frame. */
+				fp->fd->offset = foff;
+				if (fread((void *)priv, 1, chunk, fp->fd) == 0 && !cacheable)
+					break; /* EOF on a private mapping: leave the rest zero (bss tail) */
+
+				/* Cacheable and the frame fits a 32-bit cache key: publish it shared. */
+				if (cacheable && (priv >> 32) == 0)
+				{
+					u_int32_t winner = 0;
+					if (vm_filecache_insert(mp, ino, foff, (u_int32_t)priv, &winner) == 0)
+					{
+						pmap_map_user_page_shared(l1, va_pg, (u_int64_t)priv, ex);
+						if (ex)
+							md_sync_icache(priv, PAGE_SIZE);
+						continue;
+					}
+					if (winner != 0)
+					{
+						/* Lost the insert race: share the winner (already referenced
+						 * for us by vm_filecache_insert), return our frame. */
+						pmap_map_user_page_shared(l1, va_pg, (u_int64_t)winner, ex);
+						if (ex)
+							md_sync_icache((uintptr_t)winner, PAGE_SIZE);
+						free_page(priv);
+						continue;
+					}
+				}
+
+				/* Private page (writable data, or an oversized frame): keep the RW
+				 * mapping uregion installed; mark it executable if requested. */
+				if (ex)
+				{
+					pmap_map_user_page(l1, va_pg, (u_int64_t)priv, 1);
+					md_sync_icache(priv, PAGE_SIZE);
+				}
 			}
+			return (u_int64_t)va;
 		}
 	}
 
-	/* PROT_EXEC (0x4): the dynamic linker maps code segments executable. */
+	/* Anonymous (or file-backed with no usable fd): honour PROT_EXEC. */
 	if ((prot & 0x4) != 0)
 	{
 		u_int64_t done;

@@ -17,9 +17,10 @@
 
 #include "bringup.h"
 #include <vmm/vmm.h>
-#include <vmm/paging.h>  /* PAGE_SIZE */
-#include <lib/kmalloc.h> /* sysID */
-#include <string.h>      /* memset, memcpy */
+#include <vmm/paging.h>       /* PAGE_SIZE */
+#include <vmm/vm_filecache.h> /* shared file-page cache (PTE_SHARED pages) */
+#include <lib/kmalloc.h>      /* sysID */
+#include <string.h>           /* memset, memcpy */
 
 /* 39-bit VA, 4 KB granule: level index extractors. */
 #define L1_IDX(va) (((va) >> 30) & 0x1FFUL)
@@ -38,6 +39,9 @@
 #define PTE_AP_RO (1UL << 7)              /* AP[2]: read-only */
 #define PTE_PXN (1UL << 53)               /* privileged execute-never */
 #define PTE_UXN (1UL << 54)               /* unprivileged execute-never */
+#define PTE_COW (1UL << 55)               /* software bit: copy-on-write (frame shared RO) */
+#define PTE_SHARED (1UL << 56)            /* software bit: shared file-cache page (RO, refcounted) */
+#define PTE_WIRED (1UL << 57)             /* software bit: wired device/shared RW (fork shares verbatim, never freed) */
 
 /* Output-address field of a descriptor (bits [47:12]). */
 #define PTE_ADDR_MASK 0x0000FFFFFFFFF000UL
@@ -104,6 +108,46 @@ int pmap_map_user_page(u_int64_t *l1, u_int64_t va, u_int64_t pa, int executable
 		attrs |= PTE_PXN; /* runnable at EL0, never at EL1 */
 	else
 		attrs |= PTE_PXN | PTE_UXN; /* data/stack: never executable */
+
+	return pmap_map_page(l1, va, pa, attrs);
+}
+
+/**
+ * Map one 4 KB shared file-cache page: @va → @pa, read-only at EL0/EL1 and tagged
+ * PTE_SHARED so the frame is refcounted by the file cache (not freed on unmap)
+ * and shared as-is across fork.  A write takes a permission fault that
+ * pmap_cow_fault turns into a private copy, so sharing is transparent.
+ *
+ * @param executable  non-zero for a library text page (EL0-executable).
+ * @return 0 on success.
+ */
+int pmap_map_user_page_shared(u_int64_t *l1, u_int64_t va, u_int64_t pa, int executable)
+{
+	u_int64_t attrs = PTE_ATTR(ATTR_NORMAL_IDX) | PTE_SH_INNER | PTE_AP_EL0 | PTE_AP_RO | PTE_SHARED;
+
+	if (executable)
+		attrs |= PTE_PXN; /* runnable at EL0, never at EL1 */
+	else
+		attrs |= PTE_PXN | PTE_UXN;
+
+	return pmap_map_page(l1, va, pa, attrs);
+}
+
+/**
+ * Map one 4 KB wired user page: @va → @pa, EL0 read-write, tagged PTE_WIRED.
+ *
+ * For a frame the process does not own and must keep writing in place — the
+ * virtio-gpu scanout framebuffer, a shared-region window buffer — where COW is
+ * wrong: a copy-on-write would silently fork the writer off the real frame (the
+ * compositor would then paint a private copy the scanout never sees).  fork
+ * shares a wired page verbatim (RW, no COW) and teardown never frees it (the
+ * device / region owner does), exactly like an MMIO mapping.
+ *
+ * @return 0 on success.
+ */
+int pmap_map_user_page_wired(u_int64_t *l1, u_int64_t va, u_int64_t pa)
+{
+	u_int64_t attrs = PTE_ATTR(ATTR_NORMAL_IDX) | PTE_SH_INNER | PTE_AP_EL0 | PTE_PXN | PTE_UXN | PTE_WIRED;
 
 	return pmap_map_page(l1, va, pa, attrs);
 }
@@ -223,18 +267,115 @@ u_int64_t *pmap_fork_copy(u_int64_t *parent)
 				if ((l3[i3] & PTE_VALID) == 0)
 					continue;
 				u_int64_t va = (i1 << 30) | (i2 << 21) | (i3 << 12);
-				u_int64_t attrs = l3[i3] & ~PTE_ADDR_MASK; /* preserve AP/AF/SH/XN/type */
 				uintptr_t src = (uintptr_t)(l3[i3] & PTE_ADDR_MASK);
-				uintptr_t dst = vmm_find_free_page(sysID);
 
-				if (dst == 0)
-					return 0;
-				memcpy((void *)dst, (const void *)src, PAGE_SIZE);
-				pmap_map_page(child, va, (u_int64_t)dst, attrs & ~(u_int64_t)(PTE_AF | PTE_PAGE));
+				/* MMIO (a frame at/above RAM top, e.g. a device BAR) or a wired
+				 * device/shared mapping (the GPU framebuffer, a shared-region buffer):
+				 * share verbatim — the child sees the same frame and no COW desyncs the
+				 * writer from it.  Wired frames are RAM-backed, so the address test
+				 * alone misses them; the PTE_WIRED tag catches them. */
+				if ((src >> 12) >= (uintptr_t)count_memory() || (l3[i3] & PTE_WIRED))
+				{
+					pmap_map_page(child,
+					              va,
+					              (u_int64_t)src,
+					              (l3[i3] & ~PTE_ADDR_MASK) & ~(u_int64_t)(PTE_AF | PTE_PAGE));
+					continue;
+				}
+
+				/* Shared file-cache page (already read-only): the child shares it
+				 * verbatim and takes a cache reference.  No COW — a writer of either
+				 * process copies out via pmap_cow_fault's PTE_SHARED path. */
+				if (l3[i3] & PTE_SHARED)
+				{
+					pmap_map_page(child,
+					              va,
+					              (u_int64_t)src,
+					              (l3[i3] & ~PTE_ADDR_MASK) & ~(u_int64_t)(PTE_AF | PTE_PAGE));
+					vm_filecache_ref_phys((u_int32_t)src);
+					continue;
+				}
+
+				/* COW: both parent and child reference the one frame, read-only,
+				 * until one writes (the data-abort handler copies then).  Mark the
+				 * parent RO+COW the first time the frame is shared; bump the shared
+				 * frame's refcount by 2 (parent + child), or by 1 if it was already
+				 * COW from an earlier fork. */
+				int already = (l3[i3] & PTE_COW) != 0;
+				if (!already)
+				{
+					l3[i3] |= PTE_AP_RO | PTE_COW;
+					__asm__ volatile("dsb ishst; tlbi vaae1is, %0; dsb ish; isb"
+					                 :
+					                 : "r"(va >> 12)
+					                 : "memory");
+				}
+				pmap_map_page(child,
+				              va,
+				              (u_int64_t)src,
+				              (l3[i3] & ~PTE_ADDR_MASK) & ~(u_int64_t)(PTE_AF | PTE_PAGE));
+				adjust_cow_counter(src, already ? 1 : 2);
 			}
 		}
 	}
 	return child;
+}
+
+/**
+ * Resolve a write fault at user VA @va in the space rooted at @l1 on a page that
+ * is shared read-only — either a copy-on-write fork page (PTE_COW) or a shared
+ * file-cache page (PTE_SHARED).  Give this writer a private, writable copy:
+ * allocate a frame, copy the shared page into it, point the PTE at the copy with
+ * write permission and the share bits cleared, and release this writer's
+ * reference to the old frame — decrementing the COW refcount, or dropping the
+ * file-cache reference, as appropriate (the frame is freed once the last sharer
+ * lets go).  A write fault on a page that is neither COW nor shared (a genuinely
+ * read-only text page) is a real access violation — left for the caller's
+ * SIGSEGV.
+ *
+ * @return 0 if the fault was a share fault and was resolved (retry the write);
+ *         -1 if @va is not shared (real fault) or no frame was free.
+ */
+int pmap_cow_fault(u_int64_t *l1, u_int64_t va, pidType pid)
+{
+	u_int64_t e = l1[L1_IDX(va)];
+	u_int64_t *l2, *l3;
+	u_int64_t pte, attrs;
+	uintptr_t old, neu;
+
+	if (l1 == 0 || (e & PTE_VALID) == 0 || (e & PTE_TYPE_MASK) != PTE_TABLE)
+		return -1;
+	l2 = (u_int64_t *)(uintptr_t)(e & PTE_ADDR_MASK);
+	e = l2[L2_IDX(va)];
+	if ((e & PTE_VALID) == 0 || (e & PTE_TYPE_MASK) != PTE_TABLE)
+		return -1;
+	l3 = (u_int64_t *)(uintptr_t)(e & PTE_ADDR_MASK);
+	pte = l3[L3_IDX(va)];
+
+	if ((pte & PTE_VALID) == 0 || (pte & (PTE_COW | PTE_SHARED)) == 0)
+		return -1; /* not shared → a real write to a read-only page */
+
+	old = (uintptr_t)(pte & PTE_ADDR_MASK);
+	neu = vmm_find_free_page(pid);
+	if (neu == 0)
+		return -1; /* out of memory → caller terminates the task */
+
+	memcpy((void *)neu, (const void *)old, PAGE_SIZE);
+
+	/* Re-point the PTE at the private copy: same attributes, but writable at EL0
+	 * (clear AP[2]) and no longer shared. */
+	attrs = (pte & ~PTE_ADDR_MASK) & ~(PTE_AP_RO | PTE_COW | PTE_SHARED);
+	l3[L3_IDX(va)] = ((u_int64_t)neu & PTE_ADDR_MASK) | attrs;
+	__asm__ volatile("dsb ishst; tlbi vaae1is, %0; dsb ish; isb" : : "r"(va >> 12) : "memory");
+
+	/* Release this writer's hold on the old frame: a file-cache page drops a
+	 * cache reference (freed at the last unref), a COW page decrements the COW
+	 * refcount.  PTE_SHARED frames are always cache pages we sized to 32 bits. */
+	if (pte & PTE_SHARED)
+		vm_filecache_unref_phys((u_int32_t)old);
+	else
+		adjust_cow_counter(old, -1);
+	return 0;
 }
 
 /**
@@ -275,8 +416,21 @@ void pmap_free_user_space(u_int64_t *l1)
 			l3 = (u_int64_t *)(uintptr_t)(l2[i2] & PTE_ADDR_MASK);
 
 			for (i3 = 0; i3 < 512; i3++)
-				if (l3[i3] & PTE_VALID)
+			{
+				if ((l3[i3] & PTE_VALID) == 0)
+					continue;
+				/* A wired device/shared page (GPU framebuffer, shared-region buffer)
+				 * is owned elsewhere — drop the mapping but never free the frame.  A
+				 * shared file-cache page drops a cache reference (freed at the last
+				 * unref).  Everything else goes back to the allocator (free_page is
+				 * COW-/MMIO-safe). */
+				if (l3[i3] & PTE_WIRED)
+					; /* owned by the device/region; leave the frame alone */
+				else if (l3[i3] & PTE_SHARED)
+					vm_filecache_unref_phys((u_int32_t)(l3[i3] & PTE_ADDR_MASK));
+				else
 					free_page((uintptr_t)(l3[i3] & PTE_ADDR_MASK));
+			}
 
 			free_page((uintptr_t)l3); /* the L3 table */
 		}

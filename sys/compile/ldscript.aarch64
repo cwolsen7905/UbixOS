@@ -1,15 +1,19 @@
 /* AArch64 bring-up linker script (QEMU `virt`).
  *
  * `-kernel <ELF>` loads segments at their physical addresses and jumps to the
- * ELF entry.  QEMU `virt` RAM starts at 0x40000000; link there.  This is the
- * minimal Phase-11 bring-up image (start.S + boot.c), not the full kernel. */
+ * ELF entry.  QEMU `virt` RAM starts at 0x40000000, but QEMU also stages its own
+ * boot shim there — the shim that loads x0 with the DTB pointer before entering
+ * the kernel.  Linking the kernel at the RAM base overwrites that shim, so QEMU
+ * skips it and we enter with x0 = 0 (no DTB).  Link 2 MB up (the arm64
+ * text_offset convention) so the shim survives and hands us x0 = DTB; the
+ * skipped 0x40000000..0x40200000 window stays reserved by the page allocator. */
 OUTPUT_FORMAT("elf64-littleaarch64")
 OUTPUT_ARCH(aarch64)
 ENTRY(_start)
 
 SECTIONS
 {
-	. = 0x40000000;
+	. = 0x40200000;
 
 	/* .text.boot (the _start entry) must come first so the ELF entry lands
 	 * at the load address. */

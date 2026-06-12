@@ -95,7 +95,7 @@ static u_int64_t current_el(void)
  * First C code on aarch64: banner, EL report, exception vectors.  Returns to the
  * park loop in start.S (Phase 12b will instead enable IRQs and idle on `wfi`).
  */
-void kmain_aarch64(void)
+void kmain_aarch64(u_int64_t dtb_phys)
 {
 	kconsole_arch_init(); /* register the PL011 serial sink before the first kprintf */
 
@@ -108,8 +108,11 @@ void kmain_aarch64(void)
 	aarch64_mmu_init();
 	kprintf("MMU enabled: TTBR0 identity map (39-bit VA), caches on.\n");
 
-	/* Core init order (the embryonic kmain): physical allocator, then the
-	 * vitals node (kmalloc'd, so the allocator must be up first). */
+	/* Core init order (the embryonic kmain): size RAM from the DTB, then the
+	 * physical allocator, then the vitals node (kmalloc'd, so the allocator must
+	 * be up first).  aarch64_probe_memory must precede vmm_mem_map_init — it sets
+	 * the bitmap ceiling the allocator stages to. */
+	aarch64_probe_memory(dtb_phys);
 	vmm_mem_map_init();
 	vitals_init();
 	aarch64_rtc_init(); /* boot wall-clock epoch from the PL031 RTC (else clock = 1970) */
