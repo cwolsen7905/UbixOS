@@ -50,6 +50,7 @@
 #include <ubixos/sched.h>
 #include <ubixos/sched_internal.h>
 #include <ubixos/vitals.h>
+#include <ubixos/time.h> /* md_uptime — /proc/uptime */
 #include <sys/klog.h>
 #include <sys/descrip.h>
 #include <sys/thread.h>
@@ -70,6 +71,8 @@
 #define PFILE_MOUNTS   6   /* /proc/mounts — global mount table */
 #define PFILE_MEMINFO  7   /* /proc/meminfo — global memory stats */
 #define PFILE_STAT_GLOBAL 8 /* /proc/stat — per-CPU busy/idle tick counters */
+#define PFILE_STATM    9   /* /proc/<pid>/statm — memory sizes in pages */
+#define PFILE_UPTIME   10  /* /proc/uptime — seconds since boot, idle seconds */
 
 /* procfs_dir_state.type values */
 #define PDIR_ROOT  0
@@ -197,6 +200,28 @@ procfs_build_stat(kTask_t *t, char *buf, int bufsz)
 	    (unsigned)t->run_ticks,                       /* utime := run_ticks */
 	    ctob(t->td.vm_tsize) + ctob(t->td.vm_dsize),  /* vsize approx */
 	    ctob(t->td.vm_tsize) + ctob(t->td.vm_dsize));  /* rss approx */
+}
+
+/**
+ * Build /proc/<pid>/statm — memory usage in pages (the file an activity monitor
+ * actually reads for RSS; stat's memory fields are notoriously fiddly).
+ *
+ * Linux order: size resident shared text lib data dt.  v1 derives sizes from the
+ * task's tracked text/data extents (vm_tsize/vm_dsize, already in pages) rather
+ * than walking the page tables — accurate resident-set counting needs a per-arch
+ * page-table walk (deferred until the aarch64 VMM rework settles).  So `resident`
+ * == `size` here (an over-estimate); text/data are exact, the rest zero.
+ */
+static int
+procfs_build_statm(kTask_t *t, char *buf, int bufsz)
+{
+	unsigned long text = (unsigned long)t->td.vm_tsize; /* pages */
+	unsigned long data = (unsigned long)t->td.vm_dsize; /* pages */
+	unsigned long size = text + data;
+
+	(void)bufsz;
+	/* size resident shared text lib data dt */
+	return sprintf(buf, "%lu %lu 0 %lu 0 %lu 0\n", size, size, text, data);
 }
 
 static int
@@ -366,6 +391,33 @@ procfs_build_stat_global(char *buf, int bufsz)
 	    busy, idle, busy, idle);
 }
 
+/**
+ * Build /proc/uptime — "<seconds since boot> <idle seconds>", two decimals each.
+ *
+ * Seconds-since-boot comes from md_uptime() (the MI monotonic clock, correct on
+ * both arches).  Idle seconds are derived as a HZ-free ratio of the busy/idle
+ * tick counters (Phase 3.5) against that wall-clock, so no per-arch HZ constant
+ * is needed in this MI file.  Centisecond fixed point — the kernel printf has no
+ * %f.
+ */
+static int
+procfs_build_uptime(char *buf, int bufsz)
+{
+	u_int64_t sec = 0, nsec = 0;
+	u_int64_t busy = sched_cpu_busy_ticks();
+	u_int64_t idle = sched_cpu_idle_ticks();
+	u_int64_t total = busy + idle;
+	u_int64_t up_cs, idle_cs;
+
+	md_uptime(&sec, &nsec);
+	up_cs = sec * 100u + nsec / 10000000u;            /* centiseconds since boot */
+	idle_cs = (total != 0) ? (up_cs * idle / total) : up_cs;
+
+	return snprintf(buf, bufsz, "%u.%02u %u.%02u\n",
+	    (unsigned)(up_cs / 100u), (unsigned)(up_cs % 100u),
+	    (unsigned)(idle_cs / 100u), (unsigned)(idle_cs % 100u));
+}
+
 /* -----------------------------------------------------------------------
  * vfsInitFS
  * --------------------------------------------------------------------- */
@@ -455,6 +507,16 @@ procfs_open(char *file, fileDescriptor_t *fd)
 		return 1;
 	}
 
+	/* Global files: /proc/uptime */
+	if (strcmp(pidstr, "uptime") == 0 && *rest == '\0') {
+		char tmp2[64];
+		int  mlen = procfs_build_uptime(tmp2, sizeof(tmp2));
+		fd->ino   = 0;
+		fd->start = PFILE_UPTIME;
+		fd->size  = (u_int32_t)mlen;
+		return 1;
+	}
+
 	if (!procfs_isdigits(pidstr))
 		return 0;
 
@@ -500,6 +562,14 @@ procfs_open(char *file, fileDescriptor_t *fd)
 		len = procfs_build_maps(t, tmp, sizeof(tmp));
 		fd->ino   = pid;
 		fd->start = PFILE_MAPS;
+		fd->size  = (u_int32_t)len;
+		return 1;
+	}
+
+	if (strcmp(rest, "statm") == 0) {
+		len = procfs_build_statm(t, tmp, sizeof(tmp));
+		fd->ino   = pid;
+		fd->start = PFILE_STATM;
 		fd->size  = (u_int32_t)len;
 		return 1;
 	}
@@ -589,6 +659,19 @@ procfs_read(fileDescriptor_t *fd, char *data, off_t offset, long size)
 		return (int)mn;
 	}
 
+	if (fd->start == PFILE_UPTIME) {
+		char     mtmp[64];
+		int      mlen = procfs_build_uptime(mtmp, sizeof(mtmp));
+		long     mn;
+		if (offset >= (long)mlen)
+			return 0;
+		mn = (long)mlen - offset;
+		if (mn > size)
+			mn = size;
+		memcpy(data, mtmp + offset, mn);
+		return (int)mn;
+	}
+
 	t = schedFindTask(fd->ino);
 	if (!t)
 		return -1;
@@ -605,6 +688,9 @@ procfs_read(fileDescriptor_t *fd, char *data, off_t offset, long size)
 		break;
 	case PFILE_MAPS:
 		len = procfs_build_maps(t, tmp, sizeof(tmp));
+		break;
+	case PFILE_STATM:
+		len = procfs_build_statm(t, tmp, sizeof(tmp));
 		break;
 	case PFILE_FD_ENTRY:
 		len = procfs_build_fd_entry(t, (int)fd->resid, tmp, sizeof(tmp));
@@ -711,7 +797,7 @@ procfs_opendir(const char *path, kDIR_t *dir)
 
 /* Per-pid regular files (index matches PFILE_* - 1); "fd" is a directory. */
 static const char *procfs_pid_files[] = {
-	"status", "cmdline", "stat", "maps", "fd"
+	"status", "cmdline", "stat", "statm", "maps", "fd"
 };
 #define PROCFS_PID_NFILES  5
 #define PROCFS_PID_FD_IDX  4  /* index of "fd" entry — it's a DIR */
@@ -727,7 +813,7 @@ procfs_readdir(kDIR_t *dir, struct kdirent *ent)
 	/* ── Root: global files first, then live task dirs ── */
 	if (s->type == PDIR_ROOT) {
 		/* Phases 0..N-1: emit global synthetic files, one per readdir call */
-		static const char *const procfs_root_files[] = { "mounts", "meminfo", "stat" };
+		static const char *const procfs_root_files[] = { "mounts", "meminfo", "stat", "uptime" };
 		if (s->root_phase < (int)(sizeof(procfs_root_files) / sizeof(procfs_root_files[0]))) {
 			strncpy(ent->d_name, procfs_root_files[s->root_phase], sizeof(ent->d_name) - 1);
 			ent->d_name[sizeof(ent->d_name) - 1] = '\0';
