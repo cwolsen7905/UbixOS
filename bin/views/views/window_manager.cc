@@ -523,9 +523,9 @@ void WindowManager::handle_vesa_ready()
 	comp_.invalidate_all();
 }
 
-void WindowManager::flush()
+bool WindowManager::flush()
 {
-	comp_.flush();
+	return comp_.flush();
 }
 
 void WindowManager::handle_mouse(mouse_event_t &ev)

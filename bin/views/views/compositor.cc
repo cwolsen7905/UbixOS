@@ -479,7 +479,8 @@ void Compositor::round_window_corners(const Window *w, int clipx, int clipy, int
 				if (d2 >= radius * radius)
 					fb_.pixel(px, py, bg); /* outside — background */
 				else
-					fb_.pixel(px, py, ogSurface::ogBlendColor(bg, fb_.read(px, py), 128)); /* AA edge */
+					fb_.pixel(
+					    px, py, ogSurface::ogBlendColor(bg, fb_.read(px, py), 128)); /* AA edge */
 			}
 		}
 	}
@@ -545,10 +546,10 @@ void Compositor::invalidate_all()
 	damage_ = {0, 0, (int)fb_.width, (int)fb_.height, true};
 }
 
-void Compositor::flush()
+bool Compositor::flush()
 {
 	if (!damage_.valid)
-		return;
+		return false;
 
 	int x = damage_.x, y = damage_.y;
 	int w = damage_.w, h = damage_.h;
@@ -578,7 +579,7 @@ void Compositor::flush()
 	if (y + h > (int)fb_.height)
 		h = (int)fb_.height - y;
 	if (w <= 0 || h <= 0)
-		return;
+		return false;
 
 	if (x == 0 && y == 0 && w >= (int)fb_.width && h >= (int)fb_.height)
 	{
@@ -590,6 +591,7 @@ void Compositor::flush()
 		partial_composite(x, y, w, h);
 		fb_.flush_to_lf(x, y, w, h);
 	}
+	return true;
 }
 
 void Compositor::cursor_move(int dx, int dy)

@@ -65,7 +65,7 @@ class WindowManager
 	 * Adding a new message type only requires updating the handler
 	 * table in window_manager.cc — views.cc is never touched. */
 	void dispatch(uint32_t id, void *data);
-	void flush();
+	bool flush();
 
 	/* Free any window whose owning client process has died (logout-killed or
 	 * crashed) so its shared buffer is reclaimed and no ghost frame lingers.

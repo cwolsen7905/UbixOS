@@ -127,7 +127,7 @@ class Compositor
 	/* Deferred rendering: accumulate damage, render once per tick. */
 	void invalidate(int x, int y, int w, int h);
 	void invalidate_all();
-	void flush();
+	bool flush();
 
 	/* Immediate rendering: used by cursor_move so cursor stays snappy. */
 	void composite_all();

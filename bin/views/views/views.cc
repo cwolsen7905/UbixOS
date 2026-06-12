@@ -162,16 +162,27 @@ int main(int argc, char **argv)
 
 	for (;;)
 	{
+		bool activity = false;
+
 		kbd_event_t kev;
 		while (poll_kbd(&kev) == 0)
+		{
 			wm.handle_kbd(kev);
+			activity = true;
+		}
 
 		mouse_event_t ev;
 		while (poll_mouse(&ev) == 0)
+		{
 			wm.handle_mouse(ev);
+			activity = true; /* cursor moved (immediate composite) — needs present */
+		}
 
 		while (mbox.try_fetch(msg))
+		{
 			wm.dispatch(msg.header, msg.data);
+			activity = true;
+		}
 
 		if (++reap_tick >= reap_interval)
 		{
@@ -179,8 +190,13 @@ int main(int argc, char **argv)
 			wm.reap_dead_clients();
 		}
 
-		wm.flush();
-		_sys_fbpresent(); /* present the composited frame (no-op on i386) */
+		/* Present only when something actually changed: input moved the cursor, a
+		 * client flipped, or flush() repainted damage (e.g. a reaped window).  An
+		 * idle desktop must not re-transfer the whole framebuffer to the GPU every
+		 * tick — that pegged a CPU at ~96%. */
+		bool drew = wm.flush();
+		if (activity || drew)
+			_sys_fbpresent();
 		ubix::yield();
 	}
 
