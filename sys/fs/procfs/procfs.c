@@ -57,6 +57,8 @@
 #include <vmm/paging.h>
 #include <vmm/vmm.h>
 #include <vmm/vm_filecache.h>
+#include <vmm/vm_map.h> /* VMA tree — /proc/<pid>/statm size */
+#include <lib/rbtree.h>
 #include <string.h>
 
 #define PROCFS_TYPE  VFS_TYPE_PROCFS
@@ -204,20 +206,34 @@ procfs_build_stat(kTask_t *t, char *buf, int bufsz)
 
 /**
  * Build /proc/<pid>/statm — memory usage in pages (the file an activity monitor
- * actually reads for RSS; stat's memory fields are notoriously fiddly).
+ * reads for memory; stat's memory fields are notoriously fiddly).
  *
- * Linux order: size resident shared text lib data dt.  v1 derives sizes from the
- * task's tracked text/data extents (vm_tsize/vm_dsize, already in pages) rather
- * than walking the page tables — accurate resident-set counting needs a per-arch
- * page-table walk (deferred until the aarch64 VMM rework settles).  So `resident`
- * == `size` here (an over-estimate); text/data are exact, the rest zero.
+ * Linux order: size resident shared text lib data dt.  `size` is the real total
+ * mapped footprint, summed from the task's VMA tree (so it includes the mmap'd
+ * shared libraries that dominate a dynamically-linked process — vm_tsize/vm_dsize
+ * alone read ~0 for those).  `resident` mirrors `size` for now: true RSS needs a
+ * per-arch, cross-address-space page-table walk (a later accuracy pass), so this
+ * is an over-estimate.  text/data come from the exec'd extents; the rest zero.
  */
 static int
 procfs_build_statm(kTask_t *t, char *buf, int bufsz)
 {
 	unsigned long text = (unsigned long)t->td.vm_tsize; /* pages */
 	unsigned long data = (unsigned long)t->td.vm_dsize; /* pages */
-	unsigned long size = text + data;
+	unsigned long size = 0;
+	struct rb_node *n;
+
+	/* Sum every VMA's [vm_start, vm_end) — the task's full virtual footprint.
+	 * The tree nodes live in the kernel heap, so this is safe to walk for any
+	 * task from here (no need for its address space to be the active one). */
+	for (n = rb_first(&t->vm_map.vm_root); n != NULL; n = rb_next(n))
+	{
+		vm_map_entry_t *e = (vm_map_entry_t *)n; /* rb is the first member */
+		size += (unsigned long)((e->vm_end - e->vm_start) / PAGE_SIZE);
+	}
+	/* Kernel threads (no VMAs) fall back to their text+data extents. */
+	if (size == 0)
+		size = text + data;
 
 	(void)bufsz;
 	/* size resident shared text lib data dt */
