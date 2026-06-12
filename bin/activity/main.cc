@@ -24,9 +24,10 @@ extern "C"
 #include <sys/mpi.h>
 #include <sys/sched.h>
 #include <views/display_proto.h>
-/* musl gates nanosleep behind a feature macro the -std=c++20 (__STRICT_ANSI__)
- * -nostdinc world doesn't set; declare it directly, as bin/aural does. */
+/* musl gates these behind a feature macro the -std=c++20 (__STRICT_ANSI__)
+ * -nostdinc world doesn't set; declare them directly, as bin/aural does. */
 int nanosleep(const struct timespec *req, struct timespec *rem);
+int kill(int pid, int sig);
 }
 #include <objgfx/objgfx.h>
 #include <objgfx/ogScalableFont.h>
@@ -36,9 +37,13 @@ int nanosleep(const struct timespec *req, struct timespec *rem);
 #define WIN_W 640
 #define WIN_H 460
 #define HEADER_H 30
+#define SUMMARY_H 26 /* overall-CPU strip below the header */
 #define ROW_H 22
 #define FONT_PATH "/var/fonts/DejaVuSans.ttf"
 #define MAX_PROCS 256
+#define HIST 24 /* CPU-history samples kept per process (the sparkline) */
+#define SIG_TERM 15
+#define SIG_KILL 9
 
 /* Palette (light, macOS-ish). */
 static const uint32_t COL_WIN = RGB(0xFB, 0xFC, 0xFD);
@@ -48,6 +53,9 @@ static const uint32_t COL_TEXT = RGB(0x20, 0x28, 0x30);
 static const uint32_t COL_TEXT_DIM = RGB(0x6B, 0x74, 0x80);
 static const uint32_t COL_ROW_ALT = RGB(0xF1, 0xF3, 0xF6);
 static const uint32_t COL_CPU_BAR = RGB(0x3B, 0x82, 0xF6);
+static const uint32_t COL_SEL = RGB(0x3B, 0x82, 0xF6);
+static const uint32_t COL_SEL_TEXT = RGB(0xFF, 0xFF, 0xFF);
+static const uint32_t COL_SPARK = RGB(0xBC, 0xE0, 0xBC); /* faint — text reads over it */
 
 /* ── columns ────────────────────────────────────────────────────────────────*/
 enum
@@ -108,8 +116,14 @@ static int g_sort = COL_CPU; /* sort column (default: CPU% descending) */
 /* Previous-sample bookkeeping for CPU% deltas. */
 static unsigned long g_prev_run[MAX_PROCS]; /* indexed by pid (sparse, capped) */
 static unsigned long long g_prev_total;     /* prior busy+idle from /proc/stat */
+static unsigned long long g_prev_idle;      /* prior idle from /proc/stat       */
 static unsigned long long g_uptime_total;   /* busy+idle now (for Time scaling) */
-static unsigned long g_uptime_sec;          /* /proc/uptime first field */
+static unsigned long g_uptime_sec;          /* /proc/uptime first field         */
+
+static int g_sel_pid = -1;     /* selected process (highlight + kill target)    */
+static int g_overall_x10;      /* whole-machine CPU%, ×10                        */
+static unsigned char g_hist[MAX_PROCS][HIST]; /* per-pid CPU% ring (0..100)      */
+static int g_hist_head;        /* newest sample index in each ring              */
 
 /* ── helpers ────────────────────────────────────────────────────────────────*/
 
@@ -205,16 +219,21 @@ static unsigned long read_rss(const char *path)
 	return resident;
 }
 
-/* Total busy+idle ticks from /proc/stat's aggregate "cpu" line. */
-static unsigned long long read_total_ticks(void)
+/* Total busy+idle ticks from /proc/stat's aggregate "cpu" line; *idle_out gets
+ * the idle slot (for the whole-machine CPU%). */
+static unsigned long long read_total_ticks(unsigned long long *idle_out)
 {
 	char buf[256];
 	unsigned long long busy = 0, n = 0, s = 0, idle = 0;
+	if (idle_out)
+		*idle_out = 0;
 	if (slurp("/proc/stat", buf, sizeof(buf)) <= 0)
 		return 0;
 	/* "cpu  <user> <nice> <system> <idle> ..." — we packed busy into user,
 	 * idle into the idle slot. */
 	sscanf(buf, "cpu %llu %llu %llu %llu", &busy, &n, &s, &idle);
+	if (idle_out)
+		*idle_out = idle;
 	return busy + n + s + idle;
 }
 
@@ -244,8 +263,16 @@ static int cmp_rows(const void *a, const void *b)
 
 static void refresh(void)
 {
-	unsigned long long total = read_total_ticks();
+	unsigned long long idle = 0;
+	unsigned long long total = read_total_ticks(&idle);
 	unsigned long long dtotal = (total > g_prev_total) ? (total - g_prev_total) : 0;
+	unsigned long long didle = (idle > g_prev_idle) ? (idle - g_prev_idle) : 0;
+
+	/* Whole-machine CPU% = busy fraction of the elapsed ticks. */
+	g_overall_x10 = (dtotal > 0) ? (int)((dtotal - didle) * 1000 / dtotal) : 0;
+
+	/* Advance the history ring once per sample. */
+	g_hist_head = (g_hist_head + 1) % HIST;
 
 	/* /proc/uptime: "<secs> <idle>" — first field scales Time. */
 	{
@@ -282,6 +309,8 @@ static void refresh(void)
 		r->cpu_x10 = (dtotal > 0) ? (int)((unsigned long long)drun * 1000 / dtotal) : 0;
 		if (r->cpu_x10 > 1000)
 			r->cpu_x10 = 1000;
+		if (r->pid >= 0 && r->pid < MAX_PROCS)
+			g_hist[r->pid][g_hist_head] = (unsigned char)(r->cpu_x10 / 10); /* 0..100 */
 		n++;
 	}
 	closedir(d);
@@ -293,6 +322,7 @@ static void refresh(void)
 		if (g_rows[i].pid >= 0 && g_rows[i].pid < MAX_PROCS)
 			g_prev_run[g_rows[i].pid] = g_rows[i].run_ticks;
 	g_prev_total = total;
+	g_prev_idle = idle;
 
 	qsort(g_rows, g_nrows, sizeof(g_rows[0]), cmp_rows);
 }
@@ -326,43 +356,88 @@ static void draw_header(void)
 	}
 }
 
+/* Whole-machine CPU strip below the header: a label + a usage bar. */
+static void draw_summary(void)
+{
+	int y0 = HEADER_H;
+	char buf[32];
+	int bx, bw, by, bh, fill;
+
+	g_surf.ogFillRect(0, y0, g_w - 1, y0 + SUMMARY_H - 1, COL_WIN);
+	g_surf.ogHLine(0, g_w - 1, y0 + SUMMARY_H - 1, COL_DIVIDER);
+
+	snprintf(buf, sizeof(buf), "CPU  %d.%d%%", g_overall_x10 / 10, g_overall_x10 % 10);
+	set_fg(COL_TEXT);
+	g_font.PutString(g_surf, 10, y0 + 5, buf);
+
+	bx = 120;
+	bw = g_w - bx - 14;
+	by = y0 + 6;
+	bh = SUMMARY_H - 13;
+	g_surf.ogFillRect(bx, by, bx + bw, by + bh, COL_ROW_ALT);
+	fill = bw * g_overall_x10 / 1000;
+	if (fill > 0)
+		g_surf.ogFillRect(bx, by, bx + fill, by + bh, COL_CPU_BAR);
+	g_surf.ogRect(bx, by, bx + bw, by + bh, COL_DIVIDER);
+}
+
+/* A faint CPU-history sparkbar behind the CPU% cell of row at @y for @r. */
+static void draw_sparkline(struct prow *r, int y)
+{
+	int cx = g_cols[COL_CPU].x + 2;
+	int cw = g_cols[COL_CPU].w - 6;
+	int base = y + ROW_H - 3;
+	int hmax = ROW_H - 7;
+	int bw = cw / HIST > 1 ? cw / HIST - 1 : 1;
+
+	if (r->pid < 0 || r->pid >= MAX_PROCS)
+		return;
+	for (int j = 0; j < HIST; j++)
+	{
+		int idx = (g_hist_head + 1 + j) % HIST;
+		int v = g_hist[r->pid][idx]; /* 0..100 */
+		int bh = v * hmax / 100;
+		int sx = cx + j * cw / HIST;
+		if (bh > 0)
+			g_surf.ogFillRect(sx, base - bh, sx + bw, base, COL_SPARK);
+	}
+}
+
 static void draw_rows(void)
 {
-	int y = HEADER_H;
-	int maxrows = (g_h - HEADER_H) / ROW_H;
+	int top = HEADER_H + SUMMARY_H;
+	int y = top;
+	int maxrows = (g_h - top) / ROW_H;
 	for (int i = 0; i < g_nrows && i < maxrows; i++)
 	{
 		struct prow *r = &g_rows[i];
-		if (i & 1)
-			g_surf.ogFillRect(0, y, g_w - 1, y + ROW_H - 1, COL_ROW_ALT);
-
-		/* A faint CPU bar behind the row, proportional to CPU%. */
-		if (r->cpu_x10 > 0)
-		{
-			int bw = (g_cols[COL_CPU].w - 12) * r->cpu_x10 / 1000;
-			if (bw > 0)
-				g_surf.ogFillRect(g_cols[COL_CPU].x + 4,
-				                  y + ROW_H - 4,
-				                  g_cols[COL_CPU].x + 4 + bw,
-				                  y + ROW_H - 2,
-				                  COL_CPU_BAR);
-		}
-
+		bool sel = (r->pid == g_sel_pid);
+		uint32_t fg = sel ? COL_SEL_TEXT : COL_TEXT;
+		uint32_t fgd = sel ? COL_SEL_TEXT : COL_TEXT_DIM;
 		char buf[48];
 		int ty = y + 3;
+
+		if (sel)
+			g_surf.ogFillRect(0, y, g_w - 1, y + ROW_H - 1, COL_SEL);
+		else if (i & 1)
+			g_surf.ogFillRect(0, y, g_w - 1, y + ROW_H - 1, COL_ROW_ALT);
+
+		if (!sel)
+			draw_sparkline(r, y); /* history behind the CPU% number */
+
 		snprintf(buf, sizeof(buf), "%d", r->pid);
-		cell(&g_cols[COL_PID], ty, buf, COL_TEXT);
-		cell(&g_cols[COL_NAME], ty, r->name[0] ? r->name : "?", COL_TEXT);
+		cell(&g_cols[COL_PID], ty, buf, fg);
+		cell(&g_cols[COL_NAME], ty, r->name[0] ? r->name : "?", fg);
 		snprintf(buf, sizeof(buf), "%d", r->ppid);
-		cell(&g_cols[COL_PPID], ty, buf, COL_TEXT_DIM);
+		cell(&g_cols[COL_PPID], ty, buf, fgd);
 		snprintf(buf, sizeof(buf), "%c", r->state);
-		cell(&g_cols[COL_STATE], ty, buf, COL_TEXT_DIM);
+		cell(&g_cols[COL_STATE], ty, buf, fgd);
 		snprintf(buf, sizeof(buf), "%d.%d", r->cpu_x10 / 10, r->cpu_x10 % 10);
-		cell(&g_cols[COL_CPU], ty, buf, COL_TEXT);
+		cell(&g_cols[COL_CPU], ty, buf, fg);
 		hsize_pages(r->rss_pages, buf, sizeof(buf));
-		cell(&g_cols[COL_RSS], ty, buf, COL_TEXT);
+		cell(&g_cols[COL_RSS], ty, buf, fg);
 		fmt_time(r->run_ticks, buf, sizeof(buf));
-		cell(&g_cols[COL_TIME], ty, buf, COL_TEXT_DIM);
+		cell(&g_cols[COL_TIME], ty, buf, fgd);
 		y += ROW_H;
 	}
 }
@@ -385,6 +460,7 @@ static void render(void)
 {
 	g_surf.ogClear(COL_WIN);
 	draw_rows();
+	draw_summary();
 	draw_header(); /* header last so it stays crisp over row 0 */
 	flip();
 }
@@ -402,6 +478,19 @@ static void on_click(int x, int y)
 				render();
 				return;
 			}
+		return;
+	}
+
+	/* Click a row -> select it (the force-quit target). */
+	int top = HEADER_H + SUMMARY_H;
+	if (y >= top)
+	{
+		int i = (y - top) / ROW_H;
+		if (i >= 0 && i < g_nrows)
+		{
+			g_sel_pid = g_rows[i].pid;
+			render();
+		}
 	}
 }
 
@@ -505,6 +594,13 @@ int main(int argc, char **argv)
 					mpi_postMessage((char *)g_views, DISPLAY_RELEASE, &rel);
 					mpi_destroyMbox((char *)g_mbox);
 					return 0;
+				}
+				/* Force-quit the selected process: 'k' = SIGTERM, 'K' = SIGKILL. */
+				if (k->pressed && g_sel_pid > 1 && (k->keycode == 'k' || k->keycode == 'K'))
+				{
+					kill(g_sel_pid, (k->keycode == 'K') ? SIG_KILL : SIG_TERM);
+					refresh();
+					render();
 				}
 				break;
 			}
