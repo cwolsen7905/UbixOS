@@ -19,6 +19,7 @@
 #include <vmm/vmm.h>            /* address-space helpers */
 #include <vmm/vm_filecache.h>   /* shared file-page cache (read-only mmap sharing) */
 #include <vmm/uregion.h>        /* vmm_uregion_mmap_anon, vmm_uregion_brk */
+#include <sys/klog.h>           /* klog_read_wait — native klog_read read directly */
 #include <aarch64/vmm_layout.h> /* MMAP_BASE / BRK_BASE (user-VA layout) */
 #include <sys/sysproto_posix.h> /* sys_open/read/close/lseek + uap structs */
 #include <sys/descrip.h>        /* getfd, struct file */
@@ -82,7 +83,8 @@ register_t ksyscall_dispatch(
 #define NATIVE_MPI_DESTROY 51
 #define NATIVE_MPI_POST 52
 #define NATIVE_MPI_FETCH 53
-#define NATIVE_GETCWD 41 /* ubix_getcwd(buf, size) */
+#define NATIVE_GETCWD 41    /* ubix_getcwd(buf, size) */
+#define NATIVE_KLOG_READ 47 /* klog_read(buf, max, start_seq) — read args directly (see below) */
 
 /**
  * Terminate the current task (shared by exit / exit_group): a scheduled user
@@ -342,6 +344,17 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args)
 				ubuf[size - 1] = '\0';
 				return 0;
 			}
+
+			case NATIVE_KLOG_READ:
+				/* klog_read(buf, max_entries, start_seq): read the 3 args straight
+				 * from x0..x2.  The generic table dispatch sizes args by the uap
+				 * struct and packs its two trailing 32-bit fields (max_entries,
+				 * start_seq) into one 64-bit register slot on aarch64 — so start_seq
+				 * (x2) is dropped and read as 0, and logd re-reads the same entries
+				 * forever (100% CPU).  Reading the registers directly sidesteps it. */
+				_current->td.td_retval[0] = klog_read_wait(
+				    (struct klog_entry *)(uintptr_t)args[0], (int)args[1], (u_int32_t)args[2]);
+				return (u_int64_t)_current->td.td_retval[0];
 
 			default:
 				/* Fall through to the shared native table (systemCalls[]) — new

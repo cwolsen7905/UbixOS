@@ -39,6 +39,7 @@
 #include <sys/klog.h>
 #include <sys/sysproto.h>
 #include <ubixos/vitals.h>
+#include <ubixos/sched.h> /* sched_wait_event / sched_wakeup_chan — blocking drain */
 #include <lib/kprintf.h>
 #include <string.h>
 #include <stdarg.h>
@@ -67,6 +68,10 @@ void klog_push(u_int8_t level, const char *msg)
 
 	strncpy(e->ke_msg, msg, KLOG_MSG_MAX - 1);
 	e->ke_msg[KLOG_MSG_MAX - 1] = '\0';
+
+	/* Wake a drainer blocked in klog_read_wait().  ISR-safe (the comment above
+	 * promises no blocking); sched_wakeup_chan never yields. */
+	sched_wakeup_chan(&klog_seq);
 }
 
 /**
@@ -128,6 +133,31 @@ int klog_read(struct klog_entry *buf, int max_entries, u_int32_t start_seq)
 	}
 
 	return (n);
+}
+
+/** sched_wait_event predicate: true once the ring has an entry at seq >= *arg. */
+static int klog_have_since(void *arg)
+{
+	return (klog_seq > *(u_int32_t *)arg);
+}
+
+/**
+ * klog_read_wait - like klog_read, but block until at least one entry with
+ * seq >= @start_seq exists, instead of returning 0.
+ *
+ * Lets a drainer (logd) sleep on the log ring rather than spin: the calling
+ * thread leaves the run queue until klog_push() wakes it via
+ * sched_wakeup_chan(&klog_seq).  The condition is re-checked race-free against a
+ * concurrent push (sched_wait_event tests it with interrupts disabled).
+ *
+ * @return the number of entries copied (always >= 1).
+ */
+int klog_read_wait(struct klog_entry *buf, int max_entries, u_int32_t start_seq)
+{
+	u_int32_t since = start_seq;
+
+	sched_wait_event(&klog_seq, klog_have_since, &since);
+	return (klog_read(buf, max_entries, start_seq));
 }
 
 /**

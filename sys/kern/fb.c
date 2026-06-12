@@ -212,7 +212,9 @@ int sys_klog_read(struct thread *td, struct sys_klog_read_args *args)
 		return (-1);
 	}
 
-	n = klog_read(args->buf, args->max_entries, args->start_seq);
+	/* Blocking drain: sleeps the caller (logd) until the ring has a new entry,
+	 * so logd does not busy-poll the CPU. */
+	n = klog_read_wait(args->buf, args->max_entries, args->start_seq);
 	td->td_retval[0] = n;
 	return (0);
 }

@@ -236,6 +236,9 @@ int sys_klog_read(struct thread *td, struct sys_klog_read_args *uap)
 		td->td_retval[0] = -1;
 		return (-1);
 	}
+	/* Native klog_read (47) is intercepted in syscall.c and read directly from
+	 * x0..x2 (the table's struct-packing drops start_seq on aarch64), so this
+	 * table entry is only a non-native fallback. */
 	n = klog_read(uap->buf, uap->max_entries, uap->start_seq);
 	td->td_retval[0] = n;
 	return (0);
