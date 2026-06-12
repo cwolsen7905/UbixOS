@@ -1,10 +1,20 @@
-# UbixOS SMP Design Plan (i386)
+# UbixOS SMP + In-Kernel Preemption Design Plan
+
+> **Scope (decided 2026-06-10):** SMP and in-kernel preemption are **one
+> problem, one plan**. The bring-up phases below are i386-first (that is where
+> the trampoline + per-CPU `%gs` work already lives); the **preemption** thread
+> is cross-arch, because making aarch64 SMP-capable *requires* first making its
+> (deliberately non-preemptible) kernel safely preemptible — and the primitive
+> that does that is the same true-spinlock + preempt-count this plan builds for
+> SMP. See **"In-Kernel Preemption (interlocked with SMP)"** below.
 
 ## Goal
 
 Boot the secondary CPU cores and run the kernel scheduler across all of them
 safely — going from today's single-CPU kernel to genuine symmetric
-multiprocessing, where any runnable thread can execute on any idle core.
+multiprocessing, where any runnable thread can execute on any idle core — **and,
+as the same body of work, give both architectures a uniform, safe in-kernel
+preemption model.**
 
 This is a **large, staged** effort. The danger is not the hardware bring-up
 (the trampoline already works) — it is that essentially every shared kernel
@@ -35,6 +45,8 @@ Legend: ✅ done & verified · 🟡 partial · ⬜ not started
 | 3  | Real per-CPU identity (`%gs`-base / LAPIC lookup) | 🟡 | `%gs`-base half DONE (task-switch work: `g_pcpu[]`, `%gs = SEL_PCPU` with base `&g_pcpu[cpu]`, `pcpu_install_gs()` at boot). LAPIC-id lookup for AP self-identification still pending |
 | 3  | LAPIC remap into shared kernel PD range | ⬜ | prereq for LAPIC-id lookup |
 | 3  | True spinlock type (spin, not yield; IRQs off) | ⬜ | current `spinLock` yields |
+| 3  | `preempt_count` (per-CPU/thread) gating in-kernel preemption | ⬜ | the shared SMP-locking + preemptible-kernel primitive (see "In-Kernel Preemption") |
+| 4+ | **aarch64 SMP track** — PSCI `CPU_ON` + GICv2/SGI + TTBR1 + preemptible aarch64 kernel | ⬜ | reuses the `pcpu`/`preempt_count` contract; gated on i386 Ph 3-4 |
 | 3  | Per-CPU LAPIC timer + reschedule IPI | ⬜ | |
 | 3  | LAPIC EOI path | ⬜ | still 8259-only |
 | 3.5| Scheduler accounting — per-task `run_ticks`, per-CPU `busy/idle_ticks` | ⬜ | unblocks activity monitor; prereq for Phase 6 balancer |
@@ -58,6 +70,77 @@ land as a unit (see "Phase 3 prerequisites discovered").
 > plans are complementary, not conflicting. The "Current State (honest
 > inventory)" section below predates Phases 0–2.3 and this work; the status
 > matrix above is authoritative.
+
+---
+
+## In-Kernel Preemption (interlocked with SMP)
+
+This plan absorbs the "preemption" question raised in the 2026-06-10 completeness
+review. The conclusion there: **a standalone "make the kernel preemptible" plan
+is the wrong shape — preemption and SMP are interlocked, so the work lives
+here.** The reasoning:
+
+### The asymmetry today
+
+| Arch | Kernel preemption | Mechanism |
+|---|---|---|
+| **i386** | **Preemptible** | `sched()` ends a dispatch with an unconditional `sti()`; the PIT timer can reschedule while in kernel code. |
+| **aarch64** | **Non-preemptible by design** | Syscalls run IRQ-masked; only EL0 is preempted by the 100 Hz virtual timer. Kernel threads must cooperatively `sched_yield()`. (See `cross-arch-plan.md` "Preemptible EL0"; `project_aarch64_sched_jobcontrol`.) |
+
+On a **uniprocessor**, aarch64's cooperative kernel is a legitimate, simpler
+choice and is *not* a bug — it is a deliberate design decision. The reason it
+becomes a gap is **SMP**: two CPUs executing kernel code at the same instant is
+concurrency whether or not you call it "preemption," and a cooperative,
+single-lock-free kernel cannot survive it.
+
+### Why one mechanism serves both
+
+The primitive that makes a kernel *safely preemptible* and the primitive SMP
+needs for *shared-state safety* are the same two things:
+
+1. **A true spinlock** (spin with `pause`, do **not** `sched_yield()`) that
+   **disables preemption and local IRQs while held** — already called out as
+   Phase 3's "spinlocks that actually spin."
+2. **A per-CPU/per-thread `preempt_count`.** A timer tick may reschedule *only*
+   when `preempt_count == 0`. `spin_lock_irqsave` raises it; `spin_unlock`
+   lowers it and runs a deferred reschedule if one is pending.
+
+With those, "should this timer tick preempt the current kernel thread?" and
+"is it safe for another CPU to touch this structure?" have the **same answer**,
+derived from the **same counter**. Build it once:
+
+- **i386** is already preemptible but its `spinLock()` *yields* — which is
+  correct on a uniprocessor and a **deadlock under true SMP**. Phase 3 replaces
+  it with the spin+preempt-count lock; i386 in-kernel preemption becomes
+  *governed by `preempt_count`* instead of unconditional `sti()`.
+- **aarch64** moves from cooperative to preemptible-with-locks **only as a
+  prerequisite to its own SMP** — it is not worth doing for a uniprocessor. So
+  aarch64 SMP is explicitly gated on (a) this `preempt_count` + true-spinlock
+  work, **plus** (b) the aarch64-specific multi-core bring-up that has no i386
+  analogue: **PSCI `CPU_ON`** secondary start (vs. INIT-SIPI), **GICv2
+  per-CPU/SGI** routing (vs. LAPIC/IPI), the **TTBR1 kernel/user split**
+  (`cross-arch-plan.md`, deferred), and TLB shootdown via **`TLBI` broadcast**
+  (mostly hardware-coherent on ARM, unlike the i386 shootdown IPI).
+
+### Where it lands in the phases
+
+- **Phase 3** is where the shared primitive is built: the true spinlock now
+  *explicitly* carries a `preempt_count` (per-CPU, in `struct pcpu`, and/or
+  per-thread). On i386 this re-bases in-kernel preemption onto the counter; it
+  is the foundation aarch64 later reuses.
+- **Phase 4** (single global run-queue lock) is the first consumer that *needs*
+  preemption disabled while the lock is held.
+- **aarch64 SMP track** runs *after* i386 Phases 3-4 prove the model — it is the
+  same `pcpu`/`smp_*`/`preempt_count` contract (the MI scheduler is already
+  arch-neutral) re-implemented over PSCI + GICv2, and is the point at which the
+  aarch64 kernel is made preemptible. Tracked as a sibling of Phase 4, not a
+  renumber of the i386 sequence.
+
+**Net:** there is no separate preemption plan because there is no separate
+preemption mechanism — `preempt_count` + a spinning, preemption-disabling lock
+is the single thing that delivers SMP-safe critical sections on both arches
+*and* makes the aarch64 kernel preemptible. The i386 SMP phases build it; the
+aarch64 SMP track is what cashes it in for the second architecture.
 
 ---
 
@@ -254,10 +337,16 @@ This is the interlocked unit; land it together, test with **many** boots (the
   restore on exit — this is the part that conflicts with user-TLS `%gs`, so do it
   carefully.  Then `_current` becomes `%gs:offsetof(current)` — a plain memory
   operand, valid in asm, never a call.
-- **Spinlocks that spin.** Rewrite `spinLock()` to busy-wait with `pause`; add
-  `spin_lock_irqsave`-style preemption/IRQ disable while held.  Audit every
-  holder for "sleeps while holding".  (Today's `spinLock` *yields* — correct on
-  uniprocessor, deadlock on SMP.)
+- **Spinlocks that spin + `preempt_count`.** Rewrite `spinLock()` to busy-wait
+  with `pause`; add `spin_lock_irqsave`-style preemption/IRQ disable while held,
+  implemented as a per-CPU/per-thread **`preempt_count`** (lock raises it,
+  unlock lowers it + runs a pending reschedule). A timer tick reschedules only
+  when `preempt_count == 0`. This is the single primitive that both makes
+  critical sections SMP-safe *and* re-bases i386 in-kernel preemption off the
+  unconditional `sti()` — and is what the aarch64 SMP track later reuses to make
+  *its* kernel preemptible (see "In-Kernel Preemption (interlocked with SMP)").
+  Audit every holder for "sleeps while holding".  (Today's `spinLock` *yields* —
+  correct on uniprocessor, deadlock on SMP.)
 - **LAPIC interrupts.** Map the LAPIC into the globally-synced kernel PD range
   first; LAPIC EOI; per-CPU LAPIC timer for the scheduler tick on APs (BSP keeps
   PIT for timekeeping); reschedule IPI.

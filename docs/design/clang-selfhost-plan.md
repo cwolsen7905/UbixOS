@@ -8,6 +8,25 @@ OpenBSD, and macOS all made this same choice.
 
 ---
 
+## Status Matrix
+
+Legend: ✅ done & verified · 🟡 partial · ⬜ not started
+
+| Phase | Item | Status | Notes |
+|-------|------|--------|-------|
+| 1 | Anonymous mmap + munmap + mprotect | ✅ | demand-zero VMAs (`vmm-plan` P1/2); `mprotect` real (`gen_calls.c:185`) |
+| 2 | File-backed mmap + FAT random-access | ✅ | demand-paged + shared file-page cache (`vmm-plan` 2.2) |
+| 3 | waitpid + SIGCHLD + zombie reaping | ✅ | signal Phases 1–5 complete |
+| 4 | Supporting POSIX syscalls | ✅ | the build-tool syscall surface |
+| 5 | Disk + filesystem capacity (4 GB image, FAT write stress) | ⬜ | |
+| 6 | Stage 0 — cross-compile Clang for UbixOS on macOS | ⬜ | |
+| 7 | Stage 1 — first native Clang build inside UbixOS | ⬜ | |
+| 8 | Stage 2 — verification (Stage 1 vs Stage 2 output) | ⬜ | |
+
+(Per-phase effort estimates are in the Milestone Summary at the bottom.)
+
+---
+
 ## The Three-Stage Bootstrap
 
 ```

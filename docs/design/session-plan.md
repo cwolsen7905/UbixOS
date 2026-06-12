@@ -5,6 +5,20 @@ out, lock, and (eventually) fast-switch between users the way macOS
 (`loginwindow`) and Windows (`winlogon`) do — and, as the foundation, tear a
 session down cleanly so its memory and windows are reclaimed (the logout leak).
 
+## Status Matrix
+
+Legend: ✅ done & verified · 🟡 partial / in progress · ⬜ not started
+
+| Phase | Item | Status | Notes |
+|-------|------|--------|-------|
+| 0 | vlogin group-kill on logout (`kill(-pgid)`) | ✅ | `82f5a8750`-era; vlogin survives to re-show login |
+| 0 | views dead-client window reaper (frees ghost windows) | 🟡 | in progress — the immediate logout leak fix |
+| 1 | Formalize `Session` + per-process session id (`setsid`) | ⬜ | views groups windows by session id |
+| 2 | Lock screen (`DISPLAY_LOCK` top-most overlay) | ⬜ | session keeps running underneath |
+| 3 | Fast user switching (background sessions) | ⬜ | views shows/hides per-session window sets |
+
+---
+
 ## Problem
 
 There is no object that says *"these processes and these windows belong to

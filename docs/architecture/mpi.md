@@ -1,22 +1,35 @@
 # UbixOS Message Passing Interface (MPI)
 
-**Source:** `sys/mpi/`  
-**Kernel header:** `sys/include/mpi/mpi.h`  
-**Userland header:** `include/sys/mpi.h`  
-**Syscall table:** native (`int 0x81`), slots 50–53
+**Source:** `sys/mpi/`
+**Kernel header:** `sys/include/mpi/mpi.h`
+**Userland header:** `include/sys/mpi.h`
+**Syscall table:** native (`int 0x81` on i386, `svc` native path on aarch64), slots 50–53
+
+> **Status:** This document describes MPI **as built** on branch
+> `wip/aarch64-port` (verified against `sys/mpi/system.c` June 2026). It is a
+> description of current behaviour, not a wish list. Known shortcomings are
+> listed in [Current Limitations](#current-limitations); the plan to address
+> them lives in `docs/design/mpi-modernization-plan.md`.
 
 ---
 
 ## Overview
 
-MPI is UbixOS's primary IPC mechanism. It provides named **mailboxes** —
-kernel-managed FIFO queues identified by a string name. Any process can post
-a message to a mailbox by name; only the owning process (the one that
-created the mailbox) can read from it.
+MPI is UbixOS's primary in-kernel IPC mechanism. It provides named
+**mailboxes** — kernel-managed FIFO queues identified by a string name. Any
+process can post a message to a mailbox by name; only the owning process (the
+one that created the mailbox) can read from it.
 
 MPI sits alongside POSIX pipes and semaphores but is the mechanism used by
-`init`, `ubistry`, `ttyd`, `ubixfs`, and the kernel system task to
-communicate at boot and during normal operation.
+`init`, `views`, `vlogin`, `authd`, `automountd`, `ubistry`, the `ubixfs`
+background thread, and the kernel system task to communicate at boot and during
+normal operation.
+
+In practice MPI is the system's **control plane**: it carries small opcodes and
+fixed-size control structs. Bulk data (framebuffer pixels, audio rings) is
+never streamed through MPI — it travels through shared memory
+(`vmm_share_region`), and MPI carries only the signal that the shared region is
+ready. The 248-byte payload reflects that role.
 
 ---
 
@@ -28,39 +41,59 @@ All types are defined in `sys/include/mpi/mpi.h`.
 
 ```c
 struct mpi_message {
-    char            data[248];      /* payload — MESSAGE_LENGTH bytes */
-    uInt32          header;         /* message type / opcode           */
-    pidType         pid;            /* sender PID (filled by kernel)   */
-    struct mpi_message *next;       /* intrusive singly-linked list    */
+    char                data[MESSAGE_LENGTH];   /* payload — 248 bytes        */
+    u_int32_t           header;                 /* message type / opcode      */
+    pidType             pid;                    /* sender PID (filled by kernel) */
+    struct mpi_message *next;                   /* intrusive singly-linked list  */
 };
 ```
 
-`MESSAGE_LENGTH` is 248. The kernel always copies messages into a new
-`mpi_message_t` allocation on post, so the caller's buffer does not need to
-remain valid after `mpi_postMessage` returns.
+`MESSAGE_LENGTH` is 248. The kernel always copies the message into a freshly
+`kmalloc`'d `mpi_message_t` on post, so the caller's buffer does not need to
+remain valid after `mpi_postMessage` returns. The sender's PID is stamped by
+the kernel (`message->pid = _current->id`), not supplied by the caller.
 
 ### `mpi_mbox_t` — a mailbox
 
 ```c
 struct mpi_mbox {
-    struct mpi_mbox  *next;         /* global list — next mailbox     */
-    struct mpi_mbox  *prev;         /* global list — prev mailbox     */
-    struct mpi_message *msg;        /* head of message queue          */
-    struct mpi_message *msgLast;    /* tail of message queue (O(1) append) */
-    char              name[64];     /* mailbox name (63 chars + NUL)  */
-    pidType           pid;          /* owner PID (set at creation)    */
+    struct mpi_mbox    *next;       /* global list — next mailbox            */
+    struct mpi_mbox    *prev;       /* global list — prev mailbox            */
+    struct mpi_message *msg;        /* head of message queue                 */
+    struct mpi_message *msgLast;    /* tail of message queue (O(1) append)   */
+    char                name[64];   /* mailbox name (63 chars + NUL)         */
+    pidType             pid;        /* owner PID (set at creation)           */
 };
 ```
+
+### Message-type constants
+
+```c
+#define MPI_ASYNC 0x1   /* post and return immediately                       */
+#define MPI_SYNC  0x2   /* post and wait until the receiver drains the queue */
+```
+
+The type controls only the post-call behaviour (see `mpi_postMessage`). It is
+**not** stored in the message — receivers cannot tell how a message was sent.
+Any value other than `MPI_SYNC` behaves as `MPI_ASYNC`.
 
 ### Global state (`sys/mpi/system.c`)
 
 ```c
-static mpi_mbox_t  *mboxList    = NULL;              /* doubly-linked mailbox list */
-static struct spinLock mpiSpinLock = SPIN_LOCK_INITIALIZER;
+static mpi_mbox_t      *mboxList   = 0x0;                 /* doubly-linked mailbox list */
+static struct spinLock  mpiSpinLock = SPIN_LOCK_INITIALIZER;
 ```
 
-All operations acquire `mpiSpinLock` for their entire duration. Mailboxes
-are inserted at the head of `mboxList`; newest mailbox is at the front.
+All operations acquire `mpiSpinLock` for their entire duration. Mailboxes are
+inserted at the head of `mboxList`; the newest mailbox is at the front.
+
+> **Note on the lock:** today `spinLock()` is a *yielding* lock — under
+> contention it calls `sched_yield()` rather than busy-spinning. This is
+> correct and deadlock-free on the current uniprocessor kernel. The SMP +
+> in-kernel-preemption work (`docs/design/smp-plan.md`, Phase 3) replaces it
+> with a true spinning, preemption-disabling lock governed by `preempt_count`;
+> MPI inherits that change for free because it holds the lock for short,
+> non-sleeping critical sections only.
 
 ---
 
@@ -68,121 +101,145 @@ are inserted at the head of `mboxList`; newest mailbox is at the front.
 
 ### `mpi_findMbox(char *name)` — internal
 
-Linear scan of `mboxList` by name. **Not safe to call without holding
-`mpiSpinLock`** — all callers must hold the lock.
+Linear scan of `mboxList` by name. **Not task-safe** — every caller must
+already hold `mpiSpinLock`.
+
+### `mpi_mbox_exists(const char *name)` → 1 / 0
+
+Public, task-safe wrapper around `mpi_findMbox` (takes and releases the lock).
+Used by the boot path to wait for a daemon (e.g. `ubistry`) to come up before
+launching clients that query it. Returns 1 if the mailbox exists, 0 otherwise.
 
 ### `mpi_createMbox(char *name)` → 0 / -1
 
 Creates a new mailbox owned by `_current`.
 
-1. Acquires spinlock.
-2. Rejects duplicate names via `mpi_findMbox`.
-3. Allocates `mpi_mbox_t` via `kmalloc`.
-4. Copies `name` into `mbox->name` with `sprintf` (see [bugs](#known-bugs)).
-5. Sets `mbox->pid = _current->id`.
-6. Inserts at head of `mboxList`.
-7. Releases spinlock. Returns 0 on success, -1 if name already exists.
+1. Acquires the lock.
+2. Rejects duplicate names via `mpi_findMbox` → -1.
+3. `kmalloc`s the mailbox; returns -1 if allocation fails.
+4. Copies the name with `strncpy` + explicit NUL (bounded to `sizeof name`).
+5. Sets `pid = _current->id`, initialises `msg`/`msgLast` to NULL.
+6. Inserts at the head of `mboxList` (handles both empty-list and
+   non-empty-list cases, maintaining `prev` links).
+7. Releases the lock. Returns 0 on success.
 
 ### `mpi_destroyMbox(char *name)` → 0 / -1
 
 Destroys the named mailbox. Only the owner PID may destroy it.
 
-1. Acquires spinlock.
+1. Acquires the lock.
 2. Linear-searches `mboxList` for `name`.
-3. Checks `mbox->pid == _current->id`; returns -1 if unauthorized.
-4. Unlinks from doubly-linked list and calls `kfree(mbox)`.
-5. Returns 0 on success, -1 if not found or unauthorized.
+3. Returns -1 if `mbox->pid != _current->id` (not the owner).
+4. Unlinks from the doubly-linked list (correct for head, tail, and middle).
+5. Frees every queued message, then frees the mailbox.
+6. Releases the lock. Returns 0 on success, -1 if not found or unauthorized.
 
-> **Known bug:** NULL dereference if the mailbox is the first or last in the
-> list — see [BUG-MPI-01](#known-bugs).
+### `mpi_destroyProcessMboxes(pidType pid)` → void
 
-### `mpi_postMessage(char *name, uint32_t type, mpi_message_t *msg)` → 0 / 1
+Destroys **every** mailbox owned by `pid`, freeing all queued messages.
+Called from `endTask()` so a process's mailboxes do not leak when it exits
+(cleanly or via a crash). Unlike `mpi_destroyMbox`, it does **not** gate on
+`_current->id` — the owner is already gone.
+
+This closes a real correctness hole: a leaked mailbox keeps its dead owner's
+PID, so `mpi_createMbox` would refuse to recreate the name and
+`mpi_fetchMessage` (owner-PID-gated) would reject the new owner. Without this,
+relaunching a `views` app would hang waiting for a `DISPLAY_ACK` it could never
+fetch.
+
+### `mpi_postMessage(char *name, u_int32_t type, mpi_message_t *msg)` → 0 / 1
 
 Posts one message to the named mailbox.
 
-1. Acquires spinlock.
-2. Finds mailbox by name; returns 1 if not found.
-3. Allocates a new `mpi_message_t` and copies `msg->header` and `msg->data`.
-4. Sets `message->pid = _current->id` (records sender).
-5. Appends to the tail of the mailbox queue via `msgLast`.
-6. Releases spinlock.
-7. If `type == 0x2` (synchronous send): busy-spins on `mbox->msgLast != NULL`
-   until the receiver drains the queue. This is an unbounded spin without
-   `sched_yield()` — see [bugs](#known-bugs).
+1. Acquires the lock.
+2. Finds the mailbox; returns 1 if not found.
+3. `kmalloc`s a new message; returns 1 if allocation fails.
+4. Copies `header` and `data`, stamps `pid = _current->id`.
+5. Appends to the queue tail via `msgLast` (O(1); handles the empty-queue case).
+6. Releases the lock.
+7. If `type == MPI_SYNC`: loops `sched_yield()` then **re-looks-up the mailbox
+   by name under the lock** each iteration, breaking when the mailbox is gone
+   or its queue is empty. Re-finding by name (rather than reusing the stale
+   `mbox` pointer) is what makes this safe against a concurrent
+   `mpi_destroyMbox` that frees the mailbox.
 
-Returns 0 on success, 1 if mailbox not found.
+Returns 0 on success, 1 if the mailbox was not found.
+
+> `MPI_SYNC` guarantees only that the message was **dequeued**, not that it was
+> processed, and it has no callers in the current tree. See
+> [Current Limitations](#current-limitations).
 
 ### `mpi_fetchMessage(char *name, mpi_message_t *msg)` → 0 / -1
 
-Retrieves the next message from the named mailbox. Non-blocking — returns -1
-immediately if the queue is empty.
+Retrieves the next message from the named mailbox. **Non-blocking** — returns
+-1 immediately if the queue is empty.
 
-1. Acquires spinlock.
-2. Finds mailbox; returns -1 if not found.
-3. Returns -1 if `mbox->msg == NULL` (no messages).
+1. Acquires the lock.
+2. Returns -1 if the mailbox is not found.
+3. Returns -1 if the queue is empty (`mbox->msg == NULL`).
 4. Returns -1 if `mbox->pid != _current->id` (not the owner).
-5. Copies `header`, `data`, and `pid` fields from `mbox->msg` to `msg`.
-6. Dequeues `mbox->msg` and calls `kfree` on the old head.
-7. Releases spinlock. Returns 0 on success.
+5. Copies `header`, `data`, and the sender `pid` into the caller's `msg`.
+6. Dequeues the head, resetting `msgLast` to NULL when the queue drains, and
+   frees the old head.
+7. Releases the lock. Returns 0 on success.
 
-> **Known bug:** `msgLast` is not reset to NULL when the queue drains —
-> see [BUG-MPI-04](#known-bugs).
+### `mpi_spam(u_int32_t type, void *data)` → 0
 
-### `mpi_spam(uint32_t type, void *data)` — kernel-only
-
-Broadcasts a message to every mailbox in `mboxList`. Not reachable from
-userland (no syscall slot is wired to it). Used internally by the kernel
-to signal all registered processes at once.
-
-Holds `mpiSpinLock` for the entire broadcast loop — duration is proportional
-to the number of mailboxes.
+Broadcasts a copy of `data` (a full `MESSAGE_LENGTH` payload) to **every**
+mailbox in `mboxList`, holding the lock for the entire loop. **Kernel-only** —
+its former syscall slot (54) was retired and reused for `fbpresent`, so there
+is no userland path to it.
 
 ---
 
 ## Syscall Interface
 
-MPI is accessed from userland via the **native syscall table** (`int 0x81`).
+MPI is accessed from userland via the **native syscall table**, slots 50–53.
+The mechanism differs per architecture but the slot numbers and semantics are
+identical:
 
-| Slot | Name | Kernel handler |
-|------|------|----------------|
-| 50 | `mpiCreateMbox` | `sys_mpiCreateMbox` |
-| 51 | `mpiDestroyMbox` | `sys_mpiDestroyMbox` |
-| 52 | `mpiPostMessage` | `sys_mpiPostMessage` |
-| 53 | `mpiFetchMessage` | `sys_mpiFetchMessage` |
+| Slot | Name | i386 handler | aarch64 handler |
+|------|------|--------------|-----------------|
+| 50 | `mpiCreateMbox`  | `sys_mpiCreateMbox`  | `NATIVE_MPI_CREATE`  |
+| 51 | `mpiDestroyMbox` | `sys_mpiDestroyMbox` | `NATIVE_MPI_DESTROY` |
+| 52 | `mpiPostMessage` | `sys_mpiPostMessage` | `NATIVE_MPI_POST`    |
+| 53 | `mpiFetchMessage`| `sys_mpiFetchMessage`| `NATIVE_MPI_FETCH`   |
 
-The dispatch functions live in `sys/mpi/mpi_syscalls.c` and are thin
-wrappers that pull arguments from the `args` struct and call the
-corresponding `mpi_*` function.
+- **i386** registers the four `sys_mpi*` thunks in `sys/kern/syscalls.c` (the
+  native `int 0x81` table). The thunks live in `sys/mpi/mpi_syscalls.c` and
+  simply place the return value in `td->td_retval[0]`.
+- **aarch64** dispatches the same slots from a hand-rolled `switch` in
+  `sys/arch/aarch64/kern/syscall.c`, calling the `mpi_*` functions directly.
+  The syscall runs in the caller's address space with IRQs masked, so the user
+  `name`/`msg` pointers are valid without a copyin.
 
-> `sys_mpiPostMessage` contains a debug `kprintf("mPM: %s", args->name)`
-> that fires on every post. Remove this before production use.
+> **Dead code:** `sys/mpi/message.c` defines an older set of `sysMpi*` wrappers
+> (`sysMpiCreateMbox`, `sysMpiPostMessage`, …) with different signatures. These
+> have no callers anywhere in the tree and are not wired into either syscall
+> table. They should be removed.
 
 ---
 
 ## Userland API
 
-Assembly stubs in `lib/libc/sys/`:
+Assembly stubs live in **`lib/ubix_api/`** (dual-arch — each `.S` has an
+`#ifdef __aarch64__` path):
 
 ```c
-/* lib/libc/sys/mpi_creatembox.S */
-int mpi_createMbox(char *name);    /* syscall 50 via int 0x81 */
-
-/* lib/libc/sys/mpi_postmessage.S */
-int mpi_postMessage(char *name, uint32_t type, mpi_message_t *msg); /* syscall 52 */
-
-/* lib/libc/sys/mpi_fetchmessage.S */
-int mpi_fetchMessage(char *name, mpi_message_t *msg); /* syscall 53 */
+int mpi_createMbox(char *name);                                   /* slot 50 */
+int mpi_destroyMbox(char *name);                                  /* slot 51 */
+int mpi_postMessage(char *name, u_int32_t type, mpi_message_t *); /* slot 52 */
+int mpi_fetchMessage(char *name, mpi_message_t *);                /* slot 53 */
 ```
 
-`mpi_destroyMbox` exists in the kernel but has no assembly stub in libc —
-it must be called directly or via inline asm if needed from userland.
+All four operations have stubs, including `mpi_destroyMbox`.
 
-**Typical usage pattern:**
+**Typical usage pattern** (every system daemon follows this shape):
 
 ```c
 #include <sys/mpi.h>
 
-/* Receiver: create mailbox and poll */
+/* Receiver: create a mailbox and poll it. */
 mpi_message_t msg;
 
 if (mpi_createMbox("myservice") != 0)
@@ -192,15 +249,15 @@ for (;;) {
     if (mpi_fetchMessage("myservice", &msg) == 0) {
         /* process msg.header and msg.data */
     } else {
-        sched_yield();   /* no messages — yield rather than spin */
+        sched_yield();   /* no messages — yield (see Current Limitations) */
     }
 }
 
-/* Sender: post a message */
+/* Sender: post a message. */
 mpi_message_t out;
 out.header = 42;
 memcpy(out.data, payload, sizeof(payload));
-mpi_postMessage("myservice", 0x1, &out);
+mpi_postMessage("myservice", MPI_ASYNC, &out);
 ```
 
 ---
@@ -211,65 +268,71 @@ These mailboxes are created at boot by the named processes:
 
 | Mailbox name | Created by | Purpose |
 |--------------|-----------|---------|
-| `"init"` | `bin/init/main.c` | PID 1 command mailbox (receive loop currently disabled) |
-| `"system"` | `sys/arch/i386/systemtask.c` | Kernel system task |
-| `"ubixfs"` | `sys/fs/ubixfs/thread.c` | UbixFS background thread |
-| `"ubistry"` | `bin/ubistry/main.c` | Key-value registry service |
+| `"init"`     | `bin/init/main.c`              | PID 1 command mailbox |
+| `"system"`   | `sys/arch/*/…/systemtask.c`    | Kernel system task (V86/BIOS, etc.) |
+| `"ubixfs"`   | `sys/fs/ubixfs/thread.c`       | UbixFS background thread |
+| `"ubistry"`  | `bin/ubistry/message.c`        | Key-value registry service |
+| `AUTHD_MBOX` | `bin/authd/main.c`             | Authentication service |
+| `AUTOMOUNTD_MBOX` | `bin/automountd/main.c`   | Storage arrive/depart events |
 
-`ttyd` posts to `"system"` but does not create its own mailbox.
-
----
-
-## Message Types (type argument to `mpi_postMessage`)
-
-No named constants are defined in any header. The only documented value is:
-
-| Value | Meaning |
-|-------|---------|
-| `0x1` | Asynchronous — post and return immediately |
-| `0x2` | Synchronous — post and busy-spin until receiver drains the queue |
-
-All other values are treated identically to `0x1`. The type is not stored
-in the message; it only controls the post-call spin behavior.
+GUI clients (`views`, `vlogin`, `login`, `muffin`, `hello`, `vdoom`, …) create
+private per-instance mailboxes for replies and display events.
 
 ---
 
-## Known Bugs
+## Concurrency model
 
-These are tracked in [`BUGS.md`](../../BUGS.md) under the MPI section.
-
-| ID | Location | Summary |
-|----|----------|---------|
-| BUG-MPI-01 | `system.c:248` | `mpi_destroyMbox`: NULL dereference when destroying the head or tail mailbox |
-| BUG-MPI-02 | `system.c:79` | `mpi_createMbox`: `mbox->msgLast` never initialized — crash on second post |
-| BUG-MPI-03 | `system.c:165` | `mpi_postMessage`/`mpi_spam`: `msgLast` not set when appending to empty queue |
-| BUG-MPI-04 | `system.c:220` | `mpi_fetchMessage`: `msgLast` not reset when queue drains |
-| BUG-MPI-05 | `system.c:81` | `mpi_createMbox`: `sprintf(mbox->name, name)` — no bounds check on 64-byte field |
-| BUG-MPI-06 | `system.c:175` | Synchronous-send busy-spin reads `msgLast` after unlock without re-acquiring lock |
-| BUG-MPI-07 | multiple | No NULL check on `kmalloc` return in create/post/spam paths |
+- **One global lock.** Create, destroy, post, fetch, spam, and `exists` all
+  serialize on `mpiSpinLock`. Every operation is an O(n) string scan of the
+  global list under that lock. Adequate for the current handful of mailboxes
+  and low message rates; it will become a contention point under SMP (tracked
+  in `docs/design/smp-plan.md`).
+- **Owner-gated reads.** Only the creating process (by PID) may fetch from a
+  mailbox. Any process may post to any mailbox by name.
+- **Sender identity** is stamped by the kernel from `_current->id`. There is no
+  other authentication on either post or fetch.
 
 ---
 
-## Design Notes and Limitations
+## Current Limitations
 
-- **No blocking receive.** `mpi_fetchMessage` returns -1 immediately when
-  the queue is empty. Receivers must poll. The conventional pattern is
-  `while (mpi_fetchMessage(...) != 0) sched_yield()`, but none of the
-  system daemons use `sched_yield()` in their fetch loops.
+These are **true of the code today** and are the subject of
+`docs/design/mpi-modernization-plan.md`:
 
-- **No queue depth limit.** An unlimited number of messages can be queued,
-  exhausting kernel heap memory.
+- **No blocking receive.** `mpi_fetchMessage` returns -1 immediately on an
+  empty queue, so every receiver is a `sched_yield()` poll loop (`authd`,
+  `automountd`, `ubistry`, the `ubixfs` thread, `systemtask`). A yielding
+  receiver stays permanently runnable, so the scheduler never reaches a true
+  idle (WFI/HLT) state — a real power/thermal cost on the forward bare-metal
+  targets (Raspberry Pi / Orange Pi).
 
-- **No cleanup on process exit.** When the owner process dies, its mailbox
-  and any queued messages remain in `mboxList` forever. The name cannot be
-  reused and memory leaks.
+- **No authentication on posts.** Any process can post to any mailbox by name;
+  there is no credential check and no per-mailbox post ACL. Security-sensitive
+  mailboxes (`authd`, `system`, `ubistry`) are wide open. This is a gap
+  relative to `docs/design/multiuser-security-plan.md`.
 
-- **Owner-only reads.** Only the creating process can fetch messages.
-  There is no concept of shared or multi-reader mailboxes.
+- **Fixed 248-byte payload, truncating real data.** `data[]` is a fixed
+  array, so every message — even a 4-byte opcode — costs 248 bytes, and
+  payloads that should be larger are filed down to fit. This is not
+  hypothetical: `AUTH_HOME_MAX` (128) and `UB_NAMES_MAX` (224) are
+  back-computed from 248, and `ubistry`'s `UB_MSG_CHILDREN` reply
+  (`struct ub_children_rsp`) carries an explicit `truncated` flag because a
+  registry node with many children **does not fit** — its child list is
+  silently cut off. The payload should be variable-length with a hard cap.
 
-- **`mpi_spam` not exposed to userland.** No syscall slot is wired to
-  `mpi_spam`. It is callable only from kernel C code.
+- **No flow control / unbounded queues.** A mailbox can be filled without
+  limit, exhausting kernel heap. There is no depth cap and no backpressure.
 
-- **Single global lock.** All operations — create, destroy, post, fetch,
-  spam — serialize on `mpiSpinLock`. Fine for the current low-traffic
-  usage but does not scale.
+- **No first-class request/reply.** `MPI_SYNC` only confirms the queue drained,
+  not that the message was handled, and is unused. Real RPC is faked in
+  userland by creating a private reply mailbox and polling it (e.g.
+  `bin/login/main.c`, `bin/vlogin/vlogin.cc`), with no correlation IDs.
+
+- **String-keyed, not handle-keyed.** Every call re-scans the list by name
+  under the global lock; mailboxes are not descriptors, so a daemon cannot
+  `poll()`/`select()` across a mailbox and a socket together — which is *why*
+  everything polls.
+
+- **PID-based identity is weak.** Both the owner gate and the sender stamp use
+  `pidType`, which is recycled. `mpi_destroyProcessMboxes` mitigates the
+  worst leak case, but the underlying identity is still a recyclable PID.

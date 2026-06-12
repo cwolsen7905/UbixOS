@@ -17,6 +17,22 @@
 > generic linear-framebuffer descriptor rather than the VESA/multiboot
 > specifics below. Until then this is a reference, not active work.
 
+## Status Matrix
+
+Legend: ✅ done & verified · ⬜ not started · ⛔ superseded (won't build as specced)
+
+| Target | Status | Notes |
+|--------|--------|-------|
+| i386 / VESA LFB (this spec) | ⛔ | never built; `views` owns the VESA LFB via `sys_mapfb`, so the kernel console stays VGA text + COM1 — a kernel fb console would conflict |
+| aarch64 / virtio-gpu (output) | ✅ | shipped as a `kconsole` sink — `sys/arch/aarch64/dev/fbcon.c`, convergence-plan **Phase 3.5** (`6db8e3dc1`); 8×8 glyphs, suspended when `views` claims the screen. Boot log / panic / base-profile login text on screen |
+| aarch64 — on-screen keyboard input (screen-only, no serial) | ⬜ | fbcon is an output sink today; an interactive base console on a serial-less SBC still needs a keyboard input path (convergence-plan Phase 4 follow-up) |
+
+The on-screen kernel console the product identity wants was delivered on
+aarch64 (where there is no VGA text mode); this i386/VESA spec below is kept as
+the reference design that work generalised from.
+
+---
+
 **Original goal (i386/VESA):** Replace the VGA text-mode console with a single
 800×600 VESA linear framebuffer console, rendering all kernel and userspace
 output as pixel-drawn text.  Individual graphics card drivers can be added

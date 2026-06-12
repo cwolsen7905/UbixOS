@@ -6,6 +6,21 @@
 > below are deliberately deferred: none blocks app use of threads. Tackle them
 > when there's a concrete need.
 
+## Status Matrix
+
+Legend: ✅ done & verified · 🟡 partial · ⬜ not started · ⏸ blocked
+
+| Item | Status | Notes |
+|------|--------|-------|
+| Threads v1 core — `pthread_create`/`join`/`detach`, mutex, cond | ✅ | archived `completed/threading-plan.md` |
+| **E2c** — thread cancellation (`pthread_cancel`) | ⏸ | blocked on a 64-bit signal subsystem (SIGCANCEL = 33); flag-based deferred cancel partly works |
+| **F** — split `kTask_t` → `kProc_t` + `kThread_t` | ⬜ | big refactor; coordinate with `smp-plan.md` (both reshape `kTask_t`); fixes the non-last-tgid page leak |
+| **G** — true shared fd table (`struct fdtable`) | ⬜ | ideally depends on F; v1 shallow-shares `o_files[]` |
+
+None of these blocks app use of threads — they are deliberate deferrals.
+
+---
+
 ## E2c — Thread cancellation (`pthread_cancel`)
 
 **Status:** Deferred. **Blocked on:** a 64-bit signal subsystem.

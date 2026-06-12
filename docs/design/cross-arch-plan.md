@@ -99,7 +99,7 @@ same status.
 | 13j | aarch64 syscall surface (bring-up dispatcher) | B | 🟡 **Partial** — write/exit/fork/getpid/set_tid_address/exit_group/mmap/mprotect/brk in the transitional `arch/aarch64/kern/syscall.c`; **musl malloc now works** (the bug was a missing `AT_PAGESZ` auxv entry, not the mmap surface — aarch64 has no fixed `PAGE_SIZE` macro so `libc.page_size` was 0 and mallocng rounded every size to 0; fixed in the ELF-loader initial stack).  mmap/brk page mechanics extracted to the generic `sys/vmm/vmm_uregion.c` (sc_mmap/sc_brk are thin arch wrappers).  End state: route the SVC entry to the generic syscall tables once VFS/fd land |
 | 14 | virtio-blk + virtio-net | B | ✅ **Done** — virtio-blk FAT32 root mounted at `/`; virtio-net + lwIP DHCP (IP bound), sockets/TCP working (httpsget, NetSurf fetch) |
 | 15 | virtio-gpu framebuffer + virtio-input (touch) | B | ✅ **Done** — virtio-gpu scanout (1280x800) via `sys_mapfb`; virtio-input keyboard+mouse cooked into the events the compositor consumes |
-| 15a | **virtio-sound** (audio) → existing `aural`/libaudio layer | B | ⬜ **Not started** — vDoom + libaudio run silent; the one remaining cross-arch *feature* |
+| 15a | **virtio-sound** (audio) → existing `/dev/audio`/libaudio layer | B | ✅ **Done** (`ce0bf5c37`) — `sys/arch/aarch64/dev/virtio_sound.c` exposes the same `dev_char_write`/`dev_char_ioctl` `/dev/audio` contract (major 20) as i386 AC97; real txq PCM submission, single-stream playback. (Write is non-blocking today — blocking pacing for the `aural` mixer is Phase 1 of `docs/design/sound-server.md`. Multi-app mixing is the `aural` server.) |
 | 16 | Raspberry Pi 4 hardware (**optional** — QEMU is the target) | B | ⬜ Deferred |
 | — | Display stack (`views`/`objGFX`) on aarch64 | Userland | ✅ **Done (boot-to-desktop reached)** — `views` compositor + `objGFX` + `vlogin` graphical login + GUI terminal (tcsh, full job control) + vDoom + NetSurf all run; per-user themed desktop |
 
@@ -107,9 +107,11 @@ same status.
 POSIX signals + full job control (Ctrl-C/Ctrl-Z/fg, close=hangup), NetSurf
 browser, monotonic clock + unified time, non-preemptible kernel (the EL1-spin
 preemption fix), and Phase-5 convergence (shared fork/exec helpers, centralised
-VA layout, demos gated).  **Remaining cross-arch work: 15a virtio-sound**, plus
-the deferred kernel refinements (TTBR1 kernel/user split — kernel still in
-TTBR0; COW fork; routing the SVC entry fully onto the generic syscall tables).
+VA layout, demos gated).  **15a virtio-sound now done** (single-stream
+`/dev/audio` playback; multi-app mixing is the separate `aural` server).
+**Remaining cross-arch work:** the deferred kernel refinements (TTBR1 kernel/user
+split — kernel still in TTBR0; COW fork; routing the SVC entry fully onto the
+generic syscall tables).
 
 **COW fork attempted + reverted (2026-06-10).** A working COW implementation
 (PTE_COW software bit + pmap_fork_copy sharing writable pages RO+COW + a
