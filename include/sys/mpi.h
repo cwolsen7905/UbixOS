@@ -47,6 +47,7 @@ int mpi_createMbox(const char *);
 int mpi_destroyMbox(const char *);
 int mpi_postMessage(const char *,uint32_t,mpi_message_t *);
 int mpi_fetchMessage(const char *,mpi_message_t *);
+int mpi_waitMessage(const char *,mpi_message_t *,uint32_t); /* blocking fetch; timeout in ticks (0 = forever) */
 int mpi_fpam(uint32_t type,void *);
 
 #endif

@@ -101,17 +101,13 @@ int main(void)
 
 	for (;;)
 	{
-		if (mpi_fetchMessage(AUTHD_MBOX, &msg) != 0)
-		{
-			sched_yield();
+		/* Block until a request arrives instead of busy-polling fetch+yield —
+		 * authd is idle almost all the time (only a login talks to it). */
+		if (mpi_waitMessage(AUTHD_MBOX, &msg, 0) != 0)
 			continue;
-		}
 
 		if (msg.header != AUTHD_MSG_REQUEST)
-		{
-			sched_yield();
 			continue;
-		}
 
 		req = (struct auth_request *)msg.data;
 

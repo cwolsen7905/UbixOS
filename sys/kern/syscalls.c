@@ -147,6 +147,10 @@ struct syscall_entry systemCalls[] = {
      "disk_query",
      (sys_call_t *)sys_disk_query,
      SYSCALL_VALID}, // 68 - block-device/partition enumeration (Disk Utility)
+    {ARG_COUNT(sys_mpiWaitMessage_args),
+     "mpiWaitMessage",
+     (sys_call_t *)sys_mpiWaitMessage,
+     SYSCALL_VALID}, // 69 - blocking MPI receive (sleep until a message / timeout)
 };
 
 int totalCalls = sizeof(systemCalls) / sizeof(struct syscall_entry);

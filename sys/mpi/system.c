@@ -220,6 +220,12 @@ int mpi_postMessage(char *name, u_int32_t type, mpi_message_t *msg)
 
 	spinUnlock(&mpiSpinLock);
 
+	/* Wake a receiver blocked in mpi_waitMessage().  The mbox pointer is used as
+	 * an opaque wakeup token (never dereferenced by sched_wakeup_chan), so it is
+	 * safe even though the lock is dropped; a stale/spurious wake just makes the
+	 * waiter re-check its (now-true) condition.  ISR-safe; never yields. */
+	sched_wakeup_chan(mbox);
+
 	if (type == 0x2)
 	{
 		/* Re-look up the mbox by name under the lock each iteration.
@@ -290,6 +296,47 @@ int mpi_fetchMessage(char *name, mpi_message_t *msg)
 
 	spinUnlock(&mpiSpinLock);
 	return (0x0);
+}
+
+/** sched_wait_event predicate: the mailbox has at least one queued message. */
+static int mpi_mbox_has_msg(void *arg)
+{
+	return (((mpi_mbox_t *)arg)->msg != 0x0);
+}
+
+/*****************************************************************************************
+ Function: int mpi_waitMessage(char *name, mpi_message_t *msg, u_int32_t timeout)
+
+ Description: Like mpi_fetchMessage, but BLOCKS (leaves the run queue) until the
+ mailbox has a message, instead of returning -1 on empty — so a service loop can
+ sleep on its mailbox rather than busy-poll fetch+yield.
+
+ The caller sleeps on the mbox address; mpi_postMessage() wakes it.  The mbox is
+ the caller's own (fetch is owner-pid gated), so it stays live while we wait.
+ @timeout is in scheduler ticks: 0 blocks indefinitely; non-zero wakes after the
+ timeout even with no message (then fetch returns -1) — used by the compositor,
+ which must also poll input.
+
+ @return 0 on success (a message was dequeued into @msg), -1 on no mailbox or
+ timeout-with-no-message.
+ *****************************************************************************************/
+int mpi_waitMessage(char *name, mpi_message_t *msg, u_int32_t timeout)
+{
+	mpi_mbox_t *mbox;
+
+	spinLock(&mpiSpinLock);
+	mbox = mpi_findMbox(name);
+	spinUnlock(&mpiSpinLock);
+
+	if (mbox == 0x0)
+		return (-1);
+
+	if (timeout != 0)
+		sched_wait_event_timeout(mbox, mpi_mbox_has_msg, mbox, timeout);
+	else
+		sched_wait_event(mbox, mpi_mbox_has_msg, mbox);
+
+	return (mpi_fetchMessage(name, msg));
 }
 
 /*****************************************************************************************

@@ -83,6 +83,13 @@ public:
 		return mpi_fetchMessage(name_.c_str(), &msg) == 0;
 	}
 
+	/* Blocking receive: sleeps (leaves the run queue) until a message arrives or
+	 * @timeout_ticks elapse, instead of busy-polling.  timeout 0 = block forever.
+	 * Returns true if a message was fetched (false on timeout / no mailbox). */
+	bool wait(mpi_message_t &msg, uint32_t timeout_ticks = 0) const {
+		return mpi_waitMessage(name_.c_str(), &msg, timeout_ticks) == 0;
+	}
+
 	/* Post a message to this mailbox. */
 	void post(uint32_t type, mpi_message_t &msg) const {
 		mpi_postMessage(name_.c_str(), type, &msg);

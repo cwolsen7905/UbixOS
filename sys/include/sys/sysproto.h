@@ -127,6 +127,19 @@ int sys_mpiCreateMbox(struct thread *, struct sys_mpiCreateMbox_args *);
 int sys_mpiDestroyMbox(struct thread *, struct sys_mpiDestroyMbox_args *);
 int sys_mpiFetchMessage(struct thread *, struct sys_mpiFetchMessage_args *);
 int sys_mpiPostMessage(struct thread *, struct sys_mpiPostMessage_args *);
+struct sys_mpiWaitMessage_args
+{
+	char name_l_[PADL_(char *)];
+	char *name;
+	char name_r_[PADR_(char *)];
+	char msg_l_[PADL_(void *)];
+	void *msg;
+	char msg_r_[PADR_(void *)];
+	char timeout_l_[PADL_(u_int32_t)];
+	u_int32_t timeout;
+	char timeout_r_[PADR_(u_int32_t)];
+};
+int sys_mpiWaitMessage(struct thread *, struct sys_mpiWaitMessage_args *);
 int sys_getvfscwd(struct thread *, struct sys_getvfscwd_args *);
 
 struct sys_ttyctrl_args

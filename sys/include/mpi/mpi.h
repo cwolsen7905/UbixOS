@@ -62,6 +62,7 @@ int mpi_createMbox(char *);
 int mpi_destroyMbox(char *);
 int mpi_postMessage(char *, u_int32_t, mpi_message_t *);
 int mpi_fetchMessage(char *, mpi_message_t *);
+int mpi_waitMessage(char *, mpi_message_t *, u_int32_t); /* blocking fetch; timeout in ticks (0 = forever) */
 int mpi_mbox_exists(const char *);
 int mpi_spam(u_int32_t, void *);
 void mpi_destroyProcessMboxes(pidType);

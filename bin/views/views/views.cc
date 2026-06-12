@@ -197,7 +197,20 @@ int main(int argc, char **argv)
 		bool drew = wm.flush();
 		if (activity || drew)
 			_sys_fbpresent();
-		ubix::yield();
+
+		/* Idle: block on the mailbox instead of spinning.  A client message wakes
+		 * us immediately; otherwise we wake after ~1 tick (10 ms) to re-poll the
+		 * keyboard/mouse rings (which are separate from MPI).  When something just
+		 * happened, yield and loop promptly to drain the rest.  This drops an idle
+		 * compositor from a pegged CPU to a ~100 Hz input-poll cadence. */
+		if (activity || drew)
+		{
+			ubix::yield();
+		}
+		else if (mbox.wait(msg, 1))
+		{
+			wm.dispatch(msg.header, msg.data);
+		}
 	}
 
 	return 0;
