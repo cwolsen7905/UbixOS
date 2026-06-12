@@ -22,6 +22,7 @@
 #include <sys/types.h>
 #include <sys/sysproto.h>
 #include <sys/sysproto_posix.h>
+#include <sys/klog.h>           /* klog_read — drain the kernel log ring (logd) */
 #include <fs/ubixfs/ubfs_vfs.h> /* ubfs_vfs_query — native pool-query syscall 67 */
 #include <dev/disk.h>           /* disk_query — block-device enumeration syscall 68 */
 #include <ubixos/sched.h>
@@ -219,10 +220,25 @@ int sys_sysinfo(struct thread *td, struct sys_sysinfo_args *uap)
 	(void)uap;
 	ENOSYS_STUB(td);
 }
+/**
+ * klog_read (slot 47) — drain the kernel log ring into the caller's buffer.
+ *
+ * logd polls this to copy new entries (seq >= start_seq) into /var/log/messages.
+ * PAN is off, so klog_read writes the user array directly.  (The i386 copy lives
+ * in sys/kern/fb.c, which aarch64 does not link.)
+ */
 int sys_klog_read(struct thread *td, struct sys_klog_read_args *uap)
 {
-	(void)uap;
-	ENOSYS_STUB(td);
+	int n;
+
+	if (uap->buf == NULL || uap->max_entries <= 0)
+	{
+		td->td_retval[0] = -1;
+		return (-1);
+	}
+	n = klog_read(uap->buf, uap->max_entries, uap->start_seq);
+	td->td_retval[0] = n;
+	return (0);
 }
 
 /* sockets: the real implementations now link from sys/net/net/sys_arch.c (lwIP),
