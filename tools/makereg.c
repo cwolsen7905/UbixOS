@@ -64,6 +64,8 @@ static const struct reg_entry g_defaults[] = {
     {"/views/startmenu/2/label", "\"Utilities\""},
     {"/views/startmenu/2/items/0/label", "\"Disk Utility\""},
     {"/views/startmenu/2/items/0/exec", "\"/bin/diskutil\""},
+    {"/views/startmenu/2/items/1/label", "\"Activity Monitor\""},
+    {"/views/startmenu/2/items/1/exec", "\"/bin/activity\""},
 
     {"/views/startmenu/3/label", "\"Settings\""},
     {"/views/startmenu/3/exec", "\"/bin/settings\""},
