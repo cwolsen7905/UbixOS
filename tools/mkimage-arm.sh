@@ -154,7 +154,7 @@ fi
 
 # TrueType fonts for objGFX's scalable-font backend (vlogin/taskbar/term load
 # /var/fonts/DejaVuSans*.ttf) + desktop wallpapers.
-mmd -i "${IMG}@@1M" ::/var ::/var/fonts ::/var/background 2>/dev/null || true
+mmd -i "${IMG}@@1M" ::/var ::/var/fonts ::/var/background ::/var/log 2>/dev/null || true
 for f in tools/*.ttf; do [ -f "$f" ] && mcopy -o -i "${IMG}@@1M" "$f" ::/var/fonts/; done
 for f in tools/backgrounds/*.bmp tools/backgrounds/*.png; do
 	[ -f "$f" ] && mcopy -o -i "${IMG}@@1M" "$f" ::/var/background/

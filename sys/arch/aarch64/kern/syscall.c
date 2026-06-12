@@ -388,8 +388,14 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args)
 				u_int64_t iov_len;
 			} *iov = (struct iovec_lp64 *)(uintptr_t)args[1];
 			struct file *f = aarch64_lookup_fd((int)args[0]);
+			/* Match SYS_WRITE's routing: a pty/socket/pipe OR any real underlying
+			 * descriptor (a VFS/devfs regular file, f->fd != 0) dispatches through
+			 * sys_write so the fileops/VFS pick the destination.  Without the
+			 * f->fd != 0 case, buffered stdio (musl flushes via writev) writing a
+			 * regular file fell through to the bring-up UART path — so file writes
+			 * vanished to the serial console (e.g. logd's /var/log/messages). */
 			int is_fileop = (f != 0 && (f->fd_type == FD_TYPE_TTYV || f->fd_type == FD_TYPE_SOCKET ||
-			                            f->fd_type == FD_TYPE_PIPE));
+			                            f->fd_type == FD_TYPE_PIPE || f->fd != 0));
 			u_int64_t total = 0;
 			for (int i = 0; i < (int)args[2]; i++)
 			{
