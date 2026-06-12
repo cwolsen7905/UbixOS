@@ -26,26 +26,35 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/*
- * sndcfg — apply the saved master volume/mute from the ubistry registry to the
- * audio codec at boot.  Reads /aural/volume (0..100) and /aural/mute (0/1) and
- * pushes them to /dev/audio via the AC97 mixer ioctls, so the Settings → Sound
- * choice survives a reboot (the codec otherwise resets to full volume).  Run
- * once from /etc/init.d after the audio device and ubistry are up; the Settings
- * Sound pane writes the same keys when the user changes them.
- *
- * This is the lightweight stop-gap for persistence.  A future userland audio
- * server ("aural") will own the codec and central mixer, at which point master
- * volume becomes part of that daemon rather than a one-shot applier.
- */
+#include "audio_sink.hh"
+#include "aural_config.hh"
 
+#include <fcntl.h>
+#include <unistd.h>
+#include <sys/ioctl.h>
+#include <audio/audio.h>       /* AUDIO_* ioctl numbers only — not the veneer */
+#include <audio/aural_proto.h> /* AURAL_DEFAULT_RATE */
 #include <ubistry/ubistry.h>
-#include <api/ubix.h>
-#include <audio/audio.h>
 
-int main(void)
+namespace aural
 {
-	int vol = 100; /* default: full volume, unmuted */
+
+bool AudioSink::open_device()
+{
+	fd_ = open(AURAL_DEVICE_PATH, O_WRONLY);
+	if (fd_ < 0)
+		return false;
+
+	uint32_t rate = AURAL_DEFAULT_RATE;
+	ioctl(fd_, AUDIO_SET_RATE, &rate);
+
+	apply_saved_settings();
+	return true;
+}
+
+void AudioSink::apply_saved_settings()
+{
+	int vol = 100; /* registry defaults: full volume, unmuted */
 	int mute = 0;
 
 	(void)ubistry_get_int("/aural/volume", &vol);
@@ -56,18 +65,39 @@ int main(void)
 	if (vol > 100)
 		vol = 100;
 
-	int fd = audio_open("/dev/audio");
-	if (fd < 0)
+	uint32_t v = (uint32_t)vol;
+	uint32_t m = mute ? 1u : 0u;
+	ioctl(fd_, AUDIO_SET_VOLUME, &v);
+	ioctl(fd_, AUDIO_SET_MUTE, &m);
+}
+
+int AudioSink::write_period(const void *pcm, unsigned bytes)
+{
+	/* One non-blocking submission: the driver accepts a whole period or returns
+	 * 0 when its ring is full.  The caller (AuralServer) tops up the ring each
+	 * tick and naps in between — no busy-retry here. */
+	long r = write(fd_, pcm, bytes);
+	return (r < 0) ? -1 : (int)r;
+}
+
+void AudioSink::set_master(uint32_t volume, uint32_t mute, bool persist)
+{
+	if (volume != AURAL_MASTER_UNCHANGED)
 	{
-		/* No audio device on this machine — nothing to apply. */
-		ulog(ULOG_INFO, "sndcfg: no /dev/audio, skipping");
-		return (0);
+		if (volume > 100)
+			volume = 100;
+		ioctl(fd_, AUDIO_SET_VOLUME, &volume);
+		if (persist)
+			ubistry_set_int("/aural/volume", (int)volume);
 	}
 
-	audio_set_volume(fd, (unsigned int)vol);
-	audio_set_mute(fd, mute ? 1u : 0u);
-	audio_close(fd);
-
-	ulogf(ULOG_INFO, "sndcfg: applied volume=%d%% mute=%d", vol, mute ? 1 : 0);
-	return (0);
+	if (mute != AURAL_MASTER_UNCHANGED)
+	{
+		mute = mute ? 1u : 0u;
+		ioctl(fd_, AUDIO_SET_MUTE, &mute);
+		if (persist)
+			ubistry_set_int("/aural/mute", (int)mute);
+	}
 }
+
+} /* namespace aural */

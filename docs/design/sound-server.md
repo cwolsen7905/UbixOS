@@ -21,6 +21,74 @@ becomes a property of the server instead of a one-shot applier.
 
 ---
 
+## Status Matrix
+
+Legend: ✅ done & verified · 🟡 partial · ⬜ not started
+
+| Phase | Item | Status | Notes |
+|-------|------|--------|-------|
+| — | Kernel AC97 driver `/dev/audio` (s16 48 kHz stereo + vol/mute ioctls) | ✅ | i386 `sys/pci/ac97.c`; single-stream |
+| — | virtio-sound `/dev/audio` (same `dev_char_write`/`ioctl` contract, major 20) | ✅ | aarch64 `sys/arch/aarch64/dev/virtio_sound.c` — so `aural` is **dual-arch** |
+| — | `libaudio` client API (`audio_open/write/set_rate` + vol/mute) | ✅ | `lib/libaudio/`; used by aplay/mp3play/doom |
+| — | Stop-gap master-volume persistence (`sndcfg` + `/aural/*` ubistry) | ✅ | retired when Phase 3 lands |
+| 1 | `aural_proto.h` — protocol DTOs + shared SPSC ring + helpers | ✅ | `include/audio/aural_proto.h` |
+| 1 | `bin/aural` server (C++: AudioSink / StreamRegistry / Mixer / AuralServer) | ✅ | **works on aarch64** — boots in init.d, mixes live (vDoom + Tessera together). Nap-paced loop (real `nanosleep`), per-stream priming + variable-length feed |
+| 1 | Dead-client reaper (`kill(pid,0)` → free ring + stream) | ✅ | `StreamRegistry::reap()` |
+| 1 | `aural` reads master vol/mute from ubistry; owns it (decision #6) | ✅ | `AudioSink::open_device` → `apply_saved_settings` |
+| 1 | `libaudio` veneer (`audio_open` → `AURAL_CLAIM`, no app changes) | ✅ | `lib/libaudio/audio.c`; legacy `/dev/audio` fallback when aural absent. **Key fix:** must set `msg.header` before `mpi_postMessage` (MPI delivers the field, not the type arg) — see BUG-AUDIO. Added `ubix_api.a` to aplay/mp3play/tessera/settings link |
+| 1 | Wire into `bin/Makefile` SUBDIRS (both arches) + `etc/init.d/17-aural` | ✅ | both arches build; aarch64 boots desktop + audio with it |
+| 1 | Remove `sndcfg` (bin/sndcfg, 17-sndcfg, SUBDIRS, makereg.c, settings comment) | ✅ | done; stale build artifact purged |
+| 1 | Real aarch64 `nanosleep` (was yield-once) — daemon pacing primitive | ✅ | `sys/arch/aarch64/kern/syscall.c` via `sched_wait_event_timeout`; i386 generic nanosleep still busy-yields (TODO) |
+| — | **Choppy/underrun audio under load (esp. intermittent streams)** | 🟡 | mitigated (priming + variable feed); residual = likely OS perf, not aural — tracked as **BUG-AUDIO-01** in BUGS.md |
+| 1 | **Blocking-write pacing** in both drivers (`ac97.c` + `virtio_sound.c`) | ⬜ | superseded by nanosleep pacing for now; an IRQ-driven completion would tighten it (see BUG-AUDIO-01) |
+| 2 | N-client mixing (sum + clamp two streams) | ✅ | **verified** — vDoom + Tessera mix simultaneously on aarch64 |
+| 3 | Volume model (per-stream gain + server master; retire `sndcfg`) | ⬜ | Settings Sound pane points at `aural` |
+| 4 | Client migration + polish (aplay/mp3play/vdoom; rate/format convert) | ⬜ | one app at a time behind the API |
+
+The device + client-API half is built; the **mixer server itself (Phases 1–4)
+is not started** — concurrent players still fight over the single-open device.
+
+---
+
+## Decisions (locked 2026-06-10)
+
+These are settled for this version of uBixOS; the architecture doc
+(`docs/architecture/audio.md`) is written against them.
+
+1. **Blocking-write pacing.** `aural`'s mix loop is clocked by a **blocking
+   `write()` to `/dev/audio`** that returns when a DMA period drains. This
+   blocking/poll path is **Phase 1 kernel work** and must land in **both**
+   drivers (`sys/pci/ac97.c` i386, `sys/arch/aarch64/dev/virtio_sound.c`
+   aarch64). No busy-polling, no guess-timer.
+2. **`aural` is hardware-generic → dual-arch from day one.** It knows only the
+   generic `/dev/audio` contract (write PCM, `AUDIO_*` ioctls, blocking pace,
+   master-volume ioctl), never AC97/virtio internals. Both drivers already
+   present that identical contract (same `dev_char_write`/`dev_char_ioctl`,
+   major 20), so the same `aural` binary runs on i386 and aarch64.
+3. **`/dev/audio` stays the raw hardware node, `aural`-private** (mirrors "only
+   `views` opens `sys_mapfb`"). Normal apps never open it.
+4. **Compatibility = the `libaudio` veneer only.** `audio_open`/`audio_write`/…
+   are reimplemented on top of the `aural` protocol (shared ring + MPI), so
+   every current app (`aplay`/`mp3play`/vDoom, all of which use `libaudio`)
+   becomes a mixed client **with no source change**. **No** kernel
+   `/dev/audio`→server forwarding for raw `open()+write()` apps — none exist.
+5. **Control plane / data plane split.** MPI carries only control
+   (`CLAIM`/`START`/`STOP`/`SET_GAIN`/`SET_MASTER`/`RELEASE`); PCM lives only in
+   the shared SPSC ring. Empty ring at mix time = silence (one slow client never
+   stalls the master).
+6. **Master volume lives in ubistry; `sndcfg` is removed (not retired later).**
+   `aural` reads `/aural/volume` + `/aural/mute` from ubistry at startup
+   (`ubistry_get_int`), applies them to the codec, and writes them back on
+   `AURAL_SET_MASTER` — so `aural` owns master volume from day one. The one-shot
+   `bin/sndcfg` + `etc/init.d/17-sndcfg` are deleted; the Settings Sound pane
+   keeps writing the same ubistry keys. This also removes the boot-ordering
+   concern (no `sndcfg` for `aural` to sequence against).
+
+Out of scope this version: capture/recording, effects/EQ graph, network audio,
+hot device-switch, per-app volume UI beyond a flat list.
+
+---
+
 ## How Other Systems Did It
 
 | System | Who owns the codec | App produces audio how | Mixer |
@@ -51,10 +119,14 @@ The symmetry with the display stack is the whole point:
 
 ## Current State
 
-- **Kernel AC97 driver** (`sys/pci/ac97.c`) works: 16-bit stereo PCM at 48 kHz
-  out of a single kernel ring buffer exposed as `/dev/audio` (char device).
-  Master/PCM mixer volume + mute are controllable via the `AUDIO_SET_VOLUME` /
-  `AUDIO_SET_MUTE` ioctls (added alongside this plan).
+- **Kernel `/dev/audio` driver on both arches** — i386 AC97 (`sys/pci/ac97.c`)
+  and aarch64 virtio-sound (`sys/arch/aarch64/dev/virtio_sound.c`) both expose
+  the **same** char-device contract (`dev_char_write` / `dev_char_ioctl`, major
+  20): 16-bit stereo PCM at 48 kHz out of a single ring, with `AUDIO_SET_VOLUME`
+  / `AUDIO_SET_MUTE` master controls. Because the contract is identical, `aural`
+  is hardware-generic and runs on both architectures unchanged. *(What is **not**
+  there yet on either driver: a blocking `write()` that returns when the DMA
+  period drains — decision #1, Phase 1 kernel work, is to add it.)*
 - **`libaudio`** (`lib/libaudio/`) is the client API: `audio_open` →
   `open("/dev/audio")`, `audio_write`, `audio_set_rate`, plus the new
   volume/mute helpers. `aplay`, `mp3play`, and `doom` write directly to the
@@ -115,8 +187,19 @@ equivalent is alpha-clamped compositing.
 
 ### Phase 1 — Passthrough server
 **Result:** `aural` runs, owns `/dev/audio`, accepts a single client and copies
-its ring straight through. `aplay` migrated to the client API still plays.
-**Risk:** Low — no mixing yet; proves the claim/ring/MPI plumbing.
+its ring straight through. `aplay` (via the `libaudio` veneer) still plays.
+Includes the foundational pieces all later phases depend on:
+- **Blocking-write pacing** in both drivers (decision #1) — `aural`'s loop is
+  clocked by `write()` returning on DMA-period drain. *Touches `sys/pci/ac97.c`
+  and `sys/arch/aarch64/dev/virtio_sound.c`; verify both arches still play a
+  tone.*
+- **`libaudio` veneer** (decision #4) — `audio_open` → `AURAL_CLAIM` + shared
+  ring; existing apps unchanged.
+- **Dead-client reaper** (the views lesson) — `aural` reclaims a stream whose
+  client died without `AURAL_RELEASE`.
+
+**Risk:** Low–medium — no mixing yet, but the blocking-write change touches the
+kernel drivers; proves the claim/ring/MPI plumbing + pacing on both arches.
 
 ### Phase 2 — N-client mixing
 **Result:** Two clients (e.g. `mp3play` + a game) play simultaneously, summed

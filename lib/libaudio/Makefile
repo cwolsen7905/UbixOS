@@ -24,7 +24,11 @@ MUSL_INC = -I${MUSL_SRC}/include \
            -I${MUSL_SRC}/arch/generic \
            -I${SRCTOP}/include
 
-MUSL_CFLAGS = ${ARCH_CFLAGS} -nostdlib -nostdinc -fno-builtin \
+# -fPIC: libaudio.a is only ever linked into PIE executables, and the veneer
+# references an external libc data symbol (program_invocation_short_name) for the
+# app's mixer name — GOT-indirect access (PIC) is required so the aarch64 PIE link
+# does not emit an unresolvable ADR_PREL relocation against it.
+MUSL_CFLAGS = ${ARCH_CFLAGS} -nostdlib -nostdinc -fno-builtin -fPIC \
               -MMD -MP -Wall -O
 
 OBJS = audio.o

@@ -810,7 +810,8 @@ static void draw_about(ogSurface &surf, ogScalableFont &font)
 
 /* Read the current master volume/mute from the AC97 codec (once). */
 /* The persisted master volume/mute live under /aural keys (the audio analog of the
- * /views keys); bin/sndcfg applies them to the codec at boot. */
+ * /views keys); the aural mixer server owns them — it reads them at startup and
+ * applies AURAL_SET_MASTER changes to the codec. */
 static void sound_load()
 {
 	g_sound_loaded = true;

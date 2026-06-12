@@ -150,3 +150,11 @@ Known bugs in UbixOS. See [TODO.md](TODO.md) for improvements and enhancements.
 | ~~BUG-MPI-05~~ | [sys/mpi/system.c:81](sys/mpi/system.c) | **FIXED** `mpi_createMbox`: `sprintf(mbox->name, name)` with no bounds check. Replaced with `strncpy(..., sizeof(mbox->name) - 1)` and explicit NUL terminator. |
 | ~~BUG-MPI-06~~ | [sys/mpi/system.c:175](sys/mpi/system.c) | **FIXED** `mpi_postMessage` type `0x2` synchronous wait: changed spin condition from `mbox->msgLast != 0x0` (never cleared, infinite spin) to `mbox->msg != 0x0` (cleared by fetchMessage), and added `sched_yield()` inside the loop. |
 | ~~BUG-MPI-07~~ | [sys/mpi/system.c:79,158,117](sys/mpi/system.c) | **FIXED** `mpi_createMbox`, `mpi_postMessage`, `mpi_spam`: `kmalloc` return unchecked. All three paths now NULL-check and return an error (or `continue` in the spam loop) on allocation failure. |
+
+---
+
+## Audio / aural (identified 2026-06-11)
+
+| ID | File | Description |
+|----|------|-------------|
+| BUG-AUDIO-01 | [bin/aural/](bin/aural/), [sys/arch/aarch64/dev/virtio_sound.c](sys/arch/aarch64/dev/virtio_sound.c) | **OPEN — possibly performance, not a code defect.** Choppy/underrun audio through the `aural` mixer on aarch64, more pronounced for intermittent streams (Tessera UI sfx) than continuous ones (vDoom). Mixing is *functional* — multiple streams play simultaneously and pitch is correct; the artefact is occasional underrun "chop". Already mitigated substantially: per-stream ring **priming** (build a cushion before draining) + **variable-length real-data feeding** (no silence padding between bursts). Remaining chop may just be **general OS scheduling/performance under load** rather than an aural-specific bug — the cooperative aarch64 scheduler + the 10 ms `nanosleep` pacing (one 100 Hz tick) leaves little timing margin to keep the 44.1 kHz device fed. **Next step to diagnose:** a steady synthetic-tone client on an otherwise-idle desktop, to separate "aural pacing bug" from "system can't keep up under load". Tuning knobs: `PRIME_BYTES` / `PRIME_GRACE` / `RING_CAPACITY` / `AURAL_NAP_MS` in `bin/aural/`; a finer scheduler tick, or IRQ-driven virtio-sound completion (it currently polls), would tighten pacing. See `docs/design/sound-server.md`. |
