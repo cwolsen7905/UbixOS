@@ -28,6 +28,7 @@
 
 #include <i386/smp.h>
 #include <i386/pcpu.h>
+#include <ubixos/cpu_enum.h> /* acpi_enum_cpus result + cpu_enum_dump (Phase 1) */
 #include <sys/gdt.h>
 #include <ubixos/spinlock.h>
 #include <ubixos/kpanic.h>
@@ -248,6 +249,12 @@ int smpInit(void)
 	        cpuinfo[0].apic_id,
 	        cpuinfo[0].apic_ver,
 	        cpuinfo[0].brand);
+
+	/* smp-plan Phase 1: enumerate CPUs from the ACPI MADT into the MI cpu_enum
+	 * table (authoritative count + APIC ids).  Discovery only — apicMagic() below
+	 * still launches the APs the existing way; this does not change that yet. */
+	acpi_enum_cpus(cpuinfo[0].apic_id);
+	cpu_enum_dump();
 
 	/* Capture the kernel page directory so each AP can adopt it and run in the
 	 * kernel address space. */

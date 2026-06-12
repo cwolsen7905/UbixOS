@@ -88,6 +88,7 @@ AARCH64_KCFLAGS = ${KERN_TARGET_CFLAGS} -DDEBUG_SYSCTL -O -Wall -Wno-incompatibl
 AARCH64_GENERIC_SRCS = \
 	sys/kern/sched_core.c \
 	sys/kern/sched_dispatch.c \
+	sys/kern/cpu_enum.c \
 	sys/kern/callout.c \
 	sys/kern/random.c \
 	sys/kern/vitals.c \
@@ -520,6 +521,10 @@ install: install-world install-kernel
 # the selected ${_ARCH}.  `bmake run` boots i386 today; `bmake run TARGET=aarch64`
 # boots the aarch64 kernel in QEMU `virt` once it exists.  The i386 recipes below
 # are unchanged (just renamed to run-i386 / run-debug-i386).
+# vCPU count for every run target.  Minimum 2 so SMP / CPU-enumeration is always
+# exercised on both arches; override with `bmake run SMP=4`.
+SMP ?= 2
+
 run:       run-${_ARCH}
 run-debug: run-debug-${_ARCH}
 
@@ -534,7 +539,7 @@ _ARM_DISK_FLAGS!= test -f ${DISK_IMAGE_ARM} && \
 # Serial output is captured to serial.log for post-mortem inspection.
 # If usb.img exists it is attached as a USB mass-storage device.
 run-i386:
-	qemu-system-i386 -m 256 -drive file=${DISK_IMAGE},format=raw,if=ide,index=0 \
+	qemu-system-i386 -m 256 -smp ${SMP} -drive file=${DISK_IMAGE},format=raw,if=ide,index=0 \
 	  -machine pc \
 	  -device piix3-usb-uhci,id=uhci-bus \
 	  -device usb-kbd,bus=uhci-bus.0,port=1 \
@@ -549,7 +554,7 @@ run-i386:
 # Headless i386 run: no display, serial to stdout.  Ctrl-C to stop.
 # If usb.img exists it is attached as a USB mass-storage device.
 run-debug-i386:
-	qemu-system-i386 -m 256 -drive file=${DISK_IMAGE},format=raw,if=ide,index=0 \
+	qemu-system-i386 -m 256 -smp ${SMP} -drive file=${DISK_IMAGE},format=raw,if=ide,index=0 \
 	  -machine pc \
 	  -device piix3-usb-uhci,id=uhci-bus \
 	  -device usb-kbd,bus=uhci-bus.0,port=1 \
@@ -563,7 +568,7 @@ run-debug-i386:
 # bring-up); virtio-blk is attached only if ${DISK_IMAGE_ARM} exists.  HVF gives
 # near-native speed since host and guest are both ARM64.  Serial → serial.log.
 run-aarch64:
-	qemu-system-aarch64 -machine virt,gic-version=2 -accel hvf -cpu host -m 512 \
+	qemu-system-aarch64 -machine virt,gic-version=2 -accel hvf -cpu host -m 512 -smp ${SMP} \
 	  -kernel ${OBJ_DIR}/boot/kernel \
 	  -global virtio-mmio.force-legacy=false \
 	  ${_ARM_DISK_FLAGS} \
@@ -576,7 +581,7 @@ run-aarch64:
 # Headless aarch64 run: serial to stdout — the bring-up console.  Ctrl-A X quits.
 # force-legacy=false selects the modern (v2) virtio-mmio transport the driver needs.
 run-debug-aarch64:
-	qemu-system-aarch64 -machine virt,gic-version=2 -accel hvf -cpu host -m 512 \
+	qemu-system-aarch64 -machine virt,gic-version=2 -accel hvf -cpu host -m 512 -smp ${SMP} \
 	  -kernel ${OBJ_DIR}/boot/kernel \
 	  -global virtio-mmio.force-legacy=false \
 	  ${_ARM_DISK_FLAGS} \
@@ -587,7 +592,7 @@ run-debug-aarch64:
 # ne2k driver.  net_init falls back to ne2k when no e1000 is present.  Frames are
 # dumped to /tmp/ne2kdump.pcap (decode with: tcpdump -nr /tmp/ne2kdump.pcap).
 run-ne2k:
-	qemu-system-i386 -m 256 -drive file=${DISK_IMAGE},format=raw,if=ide,index=0 \
+	qemu-system-i386 -m 256 -smp ${SMP} -drive file=${DISK_IMAGE},format=raw,if=ide,index=0 \
 	  -machine pc \
 	  -device piix3-usb-uhci,id=uhci-bus \
 	  -device usb-kbd,bus=uhci-bus.0,port=1 \
@@ -600,7 +605,7 @@ run-ne2k:
 # The VM appears on your LAN and gets a real IP from your router's DHCP server.
 # Use this to bypass QEMU SLIRP and verify the e1000 driver against a real DHCP.
 run-en0:
-	sudo qemu-system-i386 -m 256 -drive file=${DISK_IMAGE},format=raw,if=ide,index=0 \
+	sudo qemu-system-i386 -m 256 -smp ${SMP} -drive file=${DISK_IMAGE},format=raw,if=ide,index=0 \
 	  -serial file:serial.log -vga std \
 	  -device e1000,netdev=net0 -netdev vmnet-bridged,id=net0,ifname=en0 \
 	  -object filter-dump,id=f1,netdev=net0,file=/tmp/e1000dump.pcap
@@ -608,7 +613,7 @@ run-en0:
 # vmnet-shared: macOS NAT + its own DHCP server, also requires sudo.
 # Useful when en0 is Wi-Fi and bridged mode is unreliable.
 run-shared:
-	sudo qemu-system-i386 -m 256 -drive file=${DISK_IMAGE},format=raw,if=ide,index=0 \
+	sudo qemu-system-i386 -m 256 -smp ${SMP} -drive file=${DISK_IMAGE},format=raw,if=ide,index=0 \
 	  -serial file:serial.log -vga std \
 	  -device e1000,netdev=net0 -netdev vmnet-shared,id=net0 \
 	  -object filter-dump,id=f1,netdev=net0,file=/tmp/e1000dump.pcap

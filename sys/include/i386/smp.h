@@ -54,4 +54,9 @@ void setEflags(u_int32_t);
 void cpuid(u_int32_t, u_int32_t *);
 void apicMagic();
 
+/* madt.c — enumerate CPUs from the ACPI MADT into the MI cpu_enum table
+ * (smp-plan Phase 1).  Call after cpuInfo() (BSP APIC id known), before
+ * apicMagic().  Discovery only — launches nothing. */
+void acpi_enum_cpus(u_int8_t bsp_apic_id);
+
 #endif

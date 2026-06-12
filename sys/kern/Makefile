@@ -8,6 +8,7 @@ include ../Makefile.incl
 OBJS = \
 	access.o \
 	callout.o \
+	cpu_enum.o \
 	descrip.o \
 	disk_query.o \
 	endtask.o \
