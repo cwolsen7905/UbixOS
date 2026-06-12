@@ -361,6 +361,22 @@ int sys_stat(struct thread *td, struct sys_stat_args *args)
 	return (0x0);
 }
 
+/**
+ * Copy the inode timestamps (seconds) from a fileDescriptor into a statx result.
+ *
+ * Filesystems that populate fd->inode (UbixFS via ubfs_vfs_open; FAT via
+ * open_fat) get real atime/mtime/ctime here; those that leave it zero report the
+ * epoch, as before.  birthtime is reported as ctime (the ufs2 dinode the VFS
+ * uses carries no separate birth field).
+ */
+static void statx_fill_times(struct statx *stx, const fileDescriptor_t *fd)
+{
+	stx->stx_atime.tv_sec = (int64_t)fd->inode.u.ufs2_i.di_atime;
+	stx->stx_mtime.tv_sec = (int64_t)fd->inode.u.ufs2_i.di_mtime;
+	stx->stx_ctime.tv_sec = (int64_t)fd->inode.u.ufs2_i.di_ctime;
+	stx->stx_btime.tv_sec = (int64_t)fd->inode.u.ufs2_i.di_ctime;
+}
+
 /*
  * sys_statx — Linux statx(2) compatibility (slot 383).
  *
@@ -434,6 +450,7 @@ int sys_statx(struct thread *td, struct sys_statx_args *args)
 		stx->stx_blocks = (fd->size + 511) / 512;
 		stx->stx_dev_major = 1;
 		stx->stx_dev_minor = 1;
+		statx_fill_times(stx, fd);
 	}
 	else
 	{
@@ -507,6 +524,7 @@ int sys_statx(struct thread *td, struct sys_statx_args *args)
 			stx->stx_blocks = (fd->size + 511) / 512;
 			stx->stx_dev_major = 1;
 			stx->stx_dev_minor = 1;
+			statx_fill_times(stx, fd);
 			fclose(fd);
 		}
 	}

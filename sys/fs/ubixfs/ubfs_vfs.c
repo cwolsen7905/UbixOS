@@ -105,6 +105,18 @@ static int ubfs_commit(struct ubfs_mount *m)
 }
 
 /**
+ * Stamp the mount's clock (ubfs_fs::now) with the current wall-clock seconds, so
+ * objects created/modified in-OS get real timestamps.  The kernel passes now=0
+ * to ubfs_fs_init at mount; without refreshing it here, every in-OS create/write
+ * (e.g. automountd's mkdir of a mount point) records the 1970 epoch.
+ */
+static void ubfs_touch_clock(struct ubfs_mount *m)
+{
+	if (systemVitals != 0)
+		m->fs.now = (uint64_t)(systemVitals->timeStart + systemVitals->sysUptime);
+}
+
+/**
  * Strip the mount-point prefix from @path so it is relative to the pool root.
  *
  * vfsMakeDir is handed the full path ("/pool/etc") while vfsUnlink/RemDir get an
@@ -320,6 +332,7 @@ static int ubfs_vfs_open(const char *path, fileDescriptor_t *fd)
 	if (fd->mp == 0 || fd->mp->fsInfo == 0)
 		return (0);
 	m = (struct ubfs_mount *)fd->mp->fsInfo;
+	ubfs_touch_clock(m); /* real timestamps on any create below */
 
 	if (ubfs_fs_lookup(&m->fs, path, &obj) < 0)
 	{
@@ -406,6 +419,7 @@ static int ubfs_vfs_write(fileDescriptor_t *fd, char *data, off_t offset, long s
 	if (!f->m->writable)
 		return (-1);
 
+	ubfs_touch_clock(f->m); /* stamp mtime/ctime with the wall clock */
 	if (ubfs_fs_write(&f->m->fs, f->obj, (uint64_t)offset, data, (uint64_t)size) < 0)
 		return (-1);
 	if (ubfs_commit(f->m) < 0)
@@ -475,6 +489,12 @@ static int ubfs_vfs_opendir(const char *path, kDIR_t *dir)
 		return (0);
 	d->count = 0;
 	d->idx = 0;
+
+	/* Synthesize "." and ".." up front.  UbixFS (ZFS-style) stores no dot entries
+	 * on disk, but POSIX readdir() and tools (`ls -a`, find) expect them; "." is
+	 * the directory itself and ".." is its parent (in.parent, self for the root). */
+	collect_cb(d, ".", obj, UBFS_DT_DIR);
+	collect_cb(d, "..", (in.parent != 0) ? in.parent : obj, UBFS_DT_DIR);
 	ubfs_fs_readdir(&m->fs, obj, collect_cb, d);
 
 	dir->dirHandle = d;
@@ -534,6 +554,7 @@ static int ubfs_vfs_mkdir(char *path, void *vfd)
 	if (!m->writable)
 		return (-1);
 
+	ubfs_touch_clock(m); /* real ctime/mtime on the new directory */
 	if (ubfs_fs_mkdir(&m->fs, pool_relative(fd->mp, path), 0755, 0, 0, &obj) < 0)
 		return (-1);
 	return (ubfs_commit(m));

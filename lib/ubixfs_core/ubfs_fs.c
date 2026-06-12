@@ -47,7 +47,7 @@ static uint8_t dtype_of(uint32_t mode)
 static int next_comp(const char **p, char *comp, int cap)
 {
 	const char *s = *p;
-	int         n = 0;
+	int n = 0;
 
 	while (*s == '/')
 		s++;
@@ -63,7 +63,7 @@ static int next_comp(const char **p, char *comp, int cap)
 static const char *split_parent(const char *path, char *pbuf, int cap)
 {
 	const char *slash = path, *q;
-	int         plen;
+	int plen;
 
 	for (q = path; *q; q++)
 		if (*q == '/')
@@ -94,7 +94,7 @@ void ubfs_fs_init(ubfs_fs_t *fs, ubfs_dmu_os_t *os, uint64_t now)
 
 int ubfs_fs_mkroot(ubfs_fs_t *fs, uint32_t uid, uint32_t gid)
 {
-	uint64_t     obj = ubfs_dmu_object_alloc(fs->os, UBFS_OT_DIRECTORY, UBFS_BT_INODE);
+	uint64_t obj = ubfs_dmu_object_alloc(fs->os, UBFS_OT_DIRECTORY, UBFS_BT_INODE);
 	ubfs_inode_t in;
 
 	if (obj != UBFS_OBJ_ROOT)
@@ -112,16 +112,26 @@ int ubfs_fs_mkroot(ubfs_fs_t *fs, uint32_t uid, uint32_t gid)
 int ubfs_fs_lookup(ubfs_fs_t *fs, const char *path, uint64_t *obj)
 {
 	uint64_t cur = UBFS_OBJ_ROOT;
-	char     comp[UBFS_NAME_MAX + 1];
+	char comp[UBFS_NAME_MAX + 1];
 
 	while (next_comp(&path, comp, sizeof(comp)) > 0)
 	{
 		ubfs_inode_t in;
-		uint64_t     next;
+		uint64_t next;
 		if (inode_get(fs, cur, &in) < 0)
 			return -1;
 		if ((in.mode & UBFS_S_IFMT) != UBFS_S_IFDIR)
 			return -2; /* not a directory */
+		/* "." stays in place; ".." ascends to the parent (root's parent is root).
+		 * UbixFS stores no on-disk dot entries, so resolve them here — without it
+		 * lstat("/."), `cd ..` and `cat ./x` all fail on the pool. */
+		if (comp[0] == '.' && comp[1] == '\0')
+			continue;
+		if (comp[0] == '.' && comp[1] == '.' && comp[2] == '\0')
+		{
+			cur = (in.parent != 0) ? in.parent : cur;
+			continue;
+		}
 		if (ubfs_dir_lookup(fs->os, cur, comp, &next, NULL) < 0)
 			return -3; /* no such entry */
 		cur = next;
@@ -131,12 +141,12 @@ int ubfs_fs_lookup(ubfs_fs_t *fs, const char *path, uint64_t *obj)
 }
 
 /* Create an object of `mode` at `path`, link it into its parent. */
-static int make_node(ubfs_fs_t *fs, const char *path, uint8_t otype, uint32_t mode, uint32_t uid, uint32_t gid,
-                     uint64_t *out)
+static int make_node(
+    ubfs_fs_t *fs, const char *path, uint8_t otype, uint32_t mode, uint32_t uid, uint32_t gid, uint64_t *out)
 {
-	char         pbuf[1024];
-	const char  *leaf = split_parent(path, pbuf, sizeof(pbuf));
-	uint64_t     pobj, obj, dummy;
+	char pbuf[1024];
+	const char *leaf = split_parent(path, pbuf, sizeof(pbuf));
+	uint64_t pobj, obj, dummy;
 	ubfs_inode_t pin, in;
 
 	if (leaf[0] == '\0')
@@ -179,7 +189,7 @@ int ubfs_fs_create(ubfs_fs_t *fs, const char *path, uint32_t mode, uint32_t uid,
 int ubfs_fs_symlink(ubfs_fs_t *fs, const char *path, const char *target, uint32_t uid, uint32_t gid, uint64_t *obj)
 {
 	uint64_t o;
-	int      r = make_node(fs, path, UBFS_OT_PLAIN_FILE, UBFS_S_IFLNK | 0777, uid, gid, &o);
+	int r = make_node(fs, path, UBFS_OT_PLAIN_FILE, UBFS_S_IFLNK | 0777, uid, gid, &o);
 
 	if (r < 0)
 		return r;
@@ -222,7 +232,7 @@ int ubfs_fs_read(ubfs_fs_t *fs, uint64_t obj, uint64_t off, void *buf, uint64_t 
 int ubfs_fs_readlink(ubfs_fs_t *fs, uint64_t obj, char *buf, uint64_t bufsz)
 {
 	ubfs_inode_t in;
-	uint64_t     n;
+	uint64_t n;
 
 	if (inode_get(fs, obj, &in) < 0)
 		return -1;
@@ -249,9 +259,9 @@ int ubfs_fs_readdir(ubfs_fs_t *fs, uint64_t dirobj, ubfs_dir_cb cb, void *arg)
 
 int ubfs_fs_unlink(ubfs_fs_t *fs, const char *path)
 {
-	char        pbuf[1024];
+	char pbuf[1024];
 	const char *leaf = split_parent(path, pbuf, sizeof(pbuf));
-	uint64_t    pobj, obj;
+	uint64_t pobj, obj;
 	ubfs_inode_t in;
 
 	if (ubfs_fs_lookup(fs, pbuf, &pobj) < 0)
