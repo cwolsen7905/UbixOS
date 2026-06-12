@@ -102,6 +102,7 @@ AARCH64_GENERIC_SRCS = \
 	sys/lib/kprintf.c \
 	sys/lib/kconsole.c \
 	sys/lib/strlen.c \
+	sys/lib/rbtree.c \
 	sys/vmm/vm_filecache.c \
 	sys/kern/elf64_load.c \
 	sys/kern/klog.c \
