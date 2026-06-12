@@ -32,6 +32,7 @@
 #include <cstdio>
 #include <cstring>
 #include <cstdlib>
+#include <ctime>
 #include <ubix/mailbox.hh>
 #include <ubix/sched.hh>
 #include <ubix/process.hh>
@@ -40,6 +41,7 @@
 #include <objgfx/ogScalableFont.h>
 #include <objgfx/ogPixelFmt.h>
 #include <ubistry/ubistry.h>
+#include <audio/aural_proto.h>
 
 extern char **environ; /* inherited session env, forwarded to launched apps */
 
@@ -58,6 +60,18 @@ extern char **environ; /* inherited session env, forwarded to launched apps */
 #define MENU_ITEM_H 28
 #define MENU_MAX_ITEMS 16
 #define MENU_FOOTER_H 32 /* user + power row at the bottom of the start menu */
+
+/* Mixer flyout geometry: a titled card with one vertical slider per column
+ * (master + each live app).  Tuned for a calm, modern pop-over: a thin rounded
+ * track, a circular knob, and generous breathing room. */
+#define FLY_PAD 16       /* card inset from the window edge          */
+#define MIX_HEADER_H 24  /* "Volume" title band                      */
+#define MIX_COL_W 58     /* per-slider column width                  */
+#define MIX_TRACK_W 5    /* slider groove width (rounded)            */
+#define MIX_TRACK_TOP 60 /* y of the track top (header + value row)  */
+#define MIX_TRACK_H 110  /* slider travel                            */
+#define MIX_KNOB_R 8     /* knob radius                              */
+#define MIX_LABEL_GAP 12 /* gap from track bottom to the name label  */
 
 /* Colours: (r<<16)|(g<<8)|b.  All but white are derived from the per-user accent
  * colour (views/theme/accent) by apply_theme(); defaults are slate-derived to
@@ -128,72 +142,49 @@ static void font_bg(ogScalableFont &f, uint32_t c)
 /* Time formatting                                                      */
 /* ------------------------------------------------------------------ */
 
-#define MINUTE 60
-#define HOUR (60 * MINUTE)
-#define DAY (24 * HOUR)
-#define YEAR (365 * DAY)
+/*
+ * Timezone: the kernel clock is UTC.  The local zone is a POSIX TZ string in
+ * ubistry (/system/timezone, e.g. "EST5EDT,M3.2.0,M11.1.0" = US Eastern with
+ * auto-DST).  We hand it to musl via $TZ and let localtime() do the offset +
+ * DST math — the standard, future-proof path (and $TZ then serves any POSIX
+ * app's localtime() too).
+ */
+static bool g_tz_loaded = false;
 
-static const int month_secs[12] = {
-    0,
-    DAY * 31,
-    DAY * (31 + 29),
-    DAY * (31 + 29 + 31),
-    DAY * (31 + 29 + 31 + 30),
-    DAY * (31 + 29 + 31 + 30 + 31),
-    DAY * (31 + 29 + 31 + 30 + 31 + 30),
-    DAY * (31 + 29 + 31 + 30 + 31 + 30 + 31),
-    DAY * (31 + 29 + 31 + 30 + 31 + 30 + 31 + 31),
-    DAY * (31 + 29 + 31 + 30 + 31 + 30 + 31 + 31 + 30),
-    DAY * (31 + 29 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31),
-    DAY * (31 + 29 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31 + 30),
-};
+/* musl gates these POSIX prototypes behind a feature macro the -nostdinc world
+ * build does not set; the symbols are in libc, so declare them directly. */
+extern "C" int setenv(const char *name, const char *value, int overwrite);
+extern "C" void tzset(void);
+extern "C" int nanosleep(const struct timespec *req, struct timespec *rem);
 
-/* Format "MM/DD  HH:MM:SS" into buf (needs >= 16 bytes). */
+/* Load /system/timezone once (default US Eastern w/ DST) and apply it via $TZ. */
+static void load_timezone(void)
+{
+	char tz[64];
+	if (ubistry_get_str("/system/timezone", tz, sizeof(tz)) != 0)
+	{
+		strncpy(tz, "EST5EDT,M3.2.0,M11.1.0", sizeof(tz) - 1);
+		tz[sizeof(tz) - 1] = '\0';
+	}
+	setenv("TZ", tz, 1);
+	tzset();
+	g_tz_loaded = true;
+}
+
+/* Format "MM/DD  HH:MM:SS" (local time, DST-aware) into buf (needs >= 16 bytes). */
 static void get_datetime_str(char *buf)
 {
-	int t = gettime();
-	int year = (t / YEAR) + 1970;
-	t -= YEAR * (year - 1970);
-	t -= DAY * (((year - 1970) + 1) / 4);
-
-	int month = 0;
-	for (int i = 11; i >= 0; i--)
+	if (!g_tz_loaded)
+		load_timezone();
+	time_t t = (time_t)gettime();
+	struct tm *lt = localtime(&t);
+	if (lt == nullptr)
 	{
-		if ((t - month_secs[i]) > 0)
-		{
-			month = i;
-			break;
-		}
+		buf[0] = '\0';
+		return;
 	}
-	t -= month_secs[month];
-	if (month > 1 && (((year - 1970) + 2) % 4) == 0)
-		t += DAY;
-
-	int day = (t / DAY) + 1;
-	t -= (t / DAY) * DAY;
-	int hour = t / HOUR;
-	t -= hour * HOUR;
-	int min = t / MINUTE;
-	t -= min * MINUTE;
-	int sec = t;
-	int mon = month + 1;
-
-	buf[0] = '0' + (mon / 10);
-	buf[1] = '0' + (mon % 10);
-	buf[2] = '/';
-	buf[3] = '0' + (day / 10);
-	buf[4] = '0' + (day % 10);
-	buf[5] = ' ';
-	buf[6] = ' ';
-	buf[7] = '0' + (hour / 10);
-	buf[8] = '0' + (hour % 10);
-	buf[9] = ':';
-	buf[10] = '0' + (min / 10);
-	buf[11] = '0' + (min % 10);
-	buf[12] = ':';
-	buf[13] = '0' + (sec / 10);
-	buf[14] = '0' + (sec % 10);
-	buf[15] = '\0';
+	snprintf(
+	    buf, 16, "%02d/%02d  %02d:%02d:%02d", lt->tm_mon + 1, lt->tm_mday, lt->tm_hour, lt->tm_min, lt->tm_sec);
 }
 
 /* ------------------------------------------------------------------ */
@@ -559,6 +550,369 @@ class Menu
 };
 
 /* ------------------------------------------------------------------ */
+/* MixerFlyout — the speaker-tray pop-over.  A vertical master-volume   */
+/*   slider plus one slider per live aural stream (the per-app mixer).  */
+/*   Drives the codec via AURAL_SET_MASTER and each stream via          */
+/*   AURAL_SET_GAIN; the live stream set comes from an AURAL_LIST query. */
+/* ------------------------------------------------------------------ */
+
+class MixerFlyout
+{
+	ogSurface surf_;
+	ubix::Mailbox replies_; /* dedicated reply box for AURAL_LIST */
+	bool replies_ready_ = false;
+	uint32_t win_id_ = 0;
+	bool open_ = false;
+	int x_ = 0, y_ = 0, w_ = 0, h_ = 0;
+	int active_col_ = -1; /* column under a held button (0 = master, 1.. = app) */
+	int hover_col_ = -1;  /* column under the cursor (knob highlight)            */
+
+	int master_vol_ = 100;
+	bool master_mute_ = false;
+	struct aural_list_reply data_ = {}; /* live streams (from AURAL_LIST) */
+
+	/* Write @p src into @p dst (cap @p n) trimmed to fit @p maxpx pixels, appending
+	 * "..." when it must be shortened.  Uses the font's real glyph advances so it
+	 * works for any name and proportional face — no guessed character budget. */
+	static void fit_label(ogScalableFont &font, char *dst, size_t n, const char *src, int maxpx)
+	{
+		std::strncpy(dst, src, n - 1);
+		dst[n - 1] = '\0';
+		if ((int)font.TextWidth(dst) <= maxpx)
+			return; /* fits whole */
+
+		/* Largest prefix p such that "p..." still fits the budget. */
+		for (size_t len = std::strlen(dst); len > 0; len--)
+		{
+			char trial[40];
+			std::snprintf(trial, sizeof(trial), "%.*s...", (int)(len - 1), src);
+			if ((int)font.TextWidth(trial) <= maxpx)
+			{
+				std::strncpy(dst, trial, n - 1);
+				dst[n - 1] = '\0';
+				return;
+			}
+		}
+		std::snprintf(dst, n, "..."); /* nothing fits — just the ellipsis */
+	}
+
+	/* Master column plus one per live stream. */
+	int columns() const
+	{
+		return 1 + (int)data_.count;
+	}
+
+	/* Display level 0..100 for column @p c (0 = master). */
+	int col_level(int c) const
+	{
+		if (c == 0)
+			return master_mute_ ? 0 : master_vol_;
+		uint32_t g = data_.streams[c - 1].gain;
+		int lvl = (int)(g * 100u / AURAL_GAIN_UNITY);
+		return lvl > 100 ? 100 : lvl;
+	}
+
+	const char *col_name(int c) const
+	{
+		return (c == 0) ? "Master" : data_.streams[c - 1].name;
+	}
+
+	/* Column under x (flyout-relative), or -1 outside any slider column. */
+	int col_at(int x) const
+	{
+		if (x < FLY_PAD)
+			return -1;
+		int c = (x - FLY_PAD) / MIX_COL_W;
+		return (c >= 0 && c < columns()) ? c : -1;
+	}
+
+	/* Map a flyout-relative y onto a 0..100 slider level (clamped to track). */
+	static int level_at(int y)
+	{
+		int top = MIX_TRACK_TOP, bot = MIX_TRACK_TOP + MIX_TRACK_H;
+		if (y <= top)
+			return 100;
+		if (y >= bot)
+			return 0;
+		return (bot - y) * 100 / MIX_TRACK_H;
+	}
+
+	void draw_slider(ogScalableFont &font, int c)
+	{
+		int x0 = FLY_PAD + c * MIX_COL_W;
+		int cx = x0 + MIX_COL_W / 2;
+		int top = MIX_TRACK_TOP, bot = MIX_TRACK_TOP + MIX_TRACK_H;
+		int lvl = col_level(c);
+		int kn_y = bot - lvl * MIX_TRACK_H / 100;
+		bool master = (c == 0);
+		bool lit = (c == active_col_ || c == hover_col_);
+		int hw = MIX_TRACK_W / 2;
+
+		uint32_t panel = FLY_BG_C;
+		uint32_t groove = ogSurface::ogBlendColor(panel, 0x00000000u, 96);
+		/* Filled portion: master in a brighter accent, apps in the calmer one. */
+		uint32_t fill = master ? ogSurface::ogBlendColor(FLY_ITEM_C, COL_WHITE, 80) : FLY_ITEM_C;
+		if (lit)
+			fill = ogSurface::ogBlendColor(fill, COL_WHITE, 48);
+
+		/* Rounded groove, then the filled portion from the knob to the bottom. */
+		surf_.ogFillRoundRect(cx - hw, top, cx + hw, bot, hw, groove);
+		if (kn_y < bot - 1)
+			surf_.ogFillRoundRect(cx - hw, kn_y, cx + hw, bot, hw, fill);
+
+		/* Knob: a white disc with a thin ring and an accent pip; grows when lit. */
+		int r = MIX_KNOB_R + (lit ? 1 : 0);
+		surf_.ogFillCircle(cx, kn_y, r, COL_WHITE);
+		surf_.ogCircle(cx, kn_y, r, ogSurface::ogBlendColor(panel, 0x00000000u, 70));
+		surf_.ogFillCircle(cx, kn_y, r - 4, fill);
+
+		/* Name below the track: trimmed to the column width, then centred under it. */
+		char nm[24];
+		fit_label(font, nm, sizeof(nm), col_name(c), MIX_COL_W - 6);
+		int nx = x0 + (MIX_COL_W - (int)font.TextWidth(nm)) / 2;
+		font_fg(font, master ? ogSurface::ogBlendColor(panel, COL_WHITE, 230) : 0x00AEB6C2u);
+		font_bg(font, panel);
+		font.PutString(surf_, nx, bot + MIX_LABEL_GAP, nm);
+
+		/* Persistent level under the name (centred, quiet secondary tone). */
+		char pct[8];
+		std::snprintf(pct, sizeof(pct), "%d%%", lvl);
+		int px = x0 + (MIX_COL_W - (int)font.TextWidth(pct)) / 2;
+		font_fg(font, ogSurface::ogBlendColor(panel, COL_WHITE, 140));
+		font.PutString(surf_, px, bot + MIX_LABEL_GAP + FONT_SIZE + 3, pct);
+	}
+
+	void draw(ogScalableFont &font)
+	{
+		/* Card: a 1px darker frame around a rounded inner fill reads as a floating
+		 * panel (the compositor already lays a soft drop shadow around the window;
+		 * the window itself is opaque + rectangular, so true rounded outer corners
+		 * are not possible — this fakes the card edge instead). */
+		uint32_t panel = FLY_BG_C;
+		uint32_t edge = ogSurface::ogBlendColor(panel, 0x00000000u, 80);
+		surf_.ogFillRect(0, 0, w_ - 1, h_ - 1, edge);
+		surf_.ogFillRoundRect(1, 1, w_ - 2, h_ - 2, 10, panel);
+
+		/* Header: a quiet title with a hairline rule under it.  Per-slider values
+		 * live persistently under each knob, so the header never reflows. */
+		int hy = (MIX_HEADER_H - FONT_SIZE) / 2 + 8;
+		font_fg(font, ogSurface::ogBlendColor(panel, COL_WHITE, 215));
+		font_bg(font, panel);
+		font.PutString(surf_, FLY_PAD, hy, "Volume");
+		surf_.ogHLine(
+		    FLY_PAD, w_ - 1 - FLY_PAD, MIX_HEADER_H + 8, ogSurface::ogBlendColor(panel, COL_WHITE, 30));
+
+		/* A faint divider sets the master column apart from the app columns. */
+		if (columns() > 1)
+		{
+			int sx = FLY_PAD + MIX_COL_W;
+			surf_.ogVLine(sx,
+			              MIX_TRACK_TOP - 10,
+			              MIX_TRACK_TOP + MIX_TRACK_H + 10,
+			              ogSurface::ogBlendColor(panel, COL_WHITE, 24));
+		}
+
+		for (int c = 0; c < columns(); c++)
+			draw_slider(font, c);
+	}
+
+	/* Push a column's new level to aural (master -> codec, app -> stream gain). */
+	void apply_level(int c, int level)
+	{
+		mpi_message_t msg = {};
+		if (c == 0)
+		{
+			master_vol_ = level;
+			master_mute_ = false;
+			struct aural_master *m = (struct aural_master *)msg.data;
+			m->volume = (uint32_t)level;
+			m->mute = AURAL_MASTER_UNCHANGED;
+			msg.header = AURAL_SET_MASTER;
+			mpi_postMessage("aural", AURAL_SET_MASTER, &msg);
+		}
+		else
+		{
+			uint32_t gain = (uint32_t)level * AURAL_GAIN_UNITY / 100u;
+			data_.streams[c - 1].gain = gain;
+			struct aural_gain *g = (struct aural_gain *)msg.data;
+			g->stream_id = data_.streams[c - 1].stream_id;
+			g->gain = gain;
+			msg.header = AURAL_SET_GAIN;
+			mpi_postMessage("aural", AURAL_SET_GAIN, &msg);
+		}
+	}
+
+	/* Ask aural for the current live-stream set (blocks briefly on the reply). */
+	void query_aural()
+	{
+		if (!replies_ready_)
+		{
+			replies_.assign("taskbar.mix");
+			replies_ready_ = replies_.create();
+		}
+		std::memset(&data_, 0, sizeof(data_));
+		if (!replies_ready_)
+			return;
+
+		mpi_message_t drain;
+		while (replies_.try_fetch(drain)) /* discard any stale reply */
+			;
+
+		mpi_message_t msg = {};
+		struct aural_list_req *req = (struct aural_list_req *)msg.data;
+		req->ver = AURAL_PROTO_VERSION;
+		std::strncpy(req->reply, "taskbar.mix", sizeof(req->reply) - 1);
+		msg.header = AURAL_LIST;
+		if (mpi_postMessage("aural", AURAL_LIST, &msg) != 0)
+			return; /* aural not running — master-only flyout */
+
+		/*
+		 * Wait for the reply paced in REAL time, not raw yields.  aural answers on
+		 * its next ~10 ms wake; a bare yield loop burns thousands of iterations in
+		 * microseconds (when nothing else is runnable on the cooperative scheduler)
+		 * and gives up before aural ever runs — which left the flyout master-only.
+		 * Sleeping ~2 ms between polls guarantees aural is scheduled.  The post
+		 * above succeeded, so the "aural" mailbox exists and a reply is coming;
+		 * ~300 ms is a generous ceiling only hit if the server is wedged.
+		 */
+		struct timespec nap = {0, 2 * 1000 * 1000}; /* 2 ms */
+		for (int tries = 0; tries < 150; tries++)
+		{
+			mpi_message_t rep;
+			if (replies_.try_fetch(rep))
+			{
+				if (rep.header == AURAL_LIST_REPLY)
+				{
+					struct aural_list_reply *lr = (struct aural_list_reply *)rep.data;
+					data_ = *lr;
+					if (data_.count > AURAL_LIST_MAX)
+						data_.count = AURAL_LIST_MAX;
+					return;
+				}
+				continue; /* unrelated message — keep waiting without sleeping */
+			}
+			nanosleep(&nap, 0);
+		}
+	}
+
+      public:
+	bool is_open() const
+	{
+		return open_;
+	}
+	uint32_t win_id() const
+	{
+		return win_id_;
+	}
+
+	/* Seed the master mirror from the taskbar's ubistry cache before showing. */
+	void set_master(int vol, bool mute)
+	{
+		master_vol_ = vol;
+		master_mute_ = mute;
+	}
+
+	/* Open the flyout, right-edge anchored to @p anchor_right (the tray glyph),
+	 * sitting just above the taskbar.  Queries aural for the app list first. */
+	void show(int anchor_right, int screen_h, ubix::Mailbox &mbox, ogScalableFont &font)
+	{
+		if (open_)
+			return;
+		query_aural();
+
+		w_ = FLY_PAD * 2 + columns() * MIX_COL_W;
+		/* track + name line + value line + bottom padding */
+		h_ = MIX_TRACK_TOP + MIX_TRACK_H + MIX_LABEL_GAP + 2 * FONT_SIZE + 14;
+		x_ = anchor_right - w_;
+		if (x_ < 0)
+			x_ = 0;
+		y_ = screen_h - TB_H - h_;
+		if (y_ < 0)
+			y_ = 0;
+
+		mpi_message_t claim = {};
+		struct display_claim_req *creq = (struct display_claim_req *)claim.data;
+		claim.header = DISPLAY_CLAIM;
+		creq->x = x_;
+		creq->y = y_;
+		creq->w = w_;
+		creq->h = h_;
+		creq->sender_pid = ubix::pid();
+		creq->no_decor = 1;
+		creq->wants_motion = 1; /* receive drag motion while a button is held */
+		std::strncpy(creq->title, "mixer", sizeof(creq->title) - 1);
+		creq->title[sizeof(creq->title) - 1] = '\0';
+		std::strncpy(creq->reply, "taskbar", sizeof(creq->reply) - 1);
+		creq->reply[sizeof(creq->reply) - 1] = '\0';
+		ubix::post_message("views", DISPLAY_CLAIM, claim);
+
+		mpi_message_t reply;
+		while (!mbox.try_fetch(reply))
+			ubix::yield();
+		if (reply.header != DISPLAY_ACK)
+			return;
+
+		struct display_ack *da = (struct display_ack *)reply.data;
+		win_id_ = da->window_id;
+		surf_.ogAttach(da->shm_base, (uint32_t)w_, (uint32_t)h_, OG_PIXFMT_32BPP);
+		open_ = true;
+		active_col_ = -1;
+		hover_col_ = -1;
+		draw(font);
+		send_flip_msg(win_id_);
+	}
+
+	void hide()
+	{
+		if (!open_)
+			return;
+		mpi_message_t msg = {};
+		struct display_release *rel = (struct display_release *)msg.data;
+		msg.header = DISPLAY_RELEASE;
+		rel->window_id = win_id_;
+		ubix::post_message("views", DISPLAY_RELEASE, msg);
+		open_ = false;
+		win_id_ = 0;
+		active_col_ = -1;
+		hover_col_ = -1;
+	}
+
+	/*
+	 * Handle a pointer event addressed to the flyout window.  A press locks onto
+	 * the column under the cursor; subsequent motion with the button held drags
+	 * that slider (so a slightly off-axis drag stays in its own column).
+	 */
+	void on_event(const display_mouse_ev *me, ogScalableFont &font)
+	{
+		bool down = (me->buttons & 1) != 0;
+
+		/* Button up: just track which knob the cursor hovers (negative x = left). */
+		if (!down)
+		{
+			active_col_ = -1;
+			int hc = (me->x < 0) ? -1 : col_at(me->x);
+			if (hc != hover_col_)
+			{
+				hover_col_ = hc;
+				draw(font);
+				send_flip_msg(win_id_);
+			}
+			return;
+		}
+
+		if (active_col_ < 0)
+			active_col_ = col_at(me->x); /* lock the column on press */
+		if (active_col_ < 0)
+			return;
+
+		hover_col_ = active_col_;
+		apply_level(active_col_, level_at(me->y));
+		draw(font);
+		send_flip_msg(win_id_);
+	}
+};
+
+/* ------------------------------------------------------------------ */
 /* Taskbar — owns the strip surface, font, window list, and event      */
 /*           routing; delegates to Menu and Launcher                   */
 /* ------------------------------------------------------------------ */
@@ -573,6 +927,7 @@ class Taskbar
 	std::vector<TrackedWin> tracked_;
 	Menu start_menu_;
 	Menu submenu_;
+	MixerFlyout mixer_;
 	Launcher launcher_;
 	bool btn_pressed_ = false;
 	bool prev_down_ = false;  /* previous button-1 state, for release-edge clicks */
@@ -877,6 +1232,7 @@ class Taskbar
 	{
 		submenu_.hide();
 		start_menu_.hide();
+		mixer_.hide();
 	}
 
 	/* Run a leaf entry: a built-in "@action" or a program to launch. */
@@ -950,6 +1306,13 @@ class Taskbar
 
 		update_hover(me);
 
+		/* Mixer flyout: drag a slider (press + motion); clicks stay inside it. */
+		if (me->window_id == mixer_.win_id() && mixer_.is_open())
+		{
+			mixer_.on_event(me, font_);
+			return;
+		}
+
 		/* Submenu click: dispatch the chosen leaf. */
 		if (me->window_id == submenu_.win_id() && submenu_.is_open())
 		{
@@ -1011,7 +1374,18 @@ class Taskbar
 		}
 		if (vol_hit(me->x))
 		{
-			launcher_.launch("/bin/settings"); /* open Settings for volume */
+			/* Toggle the mixer flyout: master volume + a slider per live app. */
+			if (mixer_.is_open())
+			{
+				close_menus();
+			}
+			else
+			{
+				close_menus();
+				int tray_right = (int)sw_ - CLOCK_W - 2;
+				mixer_.set_master(volume_, muted_);
+				mixer_.show(tray_right, (int)sh_, mbox, font_);
+			}
 			return;
 		}
 		bool in_btn = (me->x >= 2 && me->x < 2 + BTN_W);
