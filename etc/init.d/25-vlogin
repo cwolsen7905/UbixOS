@@ -1,0 +1,3 @@
+# vlogin is forked by views after the compositor is fully ready.
+# Launching it here races with VESA VM86 initialization and corrupts
+# vlogin's startup context (EIP lands in BIOS ROM at 0xF000FF53).

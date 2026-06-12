@@ -5,6 +5,9 @@ t
 t.c
 *.o
 **/*.d
+# ...but not the init.d boot-script dir (its name ends in .d, so **/*.d eats it)
+!etc/init.d/
+!etc/init.d/**
 *.so
 .depen*
 *.img
