@@ -24,8 +24,9 @@
 #include "bringup.h"
 #include <vmm/vmm.h>
 #include <vmm/paging.h>
-#include <lib/kmalloc.h> /* sysID */
-#include <string.h>      /* memset */
+#include <lib/kmalloc.h>      /* sysID */
+#include <string.h>           /* memset */
+#include <ubixos/cpu_enum.h>  /* cpu_enum_add (smp-plan Phase 1) */
 
 /* QEMU `virt` lays physical RAM at 0x40000000.  The size is whatever QEMU was
  * given with -m; aarch64_probe_memory() reads the real figure from the DTB
@@ -45,6 +46,10 @@ extern char _end[]; /* end of the kernel image (ldscript.aarch64), page-aligned 
  * Defaults to the 512 MB fallback; aarch64_probe_memory() raises it from the DTB
  * before vmm_mem_map_init() stages the bitmap. */
 static u_int64_t g_ram_top = AARCH64_RAM_BASE + AARCH64_RAM_SIZE_DEFAULT;
+
+/* Physical base of the located device tree, cached by aarch64_probe_memory() so
+ * aarch64_enum_cpus() can re-walk the same tree for /cpus.  0 = not found. */
+static uintptr_t g_dtb_base = 0;
 
 /* ── minimal flattened-device-tree (FDT) reader ──────────────────────────────
  * Just enough to pull base+size out of the /memory node.  The DTB is big-endian;
@@ -201,6 +206,8 @@ void aarch64_probe_memory(u_int64_t dtb_phys)
 		}
 	}
 
+	g_dtb_base = found; /* cache for aarch64_enum_cpus() (0 if nothing found) */
+
 	if (found != 0)
 		size = fdt_memory_size(found);
 
@@ -243,6 +250,159 @@ static int fdt_startswith(const char *a, const char *prefix)
 			return 0;
 	}
 	return 1;
+}
+
+/**
+ * Enumerate CPUs from the device-tree /cpus node into the MI cpu_enum table
+ * (smp-plan Phase 1) — the aarch64 counterpart of the i386 ACPI MADT parse.
+ *
+ * Reuses the DTB located by aarch64_probe_memory().  Each child cpu node's `reg`
+ * is the MPIDR affinity (the hardware id), `enable-method` is psci/spin-table,
+ * and the FDT header's boot_cpuid_phys names the boot CPU.  Parse-and-record
+ * only: nothing is launched here.  On a missing/garbled tree it falls back to a
+ * single boot CPU so the table is never empty.  Safe to run with the MMU's
+ * identity map up (the DTB is in identity-mapped RAM); must run after
+ * aarch64_probe_memory().
+ */
+void aarch64_enum_cpus(void)
+{
+	const struct fdt_header *h;
+	const u_int8_t *strings, *p, *end;
+	u_int32_t totalsize, off_struct, size_struct, off_strings;
+	u_int64_t boot_hwid;
+	int depth = 0;
+	int cpus_depth = -1; /* depth of /cpus, -1 = not inside it */
+	int in_cpu = 0;      /* inside a child cpu node */
+	u_int32_t addr_cells = 1; /* /cpus #address-cells (ARM/QEMU virt: 1) */
+	/* Accumulators for the cpu node currently being walked. */
+	u_int64_t cur_hwid = 0;
+	int cur_have_reg = 0, cur_is_cpu = 0, cur_disabled = 0;
+	u_int8_t cur_method = CPU_ENABLE_UNKNOWN;
+
+	if (g_dtb_base == 0)
+	{
+		kprintf("cpu_enum(aarch64): no DTB found; assuming 1 boot CPU\n");
+		cpu_enum_add(0, 1, 1, CPU_ENABLE_PSCI);
+		return;
+	}
+
+	h = (const struct fdt_header *)g_dtb_base;
+	if (be32(h->magic) != FDT_MAGIC)
+	{
+		cpu_enum_add(0, 1, 1, CPU_ENABLE_PSCI);
+		return;
+	}
+	totalsize = be32(h->totalsize);
+	off_struct = be32(h->off_dt_struct);
+	size_struct = be32(h->size_dt_struct);
+	off_strings = be32(h->off_dt_strings);
+	if (totalsize < 0x1000 || totalsize > 0x200000 || off_struct + size_struct > totalsize ||
+	    off_strings > totalsize)
+	{
+		cpu_enum_add(0, 1, 1, CPU_ENABLE_PSCI);
+		return;
+	}
+	boot_hwid = be32(h->boot_cpuid_phys);
+
+	p = (const u_int8_t *)g_dtb_base + off_struct;
+	end = p + size_struct;
+	strings = (const u_int8_t *)g_dtb_base + off_strings;
+
+	while (p + 4 <= end)
+	{
+		u_int32_t token = fdt_cell(p);
+		p += 4;
+
+		if (token == FDT_BEGIN_NODE)
+		{
+			const char *name = (const char *)p;
+			depth++;
+			/* /cpus is a direct child of the root node (root is depth 1). */
+			if (depth == 2 && fdt_streq(name, "cpus"))
+			{
+				cpus_depth = depth;
+				addr_cells = 1; /* reset; #address-cells prop (if any) sets it */
+			}
+			else if (cpus_depth >= 0 && depth == cpus_depth + 1)
+			{
+				/* A child of /cpus: start a fresh cpu accumulator. */
+				in_cpu = 1;
+				cur_hwid = 0;
+				cur_have_reg = 0;
+				cur_disabled = 0;
+				cur_method = CPU_ENABLE_UNKNOWN;
+				cur_is_cpu = fdt_startswith(name, "cpu@") || fdt_streq(name, "cpu");
+			}
+			while (p < end && *p != '\0')
+				p++;
+			p = (const u_int8_t *)(((uintptr_t)p + 4) & ~(uintptr_t)3);
+		}
+		else if (token == FDT_PROP)
+		{
+			u_int32_t len = fdt_cell(p);
+			u_int32_t nameoff = fdt_cell(p + 4);
+			const char *pname = (const char *)(strings + nameoff);
+			const u_int8_t *val = p + 8;
+
+			if (cpus_depth >= 0 && depth == cpus_depth && fdt_streq(pname, "#address-cells") && len >= 4)
+			{
+				addr_cells = fdt_cell(val);
+			}
+			else if (in_cpu && depth == cpus_depth + 1)
+			{
+				if (fdt_streq(pname, "reg") && len >= 4)
+				{
+					if (addr_cells >= 2 && len >= 8)
+						cur_hwid = ((u_int64_t)fdt_cell(val) << 32) | fdt_cell(val + 4);
+					else
+						cur_hwid = fdt_cell(val);
+					cur_have_reg = 1;
+				}
+				else if (fdt_streq(pname, "device_type") && fdt_streq((const char *)val, "cpu"))
+				{
+					cur_is_cpu = 1;
+				}
+				else if (fdt_streq(pname, "enable-method"))
+				{
+					if (fdt_streq((const char *)val, "psci"))
+						cur_method = CPU_ENABLE_PSCI;
+					else if (fdt_streq((const char *)val, "spin-table"))
+						cur_method = CPU_ENABLE_SPINTABLE;
+				}
+				else if (fdt_streq(pname, "status") && fdt_streq((const char *)val, "disabled"))
+				{
+					cur_disabled = 1;
+				}
+			}
+			p = (const u_int8_t *)(((uintptr_t)val + len + 3) & ~(uintptr_t)3);
+		}
+		else if (token == FDT_END_NODE)
+		{
+			if (in_cpu && depth == cpus_depth + 1)
+			{
+				if (cur_is_cpu && cur_have_reg)
+					cpu_enum_add(cur_hwid,
+					             cur_disabled ? 0 : 1,
+					             (cur_hwid == boot_hwid) ? 1 : 0,
+					             cur_method != CPU_ENABLE_UNKNOWN ? cur_method : CPU_ENABLE_PSCI);
+				in_cpu = 0;
+			}
+			if (cpus_depth >= 0 && depth == cpus_depth)
+				cpus_depth = -1;
+			depth--;
+		}
+		else if (token == FDT_END)
+		{
+			break;
+		}
+		/* FDT_NOP: nothing. */
+	}
+
+	if (g_cpu_desc_count == 0)
+	{
+		kprintf("cpu_enum(aarch64): /cpus held no usable cpu node; assuming 1 boot CPU\n");
+		cpu_enum_add(boot_hwid, 1, 1, CPU_ENABLE_PSCI);
+	}
 }
 
 /**

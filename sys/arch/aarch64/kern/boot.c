@@ -12,6 +12,7 @@
 #include "bringup.h"
 #include <ubixos/sched.h>          /* sched_init, RUNNING, QOS_DEFAULT */
 #include <ubixos/sched_internal.h> /* taskList, set_current (scheduler bootstrap) */
+#include <ubixos/cpu_enum.h>       /* cpu_enum_dump (smp-plan Phase 1) */
 #include <vmm/vmm.h>               /* vmm_mem_map_init */
 #include <ubixos/vitals.h>         /* vitals_init */
 #include <fs/vfs/vfs.h>            /* vfs_init */
@@ -113,6 +114,8 @@ void kmain_aarch64(u_int64_t dtb_phys)
 	 * be up first).  aarch64_probe_memory must precede vmm_mem_map_init — it sets
 	 * the bitmap ceiling the allocator stages to. */
 	aarch64_probe_memory(dtb_phys);
+	aarch64_enum_cpus(); /* smp-plan Phase 1: discover CPUs from the DTB /cpus node */
+	cpu_enum_dump();
 	vmm_mem_map_init();
 	vitals_init();
 	aarch64_rtc_init(); /* boot wall-clock epoch from the PL031 RTC (else clock = 1970) */

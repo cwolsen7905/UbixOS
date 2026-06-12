@@ -50,6 +50,11 @@ void aarch64_mmu_init(void);
 void aarch64_probe_memory(u_int64_t dtb_phys);
 u_int64_t *aarch64_kernel_l1(void); /* kernel identity L1 root (basis for new address spaces) */
 
+/* vmm_machdep.c — enumerate CPUs from the DTB /cpus node into the MI cpu_enum
+ * table (smp-plan Phase 1).  Run after aarch64_probe_memory() (reuses the DTB it
+ * located).  Discovery only — launches nothing. */
+void aarch64_enum_cpus(void);
+
 /* context.S / ctxdemo.c — cooperative context switch + its demo. */
 void aarch64_ctx_switch(u_int64_t *save_sp, u_int64_t next_sp);
 void aarch64_ctx_demo(void);
