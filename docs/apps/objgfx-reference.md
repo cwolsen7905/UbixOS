@@ -3,7 +3,10 @@
 `libobjgfx.so` is the userland drawing library for UbixOS apps.  It
 provides surfaces (the buffer you draw into), text (via TrueType), and
 image loading.  This document is the reference; the tutorial is
-[`writing-a-views-app.md`](writing-a-views-app.md).
+[`writing-a-views-app.md`](writing-a-views-app.md).  The forward
+roadmap (premultiplied compositing, vector paths, gradients, hi-DPI,
+gamma-correct text) lives in
+[`../design/objgfx-polish-plan.md`](../design/objgfx-polish-plan.md).
 
 Headers are under `include/objgfx/`; include with
 `<objgfx/objgfx.h>` etc.  Add `-I.../include` to your CFLAGS — never
@@ -45,15 +48,41 @@ Pixel format constants (all in `<objgfx/ogPixelFmt.h>`):
 `OG_PIXFMT_32BPP`.  For views apps, **always use `OG_PIXFMT_32BPP`** —
 the compositor expects it.
 
+> The palette API (`ogSetPalette`, `ogGetPalette`, `ogLoadPalette`,
+> `ogSavePalette`, `ogCopyPalette`) applies only to paletted (≤8 bpp)
+> surfaces and is unused by views apps — `OG_PIXFMT_32BPP` is direct
+> colour.  Ignore it unless you create an 8 bpp scratch surface.
+
 ### Drawing — solid fills
 
 | Call | What it draws |
 |------|---------------|
-| `ogClear(c)` | Fill the entire surface with colour `c`. |
+| `ogClear(c)` / `ogClear()` | Fill the entire surface with colour `c` (no-arg form clears to 0/black). |
 | `ogFillRect(x1, y1, x2, y2, c)` | Axis-aligned filled rectangle. |
+| `ogFillRoundRect(x1, y1, x2, y2, radius, c)` | Filled rectangle with rounded corners. |
 | `ogFillCircle(cx, cy, r, c)` | Filled circle. |
 | `ogFillTriangle(x1,y1, x2,y2, x3,y3, c)` | Filled triangle. |
 | `ogFillPolygon(n, points, c)` | Convex filled polygon. |
+| `ogFillGouraudPolygon(n, points, colours)` | Polygon with per-vertex colours, smoothly interpolated. |
+
+### Drawing — UI chrome (rounded rects, shadows)
+
+These are the shared primitives for modern card/panel UI — `bin/vlogin`
+uses all three to draw its login card rather than rolling bespoke
+drawing.  Prefer them over hand-rolled equivalents so the look stays
+consistent across apps.
+
+```c++
+surf.ogDropShadow(x1, y1, x2, y2, /*reach=*/12, /*yOffset=*/6, /*alphaMax=*/110);
+surf.ogFillRoundRect(x1, y1, x2, y2, radius, CARD_COLOR);   // filled body
+surf.ogRoundRect(x1, y1, x2, y2, radius, CARD_BORDER);      // 1px outline
+```
+
+| Call | What it draws |
+|------|---------------|
+| `ogDropShadow(x1,y1, x2,y2, reach, yOffset, alphaMax)` | Soft alpha-falloff shadow around the rectangle `(x1,y1)-(x2,y2)`. `reach` is the blur radius in pixels, `yOffset` shifts the shadow down, `alphaMax` (0..255) is the opacity directly under the edge. Draw it **before** the opaque body. |
+| `ogFillRoundRect(x1,y1, x2,y2, radius, c)` | Filled rounded rectangle (the card body). |
+| `ogRoundRect(x1,y1, x2,y2, radius, c)` | Rounded-rectangle outline (the card border). |
 
 ### Drawing — outlines and curves
 
@@ -62,9 +91,14 @@ the compositor expects it.
 | `ogLine(x1,y1, x2,y2, c)` | Line.  Set anti-aliasing first if wanted. |
 | `ogHLine(x1, x2, y, c)` / `ogVLine(x, y1, y2, c)` | Axis-aligned line — faster than `ogLine`. |
 | `ogRect(x1,y1, x2,y2, c)` | Rectangle outline. |
+| `ogTriangle(x1,y1, x2,y2, x3,y3, c)` | Triangle outline. |
+| `ogPolygon(n, points, c)` | Polygon outline (closes back to the first point). |
 | `ogCircle(cx, cy, r, c)` | Circle outline. |
 | `ogArc(cx, cy, r, start, end, c)` | Arc (angles in implementation units). |
-| `ogCurve` / `ogBSpline` / `ogCubicBezierCurve` | Parametric curves. |
+| `ogCurve` / `ogBSpline` / `ogSpline` / `ogCubicBezierCurve` | Parametric curves. |
+
+Two in-place transforms flip the surface contents about its centre axes:
+`ogHFlip()` (mirror left↔right) and `ogVFlip()` (mirror top↔bottom).
 
 ### Anti-aliasing and blending
 
@@ -76,6 +110,20 @@ s.ogSetAlpha(128);             // global alpha for blended writes
 
 Anti-aliasing only applies to the curve/line primitives — fills are
 always solid.  Blending only kicks in if `ogSetBlending(true)` was set.
+
+`ogSetTransparentColor(c)` / `ogGetTransparentColor()` set a colour key
+used as transparent by transparency-aware blits.
+
+For one-off colour math without touching surface state, use the static
+helper:
+
+```c++
+uint32_t mid = ogSurface::ogBlendColor(a, b, t);  // lerp a→b, t in [0,256]
+```
+
+It works on packed `0x00RRGGBB` words directly — the `views` compositor
+uses it for its anti-aliased window edges.  `t=0` returns `a`, `t=256`
+returns `b`.
 
 ### Raw access (when you need it)
 
@@ -107,8 +155,11 @@ dest.ogScaleBuf(dx,dy, dx+127,dy+127, scratch, 0,0, 63,63);       // stretch
 |------|---------|
 | `ogGetMaxX() / ogGetMaxY()` | Width/height in pixels minus 1. |
 | `ogGetBPP() / ogGetBytesPerPix()` | Bits / bytes per pixel. |
+| `ogGetPixFmtID() / ogGetPixFmt(fmt)` | Pixel-format ID / fill a `ogPixelFmt` describing the surface. |
 | `ogPack(r,g,b)` / `ogPack(r,g,b,a)` | Encode RGB into the surface's native format. |
-| `ogUnpack(c, r,g,b)` | Decode a packed pixel. |
+| `ogUnpack(c, r,g,b)` / `ogUnpack(c, r,g,b,a)` | Decode a packed pixel. |
+| `ogGetAlpha()` | Current global alpha (set by `ogSetAlpha`). |
+| `ogIsAntiAliasing() / ogIsBlending()` | Whether AA / blending is currently enabled. |
 | `ogGetLastError()` | Error code from the last failed operation. |
 
 ---
