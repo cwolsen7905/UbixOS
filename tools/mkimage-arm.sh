@@ -30,7 +30,7 @@ SIZE_MB=$(( 1 + FAT_SIZE_MB + SWAP_SIZE_MB + POOL_SIZE_MB + 4 ))
 #             boots straight to the text-console login.
 PROFILE="${PROFILE:-desktop}"
 # Binaries that belong only to the desktop profile (skipped for base).
-DESKTOP_BINS=" views vlogin vdoom tessera nsfb settings nsfbtest fbtest "
+DESKTOP_BINS=" views vlogin diskutil vdoom tessera nsfb settings nsfbtest fbtest "
 echo "mkimage-arm: profile=${PROFILE}"
 
 if [ ! -f "${BUILD}/lib/libc.so" ]; then
