@@ -31,8 +31,11 @@ void md_new_task(struct taskStruct *t);
 void md_setup_initial_frame(struct taskStruct *t);
 void switch_to(struct taskStruct *prev, struct taskStruct *next);
 
-/* Scheduler tick rate (Hz): the bring-up generic timer ticks at 2 Hz (timer.c). */
-#define SCHED_HZ 2
+/* Scheduler tick rate (Hz): the EL1 virtual generic timer is programmed for a
+ * 100 Hz periodic tick (timer.c: g_interval = cntfrq/100), so sysTicks advances
+ * 100 times/sec.  This MUST match that rate — it is the ticks/sec divisor for
+ * ticks<->seconds conversions (e.g. the reboot countdown in sched_dispatch.c). */
+#define SCHED_HZ 100
 
 /* Per-dispatch arch hook before switch_to (see i386/proc.h).  aarch64: no-op. */
 void md_sched_pre_switch(struct taskStruct *t);
