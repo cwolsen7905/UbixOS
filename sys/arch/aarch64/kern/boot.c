@@ -112,7 +112,8 @@ void kmain_aarch64(void)
 	 * vitals node (kmalloc'd, so the allocator must be up first). */
 	vmm_mem_map_init();
 	vitals_init();
-	vfs_init(); /* VFS core: filesystem registry + buffer cache */
+	aarch64_rtc_init(); /* boot wall-clock epoch from the PL031 RTC (else clock = 1970) */
+	vfs_init();         /* VFS core: filesystem registry + buffer cache */
 #ifdef AARCH64_BRINGUP_DEMOS
 	ubixfs_selftest(); /* UbixFS core viability over a RAM vdev (plan K1).  Gated:
 	                    * the K2/K3 disk mount below now exercises the same core

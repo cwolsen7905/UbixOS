@@ -60,6 +60,26 @@ void md_uptime(u_int64_t *sec, u_int64_t *nsec)
 	*nsec = ((cnt % freq) * 1000000000ULL) / freq;
 }
 
+/* PL031 RTC on the QEMU `virt` board: its data register (offset 0) reads the
+ * current wall-clock time as seconds since the Unix epoch. */
+#define PL031_BASE 0x09010000UL
+#define PL031_DR (*(volatile u_int32_t *)(PL031_BASE + 0x00))
+
+/**
+ * Capture the boot wall-clock epoch from the PL031 RTC into
+ * systemVitals->timeStart.  gettimeofday() returns timeStart + md_uptime(), so
+ * without this the clock starts at 1970-01-01 00:00:00 (the i386 path reads the
+ * CMOS RTC in time_init(), which is x86-only — guarded out on aarch64).
+ */
+void aarch64_rtc_init(void)
+{
+	if (systemVitals != 0)
+	{
+		systemVitals->timeStart = PL031_DR;
+		kprintf("rtc: PL031 boot epoch = %u s (wall clock = this + uptime)\n", systemVitals->timeStart);
+	}
+}
+
 static void write_tval(u_int64_t v)
 {
 	__asm__ volatile("msr cntv_tval_el0, %0" : : "r"(v));

@@ -229,6 +229,20 @@ static u_int64_t sc_brk(u_int64_t newbrk)
 	return (u_int64_t)vmm_uregion_brk(l1, (uintptr_t *)&_current->md.md_brk, (uintptr_t)newbrk);
 }
 
+/*
+ * nanosleep helper: a never-satisfied condition makes sched_wait_event_timeout()
+ * sleep the full requested duration (the task is dequeued — zero CPU — and woken
+ * only by its one-shot timeout callout).  The channel is a private address no
+ * waker posts to, so the timeout is the sole wakeup (a signal also wakes it,
+ * which is the correct early-return behaviour).
+ */
+static int g_nanosleep_chan;
+static int nanosleep_never(void *arg)
+{
+	(void)arg;
+	return 0;
+}
+
 /**
  * Dispatch an EL0 syscall.  @args points at the saved x0..x5 (x0 = arg0).
  *
@@ -404,9 +418,34 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args)
 			return 0;
 
 		case SYS_NANOSLEEP:
-			/* No timed sleep yet — yield once and report completion. */
-			sched_yield();
+		{
+			/* Real timed sleep: descheduled for the requested duration via the
+			 * callout-driven wait, so a polling daemon (e.g. aural) paces itself
+			 * without busy-spinning.  Args are 64-bit; timespec is two longs. */
+			const long *rqtp = (const long *)(uintptr_t)args[0];
+			long *rmtp = (long *)(uintptr_t)args[1];
+
+			if (rqtp != 0)
+			{
+				long tv_sec = rqtp[0];
+				long tv_nsec = rqtp[1];
+				if (tv_sec >= 0 && tv_nsec >= 0 && tv_nsec < 1000000000L)
+				{
+					/* 100 Hz tick = 10 ms; round the request up to whole ticks. */
+					u_int32_t ticks =
+					    (u_int32_t)(tv_sec * 100) + (u_int32_t)((tv_nsec + 9999999L) / 10000000L);
+					if (ticks == 0)
+						ticks = 1;
+					sched_wait_event_timeout(&g_nanosleep_chan, nanosleep_never, 0, ticks);
+				}
+			}
+			if (rmtp != 0)
+			{
+				rmtp[0] = 0;
+				rmtp[1] = 0;
+			}
 			return 0;
+		}
 
 			/* uname(164)/sched_yield(331) pre-cases pruned (Phase 3): the table's
 			 * sys_uname now reports the arch machine name (gen_calls.c #if), and

@@ -38,6 +38,7 @@ int aarch64_irq_dispatch(void); /* EL1 IRQ vector; returns non-zero on a timer t
 /* timer.c — ARM generic timer (EL1 physical, PPI 30). */
 void timer_init(void);
 void timer_tick(void);
+void aarch64_rtc_init(void); /* capture boot wall-clock epoch from the PL031 RTC */
 /* md_uptime (the aarch64 time source) is declared in <ubixos/time.h>. */
 
 /* mmu.c — enable the MMU with a TTBR0 identity map (39-bit VA). */
