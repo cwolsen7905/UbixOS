@@ -69,6 +69,7 @@
 #define PFILE_FD_ENTRY 5   /* individual /proc/N/fd/M */
 #define PFILE_MOUNTS   6   /* /proc/mounts — global mount table */
 #define PFILE_MEMINFO  7   /* /proc/meminfo — global memory stats */
+#define PFILE_STAT_GLOBAL 8 /* /proc/stat — per-CPU busy/idle tick counters */
 
 /* procfs_dir_state.type values */
 #define PDIR_ROOT  0
@@ -181,13 +182,19 @@ procfs_build_stat(kTask_t *t, char *buf, int bufsz)
 	 * Fields: pid (name) state ppid pgrp session tty_nr tpgid flags
 	 *         minflt cminflt majflt cmajflt utime stime cutime cstime
 	 *         priority nice num_threads itrealvalue starttime vsize rss
+	 *
+	 * utime (field 14) carries the task's accumulated scheduler ticks
+	 * (run_ticks), in raw timer-tick units — the smp-plan Phase 3.5 accounting.
+	 * Rendered 32-bit (wraps only after months of CPU time); userland forms
+	 * ratios against /proc/stat, which is HZ-independent.
 	 */
 	return sprintf(buf,
 	    "%u (%s) %c %u %u %u 0 -1 0 "
-	    "0 0 0 0 0 0 0 0 "
+	    "0 0 0 0 %u 0 0 0 "
 	    "0 0 1 0 0 %lu %lu\n",
 	    (unsigned)t->id, t->name, state,
 	    (unsigned)t->ppid, (unsigned)t->pgrp, (unsigned)t->sid,
+	    (unsigned)t->run_ticks,                       /* utime := run_ticks */
 	    ctob(t->td.vm_tsize) + ctob(t->td.vm_dsize),  /* vsize approx */
 	    ctob(t->td.vm_tsize) + ctob(t->td.vm_dsize));  /* rss approx */
 }
@@ -337,6 +344,28 @@ procfs_build_meminfo(char *buf, int bufsz)
 	    vmm_audit_orphan_pages());
 }
 
+/**
+ * Build /proc/stat — CPU busy/idle accounting (smp-plan Phase 3.5).
+ *
+ * Linux-ish: a `cpu` aggregate line then one `cpuN` line per online CPU, each
+ * `user nice system idle ...`.  We track only two buckets, so busy ticks land
+ * in the `user` column and idle ticks in the `idle` column; the rest are 0.
+ * Uniprocessor today (cpu0 == the aggregate); SMP Phase 4 adds the remaining
+ * per-CPU lines.  Ticks are raw timer ticks — userland takes the
+ * busy/(busy+idle) ratio, which is HZ-independent.
+ */
+static int
+procfs_build_stat_global(char *buf, int bufsz)
+{
+	unsigned busy = (unsigned)sched_cpu_busy_ticks();
+	unsigned idle = (unsigned)sched_cpu_idle_ticks();
+
+	return snprintf(buf, bufsz,
+	    "cpu  %u 0 0 %u 0 0 0 0 0 0\n"
+	    "cpu0 %u 0 0 %u 0 0 0 0 0 0\n",
+	    busy, idle, busy, idle);
+}
+
 /* -----------------------------------------------------------------------
  * vfsInitFS
  * --------------------------------------------------------------------- */
@@ -412,6 +441,16 @@ procfs_open(char *file, fileDescriptor_t *fd)
 		int  mlen = procfs_build_meminfo(tmp2, sizeof(tmp2));
 		fd->ino   = 0;
 		fd->start = PFILE_MEMINFO;
+		fd->size  = (u_int32_t)mlen;
+		return 1;
+	}
+
+	/* Global files: /proc/stat */
+	if (strcmp(pidstr, "stat") == 0 && *rest == '\0') {
+		char tmp2[256];
+		int  mlen = procfs_build_stat_global(tmp2, sizeof(tmp2));
+		fd->ino   = 0;
+		fd->start = PFILE_STAT_GLOBAL;
 		fd->size  = (u_int32_t)mlen;
 		return 1;
 	}
@@ -527,6 +566,19 @@ procfs_read(fileDescriptor_t *fd, char *data, off_t offset, long size)
 	if (fd->start == PFILE_MEMINFO) {
 		char     mtmp[256];
 		int      mlen = procfs_build_meminfo(mtmp, sizeof(mtmp));
+		long     mn;
+		if (offset >= (long)mlen)
+			return 0;
+		mn = (long)mlen - offset;
+		if (mn > size)
+			mn = size;
+		memcpy(data, mtmp + offset, mn);
+		return (int)mn;
+	}
+
+	if (fd->start == PFILE_STAT_GLOBAL) {
+		char     mtmp[256];
+		int      mlen = procfs_build_stat_global(mtmp, sizeof(mtmp));
 		long     mn;
 		if (offset >= (long)mlen)
 			return 0;
@@ -675,7 +727,7 @@ procfs_readdir(kDIR_t *dir, struct kdirent *ent)
 	/* ── Root: global files first, then live task dirs ── */
 	if (s->type == PDIR_ROOT) {
 		/* Phases 0..N-1: emit global synthetic files, one per readdir call */
-		static const char *const procfs_root_files[] = { "mounts", "meminfo" };
+		static const char *const procfs_root_files[] = { "mounts", "meminfo", "stat" };
 		if (s->root_phase < (int)(sizeof(procfs_root_files) / sizeof(procfs_root_files[0]))) {
 			strncpy(ent->d_name, procfs_root_files[s->root_phase], sizeof(ent->d_name) - 1);
 			ent->d_name[sizeof(ent->d_name) - 1] = '\0';

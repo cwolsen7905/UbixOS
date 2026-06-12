@@ -49,7 +49,7 @@ Legend: ✅ done & verified · 🟡 partial · ⬜ not started
 | 4+ | **aarch64 SMP track** — PSCI `CPU_ON` + GICv2/SGI + TTBR1 + preemptible aarch64 kernel | ⬜ | reuses the `pcpu`/`preempt_count` contract; gated on i386 Ph 3-4 |
 | 3  | Per-CPU LAPIC timer + reschedule IPI | ⬜ | |
 | 3  | LAPIC EOI path | ⬜ | still 8259-only |
-| 3.5| Scheduler accounting — per-task `run_ticks`, per-CPU `busy/idle_ticks` | ⬜ | unblocks activity monitor; prereq for Phase 6 balancer |
+| 3.5| Scheduler accounting — per-task `run_ticks`, per-CPU `busy/idle_ticks` | ✅ | done 2026-06-11, both arches boot-verified.  `sched_account_tick()` (MI, `sched_core.c`) charged once per timer IRQ from i386 `timerInt` + aarch64 `timer_tick`; idle tagged via `g_idle_task`; surfaced as `/proc/<pid>/stat` utime + new `/proc/stat`.  Uniprocessor (single busy/idle pair); per-CPU split deferred to Phase 4 |
 | 4  | SMP scheduling — global run queue under one lock | ⬜ | two cores run threads |
 | 5  | TLB shootdown IPIs | ⬜ | |
 | 6  | Per-CPU run queues + load balancing + affinity | ⬜ | optimization layer |
@@ -355,7 +355,23 @@ This is the interlocked unit; land it together, test with **many** boots (the
   stays clean across ≥8 boots.
 - **Risk:** high — deadlocks/races and the `%gs`/TLS interaction first appear here.
 
-### Phase 3.5 — Scheduler accounting (uniprocessor-safe, SMP-ready)
+### Phase 3.5 — Scheduler accounting (uniprocessor-safe, SMP-ready) ✅ DONE 2026-06-11
+
+**Status: shipped, both arches boot-verified.** Implemented ahead of the rest of
+Phase 3 (it has no dependency on the per-CPU `%gs`/spinlock work).  As built:
+- `kTask_t.run_ticks` (`u_int64_t`); a single MI `sched_account_tick()` in
+  `sys/kern/sched_core.c` charges one tick to the running thread and to one
+  busy/idle counter pair (`g_idle_task` distinguishes idle).
+- Called **once per timer interrupt** — i386 `timerInt` (`timer.S`, after EOI,
+  before the quantum-gated `sched`) and aarch64 `timer_tick` (`timer.c`) — *not*
+  from `sched()` (which also runs on voluntary yields and would over-count).
+- Surfaced in procfs: `/proc/<pid>/stat` field 14 (utime) = `run_ticks`; new
+  global `/proc/stat` with `cpu`/`cpu0` busy+idle lines.  Ticks are raw timer
+  ticks; userland forms HZ-independent ratios.
+- Uniprocessor (one busy/idle pair, `cpu0` == aggregate).  The per-CPU array and
+  extra `/proc/stat` lines arrive with Phase 4.
+
+The original design notes below are retained for reference.
 
 A small, low-risk slice that lands between the per-CPU timer work of Phase 3
 and the multi-core dispatch of Phase 4.  Useful on its own (it unblocks an

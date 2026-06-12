@@ -43,8 +43,12 @@ timerInt:
   mov %eax,%fs
   PCPU_LOAD_GS             /* %gs = SEL_PCPU so %gs:off reaches per-CPU data */
   mov $0x20,%dx            /* The Following Sends Our EOI To The MPIC  */
-  mov $0x20,%ax           
+  mov $0x20,%ax
   outb %al,%dx
+  call sched_account_tick  /* Phase 3.5: charge the just-elapsed tick (every IRQ,   */
+                           /* before the quantum-gated sched below).  %gs is already*/
+                           /* SEL_PCPU so _current (%gs:8) is valid; clobbers        */
+                           /* eax/ecx/edx, reloaded immediately below.               */
   movl systemVitals,%ecx   /* Put Location Of System Vitals Into ECX   */
   incl (%ecx)             /* Increment sysTicks our 1000ms counter    */                    
   movl (%ecx),%eax        /* Increment our sysUptime by 1S if 1000MS  */

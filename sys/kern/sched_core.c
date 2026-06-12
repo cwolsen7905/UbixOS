@@ -87,6 +87,51 @@ kTask_t *_usedMath = 0x0;
 
 int need_resched = 0;
 
+/*
+ * Scheduler accounting (smp-plan Phase 3.5).  Uniprocessor today: a single pair
+ * of CPU counters that collapse to "cpu0".  When SMP Phase 4 lands these move
+ * into per-CPU storage indexed by smp_processor_id().
+ */
+kTask_t *g_idle_task = 0x0;            /* set by main.c once the idle thread exists */
+static u_int64_t g_cpu_busy_ticks = 0; /* timer ticks spent running a non-idle thread */
+static u_int64_t g_cpu_idle_ticks = 0; /* timer ticks spent in the idle thread         */
+
+/**
+ * Charge one timer tick to the running thread and the CPU's busy/idle counters.
+ *
+ * Called from each arch's timer ISR exactly once per interrupt — before any
+ * reschedule, so _current still names the thread that was actually running for
+ * the slice just elapsed.  A NULL _current (very early boot) is charged as idle.
+ */
+void sched_account_tick(void)
+{
+	kTask_t *cur = _current;
+
+	if (cur != 0x0)
+		cur->run_ticks++;
+
+	if (cur != 0x0 && cur != g_idle_task)
+		g_cpu_busy_ticks++;
+	else
+		g_cpu_idle_ticks++;
+}
+
+/**
+ * @return total timer ticks this CPU spent running a non-idle thread.
+ */
+u_int64_t sched_cpu_busy_ticks(void)
+{
+	return g_cpu_busy_ticks;
+}
+
+/**
+ * @return total timer ticks this CPU spent in the idle thread.
+ */
+u_int64_t sched_cpu_idle_ticks(void)
+{
+	return g_cpu_idle_ticks;
+}
+
 int sched_init()
 {
 	taskList = (kTask_t *)kmalloc(sizeof(kTask_t));

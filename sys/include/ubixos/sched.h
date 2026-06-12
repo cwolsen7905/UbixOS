@@ -108,6 +108,9 @@ typedef struct taskStruct {
     void      *wait_chan;        /* sleep/wakeup channel: address slept on, NULL if not blocked */
     struct callout sleep_callout; /* timed-sleep timeout (armed by sched_wait_event_timeout) */
     u_int32_t  last_run_tick;     /* sysTicks when last dispatched (starvation aging) */
+    u_int64_t  run_ticks;         /* total scheduler ticks this task has been the running thread
+                                   * (charged one per timer interrupt by sched_account_tick).
+                                   * Units are raw timer ticks; userland forms ratios (HZ-free). */
     vm_map_t  vm_map;            /* VMA red-black tree — O(log n) mmap/fault lookup */
     pidType    tgid;             /* thread-group id (leader's pid); == id for a normal process.
                                   * Threads created via rfork(RFMEM) share the leader's tgid and
@@ -152,6 +155,19 @@ kTask_t *sched_getDelTask();
 int sched_tgid_others_alive(pidType tgid, pidType self); /* other live threads sharing the AS */
 void sched_yield();
 void sched();
+
+/*
+ * Scheduler accounting (smp-plan Phase 3.5).  Called once per timer interrupt
+ * from each arch's timer ISR (i386 timerInt, aarch64 timer_tick) — NOT from
+ * sched(), which also runs on voluntary yields and would over-count.  Charges
+ * one tick to the running thread's run_ticks and to the per-CPU busy/idle
+ * counters (the idle thread, g_idle_task, counts as idle).  Uniprocessor today;
+ * per-CPU split arrives with SMP Phase 4.
+ */
+void sched_account_tick(void);
+u_int64_t sched_cpu_busy_ticks(void); /* ticks the CPU ran a non-idle thread   */
+u_int64_t sched_cpu_idle_ticks(void); /* ticks the CPU ran the idle thread     */
+extern kTask_t *g_idle_task;          /* the per-system idle thread (set in main.c) */
 
 /* Scheduler state-transition API — always use these instead of direct
  * task->state assignments.  Phase 2 will add run-queue management here. */

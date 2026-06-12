@@ -407,7 +407,8 @@ int kmain(u_int32_t rootdev)
 	 * starts threads at QOS_DEFAULT.  (Safe to set priority here: the timer IRQ
 	 * is still masked until irqEnable() below, so the scheduler isn't running.)
 	 */
-	sched_set_priority((kTask_t *)execThread(idle_task, 0x2000, 0x0, "idle"), QOS_IDLE);
+	g_idle_task = (kTask_t *)execThread(idle_task, 0x2000, 0x0, "idle");
+	sched_set_priority(g_idle_task, QOS_IDLE); /* Phase 3.5: g_idle_task tags idle vs busy ticks */
 
 	execFile("/bin/init", argv_init, envp_init, 0x0); /* OS Initializer    */
 

@@ -15,6 +15,7 @@
 
 #include "bringup.h"
 #include <ubixos/vitals.h> /* systemVitals->sysTicks */
+#include <ubixos/sched.h>  /* sched_account_tick (Phase 3.5) */
 
 #define TIMER_INTID 27 /* EL1 virtual timer PPI */
 
@@ -113,5 +114,6 @@ void timer_tick(void)
 	g_ticks++;
 	if (systemVitals != 0)
 		systemVitals->sysTicks++; /* the scheduler's quantum/aging clock */
+	sched_account_tick();             /* Phase 3.5: charge the elapsed tick to the running thread */
 	write_tval(g_interval);           /* re-arm for the next interval */
 }
