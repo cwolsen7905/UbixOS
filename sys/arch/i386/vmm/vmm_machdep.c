@@ -17,6 +17,7 @@
 #include <sys/io.h>
 #include <lib/kprintf.h>
 #include <ubixos/vitals.h>
+#include <ubixos/sched.h>
 #include <machine/cpu.h>
 
 /* Linker symbols bracketing the kernel image. */
@@ -161,4 +162,16 @@ int vmm_mem_map_init()
 	kprintf("vmm: bitmap phys=0x%X pages=%u end_page=%u\n", vmm_bitmap_phys, numPages, bitmap_end_page);
 
 	return (0);
+}
+
+/**
+ * Resident-set count (i386): not yet implemented — counting another process's
+ * resident pages needs mapping its (non-current) page directory, which the foreign
+ * page directory walk doesn't do yet.  Returns 0, so procfs falls back to the
+ * VMA-tree sum (populated by mmap on i386).  See md_resident_pages in <ubixos/sched.h>.
+ */
+u_int32_t md_resident_pages(kTask_t *t)
+{
+	(void)t;
+	return 0;
 }

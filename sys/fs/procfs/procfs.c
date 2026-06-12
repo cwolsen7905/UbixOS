@@ -220,24 +220,28 @@ procfs_build_statm(kTask_t *t, char *buf, int bufsz)
 {
 	unsigned long text = (unsigned long)t->td.vm_tsize; /* pages */
 	unsigned long data = (unsigned long)t->td.vm_dsize; /* pages */
+	unsigned long resident = (unsigned long)md_resident_pages(t); /* real RSS where supported */
 	unsigned long size = 0;
 	struct rb_node *n;
 
-	/* Sum every VMA's [vm_start, vm_end) — the task's full virtual footprint.
-	 * The tree nodes live in the kernel heap, so this is safe to walk for any
-	 * task from here (no need for its address space to be the active one). */
+	/* Sum every VMA's [vm_start, vm_end) — the task's total mapped footprint
+	 * (VSZ).  Populated by mmap on i386; empty on aarch64 (its mmap goes through
+	 * pmap, not the MI VMA tree), where md_resident_pages() carries the count. */
 	for (n = rb_first(&t->vm_map.vm_root); n != NULL; n = rb_next(n))
 	{
 		vm_map_entry_t *e = (vm_map_entry_t *)n; /* rb is the first member */
 		size += (unsigned long)((e->vm_end - e->vm_start) / PAGE_SIZE);
 	}
-	/* Kernel threads (no VMAs) fall back to their text+data extents. */
 	if (size == 0)
-		size = text + data;
+		size = resident;       /* aarch64: no VMA tree — use the resident walk    */
+	if (size == 0)
+		size = text + data;    /* kernel thread / no info — fall back to extents  */
+	if (resident == 0)
+		resident = size;       /* i386: no page walk yet — approximate by size    */
 
 	(void)bufsz;
 	/* size resident shared text lib data dt */
-	return sprintf(buf, "%lu %lu 0 %lu 0 %lu 0\n", size, size, text, data);
+	return sprintf(buf, "%lu %lu 0 %lu 0 %lu 0\n", size, resident, text, data);
 }
 
 static int

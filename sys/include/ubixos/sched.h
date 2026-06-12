@@ -167,6 +167,15 @@ void sched();
 void sched_account_tick(void);
 u_int64_t sched_cpu_busy_ticks(void); /* ticks the CPU ran a non-idle thread   */
 u_int64_t sched_cpu_idle_ticks(void); /* ticks the CPU ran the idle thread     */
+
+/*
+ * Machine-dependent resident-set count: number of physical pages currently
+ * mapped into @t's user address space (for /proc/<pid>/statm).  Walks the task's
+ * page tables.  aarch64 implements a real walk (all RAM is identity-mapped, so a
+ * task's page tables are directly reachable); i386 returns 0 for now (procfs
+ * falls back to the VMA-tree sum).  Returns 0 for kernel threads / unsupported.
+ */
+u_int32_t md_resident_pages(kTask_t *t);
 extern kTask_t *g_idle_task;          /* the per-system idle thread (set in main.c) */
 
 /* Scheduler state-transition API — always use these instead of direct
