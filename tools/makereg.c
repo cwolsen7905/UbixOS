@@ -61,11 +61,15 @@ static const struct reg_entry g_defaults[] = {
     {"/views/startmenu/1/items/1/label", "\"Tessera\""},
     {"/views/startmenu/1/items/1/exec", "\"/bin/tessera\""},
 
-    {"/views/startmenu/2/label", "\"Settings\""},
-    {"/views/startmenu/2/exec", "\"/bin/settings\""},
+    {"/views/startmenu/2/label", "\"Utilities\""},
+    {"/views/startmenu/2/items/0/label", "\"Disk Utility\""},
+    {"/views/startmenu/2/items/0/exec", "\"/bin/diskutil\""},
 
-    {"/views/startmenu/3/label", "\"About\""},
-    {"/views/startmenu/3/exec", "\"@about\""},
+    {"/views/startmenu/3/label", "\"Settings\""},
+    {"/views/startmenu/3/exec", "\"/bin/settings\""},
+
+    {"/views/startmenu/4/label", "\"About\""},
+    {"/views/startmenu/4/exec", "\"@about\""},
 
     /* Desktop background: mode = image | solid | jailbars; each mode uses its
      * own params.  Colours are packed 0xRRGGBB stored as integers.  The system
@@ -99,8 +103,13 @@ static const struct reg_entry g_defaults[] = {
     /* Base desktop settings. */
     {"/views/taskbar/height", "32"},
 
-    /* Audio: master volume (0..100) and mute, applied to the codec at boot by
-     * bin/sndcfg and managed by the Settings Sound pane. */
+    /* Timezone: a POSIX TZ string.  The kernel clock is UTC; the taskbar (and any
+     * POSIX app via $TZ) converts with localtime().  "EST5EDT,M3.2.0,M11.1.0" =
+     * US Eastern with automatic DST (EST winter / EDT summer). */
+    {"/system/timezone", "\"EST5EDT,M3.2.0,M11.1.0\""},
+
+    /* Audio: master volume (0..100) and mute, owned by the aural mixer server
+     * (read at startup, applied to the codec) and managed by the Settings Sound pane. */
     {"/aural/volume", "100"},
     {"/aural/mute", "false"},
 

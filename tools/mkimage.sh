@@ -308,6 +308,11 @@ mkdir -p "$STAGE/var/log" "$STAGE/var/background" "$STAGE/var/fonts" "$STAGE/var
 for f in tools/backgrounds/*.bmp tools/backgrounds/*.png; do [ -f "$f" ] && cp "$f" "$STAGE/var/background/"; done
 for f in tools/*.DPF; do [ -f "$f" ] && cp "$f" "$STAGE/var/fonts/"; done
 for f in tools/*.ttf; do [ -f "$f" ] && cp "$f" "$STAGE/var/fonts/"; done
+# Regenerate the ubistry seed from its single source of truth (tools/makereg.c);
+# tools/ubistry.db is a build artifact (not tracked) so the image always matches
+# the committed defaults table.
+_makereg="$(mktemp -t ubxmakereg.XXXXXX)" && cc -o "$_makereg" tools/makereg.c \
+	&& ( cd tools && "$_makereg" >/dev/null ) && rm -f "$_makereg"
 [ -f tools/ubistry.db ] && cp tools/ubistry.db "$STAGE/var/db/ubistry.db"
 
 # ── Load the staged root into the UbixFS pool partition (type 0x9C).  The pool

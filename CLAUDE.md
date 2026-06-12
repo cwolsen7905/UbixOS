@@ -14,23 +14,27 @@ uBixOS is a hobby/research operating system written in C and C++ (plus assembly)
 
 The project uses **BSD make (`bmake`)**. On macOS use `bmake`; on FreeBSD `make` is already bmake. GNU make will not work — the Makefiles use BSD-specific syntax (`.CURDIR`, `.if`/`.else`, `!=` shell assignment).
 
+> **Multiple agents/sessions sharing this repo?** A concurrent `bmake world`/`image` from two sessions corrupts the shared tree (`contrib/` reconfig races). Serialise whole-tree builds with the lock: `tools/buildlock.sh with "<who>" bmake world image` (auto acquire+release), or `tools/buildlock.sh acquire/release/status`. See **`AGENTS-COORD.md`** for the convention + status board. Per-directory `bmake -C <dir>` builds are isolated and don't need the lock.
+
 ### Common targets
 
 Build output is **arch-homed** under `build/${ARCH}/` (e.g. `build/i386/`,
 `build/aarch64/`) so the two architectures never clobber each other. Select the
-target with `TARGET=` (alias for `TARGET_ARCH=`); default is i386.
+target with `TARGET=` (alias for `TARGET_ARCH=`). **The default is now aarch64**
+(the primary forward target); build i386 explicitly with `TARGET=i386`, or
+`export TARGET=i386` for a whole shell session.
 
 ```sh
-bmake                  # kernel + world (default, i386)
-bmake kernel           # kernel only → build/i386/boot/kernel
-bmake world            # userland only → build/i386/{bin,lib,libexec}/
-bmake image            # build a fresh bootable FAT32 disk image from scratch
-bmake run              # launch QEMU with ubixos.img (i386)
-bmake run-debug        # headless QEMU, serial to stdout
+bmake                  # kernel + world (default, aarch64) → build/aarch64/
+bmake kernel           # kernel only → build/aarch64/boot/kernel
+bmake world            # userland only → build/aarch64/{bin,lib,libexec}/
+bmake image            # fresh bootable disk image (ubixos-arm.img via mkimage-arm.sh)
+bmake run-aarch64      # launch QEMU virt (graphical, virtio-gpu, HVF on Apple Silicon)
+bmake run-debug-aarch64 # headless QEMU virt, serial to serial.log
 
-# aarch64 (QEMU virt) — Track B port, see docs/design/cross-arch-plan.md
-bmake kernel TARGET=aarch64       # → build/aarch64/boot/kernel (standalone bring-up)
-bmake run-debug TARGET=aarch64    # boot it headless in QEMU virt (HVF on Apple Silicon)
+# i386 (the abstraction anchor — keep it green) — TARGET=i386 on every command
+bmake kernel world TARGET=i386    # → build/i386/
+bmake run TARGET=i386             # launch QEMU with ubixos.img
 
 bmake clean            # clean all build artifacts
 ```

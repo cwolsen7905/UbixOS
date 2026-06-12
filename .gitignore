@@ -13,9 +13,12 @@ t.c
 .DS_Store
 .cache/
 tools/makeuser
+tools/makereg
+tools/ubistry.db
 tools/doom1.wad
 tools/userdb
 etc/userdb
 .netsurf-stage/
 contrib/netsurf/build/
 contrib/netsurf-nsgenbind/build-*/
+.buildlock

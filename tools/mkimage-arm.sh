@@ -163,6 +163,11 @@ done
 # ubistry registry seed (wallpaper/theme/per-user prefs) — the daemon loads it
 # from /var/db/ubistry.db at startup.
 mmd -i "${IMG}@@1M" ::/var/db 2>/dev/null || true
+# Regenerate the ubistry seed from its single source of truth (tools/makereg.c);
+# tools/ubistry.db is a build artifact (not tracked) so the image always matches
+# the committed defaults table.
+_makereg="$(mktemp -t ubxmakereg.XXXXXX)" && cc -o "$_makereg" tools/makereg.c \
+	&& ( cd tools && "$_makereg" >/dev/null ) && rm -f "$_makereg"
 [ -f tools/ubistry.db ] && mcopy -o -i "${IMG}@@1M" tools/ubistry.db ::/var/db/ubistry.db || true
 
 # NetSurf browser runtime resources (Messages, CSS, icons) at the path baked into

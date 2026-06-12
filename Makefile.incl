@@ -8,17 +8,16 @@
 # compile flags and linker-script suffix, keeping arch facts out of the shared
 # host-detection and CFLAGS.
 #
-# Override with either spelling: `bmake TARGET=aarch64` (short alias, resolved
-# first) or `bmake TARGET_ARCH=aarch64`.
+# Override with either spelling: `bmake TARGET=i386` (short alias, resolved
+# first) or `bmake TARGET_ARCH=i386`.
 #
-# NOTE: the default is intentionally still i386 — flip it to aarch64 only once
-# the aarch64 kernel actually builds/boots (otherwise a bare `bmake` would error
-# on the not-yet-existent arch tree).  Until then aarch64 is driven by the
-# override and the i386 build/run path is unchanged.
+# Default is aarch64 — the primary forward target, which builds and boots to a
+# graphical desktop.  i386 is the abstraction anchor and must stay green: build
+# it explicitly with `bmake ... TARGET=i386` (or `TARGET_ARCH=i386`).
 .if defined(TARGET) && !empty(TARGET)
 TARGET_ARCH ?= ${TARGET}
 .endif
-TARGET_ARCH ?= i386
+TARGET_ARCH ?= aarch64
 _ARCH       ?= ${TARGET_ARCH}
 
 REMOVE = rm -rf
