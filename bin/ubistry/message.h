@@ -29,10 +29,16 @@
 #ifndef _UBISTRY_MESSAGE_H
 #define _UBISTRY_MESSAGE_H
 
+#include <stdint.h>
+
 /* Create the registry mailbox.  @return 0 on success, -1 on failure. */
 int ubistry_init_mbox(const char *name);
 
 /* Drain and handle all pending GET/SET/ENUM/DEL requests. */
 void ubistry_process_messages(void);
+
+/* Block until a request arrives (or @timeout scheduler ticks pass), process it
+ * and drain any more.  Returns 1 if a message was handled, 0 on timeout. */
+int ubistry_wait_and_process(uint32_t timeout);
 
 #endif /* _UBISTRY_MESSAGE_H */

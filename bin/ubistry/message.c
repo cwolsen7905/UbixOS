@@ -91,37 +91,54 @@ static void handle_enum(struct ub_query_req *q)
 		mpi_postMessage(q->reply_mbox, UB_MSG_CHILDREN, &rmsg);
 }
 
+/** Dispatch a single registry request. */
+static void handle_one(mpi_message_t *msg)
+{
+	switch (msg->header)
+	{
+		case UB_MSG_GET:
+			handle_get((struct ub_query_req *)msg->data);
+			break;
+		case UB_MSG_ENUM:
+			handle_enum((struct ub_query_req *)msg->data);
+			break;
+		case UB_MSG_SET:
+		{
+			struct ub_set_req *s = (struct ub_set_req *)msg->data;
+			if (ub_set(s->path, (ub_type_t)s->type, s->value) == 0)
+				persist_mark_dirty();
+			break;
+		}
+		case UB_MSG_DEL:
+		{
+			struct ub_del_req *d = (struct ub_del_req *)msg->data;
+			if (ub_delete(d->path) == 0)
+				persist_mark_dirty();
+			break;
+		}
+		default:
+			/* Unknown command — ignore. */
+			break;
+	}
+}
+
 void ubistry_process_messages(void)
 {
 	mpi_message_t msg;
 
 	while (mpi_fetchMessage(UBISTRY_MBOX, &msg) == 0)
-	{
-		switch (msg.header)
-		{
-			case UB_MSG_GET:
-				handle_get((struct ub_query_req *)msg.data);
-				break;
-			case UB_MSG_ENUM:
-				handle_enum((struct ub_query_req *)msg.data);
-				break;
-			case UB_MSG_SET:
-			{
-				struct ub_set_req *s = (struct ub_set_req *)msg.data;
-				if (ub_set(s->path, (ub_type_t)s->type, s->value) == 0)
-					persist_mark_dirty();
-				break;
-			}
-			case UB_MSG_DEL:
-			{
-				struct ub_del_req *d = (struct ub_del_req *)msg.data;
-				if (ub_delete(d->path) == 0)
-					persist_mark_dirty();
-				break;
-			}
-			default:
-				/* Unknown command — ignore. */
-				break;
-		}
-	}
+		handle_one(&msg);
+}
+
+int ubistry_wait_and_process(uint32_t timeout)
+{
+	mpi_message_t msg;
+
+	/* Block (no busy-poll) until a request arrives or @timeout ticks pass. */
+	if (mpi_waitMessage(UBISTRY_MBOX, &msg, timeout) != 0)
+		return (0); /* timed out with nothing queued */
+
+	handle_one(&msg);           /* the message we blocked-fetched */
+	ubistry_process_messages(); /* drain any others that piled up */
+	return (1);
 }

@@ -99,7 +99,8 @@ static int fstab_parse(const char *path, fstab_entry_t *out, int max)
 		/* strip trailing newline */
 		line[strcspn(line, "\r\n")] = '\0';
 
-		if (sscanf(p, "%63s %255s %31s %63s", out[n].device, out[n].mountpoint, out[n].fstype, out[n].options) < 3)
+		if (sscanf(p, "%63s %255s %31s %63s", out[n].device, out[n].mountpoint, out[n].fstype, out[n].options) <
+		    3)
 			continue;
 
 		n++;
@@ -261,10 +262,10 @@ int main(void)
 	/* Phase 6: event loop — handle storage arrive/depart MPI messages */
 	for (;;)
 	{
-		if (mpi_fetchMessage(AUTOMOUNTD_MBOX, &msg) == 0)
+		/* Block until a storage arrive/depart event arrives instead of
+		 * busy-polling — automountd is idle until a device is (un)plugged. */
+		if (mpi_waitMessage(AUTOMOUNTD_MBOX, &msg, 0) == 0)
 			handle_storage_event(&msg);
-		else
-			sched_yield();
 	}
 
 	return (0);

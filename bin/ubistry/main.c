@@ -47,8 +47,6 @@
 
 int main(int argc, char **argv)
 {
-	int tick = 0;
-
 	(void)argc;
 	(void)argv;
 
@@ -65,24 +63,22 @@ int main(int argc, char **argv)
 
 	ulogf(ULOG_INFO, "ubistry: ready (db %s)", UBISTRY_DB);
 
+	ubistry_process_messages(); /* drain anything queued during startup */
 	for (;;)
 	{
-		ubistry_process_messages();
-
+		/* Block on the mailbox instead of busy-polling.  When the db is clean,
+		 * sleep indefinitely until a request arrives.  When dirty, sleep only up
+		 * to FLUSH_TICKS — if that elapses with no further request, persist the
+		 * pending changes (write-behind) and go back to an indefinite wait. */
 		if (persist_dirty())
 		{
-			if (++tick >= FLUSH_TICKS)
-			{
-				persist_save(UBISTRY_DB);
-				tick = 0;
-			}
+			if (!ubistry_wait_and_process(FLUSH_TICKS))
+				persist_save(UBISTRY_DB); /* quiet for FLUSH_TICKS while dirty -> flush */
 		}
 		else
 		{
-			tick = 0;
+			ubistry_wait_and_process(0); /* clean: block until a request */
 		}
-
-		sched_yield();
 	}
 
 	return (0);

@@ -228,14 +228,16 @@ int main(int argc, char **argv, char **envp)
 	 * switchable text VTs.  (ubistry, authd, … are started via /etc/init.d.) */
 	start_console();
 
-	/* Idle / reaper loop. */
+	/* Idle / reaper loop.  Block on the init mailbox instead of busy-polling; the
+	 * 1 s timeout (100 ticks @ 100 Hz) keeps PID 1 ticking over as a safety hedge,
+	 * though service reaping is handled by the per-service supervisor children,
+	 * not here. */
 	for (;;)
 	{
-		if (mpi_fetchMessage("init", &myMsg) == 0x0)
+		if (mpi_waitMessage("init", &myMsg, 100) == 0x0)
 		{
 			/* reserved for future init control messages */
 		}
-		sched_yield();
 	}
 
 	return (0x0);
