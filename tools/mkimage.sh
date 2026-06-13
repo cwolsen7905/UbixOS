@@ -26,8 +26,9 @@ IMG_SIZE_MB=656
 # the disk and FAT carries only what the firmware/GRUB must read pre-mount.
 FAT_SIZE_MB=33      # FAT32 /boot partition (type 0x0C) — kernel + GRUB only
 SWAP_SIZE_MB=64     # raw swap partition (type 0x82)
-POOL_SIZE_MB=550    # UbixFS pool partition (type 0x9C; raw mount) — the root /
-POOL_FS_MB=540      # pool filesystem size inside that partition
+POOL_SIZE_MB=1040   # UbixFS pool partition (type 0x9C; raw mount) — the root /
+POOL_FS_MB=1024     # pool filesystem size inside that partition (headroom to grow;
+                    # bump higher once self-hosted source/builds live on the pool)
 # BUILD/KERNEL honor the environment so the arch-homed build dir (build/i386)
 # can be passed in by the `image` target; default to the flat layout otherwise.
 BUILD="${BUILD:-build}"
