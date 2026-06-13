@@ -701,6 +701,20 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 
 	fd = fopen(file, "r");
 
+	/*
+	 * The pooled (UbixFS) root's reader can transiently fail to open a file
+	 * under the concurrent-fopen storm of early boot, when init forks several
+	 * /etc/init.d daemons (authd, netcfg, aural, …) in quick succession — the
+	 * symptom is an intermittent "fopen failed" that breaks login (authd never
+	 * starts).  Retry a few times, yielding so the contending reader can finish,
+	 * before giving up.  A normal open succeeds on the first try and is unaffected.
+	 */
+	for (int retry = 0; fd == 0x0 && retry < 8; retry++)
+	{
+		sched_yield();
+		fd = fopen(file, "r");
+	}
+
 	if (fd == 0x0)
 	{
 		kprintf("sys_exec: fopen failed for %s\n", file);
