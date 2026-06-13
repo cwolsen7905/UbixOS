@@ -105,17 +105,31 @@ static void vnet_deliver(const u_int8_t *frame, u_int32_t len)
 		pbuf_free(p);
 }
 
+/* Never-true sleep predicate: vnet_rx_thread has no RX interrupt to wake it, so
+ * it just sleeps out the timeout each idle pass (see vnet_rx_thread). */
+static int vnet_rx_never(void *arg)
+{
+	(void)arg;
+	return (0);
+}
+
+static char g_vnet_rx_chan; /* sleep channel token for the idle RX wait */
+
 /**
- * RX poll thread: drain the virtio receive ring and feed lwIP, yielding between
- * sweeps so other tasks run (the driver has no RX interrupt yet).
+ * RX poll thread: drain the virtio receive ring and feed lwIP.  While frames are
+ * arriving it loops at full speed; once a sweep finds nothing it sleeps ~1 tick
+ * (leaving the run queue) instead of busy-yielding, so an idle link costs ~0%
+ * CPU rather than pegging one.  Latency on the first packet after idle is one
+ * timer tick (10 ms) — fine for a desktop; a real RX interrupt would remove even
+ * that (the driver has none yet).
  */
 static void vnet_rx_thread(void *arg)
 {
 	(void)arg;
 	for (;;)
 	{
-		virtio_net_poll_rx(vnet_deliver);
-		sched_yield();
+		if (virtio_net_poll_rx(vnet_deliver) == 0)
+			sched_wait_event_timeout(&g_vnet_rx_chan, vnet_rx_never, NULL, 1);
 	}
 }
 
