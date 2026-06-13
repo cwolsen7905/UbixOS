@@ -362,7 +362,10 @@ static void draw_header(void)
 	for (int i = 0; i < NCOLS; i++)
 	{
 		char t[24];
-		snprintf(t, sizeof(t), "%s%s", g_cols[i].title, (i == g_sort) ? " \xE2\x96\xBE" : "");
+		/* Sort indicator: ASCII caret (not a UTF-8 glyph).  ogScalableFont walks
+		 * bytes, not codepoints, so a multi-byte arrow renders as mojibake until
+		 * the font engine learns UTF-8 (queued with [ls/objgfx]). */
+		snprintf(t, sizeof(t), "%s%s", g_cols[i].title, (i == g_sort) ? " v" : "");
 		cell(&g_cols[i], 7, t, (i == g_sort) ? COL_TEXT : COL_TEXT_DIM);
 	}
 }
