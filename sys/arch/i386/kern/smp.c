@@ -77,6 +77,15 @@ struct pcpu g_pcpu[MAXCPU];
  * shortcuts to the BSP (cpu 0) so no MI caller has to touch the LAPIC. */
 static volatile int g_smp_active = 0;
 
+/* Set by the BSP once it has observed each AP's heartbeat advance (the boot
+ * liveness check).  Until then an AP bumps its heartbeat in a short spin so the
+ * BSP can see it is alive; afterwards the AP halts instead of spinning.  An idle
+ * AP that busy-spins (pause) does NOT deschedule the vCPU under QEMU/TCG — it
+ * pegs a host core and steals emulation throughput from the BSP, making the
+ * whole VM crawl.  There is no per-CPU scheduler yet, so the AP has no work:
+ * halting until the real per-CPU idle thread lands is correct. */
+static volatile int g_ap_park = 0;
+
 u_int32_t smp_processor_id(void)
 {
 	u_int8_t apicid;
@@ -202,26 +211,24 @@ void c_ap_boot(void)
 
 	pcpu_register(id, apicRead(0x20) >> 24);
 
-	/* Per-CPU idle/liveness loop: bump our own heartbeat and pause.  This is the
-	 * first code an AP runs continuously in the kernel address space, in
-	 * parallel with the BSP — the seed of the real per-CPU idle thread.  We stay
-	 * cli (no scheduler/IRQs are SMP-safe yet) and touch only our own pcpu slot,
-	 * so there is no contention with any other CPU. */
-	/* Per-CPU idle loop: bump our own heartbeat (liveness the BSP can observe)
-	 * and pause.  This is the first code an AP runs continuously in the kernel
-	 * address space, in parallel with the BSP, and is the seed of the real
-	 * per-CPU idle thread.  We stay cli — no scheduler/IRQ path is SMP-safe yet
-	 * — and touch only our own pcpu slot, so there is no cross-CPU contention.
-	 * The pause also yields the vCPU under single-threaded TCG so the BSP is not
-	 * starved.  A proper sti/hlt idle replaces this once interrupts are
-	 * per-CPU-safe. */
+	/* Liveness phase: the first code an AP runs continuously in the kernel
+	 * address space, in parallel with the BSP — the seed of the real per-CPU idle
+	 * thread.  Bump our own heartbeat (liveness the BSP can observe) until the BSP
+	 * has confirmed us (g_ap_park), then fall through to halt.  We stay cli and
+	 * touch only our own pcpu slot, so there is no cross-CPU contention.  We must
+	 * NOT spin here forever: pause is only a spin-wait hint, it does not yield the
+	 * vCPU under TCG, so an idle AP would peg a host core and starve the BSP that
+	 * runs the actual system. */
 	if (id < MAXCPU)
-		for (;;)
+		while (!g_ap_park)
 		{
 			g_pcpu[id].heartbeat++;
 			__asm__ __volatile__("pause");
 		}
 
+	/* No per-CPU scheduler yet -> the AP has no work.  Halt instead of spinning
+	 * (cli;hlt: IRQs are not SMP-safe yet, so we sleep until the real per-CPU
+	 * idle thread replaces this with sti;hlt + IPI wakeup). */
 	for (;;)
 		__asm__ __volatile__("cli; hlt");
 }
@@ -290,6 +297,10 @@ int smpInit(void)
 				        : (g_pcpu[i].heartbeat != hb[i]) ? "running"
 				                                         : "STALLED");
 	}
+
+	/* Liveness confirmed: release the APs from their heartbeat spin so they halt
+	 * instead of pegging a host core under TCG. */
+	g_ap_park = 1;
 
 	return (0);
 }
