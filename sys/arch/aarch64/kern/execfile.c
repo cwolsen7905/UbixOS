@@ -164,9 +164,12 @@ static void run_init_image(const void *image, const char *name)
 	sched_ready(t);
 
 	kprintf("init: %s scheduled as pid %d; entering cooperative idle loop.\n", name, t->id);
+	/* The boot thread is now purely the idle thread: tag it so sched_account_tick
+	 * buckets its ticks as idle (not busy) and procfs reports it at 0% CPU. */
+	g_idle_task = _current;
 	for (;;)
 	{
-		sched_yield();            /* boot thread is now the idle task; init runs the system */
+		sched_yield();           /* boot thread is now the idle task; init runs the system */
 		__asm__ volatile("wfi"); /* nothing runnable: halt until the next interrupt, not spin */
 	}
 }
@@ -466,6 +469,9 @@ void aarch64_run_dynamic_init(const char *path)
 	if (t == NULL)
 		return;
 	kprintf("dyn: %s is now the system (pid %d); idle loop.\n", path, t->id);
+	/* The boot thread is now purely the idle thread: tag it so sched_account_tick
+	 * buckets its ticks as idle (not busy) and procfs reports it at 0% CPU. */
+	g_idle_task = _current;
 	for (;;)
 	{
 		sched_yield(); /* run any ready task */

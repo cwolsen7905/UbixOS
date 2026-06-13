@@ -24,10 +24,10 @@ extern "C"
 #include <sys/mpi.h>
 #include <sys/sched.h>
 #include <views/display_proto.h>
-/* musl gates these behind a feature macro the -std=c++20 (__STRICT_ANSI__)
- * -nostdinc world doesn't set; declare them directly, as bin/aural does. */
-int nanosleep(const struct timespec *req, struct timespec *rem);
-int kill(int pid, int sig);
+	/* musl gates these behind a feature macro the -std=c++20 (__STRICT_ANSI__)
+	 * -nostdinc world doesn't set; declare them directly, as bin/aural does. */
+	int nanosleep(const struct timespec *req, struct timespec *rem);
+	int kill(int pid, int sig);
 }
 #include <objgfx/objgfx.h>
 #include <objgfx/ogScalableFont.h>
@@ -120,10 +120,11 @@ static unsigned long long g_prev_idle;      /* prior idle from /proc/stat       
 static unsigned long long g_uptime_total;   /* busy+idle now (for Time scaling) */
 static unsigned long g_uptime_sec;          /* /proc/uptime first field         */
 
-static int g_sel_pid = -1;     /* selected process (highlight + kill target)    */
-static int g_overall_x10;      /* whole-machine CPU%, ×10                        */
+static int g_sel_pid = -1;                    /* selected process (highlight + kill target)    */
+static int g_overall_x10;                     /* whole-machine CPU%, ×10                        */
+static int g_idle_x10 = 1000;                 /* whole-machine idle%, ×10 (the idle thread)     */
 static unsigned char g_hist[MAX_PROCS][HIST]; /* per-pid CPU% ring (0..100)      */
-static int g_hist_head;        /* newest sample index in each ring              */
+static int g_hist_head;                       /* newest sample index in each ring              */
 
 /* ── helpers ────────────────────────────────────────────────────────────────*/
 
@@ -199,7 +200,15 @@ static int parse_stat(const char *path, struct prow *r)
 	           " %c %d %d %d %d %d %d %d %d %d %d %lu",
 	           &st,
 	           &ppid,
-	           &d[0], &d[1], &d[2], &d[3], &d[4], &d[5], &d[6], &d[7], &d[8],
+	           &d[0],
+	           &d[1],
+	           &d[2],
+	           &d[3],
+	           &d[4],
+	           &d[5],
+	           &d[6],
+	           &d[7],
+	           &d[8],
 	           &ut) < 12)
 		return -1;
 	r->state = st;
@@ -268,8 +277,10 @@ static void refresh(void)
 	unsigned long long dtotal = (total > g_prev_total) ? (total - g_prev_total) : 0;
 	unsigned long long didle = (idle > g_prev_idle) ? (idle - g_prev_idle) : 0;
 
-	/* Whole-machine CPU% = busy fraction of the elapsed ticks. */
+	/* Whole-machine CPU% = busy fraction of the elapsed ticks; idle% is the rest
+	 * (the idle thread's ticks, which the kernel buckets separately). */
 	g_overall_x10 = (dtotal > 0) ? (int)((dtotal - didle) * 1000 / dtotal) : 0;
+	g_idle_x10 = (dtotal > 0) ? (int)(didle * 1000 / dtotal) : 1000;
 
 	/* Advance the history ring once per sample. */
 	g_hist_head = (g_hist_head + 1) % HIST;
@@ -366,11 +377,17 @@ static void draw_summary(void)
 	g_surf.ogFillRect(0, y0, g_w - 1, y0 + SUMMARY_H - 1, COL_WIN);
 	g_surf.ogHLine(0, g_w - 1, y0 + SUMMARY_H - 1, COL_DIVIDER);
 
-	snprintf(buf, sizeof(buf), "CPU  %d.%d%%", g_overall_x10 / 10, g_overall_x10 % 10);
+	snprintf(buf,
+	         sizeof(buf),
+	         "CPU %d.%d%%   Idle %d.%d%%",
+	         g_overall_x10 / 10,
+	         g_overall_x10 % 10,
+	         g_idle_x10 / 10,
+	         g_idle_x10 % 10);
 	set_fg(COL_TEXT);
 	g_font.PutString(g_surf, 10, y0 + 5, buf);
 
-	bx = 120;
+	bx = 240;
 	bw = g_w - bx - 14;
 	by = y0 + 6;
 	bh = SUMMARY_H - 13;

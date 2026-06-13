@@ -107,11 +107,14 @@ void sched_account_tick(void)
 {
 	kTask_t *cur = _current;
 
-	if (cur != 0x0)
-		cur->run_ticks++;
-
 	if (cur != 0x0 && cur != g_idle_task)
+	{
+		/* Charge per-process CPU time only to real work: the idle thread is
+		 * excluded so procfs (/proc/<pid>/stat utime) reports it at 0% rather
+		 * than ~100% whenever the machine is idle. */
+		cur->run_ticks++;
 		g_cpu_busy_ticks++;
+	}
 	else
 		g_cpu_idle_ticks++;
 }
