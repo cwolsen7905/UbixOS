@@ -34,7 +34,11 @@
 
 #include "objgfx/ogScalableFont.h"
 
-/* Blend an 8-bit coverage value between two channel bytes. */
+/* Blend an 8-bit coverage value between two channel bytes.  Kept in sRGB
+ * (perceptual) space on purpose: pure linear-light blending thins dark-on-light
+ * text (a 50%-coverage edge goes 128->188), which reads as washed-out — the same
+ * reason macOS uses a tuned font-smoothing gamma rather than strict linear.
+ * Gamma-correct text is a deliberate later call (objGFX P0). */
 static inline uInt8 blend_channel(uInt8 base, uInt8 top, uInt8 cov)
 {
 	return (uInt8)(base + (((int)top - (int)base) * (int)cov) / 255);

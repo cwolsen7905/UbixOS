@@ -31,6 +31,42 @@ static void _sp24(void *p, uInt32 colour) {
 static uInt32 _gp32(void *p)            { return *(uInt32 *)p; }
 static void   _sp32(void *p, uInt32 c)  { *(uInt32 *)p = c; }
 
+/* ── Gamma-correct alpha blending (objGFX P0) ────────────────────────────────
+ * Straight source-over computed on sRGB (gamma-encoded) bytes muddies
+ * translucent fills and leaves a light "grey fringe" on anti-aliased edges and
+ * text.  Compositing physically happens in *linear light*, so blend there: map
+ * each channel sRGB->linear, mix, map back.  The 12-bit LUT pair is filled once,
+ * lazily (floating point at init only — the per-pixel path is pure lookups). */
+static uInt16 og_srgb2lin[256];  /* sRGB byte -> linear, 0..4095 */
+static uInt8  og_lin2srgb[4096]; /* linear 0..4095 -> sRGB byte  */
+static bool   og_gamma_ready = false;
+
+static void og_gamma_init(void)
+{
+	for (int i = 0; i < 256; i++)
+	{
+		float c = (float)i / 255.0f;
+		float l = (c <= 0.04045f) ? (c / 12.92f) : powf((c + 0.055f) / 1.055f, 2.4f);
+		og_srgb2lin[i] = (uInt16)lroundf(l * 4095.0f);
+	}
+	for (int i = 0; i < 4096; i++)
+	{
+		float l = (float)i / 4095.0f;
+		float c = (l <= 0.0031308f) ? (l * 12.92f) : (1.055f * powf(l, 1.0f / 2.4f) - 0.055f);
+		int v = (int)lroundf(c * 255.0f);
+		og_lin2srgb[i] = (uInt8)(v < 0 ? 0 : (v > 255 ? 255 : v));
+	}
+	og_gamma_ready = true;
+}
+
+/* Gamma-correct source-over of one channel: dst*ia + src*a in linear light,
+ * with a + ia == 255.  Returns the sRGB-encoded result. */
+static inline uInt8 og_blend_ch(uInt8 dst, uInt8 src, uInt32 a, uInt32 ia)
+{
+	uInt32 lin = (og_srgb2lin[dst] * ia + og_srgb2lin[src] * a) / 255u;
+	return og_lin2srgb[lin > 4095u ? 4095u : lin];
+}
+
 const static ogRGBA8 DEFAULT_PALETTE[256] =
 	{{0,   0,   0,   255},       // 0
 	 {0,   0,   170, 255},
@@ -971,13 +1007,14 @@ void ogSurface::RawSetPixel(uint32_t x, uInt32 y, uInt32 colour)
 		uInt8 dR, dG, dB;
 		ogUnpack(colour, sR, sG, sB, sA);
 		if (sA == 0) return;
-		if (sA != 255) 
+		if (sA != 255)
 		{
 			uint32_t inverseA = 255 - sA;
+			if (!og_gamma_ready) og_gamma_init();
 			ogUnpack(RawGetPixel(x, y), dR, dG, dB);
-			uint32_t newR = (dR * inverseA + sR * sA) >> 8;
-			uint32_t newG = (dG * inverseA + sG * sA) >> 8;
-			uint32_t newB = (dB * inverseA + sB * sA) >> 8;
+			uint32_t newR = og_blend_ch(dR, sR, sA, inverseA);
+			uint32_t newG = og_blend_ch(dG, sG, sA, inverseA);
+			uint32_t newB = og_blend_ch(dB, sB, sA, inverseA);
 			//mji for gtk      colour = ogPack(newR, newG, newB, inverseA);
 			colour = ogPack(newR, newG, newB, 255);
 		}
@@ -1089,10 +1126,11 @@ void ogSurface::RawSetPixel(uint32_t x, uInt32 y, uInt8 r, uInt8 g, uInt8 b, uIn
 			} // if a == 255
 
 			inverseA = 255 - a;
+			if (!og_gamma_ready) og_gamma_init();
 			ogUnpack(RawGetPixel(x, y), dR, dG, dB);
-			newR = (dR * inverseA + r * a) >> 8;
-			newG = (dG * inverseA + g * a) >> 8;
-			newB = (dB * inverseA + b * a) >> 8;
+			newR = og_blend_ch(dR, r, a, inverseA);
+			newG = og_blend_ch(dG, g, a, inverseA);
+			newB = og_blend_ch(dB, b, a, inverseA);
 			//mji for gtk      colour = ogPack(newR, newG, newB, inverseA);
 			colour = ogPack(newR, newG, newB, 255);
 		} else colour = ogPack(r, g, b, a);
