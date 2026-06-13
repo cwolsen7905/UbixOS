@@ -165,7 +165,10 @@ static void run_init_image(const void *image, const char *name)
 
 	kprintf("init: %s scheduled as pid %d; entering cooperative idle loop.\n", name, t->id);
 	for (;;)
-		sched_yield(); /* boot thread is now the idle task; init runs the system */
+	{
+		sched_yield();            /* boot thread is now the idle task; init runs the system */
+		__asm__ volatile("wfi"); /* nothing runnable: halt until the next interrupt, not spin */
+	}
 }
 
 /**
@@ -464,7 +467,15 @@ void aarch64_run_dynamic_init(const char *path)
 		return;
 	kprintf("dyn: %s is now the system (pid %d); idle loop.\n", path, t->id);
 	for (;;)
-		sched_yield();
+	{
+		sched_yield(); /* run any ready task */
+		/* Nothing was runnable (sched_yield returned to the idle thread): halt the
+		 * CPU until the next interrupt instead of spinning.  IRQs are unmasked, so
+		 * the 100 Hz timer (and any device IRQ / expiring callout that makes a task
+		 * runnable) wakes us; the loop then reschedules.  Without this the idle
+		 * thread pegged a core at 100% once every service learned to block. */
+		__asm__ volatile("wfi");
+	}
 }
 
 /**
