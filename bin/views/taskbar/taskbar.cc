@@ -556,6 +556,32 @@ class Menu
 /*   AURAL_SET_GAIN; the live stream set comes from an AURAL_LIST query. */
 /* ------------------------------------------------------------------ */
 
+/* Write @src into @dst (cap @n) trimmed to fit @maxpx pixels, appending "..."
+ * when shortened.  Uses the font's real glyph advances, so it works for any name
+ * and proportional face — no guessed character budget.  Shared by the mixer
+ * flyout (stream names) and the taskbar (window-button titles). */
+static void fit_label(ogScalableFont &font, char *dst, size_t n, const char *src, int maxpx)
+{
+	std::strncpy(dst, src, n - 1);
+	dst[n - 1] = '\0';
+	if ((int)font.TextWidth(dst) <= maxpx)
+		return; /* fits whole */
+
+	/* Largest prefix p such that "p..." still fits the budget. */
+	for (size_t len = std::strlen(dst); len > 0; len--)
+	{
+		char trial[40];
+		std::snprintf(trial, sizeof(trial), "%.*s...", (int)(len - 1), src);
+		if ((int)font.TextWidth(trial) <= maxpx)
+		{
+			std::strncpy(dst, trial, n - 1);
+			dst[n - 1] = '\0';
+			return;
+		}
+	}
+	std::snprintf(dst, n, "..."); /* nothing fits — just the ellipsis */
+}
+
 class MixerFlyout
 {
 	ogSurface surf_;
@@ -570,31 +596,6 @@ class MixerFlyout
 	int master_vol_ = 100;
 	bool master_mute_ = false;
 	struct aural_list_reply data_ = {}; /* live streams (from AURAL_LIST) */
-
-	/* Write @p src into @p dst (cap @p n) trimmed to fit @p maxpx pixels, appending
-	 * "..." when it must be shortened.  Uses the font's real glyph advances so it
-	 * works for any name and proportional face — no guessed character budget. */
-	static void fit_label(ogScalableFont &font, char *dst, size_t n, const char *src, int maxpx)
-	{
-		std::strncpy(dst, src, n - 1);
-		dst[n - 1] = '\0';
-		if ((int)font.TextWidth(dst) <= maxpx)
-			return; /* fits whole */
-
-		/* Largest prefix p such that "p..." still fits the budget. */
-		for (size_t len = std::strlen(dst); len > 0; len--)
-		{
-			char trial[40];
-			std::snprintf(trial, sizeof(trial), "%.*s...", (int)(len - 1), src);
-			if ((int)font.TextWidth(trial) <= maxpx)
-			{
-				std::strncpy(dst, trial, n - 1);
-				dst[n - 1] = '\0';
-				return;
-			}
-		}
-		std::snprintf(dst, n, "..."); /* nothing fits — just the ellipsis */
-	}
 
 	/* Master column plus one per live stream. */
 	int columns() const
@@ -1006,7 +1007,11 @@ class Taskbar
 				    wx, TB_H - 3, wx + WIN_BTN_W - 1, TB_H - 1, active ? COL_WHITE : TB_BTN_P);
 			font_fg(font_, (active || hover) ? COL_WHITE : 0x00C8C8D2u);
 			font_bg(font_, fill);
-			font_.PutString(surf_, wx + 8, 12, tw.title.c_str());
+			/* Truncate the title to the button so long names don't spill past the
+			 * highlighted tab (8px left pad + a small right margin). */
+			char label[40];
+			fit_label(font_, label, sizeof(label), tw.title.c_str(), WIN_BTN_W - 14);
+			font_.PutString(surf_, wx + 8, 12, label);
 			wx += WIN_BTN_W + 2;
 			i++;
 		}
