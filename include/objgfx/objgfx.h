@@ -45,6 +45,9 @@ protected:
 	void   (*setPixel)(void *, uInt32);
 
 	void         AARawLine(uInt32, uInt32, uInt32, uInt32, uInt32);
+	/* Gamma-correct coverage blend of one pixel (clipped): composite `colour`
+	 * over (x,y) at coverage cov (0..255).  The AA-fill edge primitive. */
+	void         ogAACoverage(int32 x, int32 y, uInt32 colour, int32 cov);
 	bool         ClipLine(int32&, int32&, int32&, int32&);
 	virtual uInt32 RawGetPixel(uInt32, uInt32);
 	void         RawLine(uInt32, uInt32, uInt32, uInt32, uInt32);

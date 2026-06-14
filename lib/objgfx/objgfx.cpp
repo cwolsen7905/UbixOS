@@ -1932,9 +1932,57 @@ void ogSurface::ogCurve(int32 x1, int32 y1, int32 x2, int32 y2, int32 x3, int32 
 } // void ogSurface::ogCurve()
 
 
-void ogSurface::ogFillCircle(int32 xCenter, int32 yCenter, uint32_t radius, uInt32 colour) 
+/* Gamma-correct coverage blend of one pixel (clipped) — the AA-fill edge
+ * primitive.  cov is 0..255; 255 writes opaque, in-between composites `colour`
+ * over the destination in linear light. */
+void ogSurface::ogAACoverage(int32 x, int32 y, uInt32 colour, int32 cov)
+{
+	if (cov <= 0)
+		return;
+	if (x < 0 || y < 0 || x > (int32)maxX || y > (int32)maxY)
+		return;
+	void *ptr = reinterpret_cast<void *>(buffer + lineOfs[y] + x * bytesPerPix);
+	if (cov >= 255)
+	{
+		setPixel(ptr, colour);
+		return;
+	}
+	uInt8 sr, sg, sb, sa, dr, dg, db;
+	ogUnpack(colour, sr, sg, sb, sa);
+	ogUnpack(RawGetPixel(x, y), dr, dg, db);
+	if (!og_gamma_ready)
+		og_gamma_init();
+	uInt32 ia = 255u - (uInt32)cov;
+	uInt8 nr = og_blend_ch(dr, sr, (uInt32)cov, ia);
+	uInt8 ng = og_blend_ch(dg, sg, (uInt32)cov, ia);
+	uInt8 nb = og_blend_ch(db, sb, (uInt32)cov, ia);
+	setPixel(ptr, ogPack(nr, ng, nb, 255));
+}
+
+void ogSurface::ogFillCircle(int32 xCenter, int32 yCenter, uint32_t radius, uInt32 colour)
 {
 	int32 x, y, d;
+
+	/* Smooth by default: a 1px coverage band at the boundary via the exact
+	 * distance from the centre (gamma-correct composite).  A circle is an
+	 * inherently round shape, so this is unconditional rather than gated on
+	 * ogSetAntiAliasing (which still governs lines). */
+	if (radius > 1)
+	{
+		int32 r = (int32)radius;
+		for (int32 dy = -r - 1; dy <= r + 1; dy++)
+			for (int32 dx = -r - 1; dx <= r + 1; dx++)
+			{
+				float dist = sqrtf((float)(dx * dx + dy * dy));
+				float c = (float)r + 0.5f - dist;
+				if (c <= 0.0f)
+					continue;
+				int32 cov = (c >= 1.0f) ? 255 : (int32)(c * 255.0f + 0.5f);
+				ogAACoverage(xCenter + dx, yCenter + dy, colour, cov);
+			}
+		return;
+	}
+
 	x = 0;
 	y = radius;
 	d = 4*(1-radius);
@@ -2100,6 +2148,43 @@ void ogSurface::ogFillRoundRect(int32 x1, int32 y1, int32 x2, int32 y2, uInt32 r
 		r = (y2 - y1) / 2;
 	if (r < 0)
 		r = 0;
+
+	/* Smooth by default: straight edges stay crisp (axis-aligned); only the four
+	 * corner arcs get a 1px coverage band, via the exact distance from each
+	 * corner's centre (gamma-correct composite).  Unconditional — a rounded rect
+	 * exists to be smooth — rather than gated on ogSetAntiAliasing. */
+	if (r > 1)
+	{
+		/* Crisp interior — the cross that excludes the four corner squares. */
+		ogFillRect(x1, y1 + r, x2, y2 - r, colour);         /* middle band, full width  */
+		ogFillRect(x1 + r, y1, x2 - r, y1 + r - 1, colour); /* top band between corners */
+		ogFillRect(x1 + r, y2 - r + 1, x2 - r, y2, colour); /* bottom band              */
+
+		struct
+		{
+			int32 ccx, ccy, sx, sy;
+		} corner[4] = {
+		    {x1 + r, y1 + r, x1, y1},                  /* top-left     */
+		    {x2 - r, y1 + r, x2 - r + 1, y1},          /* top-right    */
+		    {x1 + r, y2 - r, x1, y2 - r + 1},          /* bottom-left  */
+		    {x2 - r, y2 - r, x2 - r + 1, y2 - r + 1},  /* bottom-right */
+		};
+		for (int k = 0; k < 4; k++)
+		{
+			for (int32 py = corner[k].sy; py < corner[k].sy + r; py++)
+				for (int32 px = corner[k].sx; px < corner[k].sx + r; px++)
+				{
+					float ddx = (float)(px - corner[k].ccx);
+					float ddy = (float)(py - corner[k].ccy);
+					float c = (float)r + 0.5f - sqrtf(ddx * ddx + ddy * ddy);
+					if (c <= 0.0f)
+						continue;
+					int32 cov = (c >= 1.0f) ? 255 : (int32)(c * 255.0f + 0.5f);
+					ogAACoverage(px, py, colour, cov);
+				}
+		}
+		return;
+	}
 
 	for (int32 y = y1; y <= y2; y++)
 	{
