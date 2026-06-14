@@ -45,6 +45,17 @@
 #include <vmm/vmm.h>
 #include <ubixos/errno.h>
 
+/* Sleep channel + never-true predicate for sys_nanosleep's timed block: the
+ * sleeper has no event to wake on, so it sleeps out its per-task callout timeout.
+ * A single shared channel address is fine — each task is woken by its own
+ * sleep_callout at its own deadline, not by a sched_wakeup_chan. */
+static char g_nanosleep_chan;
+static int nanosleep_never(void *arg)
+{
+	(void)arg;
+	return (0);
+}
+
 void sys_call(struct trapframe *frame)
 {
 	u_int32_t code = 0x0;
@@ -290,8 +301,8 @@ int sys_sched_yield(struct thread *td, void *args)
 int sys_nanosleep(struct thread *td, void *args)
 {
 	u_int32_t *params = (u_int32_t *)args;
-	const long *rqtp = (const long *)params[0]; /* struct timespec * */
-	long *rmtp = (long *)params[1];
+	const char *rqtp = (const char *)params[0]; /* struct timespec * */
+	char *rmtp = (char *)params[1];
 
 	if (!rqtp)
 	{
@@ -299,8 +310,15 @@ int sys_nanosleep(struct thread *td, void *args)
 		return (-1);
 	}
 
-	long tv_sec = rqtp[0];
-	long tv_nsec = rqtp[1];
+	/* uBixOS's musl is _REDIR_TIME64: struct timespec on i386 is
+	 * { int64_t tv_sec; long tv_nsec; } — tv_nsec is at byte offset 8, NOT 4, and
+	 * musl always converts to this 64-bit layout before issuing SYS_nanosleep.
+	 * Reading tv_nsec as the second 32-bit word (the old code) picked up the high
+	 * word of tv_sec (always 0), so every nanosleep computed 0 ticks and returned
+	 * immediately — turning every pacing nap into a busy spin (e.g. the aural
+	 * mixer at ~90% CPU under TCG).  Read the fields at their real offsets. */
+	long long tv_sec = *(const long long *)(rqtp + 0);
+	long tv_nsec = *(const long *)(rqtp + 8);
 	if (tv_sec < 0 || tv_nsec < 0 || tv_nsec >= 1000000000L)
 	{
 		td->td_retval[0] = -1;
@@ -311,15 +329,14 @@ int sys_nanosleep(struct thread *td, void *args)
 	u_int32_t ticks = (u_int32_t)(tv_sec * PIT_TIMER) +
 	                  (u_int32_t)((tv_nsec + (1000000000L / PIT_TIMER) - 1) / (1000000000L / PIT_TIMER));
 
-	u_int32_t deadline = systemVitals->sysTicks + ticks;
-	while (!TICKS_AFTER(systemVitals->sysTicks, deadline))
-		sched_yield();
+	/* Sleep descheduled for the duration instead of busy-yielding: the old
+	 * sched_yield spin kept the caller permanently runnable.  A per-task callout
+	 * wakes us at the deadline; ticks==0 (sub-tick request) just returns. */
+	if (ticks > 0)
+		sched_wait_event_timeout(&g_nanosleep_chan, nanosleep_never, NULL, ticks);
 
 	if (rmtp)
-	{
-		rmtp[0] = 0;
-		rmtp[1] = 0;
-	}
+		memset(rmtp, 0, sizeof(long long) + sizeof(long)); /* 64-bit tv_sec(8) + tv_nsec(4) */
 	td->td_retval[0] = 0;
 	return (0);
 }
