@@ -42,6 +42,17 @@ void gic_init(void)
 }
 
 /**
+ * smp-plan M2: per-CPU GIC init for an application processor.  The distributor
+ * (GICD) is global and already enabled by the BSP; an AP only brings up its own
+ * (banked) CPU interface — priority mask + enable.
+ */
+void gic_secondary_init(void)
+{
+	GICC(GICC_PMR) = 0xFF;
+	GICC(GICC_CTLR) = 1;
+}
+
+/**
  * Enable @intid and give it a high priority (0) so PMR never masks it.
  * INTID < 32 (SGI/PPI) targets this CPU via GICD_ISENABLER0.
  */

@@ -64,16 +64,22 @@ void c_ap_boot_arm(u_int32_t id)
 	aarch64_vbar_init();                       /* this CPU's EL1 vectors (banked VBAR_EL1) */
 	aarch64_pcpu_install(id, ap_read_mpidr()); /* TPIDR_EL1 -> g_pcpu[id]; _current usable */
 
+	/* Immediate liveness so the BSP's CPU_ON wait returns promptly (the first
+	 * timer tick is ~10 ms out). */
+	curcpu()->heartbeat++;
+
 	/*
-	 * M1 liveness: bump our heartbeat a bounded number of times so the BSP sees
-	 * us executing kernel C in parallel, then park in a low-power wait.  M3
-	 * replaces this with the per-CPU scheduler (LAPIC/CNTV-timer driven sched()).
+	 * smp-plan M2: bring up this CPU's own (banked) GIC interface + CNTV timer,
+	 * then unmask IRQs.  From here the AP's own 100 Hz timer PPI drives its
+	 * heartbeat (timer_tick bumps it for cpuid != 0), proving per-CPU interrupt
+	 * delivery without touching the BSP's shared scheduler clock.  It otherwise
+	 * idles in wfi (woken by each tick).  M3 replaces the wfi loop with the
+	 * per-CPU scheduler.
 	 */
-	for (int i = 0; i < 20000000; i++)
-	{
-		curcpu()->heartbeat++;
-		__asm__ __volatile__("dmb ish");
-	}
+	gic_secondary_init();
+	timer_init();
+	__asm__ __volatile__("msr daifclr, #2"); /* unmask IRQ (keep FIQ/SError masked) */
+
 	for (;;)
 		__asm__ __volatile__("wfi");
 }

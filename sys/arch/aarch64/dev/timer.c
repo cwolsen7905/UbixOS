@@ -16,6 +16,7 @@
 #include "bringup.h"
 #include <ubixos/vitals.h> /* systemVitals->sysTicks */
 #include <ubixos/sched.h>  /* sched_account_tick (Phase 3.5) */
+#include <aarch64/pcpu.h>  /* curcpu() — per-CPU tick (smp-plan M2) */
 
 #define TIMER_INTID 27 /* EL1 virtual timer PPI */
 
@@ -99,7 +100,10 @@ void timer_init(void)
 {
 	u_int64_t freq = read_cntfrq();
 	g_interval = freq / 100; /* 100 Hz scheduler tick */
-	kprintf("timer: cntfrq=%lu Hz, tick interval=%lu counts (100 Hz)\n", freq, g_interval);
+	/* Only the BSP prints — a concurrent AP kprintf races the unlocked console and
+	 * garbles output (a console spinlock is smp-plan M4). */
+	if (curcpu()->cpuid == 0)
+		kprintf("timer: cntfrq=%lu Hz, tick interval=%lu counts (100 Hz)\n", freq, g_interval);
 
 	gic_enable_intid(TIMER_INTID);
 	write_tval(g_interval);
@@ -111,9 +115,22 @@ void timer_init(void)
  */
 void timer_tick(void)
 {
-	g_ticks++;
-	if (systemVitals != 0)
-		systemVitals->sysTicks++; /* the scheduler's quantum/aging clock */
-	sched_account_tick();             /* Phase 3.5: charge the elapsed tick to the running thread */
-	write_tval(g_interval);           /* re-arm for the next interval */
+	/*
+	 * Per-CPU tick (smp-plan M2).  Only the BSP drives the shared scheduler clock
+	 * (g_ticks / sysTicks / accounting) — an AP doing so would double-count the
+	 * quantum/aging clock.  An AP instead bumps its own heartbeat so the BSP can
+	 * confirm its per-CPU GIC + timer fire.  Both re-arm their own (banked) CNTV.
+	 */
+	if (curcpu()->cpuid == 0)
+	{
+		g_ticks++;
+		if (systemVitals != 0)
+			systemVitals->sysTicks++; /* the scheduler's quantum/aging clock */
+		sched_account_tick();             /* Phase 3.5: charge the tick to the running thread */
+	}
+	else
+	{
+		curcpu()->heartbeat++; /* AP liveness, driven by its own timer IRQ */
+	}
+	write_tval(g_interval); /* re-arm for the next interval (banked, per-CPU) */
 }

@@ -32,6 +32,7 @@ extern char vectors_el1[]; /* vector table base (vectors.S) */
 
 /* gic.c — GICv2 interrupt controller. */
 void gic_init(void);
+void gic_secondary_init(void); /* AP: bring up this CPU's GICC (smp-plan M2) */
 void gic_enable_intid(unsigned intid);
 int aarch64_irq_dispatch(void); /* EL1 IRQ vector; returns non-zero on a timer tick */
 
