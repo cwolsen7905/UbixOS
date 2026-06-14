@@ -362,6 +362,28 @@ void execFile(char *file, char **argv, char **envp, int console)
 		kpanic("Problem With File Descriptors");
 	newProcess->files[0] = fopen(file, "r");
 
+	/*
+	 * Cold-boot pool-read race.  The UbixFS pool root can transiently fail the
+	 * very first opens after boot, before its reader is warm — the symptom is
+	 * fopen() returning NULL on a file that is plainly present (serial: "Binary
+	 * File Not Executable1").  sys_exec() already retries this for the daemons
+	 * init forks, but execFile() launches PID 1 (/bin/init) directly from kmain,
+	 * so it never benefited and a lost race left the system with no init at all.
+	 * Re-issue the open a few times; a re-fopen re-runs the directory lookup and
+	 * re-reads the pool metadata, which the proven sys_exec retry shows succeeds.
+	 * We cannot sched_yield() here the way sys_exec does: execFile() runs before
+	 * irqEnable(), so yielding would context-switch into a thread that is READY
+	 * but must not run until the timer is unmasked.  A short settle spin lets any
+	 * in-flight controller access drain between tries instead.  A normal boot
+	 * opens on the first try and never spins.
+	 */
+	for (int retry = 0; newProcess->files[0] == 0x0 && retry < 8; retry++)
+	{
+		for (volatile int settle = 0; settle < 2000000; settle++)
+			; /* brief delay; no scheduler yet */
+		newProcess->files[0] = fopen(file, "r");
+	}
+
 	/* If We Dont Find the File Return */
 	if (newProcess->files[0] == 0x0)
 	{
