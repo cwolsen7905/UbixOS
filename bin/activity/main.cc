@@ -36,14 +36,24 @@ extern "C"
 
 #define WIN_W 640
 #define WIN_H 460
+#define TABBAR_H 32 /* Windows-style tab strip at the top (Processes/Performance) */
 #define HEADER_H 30
 #define SUMMARY_H 26 /* overall-CPU strip below the header */
 #define ROW_H 22
 #define FONT_PATH "/var/fonts/DejaVuSans.ttf"
 #define MAX_PROCS 256
-#define HIST 24 /* CPU-history samples kept per process (the sparkline) */
+#define HIST 24       /* CPU-history samples kept per process (the sparkline) */
+#define PERF_HIST 120 /* samples in the Performance-tab graphs (~2 min at 1 Hz) */
 #define SIG_TERM 15
 #define SIG_KILL 9
+
+/* Top-level views, Windows Task Manager style. */
+enum
+{
+	TAB_PROCESSES = 0,
+	TAB_PERFORMANCE,
+	NTABS
+};
 
 /* Palette (light, macOS-ish). */
 static const uint32_t COL_WIN = RGB(0xFB, 0xFC, 0xFD);
@@ -56,6 +66,17 @@ static const uint32_t COL_CPU_BAR = RGB(0x3B, 0x82, 0xF6);
 static const uint32_t COL_SEL = RGB(0x3B, 0x82, 0xF6);
 static const uint32_t COL_SEL_TEXT = RGB(0xFF, 0xFF, 0xFF);
 static const uint32_t COL_SPARK = RGB(0xBC, 0xE0, 0xBC); /* faint — text reads over it */
+
+/* Tab strip + Performance-tab graphs (Windows Task Manager palette). */
+static const uint32_t COL_TAB_BG = RGB(0xF1, 0xF3, 0xF6);         /* inactive tab strip fill */
+static const uint32_t COL_TAB_ACTIVE = RGB(0xFB, 0xFC, 0xFD);     /* active tab (= window bg) */
+static const uint32_t COL_TAB_ACCENT = RGB(0x17, 0x9C, 0xE6);     /* active-tab underline      */
+static const uint32_t COL_GRAPH_CPU = RGB(0x17, 0x9C, 0xE6);      /* CPU line (Win blue)       */
+static const uint32_t COL_GRAPH_CPU_FILL = RGB(0xD3, 0xEC, 0xF8); /* CPU area fill           */
+static const uint32_t COL_GRAPH_MEM = RGB(0x90, 0x3D, 0xB0);      /* memory line (Win purple)  */
+static const uint32_t COL_GRAPH_MEM_FILL = RGB(0xEA, 0xDC, 0xF1); /* memory area fill        */
+static const uint32_t COL_GRID = RGB(0xE2, 0xE6, 0xEB);           /* graph grid lines          */
+static const uint32_t COL_GRAPH_BG = RGB(0xFF, 0xFF, 0xFF);       /* graph plot background     */
 
 /* ── columns ────────────────────────────────────────────────────────────────*/
 enum
@@ -125,6 +146,14 @@ static int g_overall_x10;                     /* whole-machine CPU%, ×10       
 static int g_idle_x10 = 1000;                 /* whole-machine idle%, ×10 (the idle thread)     */
 static unsigned char g_hist[MAX_PROCS][HIST]; /* per-pid CPU% ring (0..100)      */
 static int g_hist_head;                       /* newest sample index in each ring              */
+
+/* ── Performance tab ─────────────────────────────────────────────────────────*/
+static int g_tab = TAB_PROCESSES;           /* active top-level view              */
+static unsigned char g_cpu_hist[PERF_HIST]; /* whole-machine CPU% ring (0..100)   */
+static unsigned char g_mem_hist[PERF_HIST]; /* memory-used% ring (0..100)         */
+static int g_perf_head = -1;                /* newest index in the perf rings     */
+static unsigned long g_mem_total_kb;        /* /proc/meminfo MemTotal             */
+static unsigned long g_mem_used_kb;         /* /proc/meminfo MemUsed              */
 
 /* ── helpers ────────────────────────────────────────────────────────────────*/
 
@@ -246,6 +275,28 @@ static unsigned long long read_total_ticks(unsigned long long *idle_out)
 	return busy + n + s + idle;
 }
 
+/* Read MemTotal/MemUsed (kB) from /proc/meminfo into the g_mem_* globals.  Lines
+ * are "MemTotal: <kb> kB" etc.; used := total - free. */
+static void read_meminfo(void)
+{
+	char buf[256];
+	unsigned long total = 0, freekb = 0, used = 0;
+	char *p;
+
+	if (slurp("/proc/meminfo", buf, sizeof(buf)) <= 0)
+		return;
+	if ((p = strstr(buf, "MemTotal:")) != NULL)
+		total = strtoul(p + 9, NULL, 10);
+	if ((p = strstr(buf, "MemFree:")) != NULL)
+		freekb = strtoul(p + 8, NULL, 10);
+	if ((p = strstr(buf, "MemUsed:")) != NULL)
+		used = strtoul(p + 8, NULL, 10);
+	else
+		used = (total > freekb) ? (total - freekb) : 0;
+	g_mem_total_kb = total;
+	g_mem_used_kb = used;
+}
+
 static int cmp_rows(const void *a, const void *b)
 {
 	const struct prow *x = (const struct prow *)a;
@@ -284,6 +335,13 @@ static void refresh(void)
 
 	/* Advance the history ring once per sample. */
 	g_hist_head = (g_hist_head + 1) % HIST;
+
+	/* Performance tab: push this sample's whole-machine CPU% and memory-used%
+	 * into the rolling graph rings. */
+	read_meminfo();
+	g_perf_head = (g_perf_head + 1) % PERF_HIST;
+	g_cpu_hist[g_perf_head] = (unsigned char)(g_overall_x10 / 10);
+	g_mem_hist[g_perf_head] = (g_mem_total_kb > 0) ? (unsigned char)(g_mem_used_kb * 100 / g_mem_total_kb) : 0;
 
 	/* /proc/uptime: "<secs> <idle>" — first field scales Time. */
 	{
@@ -355,10 +413,107 @@ static void cell(const struct column *c, int y, const char *s, uint32_t fg)
 	}
 }
 
+#define TAB_W 120 /* width of one tab button in the top strip */
+
+/* Draw the Windows-style tab strip (Processes / Performance) across the top. */
+static void draw_tabs(void)
+{
+	static const char *names[NTABS] = {"Processes", "Performance"};
+
+	g_surf.ogFillRect(0, 0, g_w - 1, TABBAR_H - 1, COL_TAB_BG);
+	for (int i = 0; i < NTABS; i++)
+	{
+		int x0 = i * TAB_W;
+		int x1 = x0 + TAB_W - 1;
+		bool act = (i == g_tab);
+		if (act)
+		{
+			g_surf.ogFillRect(x0, 0, x1, TABBAR_H - 1, COL_TAB_ACTIVE);
+			g_surf.ogFillRect(x0, TABBAR_H - 3, x1, TABBAR_H - 1, COL_TAB_ACCENT);
+		}
+		set_fg(act ? COL_TEXT : COL_TEXT_DIM);
+		int tw = (int)g_font.TextWidth(names[i]);
+		g_font.PutString(g_surf, x0 + (TAB_W - tw) / 2, 9, names[i]);
+	}
+	g_surf.ogHLine(0, g_w - 1, TABBAR_H - 1, COL_DIVIDER);
+}
+
+/* Draw a filled-area line graph of a 0..100 ring (oldest at left, newest at the
+ * right edge so the trace scrolls in from the right, Windows-style).  @hist is a
+ * PERF_HIST ring whose newest sample is at g_perf_head. */
+static void draw_graph(int gx, int gy, int gw, int gh, const unsigned char *hist, uint32_t line, uint32_t fill)
+{
+	int base = gy + gh - 1;
+	int prevy = base;
+
+	if (gw < 2 || gh < 2)
+		return;
+
+	g_surf.ogFillRect(gx, gy, gx + gw - 1, gy + gh - 1, COL_GRAPH_BG);
+	for (int k = 1; k < 4; k++) /* horizontal grid at 25/50/75% */
+		g_surf.ogHLine(gx, gx + gw - 1, gy + gh * k / 4, COL_GRID);
+	for (int k = 1; k < 8; k++) /* vertical grid */
+		g_surf.ogVLine(gx + gw * k / 8, gy, gy + gh - 1, COL_GRID);
+
+	/* One vertical fill bar per pixel column; line segment over the top. */
+	for (int px = 0; px < gw; px++)
+	{
+		int j = px * (PERF_HIST - 1) / (gw - 1);
+		int v = hist[(g_perf_head + 1 + j) % PERF_HIST]; /* 0..100 */
+		int x = gx + px;
+		int y = base - v * (gh - 2) / 100;
+		g_surf.ogVLine(x, y, base, fill);
+		if (px > 0)
+			g_surf.ogLine(x - 1, prevy, x, y, line);
+		prevy = y;
+	}
+	g_surf.ogRect(gx, gy, gx + gw - 1, gy + gh - 1, COL_DIVIDER);
+}
+
+/* Performance tab: stacked CPU and Memory live graphs with a heading + readout. */
+static void draw_performance(void)
+{
+	const int pad = 16;
+	int top = TABBAR_H;
+	int x = pad;
+	int w = g_w - 2 * pad;
+	int sect_h = (g_h - top - pad) / 2;
+	int gh = sect_h - 28 - pad;
+	char buf[64];
+	int tw;
+
+	g_surf.ogFillRect(0, top, g_w - 1, g_h - 1, COL_WIN);
+
+	/* CPU. */
+	int cy = top + pad;
+	set_fg(COL_TEXT);
+	g_font.PutString(g_surf, x, cy, "CPU");
+	snprintf(buf, sizeof(buf), "%d.%d%% utilization", g_overall_x10 / 10, g_overall_x10 % 10);
+	set_fg(COL_TEXT_DIM);
+	tw = (int)g_font.TextWidth(buf);
+	g_font.PutString(g_surf, x + w - tw, cy, buf);
+	draw_graph(x, cy + 24, w, gh, g_cpu_hist, COL_GRAPH_CPU, COL_GRAPH_CPU_FILL);
+
+	/* Memory. */
+	int my = top + sect_h + pad;
+	set_fg(COL_TEXT);
+	g_font.PutString(g_surf, x, my, "Memory");
+	snprintf(buf,
+	         sizeof(buf),
+	         "%lu / %lu MB  (%d%%)",
+	         g_mem_used_kb / 1024,
+	         g_mem_total_kb / 1024,
+	         g_mem_total_kb ? (int)(g_mem_used_kb * 100 / g_mem_total_kb) : 0);
+	set_fg(COL_TEXT_DIM);
+	tw = (int)g_font.TextWidth(buf);
+	g_font.PutString(g_surf, x + w - tw, my, buf);
+	draw_graph(x, my + 24, w, gh, g_mem_hist, COL_GRAPH_MEM, COL_GRAPH_MEM_FILL);
+}
+
 static void draw_header(void)
 {
-	g_surf.ogFillRect(0, 0, g_w - 1, HEADER_H - 1, COL_HEADER);
-	g_surf.ogHLine(0, g_w - 1, HEADER_H - 1, COL_DIVIDER);
+	g_surf.ogFillRect(0, TABBAR_H, g_w - 1, TABBAR_H + HEADER_H - 1, COL_HEADER);
+	g_surf.ogHLine(0, g_w - 1, TABBAR_H + HEADER_H - 1, COL_DIVIDER);
 	for (int i = 0; i < NCOLS; i++)
 	{
 		char t[24];
@@ -366,14 +521,14 @@ static void draw_header(void)
 		 * bytes, not codepoints, so a multi-byte arrow renders as mojibake until
 		 * the font engine learns UTF-8 (queued with [ls/objgfx]). */
 		snprintf(t, sizeof(t), "%s%s", g_cols[i].title, (i == g_sort) ? " v" : "");
-		cell(&g_cols[i], 7, t, (i == g_sort) ? COL_TEXT : COL_TEXT_DIM);
+		cell(&g_cols[i], TABBAR_H + 7, t, (i == g_sort) ? COL_TEXT : COL_TEXT_DIM);
 	}
 }
 
 /* Whole-machine CPU strip below the header: a label + a usage bar. */
 static void draw_summary(void)
 {
-	int y0 = HEADER_H;
+	int y0 = TABBAR_H + HEADER_H;
 	char buf[32];
 	int bx, bw, by, bh, fill;
 
@@ -425,7 +580,7 @@ static void draw_sparkline(struct prow *r, int y)
 
 static void draw_rows(void)
 {
-	int top = HEADER_H + SUMMARY_H;
+	int top = TABBAR_H + HEADER_H + SUMMARY_H;
 	int y = top;
 	int maxrows = (g_h - top) / ROW_H;
 	for (int i = 0; i < g_nrows && i < maxrows; i++)
@@ -479,16 +634,38 @@ static void flip(void)
 static void render(void)
 {
 	g_surf.ogClear(COL_WIN);
-	draw_rows();
-	draw_summary();
-	draw_header(); /* header last so it stays crisp over row 0 */
+	if (g_tab == TAB_PERFORMANCE)
+	{
+		draw_performance();
+	}
+	else
+	{
+		draw_rows();
+		draw_summary();
+		draw_header(); /* header last so it stays crisp over row 0 */
+	}
+	draw_tabs(); /* tab strip on top, both views */
 	flip();
 }
 
 /* ── input ──────────────────────────────────────────────────────────────────*/
 static void on_click(int x, int y)
 {
-	if (y < HEADER_H) /* click a header cell -> sort by that column */
+	if (y < TABBAR_H) /* click a tab -> switch view */
+	{
+		int t = x / TAB_W;
+		if (t >= 0 && t < NTABS && t != g_tab)
+		{
+			g_tab = t;
+			render();
+		}
+		return;
+	}
+
+	if (g_tab != TAB_PROCESSES)
+		return; /* Performance tab has no clickable rows yet */
+
+	if (y < TABBAR_H + HEADER_H) /* click a header cell -> sort by that column */
 	{
 		for (int i = 0; i < NCOLS; i++)
 			if (x >= g_cols[i].x && x < g_cols[i].x + g_cols[i].w)
@@ -502,7 +679,7 @@ static void on_click(int x, int y)
 	}
 
 	/* Click a row -> select it (the force-quit target). */
-	int top = HEADER_H + SUMMARY_H;
+	int top = TABBAR_H + HEADER_H + SUMMARY_H;
 	if (y >= top)
 	{
 		int i = (y - top) / ROW_H;
@@ -556,22 +733,18 @@ int main(int argc, char **argv)
 	refresh();
 	render();
 
-	/* Event loop with a ~1 Hz refresh.  No message -> yield; every ~1 s of idle
-	 * polls re-sample /proc and redraw. */
-	unsigned poll = 0;
+	/* Event loop: block on the mailbox with a ~1 s timeout.  A client message
+	 * (mouse/key/resize/close) wakes us instantly; on timeout we re-sample /proc
+	 * and redraw.  Blocking via mpi_waitMessage instead of a nanosleep poll keeps
+	 * an idle Task Manager off the CPU — critical under i386/TCG, where a busy
+	 * spin steals emulation throughput from the rest of the system. */
 	for (;;)
 	{
 		mpi_message_t ev;
-		if (mpi_fetchMessage((char *)g_mbox, &ev) != 0)
+		if (mpi_waitMessage((char *)g_mbox, &ev, 100) != 0) /* 100 ticks ~= 1 s */
 		{
-			if (++poll >= 100) /* ~1 s between samples */
-			{
-				poll = 0;
-				refresh();
-				render();
-			}
-			struct timespec ts = {0, 10 * 1000 * 1000}; /* 10 ms; descheduling */
-			nanosleep(&ts, 0);
+			refresh();
+			render();
 			continue;
 		}
 		switch (ev.header)
