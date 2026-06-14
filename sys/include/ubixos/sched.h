@@ -261,6 +261,29 @@ static inline void set_current(kTask_t *t)
 }
 
 #define _current (get_current())
+#elif defined(__aarch64__)
+/*
+ * aarch64: _current is per-CPU state in g_pcpu[].current, reached through the
+ * banked system register TPIDR_EL1 (the analog of i386's %gs).  `current` sits
+ * at offset 16 in struct pcpu (<aarch64/pcpu.h>); load/store it with a bare
+ * mrs+ldr/str so _current stays a register-relative access, never an injected
+ * function call.  TPIDR_EL1 is installed once per CPU (aarch64_pcpu_install).
+ */
+static inline kTask_t *get_current(void)
+{
+	kTask_t *p;
+	__asm__ __volatile__("mrs %0, tpidr_el1\n\tldr %0, [%0, #16]" : "=r"(p));
+	return (p);
+}
+
+static inline void set_current(kTask_t *t)
+{
+	u_int64_t base;
+	__asm__ __volatile__("mrs %0, tpidr_el1" : "=r"(base));
+	*(kTask_t **)(uintptr_t)(base + 16) = t;
+}
+
+#define _current (get_current())
 #else
 extern kTask_t *_current;
 #define set_current(t) (_current = (t))

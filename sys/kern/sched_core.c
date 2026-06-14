@@ -78,9 +78,10 @@ void pid_hash_remove(kTask_t *t)
 	}
 }
 
-#ifndef __i386__
-/* On i386 _current is per-CPU state in g_pcpu[].current (reached via %gs:8);
- * see the get_current()/set_current() accessors in <ubixos/sched.h>. */
+#if !defined(__i386__) && !defined(__aarch64__)
+/* On i386 and aarch64 _current is per-CPU state in g_pcpu[].current (reached via
+ * %gs:8 / TPIDR_EL1+16); see the get_current()/set_current() accessors in
+ * <ubixos/sched.h>.  Other arches (armv6) keep the single global. */
 kTask_t *_current = 0x0;
 #endif
 kTask_t *_usedMath = 0x0;

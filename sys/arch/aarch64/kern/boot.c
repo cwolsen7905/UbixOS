@@ -13,6 +13,7 @@
 #include <ubixos/sched.h>          /* sched_init, RUNNING, QOS_DEFAULT */
 #include <ubixos/sched_internal.h> /* taskList, set_current (scheduler bootstrap) */
 #include <ubixos/cpu_enum.h>       /* cpu_enum_dump (smp-plan Phase 1) */
+#include <aarch64/pcpu.h>          /* struct pcpu / g_pcpu / TPIDR_EL1 per-CPU (M0) */
 #include <vmm/vmm.h>               /* vmm_mem_map_init */
 #include <ubixos/vitals.h>         /* vitals_init */
 #include <fs/vfs/vfs.h>            /* vfs_init */
@@ -92,12 +93,45 @@ static u_int64_t current_el(void)
 	return (v >> 2) & 0x3;
 }
 
+/*
+ * smp-plan Phase 3 / M0 — per-CPU blocks.  g_pcpu is BSS (zeroed by start.S), so
+ * every CPU's `current`/`idle` start NULL.  aarch64_pcpu_install() points this
+ * CPU's TPIDR_EL1 at its slot; thereafter _current (sched.h) resolves to
+ * g_pcpu[cpu].current.  Must run before any _current access.
+ */
+struct pcpu g_pcpu[MAXCPU];
+
+void aarch64_pcpu_install(u_int32_t id, u_int64_t mpidr)
+{
+	g_pcpu[id].cpuid = id;
+	g_pcpu[id].mpidr = mpidr;
+	__asm__ __volatile__("msr tpidr_el1, %0" : : "r"(&g_pcpu[id]));
+	__asm__ __volatile__("isb");
+}
+
+/** Read this CPU's MPIDR_EL1 affinity (low 24 bits). */
+static u_int64_t read_mpidr(void)
+{
+	u_int64_t v;
+	__asm__ volatile("mrs %0, mpidr_el1" : "=r"(v));
+	return (v & 0xFFFFFFu);
+}
+
 /**
  * First C code on aarch64: banner, EL report, exception vectors.  Returns to the
  * park loop in start.S (Phase 12b will instead enable IRQs and idle on `wfi`).
  */
 void kmain_aarch64(u_int64_t dtb_phys)
 {
+	/*
+	 * smp-plan Phase 3 / M0: point the BSP's TPIDR_EL1 at g_pcpu[0] before any
+	 * _current access (sched.h resolves _current to g_pcpu[cpu].current via
+	 * TPIDR_EL1).  g_pcpu is zeroed BSS, so current starts NULL — matching the old
+	 * global.  Runs before MMU init; the kernel is identity-mapped, so the slot's
+	 * address is stable across the MMU enable.
+	 */
+	aarch64_pcpu_install(0, read_mpidr());
+
 	kconsole_arch_init(); /* register the PL011 serial sink before the first kprintf */
 
 	kprintf("\nuBixOS aarch64 (QEMU virt) - boot OK\n");
