@@ -67,6 +67,51 @@ static inline void apicWrite(unsigned int address, unsigned int data)
 	*(volatile unsigned int *)(0xFEE00000 + address) = data;
 }
 
+/**
+ * Signal end-of-interrupt to the running CPU's Local APIC.  Every LAPIC-delivered
+ * interrupt handler (timer, IPI) must call this before returning or the LAPIC
+ * will not deliver further interrupts of equal/lower priority.
+ */
+void lapic_eoi(void)
+{
+	apicWrite(LAPIC_EOI, 0);
+}
+
+/**
+ * Send a fixed-delivery inter-processor interrupt @vector to the CPU with the
+ * given Local APIC id, then wait for the LAPIC to report delivery.
+ *
+ * Writes the high ICR dword (destination) first; writing the low dword latches
+ * and sends the IPI.  Bit 14 (assert) is set per the usual fixed-IPI encoding;
+ * the destination shorthand is 00 (use the explicit apic id in the high dword).
+ */
+void lapic_send_ipi(u_int8_t apic_id, u_int8_t vector)
+{
+	apicWrite(LAPIC_ICR_HIGH, (u_int32_t)apic_id << 24);
+	apicWrite(LAPIC_ICR_LOW, 0x00004000u | (u_int32_t)vector);
+	/* Delivery-status bit 12 stays set until the IPI is accepted. */
+	while (apicRead(LAPIC_ICR_LOW) & 0x1000u)
+		__asm__ __volatile__("pause");
+}
+
+/**
+ * Arm the calling CPU's Local APIC timer in periodic mode at @initial_count
+ * (divide-by-16), delivering LAPIC_TIMER_VECTOR each period.  Each CPU programs
+ * its own LAPIC timer; this is how an AP gets scheduler ticks once it runs (the
+ * BSP is still driven by the legacy PIT).  @initial_count == 0 disables it.
+ */
+void lapic_timer_init(u_int32_t initial_count)
+{
+	apicWrite(LAPIC_TIMER_DIV, 0x3); /* divide bus clock by 16 */
+	if (initial_count == 0)
+	{
+		apicWrite(LAPIC_LVT_TIMER, LAPIC_LVT_MASKED);
+		return;
+	}
+	apicWrite(LAPIC_LVT_TIMER, LAPIC_TIMER_VECTOR | LAPIC_TIMER_PERIODIC);
+	apicWrite(LAPIC_TIMER_INIT, initial_count);
+}
+
 /* ------------------------------------------------------------------ */
 /* Per-CPU state (Phase 2 scaffolding)                                 */
 /* ------------------------------------------------------------------ */

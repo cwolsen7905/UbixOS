@@ -33,15 +33,40 @@
 
 #define LAPIC_PHYS 0xFEE00000 /* Local APIC MMIO physical base */
 
-struct cpuinfo_t {
-    u_int8_t id;
-    u_int8_t ok;  // 1=Ok, 0=Bad
-    u_int8_t apic_id, apic_ver;
-    u_int32_t signature; // Family, Model, Stepping
-    u_int32_t feature;
-    u_int32_t max;
-    char brand[49];  // Brand name
-    char ident[17];
+/* Local APIC register offsets (from LAPIC_PHYS), Intel SDM Vol.3 Table 10-1. */
+#define LAPIC_ID 0x020         /* Local APIC ID (id in bits 24-31) */
+#define LAPIC_EOI 0x0B0        /* End-of-interrupt (write 0)       */
+#define LAPIC_SVR 0x0F0        /* Spurious-interrupt vector (bit 8 = LAPIC enable) */
+#define LAPIC_ICR_LOW 0x300    /* Interrupt command, low dword     */
+#define LAPIC_ICR_HIGH 0x310   /* Interrupt command, high dword (dest apic id in 24-31) */
+#define LAPIC_LVT_TIMER 0x320  /* LVT timer entry                 */
+#define LAPIC_TIMER_INIT 0x380 /* Timer initial count            */
+#define LAPIC_TIMER_CUR 0x390  /* Timer current count            */
+#define LAPIC_TIMER_DIV 0x3E0  /* Timer divide configuration     */
+
+/* LVT timer mode bits + the IPI/timer vectors we own (above the 0x20-0x2F PIC
+ * range and the 0x80/0x81 syscall gates). */
+#define LAPIC_TIMER_PERIODIC 0x20000 /* LVT bit 17: periodic mode */
+#define LAPIC_LVT_MASKED 0x10000     /* LVT bit 16: masked        */
+#define IPI_RESCHED_VECTOR 0xF0      /* "please reschedule" IPI   */
+#define LAPIC_TIMER_VECTOR 0xF1      /* per-CPU LAPIC timer tick   */
+
+/* SMP infrastructure (smp-plan Phase 3).  Additive — these change no behaviour
+ * until the AP scheduler-entry integration wires them up. */
+void lapic_eoi(void);                                   /* signal end-of-interrupt to the LAPIC */
+void lapic_send_ipi(u_int8_t apic_id, u_int8_t vector); /* fixed-delivery IPI to one CPU */
+void lapic_timer_init(u_int32_t initial_count);         /* arm this CPU's periodic LAPIC timer */
+
+struct cpuinfo_t
+{
+	u_int8_t id;
+	u_int8_t ok; // 1=Ok, 0=Bad
+	u_int8_t apic_id, apic_ver;
+	u_int32_t signature; // Family, Model, Stepping
+	u_int32_t feature;
+	u_int32_t max;
+	char brand[49]; // Brand name
+	char ident[17];
 };
 
 extern struct cpuinfo_t cpuinfo[8];
