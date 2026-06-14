@@ -1262,11 +1262,21 @@ class Taskbar
 		submenu_.hide();
 		submenu_.load((parent.path + "/items").c_str());
 
-		int sx = start_menu_.x() + start_menu_.w();
+		/* Gap so the submenu clears the compositor's ~10px window drop shadow:
+		 * opening flush let the submenu's left shadow darken the parent menu's
+		 * right edge — the reported "submenu overlaps the main menu". */
+		const int GAP = 10; /* == draw_window_shadow() reach in compositor.cc */
+		int sx = start_menu_.x() + start_menu_.w() + GAP;
 		int sy = start_menu_.y() + row * MENU_ITEM_H;
 		int sh_px = submenu_.count() * MENU_ITEM_H;
+		/* No room on the right?  Open to the LEFT of the parent — but only with
+		 * real room there; never clamp into a spot that overlaps the parent (the
+		 * old `x - MENU_W` could go negative and get pinned onto the menu). */
 		if (sx + MENU_W > (int)sw_)
-			sx = start_menu_.x() - MENU_W; /* flip to the left edge */
+		{
+			int left = start_menu_.x() - MENU_W - GAP;
+			sx = (left >= 0) ? left : (int)sw_ - MENU_W;
+		}
 		if (sy + sh_px > (int)sh_ - TB_H)
 			sy = (int)sh_ - TB_H - sh_px;
 		submenu_.show(sx, sy, mbox, font_);
