@@ -52,8 +52,13 @@
 #include <sys/types.h>
 #include <sys/gdt.h>
 #include <i386/pcpu_asm.h>
+#include <i386/pcpu.h> /* smp_processor_id() — per-CPU TSS selection (Phase 3) */
 #include <isa/8259.h>
 #include <lib/kprintf.h>
+
+/* Per-CPU TSS array (defined in arch/i386/kern/smp.c): TR on CPU id points at
+ * g_cpu_tss[id] after pcpu_gdt_tss_load(id). */
+extern struct tssStruct g_cpu_tss[];
 
 /* The hand-written %gs loads in the entry stubs (PCPU_GS_SEL in <i386/pcpu_asm.h>)
  * must match the SEL_PCPU selector the GDT actually defines, or %gs:8 would not
@@ -61,13 +66,20 @@
 _Static_assert(PCPU_GS_SEL == SEL_PCPU, "PCPU_GS_SEL must equal SEL_PCPU");
 
 /*
- * The single kernel TSS used by software switching (the boot TSS the GDT's
- * selector 0x20 / TR points at).  Only its esp0/ss0 matter now: on a ring3->
- * ring0 trap the CPU reads them to find the kernel stack.  switch_to() updates
- * esp0 to the incoming task's kernel stack on every switch instead of
- * re-pointing the GDT descriptor at a per-task TSS.
+ * The kernel TSS used by software switching (the TSS the GDT's selector 0x20 /
+ * TR points at).  Only its esp0/ss0 matter: on a ring3->ring0 trap the CPU reads
+ * them to find the kernel stack.  switch_to() updates esp0 to the incoming task's
+ * kernel stack on every switch instead of re-pointing the GDT descriptor at a
+ * per-task TSS.
+ *
+ * smp-plan Phase 3: this is now PER-CPU.  After pcpu_gdt_tss_load(id) each CPU's
+ * TR points at g_cpu_tss[id], so the switch must update the RUNNING CPU's TSS,
+ * not a fixed address — otherwise two CPUs clobber each other's esp0 and a
+ * ring3->ring0 entry lands on the wrong kernel stack.  smp_processor_id()
+ * returns 0 until g_smp_active, so this is identical to the old behaviour on a
+ * uniprocessor (the BSP converts to g_cpu_tss[0] at kmain entry).
  */
-#define KERNEL_TSS ((struct tssStruct *)0x4200)
+#define CUR_TSS (&g_cpu_tss[smp_processor_id()])
 
 extern void ret_from_fork(void);
 extern void enter_vm86(void);
@@ -270,7 +282,7 @@ void switch_to(kTask_t *prev, kTask_t *next)
 		}
 	}
 
-	KERNEL_TSS->esp0 = next->md.md_tss.esp0;
+	CUR_TSS->esp0 = next->md.md_tss.esp0;
 
 	/*
 	 * Set CR0.TS so the next task takes a device-not-available trap (#NM, _int7)

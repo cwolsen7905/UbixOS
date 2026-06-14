@@ -176,7 +176,12 @@ int kmain(u_int32_t rootdev)
 	 * the SEL_PCPU GDT descriptor's base to &g_pcpu[0] and loads %gs = SEL_PCPU.
 	 * Must be the first thing in kmain — every later kernel path reads _current.
 	 */
-	pcpu_install_gs(0);
+	/* smp-plan Phase 3: give the BSP its OWN per-CPU GDT + TSS (not the shared
+	 * ubixGDT / boot TSS at 0x4200), so each CPU's %gs base and ring-0 stack are
+	 * independent.  Done here, before any task/context-switch, so switch_to()'s
+	 * per-CPU CUR_TSS->esp0 update stays consistent with where TR points from the
+	 * very start.  Supersedes pcpu_install_gs(0) (which only loaded %gs). */
+	pcpu_gdt_tss_load(0);
 
 	/* Register the console sinks (COM1 + VGA) before the first kprintf. */
 	kconsole_arch_init();

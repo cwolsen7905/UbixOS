@@ -30,6 +30,7 @@
 #include <i386/pcpu.h>
 #include <ubixos/cpu_enum.h> /* acpi_enum_cpus result + cpu_enum_dump (Phase 1) */
 #include <sys/gdt.h>
+#include <sys/tss.h> /* struct tssStruct — per-CPU TSS (Phase 3) */
 #include <ubixos/spinlock.h>
 #include <ubixos/kpanic.h>
 #include <lib/kprintf.h>
@@ -196,6 +197,61 @@ struct gdt_descr
 	u_int16_t limit;
 	u_int32_t *base __attribute__((packed));
 };
+
+/* Per-CPU GDT copies + per-CPU TSS (smp-plan Phase 3).
+ *
+ * A single shared GDT/TSS cannot serve multiple CPUs: the PCPU descriptor base
+ * (what %gs resolves to) and the TSS ring-0 stack (esp0) are per-CPU.  Each CPU
+ * loads its OWN copy of the 12-entry GDT — same selectors, so the hardcoded
+ * SEL_PCPU / SEL_TSS (0x20) keep working — with its PCPU (idx 11) and TSS (idx 4)
+ * descriptors patched to point at its own g_pcpu[] slot and its own TSS.
+ */
+union descriptorTableUnion g_cpu_gdt[MAXCPU][12] __attribute__((aligned(8)));
+struct tssStruct g_cpu_tss[MAXCPU];
+
+/**
+ * Build CPU @id's private GDT + TSS and load them (lgdt + ltr + %gs).
+ *
+ * Copies the shared ubixGDT, repoints index 11 (PCPU) at &g_pcpu[id] and index 4
+ * (TSS, selector 0x20) at &g_cpu_tss[id], clears the TSS descriptor BUSY bit (a
+ * copied-from-an-already-loaded descriptor is marked busy; ltr #GPs on a busy
+ * TSS), seeds the TSS ring-0 state from the boot TSS at 0x4200 so an early
+ * ring3->ring0 entry lands on a valid stack, then loads all three.  Same
+ * selectors as before, so no segment register needs reloading.
+ */
+void pcpu_gdt_tss_load(u_int32_t id)
+{
+	union descriptorTableUnion *gdt;
+	u_int32_t pbase, tbase;
+	struct gdt_descr gp;
+	u_int16_t tss_sel = 0x20; /* GDT index 4 << 3 */
+	u_int16_t pcpu_sel = SEL_PCPU;
+
+	if (id >= MAXCPU)
+		return;
+	gdt = g_cpu_gdt[id];
+	pbase = (u_int32_t)&g_pcpu[id];
+	tbase = (u_int32_t)&g_cpu_tss[id];
+
+	memcpy(gdt, ubixGDT, sizeof(union descriptorTableUnion) * 12);
+
+	gdt[GDT_PCPU_INDEX].descriptor.baseLow = (u_int16_t)(pbase & 0xFFFF);
+	gdt[GDT_PCPU_INDEX].descriptor.baseMed = (u_int8_t)((pbase >> 16) & 0xFF);
+	gdt[GDT_PCPU_INDEX].descriptor.baseHigh = (u_int8_t)((pbase >> 24) & 0xFF);
+
+	gdt[4].descriptor.baseLow = (u_int16_t)(tbase & 0xFFFF);
+	gdt[4].descriptor.baseMed = (u_int8_t)((tbase >> 16) & 0xFF);
+	gdt[4].descriptor.baseHigh = (u_int8_t)((tbase >> 24) & 0xFF);
+	gdt[4].descriptor.access &= (u_int8_t)~0x02; /* BUSY -> available, else ltr #GPs */
+
+	memcpy(&g_cpu_tss[id], (const void *)0x4200, sizeof(struct tssStruct));
+
+	gp.limit = (u_int16_t)(sizeof(union descriptorTableUnion) * 12 - 1);
+	gp.base = (u_int32_t *)gdt;
+	__asm__ __volatile__("lgdt %0" : : "m"(gp));
+	__asm__ __volatile__("ltr %0" : : "rm"(tss_sel));
+	__asm__ __volatile__("movw %0, %%gs" : : "rm"(pcpu_sel) : "memory");
+}
 
 static void GDT_fixer()
 {

@@ -69,4 +69,8 @@ struct pcpu *curcpu(void);
 /** Point this CPU's %gs at &g_pcpu[id] (patches the GDT, loads SEL_PCPU). */
 void pcpu_install_gs(u_int32_t id);
 
+/** Build + load CPU @id's private GDT (per-CPU PCPU + TSS descriptors) and TSS
+ *  (lgdt + ltr + %gs).  The per-CPU foundation for SMP scheduling (Phase 3). */
+void pcpu_gdt_tss_load(u_int32_t id);
+
 #endif /* _I386_PCPU_H */
