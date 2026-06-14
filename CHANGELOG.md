@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.4.0-BETA] - 2026-06-14
+
 ### Added
 - **Kernel threads — per-thread TLS (Task C)** — `set_thread_area` now records each
   thread's `%gs` base in `kTask_t.tls_base`, and `cpu_switch` re-installs it into the
@@ -45,8 +47,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   rounded rectangles), `ogDropShadow` (soft quadratic-falloff shadow around a
   rect), and `ogBlendColor` (packed-RGB lerp).  Non-virtual additions, so existing
   app binaries stay ABI-compatible.
+- **SMP — i386 application-processor bring-up (smp-plan Phase 3, opt-in)** — per-CPU
+  GDT + TSS + `%gs`, a per-CPU idle thread dispatched out-of-band (never enqueued in
+  the shared run queue), a per-CPU LAPIC timer driving the scheduler, and an AP
+  scheduler entry (`c_ap_boot`) that joins the run queue.  Gated behind
+  `SMP_ENABLE_APS` (default **off**): released APs boot cleanly, but the kernel still
+  carries uniprocessor assumptions that corrupt under multi-core *load* (single
+  global lazy-FPU owner, no cross-CPU TLB shootdown), so the default ships the proven
+  single-core desktop.  Finishing true SMP (per-CPU FPU + TLB shootdown) is a 3.x task.
 
 ### Changed
+- **Idle thread is now per-CPU (i386)** — the idle thread is pinned per CPU
+  (`g_pcpu[id].idle`) and dispatched by the scheduler when nothing else is ready,
+  instead of sitting in the shared run queue at `QOS_IDLE` (which cannot scale to
+  SMP — two CPUs would dequeue the same idle task).  Uniprocessor behaviour is
+  unchanged; aarch64 keeps the enqueued idle.
 - **Modern login screen (vlogin)** — calm-slate rounded card with a soft drop
   shadow (drawn with the new objGFX primitives), `uBixOS`/`Sign in` header, and
   boxed username/password fields that light up with an accent underline + caret on
@@ -64,6 +79,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   it is CPU state, never shared, so the child gets a private writable copy and the
   parent stays writable. COW left it read-only, so the kernel's LDT[1] update in
   `cpu_switch` faulted with interrupts off.
+- **Cold-boot triple fault (i386)** — `pcpu_gdt_tss_load()` seeded the per-CPU TSS by
+  copying the static `0x4200` TSS, but it runs as the first thing in `kmain()`,
+  *before* `idt_init()` populates `0x4200` with `ss0 = 0x10`. On a cold boot the copy
+  grabbed a null `ss0` (kernel-stack selector), so the first userland timer tick
+  faulted #TS → #DF → triple fault → reboot. A warm reset hid it because guest RAM
+  kept the previous boot's value at `0x4200`. `ss0`/`io_map` are now seeded
+  explicitly — this was the long-standing "reboots on the first boot, works on the
+  second".
+- **Cold-boot pool-read races (i386)** — `execFile()` (PID 1 launch) and the UbixFS
+  root mount now retry on the transient first-read miss after boot. The pool's
+  dataset read could report "no 'root' filesystem dataset" and drop the boot to the
+  FAT fallback (which has no `/bin/init`, so exec then failed). Same defensive retry
+  as the `sys_exec` fopen path.
 
 ---
 
@@ -589,7 +617,8 @@ Initial git import from prior CVS/SVN history. Kernel booted, basic VFS and VMM 
 - `lseek` syscall (`SEEK_END` not yet implemented).
 - TCC added to base system.
 
-[Unreleased]: https://github.com/cwolsen7905/UbixOS/compare/v2.3.0-BETA...HEAD
+[Unreleased]: https://github.com/cwolsen7905/UbixOS/compare/v2.4.0-BETA...HEAD
+[2.4.0-BETA]: https://github.com/cwolsen7905/UbixOS/compare/v2.3.0-BETA...v2.4.0-BETA
 [2.3.0-BETA]: https://github.com/cwolsen7905/UbixOS/compare/v2.2.0-BETA...v2.3.0-BETA
 [2.2.0-BETA]: https://github.com/cwolsen7905/UbixOS/compare/v2.1.0-BETA...v2.2.0-BETA
 [2.1.0-BETA]: https://github.com/cwolsen7905/UbixOS/compare/v2.0.1-BETA...v2.1.0-BETA
