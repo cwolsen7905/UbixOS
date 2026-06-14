@@ -348,6 +348,7 @@ void c_ap_boot(void)
 			__asm__ __volatile__("pause");
 		}
 
+#if SMP_ENABLE_APS
 	/* Wait (lightly) for the BSP to finish booting — tasks created, scheduler
 	 * running, desktop up — before this AP joins the scheduler.  The release flag
 	 * g_ap_go is set by a deferred kernel thread once the system is idle, so the
@@ -372,6 +373,14 @@ void c_ap_boot(void)
 	 * nothing is runnable we come back here and halt (woken by the next tick). */
 	for (;;)
 		__asm__ __volatile__("hlt");
+#else
+	/* SMP_ENABLE_APS == 0 (default): the AP has no work and the kernel still has
+	 * uniprocessor assumptions (see smp.h).  Park in a low-power halt — cli;hlt,
+	 * not a pause-spin, so an idle AP does not peg a host core under TCG. */
+	(void)id;
+	for (;;)
+		__asm__ __volatile__("cli; hlt");
+#endif
 }
 
 /*

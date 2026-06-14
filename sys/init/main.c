@@ -48,6 +48,7 @@
 #include <lib/kconsole.h>
 #include <lib/kmalloc.h>
 #include <i386/pcpu.h>
+#include <i386/smp.h> /* SMP_ENABLE_APS — AP bring-up gate (Phase 3) */
 #include <ubixos/sched.h>
 #include <ubixos/sched_internal.h> /* rq_dequeue_locked — pin the per-CPU idle */
 #include <ubixos/cpu_enum.h>       /* smp_cpu_count() — one idle thread per CPU (Phase 3) */
@@ -161,10 +162,12 @@ static void idle_task(void)
 		__asm__ __volatile__("sti; hlt");
 }
 
+#if SMP_ENABLE_APS
 /* smp-plan Phase 3: AP release.  Application processors park in c_ap_boot until
  * g_ap_go (arch/i386/kern/smp.c) is set, so they do not race the not-yet-SMP-safe
  * boot path.  This deferred thread lets the BSP boot the desktop alone, then
- * releases the APs into the per-CPU scheduler once the system is quiet. */
+ * releases the APs into the per-CPU scheduler once the system is quiet.  Only
+ * built when SMP_ENABLE_APS (smp.h) is on; by default the APs stay parked. */
 extern volatile int g_ap_go;
 static char g_ap_release_chan;
 static int ap_release_never(void *arg)
@@ -174,7 +177,7 @@ static int ap_release_never(void *arg)
 }
 static void ap_release_thread(void)
 {
-	u_int32_t target = systemVitals->sysTicks + 1500; /* ~15 s at 100 Hz (bring-up; was 6000) */
+	u_int32_t target = systemVitals->sysTicks + 1500; /* ~15 s at 100 Hz (settle, then release) */
 
 	while ((int32_t)(systemVitals->sysTicks - target) < 0)
 		sched_wait_event_timeout(&g_ap_release_chan, ap_release_never, 0x0, 100);
@@ -182,6 +185,7 @@ static void ap_release_thread(void)
 	for (;;)
 		sched_wait_event_timeout(&g_ap_release_chan, ap_release_never, 0x0, 1000);
 }
+#endif
 
 /**
  * \brief This is the entry point into the os where all of the kernels sub
@@ -264,7 +268,28 @@ int kmain(u_int32_t rootdev)
 		 * unlinked + freed (see vfs_mount), leaving / free for the FAT fallback. */
 		int root_is_pool = 0;
 		ubfs_vfs_set_raw(1);
-		if (vfs_mount(1, 3, 0x0, VFS_TYPE_UBIXFS, "/", "rw") == 0)
+		int root_mount_rc = vfs_mount(1, 3, 0x0, VFS_TYPE_UBIXFS, "/", "rw");
+
+		/*
+		 * Cold-boot UbixFS dataset-read race.  The dataset-layer read (ubfs_dsl_*)
+		 * can transiently fail on the very first reads after boot — the pool
+		 * superblock opens, but the dataset lookup reports "no 'root' filesystem
+		 * dataset", so the boot wrongly falls back to the FAT /boot partition
+		 * (which has no /bin/init, so exec then fails with "Exec Format Error").
+		 * This is the long-standing intermittent "works on the second boot" pool
+		 * mount.  A failed vfs_mount() fully unwinds (vfs_mount removes the
+		 * mountpoint and frees its state on vfsInitFS failure), so the mount is
+		 * safe to re-issue; the re-read clears the cold miss.  Runs before
+		 * irqEnable(), so settle-spin between tries rather than sched_yield().
+		 */
+		for (int mtry = 0; root_mount_rc != 0 && mtry < 8; mtry++)
+		{
+			for (volatile int s = 0; s < 2000000; s++)
+				; /* brief delay; no scheduler yet */
+			root_mount_rc = vfs_mount(1, 3, 0x0, VFS_TYPE_UBIXFS, "/", "rw");
+		}
+
+		if (root_mount_rc == 0)
 		{
 			fileDescriptor_t *probe_init = fopen("/bin/init", "r");
 			if (probe_init != NULL)
@@ -451,13 +476,15 @@ int kmain(u_int32_t rootdev)
 	rq_dequeue_locked(g_idle_task);
 	g_pcpu[0].idle = g_idle_task;
 
+#if SMP_ENABLE_APS
 	/*
-	 * smp-plan Phase 3: one per-CPU idle thread for each application processor,
-	 * pinned to g_pcpu[id].idle and kept OUT of the run queue exactly like the BSP
-	 * idle above — the dispatcher runs curcpu()->idle when a CPU has nothing
-	 * ready.  (Enqueuing them instead is what corrupted the run queue and crashed
-	 * login.)  Plus the deferred AP-release thread that sets g_ap_go once the
-	 * desktop is up, letting the parked APs join the scheduler.
+	 * smp-plan Phase 3 (experimental, off by default — see smp.h): one per-CPU
+	 * idle thread for each application processor, pinned to g_pcpu[id].idle and
+	 * kept OUT of the run queue exactly like the BSP idle above — the dispatcher
+	 * runs curcpu()->idle when a CPU has nothing ready.  (Enqueuing them instead
+	 * is what corrupted the run queue and crashed login.)  Plus the deferred
+	 * AP-release thread that sets g_ap_go once the desktop is up, letting the
+	 * parked APs join the scheduler.
 	 */
 	for (unsigned _cpu = 1; _cpu < smp_cpu_count() && _cpu < MAXCPU; _cpu++)
 	{
@@ -467,6 +494,7 @@ int kmain(u_int32_t rootdev)
 		g_pcpu[_cpu].idle = ap_idle;
 	}
 	execThread(ap_release_thread, 0x2000, 0x0, "ap_release");
+#endif
 
 	execFile("/bin/init", argv_init, envp_init, 0x0); /* OS Initializer    */
 

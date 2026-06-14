@@ -84,4 +84,17 @@ void apicMagic();
  * apicMagic().  Discovery only — launches nothing. */
 void acpi_enum_cpus(u_int8_t bsp_apic_id);
 
+/*
+ * smp-plan Phase 3 — bring application processors into the scheduler.
+ *
+ * DEFAULT OFF.  The AP scheduler entry (c_ap_boot) and per-CPU idle are complete
+ * and boot cleanly, but the i386 kernel still carries uniprocessor assumptions
+ * that corrupt under genuine multi-core LOAD: the lazy-FPU owner (_usedMath) is a
+ * single global, and there is no cross-CPU TLB shootdown.  Until those are fixed
+ * (a v3 task) the released APs are only safe while idle.  Leave this 0 for
+ * production (single-core, the proven-stable desktop); set to 1 to experiment
+ * with true SMP.  When 0, APs park in a low-power cli;hlt loop (no work, no spin).
+ */
+#define SMP_ENABLE_APS 0
+
 #endif
