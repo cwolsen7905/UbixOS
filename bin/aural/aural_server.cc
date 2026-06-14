@@ -34,8 +34,22 @@
 #include <api/ubix.h>
 
 /* musl gates the nanosleep prototype behind a feature macro the -nostdinc world
- * build does not set; the symbol is in libc, so declare it directly. */
+ * build does not set; the symbol is in libc, so declare it directly.
+ *
+ * musl is _REDIR_TIME64, so `struct timespec` here is 64-bit (tv_nsec at offset
+ * 8).  The bare `nanosleep` symbol is musl's time32 COMPAT shim, which reads the
+ * input as a 32-bit timespec (tv_nsec at offset 4) — feeding it our 64-bit struct
+ * drops the nanoseconds (it read 0), so every nap returned instantly and aural
+ * busy-spun.  Bind directly to the time64 implementation, which matches our
+ * struct layout.  (The header redirect would do this for us if the world build
+ * set the feature macro — see also the kernel-side sys_nanosleep 64-bit fix.) */
+#if defined(__i386__)
+extern "C" int nanosleep(const struct timespec *req, struct timespec *rem) __asm__("__nanosleep_time64");
+#else
+/* 64-bit arches have a single, native 64-bit time_t — the bare nanosleep is
+ * already correct (no time32 compat shim to mismatch). */
 extern "C" int nanosleep(const struct timespec *req, struct timespec *rem);
+#endif
 
 namespace
 {
