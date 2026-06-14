@@ -4,8 +4,9 @@
  * Files — the uBixOS graphical file manager (P0 MVP).
  *
  * An Explorer-leaning, best-of-all-worlds file browser: a navigation toolbar
- * (back / forward / up), a breadcrumb address bar, a sortable Details list
- * (Name / Size / Type / Modified), and a status bar.  Double-click a folder to
+ * (back / forward / up), a breadcrumb address bar, a left "Places" sidebar (Home,
+ * Filesystem, top-level folders), a sortable Details list (Name / Size / Type /
+ * Modified), and a status bar.  Double-click a folder to
  * enter it, a file to open it in the app the ubistry registry maps from its
  * extension.  File operations — New Folder, Open, Rename, Delete — live in the
  * right-click context menu (Explorer-style), not on the toolbar.  This is a
@@ -42,12 +43,13 @@ extern "C"
 
 #define RGB(r, g, b) ((uint32_t)(((r) << 16) | ((g) << 8) | (b)))
 
-#define WIN_W 760
+#define WIN_W 820
 #define WIN_H 500
 #define TOOLBAR_H 44
-#define ADDR_H 32 /* breadcrumb address bar */
-#define HEAD_H 26 /* column-header row */
-#define ROW_H 24  /* one list entry */
+#define ADDR_H 32     /* breadcrumb address bar */
+#define SIDEBAR_W 176 /* left navigation sidebar */
+#define HEAD_H 26     /* column-header row */
+#define ROW_H 24      /* one list entry */
 #define STATUS_H 26
 #define PAD 10
 #define ICON_W 18
@@ -55,6 +57,7 @@ extern "C"
 
 #define MAX_ENTRIES 1024
 #define MAX_CRUMBS 64
+#define MAX_PLACES 24
 #define NAME_MAX_LEN 256
 
 /* Palette — matches the diskutil / activity desktop look. */
@@ -125,6 +128,16 @@ static bool g_sort_desc;
 
 static struct crumb g_crumb[MAX_CRUMBS];
 static int g_ncrumb;
+
+/* Sidebar "Places": pinned/quick-access destinations. */
+struct place
+{
+	char label[64];
+	char path[512];
+	bool is_home;
+};
+static struct place g_places[MAX_PLACES];
+static int g_nplaces;
 
 static int g_mode = MODE_BROWSE;
 static char g_edit[NAME_MAX_LEN]; /* rename edit buffer */
@@ -420,6 +433,57 @@ static void navigate(const char *path, bool record)
 	/* On failure read_dir leaves an explanatory message in g_status. */
 }
 
+/**
+ * Populate the sidebar "Places": Home (if it exists and is not root), the
+ * filesystem root, then each top-level directory of "/".  Built once at startup;
+ * pinning user folders here is a later phase.
+ */
+static void build_places(void)
+{
+	g_nplaces = 0;
+
+	const char *home = getenv("HOME");
+	if (home && home[0] && strcmp(home, "/") != 0)
+	{
+		DIR *h = opendir(home);
+		if (h)
+		{
+			closedir(h);
+			snprintf(g_places[g_nplaces].label, sizeof(g_places[0].label), "Home");
+			snprintf(g_places[g_nplaces].path, sizeof(g_places[0].path), "%s", home);
+			g_places[g_nplaces].is_home = true;
+			g_nplaces++;
+		}
+	}
+
+	snprintf(g_places[g_nplaces].label, sizeof(g_places[0].label), "Filesystem");
+	snprintf(g_places[g_nplaces].path, sizeof(g_places[0].path), "/");
+	g_places[g_nplaces].is_home = false;
+	g_nplaces++;
+
+	/* Top-level directories of "/" as quick jumps. */
+	DIR *d = opendir("/");
+	if (d)
+	{
+		struct dirent *de;
+		while ((de = readdir(d)) != 0 && g_nplaces < MAX_PLACES)
+		{
+			if (de->d_name[0] == '.')
+				continue;
+			char full[600];
+			snprintf(full, sizeof(full), "/%s", de->d_name);
+			struct stat st;
+			if (stat(full, &st) != 0 || !S_ISDIR(st.st_mode))
+				continue;
+			snprintf(g_places[g_nplaces].label, sizeof(g_places[0].label), "%s", de->d_name);
+			snprintf(g_places[g_nplaces].path, sizeof(g_places[0].path), "%s", full);
+			g_places[g_nplaces].is_home = false;
+			g_nplaces++;
+		}
+		closedir(d);
+	}
+}
+
 /* ── actions ────────────────────────────────────────────────────────────────*/
 
 /**
@@ -563,6 +627,24 @@ static int list_top(void)
 	return TOOLBAR_H + ADDR_H + HEAD_H;
 }
 
+/** Y where the sidebar and the column-header row begin. */
+static int content_top(void)
+{
+	return TOOLBAR_H + ADDR_H;
+}
+
+/** Left X of the list content (right of the sidebar). */
+static int content_x(void)
+{
+	return SIDEBAR_W;
+}
+
+/** X of the Name column / entry labels. */
+static int name_x(void)
+{
+	return content_x() + PAD + ICON_W + 6;
+}
+
 /** Number of fully-visible list rows for the current window height. */
 static int visible_rows(void)
 {
@@ -604,6 +686,64 @@ static void draw_icon(int x, int y, bool is_dir)
 		g_surf.ogFillRect(x + 1, y + 1, x + 12, y + 14, COL_FILE);
 		g_surf.ogFillRect(x + 9, y + 1, x + 12, y + 4, COL_FILE_FOLD); /* folded corner */
 	}
+}
+
+/**
+ * Draw a 16px "home" glyph (a roof over a body) at (x,y).
+ */
+static void draw_home_icon(int x, int y)
+{
+	for (int i = 0; i < 7; i++) /* triangular roof */
+		g_surf.ogHLine(x + 7 - i, x + 7 + i, y + 1 + i, COL_FOLDER);
+	g_surf.ogFillRect(x + 2, y + 7, x + 12, y + 14, COL_FOLDER);
+}
+
+/**
+ * Draw the left navigation sidebar: a "Places" header over the quick-access rows
+ * (Home, Filesystem, top-level folders).  The row matching the current directory
+ * is highlighted.
+ */
+static void draw_sidebar(void)
+{
+	int top = content_top();
+	int bottom = g_h - STATUS_H;
+	g_surf.ogFillRect(0, top, SIDEBAR_W - 1, bottom - 1, COL_HEAD);
+	g_surf.ogVLine(SIDEBAR_W - 1, top, bottom - 1, COL_DIVIDER);
+
+	set_fg(COL_TEXT_DIM);
+	g_font.PutString(g_surf, PAD, top + 6, "PLACES");
+
+	int y = top + 6 + (int)g_font.GetHeight() + 6;
+	for (int i = 0; i < g_nplaces && y + ROW_H <= bottom; i++)
+	{
+		bool here = (strcmp(g_places[i].path, g_cwd) == 0);
+		if (here)
+			g_surf.ogFillRect(3, y, SIDEBAR_W - 4, y + ROW_H - 1, COL_SEL);
+
+		if (g_places[i].is_home)
+			draw_home_icon(PAD, y + (ROW_H - 16) / 2);
+		else
+			draw_icon(PAD, y + (ROW_H - 16) / 2, true);
+
+		set_fg(here ? COL_SEL_TEXT : COL_TEXT);
+		g_font.PutString(
+		    g_surf, PAD + ICON_W + 6, y + (ROW_H - (int)g_font.GetHeight()) / 2, g_places[i].label);
+		y += ROW_H;
+	}
+}
+
+/**
+ * Index of the sidebar place at (x,y), or -1 if the point is outside the list.
+ */
+static int sidebar_hit(int x, int y)
+{
+	if (x >= SIDEBAR_W)
+		return -1;
+	int first = content_top() + 6 + (int)g_font.GetHeight() + 6;
+	if (y < first)
+		return -1;
+	int i = (y - first) / ROW_H;
+	return (i >= 0 && i < g_nplaces) ? i : -1;
 }
 
 /**
@@ -725,9 +865,9 @@ static void draw_head_label(int x, const char *label, int col)
 static void draw_header(void)
 {
 	int hy = TOOLBAR_H + ADDR_H;
-	g_surf.ogFillRect(0, hy, g_w - 1, hy + HEAD_H - 1, COL_HEAD);
-	g_surf.ogHLine(0, g_w - 1, hy + HEAD_H - 1, COL_DIVIDER);
-	draw_head_label(PAD + ICON_W + 6, "Name", SORT_NAME);
+	g_surf.ogFillRect(content_x(), hy, g_w - 1, hy + HEAD_H - 1, COL_HEAD);
+	g_surf.ogHLine(content_x(), g_w - 1, hy + HEAD_H - 1, COL_DIVIDER);
+	draw_head_label(name_x(), "Name", SORT_NAME);
 	draw_head_label(col_size_r() - (int)g_font.TextWidth("Size") - 14, "Size", SORT_SIZE);
 	draw_head_label(col_type_x(), "Type", SORT_TYPE);
 	draw_head_label(col_mod_x(), "Modified", SORT_MOD);
@@ -741,7 +881,8 @@ static void draw_list(void)
 {
 	int top = list_top();
 	int bottom = g_h - STATUS_H;
-	g_surf.ogFillRect(0, top, g_w - 1, bottom - 1, COL_WIN);
+	int cx = content_x();
+	g_surf.ogFillRect(cx, top, g_w - 1, bottom - 1, COL_WIN);
 
 	int rows = visible_rows();
 	for (int r = 0; r < rows; r++)
@@ -754,11 +895,11 @@ static void draw_list(void)
 		bool sel = (i == g_sel);
 
 		if (sel)
-			g_surf.ogFillRect(0, y, g_w - 1, y + ROW_H - 1, COL_SEL);
+			g_surf.ogFillRect(cx, y, g_w - 1, y + ROW_H - 1, COL_SEL);
 		else if (i & 1)
-			g_surf.ogFillRect(0, y, g_w - 1, y + ROW_H - 1, COL_ROW_ALT);
+			g_surf.ogFillRect(cx, y, g_w - 1, y + ROW_H - 1, COL_ROW_ALT);
 
-		draw_icon(PAD, y + (ROW_H - 16) / 2, e->is_dir);
+		draw_icon(cx + PAD, y + (ROW_H - 16) / 2, e->is_dir);
 
 		int ty = y + (ROW_H - (int)g_font.GetHeight()) / 2;
 		uint32_t fg = sel ? COL_SEL_TEXT : COL_TEXT;
@@ -767,7 +908,7 @@ static void draw_list(void)
 		/* Name (inline editor for the row being renamed). */
 		if (g_mode == MODE_RENAME && sel)
 		{
-			int ex = PAD + ICON_W + 6;
+			int ex = name_x();
 			g_surf.ogFillRect(ex - 2, y + 2, col_size_r() - 16, y + ROW_H - 3, COL_ADDR);
 			g_surf.ogRoundRect(ex - 2, y + 2, col_size_r() - 16, y + ROW_H - 3, 3, COL_SEL);
 			set_fg(COL_TEXT);
@@ -778,7 +919,7 @@ static void draw_list(void)
 		else
 		{
 			set_fg(fg);
-			g_font.PutString(g_surf, PAD + ICON_W + 6, ty, e->name);
+			g_font.PutString(g_surf, name_x(), ty, e->name);
 		}
 
 		/* Size (right-aligned), folders show "--". */
@@ -890,7 +1031,7 @@ static void open_context_menu(int mx, int my)
 	g_ctx_target = -1;
 
 	/* Did the click land on a list row? */
-	if (my >= list_top() && my < g_h - STATUS_H)
+	if (mx >= content_x() && my >= list_top() && my < g_h - STATUS_H)
 	{
 		int r = (my - list_top()) / ROW_H;
 		int i = g_top + r;
@@ -1004,6 +1145,7 @@ static void render(void)
 {
 	g_surf.ogClear(COL_WIN);
 	draw_list();
+	draw_sidebar();
 	draw_header();
 	draw_address();
 	draw_toolbar();
@@ -1113,6 +1255,16 @@ static void on_click(int x, int y)
 		return;
 	}
 
+	/* Sidebar place → jump there. */
+	if (x < SIDEBAR_W && y >= content_top())
+	{
+		int p = sidebar_hit(x, y);
+		if (p >= 0)
+			navigate(g_places[p].path, true);
+		render();
+		return;
+	}
+
 	/* Column header → sort. */
 	if (y >= TOOLBAR_H + ADDR_H && y < list_top())
 	{
@@ -1167,6 +1319,8 @@ static void on_right_click(int x, int y)
 {
 	if (g_mode != MODE_BROWSE)
 		return;
+	if (x < SIDEBAR_W && y >= content_top())
+		return; /* no context menu in the sidebar */
 	open_context_menu(x, y);
 	render();
 }
@@ -1353,7 +1507,7 @@ int main(int argc, char **argv)
 	req->sender_pid = getpid();
 	strncpy(req->title, "Files", sizeof(req->title) - 1);
 	strncpy(req->reply, g_mbox, sizeof(req->reply) - 1);
-	req->min_w = 520;
+	req->min_w = 600; /* sidebar + a usable list */
 	req->min_h = 320;
 	req->max_w = 1200;
 	req->max_h = 900;
@@ -1374,6 +1528,7 @@ int main(int argc, char **argv)
 	if (!g_font.Load(FONT_PATH, 13))
 		return 1;
 
+	build_places();
 	navigate(start, true);
 	render();
 
