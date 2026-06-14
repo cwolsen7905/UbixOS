@@ -34,6 +34,16 @@
 #include <ubixos/vitals.h>
 #include <lib/kprintf.h>
 
+/* Sleep channel + never-true predicate for the inter-scan interval wait: the
+ * pageout daemon has no event to wake on, so it just sleeps out the timeout each
+ * idle pass (see pageout_daemon) instead of busy-yielding a whole CPU. */
+static char g_pageout_chan;
+static int pageout_never(void *arg)
+{
+	(void)arg;
+	return (0);
+}
+
 /*
  * pageout_daemon — kernel thread that proactively reclaims physical pages.
  *
@@ -67,10 +77,14 @@ void pageout_daemon(void)
 
 	for (;;)
 	{
-		/* Sleep until the next polling interval. */
-		while (systemVitals->sysTicks - last_tick < PAGEOUT_INTERVAL_TICKS)
+		/* Sleep until the next polling interval — block, don't busy-yield.  With
+		 * nothing to evict at idle this loop otherwise pegged a CPU for the whole
+		 * 1 s interval (very visible under i386/TCG). */
 		{
-			sched_yield();
+			u_int32_t elapsed = systemVitals->sysTicks - last_tick;
+			if (elapsed < PAGEOUT_INTERVAL_TICKS)
+				sched_wait_event_timeout(
+				    &g_pageout_chan, pageout_never, NULL, PAGEOUT_INTERVAL_TICKS - elapsed);
 		}
 		last_tick = systemVitals->sysTicks;
 
