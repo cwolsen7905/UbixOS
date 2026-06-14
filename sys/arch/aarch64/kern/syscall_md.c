@@ -54,9 +54,13 @@ int sys_sched_yield(struct thread *td, void *uap)
 	OK_STUB(td);
 }
 
+/* DEAD on aarch64: aarch64_syscall() intercepts SYS_NANOSLEEP (240) in its
+ * dispatcher switch (kern/syscall.c) and does a real callout-driven timed sleep
+ * there, so this table entry is never reached.  Kept only so the shared sysent
+ * table has a non-NULL slot; the yield is a harmless fallback. */
 int sys_nanosleep(struct thread *td, void *uap)
 {
-	(void)uap; /* no timed sleep yet — yield once */
+	(void)uap;
 	sched_yield();
 	OK_STUB(td);
 }
