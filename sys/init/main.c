@@ -50,6 +50,7 @@
 #include <i386/pcpu.h>
 #include <ubixos/sched.h>
 #include <ubixos/sched_internal.h> /* rq_dequeue_locked — pin the per-CPU idle */
+#include <ubixos/cpu_enum.h>       /* smp_cpu_count() — one idle thread per CPU (Phase 3) */
 
 #define B_ADAPTORSHIFT 24
 #define B_ADAPTORMASK 0x0f
@@ -158,6 +159,28 @@ static void idle_task(void)
 {
 	for (;;)
 		__asm__ __volatile__("sti; hlt");
+}
+
+/* smp-plan Phase 3: AP release.  Application processors park in c_ap_boot until
+ * g_ap_go (arch/i386/kern/smp.c) is set, so they do not race the not-yet-SMP-safe
+ * boot path.  This deferred thread lets the BSP boot the desktop alone, then
+ * releases the APs into the per-CPU scheduler once the system is quiet. */
+extern volatile int g_ap_go;
+static char g_ap_release_chan;
+static int ap_release_never(void *arg)
+{
+	(void)arg;
+	return (0);
+}
+static void ap_release_thread(void)
+{
+	u_int32_t target = systemVitals->sysTicks + 1500; /* ~15 s at 100 Hz (bring-up; was 6000) */
+
+	while ((int32_t)(systemVitals->sysTicks - target) < 0)
+		sched_wait_event_timeout(&g_ap_release_chan, ap_release_never, 0x0, 100);
+	g_ap_go = 1;
+	for (;;)
+		sched_wait_event_timeout(&g_ap_release_chan, ap_release_never, 0x0, 1000);
 }
 
 /**
@@ -427,6 +450,23 @@ int kmain(u_int32_t rootdev)
 	 */
 	rq_dequeue_locked(g_idle_task);
 	g_pcpu[0].idle = g_idle_task;
+
+	/*
+	 * smp-plan Phase 3: one per-CPU idle thread for each application processor,
+	 * pinned to g_pcpu[id].idle and kept OUT of the run queue exactly like the BSP
+	 * idle above — the dispatcher runs curcpu()->idle when a CPU has nothing
+	 * ready.  (Enqueuing them instead is what corrupted the run queue and crashed
+	 * login.)  Plus the deferred AP-release thread that sets g_ap_go once the
+	 * desktop is up, letting the parked APs join the scheduler.
+	 */
+	for (unsigned _cpu = 1; _cpu < smp_cpu_count() && _cpu < MAXCPU; _cpu++)
+	{
+		kTask_t *ap_idle = (kTask_t *)execThread(idle_task, 0x2000, 0x0, "idle");
+		sched_set_priority(ap_idle, QOS_IDLE);
+		rq_dequeue_locked(ap_idle);
+		g_pcpu[_cpu].idle = ap_idle;
+	}
+	execThread(ap_release_thread, 0x2000, 0x0, "ap_release");
 
 	execFile("/bin/init", argv_init, envp_init, 0x0); /* OS Initializer    */
 

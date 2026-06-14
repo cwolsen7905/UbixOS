@@ -38,6 +38,7 @@
 #define EFLAG_VM         0x20000
 
 int idt_init();
+void idt_load(void); /* load the IDTR on the calling CPU (AP bring-up, no sti) */
 void setVector(void *handler, unsigned char interrupt, unsigned short controlMajor);
 void setTaskVector(u_int8_t interrupt, u_int16_t controlMajor, u_int8_t selector);
 

@@ -190,6 +190,20 @@ int idt_init() {
   return (0x0);
 }
 
+/* smp-plan Phase 3: load the (shared) IDT on the calling CPU without enabling
+ * interrupts — an application processor calls this from c_ap_boot before it sti's
+ * its scheduler.  The IDT table itself is shared; only the IDTR is per-CPU. */
+void idt_load(void) {
+  asm volatile(
+    "lidt (%0)               \n"
+    "pushfl                  \n" /* clear NT, like idt_init */
+    "andl $0xffffbfff,(%%esp) \n"
+    "popfl                   \n"
+    :
+    : "r"((char *)&loadidt)
+  );
+}
+
 /* Sets Up IDT Vector */
 void setVector(void *handler, unsigned char interrupt, unsigned short controlMajor) {
   unsigned short codesegment = 0x08;

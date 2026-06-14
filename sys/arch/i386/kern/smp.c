@@ -31,6 +31,7 @@
 #include <ubixos/cpu_enum.h> /* acpi_enum_cpus result + cpu_enum_dump (Phase 1) */
 #include <sys/gdt.h>
 #include <sys/tss.h> /* struct tssStruct — per-CPU TSS (Phase 3) */
+#include <sys/idt.h> /* idt_load() — AP loads the shared IDT (Phase 3) */
 #include <ubixos/spinlock.h>
 #include <ubixos/kpanic.h>
 #include <lib/kprintf.h>
@@ -131,6 +132,11 @@ static volatile int g_smp_active = 0;
  * whole VM crawl.  There is no per-CPU scheduler yet, so the AP has no work:
  * halting until the real per-CPU idle thread lands is correct. */
 static volatile int g_ap_park = 0;
+
+/* Set by a deferred kernel thread once the BSP has finished booting (desktop up,
+ * system idle).  Releases each parked AP into the per-CPU scheduler (Phase 3 AP
+ * entry) so it does not race the not-yet-SMP-safe boot path. */
+volatile int g_ap_go = 0;
 
 u_int32_t smp_processor_id(void)
 {
@@ -342,11 +348,30 @@ void c_ap_boot(void)
 			__asm__ __volatile__("pause");
 		}
 
-	/* No per-CPU scheduler yet -> the AP has no work.  Halt instead of spinning
-	 * (cli;hlt: IRQs are not SMP-safe yet, so we sleep until the real per-CPU
-	 * idle thread replaces this with sti;hlt + IPI wakeup). */
+	/* Wait (lightly) for the BSP to finish booting — tasks created, scheduler
+	 * running, desktop up — before this AP joins the scheduler.  The release flag
+	 * g_ap_go is set by a deferred kernel thread once the system is idle, so the
+	 * AP does not race the (not-yet-SMP-safe) boot path. */
+	while (!g_ap_go)
+		__asm__ __volatile__("pause");
+
+	/* smp-plan Phase 3 — AP scheduler entry.  Build this CPU's private GDT+TSS
+	 * (so %gs / esp0 are per-CPU), load the shared IDT, activate g_smp_active so
+	 * smp_processor_id() resolves the real LAPIC id, arm the periodic LAPIC timer
+	 * (drives lapicTimerInt -> sched() on this CPU), then enable interrupts.
+	 * _current is NULL here; the first LAPIC-timer sched() discards this boot
+	 * context (prev==NULL) exactly as the BSP discards kmain, and runs a task —
+	 * a ready task from the shared queue, or this CPU's g_pcpu[id].idle. */
+	pcpu_gdt_tss_load(id);
+	idt_load();
+	g_smp_active = 1;
+	lapic_timer_init(1000000); /* periodic ticks (rough rate; calibration TODO) */
+	__asm__ __volatile__("sti");
+
+	/* Idle until the LAPIC timer fires and sched() switches us to real work; when
+	 * nothing is runnable we come back here and halt (woken by the next tick). */
 	for (;;)
-		__asm__ __volatile__("cli; hlt");
+		__asm__ __volatile__("hlt");
 }
 
 /*
