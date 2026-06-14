@@ -58,6 +58,49 @@
  * loops interruptible.  td must be struct thread *. */
 #define SIG_PENDING_UNBLOCKED(td) ((td)->sig_pending & ~(td)->sigmask.__bits[0])
 
+/* Signals whose SIG_DFL action is "ignore".  Per POSIX an ignored signal must
+ * not interrupt a blocking syscall (and shouldn't accumulate as pending); a
+ * SIG_DFL SIGCHLD from an unreaped child must not EINTR-spin a blocking read. */
+#define SIG_DFL_IGNORE_MASK                                                                                            \
+	((1u << (SIGCHLD - 1)) | (1u << (SIGCONT - 1)) | (1u << (SIGURG - 1)) | (1u << (SIGWINCH - 1)) |               \
+	 (1u << (SIGIO - 1)))
+
+/* Pending, unblocked signals that would actually be DELIVERED — caught by a
+ * handler, or default-terminate/stop.  Excludes ignored signals (SIG_IGN, or
+ * SIG_DFL of a default-ignore signal) so they can't interrupt blocking I/O.
+ * This is the disposition-aware replacement for SIG_PENDING_UNBLOCKED in the
+ * EINTR decision of a blocking syscall. */
+static u_int32_t sig_deliverable_pending(struct thread *td)
+{
+	u_int32_t unblocked = td->sig_pending & ~td->sigmask.__bits[0];
+	int sig;
+
+	if (unblocked == 0)
+		return (0);
+	for (sig = 1; sig <= 31; sig++)
+	{
+		u_int32_t bit = 1u << (sig - 1);
+		void *h;
+
+		if (!(unblocked & bit))
+			continue;
+		h = (void *)td->sigact[sig].sa_handler;
+		if (h == (void *)0x1) /* SIG_IGN */
+			unblocked &= ~bit;
+		else if (h == 0x0 && (bit & SIG_DFL_IGNORE_MASK)) /* SIG_DFL default-ignore */
+			unblocked &= ~bit;
+	}
+	return (unblocked);
+}
+
+/* sched_wait_event predicate: a blocking pipe reader can proceed once the pipe
+ * has data or all writers have closed (EOF). */
+static int pipe_readable(void *arg)
+{
+	struct pipeInfo *p = (struct pipeInfo *)arg;
+	return (p->bCNT != 0 || p->wfdCNT <= 0);
+}
+
 #define FD_TYPE_DIR 4
 
 int sys_open(struct thread *td, struct sys_open_args *args)
@@ -201,8 +244,13 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 		}
 		else
 		{
-			/* Blocking: wait until data arrives, the writer side closes,
-			 * or a signal fires. */
+			/* Blocking: sleep until data arrives, the writer side closes,
+			 * or a deliverable signal fires.  Sleeping (sched_wait_event) instead
+			 * of spinning on sched_yield keeps an idle reader at 0% CPU; the writer
+			 * wakes us via sched_wakeup_chan(p_fd).  A 1 s safety timeout re-checks
+			 * even if a wakeup is ever missed.  Only DELIVERABLE signals interrupt
+			 * (sig_deliverable_pending) — an ignored SIG_DFL SIGCHLD from an
+			 * unreaped child must not turn this into an EINTR spin. */
 			p_fd->reader_pid = (int)_current->id;
 			while (p_fd->bCNT == 0)
 			{
@@ -213,13 +261,13 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 					td->td_retval[0] = 0;
 					return (0);
 				}
-				if (SIG_PENDING_UNBLOCKED(td))
+				if (sig_deliverable_pending(td))
 				{
 					p_fd->reader_pid = 0;
 					td->td_retval[0] = -EINTR;
 					return (EINTR);
 				}
-				sched_yield();
+				sched_wait_event_timeout(p_fd, pipe_readable, p_fd, 100);
 			}
 			p_fd->reader_pid = 0;
 		}
@@ -358,7 +406,9 @@ int sys_write(struct thread *td, struct sys_write_args *uap)
 
 		p_fd->bCNT++;
 
-		/* Phase 3.2: boost the blocked reader so it runs before CPU-bound tasks. */
+		/* Wake the reader sleeping in sched_wait_event_timeout(p_fd, …) above, then
+		 * give it an I/O priority boost so it runs before CPU-bound tasks. */
+		sched_wakeup_chan(p_fd);
 		if (p_fd->reader_pid != 0)
 		{
 			kTask_t *reader = schedFindTask((u_int32_t)p_fd->reader_pid);
