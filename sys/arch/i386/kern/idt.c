@@ -31,6 +31,7 @@
 #include <sys/idt.h>
 #include <sys/gdt.h>
 #include <i386/pcpu_asm.h>
+#include <i386/smp.h> /* LAPIC_TIMER_VECTOR / IPI_RESCHED_VECTOR (Phase 3) */
 #include <sys/io.h>
 #include <ubixos/sched.h>
 #include <isa/8259.h>
@@ -168,6 +169,11 @@ int idt_init() {
   setVector(_sys_call_posix, 0x80, dPresent + dTrap + dDpl3);
   setVector(_sys_call, 0x81, dPresent + dTrap + dDpl3);
   setVector(timerInt, 0x68, (dInt + dPresent + dDpl0));
+  /* smp-plan Phase 3 (additive): per-CPU LAPIC timer + reschedule IPI.  Installed
+   * on the shared IDT but only fire once an AP enters the scheduler with IRQs on
+   * / an IPI is sent — no effect on the BSP until that integration lands. */
+  setVector(lapicTimerInt, LAPIC_TIMER_VECTOR, (dInt + dPresent + dDpl0));
+  setVector(ipiReschedInt, IPI_RESCHED_VECTOR, (dInt + dPresent + dDpl0));
 
   /*
    * Note: the GPF (#13), double-fault (#8) and v86 BIOS-INT paths used to be

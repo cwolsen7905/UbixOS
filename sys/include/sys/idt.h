@@ -44,4 +44,8 @@ void setTaskVector(u_int8_t interrupt, u_int16_t controlMajor, u_int8_t selector
 
 void timerInt();
 
+/* smp-plan Phase 3 — per-CPU LAPIC timer + reschedule-IPI stubs (timer.S). */
+void lapicTimerInt();
+void ipiReschedInt();
+
 #endif

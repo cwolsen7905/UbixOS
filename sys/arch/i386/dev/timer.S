@@ -95,3 +95,70 @@ done:
   pop %ds
   popa                      /* Restore Registers                        */
   iret
+
+/* ------------------------------------------------------------------------
+ * smp-plan Phase 3: per-CPU LAPIC timer + reschedule-IPI interrupt stubs.
+ *
+ * lapicTimerInt drives an application processor's scheduler the way timerInt
+ * (PIT) drives the BSP's, but EOIs the Local APIC instead of the 8259 and does
+ * NOT touch systemVitals->sysTicks (wall-clock time stays owned by the single
+ * BSP PIT).  ipiReschedInt is the "you have new work, reschedule" IPI.
+ *
+ * Both are ADDITIVE until the AP scheduler-entry integration: an AP only takes
+ * them once it sti's, and no IPI is sent yet, so installing them changes no
+ * runtime behaviour on the BSP.  When the integration lands, sched() must run
+ * under the SMP run-queue lock (spinLockIrq) before these may fire concurrently
+ * with the BSP.
+ * ------------------------------------------------------------------------ */
+.globl lapicTimerInt
+lapicTimerInt:
+  pusha
+  push %ds
+  push %es
+  push %fs
+  push %gs
+  mov $0x10,%eax
+  mov %eax,%ds
+  mov %eax,%es
+  mov %eax,%fs
+  PCPU_LOAD_GS              /* %gs = SEL_PCPU -> per-CPU _current is valid */
+  movl $0xFEE000B0,%eax     /* LAPIC EOI register                          */
+  movl $0,(%eax)
+  call sched_account_tick   /* charge the tick to this CPU's _current      */
+  call sched                /* run the scheduler on this CPU               */
+  testb $3,52(%esp)         /* AST: interrupted ring-3? (CS RPL == 3)      */
+  jz 1f
+  call signal_ast_check
+1:
+  pop %gs
+  pop %fs
+  pop %es
+  pop %ds
+  popa
+  iret
+
+.globl ipiReschedInt
+ipiReschedInt:
+  pusha
+  push %ds
+  push %es
+  push %fs
+  push %gs
+  mov $0x10,%eax
+  mov %eax,%ds
+  mov %eax,%es
+  mov %eax,%fs
+  PCPU_LOAD_GS
+  movl $0xFEE000B0,%eax     /* LAPIC EOI register */
+  movl $0,(%eax)
+  call sched
+  testb $3,52(%esp)
+  jz 2f
+  call signal_ast_check
+2:
+  pop %gs
+  pop %fs
+  pop %es
+  pop %ds
+  popa
+  iret
