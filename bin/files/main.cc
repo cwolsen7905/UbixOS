@@ -3,13 +3,14 @@
  *
  * Files — the uBixOS graphical file manager (P0 MVP).
  *
- * An Explorer-leaning, best-of-all-worlds file browser: a toolbar
- * (back / forward / up / New Folder / Rename / Delete), a breadcrumb address
- * bar, a sortable Details list (Name / Size / Type / Modified), and a status
- * bar.  Double-click a folder to enter it, a file to open it in the app the
- * ubistry registry maps from its extension.  This is a standard views + objGFX
- * client (one process, a shared-memory window buffer, MPI for window control),
- * built the same way as bin/diskutil and bin/activity.
+ * An Explorer-leaning, best-of-all-worlds file browser: a navigation toolbar
+ * (back / forward / up), a breadcrumb address bar, a sortable Details list
+ * (Name / Size / Type / Modified), and a status bar.  Double-click a folder to
+ * enter it, a file to open it in the app the ubistry registry maps from its
+ * extension.  File operations — New Folder, Open, Rename, Delete — live in the
+ * right-click context menu (Explorer-style), not on the toolbar.  This is a
+ * standard views + objGFX client (one process, a shared-memory window buffer,
+ * MPI for window control), built the same way as bin/diskutil and bin/activity.
  *
  * It is a pure userland convenience layer over the same VFS the shell uses:
  * browse via opendir/readdir/stat, mutate via mkdir/rmdir/unlink/rename, open
@@ -135,19 +136,45 @@ static char g_status[160];
 static int g_last_click_row = -1;
 static int64_t g_last_click_ms;
 
-/* Toolbar buttons: Back, Fwd, Up, New Folder, Rename, Delete. */
+/* Toolbar is navigation-only: Back, Forward, Up.  File operations (New Folder,
+ * Open, Rename, Delete) live in the right-click context menu, Explorer-style. */
 enum
 {
 	BTN_BACK = 0,
 	BTN_FWD,
 	BTN_UP,
-	BTN_NEWDIR,
-	BTN_RENAME,
-	BTN_DELETE,
 	BTN_COUNT
 };
 static ogButton g_btn[BTN_COUNT];
-static const char *g_btn_label[BTN_COUNT] = {"\x1b", "\x1a", "Up", "New Folder", "Rename", "Delete"};
+static const char *g_btn_label[BTN_COUNT] = {"<", ">", "Up"};
+
+/* Confirmation-dialog buttons (own objects so they don't alias the toolbar). */
+static ogButton g_dlg_ok;
+static ogButton g_dlg_cancel;
+
+/* Right-click context menu. */
+enum
+{
+	ACT_OPEN = 0,
+	ACT_NEWFOLDER,
+	ACT_RENAME,
+	ACT_DELETE,
+	ACT_REFRESH
+};
+struct ctx_item
+{
+	const char *label;
+	int action;
+	bool separator_after;
+};
+static bool g_ctx_open;
+static int g_ctx_x, g_ctx_y, g_ctx_w, g_ctx_h;
+static struct ctx_item g_ctx_items[8];
+static int g_ctx_n;
+static int g_ctx_target; /* row the menu acts on, or -1 for the folder background */
+
+#define CTX_ROW_H 24
+#define CTX_W 168
 
 /* Back/forward history of visited directories. */
 #define HIST_MAX 64
@@ -580,27 +607,23 @@ static void draw_icon(int x, int y, bool is_dir)
 }
 
 /**
- * Draw the toolbar and lay out / hit-enable its buttons (Back/Fwd gated on
- * history position; Rename/Delete gated on a selection).
+ * Draw the navigation toolbar (Back / Forward / Up) and lay out / hit-enable its
+ * buttons.  Back/Forward gate on history position, Up on not being at root.
  */
 static void draw_toolbar(void)
 {
 	g_surf.ogFillRect(0, 0, g_w - 1, TOOLBAR_H - 1, COL_TOOLBAR);
 	g_surf.ogHLine(0, g_w - 1, TOOLBAR_H - 1, COL_DIVIDER);
 
-	bool has_sel = (g_sel >= 0);
 	bool can_back = (g_hist_pos > 0);
 	bool can_fwd = (g_hist_pos + 1 < g_hist_len);
 
 	int bx = 8;
 	for (int i = 0; i < BTN_COUNT; i++)
 	{
-		int bw = (int)g_font.TextWidth(g_btn_label[i]) + 22;
-		if (i == BTN_BACK || i == BTN_FWD || i == BTN_UP)
-			bw = 34;
 		g_btn[i].x = bx;
 		g_btn[i].y = 7;
-		g_btn[i].w = bw;
+		g_btn[i].w = (i == BTN_UP) ? 40 : 34;
 		g_btn[i].h = TOOLBAR_H - 14;
 		g_btn[i].label = g_btn_label[i];
 		switch (i)
@@ -614,18 +637,12 @@ static void draw_toolbar(void)
 			case BTN_UP:
 				g_btn[i].enabled = !(g_cwd[0] == '/' && g_cwd[1] == '\0');
 				break;
-			case BTN_RENAME:
-			case BTN_DELETE:
-				g_btn[i].enabled = has_sel;
-				break;
 			default:
 				g_btn[i].enabled = true;
 				break;
 		}
 		g_btn[i].Draw(g_surf, g_font);
-		bx += bw + 6;
-		if (i == BTN_UP)
-			bx += 10; /* small gap before the action group */
+		bx += g_btn[i].w + 6;
 	}
 }
 
@@ -687,15 +704,16 @@ static void draw_address(void)
 }
 
 /**
- * Draw one sortable column header label, with a ▲/▼ marker when it is the active
- * sort key.
+ * Draw one sortable column header label, with an ascending/descending caret when
+ * it is the active sort key.  ASCII carets (not Unicode arrows) because the font
+ * renderer is byte-indexed, not UTF-8 aware.
  */
 static void draw_head_label(int x, const char *label, int col)
 {
 	set_fg(col == g_sort ? COL_TEXT : COL_TEXT_DIM);
 	char buf[48];
 	if (col == g_sort)
-		snprintf(buf, sizeof(buf), "%s %s", label, g_sort_desc ? "\x19" : "\x18");
+		snprintf(buf, sizeof(buf), "%s %s", label, g_sort_desc ? "v" : "^");
 	else
 		snprintf(buf, sizeof(buf), "%s", label);
 	g_font.PutString(g_surf, x, TOOLBAR_H + ADDR_H + (HEAD_H - (int)g_font.GetHeight()) / 2, buf);
@@ -844,22 +862,122 @@ static void draw_confirm(void)
 	set_fg(COL_TEXT_DIM);
 	g_font.PutString(g_surf, dx + 20, dy + 24 + (int)g_font.GetHeight() + 6, "This cannot be undone.");
 
-	/* Reuse the Delete/Rename slots as the dialog buttons for hit-testing. */
-	g_btn[BTN_DELETE].x = dx + dw - 100;
-	g_btn[BTN_DELETE].y = dy + dh - 40;
-	g_btn[BTN_DELETE].w = 84;
-	g_btn[BTN_DELETE].h = 28;
-	g_btn[BTN_DELETE].label = "Delete";
-	g_btn[BTN_DELETE].enabled = true;
-	g_btn[BTN_DELETE].Draw(g_surf, g_font);
+	g_dlg_ok.x = dx + dw - 100;
+	g_dlg_ok.y = dy + dh - 40;
+	g_dlg_ok.w = 84;
+	g_dlg_ok.h = 28;
+	g_dlg_ok.label = "Delete";
+	g_dlg_ok.enabled = true;
+	g_dlg_ok.Draw(g_surf, g_font);
 
-	g_btn[BTN_RENAME].x = dx + dw - 196;
-	g_btn[BTN_RENAME].y = dy + dh - 40;
-	g_btn[BTN_RENAME].w = 84;
-	g_btn[BTN_RENAME].h = 28;
-	g_btn[BTN_RENAME].label = "Cancel";
-	g_btn[BTN_RENAME].enabled = true;
-	g_btn[BTN_RENAME].Draw(g_surf, g_font);
+	g_dlg_cancel.x = dx + dw - 196;
+	g_dlg_cancel.y = dy + dh - 40;
+	g_dlg_cancel.w = 84;
+	g_dlg_cancel.h = 28;
+	g_dlg_cancel.label = "Cancel";
+	g_dlg_cancel.enabled = true;
+	g_dlg_cancel.Draw(g_surf, g_font);
+}
+
+/**
+ * Build the context menu for a right-click at (mx,my): an item menu (Open /
+ * Rename / Delete) when over a row, else a folder-background menu (New Folder /
+ * Refresh).  Positions and clamps the menu within the window.
+ */
+static void open_context_menu(int mx, int my)
+{
+	g_ctx_n = 0;
+	g_ctx_target = -1;
+
+	/* Did the click land on a list row? */
+	if (my >= list_top() && my < g_h - STATUS_H)
+	{
+		int r = (my - list_top()) / ROW_H;
+		int i = g_top + r;
+		if (i >= 0 && i < g_nent)
+		{
+			g_sel = i;
+			g_ctx_target = i;
+		}
+	}
+
+	if (g_ctx_target >= 0)
+	{
+		g_ctx_items[g_ctx_n++] = {"Open", ACT_OPEN, true};
+		g_ctx_items[g_ctx_n++] = {"Rename", ACT_RENAME, false};
+		g_ctx_items[g_ctx_n++] = {"Delete", ACT_DELETE, false};
+	}
+	else
+	{
+		g_ctx_items[g_ctx_n++] = {"New Folder", ACT_NEWFOLDER, true};
+		g_ctx_items[g_ctx_n++] = {"Refresh", ACT_REFRESH, false};
+	}
+
+	g_ctx_w = CTX_W;
+	g_ctx_h = g_ctx_n * CTX_ROW_H + 8;
+	g_ctx_x = mx;
+	g_ctx_y = my;
+	if (g_ctx_x + g_ctx_w > g_w)
+		g_ctx_x = g_w - g_ctx_w - 2;
+	if (g_ctx_y + g_ctx_h > g_h)
+		g_ctx_y = g_h - g_ctx_h - 2;
+	if (g_ctx_x < 0)
+		g_ctx_x = 0;
+	if (g_ctx_y < 0)
+		g_ctx_y = 0;
+	g_ctx_open = true;
+}
+
+/**
+ * Run a context-menu action against the current target row / directory, then
+ * close the menu.
+ */
+static void run_context_action(int action)
+{
+	g_ctx_open = false;
+	switch (action)
+	{
+		case ACT_OPEN:
+			if (g_ctx_target >= 0)
+				open_entry(g_ctx_target);
+			break;
+		case ACT_NEWFOLDER:
+			new_folder();
+			break;
+		case ACT_RENAME:
+			start_rename();
+			break;
+		case ACT_DELETE:
+			if (g_sel >= 0)
+				g_mode = MODE_CONFIRM_DEL;
+			break;
+		case ACT_REFRESH:
+			read_dir();
+			snprintf(g_status, sizeof(g_status), "%d item%s", g_nent, g_nent == 1 ? "" : "s");
+			break;
+		default:
+			break;
+	}
+}
+
+/**
+ * Draw the open context menu as a rounded card with one row per item and a thin
+ * separator under the primary action.
+ */
+static void draw_context_menu(void)
+{
+	g_surf.ogFillRoundRect(g_ctx_x, g_ctx_y, g_ctx_x + g_ctx_w, g_ctx_y + g_ctx_h, 6, COL_ADDR);
+	g_surf.ogRoundRect(g_ctx_x, g_ctx_y, g_ctx_x + g_ctx_w, g_ctx_y + g_ctx_h, 6, COL_DIVIDER);
+
+	for (int i = 0; i < g_ctx_n; i++)
+	{
+		int ry = g_ctx_y + 4 + i * CTX_ROW_H;
+		set_fg(COL_TEXT);
+		g_font.PutString(
+		    g_surf, g_ctx_x + 14, ry + (CTX_ROW_H - (int)g_font.GetHeight()) / 2, g_ctx_items[i].label);
+		if (g_ctx_items[i].separator_after && i + 1 < g_ctx_n)
+			g_surf.ogHLine(g_ctx_x + 8, g_ctx_x + g_ctx_w - 8, ry + CTX_ROW_H - 1, COL_DIVIDER);
+	}
 }
 
 /**
@@ -890,9 +1008,22 @@ static void render(void)
 	draw_address();
 	draw_toolbar();
 	draw_status();
+	if (g_ctx_open)
+		draw_context_menu();
 	if (g_mode == MODE_CONFIRM_DEL)
 		draw_confirm();
 	flip();
+}
+
+/**
+ * Index of the context-menu row at (x,y), or -1 if the point is outside the menu.
+ */
+static int ctx_hit(int x, int y)
+{
+	if (x < g_ctx_x || x >= g_ctx_x + g_ctx_w || y < g_ctx_y + 4 || y >= g_ctx_y + g_ctx_h)
+		return -1;
+	int i = (y - (g_ctx_y + 4)) / CTX_ROW_H;
+	return (i >= 0 && i < g_ctx_n) ? i : -1;
 }
 
 /* ── input ──────────────────────────────────────────────────────────────────*/
@@ -914,20 +1045,33 @@ static void ensure_visible(void)
 }
 
 /**
- * Handle a left-button press at (x,y): toolbar buttons, breadcrumb segments,
- * column headers, and row select / double-click-to-open.
+ * Handle a left-button press at (x,y): an open context menu (if any) takes
+ * priority, then toolbar buttons, breadcrumb segments, column headers, and row
+ * select / double-click-to-open.
  */
 static void on_click(int x, int y)
 {
+	/* An open context menu consumes the click: run the hit item, else dismiss. */
+	if (g_ctx_open)
+	{
+		int hit = ctx_hit(x, y);
+		if (hit >= 0)
+			run_context_action(g_ctx_items[hit].action);
+		else
+			g_ctx_open = false;
+		render();
+		return;
+	}
+
 	/* Modal: only the dialog buttons are live. */
 	if (g_mode == MODE_CONFIRM_DEL)
 	{
-		if (g_btn[BTN_DELETE].Hit(x, y))
+		if (g_dlg_ok.Hit(x, y))
 		{
 			g_mode = MODE_BROWSE;
 			do_delete();
 		}
-		else if (g_btn[BTN_RENAME].Hit(x, y))
+		else if (g_dlg_cancel.Hit(x, y))
 			g_mode = MODE_BROWSE;
 		render();
 		return;
@@ -939,7 +1083,7 @@ static void on_click(int x, int y)
 		return;
 	}
 
-	/* Toolbar. */
+	/* Toolbar (navigation only). */
 	if (y < TOOLBAR_H)
 	{
 		if (g_btn[BTN_BACK].Hit(x, y) && g_hist_pos > 0)
@@ -952,12 +1096,6 @@ static void on_click(int x, int y)
 			parent_of(g_cwd, up, sizeof(up));
 			navigate(up, true);
 		}
-		else if (g_btn[BTN_NEWDIR].Hit(x, y))
-			new_folder();
-		else if (g_btn[BTN_RENAME].Hit(x, y))
-			start_rename();
-		else if (g_btn[BTN_DELETE].Hit(x, y) && g_sel >= 0)
-			g_mode = MODE_CONFIRM_DEL;
 		render();
 		return;
 	}
@@ -1022,11 +1160,34 @@ static void on_click(int x, int y)
 }
 
 /**
+ * Handle a right-button press at (x,y): open the context menu (over a row → item
+ * actions; over the background → folder actions).  Ignored while modal.
+ */
+static void on_right_click(int x, int y)
+{
+	if (g_mode != MODE_BROWSE)
+		return;
+	open_context_menu(x, y);
+	render();
+}
+
+/**
  * Handle a key press.  Routes to the rename editor or delete dialog when modal;
  * otherwise drives selection, navigation, type-ahead, and the action shortcuts.
  */
 static void on_key(uint32_t kc)
 {
+	/* An open context menu: Escape dismisses it. */
+	if (g_ctx_open)
+	{
+		if (kc == KEY_ESC)
+		{
+			g_ctx_open = false;
+			render();
+		}
+		return;
+	}
+
 	/* Delete confirmation. */
 	if (g_mode == MODE_CONFIRM_DEL)
 	{
@@ -1246,7 +1407,9 @@ int main(int argc, char **argv)
 			case DISPLAY_MOUSE:
 			{
 				struct display_mouse_ev *me = (struct display_mouse_ev *)ev.data;
-				if (me->buttons & 1)
+				if (me->buttons & 2) /* right button → context menu */
+					on_right_click(me->x, me->y);
+				else if (me->buttons & 1)
 					on_click(me->x, me->y);
 				break;
 			}
