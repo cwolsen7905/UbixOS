@@ -46,21 +46,16 @@ u_int64_t *aarch64_kernel_l1(void)
  * the I/D caches).  Identity-mapped, so the PC/SP keep working across the
  * enable — no relocation needed.
  */
-void aarch64_mmu_init(void)
+/*
+ * Program MAIR/TCR/TTBR0_EL1 to point at the shared kernel l1_table and enable
+ * the MMU + caches on the *calling* CPU.  Split out of aarch64_mmu_init so an AP
+ * can reuse byte-identical config (aarch64_mmu_enable_secondary) without
+ * rebuilding the page tables — the BSP already built l1_table, and its entries
+ * were written with the MMU off (straight to RAM), so an AP's table walk reads
+ * them coherently.
+ */
+static void mmu_program_regs(void)
 {
-	for (unsigned i = 0; i < 512; i++)
-	{
-		u_int64_t pa = (u_int64_t)i * MMU_1GB;
-		u_int64_t attr;
-
-		if (i == 0)
-			attr = DESC_ATTR(ATTR_DEVICE_IDX); /* peripherals: no shareability */
-		else
-			attr = DESC_ATTR(ATTR_NORMAL_IDX) | DESC_SH_INNER; /* RAM */
-
-		l1_table[i] = pa | attr | DESC_AF | DESC_BLOCK;
-	}
-
 	/* MAIR_EL1: attr0 = Normal WB, attr1 = Device-nGnRE. */
 	u_int64_t mair = (MAIR_NORMAL << (8 * ATTR_NORMAL_IDX)) | (MAIR_DEVICE << (8 * ATTR_DEVICE_IDX));
 	__asm__ volatile("msr mair_el1, %0" : : "r"(mair));
@@ -94,4 +89,34 @@ void aarch64_mmu_init(void)
 	         | (1UL << 2)   /* C — data/unified cache */
 	         | (1UL << 12); /* I — instruction cache */
 	__asm__ volatile("msr sctlr_el1, %0; isb" : : "r"(sctlr));
+}
+
+/*
+ * Build the identity map (BSP only), then program the registers + enable the MMU.
+ */
+void aarch64_mmu_init(void)
+{
+	for (unsigned i = 0; i < 512; i++)
+	{
+		u_int64_t pa = (u_int64_t)i * MMU_1GB;
+		u_int64_t attr;
+
+		if (i == 0)
+			attr = DESC_ATTR(ATTR_DEVICE_IDX); /* peripherals: no shareability */
+		else
+			attr = DESC_ATTR(ATTR_NORMAL_IDX) | DESC_SH_INNER; /* RAM */
+
+		l1_table[i] = pa | attr | DESC_AF | DESC_BLOCK;
+	}
+
+	mmu_program_regs();
+}
+
+/*
+ * smp-plan M1: bring an application processor's MMU up on the page tables the BSP
+ * already built (l1_table).  No table build — just the register program + enable.
+ */
+void aarch64_mmu_enable_secondary(void)
+{
+	mmu_program_regs();
 }

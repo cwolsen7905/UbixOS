@@ -43,6 +43,12 @@ void aarch64_rtc_init(void); /* capture boot wall-clock epoch from the PL031 RTC
 
 /* mmu.c — enable the MMU with a TTBR0 identity map (39-bit VA). */
 void aarch64_mmu_init(void);
+void aarch64_mmu_enable_secondary(void); /* AP: reuse the BSP's page tables (smp-plan M1) */
+
+/* apsmp.c — start the application processors via PSCI CPU_ON (smp-plan M1).
+ * Each AP lands in secondary_entry (apentry.S) -> c_ap_boot_arm(). */
+void aarch64_smp_start_aps(void);
+void c_ap_boot_arm(u_int32_t id); /* AP C entry, called from apentry.S */
 
 /* vmm_machdep.c — read real RAM size from the DTB /memory node (x0 at entry).
  * Raises the page-bitmap ceiling above the 512 MB fallback; run before

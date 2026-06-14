@@ -150,6 +150,14 @@ void kmain_aarch64(u_int64_t dtb_phys)
 	aarch64_probe_memory(dtb_phys);
 	aarch64_enum_cpus(); /* smp-plan Phase 1: discover CPUs from the DTB /cpus node */
 	cpu_enum_dump();
+	/*
+	 * smp-plan M1: start the secondary cores via PSCI CPU_ON and confirm liveness.
+	 * The MMU + page tables (aarch64_mmu_init) and the BSP per-CPU block are up;
+	 * each AP enables its MMU on the same tables, installs its TPIDR_EL1, and
+	 * bumps a heartbeat the BSP observes here.  IRQs stay masked on the AP — the
+	 * per-CPU scheduler is M3.
+	 */
+	aarch64_smp_start_aps();
 	vmm_mem_map_init();
 	vitals_init();
 	aarch64_rtc_init(); /* boot wall-clock epoch from the PL031 RTC (else clock = 1970) */
