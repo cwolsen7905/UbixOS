@@ -1364,9 +1364,26 @@ void ogSurface::ogBSpline(uint32_t numPoints, ogPoint2d* points, uInt32 segments
 } // void ogSurface::ogBSpline()
 
 
-void ogSurface::ogCircle(int32 xCenter, int32 yCenter, uint32_t radius, uInt32 colour) 
+void ogSurface::ogCircle(int32 xCenter, int32 yCenter, uint32_t radius, uInt32 colour)
 {
 	int32 x, y, d;
+
+	/* Smooth 1px ring by default: coverage falls off with the distance from the
+	 * exact radius (gamma-correct composite). */
+	if (radius > 1)
+	{
+		int32 r = (int32)radius;
+		for (int32 dy = -r - 1; dy <= r + 1; dy++)
+			for (int32 dx = -r - 1; dx <= r + 1; dx++)
+			{
+				float c = 1.0f - fabsf(sqrtf((float)(dx * dx + dy * dy)) - (float)r);
+				if (c <= 0.0f)
+					continue;
+				int32 cov = (c >= 1.0f) ? 255 : (int32)(c * 255.0f + 0.5f);
+				ogAACoverage(xCenter + dx, yCenter + dy, colour, cov);
+			}
+		return;
+	}
 
 	x = 0;
 	y = radius;
@@ -2237,17 +2254,45 @@ void ogSurface::ogRoundRect(int32 x1, int32 y1, int32 x2, int32 y2, uInt32 radiu
 	ogVLine(x2, y1 + r, y2 - r, colour);
 
 	int32 cxl = x1 + r, cxr = x2 - r, cyt = y1 + r, cyb = y2 - r;
-	for (int32 i = 0; i <= r; i++)
+	if (r > 1)
 	{
-		int32 d = og_isqrt(r * r - i * i);
-		ogSetPixel(cxl - d, cyt - i, colour);
-		ogSetPixel(cxl - i, cyt - d, colour);
-		ogSetPixel(cxr + d, cyt - i, colour);
-		ogSetPixel(cxr + i, cyt - d, colour);
-		ogSetPixel(cxl - d, cyb + i, colour);
-		ogSetPixel(cxl - i, cyb + d, colour);
-		ogSetPixel(cxr + d, cyb + i, colour);
-		ogSetPixel(cxr + i, cyb + d, colour);
+		/* Smooth corners: a 1px coverage band at radius r from each corner
+		 * centre, drawn into that corner's quadrant (gamma-correct).  Matches the
+		 * AA fill so a card's border and body curve together. */
+		struct
+		{
+			int32 ccx, ccy, qx, qy;
+		} cor[4] = {
+		    {cxl, cyt, -1, -1}, /* top-left     */
+		    {cxr, cyt, +1, -1}, /* top-right    */
+		    {cxl, cyb, -1, +1}, /* bottom-left  */
+		    {cxr, cyb, +1, +1}, /* bottom-right */
+		};
+		for (int k = 0; k < 4; k++)
+			for (int32 i = 0; i <= r + 1; i++)
+				for (int32 j = 0; j <= r + 1; j++)
+				{
+					float c = 1.0f - fabsf(sqrtf((float)(i * i + j * j)) - (float)r);
+					if (c <= 0.0f)
+						continue;
+					int32 cov = (c >= 1.0f) ? 255 : (int32)(c * 255.0f + 0.5f);
+					ogAACoverage(cor[k].ccx + cor[k].qx * i, cor[k].ccy + cor[k].qy * j, colour, cov);
+				}
+	}
+	else
+	{
+		for (int32 i = 0; i <= r; i++)
+		{
+			int32 d = og_isqrt(r * r - i * i);
+			ogSetPixel(cxl - d, cyt - i, colour);
+			ogSetPixel(cxl - i, cyt - d, colour);
+			ogSetPixel(cxr + d, cyt - i, colour);
+			ogSetPixel(cxr + i, cyt - d, colour);
+			ogSetPixel(cxl - d, cyb + i, colour);
+			ogSetPixel(cxl - i, cyb + d, colour);
+			ogSetPixel(cxr + d, cyb + i, colour);
+			ogSetPixel(cxr + i, cyb + d, colour);
+		}
 	}
 } // ogSurface::ogRoundRect
 
