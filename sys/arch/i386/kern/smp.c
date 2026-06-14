@@ -246,6 +246,21 @@ void pcpu_gdt_tss_load(u_int32_t id)
 
 	memcpy(&g_cpu_tss[id], (const void *)0x4200, sizeof(struct tssStruct));
 
+	/*
+	 * Cold-boot #TS / triple-fault fix.  pcpu_gdt_tss_load() is the very first
+	 * thing kmain() does — BEFORE idt_init() populates the static 0x4200 TSS with
+	 * ss0 = 0x10.  On a cold boot 0x4200 is still zeroed when we copy it above, so
+	 * the live per-CPU TSS would inherit a null ss0.  The CPU reads SS0:ESP0 from
+	 * this TSS on every ring3->ring0 entry; a null ss0 faults #TS on the first
+	 * userland timer tick -> #DF -> triple fault -> reboot.  A warm reset hid the
+	 * bug because guest RAM keeps the previous boot's 0x10 at 0x4200 across the
+	 * reset.  Seed the ring-0 stack selector (and the I/O-map base) explicitly so
+	 * the TSS is valid independent of 0x4200's init order.  esp0 is refreshed per
+	 * switch by switch_to(); ss0 is not, so it must be correct here for good.
+	 */
+	g_cpu_tss[id].ss0 = 0x10;
+	g_cpu_tss[id].io_map = 0x8000;
+
 	gp.limit = (u_int16_t)(sizeof(union descriptorTableUnion) * 12 - 1);
 	gp.base = (u_int32_t *)gdt;
 	__asm__ __volatile__("lgdt %0" : : "m"(gp));
