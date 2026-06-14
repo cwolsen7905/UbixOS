@@ -40,10 +40,10 @@
  *   4. Commit and tag: git tag -a vMAJOR.MINOR.PATCH -m "Release MAJOR.MINOR.PATCH-TAG"
  */
 
-#define UBIXOS_VERSION_MAJOR  2
-#define UBIXOS_VERSION_MINOR  4
+#define UBIXOS_VERSION_MAJOR  3
+#define UBIXOS_VERSION_MINOR  0
 #define UBIXOS_VERSION_PATCH  0
-#define UBIXOS_VERSION_TAG    "BETA"
+#define UBIXOS_VERSION_TAG    "DEV"
 
 /* Internal stringify helpers — do not use directly. */
 #define _UBIXOS_STR(x)   #x
