@@ -49,6 +49,7 @@
 #include <lib/kmalloc.h>
 #include <i386/pcpu.h>
 #include <ubixos/sched.h>
+#include <ubixos/sched_internal.h> /* rq_dequeue_locked — pin the per-CPU idle */
 
 #define B_ADAPTORSHIFT 24
 #define B_ADAPTORMASK 0x0f
@@ -414,6 +415,18 @@ int kmain(u_int32_t rootdev)
 	 */
 	g_idle_task = (kTask_t *)execThread(idle_task, 0x2000, 0x0, "idle");
 	sched_set_priority(g_idle_task, QOS_IDLE); /* Phase 3.5: g_idle_task tags idle vs busy ticks */
+
+	/*
+	 * Pin the idle thread as the BSP's per-CPU idle (g_pcpu[0].idle) and take it
+	 * OUT of the shared run queue.  The dispatcher runs curcpu()->idle directly
+	 * when nothing else is ready (sched_dispatch.c), so the idle thread must
+	 * never be enqueued: an enqueued idle lets a second CPU dequeue the same task
+	 * and corrupt the queue (smp-plan Phase 3 — the crash that took down login
+	 * when idle threads were enqueued).  Safe to touch the queue unlocked here:
+	 * the timer IRQ is still masked, so the scheduler is not yet running.
+	 */
+	rq_dequeue_locked(g_idle_task);
+	g_pcpu[0].idle = g_idle_task;
 
 	execFile("/bin/init", argv_init, envp_init, 0x0); /* OS Initializer    */
 

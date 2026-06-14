@@ -44,6 +44,9 @@
 
 #include <ubixos/sched.h>
 #include <ubixos/sched_internal.h>
+#if defined(__i386__)
+#include <i386/pcpu.h> /* curcpu() — per-CPU idle thread (smp-plan Phase 3) */
+#endif
 #include <ubixos/spinlock.h>
 #include <ubixos/vitals.h>
 #include <ubixos/endtask.h>
@@ -240,7 +243,23 @@ void sched()
 
 	/* --- Phase 2: O(1) dispatch via ready_mask --- */
 
-	if (_current != NULL && _current->state == RUNNING)
+	/*
+	 * Per-CPU idle thread (smp-plan Phase 3).  On i386 each CPU owns an idle
+	 * thread pinned at curcpu()->idle and deliberately kept OUT of the shared run
+	 * queue: an *enqueued* idle lets a second CPU dequeue the very same task (or
+	 * two CPUs fight over one global idle), corrupting the queue — the failure
+	 * that crashed login when idle threads were enqueued.  It is dispatched
+	 * explicitly when ready_mask == 0 and is never enqueued or preempted by
+	 * quantum.  On aarch64 the idle thread is still a normal enqueued task, so
+	 * cpu_idle is NULL there and every path below is byte-for-byte unchanged.
+	 */
+#if defined(__i386__)
+	kTask_t *cpu_idle = curcpu()->idle;
+#else
+	kTask_t *cpu_idle = NULL;
+#endif
+
+	if (_current != NULL && _current->state == RUNNING && _current != cpu_idle)
 	{
 		u_int8_t pri = _current->priority;
 
@@ -282,16 +301,28 @@ void sched()
 		rq_enqueue_locked(_current);
 	}
 
-	/* Nothing ready — return without switching. */
 	if (ready_mask == 0)
 	{
-		spinUnlock(&schedulerSpinLock);
-		restore_flags(flags);
-		return;
+		/*
+		 * Nothing in the shared run queue.  On i386 run this CPU's pinned idle
+		 * thread (never enqueued); if we are already on it there is nothing to
+		 * switch to.  On aarch64 cpu_idle is NULL and the idle thread is a normal
+		 * enqueued task, so this path is the original "return without switching".
+		 */
+		if (cpu_idle != NULL && _current != cpu_idle)
+		{
+			next = cpu_idle;
+		}
+		else
+		{
+			spinUnlock(&schedulerSpinLock);
+			restore_flags(flags);
+			return;
+		}
 	}
-
-	/* Pick the highest-priority ready task (highest set bit). */
+	else
 	{
+		/* Pick the highest-priority ready task (highest set bit). */
 		int pri = 31 - __builtin_clz(ready_mask);
 		/* run_queue[pri] is a circular list; head is the next to run. */
 		next = run_queue[pri];
