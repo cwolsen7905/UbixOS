@@ -41,6 +41,14 @@ First entries of the 3.0 series (64-bit only: x86_64 + aarch64).  Development on
     three iterations and return to the boot context).  The PIT tick charges
     per-process CPU time (`sched_account_tick`); like aarch64 the kernel is
     non-preemptive until userland lands (no EL0 yet), so kernel threads yield.
+  - *SMP M0 — per-CPU state.* `_current` is now per-CPU (one `struct pcpu` per core
+    in `g_pcpu[]`), reached through the GS segment base — the long-mode analog of
+    i386's `%gs:8` and aarch64's `TPIDR_EL1`, but the base comes from the GS_BASE MSR
+    (`x86_64_pcpu_install` writes it once per CPU; `current` at `%gs:16`).  Installed
+    at the top of `kmain` so the timer's `sched_account_tick()` always sees a valid
+    block.  Also makes `<machine/{ansi,limits}.h>` resolve to LP64 x86_64 headers (the
+    32-bit i386 fallback truncated every `uintptr_t` pointer cast to 32 bits).  The
+    foundation for running secondary cores (LAPIC + AP trampoline next).
   `bmake TARGET=x86_64` builds the bring-up kernel only (the x86_64 userland/world is
   a later phase); `bmake run TARGET=x86_64` boots it (serial console).
   Grows by widening the i386 MD code to 64-bit.  See `docs/design/cross-arch-plan.md`.

@@ -10,6 +10,7 @@
 
 #include "x86_64.h"
 #include <ubixos/sched.h>
+#include <x86_64/pcpu.h>
 
 /**
  * x86-64 kernel C entry.  @mb_magic / @mb_info are the boot magic + info pointer
@@ -25,6 +26,13 @@ void kmain_x86_64(u32 mb_magic, u32 mb_info)
 	serial_puts(" info=");
 	serial_puthex(mb_info);
 	serial_puts("\n");
+
+	/* Install the per-CPU block (GS_BASE -> g_pcpu[0]) before anything reads
+	 * _current — once interrupts are on, the timer's sched_account_tick() reads
+	 * _current via %gs:16, so GS_BASE must already point at a block whose
+	 * `current` is NULL.  (aarch64 installs TPIDR_EL1 at the top of kmain for the
+	 * same reason.) */
+	x86_64_pcpu_install(0);
 
 	idt_init();
 	serial_puts("IDT installed: 256 gates, 32 CPU-exception handlers (faults now visible).\n");

@@ -288,6 +288,28 @@ static inline void set_current(kTask_t *t)
 }
 
 #define _current (get_current())
+#elif defined(__x86_64__)
+/*
+ * x86_64: _current is per-CPU state in g_pcpu[].current, reached through the GS
+ * segment base (the long-mode analog of i386's %gs:8, but the base comes from
+ * the GS_BASE MSR — see <x86_64/pcpu.h>).  `current` sits at offset 16 in struct
+ * pcpu; load/store it with a bare %gs-relative mov so _current stays a register-
+ * relative access, never an injected function call.  GS_BASE is installed once
+ * per CPU (x86_64_pcpu_install).
+ */
+static inline kTask_t *get_current(void)
+{
+	kTask_t *p;
+	__asm__ __volatile__("movq %%gs:16, %0" : "=r"(p));
+	return (p);
+}
+
+static inline void set_current(kTask_t *t)
+{
+	__asm__ __volatile__("movq %0, %%gs:16" : : "r"(t) : "memory");
+}
+
+#define _current (get_current())
 #else
 extern kTask_t *_current;
 #define set_current(t) (_current = (t))
