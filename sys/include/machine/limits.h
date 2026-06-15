@@ -10,6 +10,8 @@
 #define _MACHINE_LIMITS_H
 #if defined(__aarch64__)
 #include <aarch64/limits.h>
+#elif defined(__x86_64__)
+#include <x86_64/limits.h>
 #else
 #include <i386/limits.h>
 #endif

@@ -10,6 +10,8 @@
 #define _MACHINE_ANSI_H
 #if defined(__aarch64__)
 #include <aarch64/ansi.h>
+#elif defined(__x86_64__)
+#include <x86_64/ansi.h>
 #else
 #include <i386/ansi.h>
 #endif
