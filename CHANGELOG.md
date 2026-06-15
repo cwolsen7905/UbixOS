@@ -134,6 +134,20 @@ First entries of the 3.0 series (64-bit only: x86_64 + aarch64).  Development on
     (`\x7fELF…`) flow user → `syscall` → VFS → FAT → virtio-blk → user.  (The
     handler still services a hand-picked set; routing through the full 585-entry MI
     POSIX table — which pulls the entire syscall surface — lands with the musl world.)
+  - *Phase 5e — the MI POSIX syscall table dispatches on x86_64.* The full
+    `syscalls_posix.c` table (585 entries) + the table-driven dispatch engine
+    (`ksyscall_dispatch`) now link into the x86_64 kernel, and `x86_64_syscall`
+    routes through them (args from RDI/RSI/RDX/R10/R8/R9 per the FreeBSD/SysV ABI;
+    a serial fast path for `write` to fd 1/2 and special `exit` handling remain).
+    Bringing the table in pulled the machine-independent kernel up to its real
+    implementations — `descrip`/`vitals`/`callout`/`random`/`klog`/`endtask`/
+    `cpu_enum`, the POSIX file/dir/process/pipe/sem/time calls, MPI, procfs/devfs/
+    ramfs — so the bring-up stubs in `ksupport.c` were retired (and `vitals_init`
+    now allocates `systemVitals`).  The subsystems still needing x86_64 MD glue
+    (exec/fork, mmap/VM, signals, sockets/lwIP, pty/tty, the display/input devices)
+    are stubbed in `syscall_stubs.c` so the table links; each lands as its
+    subsystem is ported.  Verified: a ring-3 ELF64 process opens + reads
+    `/kernel/kernel` through the **real** `sys_open`/`sys_read` via the table.
   `bmake TARGET=x86_64` builds the bring-up kernel only (the x86_64 userland/world is
   a later phase); `bmake run TARGET=x86_64` boots it (serial console).
   Grows by widening the i386 MD code to 64-bit.  See `docs/design/cross-arch-plan.md`.

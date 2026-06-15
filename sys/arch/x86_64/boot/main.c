@@ -70,6 +70,13 @@ void kmain_x86_64(u32 mb_magic, u32 mb_info)
 		serial_puts(" [freed]\n");
 	}
 
+	/* Allocate + initialise systemVitals (now the real vitals.c, not a static stub);
+	 * the scheduler reads systemVitals->sysTicks, so this must run before any sched(). */
+	{
+		extern int vitals_init(void);
+		vitals_init();
+	}
+
 	/* Phase 4a: PIC + PIT timer + interrupts. */
 	pic_remap();
 	pit_init(100); /* 100 Hz */

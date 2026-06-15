@@ -18,11 +18,12 @@
 #include <vmm/vmm.h>     /* vmm_find_free_page, PAGE_SIZE */
 #include <lib/kmalloc.h> /* sysID */
 #include <string.h>
-#include <ubixos/sched.h>   /* _current, sched(), kTask_t */
-#include <ubixos/endtask.h> /* endTask */
-#include <x86_64/pcpu.h>    /* curcpu() — per-CPU kernel RSP for the syscall entry */
-#include <fs/vfs/file.h>    /* fopen/fread/fclose, fileDescriptor_t (bring-up open/read) */
-#include <sys/thread.h>     /* O_FILES, td.o_files[] */
+#include <ubixos/sched.h>    /* _current, sched(), kTask_t */
+#include <ubixos/endtask.h>  /* endTask */
+#include <x86_64/pcpu.h>     /* curcpu() — per-CPU kernel RSP for the syscall entry */
+#include <fs/vfs/file.h>     /* fopen/fread/fclose, fileDescriptor_t (bring-up open/read) */
+#include <sys/thread.h>      /* O_FILES, td.o_files[] */
+#include <ubixos/syscalls.h> /* systemCalls_posix, totalCalls_posix, struct syscall_entry */
 
 #define KCODE_SEL 0x08
 #define KDATA_SEL 0x10
@@ -294,75 +295,44 @@ void md_sync_icache(uintptr_t addr, u64 len)
  */
 void x86_64_syscall(struct x86_64_trapframe *tf)
 {
-	switch (tf->rax)
+	/* The MI table-driven dispatch engine + the FreeBSD POSIX table. */
+	extern register_t ksyscall_dispatch(
+	    struct thread * td, struct syscall_entry * tbl, int count, u_int32_t number, register_t *args);
+
+	/* exit terminates the task and schedules away — handled here (the generic
+	 * path would return to ring 3). */
+	if (tf->rax == SYS_EXIT)
 	{
-		case SYS_WRITE:
-		{
-			const char *buf = (const char *)(uintptr_t)tf->rsi;
-			u64 len = tf->rdx;
-			for (u64 i = 0; i < len; i++)
-				serial_putc(buf[i]);
-			tf->rax = len; /* bytes written */
-			break;
-		}
-		case SYS_OPEN:
-		{
-			/* open(path, flags): the path pointer is a user VA, but the syscall runs
-			 * with the caller's CR3 (the user low half is mapped), so it is read
-			 * directly.  Bridge to the real VFS via fopen() + the task's fd table —
-			 * the same o_files[] sys_open uses; routing through the full POSIX table
-			 * (proper flags/modes) lands with the world. */
-			const char *path = (const char *)(uintptr_t)tf->rdi;
-			fileDescriptor_t *fp = fopen(path, "r");
-			int fd = -1;
-			if (fp != 0)
-			{
-				for (int i = 3; i < O_FILES; i++) /* 0/1/2 reserved for std streams */
-					if (_current->td.o_files[i] == 0)
-					{
-						_current->td.o_files[i] = fp;
-						fd = i;
-						break;
-					}
-			}
-			tf->rax = (u64)(long)fd;
-			kprintf("  [ring3] open(%s) = %d\n", path, fd);
-			break;
-		}
-		case SYS_READ:
-		{
-			int fd = (int)tf->rdi;
-			void *buf = (void *)(uintptr_t)tf->rsi;
-			u64 len = tf->rdx;
-			fileDescriptor_t *fp = (fd >= 0 && fd < O_FILES) ? _current->td.o_files[fd] : 0;
-			tf->rax = (fp != 0) ? (u64)fread(buf, 1, len, fp) : (u64)-1;
-			kprintf("  [ring3] read(fd=%d, %u) = %d bytes\n", fd, (unsigned)len, (int)tf->rax);
-			break;
-		}
-		case SYS_CLOSE:
-		{
-			int fd = (int)tf->rdi;
-			if (fd >= 3 && fd < O_FILES && _current->td.o_files[fd] != 0)
-			{
-				fclose(_current->td.o_files[fd]);
-				_current->td.o_files[fd] = 0;
-				tf->rax = 0;
-			}
-			else
-				tf->rax = (u64)-1;
-			break;
-		}
-		case SYS_EXIT:
-			kprintf("  [ring3] exit(%d) -> terminating task pid=%d\n",
-			        (int)tf->rdi,
-			        _current ? _current->id : -1);
-			endTask(_current->id); /* mark ZOMBIE */
-			sched();               /* switch away; this task is never resumed */
-			break;                 /* unreachable */
-		default:
-			kprintf("  [ring3] unknown syscall %u\n", (unsigned)tf->rax);
-			tf->rax = (u64)-1;
-			break;
+		kprintf("  [ring3] exit(%d) -> terminating task pid=%d\n", (int)tf->rdi, _current ? _current->id : -1);
+		endTask(_current->id);
+		sched();
+		return; /* unreachable */
+	}
+
+	/* Bring-up console fast path: write to fd 1/2 goes straight to the serial
+	 * console (the x86_64 tty/pty fileops are not wired yet). */
+	if (tf->rax == SYS_WRITE && (tf->rdi == 1 || tf->rdi == 2))
+	{
+		const char *buf = (const char *)(uintptr_t)tf->rsi;
+		u64 len = tf->rdx;
+		for (u64 i = 0; i < len; i++)
+			serial_putc(buf[i]);
+		tf->rax = len;
+		return;
+	}
+
+	/* Everything else dispatches through the real MI POSIX table.  The FreeBSD/
+	 * SysV amd64 ABI passes args in RDI/RSI/RDX/R10/R8/R9; the syscall runs with
+	 * the caller's CR3, so user pointers in the args are directly valid. */
+	{
+		register_t args[6] = {(register_t)tf->rdi,
+		                      (register_t)tf->rsi,
+		                      (register_t)tf->rdx,
+		                      (register_t)tf->r10,
+		                      (register_t)tf->r8,
+		                      (register_t)tf->r9};
+		tf->rax = (u64)ksyscall_dispatch(
+		    &_current->td, systemCalls_posix, totalCalls_posix, (u_int32_t)tf->rax, args);
 	}
 }
 

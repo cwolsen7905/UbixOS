@@ -21,89 +21,16 @@
 #include <sys/descrip.h> /* getfd decl + g_* hook decls */
 #include <lib/kconsole.h>
 
-/* System vitals (sysTicks + the VFS fileSystems/mountPoints list heads).  The MI
- * VFS keeps its lists inside this struct, so it must be real memory, not NULL.
- * A static zero-initialised instance suffices for bring-up (vitals.c not linked). */
-static vitalsNode g_vitals;
-vitalsNode *systemVitals = &g_vitals;
-
 /* Reboot-countdown flag the scheduler tick checks (set by the kbd Ctrl-Alt-Del
- * affordance on i386; inactive here). */
+ * affordance on i386; inactive here — no MI provider linked for x86_64). */
 volatile u_int32_t reboot_at_tick = 0;
 
-/* VFS/FAT function-pointer hooks normally defined in descrip.c (too heavy to link
- * for bring-up — it pulls the isa/tty/ioctl registry).  virtio_blk installs
- * g_device_find; fat_init installs the rename/truncate shortcuts. */
-void *(*g_device_find)(int major, int minor) = 0;
-int (*g_fs_rename)(void *fs, const char *src, const char *dst) = 0;
-int (*g_fs_truncate)(void *file, u_int32_t length) = 0;
+/* NOTE: systemVitals, the g_device_find + g_fs + g_tty hooks, getfd, klog,
+ * the callout helpers, krandom_stir, endTask and smp_cpu_count are now provided
+ * by the real MI files (vitals.c, descrip.c, klog.c, callout.c, random.c,
+ * endtask.c, cpu_enum.c) linked for the full POSIX syscall table; the bring-up
+ * stubs that used to live here were removed. */
 
-/* TTY hooks file.c uses only when writing to a terminal device node; NULL here
- * (no tty on x86_64 yet) — the file/dir read path never dereferences them. */
-void (*g_tty_print)(const char *buf, void *term) = 0;
-int (*g_tty_getchar)(void) = 0;
-
-/**
- * Resolve a file descriptor to its open-file pointer (minimal version of
- * descrip.c's getfd, which is too heavy to link for bring-up).
- * @return 0 on success with *fp set, -1 on a bad/closed fd.
- */
-int getfd(struct thread *td, struct file **fp, int fd)
-{
-	if (fd < 0 || fd >= O_FILES)
-	{
-		*fp = 0;
-		return -1;
-	}
-	*fp = (struct file *)td->o_files[fd];
-	return (*fp == 0) ? -1 : 0;
-}
-
-/** Kernel log sink — not wired on x86_64 yet (the klog ring buffer is unlinked). */
-void klog(u_int8_t level, const char *fmt, ...)
-{
-	(void)level;
-	(void)fmt;
-}
-
-/* --- bring-up stubs for the scheduler's optional subsystems ------------------ *
- * sched_core/sched_dispatch reference these; the timed-sleep (callout), CSPRNG
- * stir, task-reaper (endTask), CPU enumeration and shutdown paths are not wired
- * on x86_64 yet.  Stubbed so the scheduler links + basic thread switching runs;
- * replaced as each real subsystem is linked.  Uniprocessor: one CPU. */
-void callout_reset(struct callout *c, u_int32_t ticks, void (*fn)(void *), void *arg)
-{
-	(void)c;
-	(void)ticks;
-	(void)fn;
-	(void)arg;
-}
-void callout_stop(struct callout *c)
-{
-	(void)c;
-}
-void callout_run_expired(u_int32_t now)
-{
-	(void)now;
-}
-void krandom_stir(u_int64_t sample)
-{
-	(void)sample;
-}
-void endTask(pidType id)
-{
-	(void)id;
-	/* Mark the calling task ZOMBIE so the scheduler stops dispatching it; the
-	 * caller then sched()s away.  Full reaping (free its address space + kernel
-	 * stack) is not ported on x86_64 yet — a terminated bring-up task leaks until
-	 * the real exit/wait path lands (5d/5e). */
-	if (_current != 0)
-		_current->state = ZOMBIE;
-}
-unsigned smp_cpu_count(void)
-{
-	return 1;
-}
 int sys_shutdown(shutdownCMD_t cmd)
 {
 	(void)cmd;

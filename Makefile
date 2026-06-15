@@ -291,8 +291,8 @@ kernel-aarch64:
 # link low at 1 MB.  Standalone (does NOT descend into sys/Makefile) — the same
 # minimal-first approach the aarch64 bring-up used; the generic subsystems + the
 # widened i386 drivers link in as the port grows.
-X86_64_KCFLAGS = ${KERN_TARGET_CFLAGS} -O -Wall -nostdlib -nostdinc -fno-builtin \
-	-fno-exceptions -ffreestanding -fno-pie -fno-pic -fno-stack-protector \
+X86_64_KCFLAGS = ${KERN_TARGET_CFLAGS} -O -Wall -Wno-incompatible-pointer-types -nostdlib -nostdinc \
+	-fno-builtin -fno-exceptions -ffreestanding -fno-pie -fno-pic -fno-stack-protector \
 	-I${CURDIR}/sys/include -I${CURDIR}/sys/arch/x86_64
 
 # Arch-neutral kernel sources linked into the x86_64 kernel.  Grows as the port
@@ -304,6 +304,36 @@ X86_64_GENERIC_SRCS = \
 	sys/kern/sched_core.c \
 	sys/kern/sched_dispatch.c \
 	sys/kern/elf64_load.c \
+	sys/kern/syscalls.c \
+	sys/kern/syscall_dispatch.c \
+	sys/kern/descrip.c \
+	sys/kern/vitals.c \
+	sys/kern/cpu_enum.c \
+	sys/kern/callout.c \
+	sys/kern/random.c \
+	sys/kern/klog.c \
+	sys/kern/endtask.c \
+	sys/kern/access.c \
+	sys/kern/disk_query.c \
+	sys/kern/ubthread.c \
+	sys/posix/syscalls_posix.c \
+	sys/posix/vfs_calls.c \
+	sys/posix/gen_calls.c \
+	sys/posix/time.c \
+	sys/posix/signal.c \
+	sys/posix/pipe.c \
+	sys/posix/kern_pipe.c \
+	sys/posix/sem.c \
+	sys/mpi/message.c \
+	sys/mpi/system.c \
+	sys/mpi/mpi_syscalls.c \
+	sys/vmm/vmm_uregion.c \
+	sys/vmm/vm_filecache.c \
+	sys/lib/rbtree.c \
+	sys/fs/vfs/stat.c \
+	sys/fs/procfs/procfs.c \
+	sys/fs/devfs/devfs.c \
+	sys/fs/ramfs/ramfs.c \
 	sys/lib/kprintf.c \
 	sys/lib/kconsole.c \
 	sys/lib/string.c \
