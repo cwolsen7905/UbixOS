@@ -11,13 +11,17 @@ First entries of the 3.0 series (64-bit only: x86_64 + aarch64).  Development on
 `wip/aarch64-port`; i386 remains as the reference until x86_64 reaches parity.
 
 ### Added
-- **x86_64 port — long-mode boot (Phase 1)** — a 64-bit kernel that boots into long
-  mode under `qemu -kernel` and prints a COM1 banner.  New `x86_64-elf-` native
-  (no `-m32`) toolchain config, ELF64 linker script, a 32-bit→long-mode trampoline
-  in `start.S` (identity-map the low 1 GB with 2 MB pages → PAE + EFER.LME + paging
-  → 64-bit GDT → far-jump → `kmain_x86_64`), booting via the PVH protocol (QEMU's
-  multiboot loader refuses ELF64).  The forward 3.0 target that replaces i386; grows
-  by widening the i386 MD code to 64-bit.  See `docs/design/cross-arch-plan.md`.
+- **x86_64 port (3.0 forward target, replaces i386)** — bring-up in progress:
+  - *Phase 1 — long-mode boot.* A 64-bit kernel that boots under `qemu -kernel` and
+    prints a COM1 banner.  New `x86_64-elf-` native (no `-m32`) toolchain config,
+    ELF64 linker script, a 32-bit→long-mode trampoline in `start.S` (identity-map the
+    low 1 GB with 2 MB pages → PAE + EFER.LME + paging → 64-bit GDT → far-jump →
+    `kmain_x86_64`), booting via the PVH protocol (QEMU's multiboot loader refuses
+    ELF64).
+  - *Phase 2 — IDT + exceptions.* A 256-entry 64-bit IDT with the 32 CPU-exception
+    stubs; the handler dumps the trapframe (vector, error, RIP/CS/RFLAGS, CR2) over
+    serial so faults are visible instead of a silent triple-fault.
+  Grows by widening the i386 MD code to 64-bit.  See `docs/design/cross-arch-plan.md`.
 - **aarch64 SMP bring-up (smp-plan M0–M3)** — secondary cores now run on aarch64.
   M0: per-CPU state via `TPIDR_EL1` → `struct pcpu` (`_current` is per-CPU). M1:
   start the APs via PSCI `CPU_ON` + a secondary entry that enables its MMU on the
