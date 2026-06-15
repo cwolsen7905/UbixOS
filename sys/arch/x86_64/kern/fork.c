@@ -100,6 +100,10 @@ long x86_64_fork(struct x86_64_trapframe *parent_tf)
 	for (i = 0; i < O_FILES; i++)
 		child->td.o_files[i] = _current->td.o_files[i];
 
+	/* Inherit the current working directory (else the child's cwd is empty and
+	 * relative-path resolution in the VFS breaks). */
+	memcpy(child->oInfo.cwd, _current->oInfo.cwd, sizeof(child->oInfo.cwd));
+
 	/* Child kernel stack: a copy of the parent trapframe at the top (rax = 0), and
 	 * below it a ctx frame whose return address is ret_from_fork. */
 	top = (u8 *)child->kernelStack + 65536; /* KSTACK_SIZE (schedNewTask) */

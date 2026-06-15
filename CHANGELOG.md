@@ -271,7 +271,12 @@ First entries of the 3.0 series (64-bit only: x86_64 + aarch64).  Development on
     `login` polling for `authd`'s MPI reply spun without ever handing the CPU to
     `authd`, so it always timed out ("Login incorrect").  Made the stub call the MI
     `sched_yield()`.  Now login → authd round-trips, **authenticates** (root/user),
-    and execs the user's shell — the last gate to a shell is cleared.
+    and execs the user's shell — the last gate to a shell is cleared. 
+  - *Phase 5e — working shell (cwd init).* New x86_64 processes had an empty
+    `oInfo.cwd`, so the VFS resolved a relative path (".") against "" — `ls`/`pwd`
+    failed.  `spawn_dynamic` now sets PID 1's cwd to "/" (i386 does this in its exec)
+    and `fork` inherits it.  **x86_64 now boots to a working interactive tcsh: it
+    authenticates, runs commands (`echo`, `uname`), and lists directories (`ls /`).**
 
   **With mmap/execve/fork/signals in place, the x86_64 kernel can now load, run,
   fork, and signal real on-disk binaries — the full runtime a userland needs.**

@@ -343,6 +343,11 @@ static kTask_t *spawn_dynamic(const char *path)
 	t->md.md_entry = entry;
 	t->md.md_usp = usp;
 	strncpy(t->name, path, sizeof(t->name) - 1);
+	/* New processes start at the root dir; without this oInfo.cwd is empty and the
+	 * VFS resolves a relative path (".") against "" — so ls/pwd fail (i386 sets this
+	 * in i386_exec).  fork inherits it; the shell's chdir(HOME) builds on it. */
+	t->oInfo.cwd[0] = '/';
+	t->oInfo.cwd[1] = '\0';
 	x86_64_console_setup_fds(&t->td); /* stdin/stdout/stderr -> COM1 console */
 	sched_ready(t);
 	kprintf("dyn: %s ready (pid %d, entry %X usp %X)\n", path, t->id, entry, usp);
