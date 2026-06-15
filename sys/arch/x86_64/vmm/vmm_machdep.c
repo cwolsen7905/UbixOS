@@ -37,7 +37,10 @@ void x86_64_mem_init(void)
 	u32 bitmap_bytes;
 	u32 bitmap_end_page;
 
-	vmm_mem_bitmap_init(bitmap_phys, num);
+	/* vmm_mem_bitmap_init stores the bitmap *through* the address it is given, so
+	 * pass the physmap pointer P2V(bitmap_phys); the frame-index math below stays in
+	 * physical units (mark_available marks pages by physical frame). */
+	vmm_mem_bitmap_init((uintptr_t)P2V(bitmap_phys), num);
 	bitmap_bytes = num * (u32)sizeof(vmm_page_info_t);
 	bitmap_end_page = (u32)((bitmap_phys + bitmap_bytes + PAGE_SIZE - 1) / PAGE_SIZE);
 	vmm_mem_mark_available(bitmap_end_page, num);
@@ -51,7 +54,7 @@ void x86_64_mem_init(void)
 
 /**
  * Allocate @count contiguous physical pages for the kernel heap, zeroed.  The
- * identity map makes the frame address a usable kernel pointer directly.
+ * allocator returns a physical address; the kernel reaches it through the physmap.
  */
 void *vmm_get_free_malloc_page(u_int16_t count)
 {
@@ -59,8 +62,8 @@ void *vmm_get_free_malloc_page(u_int16_t count)
 
 	if (base == 0)
 		return 0;
-	memset((void *)base, 0, (unsigned long)count * PAGE_SIZE);
-	return (void *)base;
+	memset(P2V(base), 0, (unsigned long)count * PAGE_SIZE);
+	return P2V(base);
 }
 
 /** Page-eviction hook — no swap device yet, so eviction always fails. */

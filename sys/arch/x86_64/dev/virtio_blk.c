@@ -142,15 +142,15 @@ int virtio_blk_read(struct ubx_device *dev, u32 lba, u32 count, void *buf)
 		g_hdr->sector = (u64)lba + i;
 		*g_status = 0xFF;
 
-		g_desc[0].addr = (u64)(uintptr_t)g_hdr;
+		g_desc[0].addr = V2P(g_hdr);
 		g_desc[0].len = sizeof(struct virtio_blk_req);
 		g_desc[0].flags = VIRTQ_DESC_F_NEXT;
 		g_desc[0].next = 1;
-		g_desc[1].addr = (u64)(uintptr_t)g_data;
+		g_desc[1].addr = V2P(g_data);
 		g_desc[1].len = 512;
 		g_desc[1].flags = VIRTQ_DESC_F_NEXT | VIRTQ_DESC_F_WRITE;
 		g_desc[1].next = 2;
-		g_desc[2].addr = (u64)(uintptr_t)g_status;
+		g_desc[2].addr = V2P((void *)g_status);
 		g_desc[2].len = 1;
 		g_desc[2].flags = VIRTQ_DESC_F_WRITE;
 		g_desc[2].next = 0;
@@ -177,15 +177,15 @@ int virtio_blk_write(struct ubx_device *dev, u32 lba, u32 count, void *buf)
 		g_hdr->sector = (u64)lba + i;
 		*g_status = 0xFF;
 
-		g_desc[0].addr = (u64)(uintptr_t)g_hdr;
+		g_desc[0].addr = V2P(g_hdr);
 		g_desc[0].len = sizeof(struct virtio_blk_req);
 		g_desc[0].flags = VIRTQ_DESC_F_NEXT;
 		g_desc[0].next = 1;
-		g_desc[1].addr = (u64)(uintptr_t)g_data;
+		g_desc[1].addr = V2P(g_data);
 		g_desc[1].len = 512;
 		g_desc[1].flags = VIRTQ_DESC_F_NEXT; /* device-readable */
 		g_desc[1].next = 2;
-		g_desc[2].addr = (u64)(uintptr_t)g_status;
+		g_desc[2].addr = V2P((void *)g_status);
 		g_desc[2].len = 1;
 		g_desc[2].flags = VIRTQ_DESC_F_WRITE;
 		g_desc[2].next = 0;
@@ -267,10 +267,12 @@ int virtio_blk_init(void)
 		serial_puts("virtio-blk: vring allocation failed\n");
 		return -1;
 	}
-	memset((void *)vring, 0, (size_t)align_up(total, PAGE_SIZE));
-	g_desc = (struct virtq_desc *)vring;
-	g_avail = (struct virtq_avail *)(vring + desc_bytes);
-	g_used = (struct virtq_used *)(vring + used_off);
+	/* vring is a PHYSICAL address: the device gets its page-frame number (below),
+	 * the CPU accesses the rings through the physmap (P2V). */
+	memset(P2V(vring), 0, (size_t)align_up(total, PAGE_SIZE));
+	g_desc = (struct virtq_desc *)P2V(vring);
+	g_avail = (struct virtq_avail *)((u8 *)P2V(vring) + desc_bytes);
+	g_used = (struct virtq_used *)((u8 *)P2V(vring) + used_off);
 	g_last_used = 0;
 
 	/* Tell the device where the vring lives (page-frame number) and start it. */
@@ -278,14 +280,16 @@ int virtio_blk_init(void)
 	outl((u16)(g_io + VPCI_QUEUE_PFN), (u32)(vring / VRING_ALIGN));
 	outb((u16)(g_io + VPCI_STATUS), VSTAT_ACKNOWLEDGE | VSTAT_DRIVER | VSTAT_DRIVER_OK);
 
-	/* DMA buffers (one page carved into header + 512-byte data + status). */
+	/* DMA buffers (one page carved into header + 512-byte data + status).  Physical
+	 * page; the descriptors below hand the device V2P(...) of these, while the CPU
+	 * fills them through the physmap (P2V). */
 	dma = vmm_find_free_pages_contig(1, sysID);
 	if (dma == 0)
 		return -1;
-	memset((void *)dma, 0, PAGE_SIZE);
-	g_hdr = (struct virtio_blk_req *)dma;
-	g_data = (u8 *)(dma + 64);
-	g_status = (volatile u8 *)(dma + 64 + 512);
+	memset(P2V(dma), 0, PAGE_SIZE);
+	g_hdr = (struct virtio_blk_req *)P2V(dma);
+	g_data = (u8 *)P2V(dma) + 64;
+	g_status = (volatile u8 *)P2V(dma) + 64 + 512;
 
 	g_ready = 1;
 	serial_puts("virtio-blk: ready (I/O base ");

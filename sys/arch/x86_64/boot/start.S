@@ -61,6 +61,10 @@ _start:
 	movl $(pdpt_hi - KERNBASE), %eax
 	orl $0x3, %eax
 	movl %eax, (pml4 - KERNBASE + 511*8)
+	/* PML4[256] = pdpt_pm | present|write  (physmap: 0xFFFF800000000000 -> phys 0). */
+	movl $(pdpt_pm - KERNBASE), %eax
+	orl $0x3, %eax
+	movl %eax, (pml4 - KERNBASE + 256*8)
 
 	/* pdpt_lo[0] = pd | present|write. */
 	movl $(pd - KERNBASE), %eax
@@ -68,6 +72,8 @@ _start:
 	movl %eax, (pdpt_lo - KERNBASE)
 	/* pdpt_hi[510] = pd | present|write  (0xFFFFFFFF80000000 -> PDPT idx 510; same PD). */
 	movl %eax, (pdpt_hi - KERNBASE + 510*8)
+	/* pdpt_pm[0] = pd | present|write  (physmap base -> PDPT idx 0; same PD). */
+	movl %eax, (pdpt_pm - KERNBASE)
 
 	/* pd[i] = (i*2 MB) | present|write|PS  for i = 0..511  (maps phys 0..1 GB). */
 	movl $(pd - KERNBASE), %ebx
@@ -153,6 +159,8 @@ pml4:
 pdpt_lo:
 	.skip 4096
 pdpt_hi:
+	.skip 4096
+pdpt_pm:
 	.skip 4096
 pd:
 	.skip 4096

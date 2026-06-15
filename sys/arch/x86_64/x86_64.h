@@ -16,7 +16,16 @@ typedef unsigned long u64;
 /* The kernel is linked at the higher half; a kernel-symbol VMA minus KERNBASE is
  * its physical (load) address.  Must match ldscript.x86_64 + start.S. */
 #define KERNBASE 0xFFFFFFFF80000000UL
-#define KERN_VIRT_TO_PHYS(v) ((uintptr_t)(v) - KERNBASE)
+#define KERN_VIRT_TO_PHYS(v) ((u64)(v) - KERNBASE)
+
+/* Physmap (direct map): start.S maps all RAM at PHYSMAP_BASE (PML4[256]), so the
+ * kernel reaches any physical address as a pointer there — the replacement for the
+ * low identity map once it is dropped (user space owns the low half).  P2V turns a
+ * physical address into a kernel pointer; V2P recovers the physical address (e.g.
+ * for a PTE or a device DMA address). */
+#define PHYSMAP_BASE 0xFFFF800000000000UL
+#define P2V(p) ((void *)((u64)(p) + PHYSMAP_BASE))
+#define V2P(v) ((u64)(v) - PHYSMAP_BASE)
 
 /* Port I/O (shared by the serial console + PIC/PIT). */
 static inline void outb(u16 port, u8 val)
@@ -92,8 +101,8 @@ void x86_64_exception(struct x86_64_trapframe *tf);
 void x86_64_usermode_init(void);
 u64 x86_64_ring0_stack_top(void);
 void x86_64_map_user_page(u64 va, u64 phys, int writable);
-void x86_64_map_user_page_to(u64 *pml4, u64 va, u64 phys, int writable);
-u64 *x86_64_create_user_space(void);
+void x86_64_map_user_page_to(u64 pml4_phys, u64 va, u64 phys, int writable);
+u64 x86_64_create_user_space(void);
 void x86_64_set_user_kstack(u64 top);
 void x86_64_syscall(struct x86_64_trapframe *tf);
 void x86_64_user_demo(void); /* 5a one-shot (kept; superseded by proc_demo) */

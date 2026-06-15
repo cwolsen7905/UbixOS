@@ -94,6 +94,17 @@ First entries of the 3.0 series (64-bit only: x86_64 + aarch64).  Development on
     identity map is retained for now (physical access); a high physmap + dropping the
     identity is step B.  Verified: boots high, runs the scheduler + ring-3 processes
     + mounts the FAT root, all from the higher-half VMA.
+  - *Phase 5d (higher-half kernel, step B)* — completes the standard amd64 address
+    layout.  A **physmap** (direct map of RAM at `PHYSMAP_BASE = 0xFFFF800000000000`,
+    PML4[256]) gives the kernel pointer access to any physical page (`P2V`/`V2P`),
+    replacing the low identity map: the page allocator/heap, the page-table walker,
+    and the virtio-blk vring/DMA were converted to it (the device still gets physical
+    addresses; the CPU touches the rings through the physmap).  Per-process address
+    spaces now leave the **entire low half empty** (private, clean) and share only
+    the kernel higher half, so user binaries load at their standard low VAs — the
+    ring-3 demo now runs at **0x400000** (the amd64 ELF base) instead of a >1 GB
+    work-around.  Layout: user = low canonical half, physmap = `0xFFFF8…`, kernel =
+    `0xFFFFFFFF8…`.  Verified: ring-3 process at 0x400000 + FAT root mount.
   `bmake TARGET=x86_64` builds the bring-up kernel only (the x86_64 userland/world is
   a later phase); `bmake run TARGET=x86_64` boots it (serial console).
   Grows by widening the i386 MD code to 64-bit.  See `docs/design/cross-arch-plan.md`.

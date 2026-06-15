@@ -119,8 +119,8 @@ u64 x86_64_ring0_stack_top(void)
 #define PTE_US 0x4
 #define PTE_ADDR_MASK (~0xFFFUL)
 
-#define USER_CODE_VA 0x40000000UL  /* 1 GB: PDPT[1], clear of start.S's 1 GB identity map */
-#define USER_STACK_VA 0x40001000UL /* one page above the code */
+#define USER_CODE_VA 0x400000UL  /* 4 MB — the standard amd64 ELF base; the user low */
+#define USER_STACK_VA 0x401000UL /* half is now clean (no kernel identity to collide) */
 #define USER_STACK_TOP (USER_STACK_VA + PAGE_SIZE)
 
 /* Bring-up syscall numbers (int 0x80) — replaced by the FreeBSD ABI in 5d/5e. */
@@ -132,95 +132,83 @@ extern char x86_64_user_demo_end[];
 void x86_64_enter_user(u64 user_rip, u64 user_rsp);
 void x86_64_leave_user(void);
 
-/** Allocate a zeroed page-table frame (identity-mapped, usable as a pointer). */
-static u64 *alloc_table(void)
+/** Allocate a zeroed page-table frame.  @return its PHYSICAL address (0 on OOM);
+ * the kernel reaches the frame through the physmap (P2V). */
+static uintptr_t alloc_table(void)
 {
 	uintptr_t p = vmm_find_free_page(sysID);
 	if (p != 0)
-		memset((void *)p, 0, PAGE_SIZE);
-	return (u64 *)p;
+		memset(P2V(p), 0, PAGE_SIZE);
+	return p;
 }
 
 /**
- * Ensure the table entry at @slot is present; create the next-level table (with
- * P|RW|US, so the leaf's US bit is honoured) if absent.  @return the next table.
+ * Ensure @table_phys's entry at @slot is present, creating the next-level table
+ * (P|RW|US, so the leaf's US bit is honoured) if absent.  Page tables hold and are
+ * addressed by PHYSICAL addresses; the CPU reaches them via the physmap.
+ * @return the next-level table's PHYSICAL address.
  */
-static u64 *next_table(u64 *table, unsigned slot)
+static uintptr_t next_table(uintptr_t table_phys, unsigned slot)
 {
+	u64 *table = (u64 *)P2V(table_phys);
+
 	if ((table[slot] & PTE_P) == 0)
-	{
-		u64 *t = alloc_table();
-		table[slot] = (u64)(uintptr_t)t | PTE_P | PTE_RW | PTE_US;
-	}
+		table[slot] = alloc_table() | PTE_P | PTE_RW | PTE_US;
 	else
-	{
-		/* The entry may pre-exist without the user bit (start.S builds PML4[0]
-		 * with P|RW only).  US is ANDed across all levels, so the upper entries on
-		 * the path to a user leaf must have it set; the kernel's own leaves keep
-		 * US=0 and stay protected regardless. */
-		table[slot] |= PTE_US;
-	}
-	return (u64 *)(uintptr_t)(table[slot] & PTE_ADDR_MASK);
+		table[slot] |= PTE_US; /* a pre-existing upper entry may lack US (e.g. the kernel's) */
+	return table[slot] & PTE_ADDR_MASK;
 }
 
 /**
- * Map one 4 KB user page @va -> @phys in the address space rooted at @pml4,
- * walking/creating the PML4->PDPT->PD->PT chain.  @va must not fall inside
- * start.S's 2 MB identity map (use a VA >= 1 GB).  Marks the leaf user-accessible
+ * Map one 4 KB user page @va -> @phys in the address space rooted at @pml4_phys,
+ * walking/creating the PML4->PDPT->PD->PT chain.  Marks the leaf user-accessible
  * (and writable if asked).
  */
-void x86_64_map_user_page_to(u64 *pml4, u64 va, u64 phys, int writable)
+void x86_64_map_user_page_to(uintptr_t pml4_phys, u64 va, u64 phys, int writable)
 {
-	u64 *pdpt = next_table(pml4, (unsigned)((va >> 39) & 0x1FF));
-	u64 *pd = next_table(pdpt, (unsigned)((va >> 30) & 0x1FF));
-	u64 *pt = next_table(pd, (unsigned)((va >> 21) & 0x1FF));
+	uintptr_t pdpt = next_table(pml4_phys, (unsigned)((va >> 39) & 0x1FF));
+	uintptr_t pd = next_table(pdpt, (unsigned)((va >> 30) & 0x1FF));
+	uintptr_t pt = next_table(pd, (unsigned)((va >> 21) & 0x1FF));
 
-	pt[(va >> 12) & 0x1FF] = (phys & PTE_ADDR_MASK) | PTE_P | PTE_US | (writable ? PTE_RW : 0);
+	((u64 *)P2V(pt))[(va >> 12) & 0x1FF] = (phys & PTE_ADDR_MASK) | PTE_P | PTE_US | (writable ? PTE_RW : 0);
 	__asm__ __volatile__("invlpg (%0)" : : "r"((void *)(uintptr_t)va) : "memory");
 }
 
-/** Map a user page in the live address space (CR3).  Used by the 5a one-shot. */
+/** Map a user page in the live address space (CR3 holds the physical PML4). */
 void x86_64_map_user_page(u64 va, u64 phys, int writable)
 {
 	u64 cr3;
 	__asm__ __volatile__("mov %%cr3, %0" : "=r"(cr3));
-	x86_64_map_user_page_to((u64 *)(uintptr_t)(cr3 & PTE_ADDR_MASK), va, phys, writable);
+	x86_64_map_user_page_to((uintptr_t)(cr3 & PTE_ADDR_MASK), va, phys, writable);
 }
 
 /**
- * Create a fresh per-process address space: a new PML4 whose low-1 GB kernel
- * mapping is shared with the boot space (so kernel code/stacks/page-tables stay
- * reachable in ring 0) but whose user region (PDPT[1..], VA >= 1 GB) is private.
- *
- * The kernel lives in the low half (loaded at 1 MB, identity-mapped), so rather
- * than share PML4[0] wholesale — which would make user PDPT slots global — each
- * space gets its own PDPT under PML4[0] with PDPT[0] pointing at the shared
- * kernel PD.  @return the new PML4 (a physical/identity address), or NULL.
+ * Create a fresh per-process address space and @return its PML4's PHYSICAL address
+ * (load into CR3 directly).  The entire low canonical half (PML4[0..255]) is left
+ * empty — a private, clean user region that map_user_page_to fills on demand, so
+ * binaries can load at standard low VAs (e.g. 0x400000).  The kernel's higher-half
+ * mappings (PML4[256..511] — physmap + kernel text) are shared by pointer so the
+ * kernel stays mapped (code/data + physical access) after switch_to loads this
+ * PML4 into CR3.  The kernel itself no longer needs the low identity map here.
  */
-u64 *x86_64_create_user_space(void)
+uintptr_t x86_64_create_user_space(void)
 {
 	u64 cr3;
-	u64 *kpml4, *kpdpt, *pml4, *pdpt;
+	uintptr_t kpml4_phys, pml4_phys;
+	u64 *kpml4, *pml4;
 
 	__asm__ __volatile__("mov %%cr3, %0" : "=r"(cr3));
-	kpml4 = (u64 *)(uintptr_t)(cr3 & PTE_ADDR_MASK);
-	kpdpt = (u64 *)(uintptr_t)(kpml4[0] & PTE_ADDR_MASK);
+	kpml4_phys = (uintptr_t)(cr3 & PTE_ADDR_MASK);
+	kpml4 = (u64 *)P2V(kpml4_phys);
 
-	pml4 = alloc_table();
-	pdpt = alloc_table();
-	if (pml4 == 0 || pdpt == 0)
+	pml4_phys = alloc_table();
+	if (pml4_phys == 0)
 		return 0;
+	pml4 = (u64 *)P2V(pml4_phys);
 
-	pdpt[0] = kpdpt[0];                                       /* share the kernel low-1 GB PD */
-	pml4[0] = (u64)(uintptr_t)pdpt | PTE_P | PTE_RW | PTE_US; /* US: gate user PDPT[1..] leaves */
-
-	/* Share the kernel's higher-half mappings (PML4[256..511]) by pointer so the
-	 * kernel — which now runs at the high VMA — stays mapped after switch_to swaps
-	 * CR3 into this user space.  Without this, the CR3 load unmaps the running
-	 * kernel and the very next (high-VMA) instruction faults. */
 	for (unsigned i = 256; i < 512; i++)
 		pml4[i] = kpml4[i];
-	return pml4;
+	return pml4_phys;
 }
 
 /** Set the ring-0 stack the CPU loads (TSS.rsp0) on the next ring3->ring0 trap. */
@@ -272,7 +260,7 @@ void x86_64_syscall(struct x86_64_trapframe *tf)
  */
 void x86_64_proc_demo(void)
 {
-	u64 *pml4 = x86_64_create_user_space();
+	u64 pml4 = x86_64_create_user_space();
 	uintptr_t code_phys = vmm_find_free_page(sysID);
 	uintptr_t stack_phys = vmm_find_free_page(sysID);
 	unsigned long code_len = (unsigned long)(x86_64_user_demo_end - x86_64_user_demo_start);
@@ -281,12 +269,12 @@ void x86_64_proc_demo(void)
 
 	kprintf("proc demo: scheduling a ring-3 process in its own address space...\n");
 
-	memcpy((void *)code_phys, x86_64_user_demo_start, code_len);
+	memcpy(P2V(code_phys), x86_64_user_demo_start, code_len);
 	x86_64_map_user_page_to(pml4, USER_CODE_VA, (u64)code_phys, 0);   /* exec, read-only */
 	x86_64_map_user_page_to(pml4, USER_STACK_VA, (u64)stack_phys, 1); /* writable stack */
 
 	t = schedNewTask();
-	t->md.md_cr3 = (u64)(uintptr_t)pml4;
+	t->md.md_cr3 = pml4;
 	t->md.md_entry = USER_CODE_VA;
 	t->md.md_usp = USER_STACK_TOP;
 	strncpy(t->name, "ring3proc", sizeof(t->name) - 1);
