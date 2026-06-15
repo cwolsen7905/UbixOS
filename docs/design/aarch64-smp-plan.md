@@ -165,17 +165,26 @@ Bringing M3 up surfaced the unlocked/uniprocessor state, in order:
    stlr).  This was THE prerequisite — it makes every existing `spinLock`-guarded
    structure (incl. `kmalloc`'s heap, already locked) actually safe under SMP.
    First symptom it cured: `kmalloc failed allocating kernel stack`.
-2. **Page-table / fork allocation OOM — OPEN.** With APs scheduling, a kernel
-   allocation (`sysID`/pid -2) exhausts physical pages (`vmm: OOM` panic).  The MI
-   bitmap allocator (`vmm_memory.c`) *is* locked, so this is a leak or unlocked
-   refcount in the concurrent fork / `pmap_*` page-table path — the next thing to
-   fix.
-3. **TLB shootdown — OPEN.** No cross-CPU TLB invalidation yet (broadcast
-   `TLBI ...IS` covers most aarch64 cases; a GIC SGI for the rest).
-4. **Console lock — OPEN (minor).** Concurrent `kprintf` from two cores garbles
-   output; AP prints are currently suppressed as a stopgap.
+2. **Concurrent VFS/exec corruption — FIXED + committed (`79d8dc31`).** The real
+   cause of the earlier "OOM" was *not* the page allocator: a concurrent `fread`
+   during exec returned a short read ("not loadable") → init respawn loop → only
+   *then* OOM.  The FS read/write paths (the UbixFS pool reader) are non-re-entrant;
+   a coarse `vfs_io_lock` around `fread`/`fwrite`/the `fopen` lookup serialises FS
+   I/O across CPUs.  With this, releasing the APs boots cleanly: all daemons start,
+   DHCP binds, **the desktop launches (views maps the framebuffer 1280x800, vlogin
+   starts)** — zero OOM/not-loadable/panic.
+3. **A NULL-jump fault under load — OPEN (next).** With APs scheduling + the desktop
+   coming up, a later `synchronous exception EC=0x0 ELR_EL1=0x0` (jump to address 0,
+   corrupted context/fn-ptr) on the kernel task.  Another unlocked shared structure
+   racing; needs `-accel tcg` + gdb forensics (ELR=0 loses the backtrace).
+4. **TLB shootdown — OPEN.** No cross-CPU TLB invalidation yet (broadcast
+   `TLBI ...IS` for most aarch64 cases; a GIC SGI for the rest).
+5. **Console lock — OPEN (minor).** Concurrent `kprintf` from two cores garbles
+   output; AP prints are suppressed as a stopgap.
 
-Flipping `AARCH64_SMP_ENABLE_APS` to 1 is gated on (2)+(3).
+Flipping `AARCH64_SMP_ENABLE_APS` to 1 is gated on (3)+(4).  Progress: the atomic
+spinlock + `vfs_io_lock` already take it from "OOM-panics immediately" to "boots
+to a launching desktop, then faults under load".
 
 ## 5. Risks & method
 
