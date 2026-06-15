@@ -298,6 +298,14 @@ void md_sync_icache(uintptr_t addr, u64 len)
 	(void)len;
 }
 
+/** Reach a physical frame as a kernel pointer.  x86_64 maps all RAM at the
+ * physmap (P2V); the low identity covers only 1 GB, so frames allocated above it
+ * (after memory fills) are reachable only here. */
+void *md_phys_to_virt(u64 phys)
+{
+	return P2V(phys);
+}
+
 /**
  * Service a ring-3 `int $0x80`.  Bring-up calls only: write (to the serial
  * console) and exit.  Args follow the SysV order in the trapframe: rax = nr,

@@ -230,6 +230,17 @@ First entries of the 3.0 series (64-bit only: x86_64 + aarch64).  Development on
     binary loaded directly (no fork) links + runs cleanly.  (Known bug under
     investigation: a binary exec'd *after a fork* faults in ld-musl `sysv_lookup` —
     isolated to the fork→execve path; direct dynamic loads are unaffected.)
+  - *Phase 5e — per-task TLS + portable frame access (fork/execve correctness).*
+    Three fixes the dynamic world needs: (1) the MI ELF loader now reaches freshly
+    allocated frames through a new `md_phys_to_virt` hook (identity on aarch64, the
+    physmap/P2V on x86_64) instead of a bare `(void *)frame` cast — on x86_64 a frame
+    above the low-1 GB identity window (once memory fills) was otherwise unreachable,
+    silently corrupting the loaded image; (2) `switch_to` restores each task's
+    `FS.base` (the syscall path uses no `swapgs`, so the TLS base is not saved per
+    task by hardware — without this a task whose ld-musl reads TLS before its own
+    `arch_prctl(SET_FS)` saw a stale pointer into another address space); (3) `fork`
+    inherits the parent's `md_fsbase`/mmap/brk cursors (the child runs the parent's
+    image until it `execve`s) and `execve` resets them for the fresh image.
 
   **With mmap/execve/fork/signals in place, the x86_64 kernel can now load, run,
   fork, and signal real on-disk binaries — the full runtime a userland needs.**

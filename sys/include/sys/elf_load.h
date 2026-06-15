@@ -65,4 +65,15 @@ void md_map_user_page(u_int64_t *aspace_root, u_int64_t va, u_int64_t pa, int ex
  */
 void md_sync_icache(uintptr_t addr, u_int64_t len);
 
+/**
+ * Map a physical frame to a kernel-writable virtual pointer, so the loader can
+ * fill a freshly-allocated frame before it is mapped into the user space.
+ * aarch64 identity-maps all RAM (pointer == phys); x86_64 reaches RAM only
+ * through the physmap (P2V), since its low identity covers just the first 1 GB —
+ * a frame allocated above 1 GB (after memory fills) is unreachable as a raw
+ * pointer.  Using this hook (not a bare cast) is what lets a loaded image be
+ * correct regardless of where its frames land.
+ */
+void *md_phys_to_virt(u_int64_t phys);
+
 #endif /* _SYS_ELF_LOAD_H */

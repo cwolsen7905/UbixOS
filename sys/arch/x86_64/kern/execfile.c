@@ -310,6 +310,12 @@ int sys_execve(struct thread *td, struct sys_execve_args *uap)
 	_current->md.md_usp = usp;
 	_current->md.md_mmap_next = 0; /* fresh image: reset the mmap/brk bumps */
 	_current->md.md_brk = 0;
+	/* Reset the user TLS: a fresh image's ld-musl sets its own FS.base via
+	 * arch_prctl, but until it does it must not see the previous image's (here a
+	 * fork parent's) stale TLS pointer — clear md_fsbase + FS.base now (execve
+	 * enters via iret_to_user, bypassing switch_to's per-task FS.base restore). */
+	_current->md.md_fsbase = 0;
+	__asm__ __volatile__("wrmsr" : : "c"(0xC0000100u), "a"(0u), "d"(0u));
 	__asm__ __volatile__("mov %0, %%cr3" : : "r"(pml4) : "memory");
 	x86_64_iret_to_user(entry, usp); /* does not return */
 	return 0;                        /* unreachable */

@@ -88,6 +88,11 @@ long x86_64_fork(struct x86_64_trapframe *parent_tf)
 	child->md.md_cr3 = child_pml4;
 	child->md.md_usp = parent_tf->rsp; /* same user SP in the copied space */
 	child->md.md_entry = 0;            /* unused — the trapframe drives the return */
+	/* Inherit the parent's TLS base + heap/mmap cursors: the child runs the parent's
+	 * image (same code/data, so the same FS.base-relative TLS) until it execve's. */
+	child->md.md_fsbase = _current->md.md_fsbase;
+	child->md.md_mmap_next = _current->md.md_mmap_next;
+	child->md.md_brk = _current->md.md_brk;
 	child->parent = _current;
 	_current->children++;
 

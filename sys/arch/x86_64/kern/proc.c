@@ -85,6 +85,15 @@ void switch_to(kTask_t *prev, kTask_t *next)
 	if (next->kernelStack != 0)
 		x86_64_set_user_kstack((u64)((unsigned char *)next->kernelStack + KSTACK_SIZE));
 
+	/* Restore the task's user TLS base (FS.base): the syscall path doesn't use
+	 * swapgs (the kernel owns %gs; musl keeps TLS in %fs), so FS.base is NOT saved
+	 * per task by hardware.  Without this it stays at whatever the last task set —
+	 * a task whose ld-musl reads TLS before its own arch_prctl(SET_FS) would see a
+	 * stale pointer into another address space (corrupts ld.so's dynamic linking). */
+	__asm__ __volatile__("wrmsr"
+	                     :
+	                     : "c"(0xC0000100u), "a"((u32)next->md.md_fsbase), "d"((u32)(next->md.md_fsbase >> 32)));
+
 	x86_64_ctx_switch((u64 *)&prev->md.md_kstack, (u64)next->md.md_kstack);
 }
 

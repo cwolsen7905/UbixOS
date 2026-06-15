@@ -202,6 +202,13 @@ void md_sync_icache(uintptr_t addr, u_int64_t len)
 	__asm__ volatile("dsb ish; isb");
 }
 
+/** Reach a physical frame as a kernel pointer.  aarch64 identity-maps all RAM in
+ * the kernel's low VA window, so the physical address IS a valid kernel pointer. */
+void *md_phys_to_virt(u_int64_t phys)
+{
+	return (void *)(uintptr_t)phys;
+}
+
 /**
  * Return the active TTBR0 translation-table root (the kernel's identity L1).
  */

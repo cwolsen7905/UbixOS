@@ -49,9 +49,15 @@ static int load_segment(const u_int8_t *image, const Elf64_Phdr *ph, u_int64_t *
 	for (u_int64_t va = va_start; va < va_end; va += PAGE_SIZE)
 	{
 		uintptr_t frame = vmm_find_free_page(sysID);
+		u_int8_t *kframe;
 		if (frame == 0)
 			return -1;
-		memset((void *)frame, 0, PAGE_SIZE); /* zero — covers BSS + partial pages */
+		/* Reach the frame through the arch's physical-to-kernel mapping (NOT a bare
+		 * (void*)frame cast): on x86_64 a frame above the low-1 GB identity window is
+		 * only reachable via the physmap, so a raw cast would corrupt the image once
+		 * memory fills.  md_phys_to_virt is identity on aarch64, P2V on x86_64. */
+		kframe = (u_int8_t *)md_phys_to_virt(frame);
+		memset(kframe, 0, PAGE_SIZE); /* zero — covers BSS + partial pages */
 
 		/* Copy the slice of this page overlapping [seg_vaddr, seg_vaddr+p_filesz). */
 		u_int64_t seg_file_end = seg_vaddr + ph->p_filesz;
@@ -61,11 +67,11 @@ static int load_segment(const u_int8_t *image, const Elf64_Phdr *ph, u_int64_t *
 		if (copy_hi > copy_lo)
 		{
 			u_int64_t file_off = ph->p_offset + (copy_lo - seg_vaddr);
-			memcpy((void *)(frame + (copy_lo - va)), image + file_off, (size_t)(copy_hi - copy_lo));
+			memcpy(kframe + (copy_lo - va), image + file_off, (size_t)(copy_hi - copy_lo));
 		}
 
 		if (exec)
-			md_sync_icache(frame, PAGE_SIZE);
+			md_sync_icache((uintptr_t)kframe, PAGE_SIZE);
 		md_map_user_page(aspace_root, va, (u_int64_t)frame, exec);
 	}
 	return 0;
