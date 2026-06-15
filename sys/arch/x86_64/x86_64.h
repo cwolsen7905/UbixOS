@@ -23,6 +23,9 @@ void serial_putdec(u64 v);
 /* idt.c — 64-bit IDT + exception handling (Phase 2). */
 void idt_init(void);
 
+/* vmm/vmm_machdep.c — physical page allocator setup (Phase 3). */
+void x86_64_mem_init(void);
+
 /* boot/main.c — the 64-bit C entry (called from start.S). */
 void kmain_x86_64(u32 mb_magic, u32 mb_info);
 

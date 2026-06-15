@@ -10,6 +10,8 @@
 #define _MACHINE_CPU_H
 #if defined(__aarch64__)
 #include <aarch64/cpu.h>
+#elif defined(__x86_64__)
+#include <x86_64/cpu.h>
 #else
 #include <i386/cpu.h>
 #endif

@@ -10,6 +10,8 @@
 #define _MACHINE_PROC_H
 #if defined(__aarch64__)
 #include <aarch64/proc.h>
+#elif defined(__x86_64__)
+#include <x86_64/proc.h>
 #else
 #include <i386/proc.h>
 #endif

@@ -1,0 +1,177 @@
+/*-
+ * Copyright (c) 2002-2026 The UbixOS Project.  All rights reserved.
+ *
+ * x86-64 bring-up support shims (smp-plan / Phase 3).  Minimal implementations of
+ * the few machine-dependent / global symbols the first machine-independent kernel
+ * objects (vmm_memory.c, kmalloc.c) reference, so they can link before the full
+ * generic kernel is ported.  The real kprintf/vitals/etc. replace these shims as
+ * later phases link them.  Sibling of aarch64's ksupport.c.
+ */
+
+#include "x86_64.h"
+#include <ubixos/spinlock.h>
+#include <ubixos/vitals.h>
+#include <ubixos/sched.h>
+
+/* Set by vitals_init() once linked; NULL is safe — vmm_memory.c guards on it. */
+vitalsNode *systemVitals = 0;
+
+/* --- scheduler stubs --------------------------------------------------------- *
+ * vmm_memory.c's OOM/eviction path references these; no scheduler is linked yet
+ * (Phase 4), and the bring-up happy path never reaches eviction.  Stubbed so the
+ * MI allocator links; replaced when sched_core.c is linked. */
+int sched_setStatus(pidType id, tState state)
+{
+	(void)id;
+	(void)state;
+	return 0;
+}
+
+void sched_yield(void)
+{
+}
+
+kTask_t *schedFindTask(u_int32_t id)
+{
+	(void)id;
+	return 0;
+}
+
+/* --- atomic spinlock (x86 xchg via the gcc builtin) --------------------------- */
+
+void spinLockInit(spinLock_t lock)
+{
+	if (lock != 0)
+		lock->locked = 0;
+}
+
+void spinLock(spinLock_t lock)
+{
+	if (lock == 0)
+		return;
+	while (__sync_lock_test_and_set(&lock->locked, 1) != 0)
+		__asm__ __volatile__("pause");
+}
+
+void spinUnlock(spinLock_t lock)
+{
+	if (lock != 0)
+		__sync_lock_release(&lock->locked);
+}
+
+int spinTryLock(spinLock_t lock)
+{
+	if (lock == 0)
+		return 0;
+	return __sync_lock_test_and_set(&lock->locked, 1) != 0 ? 1 : 0;
+}
+
+/* --- panic / assert ----------------------------------------------------------- */
+
+void kpanic(const char *fmt, ...)
+{
+	serial_puts("\nKERNEL PANIC: ");
+	serial_puts(fmt);
+	serial_puts("\n");
+	for (;;)
+		__asm__ __volatile__("cli; hlt");
+}
+
+void __assert(const char *func, const char *file, int line, const char *e)
+{
+	(void)line;
+	serial_puts("\nassert failed: ");
+	serial_puts(e);
+	serial_puts(" in ");
+	serial_puts(func);
+	serial_puts(" (");
+	serial_puts(file);
+	serial_puts(")\n");
+	for (;;)
+		__asm__ __volatile__("cli; hlt");
+}
+
+/* --- minimal kprintf (bring-up; %s %c %d %u %x %p %l*) ------------------------- */
+
+int kprintf(const char *fmt, ...)
+{
+	__builtin_va_list ap;
+	__builtin_va_start(ap, fmt);
+	for (const char *p = fmt; *p != '\0'; p++)
+	{
+		if (*p != '%')
+		{
+			if (*p == '\n')
+				serial_putc('\r');
+			serial_putc(*p);
+			continue;
+		}
+		p++;
+		int lng = 0;
+		while (*p == 'l')
+		{
+			lng++;
+			p++;
+		}
+		switch (*p)
+		{
+			case 's':
+				serial_puts(__builtin_va_arg(ap, const char *));
+				break;
+			case 'c':
+				serial_putc((char)__builtin_va_arg(ap, int));
+				break;
+			case 'u':
+				serial_putdec(lng ? __builtin_va_arg(ap, unsigned long) : __builtin_va_arg(ap, unsigned));
+				break;
+			case 'd':
+			case 'i':
+				serial_putdec(lng ? (u64)__builtin_va_arg(ap, long) : (u64)__builtin_va_arg(ap, int));
+				break;
+			case 'x':
+			case 'X':
+				serial_puthex(lng ? __builtin_va_arg(ap, unsigned long) : __builtin_va_arg(ap, unsigned));
+				break;
+			case 'p':
+				serial_puthex((u64)__builtin_va_arg(ap, void *));
+				break;
+			case '%':
+				serial_putc('%');
+				break;
+			default:
+				serial_putc('%');
+				serial_putc(*p);
+				break;
+		}
+	}
+	__builtin_va_end(ap);
+	return 0;
+}
+
+/* --- freestanding mem ops (the compiler emits calls to these) ----------------- */
+
+void *memset(void *dst, int c, unsigned long n)
+{
+	unsigned char *p = (unsigned char *)dst;
+	while (n-- != 0)
+		*p++ = (unsigned char)c;
+	return dst;
+}
+
+void *memcpy(void *dst, const void *src, unsigned long n)
+{
+	unsigned char *d = (unsigned char *)dst;
+	const unsigned char *s = (const unsigned char *)src;
+	while (n-- != 0)
+		*d++ = *s++;
+	return dst;
+}
+
+int memcmp(const void *a, const void *b, unsigned long n)
+{
+	const unsigned char *x = (const unsigned char *)a, *y = (const unsigned char *)b;
+	for (; n-- != 0; x++, y++)
+		if (*x != *y)
+			return (int)*x - (int)*y;
+	return 0;
+}

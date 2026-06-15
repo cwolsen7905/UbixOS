@@ -284,6 +284,13 @@ X86_64_KCFLAGS = ${KERN_TARGET_CFLAGS} -O -Wall -nostdlib -nostdinc -fno-builtin
 	-fno-exceptions -ffreestanding -fno-pie -fno-pic -fno-stack-protector \
 	-I${CURDIR}/sys/include -I${CURDIR}/sys/arch/x86_64
 
+# Arch-neutral kernel sources linked into the x86_64 kernel.  Grows as the port
+# advances (mirrors AARCH64_GENERIC_SRCS); Phase 3 links the physical allocator
+# + kernel heap.
+X86_64_GENERIC_SRCS = \
+	sys/vmm/vmm_memory.c \
+	sys/lib/kmalloc.c
+
 kernel-x86_64:
 	@mkdir -p ${OBJ_DIR}/boot ${OBJ_DIR}/obj/sys
 	@for f in `find ${CURDIR}/sys/arch/x86_64 -name '*.S'`; do \
@@ -295,6 +302,11 @@ kernel-x86_64:
 	    o=${OBJ_DIR}/obj/sys/`basename $$f .c`.o; \
 	    echo "${CROSS_PREFIX}gcc [c]   $$f"; \
 	    ${CROSS_PREFIX}gcc ${X86_64_KCFLAGS} -std=c99 -c $$f -o $$o || exit 1; \
+	done
+	@for f in ${X86_64_GENERIC_SRCS}; do \
+	    o=${OBJ_DIR}/obj/sys/`basename $$f .c`.o; \
+	    echo "${CROSS_PREFIX}gcc [gen] $$f"; \
+	    ${CROSS_PREFIX}gcc ${X86_64_KCFLAGS} -std=c99 -c ${CURDIR}/$$f -o $$o || exit 1; \
 	done
 	${CROSS_PREFIX}ld -T ${CURDIR}/sys/compile/ldscript.x86_64 -o ${OBJ_DIR}/boot/kernel ${OBJ_DIR}/obj/sys/*.o
 	@echo "x86_64 bring-up kernel linked: ${OBJ_DIR}/boot/kernel"

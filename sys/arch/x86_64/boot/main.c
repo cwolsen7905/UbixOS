@@ -28,7 +28,30 @@ void kmain_x86_64(u32 mb_magic, u32 mb_info)
 	idt_init();
 	serial_puts("IDT installed: 256 gates, 32 CPU-exception handlers (faults now visible).\n");
 
-	serial_puts("x86_64 Phase 2 up. Idle.\n");
+	x86_64_mem_init();
+
+	/* Phase 3 smoke test: the kernel heap (MI kmalloc over the MI page allocator). */
+	{
+		extern void *kmalloc(u32);
+		extern void kfree(void *);
+		char *a = (char *)kmalloc(4096);
+		char *b = (char *)kmalloc(256);
+		serial_puts("kmalloc test: a=");
+		serial_puthex((u64)a);
+		serial_puts(" b=");
+		serial_puthex((u64)b);
+		if (a != 0)
+		{
+			a[0] = 0x5A;
+			a[4095] = 0xA5;
+			serial_puts((a[0] == 0x5A && a[4095] == (char)0xA5) ? " [rw ok]" : " [rw FAIL]");
+		}
+		kfree(a);
+		kfree(b);
+		serial_puts(" [freed]\n");
+	}
+
+	serial_puts("x86_64 Phase 3 up: paging allocator + kmalloc live. Idle.\n");
 	for (;;)
 		__asm__ __volatile__("hlt");
 }
