@@ -7,6 +7,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+First entries of the 3.0 series (64-bit only: x86_64 + aarch64).  Development on
+`wip/aarch64-port`; i386 remains as the reference until x86_64 reaches parity.
+
+### Added
+- **aarch64 SMP bring-up (smp-plan M0–M3)** — secondary cores now run on aarch64.
+  M0: per-CPU state via `TPIDR_EL1` → `struct pcpu` (`_current` is per-CPU). M1:
+  start the APs via PSCI `CPU_ON` + a secondary entry that enables its MMU on the
+  shared page tables. M2: per-CPU GICv2 CPU interface + CNTV timer (each AP takes
+  its own 100 Hz tick). M3: AP scheduler entry — an AP adopts a per-CPU idle and
+  pulls tasks from the shared run queue. M3 is **opt-in** (`AARCH64_SMP_ENABLE_APS`,
+  default off) pending the M4 true-SMP hardening. See `docs/design/aarch64-smp-plan.md`.
+- **Activity Monitor — per-core CPU graphs** — the Performance tab detects the CPU
+  count and draws a graph per logical processor, with a "View: Overall / Per core"
+  toggle (Windows Task Manager style). Backed by per-core CPU accounting
+  (`sched_core.c`) exposed as Linux-style `cpu0`/`cpu1`/… lines in `/proc/stat`.
+
+### Changed
+- **aarch64 spinlock is now a real atomic lock** — `spinLock`/`spinUnlock`/
+  `spinTryLock` were uniprocessor stubs (just set a flag); reimplemented with LL/SC
+  (`ldaxr`/`stxr` + store-release), the prerequisite for SMP and strictly more
+  correct for the existing locks. Uniprocessor is unchanged (one uncontended op).
+- **Idle thread is per-CPU** — pinned at `g_pcpu[cpu].idle` and dispatched
+  out-of-band when a CPU has nothing ready, instead of sitting in the shared run
+  queue (which cannot scale to SMP). i386 BSP + aarch64 APs; uniprocessor unchanged.
+- **CPU busy/idle accounting is per-core** — was a single global pair.
+
+### Fixed
+- **Concurrent VFS I/O corruption under SMP** — the FS read/write paths (the UbixFS
+  pool reader) are not re-entrant, so two CPUs in `fread`/`fwrite`/the `fopen`
+  lookup corrupted shared reader state (symptom: a short read during exec →
+  "not loadable"). Serialised across CPUs with a coarse `vfs_io_lock`
+  (`sys/fs/vfs/file.c`); uniprocessor is uncontended, so effectively free there.
+
 ## [2.4.0-BETA] - 2026-06-14
 
 ### Added
