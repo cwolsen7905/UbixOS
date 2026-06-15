@@ -600,6 +600,109 @@ int sys_sigreturn(struct thread *td, struct sys_sigreturn_args *args)
 	return (0);
 }
 
+#elif defined(__x86_64__)
+
+/**
+ * signal_deliver_frame - construct a ring-3 signal-handler frame (x86_64)
+ *
+ * Carves a 16-byte-aligned sigcontext off the user stack (saving the interrupted
+ * GP regs + RIP/RFLAGS/RSP), plants the magic return address just below it, and
+ * redirects the trapframe so the SYSRET/IRET return enters the handler: RDI =
+ * signo, RSP = the new frame (so the handler's `ret` pops the magic address ->
+ * faults -> sigreturn, with the user RSP then pointing at the sigcontext), RIP =
+ * handler.  No on-stack trampoline (the user stack need not be executable).
+ */
+void signal_deliver_frame(int sig, struct sigaction *sa, struct trapframe *frame, struct thread *td)
+{
+	u_int64_t sc_addr = (frame->tf_rsp - (u_int64_t)sizeof(struct ubx_sigcontext)) & ~(u_int64_t)15;
+	u_int64_t new_rsp = sc_addr - 8; /* the magic return address sits here */
+	struct ubx_sigcontext *sc = (struct ubx_sigcontext *)(uintptr_t)sc_addr;
+
+	sc->sc_rax = frame->tf_rax;
+	sc->sc_rbx = frame->tf_rbx;
+	sc->sc_rcx = frame->tf_rcx;
+	sc->sc_rdx = frame->tf_rdx;
+	sc->sc_rsi = frame->tf_rsi;
+	sc->sc_rdi = frame->tf_rdi;
+	sc->sc_rbp = frame->tf_rbp;
+	sc->sc_r8 = frame->tf_r8;
+	sc->sc_r9 = frame->tf_r9;
+	sc->sc_r10 = frame->tf_r10;
+	sc->sc_r11 = frame->tf_r11;
+	sc->sc_r12 = frame->tf_r12;
+	sc->sc_r13 = frame->tf_r13;
+	sc->sc_r14 = frame->tf_r14;
+	sc->sc_r15 = frame->tf_r15;
+	sc->sc_rip = frame->tf_rip;
+	sc->sc_rflags = frame->tf_rflags;
+	sc->sc_rsp = frame->tf_rsp;
+
+	if (td->td_pflags & TDP_OLDMASK)
+	{
+		memcpy(&sc->sc_mask, &td->td_oldsigmask, sizeof(sigset_t));
+		td->td_pflags &= ~TDP_OLDMASK;
+	}
+	else
+	{
+		memcpy(&sc->sc_mask, &td->sigmask, sizeof(sigset_t));
+	}
+
+	td->sigmask.__bits[0] |= sa->sa_mask.__bits[0];
+	if (!(sa->sa_flags & SA_NODEFER))
+		td->sigmask.__bits[0] |= (1u << (sig - 1));
+
+	*(u_int64_t *)(uintptr_t)new_rsp = X86_64_SIGTRAMP_RETADDR;
+
+	frame->tf_rdi = (u_int64_t)(unsigned)sig; /* handler's first arg */
+	frame->tf_rsp = new_rsp;
+	frame->tf_rip =
+	    (sa->sa_flags & SA_SIGINFO) ? (u_int64_t)(uintptr_t)sa->sa_sigaction : (u_int64_t)(uintptr_t)sa->sa_handler;
+}
+
+/**
+ * sys_sigreturn - restore the interrupted ring-3 context after a handler (x86_64)
+ *
+ * Invoked from the #PF handler when a returning handler faults on the magic
+ * return address; @args->scp == the user RSP at the fault (the sigcontext).
+ * Restores the saved registers/RIP/RFLAGS/RSP into td->frame so the return
+ * epilogue resumes the originally-interrupted code.
+ */
+int sys_sigreturn(struct thread *td, struct sys_sigreturn_args *args)
+{
+	struct ubx_sigcontext *scp = args->scp;
+	struct trapframe *frame = td->frame;
+
+	if (scp == NULL || frame == NULL)
+	{
+		td->td_retval[0] = -1;
+		return (-1);
+	}
+
+	frame->tf_rax = scp->sc_rax;
+	frame->tf_rbx = scp->sc_rbx;
+	frame->tf_rcx = scp->sc_rcx;
+	frame->tf_rdx = scp->sc_rdx;
+	frame->tf_rsi = scp->sc_rsi;
+	frame->tf_rdi = scp->sc_rdi;
+	frame->tf_rbp = scp->sc_rbp;
+	frame->tf_r8 = scp->sc_r8;
+	frame->tf_r9 = scp->sc_r9;
+	frame->tf_r10 = scp->sc_r10;
+	frame->tf_r11 = scp->sc_r11;
+	frame->tf_r12 = scp->sc_r12;
+	frame->tf_r13 = scp->sc_r13;
+	frame->tf_r14 = scp->sc_r14;
+	frame->tf_r15 = scp->sc_r15;
+	frame->tf_rip = scp->sc_rip;
+	frame->tf_rflags = scp->sc_rflags;
+	frame->tf_rsp = scp->sc_rsp;
+
+	memcpy(&td->sigmask, &scp->sc_mask, sizeof(sigset_t));
+
+	td->td_retval[0] = (int)frame->tf_rax;
+	return (0);
+}
+
 #endif /* arch signal-frame delivery */
 
 /**

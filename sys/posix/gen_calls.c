@@ -556,6 +556,8 @@ int sys_invalid(struct thread *td, void *args)
 #if defined(__aarch64__)
 	/* x8 holds the syscall number on aarch64 (tf_eax is the i386 equivalent). */
 	kprintf("ISC[%lu:%i]", (unsigned long)(td->frame != 0 ? td->frame->tf_x[8] : 0), _current->id);
+#elif defined(__x86_64__)
+	kprintf("ISC[%lu:%i]", (unsigned long)(td->frame != 0 ? td->frame->tf_rax : 0), _current->id);
 #else
 	kprintf("ISC[%i:%i]", td->frame->tf_eax, _current->id);
 #endif

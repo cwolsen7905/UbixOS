@@ -48,6 +48,19 @@ struct trapframe
 	u_int64_t tf_sp;    /* offset 272 — sp_el0 (user stack pointer) */
 	u_int64_t tf_pad1;  /* offset 280 — 16-byte alignment to 288 */
 };
+#elif defined(__x86_64__)
+/*
+ * x86-64 trapframe — same byte layout as <x86_64.h>'s struct x86_64_trapframe
+ * (the ISR + syscall stubs push it); the signal code in signal.c uses the named
+ * fields, and x86_64_syscall casts between the two identical layouts.
+ */
+struct trapframe
+{
+	u_int64_t tf_rax, tf_rbx, tf_rcx, tf_rdx, tf_rsi, tf_rdi, tf_rbp;
+	u_int64_t tf_r8, tf_r9, tf_r10, tf_r11, tf_r12, tf_r13, tf_r14, tf_r15;
+	u_int64_t tf_vector, tf_err;
+	u_int64_t tf_rip, tf_cs, tf_rflags, tf_rsp, tf_ss;
+};
 #else
 struct trapframe
 {

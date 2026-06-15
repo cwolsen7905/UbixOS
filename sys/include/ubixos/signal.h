@@ -36,7 +36,7 @@
 
 struct sys_sigsuspend_args;
 
-#if !defined(__aarch64__)
+#if !defined(__aarch64__) && !defined(__x86_64__)
 /*
  * Saved CPU context pushed onto the user stack when delivering a signal.
  * sys_sigreturn receives a pointer to this struct and restores the registers.

@@ -36,10 +36,6 @@ long outportByteP()
 {
 	return -1;
 }
-long signal_deliver_frame()
-{
-	return -1;
-}
 long sys_accept()
 {
 	return -1;
@@ -153,10 +149,6 @@ long sys_settty()
 	return -1;
 }
 long sys_shareregion()
-{
-	return -1;
-}
-long sys_sigreturn()
 {
 	return -1;
 }

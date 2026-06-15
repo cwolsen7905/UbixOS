@@ -309,6 +309,11 @@ void x86_64_syscall(struct x86_64_trapframe *tf)
 	/* The MI table-driven dispatch engine + the FreeBSD POSIX table. */
 	extern register_t ksyscall_dispatch(
 	    struct thread * td, struct syscall_entry * tbl, int count, u_int32_t number, register_t *args);
+	extern void signal_check(struct trapframe * frame);
+
+	/* Record the live trapframe so signal delivery (signal_check) + sys_sigreturn
+	 * can read/rewrite it; both name the identical-layout struct trapframe. */
+	_current->td.frame = (struct trapframe *)tf;
 
 	/* exit terminates the task and schedules away — handled here (the generic
 	 * path would return to ring 3). */
@@ -322,39 +327,35 @@ void x86_64_syscall(struct x86_64_trapframe *tf)
 
 	/* mmap (477) + brk (17) return a 64-bit user VA, which the int td_retval[] the
 	 * generic dispatch uses cannot hold — intercept them and put the full result in
-	 * rax directly (the FreeBSD/SysV arg order is RDI/RSI/RDX/R10/...). */
+	 * rax directly (the FreeBSD/SysV arg order is RDI/RSI/RDX/R10/...).  fork (2)
+	 * needs the trapframe to seed the child. */
 	if (tf->rax == 477)
 	{
 		tf->rax = x86_64_user_mmap(tf->rdi, tf->rsi, tf->rdx, tf->r10);
-		return;
 	}
-	if (tf->rax == 17) /* break */
+	else if (tf->rax == 17) /* break */
 	{
 		tf->rax = x86_64_user_brk(tf->rdi);
-		return;
 	}
-	if (tf->rax == 2) /* fork — needs the trapframe to seed the child */
+	else if (tf->rax == 2) /* fork */
 	{
 		tf->rax = (u64)x86_64_fork(tf);
-		return;
 	}
-
-	/* Bring-up console fast path: write to fd 1/2 goes straight to the serial
-	 * console (the x86_64 tty/pty fileops are not wired yet). */
-	if (tf->rax == SYS_WRITE && (tf->rdi == 1 || tf->rdi == 2))
+	else if (tf->rax == SYS_WRITE && (tf->rdi == 1 || tf->rdi == 2))
 	{
+		/* Bring-up console fast path: write to fd 1/2 goes straight to serial
+		 * (the x86_64 tty/pty fileops are not wired yet). */
 		const char *buf = (const char *)(uintptr_t)tf->rsi;
 		u64 len = tf->rdx;
 		for (u64 i = 0; i < len; i++)
 			serial_putc(buf[i]);
 		tf->rax = len;
-		return;
 	}
-
-	/* Everything else dispatches through the real MI POSIX table.  The FreeBSD/
-	 * SysV amd64 ABI passes args in RDI/RSI/RDX/R10/R8/R9; the syscall runs with
-	 * the caller's CR3, so user pointers in the args are directly valid. */
+	else
 	{
+		/* Everything else dispatches through the real MI POSIX table.  The FreeBSD/
+		 * SysV amd64 ABI passes args in RDI/RSI/RDX/R10/R8/R9; the syscall runs with
+		 * the caller's CR3, so user pointers in the args are directly valid. */
 		register_t args[6] = {(register_t)tf->rdi,
 		                      (register_t)tf->rsi,
 		                      (register_t)tf->rdx,
@@ -364,6 +365,10 @@ void x86_64_syscall(struct x86_64_trapframe *tf)
 		tf->rax = (u64)ksyscall_dispatch(
 		    &_current->td, systemCalls_posix, totalCalls_posix, (u_int32_t)tf->rax, args);
 	}
+
+	/* On the way back to ring 3, deliver any pending signal (rewrites tf to enter
+	 * the handler; the handler's magic-return faults into sys_sigreturn). */
+	signal_check((struct trapframe *)tf);
 }
 
 /**

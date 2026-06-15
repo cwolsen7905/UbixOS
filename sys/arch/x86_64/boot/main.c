@@ -175,6 +175,10 @@ void kmain_x86_64(u32 mb_magic, u32 mb_info)
 
 			/* Phase 5e: fork — a process that fork()s; parent + child both run. */
 			x86_64_exec_demo("/forktest");
+
+			/* Phase 5e: signals — install a SIGINT handler, kill(self), verify the
+			 * handler runs + sigreturn resumes. */
+			x86_64_exec_demo("/sigtest");
 		}
 		else
 			serial_puts("vfs: FAT mount failed\n");

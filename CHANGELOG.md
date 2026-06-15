@@ -178,6 +178,19 @@ First entries of the 3.0 series (64-bit only: x86_64 + aarch64).  Development on
     at the fork return point.  fork is intercepted in the syscall entry (it needs
     the trapframe).  Verified: a `/forktest` binary forks and both parent ("child
     pid in rax") and child ("fork returned 0") run.
+  - *Phase 5e — POSIX signals.* x86_64 signal delivery + `sigreturn`: an
+    `#ifdef __x86_64__` block in the MI `signal.c` builds a sigframe on the user
+    stack (saving the GP regs + RIP/RFLAGS/RSP into a `ubx_sigcontext`) and
+    redirects the trapframe into the handler (RDI = signo).  Like aarch64, the
+    handler "returns" to a magic unmapped address (`X86_64_SIGTRAMP_RETADDR`); the
+    ring-3 `#PF` on it is turned into `sys_sigreturn`, which restores the context —
+    no executable user trampoline needed.  `signal_check` runs on the syscall
+    return path; new `x86_64/signal.h` + an x86_64 `struct trapframe` (in
+    `sys/trap.h`) carry the layout.  Verified: `/sigtest` installs a SIGINT handler,
+    `kill`s itself, the handler runs and `sigreturn` resumes it.
+
+  **With mmap/execve/fork/signals in place, the x86_64 kernel can now load, run,
+  fork, and signal real on-disk binaries — the full runtime a userland needs.**
   `bmake TARGET=x86_64` builds the bring-up kernel only (the x86_64 userland/world is
   a later phase); `bmake run TARGET=x86_64` boots it (serial console).
   Grows by widening the i386 MD code to 64-bit.  See `docs/design/cross-arch-plan.md`.

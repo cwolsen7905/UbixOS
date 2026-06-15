@@ -10,8 +10,11 @@
  */
 
 #include "x86_64.h"
-#include <ubixos/sched.h>   /* _current, sched() — ring-3 fault containment */
-#include <ubixos/endtask.h> /* endTask */
+#include <ubixos/sched.h>       /* _current, sched() — ring-3 fault containment */
+#include <ubixos/endtask.h>     /* endTask */
+#include <sys/trap.h>           /* struct trapframe */
+#include <machine/signal.h>     /* X86_64_SIGTRAMP_RETADDR, struct ubx_sigcontext */
+#include <sys/sysproto_posix.h> /* struct sys_sigreturn_args, sys_sigreturn */
 
 #define KERNEL_CS 0x08    /* 64-bit code selector (start.S GDT) */
 #define IDT_GATE_INT 0x8E /* present, DPL0, 64-bit interrupt gate */
@@ -126,6 +129,18 @@ void x86_64_exception(struct x86_64_trapframe *tf)
 	{
 		x86_64_irq((unsigned)tf->vector);
 		return;
+	}
+
+	/* A ring-3 fault on the magic signal-return address means a handler is
+	 * returning: restore the interrupted context via sys_sigreturn (the user RSP
+	 * points at the saved sigcontext) and IRETQ back into it, rather than faulting. */
+	if (tf->vector == 14 && (tf->cs & 3) == 3 && tf->rip == X86_64_SIGTRAMP_RETADDR)
+	{
+		struct sys_sigreturn_args sra;
+		sra.scp = (struct ubx_sigcontext *)(uintptr_t)tf->rsp;
+		_current->td.frame = (struct trapframe *)tf;
+		sys_sigreturn(&_current->td, &sra);
+		return; /* tf now holds the restored context */
 	}
 
 	__asm__ __volatile__("mov %%cr2, %0" : "=r"(cr2));
