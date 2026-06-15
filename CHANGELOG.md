@@ -263,7 +263,15 @@ First entries of the 3.0 series (64-bit only: x86_64 + aarch64).  Development on
     `exit_group`).  Result: x86_64 boots `init` → the `/etc/init.d` services
     (automountd, logd, ubistry, authd, …) → a **base-profile text login** with a
     working `Login:`/`Password:` prompt over serial.  (Remaining: the login↔authd MPI
-    round-trip times out — the last step before a shell.)
+     round-trip times out — the last step before a shell.)
+  - *Phase 5e — login authenticates (sched_yield was a no-op stub).* `sys_sched_yield`
+    on x86_64 was a `return -1` stub in `arch/x86_64/kern/syscall_stubs.c` (the real
+    `sys/kern/syscall.c` isn't compiled on x86_64 — it's full of i386-isms), so a
+    userland `sched_yield()` did nothing.  The cooperative scheduler depends on it:
+    `login` polling for `authd`'s MPI reply spun without ever handing the CPU to
+    `authd`, so it always timed out ("Login incorrect").  Made the stub call the MI
+    `sched_yield()`.  Now login → authd round-trips, **authenticates** (root/user),
+    and execs the user's shell — the last gate to a shell is cleared.
 
   **With mmap/execve/fork/signals in place, the x86_64 kernel can now load, run,
   fork, and signal real on-disk binaries — the full runtime a userland needs.**

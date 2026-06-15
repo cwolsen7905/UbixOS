@@ -128,9 +128,14 @@ long sys_rfork()
 {
 	return -1;
 }
+/* sched_yield(2): a real implementation, NOT a stub — the cooperative scheduler
+ * depends on it (e.g. login polling for authd's MPI reply must hand the CPU to
+ * authd, or it spins and times out).  The MI sched_yield() re-dispatches. */
 long sys_sched_yield()
 {
-	return -1;
+	extern void sched_yield(void);
+	sched_yield();
+	return 0;
 }
 long sys_sendmsg()
 {
