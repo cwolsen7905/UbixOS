@@ -323,6 +323,15 @@ void x86_64_syscall(struct x86_64_trapframe *tf)
 	 * can read/rewrite it; both name the identical-layout struct trapframe. */
 	_current->td.frame = (struct trapframe *)tf;
 
+	/* musl issues some UbixOS-native calls (e.g. exit_group) by ORing NATIVE_FLAG
+	 * (0x8000) into the number even on the `syscall`-instruction path — route those
+	 * to the native handler (which strips the flag), like aarch64's syscall.c. */
+	if (tf->rax & 0x8000)
+	{
+		x86_64_native_syscall(tf);
+		return;
+	}
+
 	/* exit terminates the task and schedules away — handled here (the generic
 	 * path would return to ring 3). */
 	if (tf->rax == SYS_EXIT)
@@ -390,12 +399,14 @@ void x86_64_syscall(struct x86_64_trapframe *tf)
  * Mirrors aarch64's NATIVE_* (kern/syscall.c); the calls that take user pointers
  * are dispatched directly (the syscall runs under the caller's CR3, so the
  * pointers are valid) to sidestep the table's uap-struct arg packing. */
+#define NATIVE_FLAG 0x8000
 #define NATIVE_GETCWD 41
 #define NATIVE_KLOG_READ 47
 #define NATIVE_MPI_CREATE 50
 #define NATIVE_MPI_DESTROY 51
 #define NATIVE_MPI_POST 52
 #define NATIVE_MPI_FETCH 53
+#define NATIVE_EXIT_GROUP 65
 #define NATIVE_MPI_WAIT 69
 
 /**
@@ -419,13 +430,21 @@ void x86_64_native_syscall(struct x86_64_trapframe *tf)
 	extern struct syscall_entry systemCalls[];
 	extern int totalCalls;
 
+	extern void endTask(int pid);
+	extern void sched(void);
+
 	u64 args[6] = {tf->rdi, tf->rsi, tf->rdx, tf->r10, tf->r8, tf->r9};
-	u32 n = (u32)tf->rax;
+	u32 n = (u32)(tf->rax & ~(u64)NATIVE_FLAG); /* strip the flag musl may OR in */
 
 	_current->td.frame = (struct trapframe *)tf;
 
 	switch (n)
 	{
+		case NATIVE_EXIT_GROUP:
+			endTask(_current->id);
+			sched();
+			return; /* unreachable */
+
 		case NATIVE_MPI_CREATE:
 			tf->rax = (u64)mpi_createMbox((char *)(uintptr_t)args[0]);
 			break;

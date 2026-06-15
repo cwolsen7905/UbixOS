@@ -75,6 +75,13 @@ void serial_putc(char c);
 void serial_puts(const char *s);
 void serial_puthex(u64 v);
 void serial_putdec(u64 v);
+int serial_getc(void);     /* non-blocking COM1 read: byte, or -1 if none */
+int serial_rx_ready(void); /* non-zero if a received byte is waiting */
+
+/* dev/console_tty.c — wire COM1 into the VFS console fileops (login/shell tty). */
+struct thread;
+void x86_64_console_tty_init(void);              /* install g_console_ops + tty hooks */
+int x86_64_console_setup_fds(struct thread *td); /* fds 0/1/2 -> console for a task */
 
 /* ksupport.c — register COM1 as a kconsole sink (so the real kprintf routes here). */
 void x86_64_console_init(void);

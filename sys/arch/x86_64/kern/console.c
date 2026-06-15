@@ -39,6 +39,20 @@ void serial_puts(const char *s)
 	}
 }
 
+/** Non-blocking COM1 read: the received byte, or -1 if none is waiting. */
+int serial_getc(void)
+{
+	if ((inb(COM1 + 5) & 0x01) == 0) /* LSR bit 0: data ready */
+		return -1;
+	return (int)(unsigned char)inb(COM1);
+}
+
+/** Non-zero if a received byte is waiting on COM1 (the console line-discipline poll). */
+int serial_rx_ready(void)
+{
+	return (inb(COM1 + 5) & 0x01) != 0;
+}
+
 void serial_puthex(u64 v)
 {
 	static const char hexd[] = "0123456789ABCDEF";

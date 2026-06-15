@@ -343,6 +343,7 @@ static kTask_t *spawn_dynamic(const char *path)
 	t->md.md_entry = entry;
 	t->md.md_usp = usp;
 	strncpy(t->name, path, sizeof(t->name) - 1);
+	x86_64_console_setup_fds(&t->td); /* stdin/stdout/stderr -> COM1 console */
 	sched_ready(t);
 	kprintf("dyn: %s ready (pid %d, entry %X usp %X)\n", path, t->id, entry, usp);
 	return t;

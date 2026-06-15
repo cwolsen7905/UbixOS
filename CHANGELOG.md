@@ -253,6 +253,17 @@ First entries of the 3.0 series (64-bit only: x86_64 + aarch64).  Development on
     services with no faults — the dynamic linker is fully functional on x86_64.
     (Next: the console/tty + devfs/procfs layer so the services and `login` have a
     `/dev` and a controlling terminal.)
+  - *Phase 5e — console + devfs/procfs: boots to an interactive login.* A COM1-backed
+    VFS console (`dev/console_tty.c`: read/write fileops with a cooked line discipline
+    — echo, CRLF, backspace) installs `g_console_ops` + the tty hooks; `serial_getc`/
+    `serial_rx_ready` add COM1 input.  `kmain` registers + mounts devfs (`/dev`) and
+    procfs (`/proc`), and `spawn_dynamic` wires a task's fds 0/1/2 to the console (init
+    + its forked children inherit them).  `x86_64_native_syscall`/`x86_64_syscall` now
+    honour musl's `NATIVE_FLAG` (0x8000) on the `syscall`-instruction path (e.g.
+    `exit_group`).  Result: x86_64 boots `init` → the `/etc/init.d` services
+    (automountd, logd, ubistry, authd, …) → a **base-profile text login** with a
+    working `Login:`/`Password:` prompt over serial.  (Remaining: the login↔authd MPI
+    round-trip times out — the last step before a shell.)
 
   **With mmap/execve/fork/signals in place, the x86_64 kernel can now load, run,
   fork, and signal real on-disk binaries — the full runtime a userland needs.**

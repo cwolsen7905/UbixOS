@@ -11,10 +11,12 @@
 #include "x86_64.h"
 #include <ubixos/sched.h>
 #include <x86_64/pcpu.h>
-#include <fs/vfs/vfs.h>   /* vfs_init, VFS_TYPE_FAT */
-#include <fs/vfs/mount.h> /* vfs_mount */
-#include <fs/vfs/file.h>  /* vfs_opendir/readdir/closedir, kDIR_t, struct kdirent */
-#include <fs/fat/fat.h>   /* fat_init */
+#include <fs/vfs/vfs.h>       /* vfs_init, VFS_TYPE_FAT/DEVFS/PROCFS */
+#include <fs/vfs/mount.h>     /* vfs_mount */
+#include <fs/vfs/file.h>      /* vfs_opendir/readdir/closedir, kDIR_t, struct kdirent */
+#include <fs/fat/fat.h>       /* fat_init */
+#include <fs/devfs/devfs.h>   /* devfs_init — /dev/{null,zero,tty,...} */
+#include <fs/procfs/procfs.h> /* procfs_init — /proc */
 
 /**
  * x86-64 kernel C entry.  @mb_magic / @mb_info are the boot magic + info pointer
@@ -140,7 +142,12 @@ void kmain_x86_64(u32 mb_magic, u32 mb_info)
 	if (virtio_blk_init() == 0)
 	{
 		vfs_init();
-		fat_init(); /* register the FAT driver with the VFS */
+		fat_init();    /* register the FAT driver with the VFS */
+		devfs_init();  /* register devfs + queue /dev/{null,zero,tty,console,...} */
+		procfs_init(); /* register procfs (/proc) */
+
+		/* Wire COM1 into the VFS console fileops so login/shell stdin/stdout work. */
+		x86_64_console_tty_init();
 
 		/* Partition 1 (vtblk0s1, major 1 / minor 1) is the FAT volume. */
 		if (vfs_mount(1, 1, 0, VFS_TYPE_FAT, "/", "rw") == 0)
@@ -163,6 +170,18 @@ void kmain_x86_64(u32 mb_magic, u32 mb_info)
 			}
 			else
 				serial_puts("vfs: opendir(/) failed\n");
+
+			/* Mount devfs at /dev and procfs at /proc so the services + login have
+			 * pseudo-devices (/dev/null, /dev/tty, /dev/console) and /proc.  Match
+			 * aarch64's boot: the kernel mounts these, init need not. */
+			if (vfs_mount(0, 0, 0, VFS_TYPE_DEVFS, "/dev", "rw") == 0)
+				serial_puts("vfs: devfs mounted at /dev\n");
+			else
+				serial_puts("vfs: devfs mount FAILED\n");
+			if (vfs_mount(0, 0, 0, VFS_TYPE_PROCFS, "/proc", "rw") == 0)
+				serial_puts("vfs: procfs mounted at /proc\n");
+			else
+				serial_puts("vfs: procfs mount FAILED\n");
 
 			/* Phase 5e FINAL: hand off to the disk-backed userland — exec /bin/init
 			 * (PID 1) via the dynamic linker (ld-musl-x86_64.so.1), the same boot
