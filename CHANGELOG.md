@@ -21,6 +21,11 @@ First entries of the 3.0 series (64-bit only: x86_64 + aarch64).  Development on
   - *Phase 2 — IDT + exceptions.* A 256-entry 64-bit IDT with the 32 CPU-exception
     stubs; the handler dumps the trapframe (vector, error, RIP/CS/RFLAGS, CR2) over
     serial so faults are visible instead of a silent triple-fault.
+  - *Phase 3 — physical memory + kmalloc.* Reuses the machine-independent page
+    allocator (`vmm_memory.c`) + `kmalloc` over a 256 MB identity-mapped RAM, via an
+    x86_64 `vmm_machdep` + bring-up support shims (atomic spinlock, kpanic, minimal
+    kprintf).  Adds the x86_64 MD header set (`<machine/{cpu,proc}.h>` now resolve to
+    x86_64, not the 32-bit i386 headers).
   Grows by widening the i386 MD code to 64-bit.  See `docs/design/cross-arch-plan.md`.
 - **aarch64 SMP bring-up (smp-plan M0–M3)** — secondary cores now run on aarch64.
   M0: per-CPU state via `TPIDR_EL1` → `struct pcpu` (`_current` is per-CPU). M1:
