@@ -27,6 +27,12 @@ ARCH_MUSL_INC = -I${MUSL_SRC}/arch/aarch64
 # aarch64 world links PIE (programs load at a high VA via ld.so), so the static
 # C++ archives must be position-independent to link into a -pie executable.
 ARCH_PIC      = -fPIC
+.elif ${_ARCH} == "x86_64"
+# x86_64 keeps SSE (SysV ABI returns float/double in XMM; -mno-sse breaks stof
+# et al.) and links PIE like aarch64, with its own musl arch headers.
+ARCH_SIMD     =
+ARCH_MUSL_INC = -I${MUSL_SRC}/arch/x86_64
+ARCH_PIC      = -fPIC
 .else
 ARCH_SIMD     = -mno-sse -mno-sse2 -mno-mmx -mno-3dnow
 ARCH_MUSL_INC = -I${MUSL_SRC}/arch/i386

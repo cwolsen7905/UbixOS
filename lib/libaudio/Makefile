@@ -13,6 +13,9 @@ MUSL_OBJ = ${OBJ_DIR}/obj/musl
 .if ${_ARCH} == "aarch64"
 ARCH_MUSL_INC = -I${MUSL_SRC}/arch/aarch64
 ARCH_CFLAGS   =
+.elif ${_ARCH} == "x86_64"
+ARCH_MUSL_INC = -I${MUSL_SRC}/arch/x86_64
+ARCH_CFLAGS   =
 .else
 ARCH_MUSL_INC = -I${MUSL_SRC}/arch/i386
 ARCH_CFLAGS   = ${CROSS_M32} -mno-sse -mno-sse2 -mno-mmx -mno-3dnow

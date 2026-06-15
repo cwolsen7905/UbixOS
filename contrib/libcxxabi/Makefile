@@ -16,6 +16,12 @@ ARCH_SIMD     =
 ARCH_MUSL_INC = -I${MUSL_SRC}/arch/aarch64
 # aarch64 world is PIE — the static archive must be position-independent.
 ARCH_PIC      = -fPIC
+.elif ${_ARCH} == "x86_64"
+# x86_64 keeps SSE (the SysV ABI returns float/double in XMM — -mno-sse breaks
+# any function returning a float).  PIE like aarch64, its own musl arch headers.
+ARCH_SIMD     =
+ARCH_MUSL_INC = -I${MUSL_SRC}/arch/x86_64
+ARCH_PIC      = -fPIC
 .else
 ARCH_SIMD     = -mno-sse -mno-sse2 -mno-mmx -mno-3dnow
 ARCH_MUSL_INC = -I${MUSL_SRC}/arch/i386

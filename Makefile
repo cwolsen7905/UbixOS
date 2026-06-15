@@ -456,9 +456,9 @@ world:
 	cd ${WORLD_LIB_SRC}; ${WMAKE} all
 	@echo
 	@echo "***************************************************************"
-	@echo "Step 2: Build World Libexec — i386 only (native ld; musl ld.so on aarch64)"
+	@echo "Step 2: Build World Libexec — i386 only (native ld; musl ld.so on 64-bit)"
 	@echo "***************************************************************"
-	@if [ "${_ARCH}" != "aarch64" ]; then \
+	@if [ "${_ARCH}" != "aarch64" ] && [ "${_ARCH}" != "x86_64" ]; then \
 	    cd ${WORLD_LIBEXEC_SRC}; ${WMAKE} all; \
 	  else echo "skip: native libexec/ld superseded by musl ld.so"; fi
 	@echo

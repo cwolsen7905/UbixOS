@@ -202,6 +202,16 @@ First entries of the 3.0 series (64-bit only: x86_64 + aarch64).  Development on
     musl-linked binary prints via `write`, `malloc`s (SSE), opens/reads files, and
     `exit`s cleanly through `__libc_start_main`.
 
+  - *Phase 5e — world libraries cross-build.* `bmake world TARGET=x86_64` now
+    builds Steps 0-2 (musl, libc++/libc++abi, and all world libraries — objGFX, the
+    NetSurf C libs, libbearssl, libpw, libhttp, libaudio, zlib, …).  Each affected
+    Makefile gained an `x86_64` arch branch alongside the existing aarch64/i386 ones:
+    SSE stays **on** (the amd64 SysV ABI returns float/double in XMM, so the kernel's
+    `-mno-sse` rule must *not* leak into the world), the musl arch headers come from
+    `arch/x86_64`, and links use the `elf_x86_64` emulation + PIE (like aarch64).  The
+    legacy native `libexec/ld` is skipped on x86_64 too (musl's `ld-musl-x86_64.so.1`
+    is the runtime linker).  (The `bin/` programs are the next step.)
+
   **With mmap/execve/fork/signals in place, the x86_64 kernel can now load, run,
   fork, and signal real on-disk binaries — the full runtime a userland needs.**
   `bmake TARGET=x86_64` builds the bring-up kernel only (the x86_64 userland/world is

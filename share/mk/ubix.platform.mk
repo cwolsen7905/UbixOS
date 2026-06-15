@@ -61,6 +61,13 @@ _ARCH ?= i386
 MUSL_ARCH        ?= aarch64
 MUSL_LDEMULATION ?= aarch64elf
 ARCH_NOSIMD      ?=
+.elif ${_ARCH} == "x86_64"
+MUSL_ARCH        ?= x86_64
+MUSL_LDEMULATION ?= elf_x86_64
+# Keep SSE in the world: the amd64 SysV ABI returns float/double in XMM, so
+# -mno-sse miscompiles anything returning a float (unlike the kernel, which sets
+# no FP state and forbids SSE).
+ARCH_NOSIMD      ?=
 .else
 MUSL_ARCH        ?= i386
 MUSL_LDEMULATION ?= elf_i386

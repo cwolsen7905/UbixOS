@@ -11,6 +11,10 @@ LIBNSGIF      = ${SRCTOP}/contrib/libnsgif
 ARCH_SIMD     =
 ARCH_MUSL_INC = -I${MUSL_SRC}/arch/aarch64
 ARCH_LDEMUL   = aarch64elf
+.elif ${_ARCH} == "x86_64"
+ARCH_SIMD     = -mno-sse -mno-sse2 -mno-mmx -mno-3dnow
+ARCH_MUSL_INC = -I${MUSL_SRC}/arch/x86_64
+ARCH_LDEMUL   = elf_x86_64
 .else
 ARCH_SIMD     = -mno-sse -mno-sse2 -mno-mmx -mno-3dnow
 ARCH_MUSL_INC = -I${MUSL_SRC}/arch/i386

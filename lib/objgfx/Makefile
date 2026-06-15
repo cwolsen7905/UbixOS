@@ -11,6 +11,9 @@ MUSL_OBJ = ${OBJ_DIR}/obj/musl
 .if ${_ARCH} == "aarch64"
 ARCH_MUSL_INC = -I${MUSL_SRC}/arch/aarch64
 ARCH_LDEMUL   = aarch64elf
+.elif ${_ARCH} == "x86_64"
+ARCH_MUSL_INC = -I${MUSL_SRC}/arch/x86_64
+ARCH_LDEMUL   = elf_x86_64
 .else
 ARCH_MUSL_INC = -I${MUSL_SRC}/arch/i386
 ARCH_LDEMUL   = elf_i386
