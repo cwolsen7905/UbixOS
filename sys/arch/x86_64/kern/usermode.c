@@ -123,8 +123,8 @@ u64 x86_64_ring0_stack_top(void)
 #define PTE_US 0x4
 #define PTE_ADDR_MASK (~0xFFFUL)
 
-#define USER_CODE_VA 0x400000UL  /* 4 MB — the standard amd64 ELF base; the user low */
-#define USER_STACK_VA 0x401000UL /* half is now clean (no kernel identity to collide) */
+#define USER_CODE_VA 0x40000000UL  /* 1 GB — first VA above the shared low-1 GB identity */
+#define USER_STACK_VA 0x40001000UL /* (user mappings live above the identity window) */
 #define USER_STACK_TOP (USER_STACK_VA + PAGE_SIZE)
 
 /* FreeBSD amd64 syscall numbers (shared by the int 0x80 + syscall-instruction
@@ -192,28 +192,39 @@ void x86_64_map_user_page(u64 va, u64 phys, int writable)
 
 /**
  * Create a fresh per-process address space and @return its PML4's PHYSICAL address
- * (load into CR3 directly).  The entire low canonical half (PML4[0..255]) is left
- * empty — a private, clean user region that map_user_page_to fills on demand, so
- * binaries can load at standard low VAs (e.g. 0x400000).  The kernel's higher-half
- * mappings (PML4[256..511] — physmap + kernel text) are shared by pointer so the
- * kernel stays mapped (code/data + physical access) after switch_to loads this
- * PML4 into CR3.  The kernel itself no longer needs the low identity map here.
+ * (load into CR3 directly).  Layout (matching aarch64's working model):
+ *   - the kernel low-1 GB identity (PML4[0] -> PDPT[0]) is shared, so the kernel's
+ *     "physical frame == pointer" accesses (the MI ELF loader + uregion mmap/brk
+ *     zero-fill a frame via (void *)frame) work while THIS user CR3 is active,
+ *     e.g. during a syscall;
+ *   - user mappings live ABOVE 1 GB (PDPT[1..], private to this space), so they
+ *     never collide with that identity window;
+ *   - the kernel higher half (PML4[256..511] — physmap + kernel text) is shared by
+ *     pointer so the kernel stays mapped across the CR3 switch.
+ * Each space gets its own PDPT under PML4[0] (with PDPT[0] = the shared kernel PD)
+ * so the per-process PDPT[1..] user slots stay private.
  */
 uintptr_t x86_64_create_user_space(void)
 {
 	u64 cr3;
-	uintptr_t kpml4_phys, pml4_phys;
-	u64 *kpml4, *pml4;
+	uintptr_t kpml4_phys, kpdpt_phys, pml4_phys, pdpt_phys;
+	u64 *kpml4, *kpdpt, *pml4, *pdpt;
 
 	__asm__ __volatile__("mov %%cr3, %0" : "=r"(cr3));
 	kpml4_phys = (uintptr_t)(cr3 & PTE_ADDR_MASK);
 	kpml4 = (u64 *)P2V(kpml4_phys);
+	kpdpt_phys = (uintptr_t)(kpml4[0] & PTE_ADDR_MASK);
+	kpdpt = (u64 *)P2V(kpdpt_phys);
 
 	pml4_phys = alloc_table();
-	if (pml4_phys == 0)
+	pdpt_phys = alloc_table();
+	if (pml4_phys == 0 || pdpt_phys == 0)
 		return 0;
 	pml4 = (u64 *)P2V(pml4_phys);
+	pdpt = (u64 *)P2V(pdpt_phys);
 
+	pdpt[0] = kpdpt[0]; /* share the kernel low-1 GB identity PD */
+	pml4[0] = pdpt_phys | PTE_P | PTE_RW | PTE_US;
 	for (unsigned i = 256; i < 512; i++)
 		pml4[i] = kpml4[i];
 	return pml4_phys;
@@ -307,6 +318,20 @@ void x86_64_syscall(struct x86_64_trapframe *tf)
 		endTask(_current->id);
 		sched();
 		return; /* unreachable */
+	}
+
+	/* mmap (477) + brk (17) return a 64-bit user VA, which the int td_retval[] the
+	 * generic dispatch uses cannot hold — intercept them and put the full result in
+	 * rax directly (the FreeBSD/SysV arg order is RDI/RSI/RDX/R10/...). */
+	if (tf->rax == 477)
+	{
+		tf->rax = x86_64_user_mmap(tf->rdi, tf->rsi, tf->rdx, tf->r10);
+		return;
+	}
+	if (tf->rax == 17) /* break */
+	{
+		tf->rax = x86_64_user_brk(tf->rdi);
+		return;
 	}
 
 	/* Bring-up console fast path: write to fd 1/2 goes straight to the serial

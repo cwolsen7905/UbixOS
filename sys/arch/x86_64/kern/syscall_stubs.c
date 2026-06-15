@@ -1,14 +1,14 @@
 /*-
  * Copyright (c) 2002-2026 The UbixOS Project.  All rights reserved.
  *
- * x86-64 syscall-surface stubs (Phase 5e).  The MI POSIX table (syscalls_posix.c)
- * references the entire syscall surface; the implementations that need x86_64
- * machine-dependent glue not yet ported -- exec/fork, mmap/VM, signals, sockets
- * (lwIP), pty/tty, the display/input devices -- are stubbed here so the table
- * links and the *implemented* calls (file I/O, getpid, time, pipe, sem, MPI)
- * dispatch through their real MI code.  Each stub is replaced as its subsystem is
- * brought up on x86_64.  K&R empty parens => the linker resolves by name; the
- * (unexercised) callers' prototypes drive the ABI, the stubs ignore args.
+ * x86-64 syscall-surface stubs (Phase 5e).  The MI POSIX table references the
+ * entire syscall surface; the implementations that still need x86_64 machine-
+ * dependent glue -- exec/fork, signals, sockets (lwIP), pty/tty, the display/
+ * input devices -- are stubbed here so the table links and the implemented calls
+ * dispatch through their real code.  The mmap/VM + TLS calls graduated to
+ * syscall_md.c.  Each stub is replaced as its subsystem is brought up; K&R empty
+ * parens => the linker resolves by name, the (unexercised) callers' prototypes
+ * drive the ABI.
  */
 
 /* Pointer-returning: callers dereference the result, so return NULL. */
@@ -24,10 +24,6 @@ long inportByte()
 {
 	return -1;
 }
-long machine_set_tls()
-{
-	return -1;
-}
 long md_disk_list()
 {
 	return -1;
@@ -36,19 +32,11 @@ long md_resident_pages()
 {
 	return -1;
 }
-long obreak()
-{
-	return -1;
-}
 long outportByteP()
 {
 	return -1;
 }
 long signal_deliver_frame()
-{
-	return -1;
-}
-long sysGetFreePage()
 {
 	return -1;
 }
@@ -104,27 +92,7 @@ long sys_listen()
 {
 	return -1;
 }
-long sys_madvise()
-{
-	return -1;
-}
 long sys_mapfb()
-{
-	return -1;
-}
-long sys_mmap()
-{
-	return -1;
-}
-long sys_mmap2()
-{
-	return -1;
-}
-long sys_msync()
-{
-	return -1;
-}
-long sys_munmap()
 {
 	return -1;
 }
@@ -228,7 +196,19 @@ long vmm_clean_virtual_space()
 {
 	return -1;
 }
-long vmm_set_page_attributes()
+
+/* mmap/mmap2/brk are intercepted by x86_64_syscall (which returns the 64-bit VA
+ * directly — td_retval is 32-bit), so these table entries are unreached; present
+ * only so the POSIX table links. */
+long sys_mmap()
+{
+	return -1;
+}
+long sys_mmap2()
+{
+	return -1;
+}
+long obreak()
 {
 	return -1;
 }

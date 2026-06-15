@@ -148,6 +148,18 @@ First entries of the 3.0 series (64-bit only: x86_64 + aarch64).  Development on
     are stubbed in `syscall_stubs.c` so the table links; each lands as its
     subsystem is ported.  Verified: a ring-3 ELF64 process opens + reads
     `/kernel/kernel` through the **real** `sys_open`/`sys_read` via the table.
+  - *Phase 5e — mmap/brk VM glue.* `sys/arch/x86_64/kern/syscall_md.c` implements
+    anonymous `mmap`/`mmap2` + `brk` (and `munmap`/`madvise`/`msync` as accepted
+    no-ops, `machine_set_tls` via the FS_BASE MSR for musl TLS) — the allocator
+    surface musl needs.  Pages are mapped via the x86_64 page-table walker with the
+    zero-fill going through the **physmap** (works under the user CR3, which has no
+    low identity for fresh frames).  mmap/brk are intercepted in the syscall entry
+    and return the 64-bit VA directly, since the generic dispatch's `td_retval[]` is
+    `int` (32-bit) and would truncate a user address.  Per-process spaces share the
+    kernel low-1 GB identity again (so the MI ELF loader's direct frame access keeps
+    working) and user mappings live above it (ELF + stack at 1 GB, brk 7 GB, mmap
+    8 GB — matching aarch64).  Verified: a ring-3 process `mmap`s a page, writes to
+    it, and reads a file — all through the `syscall` instruction.
   `bmake TARGET=x86_64` builds the bring-up kernel only (the x86_64 userland/world is
   a later phase); `bmake run TARGET=x86_64` boots it (serial console).
   Grows by widening the i386 MD code to 64-bit.  See `docs/design/cross-arch-plan.md`.

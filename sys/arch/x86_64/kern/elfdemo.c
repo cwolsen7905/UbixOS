@@ -20,8 +20,8 @@
 #include <lib/kmalloc.h> /* sysID */
 #include <string.h>
 
-#define ELF_LOAD_VA 0x400000UL /* amd64 ET_EXEC link base */
-#define ELF_STACK_VA 0x500000UL
+#define ELF_LOAD_VA 0x40000000UL /* 1 GB — above the shared low-1 GB identity window */
+#define ELF_STACK_VA 0x40010000UL
 #define ELF_STACK_TOP (ELF_STACK_VA + PAGE_SIZE)
 
 /* Use the syscall-instruction payload so the demo proves the ELF loader AND the
