@@ -74,34 +74,68 @@ void spinLockInit(spinLock_t lock)
 		lock->locked = 0;
 }
 
+/*
+ * Real atomic spinlock (smp-plan M3/M4).  Until APs were brought up these were
+ * uniprocessor stubs (just set lock->locked); with a second core actually
+ * running, the kernel heap (kmalloc) and every other spinLock-guarded structure
+ * race and corrupt.  Mirror i386's yielding-mutex contract: atomic acquire via
+ * LL/SC (ldaxr/stxr), yield the CPU while contended (so the holder runs), and a
+ * store-release unlock.
+ */
+
 /**
- * Acquire a spinlock.  Single-CPU bring-up: just record the state.
+ * Acquire a spinlock (atomic test-and-set; yields while contended).
  */
 void spinLock(spinLock_t lock)
 {
-	if (lock != 0)
-		lock->locked = 1;
+	if (lock == 0)
+		return;
+	for (;;)
+	{
+		u_int32_t cur, res;
+		__asm__ __volatile__("1: ldaxr   %w0, [%2]      \n"
+		                     "   cbnz    %w0, 2f        \n" /* held -> bail, don't store */
+		                     "   stxr    %w1, %w3, [%2] \n" /* try claim (store 1) */
+		                     "   cbnz    %w1, 1b        \n" /* lost exclusive -> retry */
+		                     "2:                        \n"
+		                     : "=&r"(cur), "=&r"(res)
+		                     : "r"(&lock->locked), "r"(1u)
+		                     : "memory");
+		if (cur == 0)
+			return; /* was free and we claimed it */
+		while (lock->locked != 0)
+			sched_yield(); /* mutex-style: let the holder run */
+	}
 }
 
 /**
- * Release a spinlock.
+ * Release a spinlock (store-release, pairs with the ldaxr acquire).
  */
 void spinUnlock(spinLock_t lock)
 {
 	if (lock != 0)
-		lock->locked = 0;
+		__asm__ __volatile__("stlr wzr, [%0]" : : "r"(&lock->locked) : "memory");
 }
 
 /**
- * Try to acquire a spinlock.  Single-CPU: always succeeds.
+ * Try to acquire a spinlock without waiting.
  *
- * @return 0 on success (lock acquired).
+ * @return 0 if acquired, non-zero if already held.
  */
 int spinTryLock(spinLock_t lock)
 {
-	if (lock != 0)
-		lock->locked = 1;
-	return 0;
+	u_int32_t cur, res = 1;
+
+	if (lock == 0)
+		return 0;
+	__asm__ __volatile__("   ldaxr   %w0, [%2]      \n"
+	                     "   cbnz    %w0, 1f        \n" /* held -> fail */
+	                     "   stxr    %w1, %w3, [%2] \n" /* try claim */
+	                     "1:                        \n"
+	                     : "=&r"(cur), "+&r"(res)
+	                     : "r"(&lock->locked), "r"(1u)
+	                     : "memory");
+	return (cur == 0 && res == 0) ? 0 : 1; /* acquired only if free AND store won */
 }
 
 /* callouts are now the real generic subsystem (sys/kern/callout.c). */
