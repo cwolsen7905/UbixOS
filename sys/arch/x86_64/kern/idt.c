@@ -47,6 +47,7 @@ static struct idt_ptr g_idt_ptr;
 
 extern void *isr_stub_table[48]; /* isr.S — 32 CPU exceptions + 16 PIC IRQ stubs */
 extern void isr_syscall(void);   /* isr.S — the int 0x80 (vector 128) entry */
+extern void isr_syscall81(void); /* isr.S — the int 0x81 (vector 129) native-ABI entry */
 
 #define IDT_GATE_USER 0xEE /* present, DPL3, 64-bit interrupt gate (ring 3 may invoke) */
 
@@ -68,8 +69,10 @@ void idt_init(void)
 	for (int v = 0; v < 48; v++)
 		idt_set_gate(v, isr_stub_table[v], IDT_GATE_INT);
 
-	/* Vector 0x80: DPL3 so ring-3 code can `int $0x80` (the bring-up syscall). */
+	/* Vector 0x80: DPL3 so ring-3 code can `int $0x80` (the POSIX/FreeBSD syscall). */
 	idt_set_gate(0x80, (void *)isr_syscall, IDT_GATE_USER);
+	/* Vector 0x81: DPL3 — the UbixOS-native ABI (lib/ubix_api: MPI, ubix_getcwd). */
+	idt_set_gate(0x81, (void *)isr_syscall81, IDT_GATE_USER);
 
 	g_idt_ptr.limit = (u16)(sizeof(g_idt) - 1);
 	g_idt_ptr.base = (u64)&g_idt[0];
@@ -117,10 +120,18 @@ void x86_64_exception(struct x86_64_trapframe *tf)
 {
 	u64 cr2;
 
-	/* Vector 128 (0x80) is the bring-up syscall gate (DPL3) — dispatch + IRETQ. */
+	/* Vector 128 (0x80) is the POSIX/FreeBSD syscall gate (DPL3) — dispatch + IRETQ. */
 	if (tf->vector == 128)
 	{
 		x86_64_syscall(tf);
+		return;
+	}
+
+	/* Vector 129 (0x81) is the UbixOS-native syscall gate (DPL3) — lib/ubix_api's
+	 * MPI mailboxes, ubix_getcwd, etc.  Dispatch via the native table + IRETQ. */
+	if (tf->vector == 129)
+	{
+		x86_64_native_syscall(tf);
 		return;
 	}
 

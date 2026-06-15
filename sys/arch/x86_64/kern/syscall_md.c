@@ -13,14 +13,10 @@
 #include <ubixos/sched.h>
 #include <sys/thread.h>
 #include <sys/sysproto_posix.h>
-#include <vmm/vmm.h>     /* vmm_find_free_page, PAGE_SIZE */
-#include <lib/kmalloc.h> /* sysID */
-#include <string.h>      /* memset */
-
-/* User-VA layout for the dynamic regions (above the ELF/stack area, in the clean
- * user low half).  Matches aarch64's choices for cross-arch consistency. */
-#define MMAP_BASE 0x200000000UL /* anonymous mmap bump allocator */
-#define BRK_BASE 0x1C0000000UL  /* program break (brk/sbrk) */
+#include <vmm/vmm.h>           /* vmm_find_free_page, PAGE_SIZE */
+#include <lib/kmalloc.h>       /* sysID */
+#include <string.h>            /* memset */
+#include <x86_64/vmm_layout.h> /* MMAP_BASE, BRK_BASE (single source of truth) */
 
 #define MSR_FS_BASE 0xC0000100
 

@@ -212,6 +212,25 @@ First entries of the 3.0 series (64-bit only: x86_64 + aarch64).  Development on
     legacy native `libexec/ld` is skipped on x86_64 too (musl's `ld-musl-x86_64.so.1`
     is the runtime linker).  (The `bin/` programs are the next step.)
 
+  - *Phase 5e — dynamic-linker boot path (PIE + ld-musl).* The x86_64 kernel now
+    loads the real **dynamically-linked** world.  `kern/execfile.c` gained
+    `load_dynamic`: it maps a PIE main executable at `DYN_MAIN_BASE`, reads + maps
+    its `PT_INTERP` linker (`ld-musl-x86_64.so.1`) at `DYN_INTERP_BASE`, and builds
+    the full SysV/auxv initial stack (`AT_PHDR/PHENT/PHNUM/BASE/ENTRY/RANDOM/PAGESZ`)
+    the linker + `__libc_start_main` consume — a sibling of aarch64's loader, over
+    the shared MI `elf64_load_at`.  A new `x86_64/vmm_layout.h` is the single source
+    of truth for the user-VA regions (DYN_MAIN/INTERP/STACK + BRK/MMAP, 1 GB-aligned).
+    The **UbixOS-native ABI** (`int $0x81`: MPI mailboxes, `ubix_getcwd`, used by
+    `lib/ubix_api` and PID 1) is now wired: a vector-0x81 IDT gate + `isr_syscall81`
+    stub + `x86_64_native_syscall` dispatching MPI/getcwd/klog directly and the rest
+    through the native `systemCalls[]` table.  `bmake image TARGET=x86_64` builds a
+    FAT-root world image (`mkimage-arm.sh` is now arch-parameterised); `kmain` hands
+    off to `/bin/init` via the dynamic linker.  Verified: `/bin/init` loads through
+    ld-musl, runs `main()`, and forks + execs the `/etc/init.d` services; a service
+    binary loaded directly (no fork) links + runs cleanly.  (Known bug under
+    investigation: a binary exec'd *after a fork* faults in ld-musl `sysv_lookup` —
+    isolated to the fork→execve path; direct dynamic loads are unaffected.)
+
   **With mmap/execve/fork/signals in place, the x86_64 kernel can now load, run,
   fork, and signal real on-disk binaries — the full runtime a userland needs.**
   `bmake TARGET=x86_64` builds the bring-up kernel only (the x86_64 userland/world is

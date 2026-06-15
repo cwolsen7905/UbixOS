@@ -11,8 +11,12 @@
 # Usage: tools/mkimage-arm.sh [image] [build-dir]
 set -e
 
+# ARCH selects the world build dir + the musl dynamic-linker soname.  Defaults to
+# aarch64 (this script's original target); the x86_64 port reuses the identical
+# FAT-root layout (PVH -kernel + virtio-blk), passing ARCH=x86_64.
+ARCH=${ARCH:-aarch64}
 IMG=${1:-ubixos-arm.img}
-BUILD=${2:-build/aarch64}
+BUILD=${2:-build/${ARCH}}
 # MBR-partitioned layout (plan K5/M4): FAT32 (fallback root + parity with i386) +
 # swap + UbixFS pool (the native CoW root the kernel mounts at /).  The kernel is
 # loaded by QEMU (-kernel), so FAT is not a boot partition here — it is the
@@ -34,7 +38,7 @@ DESKTOP_BINS=" views vlogin diskutil vdoom tessera nsfb settings nsfbtest fbtest
 echo "mkimage-arm: profile=${PROFILE}"
 
 if [ ! -f "${BUILD}/lib/libc.so" ]; then
-	echo "mkimage-arm: ${BUILD}/lib/libc.so missing — run 'bmake world TARGET=aarch64' first" >&2
+	echo "mkimage-arm: ${BUILD}/lib/libc.so missing — run 'bmake world TARGET=${ARCH}' first" >&2
 	exit 1
 fi
 
@@ -88,7 +92,7 @@ mmd -i "${IMG}@@1M" ::/bin ::/lib ::/etc
 # musl's dynamic linker IS libc.so; install it under both the INTERP path and
 # the soname programs record in DT_NEEDED.
 mcopy -i "${IMG}@@1M" "${BUILD}/lib/libc.so" ::/lib/libc.so
-mcopy -i "${IMG}@@1M" "${BUILD}/lib/libc.so" ::/lib/ld-musl-aarch64.so.1
+mcopy -i "${IMG}@@1M" "${BUILD}/lib/libc.so" "::/lib/ld-musl-${ARCH}.so.1"
 [ -f "${BUILD}/lib/ubix_api.so" ] && mcopy -i "${IMG}@@1M" "${BUILD}/lib/ubix_api.so" ::/lib/ubix_api.so || true
 # Crypto libs for the real authd (PBKDF2 over BearSSL).
 [ -f "${BUILD}/lib/libpw.so" ] && mcopy -i "${IMG}@@1M" "${BUILD}/lib/libpw.so" ::/lib/libpw.so || true

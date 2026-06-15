@@ -164,24 +164,12 @@ void kmain_x86_64(u32 mb_magic, u32 mb_info)
 			else
 				serial_puts("vfs: opendir(/) failed\n");
 
-			/* Phase 5d-C / 5e: now that a root is mounted, load a static ELF64 via
-			 * the MI loader and run it — it opens + reads a file off the FAT root
-			 * through the syscall instruction (open/read/write/exit). */
-			x86_64_elf_demo();
-
-			/* Phase 5e: load + run a REAL ELF64 off the FAT root via execve's path
-			 * (fopen/fread + build_user_image + the SysV stack). */
-			x86_64_exec_demo("/hello");
-
-			/* Phase 5e: fork — a process that fork()s; parent + child both run. */
-			x86_64_exec_demo("/forktest");
-
-			/* Phase 5e: signals — install a SIGINT handler, kill(self), verify the
-			 * handler runs + sigreturn resumes. */
-			x86_64_exec_demo("/sigtest");
-
-			/* Phase 5e: a real musl-libc binary (proves the FreeBSD-ABI musl port). */
-			x86_64_exec_demo("/hellomusl");
+			/* Phase 5e FINAL: hand off to the disk-backed userland — exec /bin/init
+			 * (PID 1) via the dynamic linker (ld-musl-x86_64.so.1), the same boot
+			 * chain as i386/aarch64.  init starts the /etc/init.d services and the
+			 * system console (views/login).  Never returns on success. */
+			kprintf("\n--- disk-backed userland: exec /bin/init ---\n");
+			x86_64_run_dynamic_init("/bin/init");
 		}
 		else
 			serial_puts("vfs: FAT mount failed\n");

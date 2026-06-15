@@ -378,6 +378,91 @@ void x86_64_syscall(struct x86_64_trapframe *tf)
 	signal_check((struct trapframe *)tf);
 }
 
+/* Native (int $0x81) syscall numbers — the UbixOS-native ABI (lib/ubix_api).
+ * Mirrors aarch64's NATIVE_* (kern/syscall.c); the calls that take user pointers
+ * are dispatched directly (the syscall runs under the caller's CR3, so the
+ * pointers are valid) to sidestep the table's uap-struct arg packing. */
+#define NATIVE_GETCWD 41
+#define NATIVE_KLOG_READ 47
+#define NATIVE_MPI_CREATE 50
+#define NATIVE_MPI_DESTROY 51
+#define NATIVE_MPI_POST 52
+#define NATIVE_MPI_FETCH 53
+#define NATIVE_MPI_WAIT 69
+
+/**
+ * Service a ring-3 `int $0x81` — the UbixOS-native ABI (MPI mailboxes,
+ * ubix_getcwd, klog_read).  Number in rax, args in RDI/RSI/RDX/R10/R8/R9 (the
+ * same SysV order as the POSIX path).  MPI/getcwd/klog are dispatched directly;
+ * everything else falls through to the native systemCalls[] table.  Sibling of
+ * aarch64_syscall's NATIVE_FLAG branch.
+ */
+void x86_64_native_syscall(struct x86_64_trapframe *tf)
+{
+	extern register_t ksyscall_dispatch(
+	    struct thread * td, struct syscall_entry * tbl, int count, u_int32_t number, register_t *args);
+	extern void signal_check(struct trapframe * frame);
+	extern int mpi_createMbox(char *);
+	extern int mpi_destroyMbox(char *);
+	extern int mpi_postMessage(char *, u_int32_t, void *);
+	extern int mpi_fetchMessage(char *, void *);
+	extern int mpi_waitMessage(char *, void *, u_int32_t);
+	extern int klog_read_wait(void *buf, int max_entries, u_int32_t start_seq);
+	extern struct syscall_entry systemCalls[];
+	extern int totalCalls;
+
+	u64 args[6] = {tf->rdi, tf->rsi, tf->rdx, tf->r10, tf->r8, tf->r9};
+	u32 n = (u32)tf->rax;
+
+	_current->td.frame = (struct trapframe *)tf;
+
+	switch (n)
+	{
+		case NATIVE_MPI_CREATE:
+			tf->rax = (u64)mpi_createMbox((char *)(uintptr_t)args[0]);
+			break;
+		case NATIVE_MPI_DESTROY:
+			tf->rax = (u64)mpi_destroyMbox((char *)(uintptr_t)args[0]);
+			break;
+		case NATIVE_MPI_POST:
+			tf->rax = (u64)mpi_postMessage(
+			    (char *)(uintptr_t)args[0], (u_int32_t)args[1], (void *)(uintptr_t)args[2]);
+			break;
+		case NATIVE_MPI_FETCH:
+			tf->rax = (u64)mpi_fetchMessage((char *)(uintptr_t)args[0], (void *)(uintptr_t)args[1]);
+			break;
+		case NATIVE_MPI_WAIT:
+			tf->rax = (u64)mpi_waitMessage(
+			    (char *)(uintptr_t)args[0], (void *)(uintptr_t)args[1], (u_int32_t)args[2]);
+			break;
+		case NATIVE_GETCWD:
+		{
+			char *ubuf = (char *)(uintptr_t)args[0];
+			u64 size = args[1];
+			const char *cwd = (_current != 0 && _current->oInfo.cwd[0] != '\0') ? _current->oInfo.cwd : "/";
+			if (ubuf == 0 || size == 0)
+				tf->rax = (u64)-1;
+			else
+			{
+				strncpy(ubuf, cwd, (size_t)size - 1);
+				ubuf[size - 1] = '\0';
+				tf->rax = 0;
+			}
+			break;
+		}
+		case NATIVE_KLOG_READ:
+			/* Read the 3 args straight from the registers (the table dispatch packs
+			 * the two trailing 32-bit fields into one slot — see the aarch64 note). */
+			tf->rax = (u64)klog_read_wait((void *)(uintptr_t)args[0], (int)args[1], (u_int32_t)args[2]);
+			break;
+		default:
+			tf->rax = (u64)ksyscall_dispatch(&_current->td, systemCalls, totalCalls, n, (register_t *)args);
+			break;
+	}
+
+	signal_check((struct trapframe *)tf);
+}
+
 /**
  * Phase 5b: run a real user process the SCHEDULER dispatches, in its own address
  * space.  Build a private PML4, map the demo payload + a stack into it, create a

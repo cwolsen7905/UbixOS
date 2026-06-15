@@ -114,7 +114,9 @@ u64 x86_64_user_brk(u64 newbrk);
 
 /* execfile.c — load an ELF64 + build the SysV initial stack (Phase 5e). */
 u64 x86_64_build_user_image(const void *image, u64 *out_entry, u64 *out_usp);
-void x86_64_exec_demo(const char *path); /* load + run a real on-disk ELF64 */
+void x86_64_exec_demo(const char *path);                 /* load + run a real on-disk static ELF64 */
+void x86_64_run_dynamic_init(const char *path);          /* exec /bin/init via ld-musl, then idle (no return) */
+void x86_64_native_syscall(struct x86_64_trapframe *tf); /* int $0x81 — UbixOS-native ABI (MPI, ubix_api) */
 
 /* fork.c — fork(2): copy address space + trapframe (Phase 5e). */
 long x86_64_fork(struct x86_64_trapframe *parent_tf);

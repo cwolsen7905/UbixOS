@@ -28,6 +28,7 @@ WORLD_FLAGS=_ARCH=${_ARCH} CC="cc" CXX="c++" AS="as" AR="ar" LD="ld" NM=nm OBJDU
 WMAKE=${MAKE} ${WORLD_FLAGS} CROSS_M32="${CROSS_M32}" INCLUDE=${WORLD_INC} BUILD_DIR=${OBJ_DIR}
 
 DISK_IMAGE?=ubixos.img
+DISK_IMAGE_X86_64?=ubixos-x86_64.img
 
 # USB mass-storage test image (64 MB FAT32, populated by bmake usb-image).
 # bmake run attaches it automatically if the file exists.
@@ -372,12 +373,12 @@ kernel-x86_64:
 	@echo "x86_64 bring-up kernel linked: ${OBJ_DIR}/boot/kernel"
 
 # Headless x86_64 run: serial to stdout (the bring-up console).  Ctrl-A X quits.
-# Attaches ${DISK_IMAGE} as a legacy virtio-blk-pci disk (disable-modern=true ->
-# the I/O-BAR register window the bring-up driver speaks).  The MBR/FAT image is
-# the i386 ubixos.img for now (a dedicated x86_64 image comes with the world).
+# Attaches ${DISK_IMAGE_X86_64} (the x86_64 world image from `bmake image
+# TARGET=x86_64`) as a legacy virtio-blk-pci disk (disable-modern=true -> the
+# I/O-BAR register window the bring-up driver speaks).
 run-x86_64:
 	qemu-system-x86_64 -m 256 -smp ${SMP} -kernel ${OBJ_DIR}/boot/kernel -nographic \
-	  -drive file=${DISK_IMAGE},format=raw,if=none,id=hd0 \
+	  -drive file=${DISK_IMAGE_X86_64},format=raw,if=none,id=hd0 \
 	  -device virtio-blk-pci,drive=hd0,disable-modern=true
 
 # musl libc per-arch knobs.  i386 uses the FreeBSD stack ABI (-m32, no SSE) and a
@@ -531,6 +532,12 @@ image-aarch64: image-arm
 
 image-arm:
 	@PROFILE=${PROFILE} sh tools/mkimage-arm.sh ${DISK_IMAGE_ARM} ${OBJ_DIR}
+
+# x86_64 disk image: the SAME raw FAT32 + musl-ld.so layout as aarch64 (mkimage-arm
+# is arch-parameterised via ARCH=), mounted at "/" via virtio-blk-pci.  Run after
+# `bmake world TARGET=x86_64`; boot with run-x86_64.
+image-x86_64:
+	@PROFILE=${PROFILE} ARCH=x86_64 sh tools/mkimage-arm.sh ${DISK_IMAGE_X86_64} ${OBJ_DIR}
 
 # Build a small FAT32 USB test image with a README.  Attach to QEMU via
 # bmake run (auto-detected when usb.img exists) or mount manually with hdiutil.

@@ -90,6 +90,15 @@ isr_syscall:
 	pushq $128
 	jmp isr_common
 
+	/* Native syscall gate (vector 0x81 = 129, DPL3): ring-3 `int $0x81` lands
+	 * here — the UbixOS-native ABI (lib/ubix_api: MPI mailboxes, ubix_getcwd, …).
+	 * The C handler routes vector 129 to x86_64_native_syscall (idt.c). */
+	.globl isr_syscall81
+isr_syscall81:
+	pushq $0
+	pushq $129
+	jmp isr_common
+
 	/*
 	 * Common entry: save GP regs (rax pushed last -> lowest address -> rsp), pass
 	 * the trapframe pointer in rdi, call the C handler, restore, pop vector+error,
