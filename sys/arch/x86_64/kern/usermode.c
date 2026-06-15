@@ -213,6 +213,13 @@ u64 *x86_64_create_user_space(void)
 
 	pdpt[0] = kpdpt[0];                                       /* share the kernel low-1 GB PD */
 	pml4[0] = (u64)(uintptr_t)pdpt | PTE_P | PTE_RW | PTE_US; /* US: gate user PDPT[1..] leaves */
+
+	/* Share the kernel's higher-half mappings (PML4[256..511]) by pointer so the
+	 * kernel — which now runs at the high VMA — stays mapped after switch_to swaps
+	 * CR3 into this user space.  Without this, the CR3 load unmaps the running
+	 * kernel and the very next (high-VMA) instruction faults. */
+	for (unsigned i = 256; i < 512; i++)
+		pml4[i] = kpml4[i];
 	return pml4;
 }
 

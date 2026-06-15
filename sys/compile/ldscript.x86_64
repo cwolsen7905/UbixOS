@@ -1,36 +1,39 @@
-/* x86-64 bring-up linker script.
+/* x86-64 higher-half linker script.
  *
- * GRUB/QEMU multiboot loads the kernel in 32-bit protected mode at its physical
- * link address and jumps to the ELF entry (_start, in .text.boot).  We link low
- * at 1 MB (0x100000) — above the BIOS/VGA hole, the standard multiboot load.
- * start.S then sets up identity-mapped 4-level paging and enters long mode.
- * (A higher-half move comes later; -mcmodel=large keeps symbol refs valid.)
+ * QEMU's PVH loader enters the kernel in 32-bit protected mode at its PHYSICAL
+ * load address (the PT_LOAD LMA) — we load at 1 MB (0x100000), above the BIOS/VGA
+ * hole.  The kernel is LINKED at the higher half (KERNBASE + 1 MB) so user space
+ * owns the entire low canonical half (standard amd64 layout); each section's LMA
+ * is its VMA - KERNBASE so it physically lands at 0x100000+.  start.S's 32-bit
+ * stub references symbols by physical address (sym - KERNBASE) until paging is on,
+ * maps both the low identity range and the kernel high, then jumps to the high VMA.
  *
- * The multiboot header must sit within the first 8 KB of the file, so .text.boot
- * (which holds it + _start) leads, and we keep the entry low.
+ * The PVH note's PHYS32_ENTRY must be the PHYSICAL entry (_start - KERNBASE).
  */
 OUTPUT_FORMAT("elf64-x86-64")
 OUTPUT_ARCH(i386:x86-64)
 ENTRY(_start)
 
+KERNBASE = 0xFFFFFFFF80000000;
+
 SECTIONS
 {
-	. = 0x100000;
+	. = KERNBASE + 0x100000;
 
 	/* PVH boot note must be present + allocated so QEMU's ELF loader finds it. */
-	.note.Xen : { *(.note.Xen) }
+	.note.Xen : AT(ADDR(.note.Xen) - KERNBASE) { *(.note.Xen) }
 
-	.text : {
+	.text : AT(ADDR(.text) - KERNBASE) {
 		*(.text.boot)
 		*(.text*)
 	}
 
-	.rodata : { *(.rodata*) }
-	.data   : { *(.data*) }
+	.rodata : AT(ADDR(.rodata) - KERNBASE) { *(.rodata*) }
+	.data   : AT(ADDR(.data) - KERNBASE) { *(.data*) }
 
 	. = ALIGN(16);
 	__bss_start = .;
-	.bss : {
+	.bss : AT(ADDR(.bss) - KERNBASE) {
 		*(.bss*)
 		*(COMMON)
 	}

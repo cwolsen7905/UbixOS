@@ -30,7 +30,10 @@ extern char _end[]; /* end of the kernel image (ldscript) */
 void x86_64_mem_init(void)
 {
 	u32 num = (u32)(X86_64_RAM_BYTES / PAGE_SIZE);
-	uintptr_t bitmap_phys = ((uintptr_t)_end + PAGE_SIZE - 1) & ~((uintptr_t)PAGE_SIZE - 1);
+	/* _end is now a higher-half VMA; the bitmap is staged at its PHYSICAL address
+	 * (accessed via the retained low identity map) so the page-index math stays in
+	 * physical-frame units. */
+	uintptr_t bitmap_phys = (KERN_VIRT_TO_PHYS(_end) + PAGE_SIZE - 1) & ~((uintptr_t)PAGE_SIZE - 1);
 	u32 bitmap_bytes;
 	u32 bitmap_end_page;
 

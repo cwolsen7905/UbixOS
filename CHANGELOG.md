@@ -83,6 +83,17 @@ First entries of the 3.0 series (64-bit only: x86_64 + aarch64).  Development on
     `getfd`.  `<stdarg.h>` now uses `__builtin_va_list` on x86_64 (the i386 `char*`
     typedef breaks 64-bit `va_arg`).  Verified: mounts the image's FAT32 volume and
     lists `/grub` + `/kernel`.
+  - *Phase 5d (higher-half kernel, step A)* — groundwork for the ELF loader: the
+    kernel is relinked at the higher half (`KERNBASE = 0xFFFFFFFF80000000`, +1 MB)
+    so user space can own the entire low canonical half (standard amd64 layout,
+    needed because static ELF64 binaries load at low VAs like 0x400000).  start.S's
+    32-bit stub references symbols by physical address (`sym - KERNBASE`), maps both
+    a low identity window and the kernel high half, enters long mode at a low label,
+    then jumps to the high VMA.  Per-process PML4s now share the kernel's high-half
+    entries (PML4[256..511]) so the kernel stays mapped across a CR3 switch.  The low
+    identity map is retained for now (physical access); a high physmap + dropping the
+    identity is step B.  Verified: boots high, runs the scheduler + ring-3 processes
+    + mounts the FAT root, all from the higher-half VMA.
   `bmake TARGET=x86_64` builds the bring-up kernel only (the x86_64 userland/world is
   a later phase); `bmake run TARGET=x86_64` boots it (serial console).
   Grows by widening the i386 MD code to 64-bit.  See `docs/design/cross-arch-plan.md`.

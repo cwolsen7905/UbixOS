@@ -13,6 +13,11 @@ typedef unsigned short u16;
 typedef unsigned int u32;
 typedef unsigned long u64;
 
+/* The kernel is linked at the higher half; a kernel-symbol VMA minus KERNBASE is
+ * its physical (load) address.  Must match ldscript.x86_64 + start.S. */
+#define KERNBASE 0xFFFFFFFF80000000UL
+#define KERN_VIRT_TO_PHYS(v) ((uintptr_t)(v) - KERNBASE)
+
 /* Port I/O (shared by the serial console + PIC/PIT). */
 static inline void outb(u16 port, u8 val)
 {
