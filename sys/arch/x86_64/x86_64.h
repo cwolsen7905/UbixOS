@@ -136,6 +136,10 @@ void x86_64_enter_user(u64 user_rip, u64 user_rsp); /* coroutine (5a one-shot) *
 void x86_64_leave_user(void);
 void x86_64_iret_to_user(u64 user_rip, u64 user_rsp); /* bare IRETQ (scheduled tasks) */
 
+/* dev/vga_fb.c — Bochs/std-VGA linear framebuffer (desktop display, like i386 VESA). */
+int x86_64_fb_init(void);
+void x86_64_fb_present(void);
+
 /* dev/virtio_blk.c — virtio-blk over legacy virtio-pci (Phase 5c). */
 struct ubx_device;
 int virtio_blk_init(void);

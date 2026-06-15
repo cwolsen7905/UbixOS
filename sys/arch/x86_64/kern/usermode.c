@@ -121,6 +121,7 @@ u64 x86_64_ring0_stack_top(void)
 #define PTE_P 0x1
 #define PTE_RW 0x2
 #define PTE_US 0x4
+#define PTE_WIRED 0x200 /* available bit 9: fork shares this page verbatim (no COW/copy) */
 #define PTE_ADDR_MASK (~0xFFFUL)
 
 #define USER_CODE_VA 0x40000000UL  /* 1 GB — first VA above the shared low-1 GB identity */
@@ -188,6 +189,64 @@ void x86_64_map_user_page(u64 va, u64 phys, int writable)
 	u64 cr3;
 	__asm__ __volatile__("mov %%cr3, %0" : "=r"(cr3));
 	x86_64_map_user_page_to((uintptr_t)(cr3 & PTE_ADDR_MASK), va, phys, writable);
+}
+
+/**
+ * Map a WIRED user page (RW): fork shares it verbatim instead of copying it
+ * (PTE_WIRED).  Used for the framebuffer + cross-process shared window buffers,
+ * which must stay one physical copy across a fork (the compositor forks vlogin) —
+ * a COW/copy would silently split the two ends apart.
+ */
+void x86_64_map_user_page_wired(uintptr_t pml4_phys, u64 va, u64 phys)
+{
+	uintptr_t pdpt = next_table(pml4_phys, (unsigned)((va >> 39) & 0x1FF));
+	uintptr_t pd = next_table(pdpt, (unsigned)((va >> 30) & 0x1FF));
+	uintptr_t pt = next_table(pd, (unsigned)((va >> 21) & 0x1FF));
+
+	((u64 *)P2V(pt))[(va >> 12) & 0x1FF] = (phys & PTE_ADDR_MASK) | PTE_P | PTE_US | PTE_RW | PTE_WIRED;
+	__asm__ __volatile__("invlpg (%0)" : : "r"((void *)(uintptr_t)va) : "memory");
+}
+
+/**
+ * Map a framebuffer (device-MMIO) page into a user space: WIRED (fork shares it,
+ * never copies an MMIO frame) + cache-disabled (PCD), so writes to the live LFB
+ * reach the display device immediately instead of sitting in a cache line.
+ */
+void x86_64_map_fb_page(uintptr_t pml4_phys, u64 va, u64 phys)
+{
+	uintptr_t pdpt = next_table(pml4_phys, (unsigned)((va >> 39) & 0x1FF));
+	uintptr_t pd = next_table(pdpt, (unsigned)((va >> 30) & 0x1FF));
+	uintptr_t pt = next_table(pd, (unsigned)((va >> 21) & 0x1FF));
+
+	((u64 *)P2V(pt))[(va >> 12) & 0x1FF] =
+	    (phys & PTE_ADDR_MASK) | PTE_P | PTE_US | PTE_RW | PTE_WIRED | 0x10 /* PCD */;
+	__asm__ __volatile__("invlpg (%0)" : : "r"((void *)(uintptr_t)va) : "memory");
+}
+
+/**
+ * Walk @pml4_phys to the leaf PTE for @va and return its physical frame address
+ * (0 if unmapped).  The cross-address-space share path (sys_shareregion) needs the
+ * source frame to re-map into the destination.
+ */
+u64 x86_64_user_extract(uintptr_t pml4_phys, u64 va)
+{
+	u64 *t = (u64 *)P2V(pml4_phys);
+	u64 e = t[(va >> 39) & 0x1FF];
+	if ((e & PTE_P) == 0)
+		return 0;
+	t = (u64 *)P2V(e & PTE_ADDR_MASK);
+	e = t[(va >> 30) & 0x1FF];
+	if ((e & PTE_P) == 0)
+		return 0;
+	t = (u64 *)P2V(e & PTE_ADDR_MASK);
+	e = t[(va >> 21) & 0x1FF];
+	if ((e & PTE_P) == 0)
+		return 0;
+	t = (u64 *)P2V(e & PTE_ADDR_MASK);
+	e = t[(va >> 12) & 0x1FF];
+	if ((e & PTE_P) == 0)
+		return 0;
+	return e & PTE_ADDR_MASK;
 }
 
 /**

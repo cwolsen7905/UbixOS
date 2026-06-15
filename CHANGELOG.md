@@ -277,6 +277,22 @@ First entries of the 3.0 series (64-bit only: x86_64 + aarch64).  Development on
     failed.  `spawn_dynamic` now sets PID 1's cwd to "/" (i386 does this in its exec)
     and `fork` inherits it.  **x86_64 now boots to a working interactive tcsh: it
     authenticates, runs commands (`echo`, `uname`), and lists directories (`ls /`).**
+  - *Phase 5e — boots into the graphical desktop (views).* x86_64 now reaches the
+    `views` compositor over a real framebuffer.  Since QEMU's virtio-gpu is
+    modern-only (no legacy transport the bring-up virtio-pci speaks), the display is
+    the **Bochs/std-VGA linear framebuffer** (`dev/vga_fb.c`: mode set via the DISPI
+    I/O ports, LFB at PCI BAR0) — a live scanout like the i386 VESA LFB, and the
+    right model for x86 PC hardware.  `dev/display.c` implements the native display
+    syscalls: `sys_mapfb` maps the LFB's BAR into the compositor (wired +
+    cache-disabled), `sys_fbpresent` is a no-op (live scanout), and `sys_shareregion`
+    maps a window's shared backing buffer into a client across address spaces.  A
+    `PTE_WIRED` bit + an MMIO check in `fork` share the framebuffer and shared
+    buffers verbatim across a fork (the compositor forks vlogin) instead of
+    COW-copying them.  Verified by a QMP `screendump`: views paints the full
+    1024x768 desktop — grey-blue wallpaper, a centred login dialog, a taskbar.
+    `bmake run TARGET=x86_64` now opens a graphical std-VGA window (serial on stdio);
+    `run-debug-x86_64` is the headless serial-only variant.  (Input — keyboard/mouse
+    — and the GUI terminal's pty are the next step.)
 
   **With mmap/execve/fork/signals in place, the x86_64 kernel can now load, run,
   fork, and signal real on-disk binaries — the full runtime a userland needs.**

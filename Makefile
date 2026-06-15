@@ -57,25 +57,17 @@ _USB_FLAGS!= test -f ${USB_IMAGE} && \
 
 # ── Primary targets ──────────────────────────────────────────────────────────
 
-.PHONY: all kernel kernel-i386 kernel-aarch64 kernel-x86_64 run-x86_64 musl-libc world makeuser image image-i386 image-aarch64 image-arm usb-image \
+.PHONY: all kernel kernel-i386 kernel-aarch64 kernel-x86_64 run-x86_64 run-debug-x86_64 musl-libc world makeuser image image-i386 image-aarch64 image-arm usb-image \
         mount-image unmount-image \
         install-kernel install-world install \
         run run-debug run-i386 run-debug-i386 run-aarch64 run-debug-aarch64 \
         run-en0 run-shared \
         kernel-to-image clean-kernel clean
 
-# `all` is arch-aware.  i386 + aarch64 build the full system (kernel + world +
-# image).  x86_64 is still a bring-up kernel — its userland (musl/world) isn't
-# ported yet (musl needs SSE, which the kernel disables; the world build also
-# still inherits the i386 -m32/elf_i386 knobs), so `all` builds the kernel only.
-.if ${_ARCH} == "x86_64"
-all: kernel
-	@echo ""
-	@echo "x86_64: world/image not ported yet — built the bring-up kernel only."
-	@echo "        run it with:  bmake run TARGET=x86_64"
-.else
+# `all` is arch-aware: every MMU-class arch builds the full system (kernel + world
+# + image).  x86_64 now boots its musl world to the graphical desktop (views over
+# the std-VGA framebuffer), same as i386/aarch64.
 all: kernel world image
-.endif
 
 # `kernel` is arch-dispatched.  i386 builds the full tree (sys/Makefile); aarch64
 # builds the minimal Phase-11 bring-up image (start.S + boot.c) standalone, since
@@ -372,11 +364,21 @@ kernel-x86_64:
 	${CROSS_PREFIX}ld -T ${CURDIR}/sys/compile/ldscript.x86_64 -o ${OBJ_DIR}/boot/kernel ${OBJ_DIR}/obj/sys/*.o
 	@echo "x86_64 bring-up kernel linked: ${OBJ_DIR}/boot/kernel"
 
-# Headless x86_64 run: serial to stdout (the bring-up console).  Ctrl-A X quits.
+# Graphical x86_64 run: a std-VGA window (the desktop framebuffer views draws
+# into) + serial multiplexed onto stdio (the monitor too: Ctrl-A C toggles).
 # Attaches ${DISK_IMAGE_X86_64} (the x86_64 world image from `bmake image
 # TARGET=x86_64`) as a legacy virtio-blk-pci disk (disable-modern=true -> the
-# I/O-BAR register window the bring-up driver speaks).
+# I/O-BAR register window the bring-up driver speaks).  On Apple Silicon x86_64
+# runs under TCG (no HVF for a foreign arch), so it is emulated — slower but works.
 run-x86_64:
+	qemu-system-x86_64 -m 256 -smp ${SMP} -kernel ${OBJ_DIR}/boot/kernel \
+	  -vga std -serial mon:stdio \
+	  -drive file=${DISK_IMAGE_X86_64},format=raw,if=none,id=hd0 \
+	  -device virtio-blk-pci,drive=hd0,disable-modern=true
+
+# Headless x86_64 run: serial only to stdout, no display (the bring-up console for
+# debugging).  Ctrl-A X quits.
+run-debug-x86_64:
 	qemu-system-x86_64 -m 256 -smp ${SMP} -kernel ${OBJ_DIR}/boot/kernel -nographic \
 	  -drive file=${DISK_IMAGE_X86_64},format=raw,if=none,id=hd0 \
 	  -device virtio-blk-pci,drive=hd0,disable-modern=true

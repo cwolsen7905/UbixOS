@@ -52,10 +52,6 @@ long sys_disk_query()
 {
 	return -1;
 }
-long sys_fbpresent()
-{
-	return -1;
-}
 long sys_fork()
 {
 	return -1;
@@ -81,10 +77,6 @@ long sys_klog_read()
 	return -1;
 }
 long sys_listen()
-{
-	return -1;
-}
-long sys_mapfb()
 {
 	return -1;
 }
@@ -150,10 +142,6 @@ long sys_setsockopt()
 	return -1;
 }
 long sys_settty()
-{
-	return -1;
-}
-long sys_shareregion()
 {
 	return -1;
 }

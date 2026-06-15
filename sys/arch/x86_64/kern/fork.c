@@ -18,11 +18,14 @@
 
 #define PTE_P 0x1
 #define PTE_US 0x4
-#define PTE_PS 0x80 /* 2 MB page (skip — kernel identity, never copied) */
+#define PTE_PS 0x80     /* 2 MB page (skip — kernel identity, never copied) */
+#define PTE_WIRED 0x200 /* available bit 9: share verbatim across fork (no copy) */
 #define PTE_ADDR_MASK (~0xFFFUL)
 #define FRAME_SLOTS 7 /* 6 callee-saved + return address (matches cpu_switch.S) */
 
 extern void ret_from_fork(void);
+extern void x86_64_map_user_page_wired(uintptr_t pml4_phys, u64 va, u64 phys);
+extern u_int32_t numPages; /* RAM page count; frame >= numPages => MMIO (vmm.h) */
 
 /**
  * Deep-copy the parent's USER pages (the private PDPT[1..] region under PML4[0],
@@ -53,14 +56,26 @@ static u64 x86_64_fork_copy(u64 parent_pml4)
 			for (ti = 0; ti < 512; ti++)
 			{
 				u64 pte = ppt[ti];
-				u64 va, frame;
+				u64 va, frame, phys;
 				if ((pte & PTE_P) == 0 || (pte & PTE_US) == 0)
 					continue;
+				va = ((u64)pi << 30) | ((u64)di << 21) | ((u64)ti << 12);
+				phys = pte & PTE_ADDR_MASK;
+
+				/* Wired (PTE_WIRED) or MMIO (frame >= RAM, e.g. the framebuffer BAR)
+				 * pages are SHARED verbatim, not copied: a copy would split a shared
+				 * window buffer off its other end, and an MMIO frame has no physmap
+				 * (P2V) entry to memcpy from anyway.  Map the same physical frame. */
+				if ((pte & PTE_WIRED) || (phys >> 12) >= numPages)
+				{
+					x86_64_map_user_page_wired(child, va, phys);
+					continue;
+				}
+
 				frame = vmm_find_free_page(sysID);
 				if (frame == 0)
 					return 0;
-				memcpy(P2V(frame), P2V(pte & PTE_ADDR_MASK), PAGE_SIZE);
-				va = ((u64)pi << 30) | ((u64)di << 21) | ((u64)ti << 12);
+				memcpy(P2V(frame), P2V(phys), PAGE_SIZE);
 				x86_64_map_user_page_to(child, va, frame, (pte & 0x2) ? 1 : 0);
 			}
 		}

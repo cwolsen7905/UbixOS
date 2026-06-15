@@ -149,6 +149,10 @@ void kmain_x86_64(u32 mb_magic, u32 mb_info)
 		/* Wire COM1 into the VFS console fileops so login/shell stdin/stdout work. */
 		x86_64_console_tty_init();
 
+		/* Bring up the std-VGA linear framebuffer (for views/objGFX), like i386's
+		 * VESA LFB.  sys_mapfb hands its physical BAR to the compositor. */
+		x86_64_fb_init();
+
 		/* Partition 1 (vtblk0s1, major 1 / minor 1) is the FAT volume. */
 		if (vfs_mount(1, 1, 0, VFS_TYPE_FAT, "/", "rw") == 0)
 		{
