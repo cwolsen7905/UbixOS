@@ -152,6 +152,19 @@ static int g_tab = TAB_PROCESSES;           /* active top-level view            
 static unsigned char g_cpu_hist[PERF_HIST]; /* whole-machine CPU% ring (0..100)   */
 static unsigned char g_mem_hist[PERF_HIST]; /* memory-used% ring (0..100)         */
 static int g_perf_head = -1;                /* newest index in the perf rings     */
+
+/* Per-core CPU graphs (Windows Task Manager "logical processors" view).  Cores
+ * come from /proc/stat's cpu0/cpu1/... lines; g_perf_percore toggles between one
+ * combined graph (overall) and a grid of one graph per core. */
+#define MAX_CORES 8
+static unsigned char g_core_hist[MAX_CORES][PERF_HIST]; /* per-core CPU% rings        */
+static int g_core_x10[MAX_CORES];                       /* current per-core CPU% (x10) */
+static unsigned long long g_prev_core_total[MAX_CORES];
+static unsigned long long g_prev_core_idle[MAX_CORES];
+static int g_core_count = 1;   /* cpuN lines seen in /proc/stat                       */
+static int g_perf_percore = 0; /* 0 = one combined graph, 1 = a graph per core        */
+/* Toggle button hit-rect (set in draw_performance, tested in on_click). */
+static int g_perf_btn_x, g_perf_btn_y, g_perf_btn_w, g_perf_btn_h;
 static unsigned long g_mem_total_kb;        /* /proc/meminfo MemTotal             */
 static unsigned long g_mem_used_kb;         /* /proc/meminfo MemUsed              */
 
@@ -275,6 +288,42 @@ static unsigned long long read_total_ticks(unsigned long long *idle_out)
 	return busy + n + s + idle;
 }
 
+/*
+ * Parse /proc/stat's per-core "cpuN <busy> 0 0 <idle> ..." lines into total and
+ * idle arrays.  Returns the number of cores seen (the highest cpuN index + 1).
+ */
+static int read_core_ticks(unsigned long long tot[], unsigned long long idl[])
+{
+	char buf[512];
+	int  count = 0;
+	char *p;
+
+	if (slurp("/proc/stat", buf, sizeof(buf)) <= 0)
+		return 0;
+
+	for (p = buf; p && *p;)
+	{
+		/* A per-core line starts "cpu" + a digit (the aggregate is "cpu " + space). */
+		if (p[0] == 'c' && p[1] == 'p' && p[2] == 'u' && p[3] >= '0' && p[3] <= '9')
+		{
+			int idx = -1;
+			unsigned long long b = 0, nn = 0, s = 0, id = 0;
+			if (sscanf(p, "cpu%d %llu %llu %llu %llu", &idx, &b, &nn, &s, &id) == 5 && idx >= 0 &&
+			    idx < MAX_CORES)
+			{
+				tot[idx] = b + nn + s + id;
+				idl[idx] = id;
+				if (idx + 1 > count)
+					count = idx + 1;
+			}
+		}
+		p = strchr(p, '\n');
+		if (p)
+			p++;
+	}
+	return count;
+}
+
 /* Read MemTotal/MemUsed (kB) from /proc/meminfo into the g_mem_* globals.  Lines
  * are "MemTotal: <kb> kB" etc.; used := total - free. */
 static void read_meminfo(void)
@@ -342,6 +391,27 @@ static void refresh(void)
 	g_perf_head = (g_perf_head + 1) % PERF_HIST;
 	g_cpu_hist[g_perf_head] = (unsigned char)(g_overall_x10 / 10);
 	g_mem_hist[g_perf_head] = (g_mem_total_kb > 0) ? (unsigned char)(g_mem_used_kb * 100 / g_mem_total_kb) : 0;
+
+	/* Per-core CPU%: same busy/(busy+idle) ratio over the elapsed sample, per core,
+	 * pushed into each core's ring (shares g_perf_head with the combined graph). */
+	{
+		unsigned long long ctot[MAX_CORES] = {0}, cidl[MAX_CORES] = {0};
+		int nc = read_core_ticks(ctot, cidl);
+		if (nc < 1)
+			nc = 1;
+		if (nc > MAX_CORES)
+			nc = MAX_CORES;
+		g_core_count = nc;
+		for (int c = 0; c < nc; c++)
+		{
+			unsigned long long dt = (ctot[c] > g_prev_core_total[c]) ? ctot[c] - g_prev_core_total[c] : 0;
+			unsigned long long di = (cidl[c] > g_prev_core_idle[c]) ? cidl[c] - g_prev_core_idle[c] : 0;
+			g_core_x10[c] = (dt > 0) ? (int)((dt - di) * 1000 / dt) : 0;
+			g_prev_core_total[c] = ctot[c];
+			g_prev_core_idle[c] = cidl[c];
+			g_core_hist[c][g_perf_head] = (unsigned char)(g_core_x10[c] / 10);
+		}
+	}
 
 	/* /proc/uptime: "<secs> <idle>" — first field scales Time. */
 	{
@@ -470,7 +540,27 @@ static void draw_graph(int gx, int gy, int gw, int gh, const unsigned char *hist
 	g_surf.ogRect(gx, gy, gx + gw - 1, gy + gh - 1, COL_DIVIDER);
 }
 
-/* Performance tab: stacked CPU and Memory live graphs with a heading + readout. */
+/* Draw the View toggle button (Overall <-> Per core) and record its hit-rect. */
+static void draw_perf_toggle(int x, int y)
+{
+	const char *label = g_perf_percore ? "View: Per core" : "View: Overall";
+	int tw = (int)g_font.TextWidth(label);
+	int bw = tw + 20, bh = 22;
+	int bx = x, by = y;
+
+	g_perf_btn_x = bx;
+	g_perf_btn_y = by;
+	g_perf_btn_w = bw;
+	g_perf_btn_h = bh;
+
+	g_surf.ogFillRect(bx, by, bx + bw - 1, by + bh - 1, COL_HEADER);
+	g_surf.ogRect(bx, by, bx + bw - 1, by + bh - 1, COL_DIVIDER);
+	set_fg(COL_TEXT);
+	g_font.PutString(g_surf, bx + 10, by + 4, (char *)label);
+}
+
+/* Performance tab: CPU (combined or per-core grid) over Memory, with a heading,
+ * readout, and a Windows-style "logical processors" toggle. */
 static void draw_performance(void)
 {
 	const int pad = 16;
@@ -484,17 +574,60 @@ static void draw_performance(void)
 
 	g_surf.ogFillRect(0, top, g_w - 1, g_h - 1, COL_WIN);
 
-	/* CPU. */
 	int cy = top + pad;
-	set_fg(COL_TEXT);
-	g_font.PutString(g_surf, x, cy, "CPU");
-	snprintf(buf, sizeof(buf), "%d.%d%% utilization", g_overall_x10 / 10, g_overall_x10 % 10);
-	set_fg(COL_TEXT_DIM);
-	tw = (int)g_font.TextWidth(buf);
-	g_font.PutString(g_surf, x + w - tw, cy, buf);
-	draw_graph(x, cy + 24, w, gh, g_cpu_hist, COL_GRAPH_CPU, COL_GRAPH_CPU_FILL);
 
-	/* Memory. */
+	/* View toggle, top-right of the CPU section. */
+	{
+		const char *l = g_perf_percore ? "View: Per core" : "View: Overall";
+		int bw = (int)g_font.TextWidth(l) + 20;
+		draw_perf_toggle(x + w - bw, cy - 4);
+	}
+
+	if (!g_perf_percore)
+	{
+		/* One combined CPU graph. */
+		set_fg(COL_TEXT);
+		g_font.PutString(g_surf, x, cy, "CPU");
+		snprintf(buf, sizeof(buf), "%d.%d%% utilization", g_overall_x10 / 10, g_overall_x10 % 10);
+		set_fg(COL_TEXT_DIM);
+		tw = (int)g_font.TextWidth(buf);
+		g_font.PutString(g_surf, x + w - tw - g_perf_btn_w - 12, cy, buf);
+		draw_graph(x, cy + 24, w, gh, g_cpu_hist, COL_GRAPH_CPU, COL_GRAPH_CPU_FILL);
+	}
+	else
+	{
+		/* A graph per logical processor, laid out in a grid (up to 4 per row). */
+		int n = g_core_count;
+		if (n < 1)
+			n = 1;
+		if (n > MAX_CORES)
+			n = MAX_CORES;
+		int cols = (n >= 4) ? 4 : n;
+		int rows = (n + cols - 1) / cols;
+		int gap = 8;
+		int label_h = 18;
+		int cell_w = (w - (cols - 1) * gap) / cols;
+		int grid_top = cy + 22;
+		int grid_h = sect_h - 22 - pad;
+		int cell_h = (grid_h - (rows - 1) * gap) / rows;
+
+		set_fg(COL_TEXT);
+		g_font.PutString(g_surf, x, cy, "CPU - per logical processor");
+
+		for (int c = 0; c < n; c++)
+		{
+			int r = c / cols, k = c % cols;
+			int gx = x + k * (cell_w + gap);
+			int gy = grid_top + r * (cell_h + gap);
+			snprintf(buf, sizeof(buf), "CPU %d   %d%%", c, g_core_x10[c] / 10);
+			set_fg(COL_TEXT_DIM);
+			g_font.PutString(g_surf, gx, gy, buf);
+			draw_graph(gx, gy + label_h, cell_w, cell_h - label_h, g_core_hist[c], COL_GRAPH_CPU,
+			           COL_GRAPH_CPU_FILL);
+		}
+	}
+
+	/* Memory (bottom half). */
 	int my = top + sect_h + pad;
 	set_fg(COL_TEXT);
 	g_font.PutString(g_surf, x, my, "Memory");
@@ -662,8 +795,20 @@ static void on_click(int x, int y)
 		return;
 	}
 
+	if (g_tab == TAB_PERFORMANCE)
+	{
+		/* Toggle the CPU view between one combined graph and per-core graphs. */
+		if (x >= g_perf_btn_x && x < g_perf_btn_x + g_perf_btn_w && y >= g_perf_btn_y &&
+		    y < g_perf_btn_y + g_perf_btn_h)
+		{
+			g_perf_percore = !g_perf_percore;
+			render();
+		}
+		return;
+	}
+
 	if (g_tab != TAB_PROCESSES)
-		return; /* Performance tab has no clickable rows yet */
+		return;
 
 	if (y < TABBAR_H + HEADER_H) /* click a header cell -> sort by that column */
 	{
