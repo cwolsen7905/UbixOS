@@ -116,6 +116,16 @@ First entries of the 3.0 series (64-bit only: x86_64 + aarch64).  Development on
     loader's direct frame access needs it; user PML4s have a clean low half).
     Verified: ELF64 process runs + exits.  (Real `syscall`/`sysret` + the FreeBSD
     ABI, for the musl world, are next.)
+  - *Phase 5d (step C-2, SYSCALL/SYSRET)* — the real fast syscall path musl uses.
+    `x86_64_syscall_init` enables EFER.SCE + STAR/LSTAR/SFMASK; an asm entry stub
+    (`syscall_entry.S`) builds the shared trapframe and returns via `SYSRETQ`.  No
+    `swapgs` is needed — the kernel owns `%gs` (musl keeps TLS in `%fs`), so the
+    per-CPU kernel-stack top (new `struct pcpu.kernel_rsp`, set by `switch_to`) is
+    read straight through `%gs` (the `syscall` instruction does not stack-switch).
+    Both entry paths now share one FreeBSD-ABI handler (write = 4, exit = 1).
+    Verified: an ELF64 process makes `write`/`exit` via the `syscall` instruction
+    ("hello from ring 3 (syscall insn)") and `int 0x80` still works.  Routing to the
+    full MI POSIX table comes with the world (5e).
   `bmake TARGET=x86_64` builds the bring-up kernel only (the x86_64 userland/world is
   a later phase); `bmake run TARGET=x86_64` boots it (serial console).
   Grows by widening the i386 MD code to 64-bit.  See `docs/design/cross-arch-plan.md`.

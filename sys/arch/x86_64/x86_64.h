@@ -104,6 +104,7 @@ void x86_64_map_user_page(u64 va, u64 phys, int writable);
 void x86_64_map_user_page_to(u64 pml4_phys, u64 va, u64 phys, int writable);
 u64 x86_64_create_user_space(void);
 void x86_64_set_user_kstack(u64 top);
+void x86_64_syscall_init(void); /* enable SYSCALL/SYSRET (STAR/LSTAR/SFMASK/EFER.SCE) */
 void x86_64_syscall(struct x86_64_trapframe *tf);
 void x86_64_user_demo(void); /* 5a one-shot (kept; superseded by proc_demo) */
 void x86_64_proc_demo(void); /* 5b scheduled ring-3 process */

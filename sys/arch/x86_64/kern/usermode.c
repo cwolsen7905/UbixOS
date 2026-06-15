@@ -20,6 +20,7 @@
 #include <string.h>
 #include <ubixos/sched.h>   /* _current, sched(), kTask_t */
 #include <ubixos/endtask.h> /* endTask */
+#include <x86_64/pcpu.h>    /* curcpu() — per-CPU kernel RSP for the syscall entry */
 
 #define KCODE_SEL 0x08
 #define KDATA_SEL 0x10
@@ -123,9 +124,10 @@ u64 x86_64_ring0_stack_top(void)
 #define USER_STACK_VA 0x401000UL /* half is now clean (no kernel identity to collide) */
 #define USER_STACK_TOP (USER_STACK_VA + PAGE_SIZE)
 
-/* Bring-up syscall numbers (int 0x80) — replaced by the FreeBSD ABI in 5d/5e. */
-#define SYS_WRITE 1
-#define SYS_EXIT 2
+/* FreeBSD amd64 syscall numbers (shared by the int 0x80 + syscall-instruction
+ * paths; what musl emits).  The full MI POSIX table is wired with the world (5e). */
+#define SYS_EXIT 1
+#define SYS_WRITE 4
 
 extern char x86_64_user_demo_start[];
 extern char x86_64_user_demo_end[];
@@ -211,10 +213,50 @@ uintptr_t x86_64_create_user_space(void)
 	return pml4_phys;
 }
 
-/** Set the ring-0 stack the CPU loads (TSS.rsp0) on the next ring3->ring0 trap. */
+/** Set the kernel stack used on the next ring3->ring0 entry: the TSS rsp0 (for
+ * interrupts) and the per-CPU kernel_rsp (for the syscall instruction, which the
+ * CPU does not stack-switch).  Called from switch_to for each task. */
 void x86_64_set_user_kstack(u64 top)
 {
 	g_tss.rsp0 = top;
+	curcpu()->kernel_rsp = top;
+}
+
+#define MSR_EFER 0xC0000080
+#define MSR_STAR 0xC0000081
+#define MSR_LSTAR 0xC0000082
+#define MSR_SFMASK 0xC0000084
+
+extern void x86_64_syscall_entry(void);
+
+/** Write @val to MSR @msr (edx:eax = hi:lo). */
+static void wrmsr(u32 msr, u64 val)
+{
+	u32 lo = (u32)val;
+	u32 hi = (u32)(val >> 32);
+	__asm__ __volatile__("wrmsr" : : "c"(msr), "a"(lo), "d"(hi));
+}
+
+static u64 rdmsr(u32 msr)
+{
+	u32 lo, hi;
+	__asm__ __volatile__("rdmsr" : "=a"(lo), "=d"(hi) : "c"(msr));
+	return ((u64)hi << 32) | lo;
+}
+
+/**
+ * Enable the SYSCALL/SYSRET fast path: EFER.SCE, the STAR segment selectors
+ * (SYSCALL -> kernel CS 0x08 / SS 0x10; SYSRET -> user CS 0x23 / SS 0x1b from base
+ * 0x10), LSTAR (the entry point), and SFMASK (mask IF on entry so the stub runs
+ * with interrupts off until it is on the kernel stack).  Call once per CPU after
+ * the GDT is installed.
+ */
+void x86_64_syscall_init(void)
+{
+	wrmsr(MSR_EFER, rdmsr(MSR_EFER) | 0x1); /* SCE */
+	wrmsr(MSR_STAR, ((u64)0x10 << 48) | ((u64)0x08 << 32));
+	wrmsr(MSR_LSTAR, (u64)(unsigned long)x86_64_syscall_entry);
+	wrmsr(MSR_SFMASK, 0x200); /* clear IF on syscall entry */
 }
 
 /* -------------------------------------------------------------------------- *

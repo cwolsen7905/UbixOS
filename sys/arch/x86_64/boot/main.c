@@ -39,8 +39,10 @@ void kmain_x86_64(u32 mb_magic, u32 mb_info)
 	 * same reason.) */
 	x86_64_pcpu_install(0);
 
-	/* Ring-3 GDT + TSS (the ring-0 stack the CPU loads on a ring3->ring0 trap). */
+	/* Ring-3 GDT + TSS (the ring-0 stack the CPU loads on a ring3->ring0 trap),
+	 * then enable the SYSCALL/SYSRET fast path (the entry musl uses). */
 	x86_64_usermode_init();
+	x86_64_syscall_init();
 
 	idt_init();
 	serial_puts("IDT installed: 256 gates, 32 CPU-exception handlers (faults now visible).\n");

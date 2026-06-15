@@ -24,8 +24,10 @@
 #define ELF_STACK_VA 0x500000UL
 #define ELF_STACK_TOP (ELF_STACK_VA + PAGE_SIZE)
 
-extern char x86_64_user_demo_start[];
-extern char x86_64_user_demo_end[];
+/* Use the syscall-instruction payload so the demo proves the ELF loader AND the
+ * SYSCALL/SYSRET fast path together. */
+extern char x86_64_user_demo_sc_start[];
+extern char x86_64_user_demo_sc_end[];
 
 static u8 g_elf_image[1024];
 
@@ -38,11 +40,11 @@ static unsigned long synth_elf(void)
 	Elf64_Ehdr *eh = (Elf64_Ehdr *)g_elf_image;
 	Elf64_Phdr *ph = (Elf64_Phdr *)(g_elf_image + sizeof(Elf64_Ehdr));
 	unsigned long code_off = sizeof(Elf64_Ehdr) + sizeof(Elf64_Phdr);
-	unsigned long code_len = (unsigned long)(x86_64_user_demo_end - x86_64_user_demo_start);
+	unsigned long code_len = (unsigned long)(x86_64_user_demo_sc_end - x86_64_user_demo_sc_start);
 	unsigned long total = code_off + code_len;
 
 	memset(g_elf_image, 0, sizeof(g_elf_image));
-	memcpy(g_elf_image + code_off, x86_64_user_demo_start, code_len);
+	memcpy(g_elf_image + code_off, x86_64_user_demo_sc_start, code_len);
 
 	eh->e_ident[EI_MAG0] = ELFMAG0;
 	eh->e_ident[EI_MAG1] = ELFMAG1;

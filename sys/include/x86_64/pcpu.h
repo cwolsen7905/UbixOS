@@ -32,12 +32,19 @@ struct pcpu
 	struct pcpu *self;            /* &g_pcpu[cpuid], for curcpu() — offset 8 */
 	struct taskStruct *current;   /* thread running on this CPU — offset 16 */
 	struct taskStruct *idle;      /* this CPU's idle thread — offset 24 */
-	volatile u_int32_t heartbeat; /* liveness counter an AP bumps before it schedules */
+	volatile u_int32_t heartbeat; /* liveness counter an AP bumps before it schedules — 32 */
+	u_int32_t _pad;               /* 36 */
+	u_int64_t kernel_rsp;         /* current task's kernel-stack top — offset 40 (syscall entry) */
+	u_int64_t user_rsp_scratch;   /* stash for the user RSP across syscall entry — offset 48 */
 };
 
 _Static_assert(__builtin_offsetof(struct pcpu, self) == 8, "struct pcpu.self must be at offset 8 (pcpu.h curcpu asm)");
 _Static_assert(__builtin_offsetof(struct pcpu, current) == 16,
                "struct pcpu.current must be at offset 16 (sched.h get_current/set_current asm)");
+_Static_assert(__builtin_offsetof(struct pcpu, kernel_rsp) == 40,
+               "struct pcpu.kernel_rsp must be at offset 40 (syscall entry asm)");
+_Static_assert(__builtin_offsetof(struct pcpu, user_rsp_scratch) == 48,
+               "struct pcpu.user_rsp_scratch must be at offset 48 (syscall entry asm)");
 
 extern struct pcpu g_pcpu[MAXCPU];
 
