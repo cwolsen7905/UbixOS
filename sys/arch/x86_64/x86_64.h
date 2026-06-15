@@ -109,7 +109,7 @@ void x86_64_syscall(struct x86_64_trapframe *tf);
 
 /* syscall_md.c — mmap/brk return a 64-bit VA directly (td_retval is 32-bit), so
  * the syscall entry intercepts them.  See x86_64_syscall. */
-u64 x86_64_user_mmap(u64 addr, u64 len, u64 prot, u64 flags);
+u64 x86_64_user_mmap(u64 addr, u64 len, u64 prot, u64 flags, u64 fd, u64 off);
 u64 x86_64_user_brk(u64 newbrk);
 
 /* execfile.c — load an ELF64 + build the SysV initial stack (Phase 5e). */

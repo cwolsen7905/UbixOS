@@ -241,6 +241,18 @@ First entries of the 3.0 series (64-bit only: x86_64 + aarch64).  Development on
     `arch_prctl(SET_FS)` saw a stale pointer into another address space); (3) `fork`
     inherits the parent's `md_fsbase`/mmap/brk cursors (the child runs the parent's
     image until it `execve`s) and `execve` resets them for the fresh image.
+  - *Phase 5e — file-backed mmap (the dynamic linker fully works).* `x86_64_user_mmap`
+    now honours a file-backed mapping (MAP_ANON clear + a valid fd): it reads the
+    file's bytes into each page instead of zero-filling, and the syscall entry passes
+    the `fd`/`offset` args it previously dropped.  This is how ld-musl maps a shared
+    library's segments — without it a library loaded after the main exe came up all
+    zeroes (empty dynamic section → `sysv_lookup` faulted on a NULL hash table).  This
+    was the bug that made a binary exec'd after a fork crash: a directly-loaded
+    program reused ld-musl for `libc.so` and never file-mapped, while the exec'd one
+    loaded it fresh.  Verified: `/bin/init` now forks + execs the `/etc/init.d`
+    services with no faults — the dynamic linker is fully functional on x86_64.
+    (Next: the console/tty + devfs/procfs layer so the services and `login` have a
+    `/dev` and a controlling terminal.)
 
   **With mmap/execve/fork/signals in place, the x86_64 kernel can now load, run,
   fork, and signal real on-disk binaries — the full runtime a userland needs.**

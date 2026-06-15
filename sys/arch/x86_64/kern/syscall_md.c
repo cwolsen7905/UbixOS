@@ -17,6 +17,8 @@
 #include <lib/kmalloc.h>       /* sysID */
 #include <string.h>            /* memset */
 #include <x86_64/vmm_layout.h> /* MMAP_BASE, BRK_BASE (single source of truth) */
+#include <sys/descrip.h>       /* getfd, struct file (file-backed mmap) */
+#include <fs/vfs/file.h>       /* fileDescriptor_t, fread (file-backed mmap) */
 
 #define MSR_FS_BASE 0xC0000100
 
@@ -43,21 +45,48 @@ static int map_anon(u64 va, u64 npages)
 }
 
 /**
- * mmap(addr, len, prot, flags) — anonymous private mapping (the case musl's
- * allocator uses).  File-backed mappings are treated as anonymous + zero for now
- * (static binaries don't need them).  Honours MAP_FIXED (0x10) with a non-zero
- * addr.  @return the mapped base (0 on failure).
+ * Map @npages at @va, each populated from @fd at byte offset @file_off + page*4K
+ * (short reads leave the page-tail zero — covers a segment's .bss tail).  This is
+ * how the dynamic linker loads a shared library's segments.  Pages are private
+ * (no shared file-cache yet — correctness over the aarch64 optimisation).
+ * @return 0 on success, -1 on OOM.
+ */
+static int map_file(u64 va, u64 npages, fileDescriptor_t *fd, u64 file_off, int writable)
+{
+	u64 i;
+
+	for (i = 0; i < npages; i++)
+	{
+		uintptr_t frame = vmm_find_free_page(sysID);
+		if (frame == 0)
+			return -1;
+		memset(P2V(frame), 0, PAGE_SIZE);
+		fd->offset = (off_t)(file_off + i * PAGE_SIZE);
+		fread((void *)P2V(frame), 1, PAGE_SIZE, fd); /* short read => zero tail */
+		x86_64_map_user_page_to(_current->md.md_cr3, va + i * PAGE_SIZE, (u64)frame, writable);
+	}
+	return 0;
+}
+
+/**
+ * mmap(addr, len, prot, flags, fd, off) — private mapping, anonymous or
+ * file-backed.  Anonymous (MAP_ANON 0x20, or no valid fd) is zero-filled; a
+ * file-backed mapping reads the file's bytes into each page (the loader's path
+ * for shared-library segments — without it ld-musl maps zeroed segments and any
+ * lib it loads has an empty dynamic section).  Honours MAP_FIXED (0x10).  Syscall
+ * 477 passes @off in PAGE_SIZE units (matching aarch64's musl).  @return the
+ * mapped base (0 on failure).
  *
  * Returns the address DIRECTLY (not via td_retval): the syscall return slot
  * td_retval[] is int (32-bit), which cannot hold a 64-bit user VA, so the syscall
  * entry intercepts mmap/brk and puts this result straight in rax.
  */
-u64 x86_64_user_mmap(u64 addr, u64 len, u64 prot, u64 flags)
+u64 x86_64_user_mmap(u64 addr, u64 len, u64 prot, u64 flags, u64 fd, u64 off)
 {
 	u64 base;
 	u64 npages = (len + PAGE_SIZE - 1) / PAGE_SIZE;
+	int writable = (prot & 0x2) != 0; /* PROT_WRITE */
 
-	(void)prot;
 	if (npages == 0 || _current->md.md_cr3 == 0)
 		return 0;
 
@@ -74,8 +103,21 @@ u64 x86_64_user_mmap(u64 addr, u64 len, u64 prot, u64 flags)
 		base = _current->md.md_mmap_next;
 	}
 
-	if (map_anon(base, npages) != 0)
+	/* File-backed (MAP_ANON 0x20 clear) with a valid fd: read the file in.  A
+	 * library's text/data segments are mapped writable here (relocations patch
+	 * them); RELRO/mprotect-RO is a later refinement. */
+	if ((flags & 0x20) == 0 && (int)fd >= 0)
+	{
+		struct file *fp = 0;
+		if (getfd(&_current->td, &fp, (int)fd) != 0 || fp == 0 || fp->fd == 0)
+			return 0;
+		if (map_file(base, npages, fp->fd, off * PAGE_SIZE, writable) != 0)
+			return 0;
+	}
+	else if (map_anon(base, npages) != 0)
+	{
 		return 0;
+	}
 
 	if (!((flags & 0x10) && addr != 0))
 		_current->md.md_mmap_next = base + npages * PAGE_SIZE;

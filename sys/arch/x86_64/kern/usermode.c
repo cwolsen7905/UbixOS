@@ -339,7 +339,7 @@ void x86_64_syscall(struct x86_64_trapframe *tf)
 	 * needs the trapframe to seed the child. */
 	if (tf->rax == 477)
 	{
-		tf->rax = x86_64_user_mmap(tf->rdi, tf->rsi, tf->rdx, tf->r10);
+		tf->rax = x86_64_user_mmap(tf->rdi, tf->rsi, tf->rdx, tf->r10, tf->r8, tf->r9);
 	}
 	else if (tf->rax == 17) /* break */
 	{
