@@ -172,6 +172,9 @@ void kmain_x86_64(u32 mb_magic, u32 mb_info)
 			/* Phase 5e: load + run a REAL ELF64 off the FAT root via execve's path
 			 * (fopen/fread + build_user_image + the SysV stack). */
 			x86_64_exec_demo("/hello");
+
+			/* Phase 5e: fork — a process that fork()s; parent + child both run. */
+			x86_64_exec_demo("/forktest");
 		}
 		else
 			serial_puts("vfs: FAT mount failed\n");

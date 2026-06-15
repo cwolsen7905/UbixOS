@@ -115,9 +115,12 @@ u64 x86_64_user_brk(u64 newbrk);
 /* execfile.c — load an ELF64 + build the SysV initial stack (Phase 5e). */
 u64 x86_64_build_user_image(const void *image, u64 *out_entry, u64 *out_usp);
 void x86_64_exec_demo(const char *path); /* load + run a real on-disk ELF64 */
-void x86_64_user_demo(void);             /* 5a one-shot (kept; superseded by proc_demo) */
-void x86_64_proc_demo(void);             /* 5b scheduled ring-3 process */
-void x86_64_elf_demo(void);              /* 5d-C: load a synthesized ELF64 via the MI loader */
+
+/* fork.c — fork(2): copy address space + trapframe (Phase 5e). */
+long x86_64_fork(struct x86_64_trapframe *parent_tf);
+void x86_64_user_demo(void); /* 5a one-shot (kept; superseded by proc_demo) */
+void x86_64_proc_demo(void); /* 5b scheduled ring-3 process */
+void x86_64_elf_demo(void);  /* 5d-C: load a synthesized ELF64 via the MI loader */
 
 /* userentry.S — ring-3 entry primitives. */
 void x86_64_enter_user(u64 user_rip, u64 user_rsp); /* coroutine (5a one-shot) */

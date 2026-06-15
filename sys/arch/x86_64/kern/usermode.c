@@ -333,6 +333,11 @@ void x86_64_syscall(struct x86_64_trapframe *tf)
 		tf->rax = x86_64_user_brk(tf->rdi);
 		return;
 	}
+	if (tf->rax == 2) /* fork — needs the trapframe to seed the child */
+	{
+		tf->rax = (u64)x86_64_fork(tf);
+		return;
+	}
 
 	/* Bring-up console fast path: write to fd 1/2 goes straight to the serial
 	 * console (the x86_64 tty/pty fileops are not wired yet). */

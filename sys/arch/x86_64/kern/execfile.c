@@ -155,7 +155,9 @@ void x86_64_exec_demo(const char *path)
 	sched_ready(t);
 
 	kprintf("  task pid=%d ready (entry %X usp %X); yielding...\n", t->id, entry, usp);
-	for (i = 0; i < 64 && t->state != DEAD && t->state != ZOMBIE; i++)
+	/* Yield generously (not just until this task exits) so any children it fork()s
+	 * — separate tasks the scheduler must also dispatch — run to completion too. */
+	for (i = 0; i < 256; i++)
 		sched_yield();
 	kprintf("exec demo: %s ran + exited — execve loads real on-disk binaries on x86_64.\n", path);
 }

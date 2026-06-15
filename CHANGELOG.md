@@ -170,6 +170,14 @@ First entries of the 3.0 series (64-bit only: x86_64 + aarch64).  Development on
     — "hello from a real ELF64 on disk".  This is the exact path the musl world will
     load through.  (The test binary's source + build steps are in
     `tools/x86_64-test/`.)
+  - *Phase 5e — fork(2).* `arch/x86_64/kern/fork.c`: a child task with a deep copy
+    of the parent's user pages (the private PDPT[1..] region above the 1 GB
+    identity) and a duplicate of the fork-syscall trapframe with `rax = 0`.  The
+    child's kernel stack is seeded so its first dispatch lands in `ret_from_fork`
+    (the shared pop-and-`SYSRETQ` tail in `syscall_entry.S`), resuming it in ring 3
+    at the fork return point.  fork is intercepted in the syscall entry (it needs
+    the trapframe).  Verified: a `/forktest` binary forks and both parent ("child
+    pid in rax") and child ("fork returned 0") run.
   `bmake TARGET=x86_64` builds the bring-up kernel only (the x86_64 userland/world is
   a later phase); `bmake run TARGET=x86_64` boots it (serial console).
   Grows by widening the i386 MD code to 64-bit.  See `docs/design/cross-arch-plan.md`.

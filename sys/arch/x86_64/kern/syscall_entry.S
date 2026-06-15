@@ -53,7 +53,13 @@ x86_64_syscall_entry:
 	movq %rsp, %rdi /* arg0 = &trapframe */
 	call x86_64_syscall
 
-	popq %rax /* rax = return value the handler stored */
+	/* fork()'s child is dispatched here: switch_to lands in ret_from_fork (the
+	 * seeded ctx frame's return address) with RSP pointing at the copied trapframe
+	 * (rax already 0), so it shares this exact pop-and-SYSRETQ return tail. */
+	.globl ret_from_fork
+	.type ret_from_fork, @function
+ret_from_fork:
+	popq %rax /* rax = return value the handler stored (0 for the forked child) */
 	popq %rbx
 	popq %rcx
 	popq %rdx
