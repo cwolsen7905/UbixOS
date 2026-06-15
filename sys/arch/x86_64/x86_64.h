@@ -62,7 +62,8 @@ void serial_puts(const char *s);
 void serial_puthex(u64 v);
 void serial_putdec(u64 v);
 
-/* ksupport.c — bring-up kprintf (routes to the serial console). */
+/* ksupport.c — register COM1 as a kconsole sink (so the real kprintf routes here). */
+void x86_64_console_init(void);
 int kprintf(const char *fmt, ...);
 
 /* idt.c — 64-bit IDT + exception handling (Phase 2). */
@@ -99,9 +100,10 @@ void x86_64_leave_user(void);
 void x86_64_iret_to_user(u64 user_rip, u64 user_rsp); /* bare IRETQ (scheduled tasks) */
 
 /* dev/virtio_blk.c — virtio-blk over legacy virtio-pci (Phase 5c). */
+struct ubx_device;
 int virtio_blk_init(void);
-int virtio_blk_read(u32 lba, u32 count, void *buf);
-int virtio_blk_write(u32 lba, u32 count, const void *buf);
+int virtio_blk_read(struct ubx_device *dev, u32 lba, u32 count, void *buf);
+int virtio_blk_write(struct ubx_device *dev, u32 lba, u32 count, void *buf);
 
 /* vmm/vmm_machdep.c — physical page allocator setup (Phase 3). */
 void x86_64_mem_init(void);

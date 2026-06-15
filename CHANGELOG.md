@@ -73,6 +73,16 @@ First entries of the 3.0 series (64-bit only: x86_64 + aarch64).  Development on
     PCI-I/O-port transport differs) reads/writes 512-byte sectors.  Verified: reads
     sector 0 of the attached image and confirms the MBR `0x55AA` signature.  (The
     FAT/VFS root mount on top is 5c-2.)
+  - *Phase 5c-2 — FAT root over the VFS.* The machine-independent VFS / buffer-cache
+    / FAT driver now link into the x86_64 kernel and **mount a real disk root**:
+    `vfs_mount(VFS_TYPE_FAT, "/")` on the virtio-blk partition, with directory
+    listing working (`vfs_opendir`/`readdir` enumerate the volume).  This pulled the
+    MI lib up to the real implementations — `kprintf.c`/`kconsole.c` (a COM1 sink
+    replaces the bring-up stub kprintf), `string.c`/`strlen.c`/`strstr.c`, plus a
+    real `systemVitals` (the VFS keeps its mount/fs lists there) and a minimal
+    `getfd`.  `<stdarg.h>` now uses `__builtin_va_list` on x86_64 (the i386 `char*`
+    typedef breaks 64-bit `va_arg`).  Verified: mounts the image's FAT32 volume and
+    lists `/grub` + `/kernel`.
   `bmake TARGET=x86_64` builds the bring-up kernel only (the x86_64 userland/world is
   a later phase); `bmake run TARGET=x86_64` boots it (serial console).
   Grows by widening the i386 MD code to 64-bit.  See `docs/design/cross-arch-plan.md`.

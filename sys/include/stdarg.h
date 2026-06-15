@@ -31,10 +31,10 @@
 
 /*
  * va_list is the compiler's builtin variadic-argument type.  On i386 it is
- * pointer-like (historically char *); on aarch64 it is a struct, so the builtin
- * type must be used or __builtin_va_arg rejects it.
+ * pointer-like (historically char *); on aarch64 and x86_64 it is an array/struct
+ * type, so the builtin type must be used or __builtin_va_arg rejects it.
  */
-#if defined(__aarch64__)
+#if defined(__aarch64__) || defined(__x86_64__)
 typedef __builtin_va_list va_list;
 #else
 typedef char *va_list;

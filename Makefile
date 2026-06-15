@@ -302,7 +302,23 @@ X86_64_GENERIC_SRCS = \
 	sys/vmm/vmm_memory.c \
 	sys/lib/kmalloc.c \
 	sys/kern/sched_core.c \
-	sys/kern/sched_dispatch.c
+	sys/kern/sched_dispatch.c \
+	sys/lib/kprintf.c \
+	sys/lib/kconsole.c \
+	sys/lib/string.c \
+	sys/lib/strlen.c \
+	sys/lib/strstr.c \
+	sys/dev/partition.c \
+	sys/fs/vfs/vfs.c \
+	sys/fs/vfs/bcache.c \
+	sys/fs/vfs/mount.c \
+	sys/fs/vfs/file.c \
+	sys/fs/fat/fat_bpb.c \
+	sys/fs/fat/fat_clust.c \
+	sys/fs/fat/fat_dir.c \
+	sys/fs/fat/fat_file.c \
+	sys/fs/fat/fat_sector.c \
+	sys/fs/fat/fat_vfs.c
 
 kernel-x86_64:
 	@mkdir -p ${OBJ_DIR}/boot ${OBJ_DIR}/obj/sys

@@ -17,13 +17,54 @@
 #include <ubixos/sched.h>
 #include <sys/shutdown.h>
 #include <sys/types.h>
+#include <sys/thread.h>  /* struct thread, O_FILES (getfd) */
+#include <sys/descrip.h> /* getfd decl + g_* hook decls */
+#include <lib/kconsole.h>
 
-/* Set by vitals_init() once linked; NULL is safe — vmm_memory.c guards on it. */
-vitalsNode *systemVitals = 0;
+/* System vitals (sysTicks + the VFS fileSystems/mountPoints list heads).  The MI
+ * VFS keeps its lists inside this struct, so it must be real memory, not NULL.
+ * A static zero-initialised instance suffices for bring-up (vitals.c not linked). */
+static vitalsNode g_vitals;
+vitalsNode *systemVitals = &g_vitals;
 
 /* Reboot-countdown flag the scheduler tick checks (set by the kbd Ctrl-Alt-Del
  * affordance on i386; inactive here). */
 volatile u_int32_t reboot_at_tick = 0;
+
+/* VFS/FAT function-pointer hooks normally defined in descrip.c (too heavy to link
+ * for bring-up — it pulls the isa/tty/ioctl registry).  virtio_blk installs
+ * g_device_find; fat_init installs the rename/truncate shortcuts. */
+void *(*g_device_find)(int major, int minor) = 0;
+int (*g_fs_rename)(void *fs, const char *src, const char *dst) = 0;
+int (*g_fs_truncate)(void *file, u_int32_t length) = 0;
+
+/* TTY hooks file.c uses only when writing to a terminal device node; NULL here
+ * (no tty on x86_64 yet) — the file/dir read path never dereferences them. */
+void (*g_tty_print)(const char *buf, void *term) = 0;
+int (*g_tty_getchar)(void) = 0;
+
+/**
+ * Resolve a file descriptor to its open-file pointer (minimal version of
+ * descrip.c's getfd, which is too heavy to link for bring-up).
+ * @return 0 on success with *fp set, -1 on a bad/closed fd.
+ */
+int getfd(struct thread *td, struct file **fp, int fd)
+{
+	if (fd < 0 || fd >= O_FILES)
+	{
+		*fp = 0;
+		return -1;
+	}
+	*fp = (struct file *)td->o_files[fd];
+	return (*fp == 0) ? -1 : 0;
+}
+
+/** Kernel log sink — not wired on x86_64 yet (the klog ring buffer is unlinked). */
+void klog(u_int8_t level, const char *fmt, ...)
+{
+	(void)level;
+	(void)fmt;
+}
 
 /* --- bring-up stubs for the scheduler's optional subsystems ------------------ *
  * sched_core/sched_dispatch reference these; the timed-sleep (callout), CSPRNG
@@ -136,62 +177,45 @@ void __assert(const char *func, const char *file, int line, const char *e)
 		__asm__ __volatile__("cli; hlt");
 }
 
-/* --- minimal kprintf (bring-up; %s %c %d %u %x %p %l*) ------------------------- */
+/* --- console: register COM1 as a kconsole sink so the real kprintf.c routes
+ * here (graduated from the bring-up stub kprintf).  x86_64_console_init() must
+ * run before the first kprintf. --------------------------------------------- */
 
-int kprintf(const char *fmt, ...)
+static void kc_serial_putc(int c)
 {
-	__builtin_va_list ap;
-	__builtin_va_start(ap, fmt);
-	for (const char *p = fmt; *p != '\0'; p++)
+	if (c == '\n')
+		serial_putc('\r'); /* serial sink owns CR/LF expansion */
+	serial_putc((char)c);
+}
+
+static struct kconsole g_kc_serial = {kc_serial_putc, "com1", KC_SERIAL, 0};
+
+void x86_64_console_init(void)
+{
+	kconsole_register(&g_kc_serial);
+}
+
+/* --- string ops the freestanding build needs (no arch lib/string.c yet) ------- */
+
+int strcmp(const char *a, const char *b)
+{
+	while (*a != '\0' && *a == *b)
 	{
-		if (*p != '%')
-		{
-			if (*p == '\n')
-				serial_putc('\r');
-			serial_putc(*p);
-			continue;
-		}
-		p++;
-		int lng = 0;
-		while (*p == 'l')
-		{
-			lng++;
-			p++;
-		}
-		switch (*p)
-		{
-			case 's':
-				serial_puts(__builtin_va_arg(ap, const char *));
-				break;
-			case 'c':
-				serial_putc((char)__builtin_va_arg(ap, int));
-				break;
-			case 'u':
-				serial_putdec(lng ? __builtin_va_arg(ap, unsigned long)
-				                  : __builtin_va_arg(ap, unsigned));
-				break;
-			case 'd':
-			case 'i':
-				serial_putdec(lng ? (u64) __builtin_va_arg(ap, long) : (u64) __builtin_va_arg(ap, int));
-				break;
-			case 'x':
-			case 'X':
-				serial_puthex(lng ? __builtin_va_arg(ap, unsigned long)
-				                  : __builtin_va_arg(ap, unsigned));
-				break;
-			case 'p':
-				serial_puthex((u64) __builtin_va_arg(ap, void *));
-				break;
-			case '%':
-				serial_putc('%');
-				break;
-			default:
-				serial_putc('%');
-				serial_putc(*p);
-				break;
-		}
+		a++;
+		b++;
 	}
-	__builtin_va_end(ap);
+	return (int)(unsigned char)*a - (int)(unsigned char)*b;
+}
+
+int strncmp(const char *a, const char *b, unsigned long n)
+{
+	for (; n != 0; n--, a++, b++)
+	{
+		if (*a != *b)
+			return (int)(unsigned char)*a - (int)(unsigned char)*b;
+		if (*a == '\0')
+			break;
+	}
 	return 0;
 }
 

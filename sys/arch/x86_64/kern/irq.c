@@ -11,6 +11,7 @@
  */
 
 #include "x86_64.h"
+#include <ubixos/vitals.h>
 
 #define PIC1_CMD 0x20
 #define PIC1_DATA 0x21
@@ -103,7 +104,10 @@ void x86_64_irq(unsigned vector)
 	if (vector == IRQ_BASE) /* IRQ0 — PIT timer */
 	{
 		extern void sched_account_tick(void);
+		extern vitalsNode *systemVitals;
 		g_ticks++;
+		if (systemVitals != 0)
+			systemVitals->sysTicks++; /* MI time base (scheduler aging, callouts) */
 		/* Charge the elapsed tick to whatever was running.  The kernel is
 		 * non-preemptive here (like aarch64: no EL0/userland yet), so we do
 		 * not reschedule from IRQ context — kernel threads cooperatively

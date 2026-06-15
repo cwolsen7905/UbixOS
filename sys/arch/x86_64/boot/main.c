@@ -11,6 +11,10 @@
 #include "x86_64.h"
 #include <ubixos/sched.h>
 #include <x86_64/pcpu.h>
+#include <fs/vfs/vfs.h>   /* vfs_init, VFS_TYPE_FAT */
+#include <fs/vfs/mount.h> /* vfs_mount */
+#include <fs/vfs/file.h>  /* vfs_opendir/readdir/closedir, kDIR_t, struct kdirent */
+#include <fs/fat/fat.h>   /* fat_init */
 
 /**
  * x86-64 kernel C entry.  @mb_magic / @mb_info are the boot magic + info pointer
@@ -19,6 +23,7 @@
 void kmain_x86_64(u32 mb_magic, u32 mb_info)
 {
 	serial_init();
+	x86_64_console_init(); /* register COM1 as a kconsole sink for kprintf */
 	serial_puts("\nuBixOS x86_64 (long mode) - boot OK\n");
 	serial_puts("x86_64 bring-up: COM1 up, PAE+LME+paging on, 64-bit C ABI live.\n");
 	serial_puts("  boot magic=");
@@ -112,22 +117,38 @@ void kmain_x86_64(u32 mb_magic, u32 mb_info)
 	 * per-process address space (supersedes the 5a one-shot enter/leave demo). */
 	x86_64_proc_demo();
 
-	/* Phase 5c: probe the virtio-blk-pci disk and read sector 0 — verify the
-	 * MBR boot signature (0x55 0xAA at offset 510) as proof the block path works
-	 * before the FAT/VFS stack mounts a root on it. */
+	/* Phase 5c: probe the virtio-blk-pci disk, then mount its FAT partition as the
+	 * VFS root and list it — proof the block driver + buffer cache + FAT + VFS all
+	 * work together (the foundation execve/init will load binaries through). */
 	if (virtio_blk_init() == 0)
 	{
-		static u8 sec[512];
-		if (virtio_blk_read(0, 1, sec) == 0)
+		vfs_init();
+		fat_init(); /* register the FAT driver with the VFS */
+
+		/* Partition 1 (vtblk0s1, major 1 / minor 1) is the FAT volume. */
+		if (vfs_mount(1, 1, 0, VFS_TYPE_FAT, "/", "rw") == 0)
 		{
-			serial_puts("virtio-blk: sector 0 sig = ");
-			serial_puthex(sec[510]);
-			serial_puts(" ");
-			serial_puthex(sec[511]);
-			serial_puts((sec[510] == 0x55 && sec[511] == 0xAA) ? "  [valid MBR]\n" : "  [no MBR sig]\n");
+			kDIR_t *d = vfs_opendir("/");
+			serial_puts("vfs: mounted FAT root on vtblk0s1; readdir / :\n");
+			if (d != 0)
+			{
+				struct kdirent e;
+				int n = 0;
+				while (vfs_readdir(d, &e) == 0 && n < 32)
+				{
+					serial_puts("  /");
+					serial_puts(e.d_name);
+					serial_puts("\n");
+					n++;
+				}
+				vfs_closedir(d);
+				serial_puts("vfs: FAT root readable — disk-backed root works on x86_64.\n");
+			}
+			else
+				serial_puts("vfs: opendir(/) failed\n");
 		}
 		else
-			serial_puts("virtio-blk: sector 0 read failed\n");
+			serial_puts("vfs: FAT mount failed\n");
 	}
 
 	serial_puts("x86_64 Phase 4b-2 (generic scheduler) verified. Idle.\n");
