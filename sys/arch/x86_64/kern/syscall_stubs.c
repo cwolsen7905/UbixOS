@@ -56,10 +56,6 @@ long sys_disk_query()
 {
 	return -1;
 }
-long sys_execve()
-{
-	return -1;
-}
 long sys_fbpresent()
 {
 	return -1;

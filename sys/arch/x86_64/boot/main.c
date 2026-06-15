@@ -168,6 +168,10 @@ void kmain_x86_64(u32 mb_magic, u32 mb_info)
 			 * the MI loader and run it — it opens + reads a file off the FAT root
 			 * through the syscall instruction (open/read/write/exit). */
 			x86_64_elf_demo();
+
+			/* Phase 5e: load + run a REAL ELF64 off the FAT root via execve's path
+			 * (fopen/fread + build_user_image + the SysV stack). */
+			x86_64_exec_demo("/hello");
 		}
 		else
 			serial_puts("vfs: FAT mount failed\n");

@@ -160,6 +160,16 @@ First entries of the 3.0 series (64-bit only: x86_64 + aarch64).  Development on
     working) and user mappings live above it (ELF + stack at 1 GB, brk 7 GB, mmap
     8 GB — matching aarch64).  Verified: a ring-3 process `mmap`s a page, writes to
     it, and reads a file — all through the `syscall` instruction.
+  - *Phase 5e — execve (real on-disk binaries).* `arch/x86_64/kern/execfile.c`:
+    `x86_64_build_user_image` loads an ELF64 into a fresh address space and builds
+    the minimal SysV amd64 initial stack (argc/argv/envp + an `AT_PAGESZ` auxv
+    entry, which musl reads or `malloc` fails); `sys_execve` reads a path off the
+    VFS (`fopen`/`fread`), builds the image, and IRETQs the calling task into it.
+    Verified end to end: a real static ELF64 (`/hello`, built with the cross
+    toolchain + `mcopy`'d onto the FAT image) is loaded off disk and runs at ring 3
+    — "hello from a real ELF64 on disk".  This is the exact path the musl world will
+    load through.  (The test binary's source + build steps are in
+    `tools/x86_64-test/`.)
   `bmake TARGET=x86_64` builds the bring-up kernel only (the x86_64 userland/world is
   a later phase); `bmake run TARGET=x86_64` boots it (serial console).
   Grows by widening the i386 MD code to 64-bit.  See `docs/design/cross-arch-plan.md`.
