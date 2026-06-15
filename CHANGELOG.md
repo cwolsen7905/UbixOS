@@ -49,6 +49,13 @@ First entries of the 3.0 series (64-bit only: x86_64 + aarch64).  Development on
     block.  Also makes `<machine/{ansi,limits}.h>` resolve to LP64 x86_64 headers (the
     32-bit i386 fallback truncated every `uintptr_t` pointer cast to 32 bits).  The
     foundation for running secondary cores (LAPIC + AP trampoline next).
+  - *Phase 5a — ring 3 + syscalls.* The kernel can now drop to **user mode** and
+    service a syscall: a writable GDT adds the ring-3 code/data segments + a 64-bit
+    TSS (the ring-0 stack the CPU loads on a ring3->ring0 trap); a 4 KB user page is
+    mapped (real page-table walk in an unused PDPT slot, clear of the 2 MB boot map);
+    `int $0x80` enters through a DPL3 IDT gate.  Verified end-to-end: a hand-rolled
+    ring-3 payload `write`s a string and `exit`s, returning to the kernel via a
+    coroutine swap.  (`syscall`/`sysret` + the FreeBSD ABI come with the ELF loader.)
   `bmake TARGET=x86_64` builds the bring-up kernel only (the x86_64 userland/world is
   a later phase); `bmake run TARGET=x86_64` boots it (serial console).
   Grows by widening the i386 MD code to 64-bit.  See `docs/design/cross-arch-plan.md`.

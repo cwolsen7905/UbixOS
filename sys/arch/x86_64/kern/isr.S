@@ -81,6 +81,15 @@ isr\vec:
 	ISR_NOERR 46
 	ISR_NOERR 47
 
+	/* Syscall gate (vector 0x80 = 128, DPL3): ring-3 `int $0x80` lands here.  No
+	 * error code, so push a dummy 0 + the vector and reuse the common path; the C
+	 * handler routes vector 128 to x86_64_syscall (idt.c). */
+	.globl isr_syscall
+isr_syscall:
+	pushq $0
+	pushq $128
+	jmp isr_common
+
 	/*
 	 * Common entry: save GP regs (rax pushed last -> lowest address -> rsp), pass
 	 * the trapframe pointer in rdi, call the C handler, restore, pop vector+error,

@@ -34,6 +34,9 @@ void kmain_x86_64(u32 mb_magic, u32 mb_info)
 	 * same reason.) */
 	x86_64_pcpu_install(0);
 
+	/* Ring-3 GDT + TSS (the ring-0 stack the CPU loads on a ring3->ring0 trap). */
+	x86_64_usermode_init();
+
 	idt_init();
 	serial_puts("IDT installed: 256 gates, 32 CPU-exception handlers (faults now visible).\n");
 
@@ -104,6 +107,10 @@ void kmain_x86_64(u32 mb_magic, u32 mb_info)
 		taskList->base_priority = QOS_DEFAULT;
 		x86_64_sched_demo();
 	}
+
+	/* Phase 5a: drop to ring 3 and round-trip a syscall (proof of the privilege
+	 * transition + the int 0x80 path before per-process address spaces in 5b). */
+	x86_64_user_demo();
 
 	serial_puts("x86_64 Phase 4b-2 (generic scheduler) verified. Idle.\n");
 	for (;;)

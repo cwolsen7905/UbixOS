@@ -44,6 +44,27 @@ int kprintf(const char *fmt, ...);
 /* idt.c — 64-bit IDT + exception handling (Phase 2). */
 void idt_init(void);
 
+/*
+ * Trapframe pushed by the ISR stubs (isr.S): GP registers (r15 at the lowest
+ * address), then vector + error code, then the CPU-pushed IRET frame.
+ */
+struct x86_64_trapframe
+{
+	u64 rax, rbx, rcx, rdx, rsi, rdi, rbp;
+	u64 r8, r9, r10, r11, r12, r13, r14, r15;
+	u64 vector, error;
+	u64 rip, cs, rflags, rsp, ss;
+};
+
+void x86_64_exception(struct x86_64_trapframe *tf);
+
+/* usermode.c — ring-3 GDT + TSS + the one-shot ring-3 demo (Phase 5a). */
+void x86_64_usermode_init(void);
+u64 x86_64_ring0_stack_top(void);
+void x86_64_map_user_page(u64 va, u64 phys, int writable);
+void x86_64_syscall(struct x86_64_trapframe *tf);
+void x86_64_user_demo(void);
+
 /* vmm/vmm_machdep.c — physical page allocator setup (Phase 3). */
 void x86_64_mem_init(void);
 

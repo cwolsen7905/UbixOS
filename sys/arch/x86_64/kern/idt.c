@@ -37,36 +37,34 @@ struct idt_ptr
  * Trapframe — matches the push order in isr_common (isr.S): GP regs (rax at the
  * lowest address), then vector + error code, then the CPU-pushed iret frame.
  */
-struct x86_64_trapframe
-{
-	u64 rax, rbx, rcx, rdx, rsi, rdi, rbp;
-	u64 r8, r9, r10, r11, r12, r13, r14, r15;
-	u64 vector, error;
-	u64 rip, cs, rflags, rsp, ss;
-};
-
 static struct idt_gate g_idt[NIDT];
 static struct idt_ptr g_idt_ptr;
 
 extern void *isr_stub_table[48]; /* isr.S — 32 CPU exceptions + 16 PIC IRQ stubs */
+extern void isr_syscall(void);   /* isr.S — the int 0x80 (vector 128) entry */
 
-static void idt_set_gate(int vec, void *handler)
+#define IDT_GATE_USER 0xEE /* present, DPL3, 64-bit interrupt gate (ring 3 may invoke) */
+
+static void idt_set_gate(int vec, void *handler, u8 attr)
 {
 	u64 addr = (u64)handler;
 	g_idt[vec].off_lo = (u16)(addr & 0xFFFF);
 	g_idt[vec].selector = KERNEL_CS;
 	g_idt[vec].ist = 0;
-	g_idt[vec].attr = IDT_GATE_INT;
+	g_idt[vec].attr = attr;
 	g_idt[vec].off_mid = (u16)((addr >> 16) & 0xFFFF);
 	g_idt[vec].off_hi = (u32)((addr >> 32) & 0xFFFFFFFF);
 	g_idt[vec].zero = 0;
 }
 
-/** Build the IDT (32 exception vectors + 16 PIC IRQ vectors) and load it. */
+/** Build the IDT (32 exception vectors + 16 PIC IRQ vectors + the syscall gate). */
 void idt_init(void)
 {
 	for (int v = 0; v < 48; v++)
-		idt_set_gate(v, isr_stub_table[v]);
+		idt_set_gate(v, isr_stub_table[v], IDT_GATE_INT);
+
+	/* Vector 0x80: DPL3 so ring-3 code can `int $0x80` (the bring-up syscall). */
+	idt_set_gate(0x80, (void *)isr_syscall, IDT_GATE_USER);
 
 	g_idt_ptr.limit = (u16)(sizeof(g_idt) - 1);
 	g_idt_ptr.base = (u64)&g_idt[0];
@@ -113,6 +111,13 @@ static const char *const g_exc_names[32] = {"#DE divide error",
 void x86_64_exception(struct x86_64_trapframe *tf)
 {
 	u64 cr2;
+
+	/* Vector 128 (0x80) is the bring-up syscall gate (DPL3) — dispatch + IRETQ. */
+	if (tf->vector == 128)
+	{
+		x86_64_syscall(tf);
+		return;
+	}
 
 	/* Vectors 32..47 are hardware IRQs (PIC-remapped) — handle + EOI, then IRETQ. */
 	if (tf->vector >= 32)
