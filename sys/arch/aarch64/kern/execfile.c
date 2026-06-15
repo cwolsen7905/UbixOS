@@ -167,6 +167,12 @@ static void run_init_image(const void *image, const char *name)
 	/* The boot thread is now purely the idle thread: tag it so sched_account_tick
 	 * buckets its ticks as idle (not busy) and procfs reports it at 0% CPU. */
 	g_idle_task = _current;
+
+	/* smp-plan M3: the scheduler is up and init is scheduled — create each AP's
+	 * per-CPU idle task and release the APs into the shared run queue.  From here
+	 * they pull READY tasks alongside the BSP (true SMP). */
+	aarch64_smp_release_aps();
+
 	for (;;)
 	{
 		sched_yield();           /* boot thread is now the idle task; init runs the system */
@@ -472,6 +478,11 @@ void aarch64_run_dynamic_init(const char *path)
 	/* The boot thread is now purely the idle thread: tag it so sched_account_tick
 	 * buckets its ticks as idle (not busy) and procfs reports it at 0% CPU. */
 	g_idle_task = _current;
+
+	/* smp-plan M3: scheduler up + init scheduled — create each AP's per-CPU idle
+	 * task and release the APs into the shared run queue (true SMP). */
+	aarch64_smp_release_aps();
+
 	for (;;)
 	{
 		sched_yield(); /* run any ready task */

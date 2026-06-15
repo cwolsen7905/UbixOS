@@ -50,6 +50,7 @@ void aarch64_mmu_enable_secondary(void); /* AP: reuse the BSP's page tables (smp
  * Each AP lands in secondary_entry (apentry.S) -> c_ap_boot_arm(). */
 void aarch64_smp_start_aps(void);
 void c_ap_boot_arm(u_int32_t id); /* AP C entry, called from apentry.S */
+void aarch64_smp_release_aps(void); /* M3: create per-AP idle tasks + release APs into the scheduler */
 
 /* vmm_machdep.c — read real RAM size from the DTB /memory node (x0 at entry).
  * Raises the page-bitmap ceiling above the 512 MB fallback; run before

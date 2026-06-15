@@ -46,6 +46,8 @@
 #include <ubixos/sched_internal.h>
 #if defined(__i386__)
 #include <i386/pcpu.h> /* curcpu() — per-CPU idle thread (smp-plan Phase 3) */
+#elif defined(__aarch64__)
+#include <aarch64/pcpu.h> /* curcpu() — per-CPU idle thread (smp-plan M3) */
 #endif
 #include <ubixos/spinlock.h>
 #include <ubixos/vitals.h>
@@ -253,7 +255,7 @@ void sched()
 	 * quantum.  On aarch64 the idle thread is still a normal enqueued task, so
 	 * cpu_idle is NULL there and every path below is byte-for-byte unchanged.
 	 */
-#if defined(__i386__)
+#if defined(__i386__) || defined(__aarch64__)
 	kTask_t *cpu_idle = curcpu()->idle;
 #else
 	kTask_t *cpu_idle = NULL;

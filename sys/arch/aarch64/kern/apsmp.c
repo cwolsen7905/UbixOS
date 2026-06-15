@@ -10,12 +10,34 @@
  */
 
 #include <sys/types.h>
-#include <aarch64/pcpu.h>    /* struct pcpu, g_pcpu, curcpu, aarch64_pcpu_install */
-#include <ubixos/cpu_enum.h> /* g_cpu_desc, smp_cpu_count */
+#include <aarch64/pcpu.h>          /* struct pcpu, g_pcpu, curcpu, aarch64_pcpu_install */
+#include <ubixos/cpu_enum.h>       /* g_cpu_desc, smp_cpu_count */
+#include <ubixos/sched.h>          /* kTask_t, sched_yield, set_current, QOS_IDLE */
+#include <ubixos/sched_internal.h> /* schedNewTask, sched_set_priority */
 #include <lib/kprintf.h>
-#include "../bringup.h" /* aarch64_mmu_enable_secondary, aarch64_vbar_init, c_ap_boot_arm */
+#include <string.h>
+#include "../bringup.h" /* aarch64_mmu_enable_secondary, aarch64_vbar_init, c_ap_boot_arm, aarch64_kernel_l1 */
 
 #define AP_STACK_SIZE 16384 /* must match apentry.S */
+
+/*
+ * smp-plan: release the APs into the SCHEDULER (M3), default OFF.  The AP
+ * scheduler entry works, but true SMP still has uniprocessor assumptions that
+ * corrupt or exhaust state under concurrent load (the atomic spinlock + kmalloc
+ * are fixed; the page-table/fork allocation path still leaks/OOMs — M4 hardening
+ * + TLB shootdown remain).  With this 0, the APs still come up and take their own
+ * per-CPU timer ticks (M2, verified stable) but stay parked at the release gate.
+ * Set to 1 to experiment with APs pulling real tasks.  Mirrors i386 SMP_ENABLE_APS.
+ */
+#define AARCH64_SMP_ENABLE_APS 0
+
+/*
+ * smp-plan M3 AP-release gate.  The APs come up (M1/M2) before the scheduler and
+ * the per-CPU idle tasks exist, so they idle on their own timer (heartbeat) until
+ * the BSP has sched_init'd, scheduled init, created each AP's idle task, and set
+ * this flag — then each AP adopts its idle and joins the shared run queue.
+ */
+volatile int g_arm_ap_go = 0;
 
 /* Per-CPU kernel stacks for the APs (slot 0 = BSP's, unused — the BSP runs on
  * the linker's _stack).  BSS, so zeroed; apentry.S carves sp from this symbol. */
@@ -80,8 +102,60 @@ void c_ap_boot_arm(u_int32_t id)
 	timer_init();
 	__asm__ __volatile__("msr daifclr, #2"); /* unmask IRQ (keep FIQ/SError masked) */
 
-	for (;;)
+	/*
+	 * smp-plan M3: wait for the BSP to finish booting and create our per-CPU idle
+	 * task (g_arm_ap_go), taking our own timer ticks meanwhile.  Then adopt the
+	 * idle as _current and enter the cooperative scheduler: sched_yield() pulls a
+	 * READY task from the shared run queue (run-queue-locked, so safe alongside
+	 * the BSP); when nothing is runnable we halt until our next timer tick.  This
+	 * is the per-CPU-idle path (dispatcher: cpu_idle = curcpu()->idle).
+	 */
+	while (!g_arm_ap_go)
 		__asm__ __volatile__("wfi");
+
+	kTask_t *idle = curcpu()->idle;
+	idle->state = RUNNING;
+	set_current(idle);
+
+	for (;;)
+	{
+		sched_yield();
+		__asm__ __volatile__("wfi");
+	}
+}
+
+/**
+ * BSP: create one non-enqueued per-CPU idle task per AP and release the APs into
+ * the scheduler (smp-plan M3).  Called once the scheduler is up and init is
+ * scheduled — the APs then pull READY tasks from the shared run queue.
+ */
+void aarch64_smp_release_aps(void)
+{
+	unsigned n = smp_cpu_count();
+
+#if !AARCH64_SMP_ENABLE_APS
+	/* Default: leave the APs parked at the M2 gate (up + taking their own timer
+	 * ticks, but not scheduling).  True-SMP hardening (M4) is incomplete. */
+	(void)n;
+	return;
+#endif
+
+	for (unsigned id = 1; id < n && id < MAXCPU; id++)
+	{
+		kTask_t *idle = schedNewTask();
+		if (idle == 0)
+			continue;
+		idle->md.md_ttbr0 = (u_int64_t)(uintptr_t)aarch64_kernel_l1(); /* kernel space */
+		idle->md.md_entry = 0;
+		idle->md.md_usp = 0;
+		strncpy(idle->name, "idle/ap", sizeof(idle->name) - 1);
+		sched_set_priority(idle, QOS_IDLE); /* lowest band; never enqueued (per-CPU fallback) */
+		g_pcpu[id].idle = idle;             /* the AP adopts this as its _current */
+	}
+
+	__asm__ __volatile__("dmb ish");
+	g_arm_ap_go = 1;
+	kprintf("smp: released %u application processor(s) into the scheduler\n", (n > 1) ? n - 1 : 0);
 }
 
 /**
