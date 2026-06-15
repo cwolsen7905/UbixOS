@@ -51,7 +51,33 @@ void kmain_x86_64(u32 mb_magic, u32 mb_info)
 		serial_puts(" [freed]\n");
 	}
 
-	serial_puts("x86_64 Phase 3 up: paging allocator + kmalloc live. Idle.\n");
+	/* Phase 4a: PIC + PIT timer + interrupts. */
+	pic_remap();
+	pit_init(100); /* 100 Hz */
+	__asm__ __volatile__("sti");
+	serial_puts("PIC remapped (IRQ 32-47), PIT at 100 Hz, interrupts on.\n");
+
+	/* Verify the timer IRQ fires: print the first 3 one-second marks. */
+	{
+		u64 next = 100;
+		int marks = 0;
+		while (marks < 3)
+		{
+			if (timer_ticks() >= next)
+			{
+				serial_puts("  timer tick ");
+				serial_putdec(timer_ticks());
+				serial_puts(" (~");
+				serial_putdec((timer_ticks() / 100));
+				serial_puts("s)\n");
+				next += 100;
+				marks++;
+			}
+			__asm__ __volatile__("hlt"); /* wait for the next interrupt */
+		}
+	}
+
+	serial_puts("x86_64 Phase 4a up: timer + IRQs live. Idle.\n");
 	for (;;)
 		__asm__ __volatile__("hlt");
 }

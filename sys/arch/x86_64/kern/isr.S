@@ -62,6 +62,25 @@ isr\vec:
 	ISR_NOERR 30
 	ISR_NOERR 31
 
+	/* Hardware IRQ vectors (PIC-remapped to 32..47).  No error code; the common
+	 * path routes vector >= 32 to the IRQ handler + EOI (idt.c). */
+	ISR_NOERR 32  /* IRQ0  PIT timer   */
+	ISR_NOERR 33  /* IRQ1  keyboard    */
+	ISR_NOERR 34
+	ISR_NOERR 35
+	ISR_NOERR 36
+	ISR_NOERR 37
+	ISR_NOERR 38
+	ISR_NOERR 39
+	ISR_NOERR 40
+	ISR_NOERR 41
+	ISR_NOERR 42
+	ISR_NOERR 43
+	ISR_NOERR 44
+	ISR_NOERR 45
+	ISR_NOERR 46
+	ISR_NOERR 47
+
 	/*
 	 * Common entry: save GP regs (rax pushed last -> lowest address -> rsp), pass
 	 * the trapframe pointer in rdi, call the C handler, restore, pop vector+error,
@@ -106,7 +125,7 @@ isr_common:
 	addq $16, %rsp    /* discard vector + error code */
 	iretq
 
-	/* Table of the 32 exception-stub entry points, for idt_init() to loop over. */
+	/* Table of stub entry points (48 = 32 exceptions + 16 IRQs) for idt_init(). */
 	.section .rodata
 	.align 8
 	.globl isr_stub_table
@@ -115,3 +134,5 @@ isr_stub_table:
 	.quad isr8,  isr9,  isr10, isr11, isr12, isr13, isr14, isr15
 	.quad isr16, isr17, isr18, isr19, isr20, isr21, isr22, isr23
 	.quad isr24, isr25, isr26, isr27, isr28, isr29, isr30, isr31
+	.quad isr32, isr33, isr34, isr35, isr36, isr37, isr38, isr39
+	.quad isr40, isr41, isr42, isr43, isr44, isr45, isr46, isr47

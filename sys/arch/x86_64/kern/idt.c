@@ -62,10 +62,10 @@ static void idt_set_gate(int vec, void *handler)
 	g_idt[vec].zero = 0;
 }
 
-/** Build the IDT (the 32 exception vectors) and load it. */
+/** Build the IDT (32 exception vectors + 16 PIC IRQ vectors) and load it. */
 void idt_init(void)
 {
-	for (int v = 0; v < 32; v++)
+	for (int v = 0; v < 48; v++)
 		idt_set_gate(v, isr_stub_table[v]);
 
 	g_idt_ptr.limit = (u16)(sizeof(g_idt) - 1);
@@ -94,6 +94,14 @@ static const char *const g_exc_names[32] = {
 void x86_64_exception(struct x86_64_trapframe *tf)
 {
 	u64 cr2;
+
+	/* Vectors 32..47 are hardware IRQs (PIC-remapped) — handle + EOI, then IRETQ. */
+	if (tf->vector >= 32)
+	{
+		x86_64_irq((unsigned)tf->vector);
+		return;
+	}
+
 	__asm__ __volatile__("mov %%cr2, %0" : "=r"(cr2));
 
 	serial_puts("\n*** x86_64 exception: ");
