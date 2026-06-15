@@ -33,9 +33,15 @@
 #include <machine/signal.h> /* SIGCHLD — child-stop notification to the parent */
 #include <ubixos/spinlock.h>
 #include <ubixos/wait.h>
+#include <ubixos/cpu_enum.h> /* CPU_ENUM_MAX, smp_cpu_count — per-core CPU accounting */
 #include <lib/kmalloc.h>
 #include <lib/kprintf.h>
 #include <string.h>
+#if defined(__i386__)
+#include <i386/pcpu.h> /* smp_processor_id(), curcpu() — which CPU a tick is charged to */
+#elif defined(__aarch64__)
+#include <aarch64/pcpu.h> /* curcpu() — which CPU a tick is charged to */
+#endif
 #include <assert.h>
 #include <sys/descrip.h>
 #include <sys/resource.h>
@@ -93,47 +99,109 @@ int need_resched = 0;
  * of CPU counters that collapse to "cpu0".  When SMP Phase 4 lands these move
  * into per-CPU storage indexed by smp_processor_id().
  */
-kTask_t *g_idle_task = 0x0;            /* set by main.c once the idle thread exists */
-static u_int64_t g_cpu_busy_ticks = 0; /* timer ticks spent running a non-idle thread */
-static u_int64_t g_cpu_idle_ticks = 0; /* timer ticks spent in the idle thread         */
+kTask_t *g_idle_task = 0x0; /* set by main.c once the idle thread exists */
+
+/*
+ * Per-CPU busy/idle tick counters (smp-plan Phase 3.5 → per-core).  Indexed by
+ * the running CPU so the Activity Monitor can draw a graph per core.  On a
+ * uniprocessor (or with the APs parked) only index 0 advances; the others stay 0
+ * (correctly reported as an idle/offline core).
+ */
+static u_int64_t g_cpu_busy_ticks[CPU_ENUM_MAX]; /* ticks running a non-idle thread, per CPU */
+static u_int64_t g_cpu_idle_ticks[CPU_ENUM_MAX]; /* ticks in the idle thread, per CPU         */
+
+/** Logical id of the CPU charging the current tick (0 on uniprocessor arches). */
+static inline unsigned acct_cpu(void)
+{
+#if defined(__i386__)
+	unsigned c = smp_processor_id();
+#elif defined(__aarch64__)
+	unsigned c = (unsigned)curcpu()->cpuid;
+#else
+	unsigned c = 0;
+#endif
+	return (c < CPU_ENUM_MAX) ? c : 0;
+}
+
+/** True if @cur is an idle thread (the global BSP idle or this CPU's per-CPU idle). */
+static inline int acct_is_idle(kTask_t *cur)
+{
+	if (cur == 0x0 || cur == g_idle_task)
+		return (1);
+#if defined(__i386__) || defined(__aarch64__)
+	if (cur == curcpu()->idle)
+		return (1);
+#endif
+	return (0);
+}
 
 /**
- * Charge one timer tick to the running thread and the CPU's busy/idle counters.
+ * Charge one timer tick to the running thread and to *this CPU's* busy/idle
+ * counters.
  *
- * Called from each arch's timer ISR exactly once per interrupt — before any
+ * Called from each CPU's timer ISR exactly once per interrupt — before any
  * reschedule, so _current still names the thread that was actually running for
- * the slice just elapsed.  A NULL _current (very early boot) is charged as idle.
+ * the slice just elapsed.  A NULL/idle _current is charged as idle.
  */
 void sched_account_tick(void)
 {
 	kTask_t *cur = _current;
+	unsigned cpu = acct_cpu();
 
-	if (cur != 0x0 && cur != g_idle_task)
+	if (!acct_is_idle(cur))
 	{
 		/* Charge per-process CPU time only to real work: the idle thread is
 		 * excluded so procfs (/proc/<pid>/stat utime) reports it at 0% rather
 		 * than ~100% whenever the machine is idle. */
 		cur->run_ticks++;
-		g_cpu_busy_ticks++;
+		g_cpu_busy_ticks[cpu]++;
 	}
 	else
-		g_cpu_idle_ticks++;
+		g_cpu_idle_ticks[cpu]++;
+}
+
+/** @return busy ticks for CPU @cpu (0 if out of range). */
+u_int64_t sched_cpu_busy_ticks_n(unsigned cpu)
+{
+	return (cpu < CPU_ENUM_MAX) ? g_cpu_busy_ticks[cpu] : 0;
+}
+
+/** @return idle ticks for CPU @cpu (0 if out of range). */
+u_int64_t sched_cpu_idle_ticks_n(unsigned cpu)
+{
+	return (cpu < CPU_ENUM_MAX) ? g_cpu_idle_ticks[cpu] : 0;
+}
+
+/** @return number of CPUs whose ticks /proc/stat should report (>= 1). */
+unsigned sched_cpu_acct_count(void)
+{
+	unsigned n = smp_cpu_count();
+	if (n < 1)
+		n = 1;
+	return (n < CPU_ENUM_MAX) ? n : CPU_ENUM_MAX;
 }
 
 /**
- * @return total timer ticks this CPU spent running a non-idle thread.
+ * @return total (all-CPU) ticks spent running a non-idle thread.  Aggregate kept
+ * for existing callers; per-core data is via sched_cpu_busy_ticks_n().
  */
 u_int64_t sched_cpu_busy_ticks(void)
 {
-	return g_cpu_busy_ticks;
+	u_int64_t sum = 0;
+	for (unsigned c = 0; c < CPU_ENUM_MAX; c++)
+		sum += g_cpu_busy_ticks[c];
+	return sum;
 }
 
 /**
- * @return total timer ticks this CPU spent in the idle thread.
+ * @return total (all-CPU) ticks spent in the idle thread.
  */
 u_int64_t sched_cpu_idle_ticks(void)
 {
-	return g_cpu_idle_ticks;
+	u_int64_t sum = 0;
+	for (unsigned c = 0; c < CPU_ENUM_MAX; c++)
+		sum += g_cpu_idle_ticks[c];
+	return sum;
 }
 
 int sched_init()

@@ -402,13 +402,23 @@ procfs_build_meminfo(char *buf, int bufsz)
 static int
 procfs_build_stat_global(char *buf, int bufsz)
 {
-	unsigned busy = (unsigned)sched_cpu_busy_ticks();
-	unsigned idle = (unsigned)sched_cpu_idle_ticks();
+	unsigned ncpu = sched_cpu_acct_count();
+	unsigned total_busy = (unsigned)sched_cpu_busy_ticks();
+	unsigned total_idle = (unsigned)sched_cpu_idle_ticks();
+	int off;
 
-	return snprintf(buf, bufsz,
-	    "cpu  %u 0 0 %u 0 0 0 0 0 0\n"
-	    "cpu0 %u 0 0 %u 0 0 0 0 0 0\n",
-	    busy, idle, busy, idle);
+	/* Aggregate ("cpu") line, then one per-core ("cpu0", "cpu1", ...) line —
+	 * Linux-style, so the Activity Monitor detects the core count and draws a
+	 * graph per core.  A parked/offline core simply shows all-idle. */
+	off = snprintf(buf, bufsz, "cpu  %u 0 0 %u 0 0 0 0 0 0\n", total_busy, total_idle);
+
+	for (unsigned c = 0; c < ncpu && off > 0 && off < bufsz; c++)
+	{
+		unsigned b = (unsigned)sched_cpu_busy_ticks_n(c);
+		unsigned i = (unsigned)sched_cpu_idle_ticks_n(c);
+		off += snprintf(buf + off, bufsz - off, "cpu%u %u 0 0 %u 0 0 0 0 0 0\n", c, b, i);
+	}
+	return off;
 }
 
 /**
@@ -519,7 +529,7 @@ procfs_open(char *file, fileDescriptor_t *fd)
 
 	/* Global files: /proc/stat */
 	if (strcmp(pidstr, "stat") == 0 && *rest == '\0') {
-		char tmp2[256];
+		char tmp2[512]; /* aggregate + up to CPU_ENUM_MAX per-core lines */
 		int  mlen = procfs_build_stat_global(tmp2, sizeof(tmp2));
 		fd->ino   = 0;
 		fd->start = PFILE_STAT_GLOBAL;
@@ -667,7 +677,7 @@ procfs_read(fileDescriptor_t *fd, char *data, off_t offset, long size)
 	}
 
 	if (fd->start == PFILE_STAT_GLOBAL) {
-		char     mtmp[256];
+		char     mtmp[512]; /* aggregate + up to CPU_ENUM_MAX per-core lines */
 		int      mlen = procfs_build_stat_global(mtmp, sizeof(mtmp));
 		long     mn;
 		if (offset >= (long)mlen)

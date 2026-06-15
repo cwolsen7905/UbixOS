@@ -165,8 +165,12 @@ void sched();
  * per-CPU split arrives with SMP Phase 4.
  */
 void sched_account_tick(void);
-u_int64_t sched_cpu_busy_ticks(void); /* ticks the CPU ran a non-idle thread   */
-u_int64_t sched_cpu_idle_ticks(void); /* ticks the CPU ran the idle thread     */
+u_int64_t sched_cpu_busy_ticks(void); /* all-CPU total: ticks running a non-idle thread */
+u_int64_t sched_cpu_idle_ticks(void); /* all-CPU total: ticks in the idle thread         */
+/* Per-core accounting (Activity Monitor per-core graphs). */
+u_int64_t sched_cpu_busy_ticks_n(unsigned cpu);
+u_int64_t sched_cpu_idle_ticks_n(unsigned cpu);
+unsigned sched_cpu_acct_count(void); /* CPUs to report in /proc/stat (>= 1) */
 
 /*
  * Machine-dependent resident-set count: number of physical pages currently

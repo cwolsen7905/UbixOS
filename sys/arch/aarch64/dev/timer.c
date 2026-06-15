@@ -131,6 +131,7 @@ void timer_tick(void)
 	else
 	{
 		curcpu()->heartbeat++; /* AP liveness, driven by its own timer IRQ */
+		sched_account_tick();  /* charge this core's busy/idle (per-core; for /proc/stat) */
 	}
 	write_tval(g_interval); /* re-arm for the next interval (banked, per-CPU) */
 }
