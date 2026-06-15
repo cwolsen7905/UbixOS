@@ -38,6 +38,9 @@ void serial_puts(const char *s);
 void serial_puthex(u64 v);
 void serial_putdec(u64 v);
 
+/* ksupport.c — bring-up kprintf (routes to the serial console). */
+int kprintf(const char *fmt, ...);
+
 /* idt.c — 64-bit IDT + exception handling (Phase 2). */
 void idt_init(void);
 

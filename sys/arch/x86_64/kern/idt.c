@@ -11,7 +11,7 @@
 
 #include "x86_64.h"
 
-#define KERNEL_CS 0x08 /* 64-bit code selector (start.S GDT) */
+#define KERNEL_CS 0x08    /* 64-bit code selector (start.S GDT) */
 #define IDT_GATE_INT 0x8E /* present, DPL0, 64-bit interrupt gate */
 #define NIDT 256
 
@@ -48,7 +48,7 @@ struct x86_64_trapframe
 static struct idt_gate g_idt[NIDT];
 static struct idt_ptr g_idt_ptr;
 
-extern void *isr_stub_table[32]; /* isr.S */
+extern void *isr_stub_table[48]; /* isr.S — 32 CPU exceptions + 16 PIC IRQ stubs */
 
 static void idt_set_gate(int vec, void *handler)
 {
@@ -73,19 +73,38 @@ void idt_init(void)
 	__asm__ __volatile__("lidt %0" : : "m"(g_idt_ptr));
 }
 
-static const char *const g_exc_names[32] = {
-    "#DE divide error",      "#DB debug",
-    "NMI",                   "#BP breakpoint",
-    "#OF overflow",          "#BR bound range",
-    "#UD invalid opcode",    "#NM device n/a",
-    "#DF double fault",      "coproc seg overrun",
-    "#TS invalid TSS",       "#NP segment n/p",
-    "#SS stack fault",       "#GP general protection",
-    "#PF page fault",        "reserved(15)",
-    "#MF x87 FP error",      "#AC alignment check",
-    "#MC machine check",     "#XM SIMD FP",
-    "#VE virtualization",    "#CP control prot",
-    "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"};
+static const char *const g_exc_names[32] = {"#DE divide error",
+                                            "#DB debug",
+                                            "NMI",
+                                            "#BP breakpoint",
+                                            "#OF overflow",
+                                            "#BR bound range",
+                                            "#UD invalid opcode",
+                                            "#NM device n/a",
+                                            "#DF double fault",
+                                            "coproc seg overrun",
+                                            "#TS invalid TSS",
+                                            "#NP segment n/p",
+                                            "#SS stack fault",
+                                            "#GP general protection",
+                                            "#PF page fault",
+                                            "reserved(15)",
+                                            "#MF x87 FP error",
+                                            "#AC alignment check",
+                                            "#MC machine check",
+                                            "#XM SIMD FP",
+                                            "#VE virtualization",
+                                            "#CP control prot",
+                                            "22",
+                                            "23",
+                                            "24",
+                                            "25",
+                                            "26",
+                                            "27",
+                                            "28",
+                                            "29",
+                                            "30",
+                                            "31"};
 
 /**
  * C exception handler (from isr_common).  Dumps the trapframe and halts — bring-up

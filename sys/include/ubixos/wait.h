@@ -52,6 +52,14 @@ struct semaphore {
 #define nop() __asm__ __volatile__("nop")
 #define save_flags(x) __asm__ __volatile__("mrs %0, daif" : "=r"(x) : : "memory")
 #define restore_flags(x) __asm__ __volatile__("msr daif, %0" : : "r"(x) : "memory")
+#elif defined(__x86_64__)
+/* RFLAGS is 64-bit; %q0 names the 64-bit register even though x is word-sized
+ * (only the low 32 bits — incl IF at bit 9 — matter; popfq ignores bits 32-63). */
+#define sti() __asm__ __volatile__("sti" : : : "memory")
+#define cli() __asm__ __volatile__("cli" : : : "memory")
+#define nop() __asm__ __volatile__("nop")
+#define save_flags(x) __asm__ __volatile__("pushfq ; pop %q0" : "=r"(x) : : "memory")
+#define restore_flags(x) __asm__ __volatile__("push %q0 ; popfq" : : "r"(x) : "memory")
 #else
 #define sti() __asm__ __volatile__("sti" : : : "memory")
 #define cli() __asm__ __volatile__("cli" : : : "memory")

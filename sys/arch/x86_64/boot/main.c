@@ -9,6 +9,7 @@
  */
 
 #include "x86_64.h"
+#include <ubixos/sched.h>
 
 /**
  * x86-64 kernel C entry.  @mb_magic / @mb_info are the boot magic + info pointer
@@ -77,11 +78,26 @@ void kmain_x86_64(u32 mb_magic, u32 mb_info)
 		}
 	}
 
-	/* Phase 4b: verify the context switch (cpu_switch.S) before linking the
-	 * machine-independent scheduler. */
+	/* Phase 4b-1: verify the raw register switch (cpu_switch.S) in isolation. */
 	x86_64_ctx_test();
 
-	serial_puts("x86_64 Phase 4b (ctx switch) verified. Idle.\n");
+	/* Phase 4b-2: bring up the machine-independent scheduler over that switch.
+	 * sched_init() creates task 0 (the kernel task); set_current() makes this
+	 * boot context that task so sched()/switch_to have a valid "prev". */
+	{
+		extern int sched_init(void);
+		extern kTask_t *taskList;
+		extern void x86_64_sched_demo(void);
+
+		sched_init();
+		set_current(taskList);
+		taskList->state = RUNNING;
+		taskList->priority = QOS_DEFAULT; /* share the CPU at the default QoS */
+		taskList->base_priority = QOS_DEFAULT;
+		x86_64_sched_demo();
+	}
+
+	serial_puts("x86_64 Phase 4b-2 (generic scheduler) verified. Idle.\n");
 	for (;;)
 		__asm__ __volatile__("hlt");
 }

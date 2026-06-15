@@ -32,6 +32,15 @@ First entries of the 3.0 series (64-bit only: x86_64 + aarch64).  Development on
   - *Phase 4b-1 — context switch.* `cpu_switch.S` (`x86_64_ctx_switch`): callee-saved
     + RSP save/restore with a seeded initial frame for fresh threads — verified in
     isolation (a kernel thread enters, yields back, and resumes).
+  - *Phase 4b-2 — generic scheduler.* The arch-neutral scheduler
+    (`sys/kern/sched_core.c` + `sched_dispatch.c`) now runs unmodified on x86_64 over
+    that context switch, via x86_64 md hooks (`md_new_task` /
+    `md_setup_initial_frame` / `switch_to` in `arch/x86_64/kern/proc.c`).  Two demo
+    kernel threads created with `schedNewTask()`/`sched_ready()` cooperatively yield
+    through the real `sched()`/`sched_yield()` dispatch (verified: both alternate
+    three iterations and return to the boot context).  The PIT tick charges
+    per-process CPU time (`sched_account_tick`); like aarch64 the kernel is
+    non-preemptive until userland lands (no EL0 yet), so kernel threads yield.
   `bmake TARGET=x86_64` builds the bring-up kernel only (the x86_64 userland/world is
   a later phase); `bmake run TARGET=x86_64` boots it (serial console).
   Grows by widening the i386 MD code to 64-bit.  See `docs/design/cross-arch-plan.md`.

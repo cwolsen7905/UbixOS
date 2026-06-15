@@ -11,30 +11,68 @@
 #include "x86_64.h"
 #include <ubixos/spinlock.h>
 #include <ubixos/vitals.h>
-#include <ubixos/sched.h>
+#include <ubixos/callout.h>
+#include <ubixos/endtask.h>
+#include <ubixos/random.h>
+#include <sys/shutdown.h>
+#include <sys/types.h>
 
 /* Set by vitals_init() once linked; NULL is safe — vmm_memory.c guards on it. */
 vitalsNode *systemVitals = 0;
 
-/* --- scheduler stubs --------------------------------------------------------- *
- * vmm_memory.c's OOM/eviction path references these; no scheduler is linked yet
- * (Phase 4), and the bring-up happy path never reaches eviction.  Stubbed so the
- * MI allocator links; replaced when sched_core.c is linked. */
-int sched_setStatus(pidType id, tState state)
+/* Reboot-countdown flag the scheduler tick checks (set by the kbd Ctrl-Alt-Del
+ * affordance on i386; inactive here). */
+volatile u_int32_t reboot_at_tick = 0;
+
+/* --- bring-up stubs for the scheduler's optional subsystems ------------------ *
+ * sched_core/sched_dispatch reference these; the timed-sleep (callout), CSPRNG
+ * stir, task-reaper (endTask), CPU enumeration and shutdown paths are not wired
+ * on x86_64 yet.  Stubbed so the scheduler links + basic thread switching runs;
+ * replaced as each real subsystem is linked.  Uniprocessor: one CPU. */
+void callout_reset(struct callout *c, u_int32_t ticks, void (*fn)(void *), void *arg)
+{
+	(void)c;
+	(void)ticks;
+	(void)fn;
+	(void)arg;
+}
+void callout_stop(struct callout *c)
+{
+	(void)c;
+}
+void callout_run_expired(u_int32_t now)
+{
+	(void)now;
+}
+void krandom_stir(u_int64_t sample)
+{
+	(void)sample;
+}
+void endTask(pidType id)
 {
 	(void)id;
-	(void)state;
-	return 0;
+}
+unsigned smp_cpu_count(void)
+{
+	return 1;
+}
+int sys_shutdown(shutdownCMD_t cmd)
+{
+	(void)cmd;
+	serial_puts("sys_shutdown: halting.\n");
+	for (;;)
+		__asm__ __volatile__("cli; hlt");
 }
 
-void sched_yield(void)
+/* --- strncpy (string.h; the freestanding build provides no libc) ------------- */
+char *strncpy(char *dst, const char *src, unsigned long n)
 {
-}
-
-kTask_t *schedFindTask(u_int32_t id)
-{
-	(void)id;
-	return 0;
+	unsigned long i = 0;
+	for (; i < n && src[i] != '\0'; i++)
+		dst[i] = src[i];
+	for (; i < n; i++)
+		dst[i] = '\0';
+	return dst;
 }
 
 /* --- atomic spinlock (x86 xchg via the gcc builtin) --------------------------- */
@@ -122,18 +160,20 @@ int kprintf(const char *fmt, ...)
 				serial_putc((char)__builtin_va_arg(ap, int));
 				break;
 			case 'u':
-				serial_putdec(lng ? __builtin_va_arg(ap, unsigned long) : __builtin_va_arg(ap, unsigned));
+				serial_putdec(lng ? __builtin_va_arg(ap, unsigned long)
+				                  : __builtin_va_arg(ap, unsigned));
 				break;
 			case 'd':
 			case 'i':
-				serial_putdec(lng ? (u64)__builtin_va_arg(ap, long) : (u64)__builtin_va_arg(ap, int));
+				serial_putdec(lng ? (u64) __builtin_va_arg(ap, long) : (u64) __builtin_va_arg(ap, int));
 				break;
 			case 'x':
 			case 'X':
-				serial_puthex(lng ? __builtin_va_arg(ap, unsigned long) : __builtin_va_arg(ap, unsigned));
+				serial_puthex(lng ? __builtin_va_arg(ap, unsigned long)
+				                  : __builtin_va_arg(ap, unsigned));
 				break;
 			case 'p':
-				serial_puthex((u64)__builtin_va_arg(ap, void *));
+				serial_puthex((u64) __builtin_va_arg(ap, void *));
 				break;
 			case '%':
 				serial_putc('%');

@@ -101,6 +101,14 @@ u64 timer_ticks(void)
 void x86_64_irq(unsigned vector)
 {
 	if (vector == IRQ_BASE) /* IRQ0 — PIT timer */
+	{
+		extern void sched_account_tick(void);
 		g_ticks++;
+		/* Charge the elapsed tick to whatever was running.  The kernel is
+		 * non-preemptive here (like aarch64: no EL0/userland yet), so we do
+		 * not reschedule from IRQ context — kernel threads cooperatively
+		 * yield.  Once userland lands, the EL0 timer path will call sched(). */
+		sched_account_tick();
+	}
 	irq_eoi(vector);
 }

@@ -300,7 +300,9 @@ X86_64_KCFLAGS = ${KERN_TARGET_CFLAGS} -O -Wall -nostdlib -nostdinc -fno-builtin
 # + kernel heap.
 X86_64_GENERIC_SRCS = \
 	sys/vmm/vmm_memory.c \
-	sys/lib/kmalloc.c
+	sys/lib/kmalloc.c \
+	sys/kern/sched_core.c \
+	sys/kern/sched_dispatch.c
 
 kernel-x86_64:
 	@mkdir -p ${OBJ_DIR}/boot ${OBJ_DIR}/obj/sys
