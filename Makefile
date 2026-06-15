@@ -56,7 +56,7 @@ _USB_FLAGS!= test -f ${USB_IMAGE} && \
 
 # ── Primary targets ──────────────────────────────────────────────────────────
 
-.PHONY: all kernel kernel-i386 kernel-aarch64 musl-libc world makeuser image image-i386 image-aarch64 image-arm usb-image \
+.PHONY: all kernel kernel-i386 kernel-aarch64 kernel-x86_64 run-x86_64 musl-libc world makeuser image image-i386 image-aarch64 image-arm usb-image \
         mount-image unmount-image \
         install-kernel install-world install \
         run run-debug run-i386 run-debug-i386 run-aarch64 run-debug-aarch64 \
@@ -275,6 +275,33 @@ kernel-aarch64:
 	    worldcat ${OBJ_DIR}/obj/sys/worldcat_embed.o || exit 1
 	${CROSS_PREFIX}ld -T ${CURDIR}/sys/compile/ldscript.aarch64 -o ${OBJ_DIR}/boot/kernel ${OBJ_DIR}/obj/sys/*.o
 	@echo "aarch64 bring-up kernel linked: ${OBJ_DIR}/boot/kernel"
+
+# x86-64 bring-up kernel: assemble the long-mode entry, compile the COM1 banner,
+# link low at 1 MB.  Standalone (does NOT descend into sys/Makefile) — the same
+# minimal-first approach the aarch64 bring-up used; the generic subsystems + the
+# widened i386 drivers link in as the port grows.
+X86_64_KCFLAGS = ${KERN_TARGET_CFLAGS} -O -Wall -nostdlib -nostdinc -fno-builtin \
+	-fno-exceptions -ffreestanding -fno-pie -fno-pic -fno-stack-protector \
+	-I${CURDIR}/sys/include -I${CURDIR}/sys/arch/x86_64
+
+kernel-x86_64:
+	@mkdir -p ${OBJ_DIR}/boot ${OBJ_DIR}/obj/sys
+	@for f in `find ${CURDIR}/sys/arch/x86_64 -name '*.S'`; do \
+	    o=${OBJ_DIR}/obj/sys/`basename $$f .S`.o; \
+	    echo "${CROSS_PREFIX}gcc [asm] $$f"; \
+	    ${CROSS_PREFIX}gcc ${X86_64_KCFLAGS} -c $$f -o $$o || exit 1; \
+	done
+	@for f in `find ${CURDIR}/sys/arch/x86_64 -name '*.c'`; do \
+	    o=${OBJ_DIR}/obj/sys/`basename $$f .c`.o; \
+	    echo "${CROSS_PREFIX}gcc [c]   $$f"; \
+	    ${CROSS_PREFIX}gcc ${X86_64_KCFLAGS} -std=c99 -c $$f -o $$o || exit 1; \
+	done
+	${CROSS_PREFIX}ld -T ${CURDIR}/sys/compile/ldscript.x86_64 -o ${OBJ_DIR}/boot/kernel ${OBJ_DIR}/obj/sys/*.o
+	@echo "x86_64 bring-up kernel linked: ${OBJ_DIR}/boot/kernel"
+
+# Headless x86_64 run: serial to stdout (the bring-up console).  Ctrl-A X quits.
+run-x86_64:
+	qemu-system-x86_64 -m 256 -smp ${SMP} -kernel ${OBJ_DIR}/boot/kernel -nographic
 
 # musl libc per-arch knobs.  i386 uses the FreeBSD stack ABI (-m32, no SSE) and a
 # hand-rolled libgcc32; aarch64 uses the stock SVC ABI + the real libgcc.  Both

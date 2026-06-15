@@ -1,0 +1,49 @@
+/* x86-64 bring-up linker script.
+ *
+ * GRUB/QEMU multiboot loads the kernel in 32-bit protected mode at its physical
+ * link address and jumps to the ELF entry (_start, in .text.boot).  We link low
+ * at 1 MB (0x100000) — above the BIOS/VGA hole, the standard multiboot load.
+ * start.S then sets up identity-mapped 4-level paging and enters long mode.
+ * (A higher-half move comes later; -mcmodel=large keeps symbol refs valid.)
+ *
+ * The multiboot header must sit within the first 8 KB of the file, so .text.boot
+ * (which holds it + _start) leads, and we keep the entry low.
+ */
+OUTPUT_FORMAT("elf64-x86-64")
+OUTPUT_ARCH(i386:x86-64)
+ENTRY(_start)
+
+SECTIONS
+{
+	. = 0x100000;
+
+	/* PVH boot note must be present + allocated so QEMU's ELF loader finds it. */
+	.note.Xen : { *(.note.Xen) }
+
+	.text : {
+		*(.text.boot)
+		*(.text*)
+	}
+
+	.rodata : { *(.rodata*) }
+	.data   : { *(.data*) }
+
+	. = ALIGN(16);
+	__bss_start = .;
+	.bss : {
+		*(.bss*)
+		*(COMMON)
+	}
+	. = ALIGN(16);
+	__bss_end = .;
+
+	/* Boot stack; _stack_top is the initial SP (grows down toward __bss_end). */
+	. = ALIGN(16);
+	. += 0x10000; /* 64 KB */
+	_stack_top = .;
+
+	. = ALIGN(0x1000);
+	_end = .;
+
+	/DISCARD/ : { *(.comment) *(.eh_frame*) }
+}
