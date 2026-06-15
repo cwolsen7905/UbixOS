@@ -390,6 +390,12 @@ run-x86_64:
 MUSL_USER_CFLAGS = -march=armv8-a -ffreestanding -fno-stack-protector
 MUSL_LIBCC       = ${LIBGCC}
 MUSL_LDEMULATION = aarch64elf
+.elif ${_ARCH} == "x86_64"
+# Userland keeps SSE (the SysV amd64 ABI returns floats in XMM + musl's code uses
+# it) — unlike the kernel's -mno-sse.  Real libgcc, no -m32 shim.
+MUSL_USER_CFLAGS = -ffreestanding -fno-stack-protector
+MUSL_LIBCC       = ${LIBGCC}
+MUSL_LDEMULATION = elf_x86_64
 .else
 MUSL_USER_CFLAGS = ${CROSS_M32} -mno-sse -mno-sse2 -mno-mmx -mno-3dnow -ffreestanding -fno-stack-protector
 MUSL_LIBCC       = ${OBJ_DIR}/lib/libgcc32.a
@@ -410,7 +416,7 @@ musl-libc:
 			LIBCC="" \
 			CFLAGS="${MUSL_USER_CFLAGS}"; \
 	fi
-	@if [ "${_ARCH}" != "aarch64" ]; then \
+	@if [ "${_ARCH}" != "aarch64" ] && [ "${_ARCH}" != "x86_64" ]; then \
 		${CROSS_PREFIX}gcc ${CROSS_M32} -mno-sse -mno-sse2 -mno-mmx -mno-3dnow \
 		    -ffreestanding -fno-pie -fno-pic -nostdinc -std=c99 -O2 \
 		    -c ${CURDIR}/tools/libgcc32.c -o ${OBJ_DIR}/obj/musl/libgcc32.o && \

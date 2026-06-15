@@ -179,6 +179,9 @@ void kmain_x86_64(u32 mb_magic, u32 mb_info)
 			/* Phase 5e: signals — install a SIGINT handler, kill(self), verify the
 			 * handler runs + sigreturn resumes. */
 			x86_64_exec_demo("/sigtest");
+
+			/* Phase 5e: a real musl-libc binary (proves the FreeBSD-ABI musl port). */
+			x86_64_exec_demo("/hellomusl");
 		}
 		else
 			serial_puts("vfs: FAT mount failed\n");

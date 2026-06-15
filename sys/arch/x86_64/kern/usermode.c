@@ -341,6 +341,13 @@ void x86_64_syscall(struct x86_64_trapframe *tf)
 	{
 		tf->rax = (u64)x86_64_fork(tf);
 	}
+	else if (tf->rax == 158) /* arch_prctl — musl's TLS setup (no FreeBSD nr) */
+	{
+		extern void machine_set_tls(struct thread * td, uintptr_t base);
+		if (tf->rdi == 0x1002) /* ARCH_SET_FS: point FS.base at the musl TCB */
+			machine_set_tls(&_current->td, (uintptr_t)tf->rsi);
+		tf->rax = 0;
+	}
 	else if (tf->rax == SYS_WRITE && (tf->rdi == 1 || tf->rdi == 2))
 	{
 		/* Bring-up console fast path: write to fd 1/2 goes straight to serial

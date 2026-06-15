@@ -189,6 +189,19 @@ First entries of the 3.0 series (64-bit only: x86_64 + aarch64).  Development on
     `sys/trap.h`) carry the layout.  Verified: `/sigtest` installs a SIGINT handler,
     `kill`s itself, the handler runs and `sigreturn` resumes it.
 
+  - *Phase 5e — musl libc runs.* The cross-build support to compile **musl** for
+    x86_64: a FreeBSD-numbered `bits/syscall.h.in` (stock musl x86_64 ships Linux
+    numbers — `write=1`, `mmap=9` — wrong for the FreeBSD ABI table) plus the
+    UbixOS ABI `bits/{fcntl,ioctl,ipcstat,msg,shm,termios,sem}.h`, and an x86_64 PIE
+    branch in `share/mk/ubix.musl.vars.mk`.  Two kernel fixes were needed to run a
+    real libc binary: (1) `start.S` now enables SSE at boot — `CR4.OSFXSR`/`OSXMMEXCPT`,
+    `CR0.MP`, clear `CR0.EM`, `fninit` — since musl's userland is built with SSE and
+    `pxor`/`movaps` `#UD` without it; (2) musl sets up TLS via `arch_prctl(ARCH_SET_FS)`,
+    which the kernel intercepts in the syscall entry and routes to `machine_set_tls`
+    (FS_BASE MSR) — no FreeBSD syscall number collides.  Verified: a static
+    musl-linked binary prints via `write`, `malloc`s (SSE), opens/reads files, and
+    `exit`s cleanly through `__libc_start_main`.
+
   **With mmap/execve/fork/signals in place, the x86_64 kernel can now load, run,
   fork, and signal real on-disk binaries — the full runtime a userland needs.**
   `bmake TARGET=x86_64` builds the bring-up kernel only (the x86_64 userland/world is

@@ -88,9 +88,11 @@ _start:
 	addl $8, %ebx
 	loop 1b
 
-	/* CR4.PAE (bit 5). */
+	/* CR4.PAE (bit 5) + SSE: OSFXSR (bit 9) lets fxsave/SSE run, OSXMMEXCPT
+	 * (bit 10) routes SIMD FP exceptions to #XF.  Long-mode code (and musl's
+	 * userland, built with SSE) emits movaps/pxor, which #UD without OSFXSR. */
 	movl %cr4, %eax
-	orl $0x20, %eax
+	orl $0x620, %eax
 	movl %eax, %cr4
 
 	/* CR3 = PML4 (physical). */
@@ -103,9 +105,12 @@ _start:
 	orl $0x100, %eax
 	wrmsr
 
-	/* CR0.PG (bit 31) + PE (bit 0) -> activate long mode. */
+	/* CR0.PG (bit 31) + PE (bit 0) -> activate long mode.  Also clear EM
+	 * (bit 2: no FPU emulation) and set MP (bit 1) so SSE/x87 execute natively. */
 	movl %cr0, %eax
 	orl $0x80000001, %eax
+	andl $0xFFFFFFFB, %eax /* ~EM */
+	orl $0x2, %eax         /* MP */
 	movl %eax, %cr0
 
 	/* Load the 64-bit GDT (physical pseudo-descriptor) and far-jump to the low
@@ -128,6 +133,8 @@ long_high:
 	movw %ax, %fs
 	movw %ax, %gs
 	movabs $_stack_top, %rsp /* higher-half stack */
+
+	fninit /* initialise the x87/SSE unit before any FP/SIMD runs */
 
 	/* %edi/%esi still hold the multiboot magic/info (zero-extended). */
 	call kmain_x86_64

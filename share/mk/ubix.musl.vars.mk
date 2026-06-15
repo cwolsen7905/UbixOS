@@ -43,6 +43,17 @@ MUSL_LIBGCC_COMPAT ?=
 MUSL_CRT1          ?= ${MUSL_LIB}/Scrt1.o
 MUSL_PIE_CFLAGS    ?= -fPIC
 MUSL_PIE_LDFLAGS   ?= -pie
+.elif ${_ARCH} == "x86_64"
+# x86_64 mirrors aarch64: PIE (ET_DYN) loaded high, since a fixed ET_EXEC at
+# musl's default 0x400000 falls inside the kernel low-1 GB identity window and
+# cannot be mapped as user.  Real libgcc (no -m32 shim).
+MUSL_LDEMULATION   ?= elf_x86_64
+MUSL_LDSO          ?= /lib/ld-musl-x86_64.so.1
+MUSL_ARCH_INC      ?= -I${MUSL_SRC}/arch/x86_64
+MUSL_LIBGCC_COMPAT ?=
+MUSL_CRT1          ?= ${MUSL_LIB}/Scrt1.o
+MUSL_PIE_CFLAGS    ?= -fPIC
+MUSL_PIE_LDFLAGS   ?= -pie
 .else
 MUSL_LDEMULATION   ?= elf_i386
 MUSL_LDSO          ?= /lib/ld-musl-i386.so.1
