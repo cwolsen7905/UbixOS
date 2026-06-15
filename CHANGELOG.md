@@ -26,6 +26,11 @@ First entries of the 3.0 series (64-bit only: x86_64 + aarch64).  Development on
     x86_64 `vmm_machdep` + bring-up support shims (atomic spinlock, kpanic, minimal
     kprintf).  Adds the x86_64 MD header set (`<machine/{cpu,proc}.h>` now resolve to
     x86_64, not the 32-bit i386 headers).
+  - *Phase 4a — PIC + PIT + IRQs.* Remap the 8259 PICs to vectors 32-47, a 100 Hz
+    PIT tick, and IRQ dispatch (+ EOI) from the common ISR path — the timer/interrupt
+    foundation for the scheduler.
+  `bmake TARGET=x86_64` builds the bring-up kernel only (the x86_64 userland/world is
+  a later phase); `bmake run TARGET=x86_64` boots it (serial console).
   Grows by widening the i386 MD code to 64-bit.  See `docs/design/cross-arch-plan.md`.
 - **aarch64 SMP bring-up (smp-plan M0–M3)** — secondary cores now run on aarch64.
   M0: per-CPU state via `TPIDR_EL1` → `struct pcpu` (`_current` is per-CPU). M1:
