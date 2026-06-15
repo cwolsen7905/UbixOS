@@ -63,7 +63,18 @@ _USB_FLAGS!= test -f ${USB_IMAGE} && \
         run-en0 run-shared \
         kernel-to-image clean-kernel clean
 
+# `all` is arch-aware.  i386 + aarch64 build the full system (kernel + world +
+# image).  x86_64 is still a bring-up kernel — its userland (musl/world) isn't
+# ported yet (musl needs SSE, which the kernel disables; the world build also
+# still inherits the i386 -m32/elf_i386 knobs), so `all` builds the kernel only.
+.if ${_ARCH} == "x86_64"
+all: kernel
+	@echo ""
+	@echo "x86_64: world/image not ported yet — built the bring-up kernel only."
+	@echo "        run it with:  bmake run TARGET=x86_64"
+.else
 all: kernel world image
+.endif
 
 # `kernel` is arch-dispatched.  i386 builds the full tree (sys/Makefile); aarch64
 # builds the minimal Phase-11 bring-up image (start.S + boot.c) standalone, since
