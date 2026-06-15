@@ -21,6 +21,8 @@
 #include <ubixos/sched.h>   /* _current, sched(), kTask_t */
 #include <ubixos/endtask.h> /* endTask */
 #include <x86_64/pcpu.h>    /* curcpu() — per-CPU kernel RSP for the syscall entry */
+#include <fs/vfs/file.h>    /* fopen/fread/fclose, fileDescriptor_t (bring-up open/read) */
+#include <sys/thread.h>     /* O_FILES, td.o_files[] */
 
 #define KCODE_SEL 0x08
 #define KDATA_SEL 0x10
@@ -127,7 +129,10 @@ u64 x86_64_ring0_stack_top(void)
 /* FreeBSD amd64 syscall numbers (shared by the int 0x80 + syscall-instruction
  * paths; what musl emits).  The full MI POSIX table is wired with the world (5e). */
 #define SYS_EXIT 1
+#define SYS_READ 3
 #define SYS_WRITE 4
+#define SYS_OPEN 5
+#define SYS_CLOSE 6
 
 extern char x86_64_user_demo_start[];
 extern char x86_64_user_demo_end[];
@@ -298,6 +303,53 @@ void x86_64_syscall(struct x86_64_trapframe *tf)
 			for (u64 i = 0; i < len; i++)
 				serial_putc(buf[i]);
 			tf->rax = len; /* bytes written */
+			break;
+		}
+		case SYS_OPEN:
+		{
+			/* open(path, flags): the path pointer is a user VA, but the syscall runs
+			 * with the caller's CR3 (the user low half is mapped), so it is read
+			 * directly.  Bridge to the real VFS via fopen() + the task's fd table —
+			 * the same o_files[] sys_open uses; routing through the full POSIX table
+			 * (proper flags/modes) lands with the world. */
+			const char *path = (const char *)(uintptr_t)tf->rdi;
+			fileDescriptor_t *fp = fopen(path, "r");
+			int fd = -1;
+			if (fp != 0)
+			{
+				for (int i = 3; i < O_FILES; i++) /* 0/1/2 reserved for std streams */
+					if (_current->td.o_files[i] == 0)
+					{
+						_current->td.o_files[i] = fp;
+						fd = i;
+						break;
+					}
+			}
+			tf->rax = (u64)(long)fd;
+			kprintf("  [ring3] open(%s) = %d\n", path, fd);
+			break;
+		}
+		case SYS_READ:
+		{
+			int fd = (int)tf->rdi;
+			void *buf = (void *)(uintptr_t)tf->rsi;
+			u64 len = tf->rdx;
+			fileDescriptor_t *fp = (fd >= 0 && fd < O_FILES) ? _current->td.o_files[fd] : 0;
+			tf->rax = (fp != 0) ? (u64)fread(buf, 1, len, fp) : (u64)-1;
+			kprintf("  [ring3] read(fd=%d, %u) = %d bytes\n", fd, (unsigned)len, (int)tf->rax);
+			break;
+		}
+		case SYS_CLOSE:
+		{
+			int fd = (int)tf->rdi;
+			if (fd >= 3 && fd < O_FILES && _current->td.o_files[fd] != 0)
+			{
+				fclose(_current->td.o_files[fd]);
+				_current->td.o_files[fd] = 0;
+				tf->rax = 0;
+			}
+			else
+				tf->rax = (u64)-1;
 			break;
 		}
 		case SYS_EXIT:

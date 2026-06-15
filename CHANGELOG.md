@@ -126,6 +126,14 @@ First entries of the 3.0 series (64-bit only: x86_64 + aarch64).  Development on
     Verified: an ELF64 process makes `write`/`exit` via the `syscall` instruction
     ("hello from ring 3 (syscall insn)") and `int 0x80` still works.  Routing to the
     full MI POSIX table comes with the world (5e).
+  - *Phase 5e (start) — userland file I/O.* The syscall handler gains real
+    `open`/`read`/`close` (FreeBSD 5/3/6) bridged to the VFS via `fopen`/`fread`/
+    `fclose` + the task's `td.o_files[]` fd table (the same machinery `sys_open`
+    uses).  Verified end to end: a ring-3 ELF64 process opens `/kernel/kernel` off
+    the FAT root, reads 32 bytes, and writes them out — the real ELF header bytes
+    (`\x7fELF…`) flow user → `syscall` → VFS → FAT → virtio-blk → user.  (The
+    handler still services a hand-picked set; routing through the full 585-entry MI
+    POSIX table — which pulls the entire syscall surface — lands with the musl world.)
   `bmake TARGET=x86_64` builds the bring-up kernel only (the x86_64 userland/world is
   a later phase); `bmake run TARGET=x86_64` boots it (serial console).
   Grows by widening the i386 MD code to 64-bit.  See `docs/design/cross-arch-plan.md`.

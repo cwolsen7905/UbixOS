@@ -127,10 +127,6 @@ void kmain_x86_64(u32 mb_magic, u32 mb_info)
 	 * per-process address space (supersedes the 5a one-shot enter/leave demo). */
 	x86_64_proc_demo();
 
-	/* Phase 5d-C: load a synthesized static ELF64 through the arch-neutral loader
-	 * and run it at the standard amd64 base (0x400000) in the clean user low half. */
-	x86_64_elf_demo();
-
 	/* Phase 5c: probe the virtio-blk-pci disk, then mount its FAT partition as the
 	 * VFS root and list it — proof the block driver + buffer cache + FAT + VFS all
 	 * work together (the foundation execve/init will load binaries through). */
@@ -160,6 +156,11 @@ void kmain_x86_64(u32 mb_magic, u32 mb_info)
 			}
 			else
 				serial_puts("vfs: opendir(/) failed\n");
+
+			/* Phase 5d-C / 5e: now that a root is mounted, load a static ELF64 via
+			 * the MI loader and run it — it opens + reads a file off the FAT root
+			 * through the syscall instruction (open/read/write/exit). */
+			x86_64_elf_demo();
 		}
 		else
 			serial_puts("vfs: FAT mount failed\n");

@@ -35,24 +35,40 @@ x86_64_user_demo_start:
 	.globl x86_64_user_demo_end
 x86_64_user_demo_end:
 
-	/* --- syscall-instruction variant ---------------------------------------- *
-	 * `syscall` clobbers RCX (return RIP) and R11 (RFLAGS); the FreeBSD/SysV amd64
-	 * ABI passes args in RDI/RSI/RDX/R10/R8/R9, nr in RAX. */
+	/* --- syscall-instruction variant: real file I/O ------------------------- *
+	 * Opens a file on the FAT root, reads its first bytes, writes them to fd 1, and
+	 * exits — exercising open/read/write/exit through the `syscall` instruction and
+	 * the VFS.  `syscall` clobbers RCX/R11; args are RDI/RSI/RDX/R10/R8/R9, nr in
+	 * RAX; RBX/RBP/R12-R15 survive (the kernel entry stub preserves them). */
 	.globl x86_64_user_demo_sc_start
 x86_64_user_demo_sc_start:
-	movq $4, %rax            /* SYS_write */
-	movq $1, %rdi            /* fd = 1 */
-	leaq .Lscmsg(%rip), %rsi
-	movq $(.Lscmsg_end - .Lscmsg), %rdx
+	movq $5, %rax            /* SYS_open(path, O_RDONLY) */
+	leaq .Lpath(%rip), %rdi
+	xorq %rsi, %rsi
+	syscall
+	movq %rax, %r12          /* fd (callee-saved -> survives the next syscall) */
+
+	movq $3, %rax            /* SYS_read(fd, buf, 32) */
+	movq %r12, %rdi
+	leaq .Lbuf(%rip), %rsi
+	movq $32, %rdx
 	syscall
 
-	movq $1, %rax            /* SYS_exit */
+	movq %rax, %rdx          /* bytes read -> write length */
+	movq $4, %rax            /* SYS_write(1, buf, n) */
+	movq $1, %rdi
+	leaq .Lbuf(%rip), %rsi
+	syscall
+
+	movq $1, %rax            /* SYS_exit(0) */
 	xorq %rdi, %rdi
 	syscall
 .Lspin1:
 	jmp .Lspin1
-.Lscmsg:
-	.ascii "hello from ring 3 (syscall insn, x86_64)\n"
-.Lscmsg_end:
+.Lpath:
+	.asciz "/kernel/kernel"
+	.align 4
+.Lbuf:
+	.skip 32
 	.globl x86_64_user_demo_sc_end
 x86_64_user_demo_sc_end:
