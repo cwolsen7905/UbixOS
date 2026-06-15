@@ -31,6 +31,30 @@ static inline void io_wait(void)
 	outb(0x80, 0); /* write to an unused port — a short, portable I/O delay */
 }
 
+static inline void outw(u16 port, u16 val)
+{
+	__asm__ __volatile__("outw %0, %1" : : "a"(val), "Nd"(port));
+}
+
+static inline u16 inw(u16 port)
+{
+	u16 r;
+	__asm__ __volatile__("inw %1, %0" : "=a"(r) : "Nd"(port));
+	return r;
+}
+
+static inline void outl(u16 port, u32 val)
+{
+	__asm__ __volatile__("outl %0, %1" : : "a"(val), "Nd"(port));
+}
+
+static inline u32 inl(u16 port)
+{
+	u32 r;
+	__asm__ __volatile__("inl %1, %0" : "=a"(r) : "Nd"(port));
+	return r;
+}
+
 /* console.c — COM1 serial console (the bring-up console). */
 void serial_init(void);
 void serial_putc(char c);
@@ -73,6 +97,11 @@ void x86_64_proc_demo(void); /* 5b scheduled ring-3 process */
 void x86_64_enter_user(u64 user_rip, u64 user_rsp); /* coroutine (5a one-shot) */
 void x86_64_leave_user(void);
 void x86_64_iret_to_user(u64 user_rip, u64 user_rsp); /* bare IRETQ (scheduled tasks) */
+
+/* dev/virtio_blk.c — virtio-blk over legacy virtio-pci (Phase 5c). */
+int virtio_blk_init(void);
+int virtio_blk_read(u32 lba, u32 count, void *buf);
+int virtio_blk_write(u32 lba, u32 count, const void *buf);
 
 /* vmm/vmm_machdep.c — physical page allocator setup (Phase 3). */
 void x86_64_mem_init(void);

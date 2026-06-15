@@ -112,6 +112,24 @@ void kmain_x86_64(u32 mb_magic, u32 mb_info)
 	 * per-process address space (supersedes the 5a one-shot enter/leave demo). */
 	x86_64_proc_demo();
 
+	/* Phase 5c: probe the virtio-blk-pci disk and read sector 0 — verify the
+	 * MBR boot signature (0x55 0xAA at offset 510) as proof the block path works
+	 * before the FAT/VFS stack mounts a root on it. */
+	if (virtio_blk_init() == 0)
+	{
+		static u8 sec[512];
+		if (virtio_blk_read(0, 1, sec) == 0)
+		{
+			serial_puts("virtio-blk: sector 0 sig = ");
+			serial_puthex(sec[510]);
+			serial_puts(" ");
+			serial_puthex(sec[511]);
+			serial_puts((sec[510] == 0x55 && sec[511] == 0xAA) ? "  [valid MBR]\n" : "  [no MBR sig]\n");
+		}
+		else
+			serial_puts("virtio-blk: sector 0 read failed\n");
+	}
+
 	serial_puts("x86_64 Phase 4b-2 (generic scheduler) verified. Idle.\n");
 	for (;;)
 		__asm__ __volatile__("hlt");

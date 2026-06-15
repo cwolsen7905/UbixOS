@@ -325,8 +325,13 @@ kernel-x86_64:
 	@echo "x86_64 bring-up kernel linked: ${OBJ_DIR}/boot/kernel"
 
 # Headless x86_64 run: serial to stdout (the bring-up console).  Ctrl-A X quits.
+# Attaches ${DISK_IMAGE} as a legacy virtio-blk-pci disk (disable-modern=true ->
+# the I/O-BAR register window the bring-up driver speaks).  The MBR/FAT image is
+# the i386 ubixos.img for now (a dedicated x86_64 image comes with the world).
 run-x86_64:
-	qemu-system-x86_64 -m 256 -smp ${SMP} -kernel ${OBJ_DIR}/boot/kernel -nographic
+	qemu-system-x86_64 -m 256 -smp ${SMP} -kernel ${OBJ_DIR}/boot/kernel -nographic \
+	  -drive file=${DISK_IMAGE},format=raw,if=none,id=hd0 \
+	  -device virtio-blk-pci,drive=hd0,disable-modern=true
 
 # musl libc per-arch knobs.  i386 uses the FreeBSD stack ABI (-m32, no SSE) and a
 # hand-rolled libgcc32; aarch64 uses the stock SVC ABI + the real libgcc.  Both

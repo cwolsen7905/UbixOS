@@ -66,6 +66,13 @@ First entries of the 3.0 series (64-bit only: x86_64 + aarch64).  Development on
     (CS RPL check) instead of halting the kernel — the x86_64 analog of aarch64's
     EL0->kill containment.  Verified: a scheduled process runs at ring 3, writes via
     a syscall, and exits, with control returning to the scheduler.
+  - *Phase 5c (block device) — virtio-blk-pci.* The first **disk** driver: minimal
+    PCI enumeration (legacy 0xCF8/0xCFC config mechanism) finds the virtio-blk
+    device, and a polled legacy virtio-pci block driver (one contiguous vring,
+    3-descriptor request chain — the virtqueue logic shared with aarch64, only the
+    PCI-I/O-port transport differs) reads/writes 512-byte sectors.  Verified: reads
+    sector 0 of the attached image and confirms the MBR `0x55AA` signature.  (The
+    FAT/VFS root mount on top is 5c-2.)
   `bmake TARGET=x86_64` builds the bring-up kernel only (the x86_64 userland/world is
   a later phase); `bmake run TARGET=x86_64` boots it (serial console).
   Grows by widening the i386 MD code to 64-bit.  See `docs/design/cross-arch-plan.md`.
