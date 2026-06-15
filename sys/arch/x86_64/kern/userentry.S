@@ -55,6 +55,24 @@ x86_64_leave_user:
 	ret
 	.size x86_64_leave_user, . - x86_64_leave_user
 
+	/* void x86_64_iret_to_user(u64 rip /​* rdi *​/, u64 rsp /​* rsi *​/);
+	 * Bare IRETQ to ring 3 — no kernel context saved (the caller is a scheduled
+	 * user task's first-switch trampoline; it never returns to the kernel except
+	 * through a syscall/trap, which lands on the task's own kernel stack). */
+	.globl x86_64_iret_to_user
+	.type x86_64_iret_to_user, @function
+x86_64_iret_to_user:
+	pushq $0x1b      /* SS  = user data | RPL 3 */
+	pushq %rsi       /* RSP = user stack */
+	pushq $0x202     /* RFLAGS: IF + reserved bit 1 */
+	pushq $0x23      /* CS  = user code | RPL 3 */
+	pushq %rdi       /* RIP = user entry */
+	movw $0x1b, %ax
+	movw %ax, %ds
+	movw %ax, %es
+	iretq
+	.size x86_64_iret_to_user, . - x86_64_iret_to_user
+
 	.bss
 	.align 8
 	.globl g_kernel_resume_sp

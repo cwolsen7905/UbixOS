@@ -10,6 +10,8 @@
  */
 
 #include "x86_64.h"
+#include <ubixos/sched.h>   /* _current, sched() — ring-3 fault containment */
+#include <ubixos/endtask.h> /* endTask */
 
 #define KERNEL_CS 0x08    /* 64-bit code selector (start.S GDT) */
 #define IDT_GATE_INT 0x8E /* present, DPL0, 64-bit interrupt gate */
@@ -148,6 +150,18 @@ void x86_64_exception(struct x86_64_trapframe *tf)
 	serial_puts(" CR2=");
 	serial_puthex(cr2);
 	serial_puts("\n");
+
+	/* Fault-containment: a fault taken in ring 3 (CS RPL == 3) is the user
+	 * program's fault, not the kernel's — terminate the task and schedule on, so a
+	 * buggy app can't take down the OS (the x86_64 analog of aarch64's EL0->kill).
+	 * A ring-0 fault is a kernel bug; halt so it stays visible. */
+	if ((tf->cs & 3) == 3)
+	{
+		serial_puts("  (ring-3 fault — terminating the task)\n");
+		endTask(_current ? _current->id : 0);
+		sched();
+		/* not reached */
+	}
 
 	for (;;)
 		__asm__ __volatile__("cli; hlt");

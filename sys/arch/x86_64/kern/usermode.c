@@ -18,6 +18,8 @@
 #include <vmm/vmm.h>     /* vmm_find_free_page, PAGE_SIZE */
 #include <lib/kmalloc.h> /* sysID */
 #include <string.h>
+#include <ubixos/sched.h>   /* _current, sched(), kTask_t */
+#include <ubixos/endtask.h> /* endTask */
 
 #define KCODE_SEL 0x08
 #define KDATA_SEL 0x10
@@ -162,29 +164,69 @@ static u64 *next_table(u64 *table, unsigned slot)
 }
 
 /**
- * Map one 4 KB user page @va -> @phys, walking/creating the PML4->PDPT->PD->PT
- * chain from the live CR3.  @va must not fall inside start.S's 2 MB identity map
- * (use a VA >= 1 GB).  Marks the leaf user-accessible (and writable if asked).
+ * Map one 4 KB user page @va -> @phys in the address space rooted at @pml4,
+ * walking/creating the PML4->PDPT->PD->PT chain.  @va must not fall inside
+ * start.S's 2 MB identity map (use a VA >= 1 GB).  Marks the leaf user-accessible
+ * (and writable if asked).
  */
-void x86_64_map_user_page(u64 va, u64 phys, int writable)
+void x86_64_map_user_page_to(u64 *pml4, u64 va, u64 phys, int writable)
 {
-	u64 cr3;
-	u64 *pml4, *pdpt, *pd, *pt;
-
-	__asm__ __volatile__("mov %%cr3, %0" : "=r"(cr3));
-	pml4 = (u64 *)(uintptr_t)(cr3 & PTE_ADDR_MASK);
-	pdpt = next_table(pml4, (unsigned)((va >> 39) & 0x1FF));
-	pd = next_table(pdpt, (unsigned)((va >> 30) & 0x1FF));
-	pt = next_table(pd, (unsigned)((va >> 21) & 0x1FF));
+	u64 *pdpt = next_table(pml4, (unsigned)((va >> 39) & 0x1FF));
+	u64 *pd = next_table(pdpt, (unsigned)((va >> 30) & 0x1FF));
+	u64 *pt = next_table(pd, (unsigned)((va >> 21) & 0x1FF));
 
 	pt[(va >> 12) & 0x1FF] = (phys & PTE_ADDR_MASK) | PTE_P | PTE_US | (writable ? PTE_RW : 0);
 	__asm__ __volatile__("invlpg (%0)" : : "r"((void *)(uintptr_t)va) : "memory");
 }
 
+/** Map a user page in the live address space (CR3).  Used by the 5a one-shot. */
+void x86_64_map_user_page(u64 va, u64 phys, int writable)
+{
+	u64 cr3;
+	__asm__ __volatile__("mov %%cr3, %0" : "=r"(cr3));
+	x86_64_map_user_page_to((u64 *)(uintptr_t)(cr3 & PTE_ADDR_MASK), va, phys, writable);
+}
+
 /**
- * Service a ring-3 `int $0x80` (Phase 5a).  Bring-up calls only: write (to the
- * serial console) and exit (return to the kernel via x86_64_leave_user()).  args
- * follow the SysV order in the trapframe: rax=nr, rdi/rsi/rdx = arg0/1/2.
+ * Create a fresh per-process address space: a new PML4 whose low-1 GB kernel
+ * mapping is shared with the boot space (so kernel code/stacks/page-tables stay
+ * reachable in ring 0) but whose user region (PDPT[1..], VA >= 1 GB) is private.
+ *
+ * The kernel lives in the low half (loaded at 1 MB, identity-mapped), so rather
+ * than share PML4[0] wholesale — which would make user PDPT slots global — each
+ * space gets its own PDPT under PML4[0] with PDPT[0] pointing at the shared
+ * kernel PD.  @return the new PML4 (a physical/identity address), or NULL.
+ */
+u64 *x86_64_create_user_space(void)
+{
+	u64 cr3;
+	u64 *kpml4, *kpdpt, *pml4, *pdpt;
+
+	__asm__ __volatile__("mov %%cr3, %0" : "=r"(cr3));
+	kpml4 = (u64 *)(uintptr_t)(cr3 & PTE_ADDR_MASK);
+	kpdpt = (u64 *)(uintptr_t)(kpml4[0] & PTE_ADDR_MASK);
+
+	pml4 = alloc_table();
+	pdpt = alloc_table();
+	if (pml4 == 0 || pdpt == 0)
+		return 0;
+
+	pdpt[0] = kpdpt[0];                                       /* share the kernel low-1 GB PD */
+	pml4[0] = (u64)(uintptr_t)pdpt | PTE_P | PTE_RW | PTE_US; /* US: gate user PDPT[1..] leaves */
+	return pml4;
+}
+
+/** Set the ring-0 stack the CPU loads (TSS.rsp0) on the next ring3->ring0 trap. */
+void x86_64_set_user_kstack(u64 top)
+{
+	g_tss.rsp0 = top;
+}
+
+/**
+ * Service a ring-3 `int $0x80`.  Bring-up calls only: write (to the serial
+ * console) and exit.  Args follow the SysV order in the trapframe: rax = nr,
+ * rdi/rsi/rdx = arg0/1/2.  exit terminates the calling task and schedules away,
+ * so control returns to whatever the scheduler picks next (never to ring 3).
  */
 void x86_64_syscall(struct x86_64_trapframe *tf)
 {
@@ -200,9 +242,12 @@ void x86_64_syscall(struct x86_64_trapframe *tf)
 			break;
 		}
 		case SYS_EXIT:
-			kprintf("  [ring3] exit(%d) -> returning to kernel\n", (int)tf->rdi);
-			x86_64_leave_user(); /* does not return */
-			break;
+			kprintf("  [ring3] exit(%d) -> terminating task pid=%d\n",
+			        (int)tf->rdi,
+			        _current ? _current->id : -1);
+			endTask(_current->id); /* mark ZOMBIE */
+			sched();               /* switch away; this task is never resumed */
+			break;                 /* unreachable */
 		default:
 			kprintf("  [ring3] unknown syscall %u\n", (unsigned)tf->rax);
 			tf->rax = (u64)-1;
@@ -211,22 +256,41 @@ void x86_64_syscall(struct x86_64_trapframe *tf)
 }
 
 /**
- * One-shot ring-3 proof: map the demo payload + a stack as user pages, drop to
- * ring 3, and let it run.  It writes via the syscall path and exits back here.
+ * Phase 5b: run a real user process the SCHEDULER dispatches, in its own address
+ * space.  Build a private PML4, map the demo payload + a stack into it, create a
+ * task pointing at that space (md_cr3/md_entry/md_usp), and sched_ready() it.
+ * When sched() picks it, switch_to swaps CR3 + rsp0 and user_trampoline IRETQs to
+ * ring 3; the payload writes via a syscall and exits, after which the scheduler
+ * returns here.  Sibling of aarch64's aarch64_proc_demo.
  */
-void x86_64_user_demo(void)
+void x86_64_proc_demo(void)
 {
+	u64 *pml4 = x86_64_create_user_space();
 	uintptr_t code_phys = vmm_find_free_page(sysID);
 	uintptr_t stack_phys = vmm_find_free_page(sysID);
 	unsigned long code_len = (unsigned long)(x86_64_user_demo_end - x86_64_user_demo_start);
+	kTask_t *t;
+	int i;
 
-	kprintf("user demo: dropping to ring 3 (payload %u bytes @ VA %X)...\n", (unsigned)code_len, USER_CODE_VA);
+	kprintf("proc demo: scheduling a ring-3 process in its own address space...\n");
 
 	memcpy((void *)code_phys, x86_64_user_demo_start, code_len);
-	x86_64_map_user_page(USER_CODE_VA, (u64)code_phys, 0);   /* exec (no NX), read-only */
-	x86_64_map_user_page(USER_STACK_VA, (u64)stack_phys, 1); /* writable stack */
+	x86_64_map_user_page_to(pml4, USER_CODE_VA, (u64)code_phys, 0);   /* exec, read-only */
+	x86_64_map_user_page_to(pml4, USER_STACK_VA, (u64)stack_phys, 1); /* writable stack */
 
-	x86_64_enter_user(USER_CODE_VA, USER_STACK_TOP);
+	t = schedNewTask();
+	t->md.md_cr3 = (u64)(uintptr_t)pml4;
+	t->md.md_entry = USER_CODE_VA;
+	t->md.md_usp = USER_STACK_TOP;
+	strncpy(t->name, "ring3proc", sizeof(t->name) - 1);
+	sched_ready(t);
 
-	kprintf("user demo: back in the kernel — ring 3 + syscall round-trip works on x86_64.\n");
+	kprintf("  task pid=%d ready; yielding to the scheduler...\n", t->id);
+
+	for (i = 0; i < 64 && t->state != DEAD && t->state != ZOMBIE; i++)
+		sched_yield();
+
+	kprintf("proc demo: user process (pid=%d) ran + exited via the scheduler — "
+	        "scheduled ring-3 processes work on x86_64.\n",
+	        t->id);
 }

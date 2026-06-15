@@ -58,12 +58,21 @@ struct x86_64_trapframe
 
 void x86_64_exception(struct x86_64_trapframe *tf);
 
-/* usermode.c — ring-3 GDT + TSS + the one-shot ring-3 demo (Phase 5a). */
+/* usermode.c — ring-3 GDT + TSS, per-process address spaces, syscalls (5a/5b). */
 void x86_64_usermode_init(void);
 u64 x86_64_ring0_stack_top(void);
 void x86_64_map_user_page(u64 va, u64 phys, int writable);
+void x86_64_map_user_page_to(u64 *pml4, u64 va, u64 phys, int writable);
+u64 *x86_64_create_user_space(void);
+void x86_64_set_user_kstack(u64 top);
 void x86_64_syscall(struct x86_64_trapframe *tf);
-void x86_64_user_demo(void);
+void x86_64_user_demo(void); /* 5a one-shot (kept; superseded by proc_demo) */
+void x86_64_proc_demo(void); /* 5b scheduled ring-3 process */
+
+/* userentry.S — ring-3 entry primitives. */
+void x86_64_enter_user(u64 user_rip, u64 user_rsp); /* coroutine (5a one-shot) */
+void x86_64_leave_user(void);
+void x86_64_iret_to_user(u64 user_rip, u64 user_rsp); /* bare IRETQ (scheduled tasks) */
 
 /* vmm/vmm_machdep.c — physical page allocator setup (Phase 3). */
 void x86_64_mem_init(void);

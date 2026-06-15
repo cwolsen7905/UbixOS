@@ -44,8 +44,20 @@ static void kthread_trampoline(void)
 }
 
 /**
+ * First-switch trampoline for a user (ring-3) task: IRETQ to its entry at ring 3.
+ * Reached when switch_to() first dispatches the task — _current is already the
+ * new task, CR3 is its address space, and rsp0 is its kernel stack, so its later
+ * ring-3 traps land on that stack.  Does not return.
+ */
+static void user_trampoline(void)
+{
+	x86_64_iret_to_user(_current->md.md_entry, _current->md.md_usp);
+}
+
+/**
  * Build a new task's initial kernel-stack frame so the first switch into it
- * (cpu_switch.S: pop 6 callee-saved, RET) lands in kthread_trampoline.
+ * (cpu_switch.S: pop 6 callee-saved, RET) lands in its trampoline: a user task
+ * (md_usp set) IRETQs to ring 3; a kernel thread runs its entry directly.
  */
 void md_setup_initial_frame(kTask_t *t)
 {
@@ -54,20 +66,24 @@ void md_setup_initial_frame(kTask_t *t)
 	sp -= FRAME_SLOTS;
 	for (unsigned i = 0; i < FRAME_SLOTS; i++)
 		sp[i] = 0;
-	sp[FRAME_SLOTS - 1] = (u64)kthread_trampoline; /* RET target after the 6 pops */
+	sp[FRAME_SLOTS - 1] = (t->md.md_usp != 0) ? (u64)user_trampoline : (u64)kthread_trampoline;
 
 	t->md.md_kstack = (u64)sp;
 }
 
 /**
  * Register-level context switch from prev to next.  Swap the address space if it
- * differs (kernel threads share the kernel CR3), then save/restore registers via
- * cpu_switch.S.  Call with interrupts disabled.
+ * differs (kernel threads share the kernel CR3), re-arm the TSS ring-0 stack to
+ * next's kernel stack (so a ring-3 task's traps land on its own stack), then
+ * save/restore registers via cpu_switch.S.  Call with interrupts disabled.
  */
 void switch_to(kTask_t *prev, kTask_t *next)
 {
 	if (next->md.md_cr3 != 0 && next->md.md_cr3 != prev->md.md_cr3)
 		__asm__ __volatile__("mov %0, %%cr3" : : "r"(next->md.md_cr3) : "memory");
+
+	if (next->kernelStack != 0)
+		x86_64_set_user_kstack((u64)((unsigned char *)next->kernelStack + KSTACK_SIZE));
 
 	x86_64_ctx_switch((u64 *)&prev->md.md_kstack, (u64)next->md.md_kstack);
 }

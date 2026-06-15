@@ -14,6 +14,7 @@
 #include <ubixos/callout.h>
 #include <ubixos/endtask.h>
 #include <ubixos/random.h>
+#include <ubixos/sched.h>
 #include <sys/shutdown.h>
 #include <sys/types.h>
 
@@ -51,6 +52,12 @@ void krandom_stir(u_int64_t sample)
 void endTask(pidType id)
 {
 	(void)id;
+	/* Mark the calling task ZOMBIE so the scheduler stops dispatching it; the
+	 * caller then sched()s away.  Full reaping (free its address space + kernel
+	 * stack) is not ported on x86_64 yet — a terminated bring-up task leaks until
+	 * the real exit/wait path lands (5d/5e). */
+	if (_current != 0)
+		_current->state = ZOMBIE;
 }
 unsigned smp_cpu_count(void)
 {

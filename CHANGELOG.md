@@ -56,6 +56,16 @@ First entries of the 3.0 series (64-bit only: x86_64 + aarch64).  Development on
     `int $0x80` enters through a DPL3 IDT gate.  Verified end-to-end: a hand-rolled
     ring-3 payload `write`s a string and `exit`s, returning to the kernel via a
     coroutine swap.  (`syscall`/`sysret` + the FreeBSD ABI come with the ELF loader.)
+  - *Phase 5b — per-process address spaces.* A ring-3 process the **scheduler**
+    dispatches, each in its own page tables: `x86_64_create_user_space()` builds a
+    private PML4 (sharing the kernel's low-1 GB PD by pointer, private user region
+    above 1 GB); `switch_to` swaps CR3 + re-arms the TSS `rsp0` to the next task's
+    kernel stack; a user task's first dispatch runs a `user_trampoline` that IRETQs
+    to ring 3 (vs. the kernel-thread trampoline).  `exit` terminates the task
+    (`endTask` -> ZOMBIE) and schedules on.  A ring-3 fault now kills just the task
+    (CS RPL check) instead of halting the kernel — the x86_64 analog of aarch64's
+    EL0->kill containment.  Verified: a scheduled process runs at ring 3, writes via
+    a syscall, and exits, with control returning to the scheduler.
   `bmake TARGET=x86_64` builds the bring-up kernel only (the x86_64 userland/world is
   a later phase); `bmake run TARGET=x86_64` boots it (serial console).
   Grows by widening the i386 MD code to 64-bit.  See `docs/design/cross-arch-plan.md`.

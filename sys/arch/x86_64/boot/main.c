@@ -108,9 +108,9 @@ void kmain_x86_64(u32 mb_magic, u32 mb_info)
 		x86_64_sched_demo();
 	}
 
-	/* Phase 5a: drop to ring 3 and round-trip a syscall (proof of the privilege
-	 * transition + the int 0x80 path before per-process address spaces in 5b). */
-	x86_64_user_demo();
+	/* Phase 5b: run a real ring-3 process the scheduler dispatches, in its own
+	 * per-process address space (supersedes the 5a one-shot enter/leave demo). */
+	x86_64_proc_demo();
 
 	serial_puts("x86_64 Phase 4b-2 (generic scheduler) verified. Idle.\n");
 	for (;;)
