@@ -48,6 +48,18 @@
 
 static struct spinLock fdTable_lock = SPIN_LOCK_INITIALIZER;
 
+/*
+ * Coarse VFS I/O lock (smp-plan M4).  The filesystem read/write paths — notably
+ * the UbixFS pool reader — keep shared per-driver state that is not re-entrant,
+ * so two CPUs issuing fread()/fwrite() concurrently corrupt it (symptom under
+ * SMP: a short read during exec -> "not loadable").  Serialise FS I/O across
+ * CPUs with this lock.  spinLock() is a yielding mutex, so holding it across a
+ * blocking read is fine.  Uniprocessor (the i386 default + parked-AP aarch64) is
+ * always uncontended, so this is a no-op there.  A finer per-FS lock can replace
+ * it once the drivers are individually audited for re-entrancy.
+ */
+static struct spinLock vfs_io_lock = SPIN_LOCK_INITIALIZER;
+
 int sysMkDir(const char *path);
 
 fileDescriptor_t *fdTable = 0x0;
@@ -621,9 +633,10 @@ size_t fread(void *ptr, size_t size, size_t nmemb, fileDescriptor_t *fd)
 	assert(fd->mp);
 	assert(fd->mp->fs);
 
+	spinLock(&vfs_io_lock); /* serialise FS reads across CPUs (smp-plan M4) */
 	i = fd->mp->fs->vfsRead(fd, ptr, fd->offset, size * nmemb);
-
 	fd->offset += i;
+	spinUnlock(&vfs_io_lock);
 
 	return (i);
 }
@@ -639,8 +652,10 @@ size_t fwrite(void *ptr, int size, int nmemb, fileDescriptor_t *fd)
 
 	if (fd != 0x0 && fd->mp->fs->vfsWrite != NULL)
 	{
+		spinLock(&vfs_io_lock); /* serialise FS writes across CPUs (smp-plan M4) */
 		res = fd->mp->fs->vfsWrite(fd, ptr, fd->offset, size * nmemb);
 		fd->offset += size * nmemb;
+		spinUnlock(&vfs_io_lock);
 	}
 	return (res);
 }
@@ -824,8 +839,13 @@ fileDescriptor_t *fopen(const char *file, const char *flags)
 		}
 	}
 
-	/* Search For The File */
-	if (tmpFd->mp->fs->vfsOpenFile(tmpFd->fileName, tmpFd) == 0x1)
+	/* Search For The File.  The lookup reads FS metadata (the UbixFS pool
+	 * directory/dataset blocks) through the same non-re-entrant reader as fread,
+	 * so serialise it across CPUs too (smp-plan M4). */
+	spinLock(&vfs_io_lock);
+	int found = (tmpFd->mp->fs->vfsOpenFile(tmpFd->fileName, tmpFd) == 0x1);
+	spinUnlock(&vfs_io_lock);
+	if (found)
 	{
 		/* If The File Is Found Then Set Up The Descriptor */
 
