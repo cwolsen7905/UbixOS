@@ -140,6 +140,43 @@ TLB shootdown) is shared across all three arches.
 
 ---
 
+## 4b. Status (2026-06-15)
+
+- **M0 — DONE + verified, committed.** `<aarch64/pcpu.h>` (struct pcpu, g_pcpu,
+  curcpu via TPIDR_EL1); `_current` is per-CPU (sched.h, offset 16); BSP installs
+  TPIDR_EL1 at the top of kmain.  Boots to the full desktop unchanged on -smp 2.
+- **M1 — DONE + verified, committed.** PSCI CPU_ON + `apentry.S`/`apsmp.c`: the AP
+  enables its MMU on the BSP's tables (coherent — only symbol-address literals are
+  read MMU-off), installs VBAR_EL1 + TPIDR_EL1, and runs kernel C.  Observed:
+  `smp: cpu1 online (heartbeat advancing)`.
+- **M2 — DONE + verified, committed.** Per-CPU GICC + CNTV timer; `timer_tick` is
+  per-CPU (only the BSP drives the shared clock; an AP bumps its own heartbeat).
+  The AP takes its own 100 Hz timer IRQs.  **Default-on, stable.**
+- **M3 — implemented, opt-in (default OFF: `AARCH64_SMP_ENABLE_APS`).** The
+  dispatcher's per-CPU idle was extended to aarch64; the AP adopts a non-enqueued
+  per-CPU idle and runs the cooperative scheduler (`sched_yield`+`wfi`), pulling
+  READY tasks off the shared run queue.  **Works structurally** — the AP runs real
+  tasks — but exposed the M4 tail below, so it ships gated off.
+
+### M4 findings (the true-SMP hardening tail)
+Bringing M3 up surfaced the unlocked/uniprocessor state, in order:
+1. **Atomic spinlock — FIXED + committed.** `spinLock/spinUnlock/spinTryLock` were
+   uniprocessor stubs (set a flag, no atomicity).  Now real LL/SC (ldaxr/stxr +
+   stlr).  This was THE prerequisite — it makes every existing `spinLock`-guarded
+   structure (incl. `kmalloc`'s heap, already locked) actually safe under SMP.
+   First symptom it cured: `kmalloc failed allocating kernel stack`.
+2. **Page-table / fork allocation OOM — OPEN.** With APs scheduling, a kernel
+   allocation (`sysID`/pid -2) exhausts physical pages (`vmm: OOM` panic).  The MI
+   bitmap allocator (`vmm_memory.c`) *is* locked, so this is a leak or unlocked
+   refcount in the concurrent fork / `pmap_*` page-table path — the next thing to
+   fix.
+3. **TLB shootdown — OPEN.** No cross-CPU TLB invalidation yet (broadcast
+   `TLBI ...IS` covers most aarch64 cases; a GIC SGI for the rest).
+4. **Console lock — OPEN (minor).** Concurrent `kprintf` from two cores garbles
+   output; AP prints are currently suppressed as a stopgap.
+
+Flipping `AARCH64_SMP_ENABLE_APS` to 1 is gated on (2)+(3).
+
 ## 5. Risks & method
 
 - **M0 is the riskiest single step** (touches every `_current` read); land + verify it
