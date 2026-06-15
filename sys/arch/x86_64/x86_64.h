@@ -54,4 +54,10 @@ u64 timer_ticks(void);
 /* boot/main.c — the 64-bit C entry (called from start.S). */
 void kmain_x86_64(u32 mb_magic, u32 mb_info);
 
+/* cpu_switch.S — register-level context switch (Phase 4b). */
+void x86_64_ctx_switch(u64 *save_rsp, u64 next_rsp);
+
+/* ctxtest.c — verify the context switch (bring-up demo, Phase 4b). */
+void x86_64_ctx_test(void);
+
 #endif /* _X86_64_BRINGUP_H */

@@ -77,7 +77,11 @@ void kmain_x86_64(u32 mb_magic, u32 mb_info)
 		}
 	}
 
-	serial_puts("x86_64 Phase 4a up: timer + IRQs live. Idle.\n");
+	/* Phase 4b: verify the context switch (cpu_switch.S) before linking the
+	 * machine-independent scheduler. */
+	x86_64_ctx_test();
+
+	serial_puts("x86_64 Phase 4b (ctx switch) verified. Idle.\n");
 	for (;;)
 		__asm__ __volatile__("hlt");
 }
