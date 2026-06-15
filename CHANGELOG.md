@@ -105,6 +105,17 @@ First entries of the 3.0 series (64-bit only: x86_64 + aarch64).  Development on
     ring-3 demo now runs at **0x400000** (the amd64 ELF base) instead of a >1 GB
     work-around.  Layout: user = low canonical half, physmap = `0xFFFF8…`, kernel =
     `0xFFFFFFFF8…`.  Verified: ring-3 process at 0x400000 + FAT root mount.
+  - *Phase 5d (step C, ELF64 loader)* — the arch-neutral ELF64 loader
+    (`sys/kern/elf64_load.c`, shared with aarch64) now runs on x86_64 via two md
+    hooks (`md_map_user_page` over the page-table walker, `md_sync_icache` a no-op —
+    x86 I-cache is coherent) + an `x86_64/elf.h` (`ELF_TARG_MACH = EM_X86_64`).  A
+    synthesized static ET_EXEC wrapping the ring-3 payload loads at the amd64 base
+    (0x400000) into a fresh address space and runs as a scheduled process.  Also
+    fixes the boot task's `md_cr3` (0 -> the boot PML4) so `switch_to` restores a
+    CR3 with the low identity when a user task exits back to the kernel (the MI
+    loader's direct frame access needs it; user PML4s have a clean low half).
+    Verified: ELF64 process runs + exits.  (Real `syscall`/`sysret` + the FreeBSD
+    ABI, for the musl world, are next.)
   `bmake TARGET=x86_64` builds the bring-up kernel only (the x86_64 userland/world is
   a later phase); `bmake run TARGET=x86_64` boots it (serial console).
   Grows by widening the i386 MD code to 64-bit.  See `docs/design/cross-arch-plan.md`.

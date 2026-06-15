@@ -107,6 +107,7 @@ void x86_64_set_user_kstack(u64 top);
 void x86_64_syscall(struct x86_64_trapframe *tf);
 void x86_64_user_demo(void); /* 5a one-shot (kept; superseded by proc_demo) */
 void x86_64_proc_demo(void); /* 5b scheduled ring-3 process */
+void x86_64_elf_demo(void);  /* 5d-C: load a synthesized ELF64 via the MI loader */
 
 /* userentry.S — ring-3 entry primitives. */
 void x86_64_enter_user(u64 user_rip, u64 user_rsp); /* coroutine (5a one-shot) */

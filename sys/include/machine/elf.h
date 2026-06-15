@@ -10,6 +10,8 @@
 #define _MACHINE_ELF_H
 #if defined(__aarch64__)
 #include <aarch64/elf.h>
+#elif defined(__x86_64__)
+#include <x86_64/elf.h>
 #else
 #include <i386/elf.h>
 #endif

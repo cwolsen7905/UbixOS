@@ -217,6 +217,28 @@ void x86_64_set_user_kstack(u64 top)
 	g_tss.rsp0 = top;
 }
 
+/* -------------------------------------------------------------------------- *
+ * Machine-dependent hooks for the arch-neutral ELF64 loader (sys/kern/elf64_load.c).
+ * -------------------------------------------------------------------------- */
+
+/**
+ * Map a loaded ELF page into @aspace_root (an x86_64 PML4 PHYSICAL address passed
+ * as the loader's opaque handle).  Mapped writable + user; @executable is unused
+ * (no NX / W^X yet, so every user page is executable).
+ */
+void md_map_user_page(u64 *aspace_root, u64 va, u64 pa, int executable)
+{
+	(void)executable;
+	x86_64_map_user_page_to((u64)(uintptr_t)aspace_root, va, pa, 1);
+}
+
+/** Sync the I-cache after writing code (x86_64's I-cache is coherent: no-op). */
+void md_sync_icache(uintptr_t addr, u64 len)
+{
+	(void)addr;
+	(void)len;
+}
+
 /**
  * Service a ring-3 `int $0x80`.  Bring-up calls only: write (to the serial
  * console) and exit.  Args follow the SysV order in the trapframe: rax = nr,

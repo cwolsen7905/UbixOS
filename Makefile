@@ -303,6 +303,7 @@ X86_64_GENERIC_SRCS = \
 	sys/lib/kmalloc.c \
 	sys/kern/sched_core.c \
 	sys/kern/sched_dispatch.c \
+	sys/kern/elf64_load.c \
 	sys/lib/kprintf.c \
 	sys/lib/kconsole.c \
 	sys/lib/string.c \

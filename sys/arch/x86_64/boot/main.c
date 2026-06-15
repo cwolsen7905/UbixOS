@@ -105,17 +105,29 @@ void kmain_x86_64(u32 mb_magic, u32 mb_info)
 		extern kTask_t *taskList;
 		extern void x86_64_sched_demo(void);
 
+		u64 boot_cr3;
+
 		sched_init();
 		set_current(taskList);
 		taskList->state = RUNNING;
 		taskList->priority = QOS_DEFAULT; /* share the CPU at the default QoS */
 		taskList->base_priority = QOS_DEFAULT;
+		/* sched_init() builds the boot task without md_new_task, leaving md_cr3 = 0;
+		 * record the boot PML4 so switch_to restores it when a user task exits back
+		 * to this kernel context (the boot PML4 keeps the low identity that the MI
+		 * ELF loader's direct frame access relies on — user PML4s do not). */
+		__asm__ __volatile__("mov %%cr3, %0" : "=r"(boot_cr3));
+		taskList->md.md_cr3 = boot_cr3;
 		x86_64_sched_demo();
 	}
 
 	/* Phase 5b: run a real ring-3 process the scheduler dispatches, in its own
 	 * per-process address space (supersedes the 5a one-shot enter/leave demo). */
 	x86_64_proc_demo();
+
+	/* Phase 5d-C: load a synthesized static ELF64 through the arch-neutral loader
+	 * and run it at the standard amd64 base (0x400000) in the clean user low half. */
+	x86_64_elf_demo();
 
 	/* Phase 5c: probe the virtio-blk-pci disk, then mount its FAT partition as the
 	 * VFS root and list it — proof the block driver + buffer cache + FAT + VFS all
