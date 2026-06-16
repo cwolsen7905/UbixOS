@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- **aarch64 initial stack: argv/env no longer 1-page-capped.** `build_dyn_stack`
+  wrote the argv/env strings + auxv vector into the single top stack page; a large
+  argv + environment would run past it into adjacent kernel memory.  `load_dynamic`
+  now allocates the whole stack as one **contiguous** run of frames
+  (`vmm_find_free_pages_contig`) so the vector can span pages (kernel-identity + user
+  VA both linear), and `build_dyn_stack` sizes the argv/env/auxv up front against a
+  `limit` (the top half of the stack), failing the exec cleanly on overflow instead
+  of scribbling.  Mirrors the x86_64 fix; verified by booting aarch64 headless — all
+  services + views exec cleanly through the new path, no overflow/fault.
+
 ## [3.0.0-BETA] - 2026-06-16
 
 First release of the 3.0 series — the **AArch64** and **x86_64** 64-bit ports.

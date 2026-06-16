@@ -255,14 +255,35 @@ static u_int64_t build_dyn_stack(uintptr_t phys_page,
                                  char **envp,
                                  int envc,
                                  const elf64_load_info_t *mi,
-                                 u_int64_t interp_base)
+                                 u_int64_t interp_base,
+                                 u_int64_t limit)
 {
 	u_int8_t *page = (u_int8_t *)phys_page;
 	u_int8_t *p = page + PAGE_SIZE;
 	u_int64_t argv_uva[MAXARG], envp_uva[MAXARG], random_uva;
 	u_int64_t *vec;
 	int i, k = 0, nvec;
+	size_t need;
 #define UVA(ptr) (page_uva + (u_int64_t)((u_int8_t *)(ptr) - page))
+
+	/* The argv/env strings + the AT_RANDOM block + the argc/argv/envp/auxv vector are
+	 * laid down below the top of the stack, descending from @phys_page's top.  @limit
+	 * is how far down that may go (the reserved, physically-contiguous arg region);
+	 * size it up front and bail cleanly on overflow rather than scribbling past the
+	 * region into adjacent kernel memory (a huge environment must fail the exec). */
+	nvec = 1 + argc + 1 + envc + 1 + 16;
+	need = 16 + 32 /* AT_RANDOM + two 16-byte alignment slacks */ + (size_t)nvec * sizeof(u_int64_t);
+	for (i = 0; i < argc; i++)
+		need += strlen(argv[i]) + 1;
+	for (i = 0; i < envc; i++)
+		need += strlen(envp[i]) + 1;
+	if (need > limit)
+	{
+		kprintf("execve: argv+env (%u bytes) exceeds the %u-byte stack arg region\n",
+		        (u_int32_t)need,
+		        (u_int32_t)limit);
+		return (0);
+	}
 
 	/* argv + envp strings, then 16 random bytes for the stack canary, near top. */
 	for (i = 0; i < argc; i++)
@@ -374,22 +395,39 @@ static int load_dynamic(const void *image,
 		start_entry = ii.entry; /* enter the dynamic linker, not the main exe */
 	}
 
-	/* Map a multi-page stack; the auxv/argv vector lives in the top page. */
+	/* Allocate the whole stack as one *contiguous* run of frames.  The argv/env/auxv
+	 * vector is laid down from the top descending; contiguous frames keep both the
+	 * (identity-mapped) kernel view and the user VA linear, so the vector can span
+	 * multiple pages (the pointer math in build_dyn_stack stays valid across page
+	 * boundaries) instead of being capped at the single top page.  A contiguous-alloc
+	 * failure fails the exec cleanly rather than corrupting. */
 	{
-		uintptr_t top_frame = 0;
+		uintptr_t stack_base;
 		int i;
+
+		stack_base = vmm_find_free_pages_contig(DYN_STACK_PAGES, sysID);
+		if (stack_base == 0)
+			return (-1);
+		memset((void *)stack_base, 0, (size_t)DYN_STACK_PAGES * PAGE_SIZE);
 		for (i = 0; i < DYN_STACK_PAGES; i++)
-		{
-			uintptr_t f = vmm_find_free_page(sysID);
-			if (f == 0)
-				return (-1);
-			memset((void *)f, 0, PAGE_SIZE);
-			pmap_map_user_page(l1, DYN_STACK_VA + (u_int64_t)i * PAGE_SIZE, (u_int64_t)f, 0);
-			if (i == DYN_STACK_PAGES - 1)
-				top_frame = f;
-		}
-		*out_usp =
-		    build_dyn_stack(top_frame, DYN_STACK_TOP - PAGE_SIZE, argv, argc, envp, envc, &mi, interp_base);
+			pmap_map_user_page(l1,
+			                   DYN_STACK_VA + (u_int64_t)i * PAGE_SIZE,
+			                   (u_int64_t)(stack_base + (uintptr_t)i * PAGE_SIZE),
+			                   0);
+
+		/* build_dyn_stack writes top-down from the topmost page.  Reserve the lower
+		 * half for runtime growth; the argv/env/auxv vector may use the top half. */
+		*out_usp = build_dyn_stack(stack_base + (uintptr_t)(DYN_STACK_PAGES - 1) * PAGE_SIZE,
+		                           DYN_STACK_TOP - PAGE_SIZE,
+		                           argv,
+		                           argc,
+		                           envp,
+		                           envc,
+		                           &mi,
+		                           interp_base,
+		                           (u_int64_t)(DYN_STACK_PAGES / 2) * PAGE_SIZE);
+		if (*out_usp == 0)
+			return (-1);
 	}
 
 	*out_entry = start_entry;
