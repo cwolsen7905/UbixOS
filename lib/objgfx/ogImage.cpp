@@ -115,17 +115,22 @@ bool ogImage::DecodeBMP(int fd, ogSurface &surface)
  */
 bool ogImage::DecodePNG(int fd, ogSurface &surface)
 {
-	struct stat st;
-
-	if (fstat(fd, &st) != 0 || st.st_size <= 0)
+	/* Size the file with lseek(SEEK_END), not fstat: the kernel's struct stat is
+	 * the FreeBSD layout and musl's per-arch kstat does not place st_size at a
+	 * matching offset on every port (x86_64's fstat reports a bogus size), which
+	 * made the whole-file slurp below fail and the desktop wallpaper vanish.
+	 * lseek returns the offset directly via the syscall return value, so it is
+	 * immune to the stat ABI — the same path DecodeBMP already relies on. */
+	off_t end = lseek(fd, 0, SEEK_END);
+	lseek(fd, 0, SEEK_SET);
+	if (end <= 0)
 		return false;
 
-	size_t sz = (size_t)st.st_size;
+	size_t sz = (size_t)end;
 	unsigned char *file = (unsigned char *)malloc(sz);
 	if (file == nullptr)
 		return false;
 
-	lseek(fd, 0, SEEK_SET);
 	size_t got = 0;
 	while (got < sz)
 	{

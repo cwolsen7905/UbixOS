@@ -62,7 +62,7 @@ int x86_64_fb_init(void)
 {
 	struct pci_dev d;
 	u32 cmd;
-	u32 w = 1024, h = 768;
+	u32 w = 1280, h = 720; /* 16:9; 1280x720x4 = 3.7 MB, well within the 16 MB std-VGA LFB */
 
 	if (!pci_find_device(VGA_VENDOR, VGA_DEVICE, &d))
 	{

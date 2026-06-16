@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- **x86_64 desktop is now 16:9 (1280×720).** The std-VGA framebuffer was programmed
+  at 1024×768 (4:3); it now uses 1280×720 (3.7 MB, well within the 16 MB LFB).
+
+### Fixed
+- **x86_64 desktop wallpaper now renders.** objGFX's PNG loader sized the file with
+  `fstat()`, but the kernel's FreeBSD-derived `struct stat` doesn't place `st_size`
+  at the offset musl's x86_64 `kstat` reads, so the whole-file slurp got a bogus
+  size and every PNG wallpaper failed to load (the desktop fell back to a flat
+  background; BMPs like the login screen's `ubix.bmp` were unaffected since
+  `DecodeBMP` reads its own header).  `DecodePNG` now sizes the file with
+  `lseek(SEEK_END)` — which returns the offset via the syscall result, immune to
+  the stat ABI, and is the same path `DecodeBMP` already used.  Fixes PNG wallpapers
+  on all arches.
+
 ### Added
 - **x86_64 `sysinfo` + `nanosleep` syscalls (were `-1` stubs).** `sys_sysinfo`
   (native 62) now fills uptime / total+free physical pages / page size, so
