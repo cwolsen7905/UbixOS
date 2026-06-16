@@ -10,6 +10,7 @@
 
 #include "x86_64.h"
 #include <ubixos/sched.h>
+#include <ubixos/tty.h> /* tty_init — pty pool + VT100 engine */
 #include <x86_64/pcpu.h>
 #include <fs/vfs/vfs.h>       /* vfs_init, VFS_TYPE_FAT/DEVFS/PROCFS */
 #include <fs/vfs/mount.h>     /* vfs_mount */
@@ -148,6 +149,10 @@ void kmain_x86_64(u32 mb_magic, u32 mb_info)
 
 		/* Wire COM1 into the VFS console fileops so login/shell stdin/stdout work. */
 		x86_64_console_tty_init();
+
+		/* Set up the pty pool + VT100 line-discipline engine (sys/posix/tty.c) so
+		 * the graphical terminal (bin/views/term) can run a shell on a pty. */
+		tty_init();
 
 		/* Bring up the std-VGA linear framebuffer (for views/objGFX), like i386's
 		 * VESA LFB.  sys_mapfb hands its physical BAR to the compositor. */

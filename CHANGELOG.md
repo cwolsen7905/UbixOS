@@ -333,6 +333,26 @@ First entries of the 3.0 series (64-bit only: x86_64 + aarch64).  Development on
     QMP `input-send-event` rel-moves + a click): the cursor tracks both axes in the
     correct direction.
 
+  - *Phase 5e — graphical terminal (pty/tty engine).* The desktop's **Terminal**
+    (`bin/views/term`) now runs an interactive shell on a kernel pseudo-terminal.
+    The arch-neutral VT100 line-discipline + pty pool (`sys/posix/tty.c`) was added
+    to the x86_64 build (it had an i386/aarch64 `#if`; added an x86_64 branch — its
+    own `pushfq`/`popfq` IRQ save-restore + the `<x86_64/signal.h>` signal numbers,
+    and the no-op `rs232_putc`/`backSpace` echo shims it shares with aarch64).  A new
+    `arch/x86_64/dev/pty.c` provides the `sys_settty` + `sys_pty{alloc,free,inject,
+    snap,resize}` syscalls (thin wrappers over the engine, replacing the stubs), and
+    `tty_init()` runs at boot.  One userland fix was needed: `lib/ubix_api`'s
+    `ubix_getcwd` (the `int $0x81` thunk the shell calls for its prompt) had only an
+    i386 asm body under `#else`, which on x86_64 assembled `movl 4(%esp),%eax` with a
+    `0x67` address-size override — truncating the 64-bit stack pointer to 32 bits and
+    faulting; added an x86_64 branch reading `buf` from `%rdi` per the SysV ABI.  Also
+    hardened: the ring-0 fault dump now prints the faulting `pid`.  Verified headless
+    (`tools/x86_64-test/gui-term.py` drives the mouse through the start menu to launch
+    Terminal, then types `ls`): the shell prompt renders and `ls` lists the root —
+    full keyboard → `sys_ptyinject` → shell → VT100 → render round-trip, zero faults.
+    Known follow-up: `sys_execve` still drops the caller's argv/envp (execs with
+    `argc=1`, no env) — fine for the shell but a real gap to close.
+
   **With mmap/execve/fork/signals in place, the x86_64 kernel can now load, run,
   fork, and signal real on-disk binaries — the full runtime a userland needs.**
   `bmake TARGET=x86_64` builds the bring-up kernel only (the x86_64 userland/world is

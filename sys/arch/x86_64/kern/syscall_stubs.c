@@ -80,26 +80,6 @@ long sys_net_configure()
 {
 	return -1;
 }
-long sys_ptyalloc()
-{
-	return -1;
-}
-long sys_ptyfree()
-{
-	return -1;
-}
-long sys_ptyinject()
-{
-	return -1;
-}
-long sys_ptyresize()
-{
-	return -1;
-}
-long sys_ptysnap()
-{
-	return -1;
-}
 long sys_recvfrom()
 {
 	return -1;
@@ -133,10 +113,6 @@ long sys_setsockopt()
 {
 	return -1;
 }
-long sys_settty()
-{
-	return -1;
-}
 long sys_socket()
 {
 	return -1;
@@ -158,10 +134,6 @@ long sys_ubfs_query()
 	return -1;
 }
 long sys_vesa_modes()
-{
-	return -1;
-}
-long tty_hangup_by_owner()
 {
 	return -1;
 }

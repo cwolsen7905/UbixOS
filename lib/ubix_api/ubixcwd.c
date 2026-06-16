@@ -48,6 +48,26 @@ asm(".text                          \n"
     "1:                             \n"
     "  mov x0, #0                   \n" /* return NULL */
     "  ret                          \n");
+#elif defined(__x86_64__)
+/* x86-64 SysV ABI: buf in %rdi, size in %rsi; the int $0x81 native path reads
+ * the args from those registers (C-ABI order).  Save buf in a call-clobbered
+ * register the kernel preserves across the trap, and hand it back on success.
+ * (The i386 version reads buf from 4(%esp) — wrong here: that is a 32-bit ESP
+ * access that truncates the 64-bit stack pointer and faults.) */
+asm(".text                          \n"
+    ".globl ubix_getcwd             \n"
+    ".type  ubix_getcwd, @function  \n"
+    "ubix_getcwd:                   \n"
+    "  movq %rdi, %r9               \n" /* save buf */
+    "  movl $41, %eax               \n"
+    "  int  $0x81                   \n"
+    "  testl %eax, %eax             \n"
+    "  jnz  ubix_getcwd_err         \n"
+    "  movq %r9, %rax               \n" /* return buf */
+    "  ret                          \n"
+    "ubix_getcwd_err:               \n"
+    "  xorl %eax, %eax              \n" /* return NULL */
+    "  ret                          \n");
 #else
 asm(".text                          \n"
     ".globl ubix_getcwd             \n"

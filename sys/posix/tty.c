@@ -51,8 +51,10 @@
 #include <isa/rs232.h>
 #include <isa/kbd.h>     /* kbd_gui_mode */
 #include <fs/vfs/file.h> /* getchar */
-#else
+#elif defined(__aarch64__)
 #include <aarch64/signal.h> /* SIGINT/SIGTTIN/... signal numbers */
+#else                       /* __x86_64__ */
+#include <x86_64/signal.h>  /* SIGINT/SIGTTIN/... signal numbers */
 #endif
 
 /* True when an unblocked signal is pending (makes the blocking tty read loops
@@ -82,6 +84,18 @@ static inline void irq_restore(u_int32_t flags)
 {
 	asm volatile("pushl %0; popfl" : : "r"(flags) : "memory");
 }
+#elif defined(__x86_64__)
+/* x86-64: same RFLAGS save/disable as i386, with the 64-bit pushfq/popfq. */
+static inline u_int64_t irq_save_disable(void)
+{
+	u_int64_t flags;
+	__asm__ volatile("pushfq; popq %0; cli" : "=r"(flags) : : "memory");
+	return (flags);
+}
+static inline void irq_restore(u_int64_t flags)
+{
+	__asm__ volatile("pushq %0; popfq" : : "r"(flags) : "memory");
+}
 #else
 /* aarch64: mask/restore IRQs via DAIF.  The pty's stdin[] ring is only touched
  * from syscall context here (no serial ISR feeds it as on i386), but keep the
@@ -96,11 +110,14 @@ static inline void irq_restore(u_int64_t daif)
 {
 	__asm__ volatile("msr daif, %0" : : "r"(daif) : "memory");
 }
+#endif
 
+#if !defined(__i386__)
 /* The VT100 line discipline's echo has SERIAL (rs232_putc) and VGA (backSpace)
- * arms alongside the pty arm (tty_print).  On aarch64 a pty is always
- * TTY_TYPE_PTY, so those arms are never taken — but they must still link.  No-op
- * shims keep tty_inject byte-identical across arches without per-site #ifdefs. */
+ * arms alongside the pty arm (tty_print).  On aarch64 and x86_64 a graphical pty
+ * is always TTY_TYPE_PTY, so those arms are never taken — but they must still
+ * link.  No-op shims keep tty_inject byte-identical across arches without
+ * per-site #ifdefs. */
 static inline void rs232_putc(char c)
 {
 	(void)c;

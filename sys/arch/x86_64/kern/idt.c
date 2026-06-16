@@ -175,6 +175,8 @@ void x86_64_exception(struct x86_64_trapframe *tf)
 	serial_puthex(tf->rbp);
 	serial_puts(" CR2=");
 	serial_puthex(cr2);
+	serial_puts(" pid=");
+	serial_putdec(_current ? (int)_current->id : -1);
 	serial_puts("\n");
 
 	/* Fault-containment: a fault taken in ring 3 (CS RPL == 3) is the user

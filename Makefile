@@ -318,6 +318,7 @@ X86_64_GENERIC_SRCS = \
 	sys/posix/pipe.c \
 	sys/posix/kern_pipe.c \
 	sys/posix/sem.c \
+	sys/posix/tty.c \
 	sys/mpi/message.c \
 	sys/mpi/system.c \
 	sys/mpi/mpi_syscalls.c \
