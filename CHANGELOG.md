@@ -7,8 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-First entries of the 3.0 series (64-bit only: x86_64 + aarch64).  Development on
-`wip/aarch64-port`; i386 remains as the reference until x86_64 reaches parity.
+## [3.0.0-BETA] - 2026-06-16
+
+First release of the 3.0 series — the **AArch64** and **x86_64** 64-bit ports.
+x86_64 has reached desktop parity with aarch64: it boots to the graphical desktop
+(login, mouse, an interactive tcsh terminal), schedules preemptively, reclaims
+address spaces on exec, runs the NetSurf browser, and has a working network stack
+(virtio-net + lwIP + DHCP + sockets — ICMP/UDP/TCP).  Developed on
+`wip/aarch64-port`; i386 remains in-tree as the reference.
 
 ### Added
 - **x86_64 port (3.0 forward target, replaces i386)** — bring-up in progress:
@@ -1085,7 +1091,8 @@ Initial git import from prior CVS/SVN history. Kernel booted, basic VFS and VMM 
 - `lseek` syscall (`SEEK_END` not yet implemented).
 - TCC added to base system.
 
-[Unreleased]: https://github.com/cwolsen7905/UbixOS/compare/v2.4.0-BETA...HEAD
+[Unreleased]: https://github.com/cwolsen7905/UbixOS/compare/v3.0.0-BETA...HEAD
+[3.0.0-BETA]: https://github.com/cwolsen7905/UbixOS/compare/v2.4.0-BETA...v3.0.0-BETA
 [2.4.0-BETA]: https://github.com/cwolsen7905/UbixOS/compare/v2.3.0-BETA...v2.4.0-BETA
 [2.3.0-BETA]: https://github.com/cwolsen7905/UbixOS/compare/v2.2.0-BETA...v2.3.0-BETA
 [2.2.0-BETA]: https://github.com/cwolsen7905/UbixOS/compare/v2.1.0-BETA...v2.2.0-BETA
