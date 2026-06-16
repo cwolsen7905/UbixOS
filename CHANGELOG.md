@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **x86_64 network tools: `wget` + `httpsget`.** Added to the x86_64 `bin/` build
+  (`libhttp` + `libbearssl` were already cross-built and the socket stack works), so
+  `bmake world`/`image TARGET=x86_64` ship them.  Verified end to end against a local
+  HTTP server (QEMU user-net `guestfwd`): `wget http://…` connects, sends the GET (the
+  host server logs it), and receives **HTTP 200** — the full userland network-app path
+  (socket connect/send/recv → lwIP → virtio-net) on x86_64.
+
 ### Fixed
 - **aarch64 initial stack: argv/env no longer 1-page-capped.** `build_dyn_stack`
   wrote the argv/env strings + auxv vector into the single top stack page; a large
