@@ -97,10 +97,17 @@ u64 timer_ticks(void)
 
 /**
  * IRQ handler (called from the common ISR path in idt.c for vector >= 32).
- * Counts the timer tick (IRQ0) and sends EOI.  Other lines are masked for now.
+ * Counts the timer tick (IRQ0), charges it to the running task, and sends EOI.
+ * Other lines are masked for now.
+ *
+ * @return 1 if this was a timer tick (IRQ0), so the caller can decide whether to
+ *         preempt; 0 otherwise.  EOI is already sent on return, so the caller may
+ *         reschedule safely.
  */
-void x86_64_irq(unsigned vector)
+int x86_64_irq(unsigned vector)
 {
+	int ticked = 0;
+
 	if (vector == IRQ_BASE) /* IRQ0 — PIT timer */
 	{
 		extern void sched_account_tick(void);
@@ -108,11 +115,10 @@ void x86_64_irq(unsigned vector)
 		g_ticks++;
 		if (systemVitals != 0)
 			systemVitals->sysTicks++; /* MI time base (scheduler aging, callouts) */
-		/* Charge the elapsed tick to whatever was running.  The kernel is
-		 * non-preemptive here (like aarch64: no EL0/userland yet), so we do
-		 * not reschedule from IRQ context — kernel threads cooperatively
-		 * yield.  Once userland lands, the EL0 timer path will call sched(). */
+		/* Charge the elapsed tick to whatever was running. */
 		sched_account_tick();
+		ticked = 1;
 	}
 	irq_eoi(vector);
+	return ticked;
 }

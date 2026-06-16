@@ -156,7 +156,7 @@ void x86_64_mem_init(void);
 void pic_remap(void);
 void pit_init(unsigned hz);
 void irq_eoi(unsigned vector);
-void x86_64_irq(unsigned vector); /* called from the common ISR path for vec >= 32 */
+int x86_64_irq(unsigned vector); /* called from the common ISR path for vec >= 32; 1 if timer tick */
 u64 timer_ticks(void);
 
 /* boot/main.c — the 64-bit C entry (called from start.S). */

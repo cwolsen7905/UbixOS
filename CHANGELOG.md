@@ -362,6 +362,19 @@ First entries of the 3.0 series (64-bit only: x86_64 + aarch64).  Development on
     `argv0="-tcsh"` + `HOME`/`TERM`, sources its login files, and `ls` works; forked
     services show their real names in traces instead of blank.
 
+  - *Phase 5e — preemptive scheduling.* The PIT timer (IRQ0) now preempts a running
+    **user** task: `x86_64_irq` reports a timer tick back to the IRQ dispatcher, and
+    if it interrupted ring 3 (`CS.RPL == 3`) the handler delivers any pending signal
+    (so Ctrl-C reaches a CPU-bound foreground program) and calls `sched()` to pick
+    the next runnable task.  The kernel itself stays **non-preemptive** (mirrors
+    aarch64's EL0-only reschedule): an in-kernel context — a driver polling a virtio
+    ring at boot, a service mid-syscall — runs to its next voluntary `sched_yield()`/
+    block rather than being preempted mid-operation.  Before this, a user program
+    that never yielded (e.g. a `while(1)` loop) starved the whole desktop; now it is
+    time-sliced.  Verified headless (`tools/x86_64-test/gui-preempt.py`): with tcsh
+    spinning in a pure-CPU `while(1)` loop, the taskbar clock keeps advancing
+    (19:00:17 → :20 over 4 s), proving the CPU-bound task is being preempted.
+
   **With mmap/execve/fork/signals in place, the x86_64 kernel can now load, run,
   fork, and signal real on-disk binaries — the full runtime a userland needs.**
   `bmake TARGET=x86_64` builds the bring-up kernel only (the x86_64 userland/world is

@@ -138,7 +138,24 @@ void x86_64_exception(struct x86_64_trapframe *tf)
 	/* Vectors 32..47 are hardware IRQs (PIC-remapped) — handle + EOI, then IRETQ. */
 	if (tf->vector >= 32)
 	{
-		x86_64_irq((unsigned)tf->vector);
+		int ticked = x86_64_irq((unsigned)tf->vector);
+
+		/* Preemptive scheduling: a timer tick (IRQ0) that interrupted a *user*
+		 * (ring-3) task preempts it — pick the next runnable task.  The kernel
+		 * itself stays non-preemptive (mirrors aarch64's EL0-only reschedule): an
+		 * in-kernel context — a driver polling a virtio ring at boot, a service
+		 * mid-syscall — runs to its next voluntary sched_yield()/block rather than
+		 * being preempted mid-operation.  EOI was already sent by x86_64_irq, so
+		 * the next task can take its own ticks.  On the way out we deliver any
+		 * pending signal so Ctrl-C reaches a CPU-bound foreground program (not just
+		 * one blocked in a syscall), exactly like the syscall-return path. */
+		if (ticked && (tf->cs & 3) == 3 && _current != 0)
+		{
+			extern void signal_check(struct trapframe * frame);
+			_current->td.frame = (struct trapframe *)tf;
+			signal_check((struct trapframe *)tf);
+			sched();
+		}
 		return;
 	}
 
