@@ -6,8 +6,9 @@
  * An Explorer-leaning, best-of-all-worlds file browser: a navigation toolbar
  * (back / forward / up), a breadcrumb address bar that turns into an editable
  * path field when clicked, a left "Places" sidebar (Home, Filesystem, top-level
- * folders), a sortable Details list (Name / Size / Type / Modified) with a
- * drag/page scrollbar, and a status bar.  Double-click a folder to
+ * folders), a sortable Details list (Name / Size / Type / Modified) or a large-
+ * icon grid (toggled in the toolbar) with a drag/page/wheel scrollbar, a filter
+ * box, and a status bar showing item count and free space.  Double-click a folder to
  * enter it, a file to open it in the app the ubistry registry maps from its
  * extension.  File operations — New Folder, Open, Rename, Delete — live in the
  * right-click context menu (Explorer-style), not on the toolbar.  This is a
@@ -97,6 +98,17 @@ enum
 	MODE_CONFIRM_DEL
 };
 
+/* List presentation: a Details table or a grid of large icons. */
+enum
+{
+	VIEW_DETAILS = 0,
+	VIEW_ICONS
+};
+
+#define CELL_W 120
+#define CELL_H 92
+#define BIG_ICON 48
+
 /* One directory entry. */
 struct fentry
 {
@@ -129,6 +141,7 @@ static int g_sel = -1; /* selected row, or -1 */
 static int g_top = 0;  /* first visible row (scroll offset) */
 static int g_sort = SORT_NAME;
 static bool g_sort_desc;
+static int g_view = VIEW_DETAILS;
 
 static struct crumb g_crumb[MAX_CRUMBS];
 static int g_ncrumb;
@@ -185,6 +198,9 @@ static const char *g_btn_label[BTN_COUNT] = {"<", ">", "Up"};
 /* Confirmation-dialog buttons (own objects so they don't alias the toolbar). */
 static ogButton g_dlg_ok;
 static ogButton g_dlg_cancel;
+
+/* View-mode toggle buttons (Details / Icons), laid out in draw_toolbar. */
+static ogButton g_vbtn[2];
 
 /* Right-click context menu. */
 enum
@@ -765,12 +781,6 @@ static void addr_commit(void)
 
 /* ── layout queries ─────────────────────────────────────────────────────────*/
 
-/** Y of the first list row (below toolbar + address bar + header). */
-static int list_top(void)
-{
-	return TOOLBAR_H + ADDR_H + HEAD_H;
-}
-
 /** Y where the sidebar and the column-header row begin. */
 static int content_top(void)
 {
@@ -783,23 +793,52 @@ static int content_x(void)
 	return SIDEBAR_W;
 }
 
-/** X of the Name column / entry labels. */
+/** Y of the first list row.  Details has a column header; Icons does not. */
+static int list_top(void)
+{
+	return content_top() + (g_view == VIEW_ICONS ? 0 : HEAD_H);
+}
+
+/** X of the Name column / entry labels (Details view). */
 static int name_x(void)
 {
 	return content_x() + PAD + ICON_W + 6;
 }
 
-/** Number of fully-visible list rows for the current window height. */
+/** Height of one scroll unit: a row (Details) or a cell row (Icons). */
+static int unit_h(void)
+{
+	return g_view == VIEW_ICONS ? CELL_H : ROW_H;
+}
+
+/** Number of icon columns across the content area (1 in Details). */
+static int grid_cols(void)
+{
+	if (g_view != VIEW_ICONS)
+		return 1;
+	int avail = g_w - content_x() - SCROLLBAR_W;
+	int c = avail / CELL_W;
+	return c > 0 ? c : 1;
+}
+
+/** Total scroll units: entry rows (Details) or cell rows (Icons). */
+static int total_units(void)
+{
+	int cols = grid_cols();
+	return (g_nent + cols - 1) / cols;
+}
+
+/** Number of fully-visible scroll units for the current window height. */
 static int visible_rows(void)
 {
 	int h = g_h - STATUS_H - list_top();
-	return h > 0 ? h / ROW_H : 0;
+	return h > 0 ? h / unit_h() : 0;
 }
 
 /** Largest valid scroll offset (0 when everything fits). */
 static int max_top(void)
 {
-	int m = g_nent - visible_rows();
+	int m = total_units() - visible_rows();
 	return m > 0 ? m : 0;
 }
 
@@ -812,10 +851,10 @@ static void clamp_top(void)
 		g_top = 0;
 }
 
-/** True when the list is taller than the viewport and needs a scrollbar. */
+/** True when the content is taller than the viewport and needs a scrollbar. */
 static bool scrollbar_visible(void)
 {
-	return g_nent > visible_rows();
+	return total_units() > visible_rows();
 }
 
 /** Compute the scrollbar thumb's top Y (*ty) and height (*th). */
@@ -823,7 +862,8 @@ static void sb_thumb(int *ty, int *th)
 {
 	int y0 = list_top();
 	int track = (g_h - STATUS_H) - y0;
-	int t = (g_nent > 0) ? track * visible_rows() / g_nent : track;
+	int units = total_units();
+	int t = (units > 0) ? track * visible_rows() / units : track;
 	if (t < SCROLL_THUMB_MIN)
 		t = SCROLL_THUMB_MIN;
 	if (t > track)
@@ -831,6 +871,24 @@ static void sb_thumb(int *ty, int *th)
 	int mt = max_top();
 	*ty = y0 + ((mt > 0) ? (track - t) * g_top / mt : 0);
 	*th = t;
+}
+
+/** Entry index under (x,y) in the list area, or -1.  Handles both view modes. */
+static int list_hit(int x, int y)
+{
+	if (y < list_top() || y >= g_h - STATUS_H || x < content_x())
+		return -1;
+	if (g_view == VIEW_ICONS)
+	{
+		int cols = grid_cols();
+		int col = (x - content_x()) / CELL_W;
+		if (col < 0 || col >= cols)
+			return -1;
+		int i = (g_top + (y - list_top()) / CELL_H) * cols + col;
+		return (i >= 0 && i < g_nent) ? i : -1;
+	}
+	int i = g_top + (y - list_top()) / ROW_H;
+	return (i >= 0 && i < g_nent) ? i : -1;
 }
 
 /** Right-edge X of the size column (size is right-aligned here). */
@@ -866,6 +924,46 @@ static void draw_icon(int x, int y, bool is_dir)
 	{
 		g_surf.ogFillRect(x + 1, y + 1, x + 12, y + 14, COL_FILE);
 		g_surf.ogFillRect(x + 9, y + 1, x + 12, y + 4, COL_FILE_FOLD); /* folded corner */
+	}
+}
+
+/**
+ * Draw a large (BIG_ICON-wide) folder or document glyph at (x,y), for icon view.
+ */
+static void draw_big_icon(int x, int y, bool is_dir)
+{
+	if (is_dir)
+	{
+		g_surf.ogFillRect(x, y + 10, x + BIG_ICON - 1, y + 38, COL_FOLDER);
+		g_surf.ogFillRect(x, y + 4, x + 18, y + 12, COL_FOLDER); /* tab */
+	}
+	else
+	{
+		g_surf.ogFillRect(x + 6, y + 2, x + BIG_ICON - 6, y + 40, COL_FILE);
+		g_surf.ogFillRect(x + BIG_ICON - 18, y + 2, x + BIG_ICON - 6, y + 14, COL_FILE_FOLD); /* fold */
+	}
+}
+
+/**
+ * Copy @name into @out, truncating with a ".." tail if it would exceed @maxw
+ * pixels in the current font.
+ */
+static void fit_name(const char *name, int maxw, char *out, size_t outsz)
+{
+	snprintf(out, outsz, "%s", name);
+	if ((int)g_font.TextWidth(out) <= maxw)
+		return;
+	size_t n = strlen(out);
+	while (n > 1)
+	{
+		out[--n] = '\0';
+		char probe[NAME_MAX_LEN + 4];
+		snprintf(probe, sizeof(probe), "%s..", out);
+		if ((int)g_font.TextWidth(probe) <= maxw)
+		{
+			snprintf(out, outsz, "%s", probe);
+			return;
+		}
 	}
 }
 
@@ -964,6 +1062,21 @@ static void draw_toolbar(void)
 		}
 		g_btn[i].Draw(g_surf, g_font);
 		bx += g_btn[i].w + 6;
+	}
+
+	/* View-mode toggle (Details / Icons): the active mode is drawn pressed. */
+	static const char *vlabel[2] = {"Details", "Icons"};
+	bx += 8;
+	for (int v = 0; v < 2; v++)
+	{
+		g_vbtn[v].x = bx;
+		g_vbtn[v].y = 7;
+		g_vbtn[v].w = (int)g_font.TextWidth(vlabel[v]) + 18;
+		g_vbtn[v].h = TOOLBAR_H - 14;
+		g_vbtn[v].label = vlabel[v];
+		g_vbtn[v].enabled = true;
+		g_vbtn[v].Draw(g_surf, g_font, g_view == v);
+		bx += g_vbtn[v].w + 4;
 	}
 
 	/* Filter box on the right: a rounded field showing the filter text (or a dim
@@ -1080,6 +1193,8 @@ static void draw_head_label(int x, const char *label, int col)
  */
 static void draw_header(void)
 {
+	if (g_view == VIEW_ICONS)
+		return; /* icon grid has no column header */
 	int hy = TOOLBAR_H + ADDR_H;
 	g_surf.ogFillRect(content_x(), hy, g_w - 1, hy + HEAD_H - 1, COL_HEAD);
 	g_surf.ogHLine(content_x(), g_w - 1, hy + HEAD_H - 1, COL_DIVIDER);
@@ -1093,9 +1208,49 @@ static void draw_header(void)
  * Draw the visible slice of the file list, including row striping, the selection
  * highlight, and the inline rename editor when active.
  */
+/**
+ * Draw the icon-grid view: large icons in a wrapping grid, each with a centered,
+ * truncated name caption.
+ */
+static void draw_icons(void)
+{
+	int top = list_top();
+	int bottom = g_h - STATUS_H;
+	int cx = content_x();
+	g_surf.ogFillRect(cx, top, g_w - 1, bottom - 1, COL_WIN);
+
+	int cols = grid_cols();
+	for (int i = g_top * cols; i < g_nent; i++)
+	{
+		int rel_row = i / cols - g_top;
+		int y = top + rel_row * CELL_H;
+		if (y >= bottom)
+			break;
+		int x = cx + (i % cols) * CELL_W;
+		struct fentry *e = &g_ent[i];
+		bool sel = (i == g_sel);
+
+		if (sel)
+			g_surf.ogFillRoundRect(x + 4, y + 4, x + CELL_W - 4, y + CELL_H - 4, 6, COL_SEL);
+
+		draw_big_icon(x + (CELL_W - BIG_ICON) / 2, y + 12, e->is_dir);
+
+		char label[NAME_MAX_LEN + 4];
+		fit_name(e->name, CELL_W - 12, label, sizeof(label));
+		set_fg(sel ? COL_SEL_TEXT : COL_TEXT);
+		int tw = (int)g_font.TextWidth(label);
+		g_font.PutString(g_surf, x + (CELL_W - tw) / 2, y + 12 + BIG_ICON + 8, label);
+	}
+}
+
 static void draw_list(void)
 {
 	clamp_top();
+	if (g_view == VIEW_ICONS)
+	{
+		draw_icons();
+		return;
+	}
 	int top = list_top();
 	int bottom = g_h - STATUS_H;
 	int cx = content_x();
@@ -1266,16 +1421,12 @@ static void open_context_menu(int mx, int my)
 	g_ctx_n = 0;
 	g_ctx_target = -1;
 
-	/* Did the click land on a list row? */
-	if (mx >= content_x() && my >= list_top() && my < g_h - STATUS_H)
+	/* Did the click land on a list item (row or icon cell)? */
+	int hit = list_hit(mx, my);
+	if (hit >= 0)
 	{
-		int r = (my - list_top()) / ROW_H;
-		int i = g_top + r;
-		if (i >= 0 && i < g_nent)
-		{
-			g_sel = i;
-			g_ctx_target = i;
-		}
+		g_sel = hit;
+		g_ctx_target = hit;
 	}
 
 	if (g_ctx_target >= 0)
@@ -1416,10 +1567,11 @@ static void ensure_visible(void)
 	if (g_sel < 0)
 		return;
 	int rows = visible_rows();
-	if (g_sel < g_top)
-		g_top = g_sel;
-	else if (g_sel >= g_top + rows)
-		g_top = g_sel - rows + 1;
+	int sel_unit = (g_view == VIEW_ICONS) ? g_sel / grid_cols() : g_sel; /* scroll-unit row */
+	if (sel_unit < g_top)
+		g_top = sel_unit;
+	else if (sel_unit >= g_top + rows)
+		g_top = sel_unit - rows + 1;
 	if (g_top < 0)
 		g_top = 0;
 }
@@ -1489,7 +1641,11 @@ static void on_click(int x, int y)
 			render();
 			return;
 		}
-		if (g_btn[BTN_BACK].Hit(x, y) && g_hist_pos > 0)
+		if (g_vbtn[0].Hit(x, y))
+			g_view = VIEW_DETAILS;
+		else if (g_vbtn[1].Hit(x, y))
+			g_view = VIEW_ICONS;
+		else if (g_btn[BTN_BACK].Hit(x, y) && g_hist_pos > 0)
 			navigate(g_hist[--g_hist_pos], false);
 		else if (g_btn[BTN_FWD].Hit(x, y) && g_hist_pos + 1 < g_hist_len)
 			navigate(g_hist[++g_hist_pos], false);
@@ -1499,6 +1655,7 @@ static void on_click(int x, int y)
 			parent_of(g_cwd, up, sizeof(up));
 			navigate(up, true);
 		}
+		clamp_top();
 		render();
 		return;
 	}
@@ -1575,12 +1732,11 @@ static void on_click(int x, int y)
 		return;
 	}
 
-	/* List row. */
+	/* List item (row in Details, cell in Icons). */
 	if (y >= list_top() && y < g_h - STATUS_H)
 	{
-		int r = (y - list_top()) / ROW_H;
-		int i = g_top + r;
-		if (i < 0 || i >= g_nent)
+		int i = list_hit(x, y);
+		if (i < 0)
 		{
 			g_sel = -1;
 			render();
@@ -1769,16 +1925,36 @@ static void on_key(uint32_t kc)
 			exit(0);
 		}
 		case KEY_UP:
-			if (g_sel > 0)
-				g_sel--;
-			else if (g_sel < 0 && g_nent > 0)
+		{
+			int step = (g_view == VIEW_ICONS) ? grid_cols() : 1; /* one grid row up */
+			if (g_sel < 0 && g_nent > 0)
 				g_sel = 0;
+			else if (g_sel - step >= 0)
+				g_sel -= step;
 			ensure_visible();
 			break;
+		}
 		case KEY_DOWN:
-			if (g_sel < g_nent - 1)
-				g_sel++;
+		{
+			int step = (g_view == VIEW_ICONS) ? grid_cols() : 1;
+			if (g_sel + step < g_nent)
+				g_sel += step;
 			ensure_visible();
+			break;
+		}
+		case KEY_LEFT:
+			if (g_view == VIEW_ICONS && g_sel > 0)
+			{
+				g_sel--;
+				ensure_visible();
+			}
+			break;
+		case KEY_RIGHT:
+			if (g_view == VIEW_ICONS && g_sel < g_nent - 1)
+			{
+				g_sel++;
+				ensure_visible();
+			}
 			break;
 		case KEY_PGUP:
 			g_sel -= visible_rows();
