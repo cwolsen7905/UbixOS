@@ -20,7 +20,7 @@ ARCH_LDEMUL   = elf_i386
 .endif
 
 OBJS = objgfx.o ogEdgeTable.o ogImage.o ogPixCon.o ogPixelFmt.o vWindow.o ogFont.o vWidget.o og_stbimpl.o \
-       og_sttimpl.o ogScalableFont.o ogSegmentBar.o ogButton.o
+       og_sttimpl.o ogScalableFont.o ogSegmentBar.o ogButton.o ogScrollBar.o
 
 INCLUDES  = -I${MUSL_SRC}/include \
             -I${MUSL_OBJ}/obj/include \

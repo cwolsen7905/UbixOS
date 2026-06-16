@@ -43,6 +43,7 @@ extern "C"
 #include <objgfx/objgfx.h>
 #include <objgfx/ogScalableFont.h>
 #include <objgfx/ogButton.h>
+#include <objgfx/ogScrollBar.h>
 
 #define RGB(r, g, b) ((uint32_t)(((r) << 16) | ((g) << 8) | (b)))
 
@@ -55,7 +56,6 @@ extern "C"
 #define ROW_H 24      /* one list entry */
 #define STATUS_H 26
 #define SCROLLBAR_W 12
-#define SCROLL_THUMB_MIN 28
 #define PAD 10
 #define ICON_W 18
 #define FONT_PATH "/var/fonts/DejaVuSans.ttf"
@@ -178,7 +178,8 @@ static char g_free_str[48]; /* "1.2 GB free" for the current filesystem, or "" *
 static int g_last_click_row = -1;
 static int64_t g_last_click_ms;
 
-/* Scrollbar drag state. */
+/* Scrollbar (reusable objGFX widget) + drag state. */
+static ogScrollBar g_sb;
 static uint8_t g_prev_buttons;
 static bool g_scroll_drag;
 static int g_scroll_drag_off; /* cursor offset within the thumb at grab time */
@@ -857,20 +858,16 @@ static bool scrollbar_visible(void)
 	return total_units() > visible_rows();
 }
 
-/** Compute the scrollbar thumb's top Y (*ty) and height (*th). */
-static void sb_thumb(int *ty, int *th)
+/** Populate the scrollbar widget from the current view/scroll state. */
+static void sb_sync(void)
 {
-	int y0 = list_top();
-	int track = (g_h - STATUS_H) - y0;
-	int units = total_units();
-	int t = (units > 0) ? track * visible_rows() / units : track;
-	if (t < SCROLL_THUMB_MIN)
-		t = SCROLL_THUMB_MIN;
-	if (t > track)
-		t = track;
-	int mt = max_top();
-	*ty = y0 + ((mt > 0) ? (track - t) * g_top / mt : 0);
-	*th = t;
+	g_sb.x = g_w - SCROLLBAR_W;
+	g_sb.y = list_top();
+	g_sb.w = SCROLLBAR_W;
+	g_sb.h = (g_h - STATUS_H) - list_top();
+	g_sb.total = total_units();
+	g_sb.visible = visible_rows();
+	g_sb.top = g_top;
 }
 
 /** Entry index under (x,y) in the list area, or -1.  Handles both view modes. */
@@ -1336,13 +1333,8 @@ static void draw_list(void)
  */
 static void draw_scrollbar(void)
 {
-	if (!scrollbar_visible())
-		return;
-	int x0 = g_w - SCROLLBAR_W;
-	g_surf.ogFillRect(x0, list_top(), g_w - 1, (g_h - STATUS_H) - 1, COL_ROW_ALT);
-	int ty, th;
-	sb_thumb(&ty, &th);
-	g_surf.ogFillRoundRect(x0 + 2, ty + 1, g_w - 3, ty + th - 1, 3, COL_TEXT_DIM);
+	sb_sync();
+	g_sb.Draw(g_surf); /* no-op when the content fits */
 }
 
 /**
@@ -1716,14 +1708,16 @@ static void on_click(int x, int y)
 	/* Scrollbar: grab the thumb to drag, or click the track to page. */
 	if (scrollbar_visible() && x >= g_w - SCROLLBAR_W && y >= list_top() && y < g_h - STATUS_H)
 	{
-		int ty, th;
-		sb_thumb(&ty, &th);
-		if (y < ty)
+		sb_sync();
+		int hh = g_sb.HitTest(x, y);
+		if (hh == ogScrollBar::HIT_PAGEUP)
 			g_top -= visible_rows();
-		else if (y >= ty + th)
+		else if (hh == ogScrollBar::HIT_PAGEDOWN)
 			g_top += visible_rows();
-		else
+		else if (hh == ogScrollBar::HIT_THUMB)
 		{
+			int32 ty, th;
+			g_sb.Thumb(&ty, &th);
 			g_scroll_drag = true;
 			g_scroll_drag_off = y - ty;
 		}
@@ -1775,20 +1769,8 @@ static void on_drag(int y)
 {
 	if (!g_scroll_drag)
 		return;
-	int y0 = list_top();
-	int track = (g_h - STATUS_H) - y0;
-	int ty, th;
-	sb_thumb(&ty, &th);
-	int span = track - th;
-	int mt = max_top();
-	if (span <= 0 || mt <= 0)
-		return;
-	int rel = (y - g_scroll_drag_off) - y0;
-	if (rel < 0)
-		rel = 0;
-	if (rel > span)
-		rel = span;
-	g_top = rel * mt / span;
+	sb_sync();
+	g_top = g_sb.DragTop(y, g_scroll_drag_off);
 	clamp_top();
 	render();
 }
