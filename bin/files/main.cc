@@ -6,8 +6,8 @@
  * An Explorer-leaning, best-of-all-worlds file browser: a navigation toolbar
  * (back / forward / up), a breadcrumb address bar that turns into an editable
  * path field when clicked, a left "Places" sidebar (Home, Filesystem, top-level
- * folders), a sortable Details list (Name / Size / Type / Modified), and a status
- * bar.  Double-click a folder to
+ * folders), a sortable Details list (Name / Size / Type / Modified) with a
+ * drag/page scrollbar, and a status bar.  Double-click a folder to
  * enter it, a file to open it in the app the ubistry registry maps from its
  * extension.  File operations — New Folder, Open, Rename, Delete — live in the
  * right-click context menu (Explorer-style), not on the toolbar.  This is a
@@ -52,6 +52,8 @@ extern "C"
 #define HEAD_H 26     /* column-header row */
 #define ROW_H 24      /* one list entry */
 #define STATUS_H 26
+#define SCROLLBAR_W 12
+#define SCROLL_THUMB_MIN 28
 #define PAD 10
 #define ICON_W 18
 #define FONT_PATH "/var/fonts/DejaVuSans.ttf"
@@ -154,6 +156,11 @@ static char g_status[160];
 /* Double-click tracking. */
 static int g_last_click_row = -1;
 static int64_t g_last_click_ms;
+
+/* Scrollbar drag state. */
+static uint8_t g_prev_buttons;
+static bool g_scroll_drag;
+static int g_scroll_drag_off; /* cursor offset within the thumb at grab time */
 
 /* Toolbar is navigation-only: Back, Forward, Up.  File operations (New Folder,
  * Open, Rename, Delete) live in the right-click context menu, Explorer-style. */
@@ -708,6 +715,43 @@ static int visible_rows(void)
 	return h > 0 ? h / ROW_H : 0;
 }
 
+/** Largest valid scroll offset (0 when everything fits). */
+static int max_top(void)
+{
+	int m = g_nent - visible_rows();
+	return m > 0 ? m : 0;
+}
+
+/** Clamp g_top into [0, max_top()]. */
+static void clamp_top(void)
+{
+	if (g_top > max_top())
+		g_top = max_top();
+	if (g_top < 0)
+		g_top = 0;
+}
+
+/** True when the list is taller than the viewport and needs a scrollbar. */
+static bool scrollbar_visible(void)
+{
+	return g_nent > visible_rows();
+}
+
+/** Compute the scrollbar thumb's top Y (*ty) and height (*th). */
+static void sb_thumb(int *ty, int *th)
+{
+	int y0 = list_top();
+	int track = (g_h - STATUS_H) - y0;
+	int t = (g_nent > 0) ? track * visible_rows() / g_nent : track;
+	if (t < SCROLL_THUMB_MIN)
+		t = SCROLL_THUMB_MIN;
+	if (t > track)
+		t = track;
+	int mt = max_top();
+	*ty = y0 + ((mt > 0) ? (track - t) * g_top / mt : 0);
+	*th = t;
+}
+
 /** Right-edge X of the size column (size is right-aligned here). */
 static int col_size_r(void)
 {
@@ -949,6 +993,7 @@ static void draw_header(void)
  */
 static void draw_list(void)
 {
+	clamp_top();
 	int top = list_top();
 	int bottom = g_h - STATUS_H;
 	int cx = content_x();
@@ -1026,6 +1071,21 @@ static void draw_list(void)
 			}
 		}
 	}
+}
+
+/**
+ * Draw the vertical scrollbar on the right edge of the list (track + a
+ * proportional thumb), only when the content overflows the viewport.
+ */
+static void draw_scrollbar(void)
+{
+	if (!scrollbar_visible())
+		return;
+	int x0 = g_w - SCROLLBAR_W;
+	g_surf.ogFillRect(x0, list_top(), g_w - 1, (g_h - STATUS_H) - 1, COL_ROW_ALT);
+	int ty, th;
+	sb_thumb(&ty, &th);
+	g_surf.ogFillRoundRect(x0 + 2, ty + 1, g_w - 3, ty + th - 1, 3, COL_TEXT_DIM);
 }
 
 /**
@@ -1215,6 +1275,7 @@ static void render(void)
 {
 	g_surf.ogClear(COL_WIN);
 	draw_list();
+	draw_scrollbar();
 	draw_sidebar();
 	draw_header();
 	draw_address();
@@ -1373,6 +1434,25 @@ static void on_click(int x, int y)
 		return;
 	}
 
+	/* Scrollbar: grab the thumb to drag, or click the track to page. */
+	if (scrollbar_visible() && x >= g_w - SCROLLBAR_W && y >= list_top() && y < g_h - STATUS_H)
+	{
+		int ty, th;
+		sb_thumb(&ty, &th);
+		if (y < ty)
+			g_top -= visible_rows();
+		else if (y >= ty + th)
+			g_top += visible_rows();
+		else
+		{
+			g_scroll_drag = true;
+			g_scroll_drag_off = y - ty;
+		}
+		clamp_top();
+		render();
+		return;
+	}
+
 	/* List row. */
 	if (y >= list_top() && y < g_h - STATUS_H)
 	{
@@ -1407,6 +1487,40 @@ static void on_right_click(int x, int y)
 		return; /* no context menu in the sidebar */
 	open_context_menu(x, y);
 	render();
+}
+
+/**
+ * Handle pointer motion while the left button is held: drives a scrollbar-thumb
+ * drag (mapping the cursor's track position back to a scroll offset).
+ */
+static void on_drag(int y)
+{
+	if (!g_scroll_drag)
+		return;
+	int y0 = list_top();
+	int track = (g_h - STATUS_H) - y0;
+	int ty, th;
+	sb_thumb(&ty, &th);
+	int span = track - th;
+	int mt = max_top();
+	if (span <= 0 || mt <= 0)
+		return;
+	int rel = (y - g_scroll_drag_off) - y0;
+	if (rel < 0)
+		rel = 0;
+	if (rel > span)
+		rel = span;
+	g_top = rel * mt / span;
+	clamp_top();
+	render();
+}
+
+/**
+ * Handle left-button release: end any in-progress scrollbar drag.
+ */
+static void on_release(void)
+{
+	g_scroll_drag = false;
 }
 
 /**
@@ -1616,6 +1730,7 @@ int main(int argc, char **argv)
 	req->min_h = 320;
 	req->max_w = 1200;
 	req->max_h = 900;
+	req->wants_motion = 1; /* deliver pointer motion so the scrollbar thumb drags */
 	while (mpi_postMessage((char *)g_views, DISPLAY_CLAIM, &msg) != 0)
 		sched_yield();
 
@@ -1666,11 +1781,22 @@ int main(int argc, char **argv)
 			}
 			case DISPLAY_MOUSE:
 			{
+				/* Motion events arrive too (wants_motion), so act on button edges:
+				 * a fresh press is a click, button-held motion is a drag, and a
+				 * release ends a drag.  Hover (no button) is ignored. */
 				struct display_mouse_ev *me = (struct display_mouse_ev *)ev.data;
-				if (me->buttons & 2) /* right button → context menu */
+				uint8_t b = me->buttons;
+				bool lnow = (b & 1) != 0, lprev = (g_prev_buttons & 1) != 0;
+				bool rnow = (b & 2) != 0, rprev = (g_prev_buttons & 2) != 0;
+				if (rnow && !rprev)
 					on_right_click(me->x, me->y);
-				else if (me->buttons & 1)
+				else if (lnow && !lprev)
 					on_click(me->x, me->y);
+				else if (lnow && lprev)
+					on_drag(me->y);
+				else if (!lnow && lprev)
+					on_release();
+				g_prev_buttons = b;
 				break;
 			}
 			case DISPLAY_KEY:
