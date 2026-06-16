@@ -38,10 +38,6 @@ long sys_klog_read()
 {
 	return -1;
 }
-long sys_nanosleep()
-{
-	return -1;
-}
 long sys_net_configure()
 {
 	return -1;
@@ -60,10 +56,6 @@ long sys_sched_yield()
 	return 0;
 }
 long sys_sysctl()
-{
-	return -1;
-}
-long sys_sysinfo()
 {
 	return -1;
 }

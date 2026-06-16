@@ -8,6 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **x86_64 `sysinfo` + `nanosleep` syscalls (were `-1` stubs).** `sys_sysinfo`
+  (native 62) now fills uptime / total+free physical pages / page size, so
+  **Settings → About** reports real memory (e.g. "256 MB total, 213 MB free")
+  instead of "0 MB"; mirrors the MI `sys/kern/fb.c` provider (not linked on
+  x86_64).  `sys_nanosleep` (POSIX 240) now sleeps the caller descheduled for the
+  requested duration via the callout-driven timed wait (mirrors i386/aarch64) so
+  pacing daemons nap instead of busy-spinning.  Both in `kern/syscall_md.c`.
 - **x86_64 boots off the UbixFS pool as root** (parity with i386 K5/M3 + aarch64
   K5/M4).  The kernel now links the portable UbixFS pool driver (`UBIXFS_KERN_SRCS`
   added to the `kernel-x86_64` build) and `boot/main.c` prefers the pool partition

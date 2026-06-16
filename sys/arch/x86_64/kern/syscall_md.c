@@ -22,6 +22,7 @@
 #include <sys/descrip.h>       /* getfd, struct file (file-backed mmap) */
 #include <fs/vfs/file.h>       /* fileDescriptor_t, fread (file-backed mmap) */
 #include <vmm/vm_filecache.h>  /* shared read-only file-page cache */
+#include <ubixos/vitals.h>     /* systemVitals — uptime/freePages for sys_sysinfo */
 
 void x86_64_map_user_page_shared(u64 pml4_phys, u64 va, u64 phys);
 
@@ -235,6 +236,83 @@ int sys_msync(struct thread *td, struct sys_msync_args *uap)
 int sys_disk_query(struct thread *td, struct sys_disk_query_args *uap)
 {
 	td->td_retval[0] = disk_query(uap->buf, (int)uap->max);
+	return (0);
+}
+
+/**
+ * Native syscall 62 — fill @uap->out (struct ubix_sysinfo: 4 × u_int32_t) with
+ * uptime, total/free physical pages, and page size.  Feeds Settings' memory
+ * readout + ubix_sysinfo().  Mirrors the MI implementation in sys/kern/fb.c
+ * (not linked on x86_64, so this is the x86_64 provider).
+ */
+int sys_sysinfo(struct thread *td, struct sys_sysinfo_args *uap)
+{
+	u_int32_t *out = (u_int32_t *)uap->out;
+
+	if (out == 0)
+	{
+		td->td_retval[0] = -1;
+		return (-1);
+	}
+	out[0] = systemVitals ? systemVitals->sysUptime : 0; /* uptime, seconds */
+	out[1] = numPages;                                   /* total physical pages */
+	out[2] = systemVitals ? systemVitals->freePages : 0; /* free physical pages */
+	out[3] = PAGE_SIZE;                                  /* bytes per page */
+	td->td_retval[0] = 0;
+	return (0);
+}
+
+/* nanosleep wait channel — any address works (no one wakes it; the timeout
+ * callout fires the wakeup).  cond returns 0 so the sleep always blocks for the
+ * full duration. */
+static int g_nanosleep_chan;
+static int nanosleep_never(void *arg)
+{
+	(void)arg;
+	return 0;
+}
+
+/**
+ * nanosleep(2) (FreeBSD 240).  Sleeps the caller descheduled for the requested
+ * duration via the callout-driven timed wait (a per-task callout wakes it at the
+ * deadline) instead of busy-yielding — so a pacing daemon (e.g. aural) naps
+ * without spinning.  Mirrors the i386 sys_nanosleep (sys/kern/syscall.c) but with
+ * 64-bit register args.
+ *
+ * @param args the dispatched register args: args[0] = rqtp (timespec*), args[1] =
+ *             rmtp (remaining, may be NULL).  uBixOS musl is _REDIR_TIME64, so
+ *             timespec is { int64_t tv_sec; long tv_nsec } with tv_nsec at byte 8.
+ */
+int sys_nanosleep(struct thread *td, void *args)
+{
+	register_t *params = (register_t *)args;
+	const char *rqtp = (const char *)(uintptr_t)params[0];
+	char *rmtp = (char *)(uintptr_t)params[1];
+	long long tv_sec;
+	long tv_nsec;
+	u_int32_t ticks;
+
+	if (rqtp == 0)
+	{
+		td->td_retval[0] = -1;
+		return (-1);
+	}
+	tv_sec = *(const long long *)(rqtp + 0);
+	tv_nsec = *(const long *)(rqtp + 8);
+	if (tv_sec < 0 || tv_nsec < 0 || tv_nsec >= 1000000000L)
+	{
+		td->td_retval[0] = -1;
+		return (-1);
+	}
+
+	/* 100 Hz tick = 10 ms; round the request up to whole ticks. */
+	ticks = (u_int32_t)(tv_sec * 100) + (u_int32_t)((tv_nsec + 9999999L) / 10000000L);
+	if (ticks > 0)
+		sched_wait_event_timeout(&g_nanosleep_chan, nanosleep_never, 0, ticks);
+
+	if (rmtp != 0)
+		memset(rmtp, 0, sizeof(long long) + sizeof(long));
+	td->td_retval[0] = 0;
 	return (0);
 }
 
