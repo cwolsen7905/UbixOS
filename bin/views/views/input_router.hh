@@ -72,7 +72,7 @@ class InputRouter
 	void (*place_fn_)(void *, Window *, int);       /* maximize/snap (mode: 0=max,1=left,2=right) */
 	void (*focus_fn_)(void *, Window *);            /* click-to-focus callback (same ctx) */
 
-	void send_mouse(Window *w, int cx, int cy, uint8_t buttons);
+	void send_mouse(Window *w, int cx, int cy, uint8_t buttons, int8_t wheel = 0);
 	void close_window(Window *w);
 
       public:

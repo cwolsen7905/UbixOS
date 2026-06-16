@@ -31,6 +31,7 @@ int virtio_input_poll(void (*deliver)(int dev, u_int16_t type, u_int16_t code, u
 #define EV_REL 0x02
 #define REL_X 0x00
 #define REL_Y 0x01
+#define REL_WHEEL 0x08
 #define BTN_LEFT 0x110
 #define BTN_RIGHT 0x111
 #define BTN_MIDDLE 0x112
@@ -85,6 +86,7 @@ static int g_shift;
 static int g_ctrl;
 static u_int8_t g_buttons;
 static int g_dx, g_dy;
+static int g_wheel;
 static int g_mouse_dirty;
 
 /**
@@ -104,7 +106,7 @@ static void kbd_push(u_int32_t keycode, u_int8_t pressed)
 /**
  * Push a cooked mouse event (relative motion + button state) onto the ring.
  */
-static void mouse_push(int dx, int dy, u_int8_t buttons)
+static void mouse_push(int dx, int dy, u_int8_t buttons, int wheel)
 {
 	u_int32_t next = (g_mouse_head + 1) % RING;
 
@@ -113,6 +115,7 @@ static void mouse_push(int dx, int dy, u_int8_t buttons)
 	g_mouse_ring[g_mouse_head].dx = (int16_t)dx;
 	g_mouse_ring[g_mouse_head].dy = (int16_t)dy;
 	g_mouse_ring[g_mouse_head].buttons = buttons;
+	g_mouse_ring[g_mouse_head].wheel = (int8_t)wheel;
 	g_mouse_head = next;
 }
 
@@ -218,15 +221,18 @@ static void cook_event(int dev, u_int16_t type, u_int16_t code, u_int32_t value)
 				g_dx += (int)(int32_t)value;
 			else if (code == REL_Y)
 				g_dy += (int)(int32_t)value;
+			else if (code == REL_WHEEL)
+				g_wheel += (int)(int32_t)value;
 			g_mouse_dirty = 1;
 			break;
 
 		case EV_SYN:
 			if (g_mouse_dirty)
 			{
-				mouse_push(g_dx, g_dy, g_buttons);
+				mouse_push(g_dx, g_dy, g_buttons, g_wheel);
 				g_dx = 0;
 				g_dy = 0;
+				g_wheel = 0;
 				g_mouse_dirty = 0;
 			}
 			break;

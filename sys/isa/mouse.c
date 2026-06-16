@@ -201,6 +201,7 @@ void mouseHandler(void)
 
 		mouse_event_t ev;
 		ev.buttons = pkt[0] & 0x07;
+		ev.wheel = 0; /* PS/2 3-byte mode carries no wheel (IntelliMouse TODO) */
 
 		/* dx: signed 9-bit from status sign bit + byte */
 		ev.dx = (int16_t)(pkt[1] ? ((pkt[0] & 0x10) ? pkt[1] - 256 : pkt[1]) : 0);

@@ -35,6 +35,7 @@ struct mouse_event {
 	int16_t  dx;
 	int16_t  dy;
 	uint8_t  buttons;
+	int8_t   wheel;   /* vertical scroll notches: + = up/away, - = down (0 = none) */
 };
 typedef struct mouse_event mouse_event_t;
 

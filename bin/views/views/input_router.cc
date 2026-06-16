@@ -72,7 +72,7 @@ static void clamp_resize(const Window *w, int &nw, int &nh)
 		nh = w->max_h;
 }
 
-void InputRouter::send_mouse(Window *w, int cx, int cy, uint8_t buttons)
+void InputRouter::send_mouse(Window *w, int cx, int cy, uint8_t buttons, int8_t wheel)
 {
 	if (w->mbox.empty())
 		return;
@@ -85,6 +85,7 @@ void InputRouter::send_mouse(Window *w, int cx, int cy, uint8_t buttons)
 	me->dx = 0;
 	me->dy = 0;
 	me->buttons = buttons;
+	me->wheel = wheel;
 	ubix::post_message(w->mbox, DISPLAY_MOUSE, mev);
 }
 
@@ -170,6 +171,26 @@ void InputRouter::handle_mouse(mouse_event_t &ev)
 
 		if (hov != nullptr && hov != f)
 			send_mouse(hov, cx, cy, ev.buttons);
+	}
+
+	/* Wheel: deliver a scroll notch to the topmost window under the cursor.  A
+	 * discrete event (not hover), so it goes to any window — no wants_motion
+	 * opt-in needed — and before the buttons-unchanged early return below (a
+	 * wheel-only event leaves the button state untouched). */
+	if (ev.wheel != 0)
+	{
+		int cx = comp_.cur_x(), cy = comp_.cur_y();
+		for (auto it = reg_.z_stack().rbegin(); it != reg_.z_stack().rend(); ++it)
+		{
+			Window *h = *it;
+			if (h->minimized)
+				continue;
+			if (h->hit_test(cx, cy))
+			{
+				send_mouse(h, cx, cy, ev.buttons, ev.wheel);
+				break;
+			}
+		}
 	}
 
 	if (ev.buttons == prev_buttons_)

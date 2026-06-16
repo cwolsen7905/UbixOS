@@ -1785,6 +1785,12 @@ int main(int argc, char **argv)
 				 * a fresh press is a click, button-held motion is a drag, and a
 				 * release ends a drag.  Hover (no button) is ignored. */
 				struct display_mouse_ev *me = (struct display_mouse_ev *)ev.data;
+				if (me->wheel != 0 && g_mode == MODE_BROWSE && !g_ctx_open)
+				{
+					g_top -= me->wheel * 3; /* one notch ≈ 3 rows */
+					clamp_top();
+					render();
+				}
 				uint8_t b = me->buttons;
 				bool lnow = (b & 1) != 0, lprev = (g_prev_buttons & 1) != 0;
 				bool rnow = (b & 2) != 0, rprev = (g_prev_buttons & 2) != 0;

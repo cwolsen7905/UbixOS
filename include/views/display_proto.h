@@ -161,6 +161,7 @@ struct display_mouse_ev
 	int16_t x, y; /* position relative to window origin */
 	int16_t dx, dy;
 	uint8_t buttons;
+	int8_t wheel; /* vertical scroll notches: + = up/away, - = down (0 = none) */
 };
 
 /*

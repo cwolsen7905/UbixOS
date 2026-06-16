@@ -179,6 +179,7 @@ int sys_getmouse(struct thread *td, struct sys_getmouse_args *args)
 	out->dx = ev.dx;
 	out->dy = ev.dy;
 	out->buttons = ev.buttons;
+	out->wheel = ev.wheel;
 
 	td->td_retval[0] = 0;
 	return (0);
