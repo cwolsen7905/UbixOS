@@ -16,10 +16,6 @@ void *ubx_device_find()
 {
 	return 0;
 }
-long execThread()
-{
-	return -1;
-}
 long inportByte()
 {
 	return -1;
@@ -33,18 +29,6 @@ long md_resident_pages()
 	return -1;
 }
 long outportByteP()
-{
-	return -1;
-}
-long sys_accept()
-{
-	return -1;
-}
-long sys_bind()
-{
-	return -1;
-}
-long sys_connect()
 {
 	return -1;
 }
@@ -68,23 +52,11 @@ long sys_klog_read()
 {
 	return -1;
 }
-long sys_listen()
-{
-	return -1;
-}
 long sys_nanosleep()
 {
 	return -1;
 }
 long sys_net_configure()
-{
-	return -1;
-}
-long sys_recvfrom()
-{
-	return -1;
-}
-long sys_recvmsg()
 {
 	return -1;
 }
@@ -100,22 +72,6 @@ long sys_sched_yield()
 	extern void sched_yield(void);
 	sched_yield();
 	return 0;
-}
-long sys_sendmsg()
-{
-	return -1;
-}
-long sys_sendto()
-{
-	return -1;
-}
-long sys_setsockopt()
-{
-	return -1;
-}
-long sys_socket()
-{
-	return -1;
 }
 long sys_sysctl()
 {

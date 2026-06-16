@@ -10,6 +10,7 @@
 #include "../x86_64.h"
 #include <ubixos/sched.h>
 #include <ubixos/sched_internal.h>
+#include <string.h> /* strncpy (execThread sets the thread name) */
 
 #define KSTACK_SIZE 65536 /* must match schedNewTask's kmalloc */
 #define FRAME_SLOTS 7     /* 6 callee-saved (r15..rbx) + 1 return address */
@@ -25,6 +26,31 @@ void md_new_task(kTask_t *t)
 	t->md.md_kstack = 0;
 	__asm__ __volatile__("mov %%cr3, %0" : "=r"(cr3));
 	t->md.md_cr3 = cr3;
+}
+
+/**
+ * Create and schedule a kernel thread that runs @tproc(@arg) at ring 0 in the
+ * kernel address space.  Leaves md_usp = 0 (so the first dispatch enters via
+ * kthread_trampoline, not the ring-3 path) and md_kstack = 0 (so sched_ready
+ * builds the initial frame).  Used by ubthread_create / sys_thread_new (the lwIP
+ * tcpip + RX threads).  Sibling of aarch64's execThread.
+ *
+ * @return the new thread's pid, or 0 on failure.
+ */
+u_int32_t execThread(void (*tproc)(void), u_int32_t stack, char *arg, const char *name)
+{
+	kTask_t *t = schedNewTask();
+
+	(void)stack;
+	if (t == 0)
+		return (0);
+	t->md.md_entry = (u64)(uintptr_t)tproc;
+	t->md.md_arg = (u64)(uintptr_t)arg;
+	t->md.md_usp = 0; /* kernel thread — no ring-3 stack */
+	if (name != 0)
+		strncpy(t->name, name, sizeof(t->name) - 1);
+	sched_ready(t);
+	return (t->id);
 }
 
 /**

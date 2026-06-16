@@ -161,6 +161,10 @@ void kmain_x86_64(u32 mb_magic, u32 mb_info)
 		/* Enable the PS/2 mouse on the 8042 aux channel (polled by sys_getmouse). */
 		x86_64_mouse_init();
 
+		/* Probe the virtio-net-pci NIC (lwIP is brought up over it just before the
+		 * init handoff, once the scheduler can run the tcpip + RX threads). */
+		x86_64_virtio_net_init();
+
 		/* Partition 1 (vtblk0s1, major 1 / minor 1) is the FAT volume. */
 		if (vfs_mount(1, 1, 0, VFS_TYPE_FAT, "/", "rw") == 0)
 		{
@@ -199,6 +203,11 @@ void kmain_x86_64(u32 mb_magic, u32 mb_info)
 			 * (PID 1) via the dynamic linker (ld-musl-x86_64.so.1), the same boot
 			 * chain as i386/aarch64.  init starts the /etc/init.d services and the
 			 * system console (views/login).  Never returns on success. */
+			/* Bring up lwIP over the virtio-net NIC (tcpip thread + RX poll thread +
+			 * DHCP).  The scheduler is up, so the threads it spawns will run; a no-op
+			 * if no NIC was found. */
+			x86_64_net_init();
+
 			kprintf("\n--- disk-backed userland: exec /bin/init ---\n");
 			x86_64_run_dynamic_init("/bin/init");
 		}

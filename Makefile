@@ -323,6 +323,39 @@ X86_64_GENERIC_SRCS = \
 	sys/mpi/message.c \
 	sys/mpi/system.c \
 	sys/mpi/mpi_syscalls.c \
+	sys/net/core/def.c \
+	sys/net/core/dns.c \
+	sys/net/core/inet_chksum.c \
+	sys/net/core/init.c \
+	sys/net/core/ip.c \
+	sys/net/core/mem.c \
+	sys/net/core/memp.c \
+	sys/net/core/netif.c \
+	sys/net/core/pbuf.c \
+	sys/net/core/raw.c \
+	sys/net/core/stats.c \
+	sys/net/core/sys.c \
+	sys/net/core/tcp.c \
+	sys/net/core/tcp_in.c \
+	sys/net/core/tcp_out.c \
+	sys/net/core/timeouts.c \
+	sys/net/core/udp.c \
+	sys/net/core/ipv4/autoip.c \
+	sys/net/core/ipv4/dhcp.c \
+	sys/net/core/ipv4/etharp.c \
+	sys/net/core/ipv4/icmp.c \
+	sys/net/core/ipv4/igmp.c \
+	sys/net/core/ipv4/ip4.c \
+	sys/net/core/ipv4/ip4_addr.c \
+	sys/net/core/ipv4/ip4_frag.c \
+	sys/net/api/api_lib.c \
+	sys/net/api/api_msg.c \
+	sys/net/api/err.c \
+	sys/net/api/netbuf.c \
+	sys/net/api/sockets.c \
+	sys/net/api/tcpip.c \
+	sys/net/netif/ethernet.c \
+	sys/net/net/sys_arch.c \
 	sys/vmm/vmm_uregion.c \
 	sys/vmm/vm_filecache.c \
 	sys/lib/rbtree.c \
@@ -377,14 +410,18 @@ run-x86_64:
 	qemu-system-x86_64 -m 256 -smp ${SMP} -kernel ${OBJ_DIR}/boot/kernel \
 	  -vga std -serial mon:stdio \
 	  -drive file=${DISK_IMAGE_X86_64},format=raw,if=none,id=hd0 \
-	  -device virtio-blk-pci,drive=hd0,disable-modern=true
+	  -device virtio-blk-pci,drive=hd0,disable-modern=true \
+	  -netdev user,id=n0 \
+	  -device virtio-net-pci,netdev=n0,disable-modern=true
 
 # Headless x86_64 run: serial only to stdout, no display (the bring-up console for
 # debugging).  Ctrl-A X quits.
 run-debug-x86_64:
 	qemu-system-x86_64 -m 256 -smp ${SMP} -kernel ${OBJ_DIR}/boot/kernel -nographic \
 	  -drive file=${DISK_IMAGE_X86_64},format=raw,if=none,id=hd0 \
-	  -device virtio-blk-pci,drive=hd0,disable-modern=true
+	  -device virtio-blk-pci,drive=hd0,disable-modern=true \
+	  -netdev user,id=n0 \
+	  -device virtio-net-pci,netdev=n0,disable-modern=true
 
 # musl libc per-arch knobs.  i386 uses the FreeBSD stack ABI (-m32, no SSE) and a
 # hand-rolled libgcc32; aarch64 uses the stock SVC ABI + the real libgcc.  Both

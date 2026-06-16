@@ -398,6 +398,25 @@ First entries of the 3.0 series (64-bit only: x86_64 + aarch64).  Development on
     log if it would overflow instead of scribbling.  Verified: desktop login + the
     tcsh terminal (`HOME`/`SHELL`/`TERM` env) still clean (0 faults).
 
+  - *Phase 5e — networking (virtio-net + lwIP + DHCP + sockets).* x86_64 gets a TCP/IP
+    stack.  A new **virtio-net-pci** driver (`dev/virtio_net.c`) over the legacy
+    transport (the PCI I/O-port + `QUEUE_PFN` path from `virtio_blk.c`, the two-queue
+    RX/TX + `virtio_net_hdr` logic from aarch64's `virtio_net.c`) drives QEMU's NIC; a
+    netif bridge (`net/virtio_netif.c`, a sibling of aarch64's) brings **lwIP** up over
+    it with a polling RX thread, and `x86_64_net_init` (called at boot) starts the
+    tcpip thread + DHCP.  The full lwIP core/api + `net/sys_arch.c` (the real socket
+    syscalls) joined `X86_64_GENERIC_SRCS`, and the `socket`/`connect`/`bind`/`listen`/
+    `accept`/`send*`/`recv*`/`setsockopt` stubs were removed so they dispatch to lwIP.
+    Two enabling fixes: (1) `execThread` was stubbed (`return -1`), so `ubthread_create`
+    / `sys_thread_new` couldn't create the tcpip + RX kernel threads — implemented it
+    (a sibling of aarch64's) over the existing `kthread_trampoline`; (2) **legacy
+    virtio-pci has no writable queue-size register** — the queue size is fixed at the
+    device's read-only `QUEUE_NUM`, so the vring must be laid out for exactly that many
+    entries (a smaller layout puts the used ring where the device never writes it, so
+    TX/RX never complete — this hung DHCP until fixed).  `run-x86_64`/`run-debug-x86_64`
+    now attach a `virtio-net-pci` NIC on QEMU user-net.  Verified headless: `virtio-net:
+    vtnet0 ready` → `net: DHCP bound IP=10.0.2.15 gw=10.0.2.2`, with the desktop up.
+
   **With mmap/execve/fork/signals in place, the x86_64 kernel can now load, run,
   fork, and signal real on-disk binaries — the full runtime a userland needs.**
   `bmake TARGET=x86_64` builds the bring-up kernel only (the x86_64 userland/world is
