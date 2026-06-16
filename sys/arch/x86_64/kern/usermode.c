@@ -15,8 +15,9 @@
  */
 
 #include "../x86_64.h"
-#include <vmm/vmm.h>     /* vmm_find_free_page, PAGE_SIZE */
-#include <lib/kmalloc.h> /* sysID */
+#include <vmm/vmm.h>          /* vmm_find_free_page, PAGE_SIZE, adjust_cow_counter */
+#include <vmm/vm_filecache.h> /* vm_filecache_unref_phys (shared file-cache pages) */
+#include <lib/kmalloc.h>      /* sysID */
 #include <string.h>
 #include <ubixos/sched.h>    /* _current, sched(), kTask_t */
 #include <ubixos/endtask.h>  /* endTask */
@@ -121,9 +122,10 @@ u64 x86_64_ring0_stack_top(void)
 #define PTE_P 0x1
 #define PTE_RW 0x2
 #define PTE_US 0x4
-#define PTE_PS 0x80     /* 2 MB page (a big page maps no sub-table to free) */
-#define PTE_WIRED 0x200 /* available bit 9: fork shares this page verbatim (no COW/copy) */
-#define PTE_COW 0x400   /* available bit 10: copy-on-write — frame shared read-only */
+#define PTE_PS 0x80      /* 2 MB page (a big page maps no sub-table to free) */
+#define PTE_WIRED 0x200  /* available bit 9: fork shares this page verbatim (no COW/copy) */
+#define PTE_COW 0x400    /* available bit 10: copy-on-write — frame shared read-only */
+#define PTE_SHARED 0x800 /* available bit 11: shared file-cache page (RO; vm_filecache-owned) */
 #define PTE_ADDR_MASK (~0xFFFUL)
 
 #define USER_CODE_VA 0x40000000UL  /* 1 GB — first VA above the shared low-1 GB identity */
@@ -241,6 +243,22 @@ void x86_64_map_user_page_cow(u64 pml4_phys, u64 va, u64 phys)
 }
 
 /**
+ * Map a shared file-cache user page @va -> @phys (read-only + PTE_SHARED + user).
+ * The frame is owned by the MI file-page cache (vm_filecache): a library's text/
+ * rodata is one physical copy across every process that maps the file.  A write
+ * faults into x86_64_cow_fault, which gives the writer a private copy and drops a
+ * cache reference.
+ */
+void x86_64_map_user_page_shared(u64 pml4_phys, u64 va, u64 phys)
+{
+	uintptr_t pdpt = next_table(pml4_phys, (unsigned)((va >> 39) & 0x1FF));
+	uintptr_t pd = next_table(pdpt, (unsigned)((va >> 30) & 0x1FF));
+	uintptr_t pt = next_table(pd, (unsigned)((va >> 21) & 0x1FF));
+
+	((u64 *)P2V(pt))[(va >> 12) & 0x1FF] = (phys & PTE_ADDR_MASK) | PTE_P | PTE_US | PTE_SHARED; /* RO */
+}
+
+/**
  * Resolve a write fault at user VA @va in @pml4_phys on a copy-on-write page: give
  * the writer a private, writable copy.  Allocate a frame, copy the shared page into
  * it, repoint the PTE at the copy (writable, COW cleared), and drop this writer's
@@ -274,8 +292,8 @@ int x86_64_cow_fault(u64 pml4_phys, u64 va, int pid)
 	pte_slot = &t[(va >> 12) & 0x1FF];
 	pte = *pte_slot;
 
-	if ((pte & PTE_P) == 0 || (pte & PTE_COW) == 0)
-		return -1; /* not a COW page → a real write to a read-only page */
+	if ((pte & PTE_P) == 0 || (pte & (PTE_COW | PTE_SHARED)) == 0)
+		return -1; /* not shared → a real write to a read-only page */
 
 	old = pte & PTE_ADDR_MASK;
 	neu = vmm_find_free_page(pid);
@@ -283,12 +301,17 @@ int x86_64_cow_fault(u64 pml4_phys, u64 va, int pid)
 		return -1; /* out of memory → caller terminates the task */
 	memcpy(P2V(neu), P2V(old), PAGE_SIZE);
 
-	/* Private writable copy: same flags, but writable and no longer COW. */
-	attrs = (pte & ~PTE_ADDR_MASK & ~(u64)PTE_COW) | PTE_RW;
+	/* Private writable copy: same flags, but writable and no longer shared. */
+	attrs = (pte & ~PTE_ADDR_MASK & ~(u64)(PTE_COW | PTE_SHARED)) | PTE_RW;
 	*pte_slot = (neu & PTE_ADDR_MASK) | attrs;
 	__asm__ __volatile__("invlpg (%0)" : : "r"((void *)(uintptr_t)va) : "memory");
 
-	adjust_cow_counter((uintptr_t)old, -1); /* release this writer's hold on the shared frame */
+	/* Release this writer's hold on the old frame: a file-cache page drops a cache
+	 * reference (freed at the last unref); a COW fork page decrements the COW count. */
+	if (pte & PTE_SHARED)
+		vm_filecache_unref_phys((u_int32_t)old);
+	else
+		adjust_cow_counter((uintptr_t)old, -1);
 	return 0;
 }
 
@@ -409,7 +432,13 @@ void x86_64_free_user_space(u64 pml4_phys)
 				 * elsewhere — drop the mapping but never free the frame. */
 				if ((pte & PTE_WIRED) || (phys >> 12) >= numPages)
 					continue;
-				free_page((uintptr_t)phys);
+				/* A shared file-cache page drops a cache reference (freed at the last
+				 * unref); everything else (private + COW) goes through free_page,
+				 * which honours the COW counter. */
+				if (pte & PTE_SHARED)
+					vm_filecache_unref_phys((u_int32_t)phys);
+				else
+					free_page((uintptr_t)phys);
 			}
 			free_page((uintptr_t)(pd[di] & PTE_ADDR_MASK)); /* the PT */
 		}

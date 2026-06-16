@@ -8,6 +8,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **x86_64 shared file-cache pages (read-only mmap sharing).** A library's text/
+  rodata is now ONE physical copy across every process that maps the file, instead of
+  a private per-process copy.  The file-backed `mmap` path (`map_file`, the dynamic
+  linker's hot path for `libc.so`/`libc++.so`/…) consults the MI file-page cache
+  (`vm_filecache`): a read-only, inode-identified page is shared (`PTE_SHARED`,
+  software bit 11) on a cache hit, or read once + published on a miss.  `fork` shares
+  such pages verbatim with a fresh cache reference (no COW); a write faults into the
+  extended `x86_64_cow_fault`, which hands the writer a private copy and drops a cache
+  reference; teardown (`x86_64_free_user_space`) unrefs the cache rather than freeing.
+  Mirrors aarch64.  Verified: desktop + the `term → tcsh` chain run cleanly (every
+  process shares the same libc frames), 0 faults.
 - **x86_64 copy-on-write fork.** `fork` no longer deep-copies the parent's user
   pages — it shares them read-only in both spaces (`PTE_COW`, software bit 10) and
   bumps the MI COW refcount (`adjust_cow_counter`, `+2` first share / `+1` if already

@@ -19,6 +19,9 @@
 #include <x86_64/vmm_layout.h> /* MMAP_BASE, BRK_BASE (single source of truth) */
 #include <sys/descrip.h>       /* getfd, struct file (file-backed mmap) */
 #include <fs/vfs/file.h>       /* fileDescriptor_t, fread (file-backed mmap) */
+#include <vmm/vm_filecache.h>  /* shared read-only file-page cache */
+
+void x86_64_map_user_page_shared(u64 pml4_phys, u64 va, u64 phys);
 
 #define MSR_FS_BASE 0xC0000100
 
@@ -54,16 +57,59 @@ static int map_anon(u64 va, u64 npages)
 static int map_file(u64 va, u64 npages, fileDescriptor_t *fd, u64 file_off, int writable)
 {
 	u64 i;
+	/* A read-only, file-identified page is shared through the MI file-page cache so a
+	 * library's text/rodata is ONE physical copy across every process (the dynamic
+	 * linker's hot path: libc.so / libc++.so across the whole desktop).  Writable
+	 * (data) pages stay private.  Mirrors aarch64's mmap. */
+	int cacheable = !writable && fd->ino != 0;
+	void *mp = fd->mp;
+	u_int32_t ino = fd->ino;
 
 	for (i = 0; i < npages; i++)
 	{
-		uintptr_t frame = vmm_find_free_page(sysID);
+		u64 va_pg = va + i * PAGE_SIZE;
+		off_t foff = (off_t)(file_off + i * PAGE_SIZE);
+		uintptr_t frame;
+
+		/* Cache hit: share the cached frame read-only; allocate nothing. */
+		if (cacheable)
+		{
+			uintptr_t hit = (uintptr_t)vm_filecache_lookup_ref(mp, ino, foff);
+			if (hit != 0)
+			{
+				x86_64_map_user_page_shared(_current->md.md_cr3, va_pg, (u64)hit);
+				continue;
+			}
+		}
+
+		frame = vmm_find_free_page(sysID);
 		if (frame == 0)
 			return -1;
 		memset(P2V(frame), 0, PAGE_SIZE);
-		fd->offset = (off_t)(file_off + i * PAGE_SIZE);
+		fd->offset = foff;
 		fread((void *)P2V(frame), 1, PAGE_SIZE, fd); /* short read => zero tail */
-		x86_64_map_user_page_to(_current->md.md_cr3, va + i * PAGE_SIZE, (u64)frame, writable);
+
+		/* Cacheable + a 32-bit frame (the cache key is 32-bit): publish it shared. */
+		if (cacheable && (frame >> 32) == 0)
+		{
+			u_int32_t winner = 0;
+			if (vm_filecache_insert(mp, ino, foff, (u_int32_t)frame, &winner) == 0)
+			{
+				x86_64_map_user_page_shared(_current->md.md_cr3, va_pg, (u64)frame);
+				continue;
+			}
+			if (winner != 0)
+			{
+				/* Lost the insert race: share the winner (referenced for us by
+				 * vm_filecache_insert), return our frame. */
+				x86_64_map_user_page_shared(_current->md.md_cr3, va_pg, (u64)winner);
+				free_page((uintptr_t)frame);
+				continue;
+			}
+		}
+
+		/* Private page (writable data, or an oversized frame). */
+		x86_64_map_user_page_to(_current->md.md_cr3, va_pg, (u64)frame, writable);
 	}
 	return 0;
 }

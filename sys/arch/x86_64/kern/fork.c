@@ -22,16 +22,19 @@
 #define PTE_P 0x1
 #define PTE_RW 0x2
 #define PTE_US 0x4
-#define PTE_PS 0x80     /* 2 MB page (skip — kernel identity, never copied) */
-#define PTE_WIRED 0x200 /* available bit 9: share verbatim across fork (no copy) */
-#define PTE_COW 0x400   /* available bit 10: copy-on-write (frame shared read-only) */
+#define PTE_PS 0x80      /* 2 MB page (skip — kernel identity, never copied) */
+#define PTE_WIRED 0x200  /* available bit 9: share verbatim across fork (no copy) */
+#define PTE_COW 0x400    /* available bit 10: copy-on-write (frame shared read-only) */
+#define PTE_SHARED 0x800 /* available bit 11: shared file-cache page (vm_filecache-owned) */
 #define PTE_ADDR_MASK (~0xFFFUL)
 #define FRAME_SLOTS 7 /* 6 callee-saved + return address (matches cpu_switch.S) */
 
 extern void ret_from_fork(void);
 extern void x86_64_map_user_page_wired(uintptr_t pml4_phys, u64 va, u64 phys);
 extern void x86_64_map_user_page_cow(u64 pml4_phys, u64 va, u64 phys);
+extern void x86_64_map_user_page_shared(u64 pml4_phys, u64 va, u64 phys);
 extern int adjust_cow_counter(uintptr_t base_addr, int adjustment);
+extern int vm_filecache_ref_phys(u_int32_t phys);
 extern u_int32_t numPages; /* RAM page count; frame >= numPages => MMIO (vmm.h) */
 
 /**
@@ -83,6 +86,17 @@ static u64 x86_64_fork_copy(u64 parent_pml4)
 				if (pte & PTE_WIRED)
 				{
 					x86_64_map_user_page_wired(child, va, phys);
+					continue;
+				}
+
+				/* Shared file-cache page (a library's text/rodata): the child maps the
+				 * same frame read-only and takes its own cache reference — no COW, a
+				 * writer of either side copies out via x86_64_cow_fault's PTE_SHARED
+				 * path. */
+				if (pte & PTE_SHARED)
+				{
+					x86_64_map_user_page_shared(child, va, phys);
+					vm_filecache_ref_phys((u_int32_t)phys);
 					continue;
 				}
 
