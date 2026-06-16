@@ -20,19 +20,7 @@ long inportByte()
 {
 	return -1;
 }
-long md_disk_list()
-{
-	return -1;
-}
-long md_resident_pages()
-{
-	return -1;
-}
 long outportByteP()
-{
-	return -1;
-}
-long sys_disk_query()
 {
 	return -1;
 }

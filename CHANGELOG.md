@@ -8,6 +8,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **x86_64 Disk Utility + Activity Monitor data layers (the app-suite parity pass).**
+  Implemented the last three machine-dependent hooks the desktop apps need on x86_64,
+  all previously stubbed to `-1`:
+  - `md_disk_list` (dev/virtio_blk.c) enumerates the legacy virtio-blk drive, reading
+    its capacity from the virtio-blk device-config window (I/O `VPCI_CONFIG`, no
+    MSI-X), and `sys_disk_query` (kern/syscall_md.c, native syscall 68) drives the MI
+    `disk_query` MBR walk — so **Disk Utility** now shows the disk (`vtblk0`, 165 MB)
+    and its partitions (fat `/`, swap, ubixfs) instead of "0 B / no disk".
+  - `md_resident_pages` (vmm/resident.c) walks the per-process PML4 (`PML4[0] →
+    PDPT[1..511] → PD → PT`, counting `PTE_US` leaves) so **Activity Monitor** reports
+    a real RSS per process (e.g. views 18.8 MB, vlogin 9.7 MB) instead of the bogus
+    16 TB the `-1` stub produced.
+  - `uname(2)` (sys/posix/gen_calls.c) now returns `machine = "x86_64"` (was falling
+    through to `"i386"`), so **Settings → General** reports the correct architecture.
+  Mirrors the aarch64 implementations.  Verified headless: all three apps render
+  correct data, 0 faults.
 - **x86_64 shared file-cache pages (read-only mmap sharing).** A library's text/
   rodata is now ONE physical copy across every process that maps the file, instead of
   a private per-process copy.  The file-backed `mmap` path (`map_file`, the dynamic

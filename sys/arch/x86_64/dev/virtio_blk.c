@@ -22,6 +22,7 @@
 #include <sys/bus.h>      /* struct ubx_device / ubx_blk_ops */
 #include <sys/descrip.h>  /* g_device_find hook (vfs_mount resolves to us) */
 #include <dev/partition.h>/* mbr_parse_partitions */
+#include <dev/disk.h>     /* struct disk_hw — Disk Utility enumeration hook */
 
 /* PCI identity: Red Hat / virtio vendor; transitional block device id 0x1001. */
 #define VIRTIO_VENDOR 0x1AF4
@@ -36,6 +37,7 @@
 #define VPCI_QUEUE_NOTIFY 0x10   /* w 16 */
 #define VPCI_STATUS 0x12         /* rw 8 */
 #define VPCI_ISR 0x13            /* r 8 */
+#define VPCI_CONFIG 0x14         /* device-specific config (no MSI-X): blk capacity */
 
 #define VSTAT_ACKNOWLEDGE 1
 #define VSTAT_DRIVER 2
@@ -312,4 +314,30 @@ int virtio_blk_init(void)
 	serial_putdec((u64)g_npart);
 	serial_puts("\n");
 	return 0;
+}
+
+/**
+ * md_disk_list (sys/kern/disk_query.c hook): the x86_64 disk inventory — the
+ * single legacy virtio-blk drive.  Capacity is the virtio-blk config `capacity`
+ * field (512-byte sectors) at the start of the device-specific config window
+ * (I/O offset VPCI_CONFIG, since this transitional device is configured without
+ * MSI-X).  Sibling of aarch64's md_disk_list in dev/virtio_blk.c.
+ */
+int md_disk_list(struct disk_hw *out, int max)
+{
+	u32 lo, hi;
+
+	if (max <= 0 || !g_ready)
+		return (0);
+
+	lo = inl((u16)(g_io + VPCI_CONFIG));
+	hi = inl((u16)(g_io + VPCI_CONFIG + 4));
+
+	out[0].dev = &g_blk_dev;
+	strncpy(out[0].name, "vtblk0", sizeof(out[0].name) - 1);
+	out[0].name[sizeof(out[0].name) - 1] = '\0';
+	out[0].sectors = ((u64)hi << 32) | lo;
+	strncpy(out[0].model, "virtio-blk", sizeof(out[0].model) - 1);
+	out[0].model[sizeof(out[0].model) - 1] = '\0';
+	return (1);
 }

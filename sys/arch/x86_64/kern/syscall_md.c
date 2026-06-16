@@ -13,6 +13,8 @@
 #include <ubixos/sched.h>
 #include <sys/thread.h>
 #include <sys/sysproto_posix.h>
+#include <sys/sysproto.h>      /* sys_disk_query_args (native ABI) */
+#include <dev/disk.h>          /* disk_query — block-device enumeration syscall 68 */
 #include <vmm/vmm.h>           /* vmm_find_free_page, PAGE_SIZE */
 #include <lib/kmalloc.h>       /* sysID */
 #include <string.h>            /* memset */
@@ -221,6 +223,18 @@ int sys_msync(struct thread *td, struct sys_msync_args *uap)
 {
 	(void)uap;
 	td->td_retval[0] = 0;
+	return (0);
+}
+
+/**
+ * Native syscall 68 — fill the userland buffer with the disk inventory (whole
+ * disks + MBR partitions) for the graphical Disk Utility.  The arch-neutral
+ * disk_query() (sys/kern/disk_query.c) drives md_disk_list() + MBR parsing;
+ * mirrors the aarch64 handler.  The entry count is returned in td_retval[0].
+ */
+int sys_disk_query(struct thread *td, struct sys_disk_query_args *uap)
+{
+	td->td_retval[0] = disk_query(uap->buf, (int)uap->max);
 	return (0);
 }
 
