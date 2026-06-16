@@ -4,9 +4,10 @@
  * Files — the uBixOS graphical file manager (P0 MVP).
  *
  * An Explorer-leaning, best-of-all-worlds file browser: a navigation toolbar
- * (back / forward / up), a breadcrumb address bar, a left "Places" sidebar (Home,
- * Filesystem, top-level folders), a sortable Details list (Name / Size / Type /
- * Modified), and a status bar.  Double-click a folder to
+ * (back / forward / up), a breadcrumb address bar that turns into an editable
+ * path field when clicked, a left "Places" sidebar (Home, Filesystem, top-level
+ * folders), a sortable Details list (Name / Size / Type / Modified), and a status
+ * bar.  Double-click a folder to
  * enter it, a file to open it in the app the ubistry registry maps from its
  * extension.  File operations — New Folder, Open, Rename, Delete — live in the
  * right-click context menu (Explorer-style), not on the toolbar.  This is a
@@ -142,6 +143,11 @@ static int g_nplaces;
 static int g_mode = MODE_BROWSE;
 static char g_edit[NAME_MAX_LEN]; /* rename edit buffer */
 static int g_editlen;
+
+/* Editable address bar: click the path bar to type a destination. */
+static bool g_addr_edit;
+static char g_addr_buf[512];
+static int g_addr_len;
 
 static char g_status[160];
 
@@ -619,6 +625,56 @@ static void start_rename(void)
 	g_mode = MODE_RENAME;
 }
 
+/**
+ * Enter address-bar edit mode, seeding the field with the current path.
+ */
+static void addr_begin_edit(void)
+{
+	snprintf(g_addr_buf, sizeof(g_addr_buf), "%s", g_cwd);
+	g_addr_len = (int)strlen(g_addr_buf);
+	g_addr_edit = true;
+}
+
+/**
+ * Commit the typed path: trim a trailing slash, then navigate there if it opens
+ * as a directory, else report the failure and stay put.  Always leaves edit mode.
+ */
+static void addr_commit(void)
+{
+	g_addr_edit = false;
+
+	/* Collapse runs of '/' into one (so "//var", "/var//log" normalize cleanly). */
+	char path[512];
+	size_t w = 0;
+	for (const char *r = g_addr_buf; *r && w < sizeof(path) - 1; r++)
+	{
+		if (*r == '/' && w > 0 && path[w - 1] == '/')
+			continue;
+		path[w++] = *r;
+	}
+	path[w] = '\0';
+	if (path[0] != '/') /* a relative entry: anchor it at "/" */
+	{
+		char tmp[512];
+		snprintf(tmp, sizeof(tmp), "/%s", path);
+		snprintf(path, sizeof(path), "%s", tmp);
+		w = strlen(path);
+	}
+	while (w > 1 && path[w - 1] == '/') /* drop trailing slashes (keep root "/") */
+		path[--w] = '\0';
+	if (path[0] == '\0')
+		snprintf(path, sizeof(path), "/");
+
+	DIR *d = opendir(path);
+	if (d)
+	{
+		closedir(d);
+		navigate(path, true);
+	}
+	else
+		snprintf(g_status, sizeof(g_status), "No such directory: %s", path);
+}
+
 /* ── layout queries ─────────────────────────────────────────────────────────*/
 
 /** Y of the first list row (below toolbar + address bar + header). */
@@ -787,14 +843,28 @@ static void draw_toolbar(void)
 }
 
 /**
- * Draw the breadcrumb address bar, recording each segment's span + target path
- * in g_crumb for click navigation.
+ * Draw the address bar.  In browse mode it shows clickable breadcrumb segments
+ * (recorded in g_crumb for hit-testing); in edit mode it shows an editable path
+ * field with a caret.
  */
 static void draw_address(void)
 {
 	int ay = TOOLBAR_H;
 	g_surf.ogFillRect(0, ay, g_w - 1, ay + ADDR_H - 1, COL_ADDR);
 	g_surf.ogHLine(0, g_w - 1, ay + ADDR_H - 1, COL_DIVIDER);
+
+	int ety = ay + (ADDR_H - (int)g_font.GetHeight()) / 2;
+
+	/* Editable path field. */
+	if (g_addr_edit)
+	{
+		g_surf.ogRoundRect(PAD - 4, ay + 4, g_w - PAD, ay + ADDR_H - 5, 3, COL_SEL);
+		set_fg(COL_TEXT);
+		char shown[520];
+		snprintf(shown, sizeof(shown), "%s|", g_addr_buf);
+		g_font.PutString(g_surf, PAD, ety, shown);
+		return;
+	}
 
 	g_ncrumb = 0;
 	int x = PAD;
@@ -1205,6 +1275,14 @@ static void on_click(int x, int y)
 		return;
 	}
 
+	/* Editing the address bar: a click outside the bar cancels the edit. */
+	if (g_addr_edit && !(y >= TOOLBAR_H && y < TOOLBAR_H + ADDR_H))
+	{
+		g_addr_edit = false;
+		render();
+		return;
+	}
+
 	/* Modal: only the dialog buttons are live. */
 	if (g_mode == MODE_CONFIRM_DEL)
 	{
@@ -1242,9 +1320,13 @@ static void on_click(int x, int y)
 		return;
 	}
 
-	/* Breadcrumb bar. */
+	/* Address bar.  Already editing: a click in the bar keeps the edit.  A click
+	 * on a breadcrumb segment navigates; a click on the empty part of the bar
+	 * starts editing the path (Explorer: click the address to type). */
 	if (y >= TOOLBAR_H && y < TOOLBAR_H + ADDR_H)
 	{
+		if (g_addr_edit)
+			return;
 		for (int i = 0; i < g_ncrumb; i++)
 			if (x >= g_crumb[i].x0 - 2 && x <= g_crumb[i].x1 + 2)
 			{
@@ -1252,6 +1334,8 @@ static void on_click(int x, int y)
 				render();
 				return;
 			}
+		addr_begin_edit();
+		render();
 		return;
 	}
 
@@ -1331,6 +1415,27 @@ static void on_right_click(int x, int y)
  */
 static void on_key(uint32_t kc)
 {
+	/* Editing the address bar: type a path, Enter to go, Esc to cancel. */
+	if (g_addr_edit)
+	{
+		if (kc == '\r' || kc == '\n')
+			addr_commit();
+		else if (kc == KEY_ESC)
+			g_addr_edit = false;
+		else if (kc == '\b' || kc == 0x7F)
+		{
+			if (g_addr_len > 0)
+				g_addr_buf[--g_addr_len] = '\0';
+		}
+		else if (kc >= 0x20 && kc < 0x7F && g_addr_len < (int)sizeof(g_addr_buf) - 1)
+		{
+			g_addr_buf[g_addr_len++] = (char)kc;
+			g_addr_buf[g_addr_len] = '\0';
+		}
+		render();
+		return;
+	}
+
 	/* An open context menu: Escape dismisses it. */
 	if (g_ctx_open)
 	{
