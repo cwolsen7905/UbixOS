@@ -667,11 +667,13 @@ int sys_ioctl(struct thread *td, struct sys_ioctl_args *args)
 
 int sys_select(struct thread *td, struct sys_select_args *args)
 {
-	int i, nd, total;
+	int i, j, nd, total;
 	fd_set lwip_rfds, lwip_wfds;
 	fd_set watch_in, watch_out;
 	int kern_to_lwip_r[MAX_FILES]; /* kernel fd → lwIP socket for read set */
 	int kern_to_lwip_w[MAX_FILES]; /* kernel fd → lwIP socket for write set */
+	int tty_rd_fds[MAX_FILES];     /* read fds that are pseudo-terminals (FD_TYPE_TTYV) */
+	int n_tty_rd;
 	int max_lwip;
 	int has_stdin_rd;
 	struct timeval zero_tv;
@@ -683,6 +685,7 @@ int sys_select(struct thread *td, struct sys_select_args *args)
 	memset(kern_to_lwip_w, -1, sizeof(kern_to_lwip_w));
 	max_lwip = 0;
 	has_stdin_rd = 0;
+	n_tty_rd = 0;
 
 	/* Copy and clear input sets immediately so args->in/ou become result sets. */
 	if (args->in)
@@ -703,8 +706,12 @@ int sys_select(struct thread *td, struct sys_select_args *args)
 		{
 			if (!FD_ISSET(i, &watch_in))
 				continue;
-			if (i == 0)
+			if (i == 0 &&
+			    !(td->o_files[0] != NULL && ((struct file *)td->o_files[0])->fd_type == FD_TYPE_TTYV))
 			{
+				/* fd 0 backed by the console placeholder (FD_TYPE_TTY / none): the
+				 * global console-readiness hook tracks it.  A GUI pty on fd 0 falls
+				 * through to the FD_TYPE_TTYV case below (its own line buffer). */
 				has_stdin_rd = 1;
 			}
 			else
@@ -732,9 +739,15 @@ int sys_select(struct thread *td, struct sys_select_args *args)
 					/* Regular file: always ready */
 					FD_SET(i, args->in);
 				}
-				else if (f && (f->fd_type == FD_TYPE_TTY || f->fd_type == FD_TYPE_TTYV))
+				else if (f && f->fd_type == FD_TYPE_TTYV)
 				{
-					/* /dev/tty and /dev/ttyN: treat as terminal stdin */
+					/* A specific pseudo-terminal (/dev/ttyN, tty_term in f->data):
+					 * checked per-fd in the poll loop via its own line buffer. */
+					tty_rd_fds[n_tty_rd++] = i;
+				}
+				else if (f && f->fd_type == FD_TYPE_TTY)
+				{
+					/* /dev/tty — the process's controlling terminal: global hook. */
 					has_stdin_rd = 1;
 				}
 			}
@@ -816,6 +829,24 @@ int sys_select(struct thread *td, struct sys_select_args *args)
 			}
 		}
 
+		/* TTYV (pseudo-terminal) read fds — e.g. the GUI terminal's stdin: ready when
+		 * a complete canonical line sits in the pty's own line discipline (filled by
+		 * the terminal app via sys_ptyinject).  Checked per-fd here rather than via the
+		 * global g_console_stdin_ready hook, which tracks the *console* (serial/VGA),
+		 * not an arbitrary pty — so a select() mixing a pty stdin with a socket wakes
+		 * on either. */
+		for (j = 0; j < n_tty_rd; j++)
+		{
+			struct file *tf = td->o_files[tty_rd_fds[j]];
+			tty_term *tt = (tf != NULL) ? (tty_term *)tf->data : NULL;
+			if (tt != NULL && tt->stdinSize > 0)
+			{
+				if (args->in)
+					FD_SET(tty_rd_fds[j], args->in);
+				total++;
+			}
+		}
+
 		if (total > 0)
 			break;
 
@@ -884,6 +915,10 @@ int sys_poll(struct thread *td, struct sys_poll_args *args)
 		}
 	}
 
+	/* A pty (FD_TYPE_TTYV) on any pollfd — incl. fd 0 in the GUI terminal — is
+	 * checked via its own line-discipline buffer in the loop below, not the global
+	 * console hook (which tracks the serial/VGA console, not an arbitrary pty). */
+
 	zero_tv.tv_sec = 0;
 	zero_tv.tv_usec = 0;
 
@@ -897,12 +932,32 @@ int sys_poll(struct thread *td, struct sys_poll_args *args)
 		total = 0;
 
 		/* stdin readiness: the tty layer drains the console + reports a complete
-		 * line (path B hook; no-op where there's no TTY layer). */
+		 * line (path B hook; no-op where there's no TTY layer).  Only fd 0 backed by
+		 * the console placeholder (not a pty — that is handled per-fd below). */
 		if (g_console_stdin_ready != NULL && g_console_stdin_ready())
 		{
 			for (i = 0; i < nfds; i++)
 			{
-				if (args->fds[i].fd == 0 && (args->fds[i].events & (POLLIN | POLLRDNORM)))
+				struct file *f0 = (args->fds[i].fd == 0) ? td->o_files[0] : NULL;
+				if (args->fds[i].fd == 0 && (f0 == NULL || f0->fd_type != FD_TYPE_TTYV) &&
+				    (args->fds[i].events & (POLLIN | POLLRDNORM)))
+				{
+					args->fds[i].revents |= POLLIN;
+					total++;
+				}
+			}
+		}
+
+		/* pty (FD_TYPE_TTYV) readiness: a complete line in the pty's own line
+		 * discipline (the GUI terminal's stdin path). */
+		for (i = 0; i < nfds; i++)
+		{
+			int kfd = args->fds[i].fd;
+			struct file *f = (kfd >= 0 && kfd < MAX_FILES) ? td->o_files[kfd] : NULL;
+			if (f != NULL && f->fd_type == FD_TYPE_TTYV && (args->fds[i].events & (POLLIN | POLLRDNORM)))
+			{
+				tty_term *tt = (tty_term *)f->data;
+				if (tt != NULL && tt->stdinSize > 0)
 				{
 					args->fds[i].revents |= POLLIN;
 					total++;

@@ -417,6 +417,19 @@ First entries of the 3.0 series (64-bit only: x86_64 + aarch64).  Development on
     now attach a `virtio-net-pci` NIC on QEMU user-net.  Verified headless: `virtio-net:
     vtnet0 ready` → `net: DHCP bound IP=10.0.2.15 gw=10.0.2.2`, with the desktop up.
 
+- **select/poll over a pseudo-terminal + a socket (interactive terminal net apps).**
+  `sys_select`/`sys_poll` decided stdin readiness solely via the global
+  `g_console_stdin_ready` hook, which tracks the *console* (serial/VGA), not an
+  arbitrary pty — so a `select()`/`poll()` mixing the GUI terminal's stdin (a
+  `FD_TYPE_TTYV` pty) with a socket never woke on typed input.  They now check a pty
+  fd's *own* line-discipline buffer (`tty_term.stdinSize`, like the existing
+  `FD_TYPE_PIPE` `bCNT` check) per-fd, so e.g. `nc` in the desktop terminal wakes on
+  keystrokes and forwards them to its socket.  MI fix (`sys/kern/descrip.c`), so it
+  benefits the GUI terminal on every arch; verified on x86_64 (the pty's `stdinSize`
+  is seen, `nc` reads stdin and `lwip_send`s, and a packet capture shows the TCP data
+  segment transmitted + ACKed — full guest TCP send path) with no console-login or
+  terminal regression.
+
   **With mmap/execve/fork/signals in place, the x86_64 kernel can now load, run,
   fork, and signal real on-disk binaries — the full runtime a userland needs.**
   `bmake TARGET=x86_64` builds the bring-up kernel only (the x86_64 userland/world is

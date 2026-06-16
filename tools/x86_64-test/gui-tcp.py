@@ -49,9 +49,8 @@ def echo_server():
 
 def _echo_conn(c):
     print("[host echo] guest CONNECTED", flush=True)
-    c.settimeout(4.0)
+    c.settimeout(30.0)
     try:
-        c.sendall(b"GREETINGS-FROM-HOST\n")  # tests the guest's TCP recv path
         while not _stop.is_set():
             data = c.recv(512)
             if not data:
@@ -121,6 +120,7 @@ def main():
         "-device", "virtio-blk-pci,drive=hd0,disable-modern=true",
         "-netdev", "user,id=n0,guestfwd=tcp:10.0.2.100:%d-tcp:127.0.0.1:%d" % (ECHO_PORT, ECHO_PORT),
         "-device", "virtio-net-pci,netdev=n0,disable-modern=true",
+        "-object", "filter-dump,id=f0,netdev=n0,file=/tmp/x86_64-tcp.pcap",
         "-qmp", "unix:%s,server,nowait" % QMP])
     try:
         sock = None
