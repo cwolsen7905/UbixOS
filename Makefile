@@ -397,6 +397,11 @@ kernel-x86_64:
 	    echo "${CROSS_PREFIX}gcc [gen] $$f"; \
 	    ${CROSS_PREFIX}gcc ${X86_64_KCFLAGS} -std=c99 -c ${CURDIR}/$$f -o $$o || exit 1; \
 	done
+	@for f in ${UBIXFS_KERN_SRCS}; do \
+	    o=${OBJ_DIR}/obj/sys/`basename $$f .c`.o; \
+	    echo "${CROSS_PREFIX}gcc [ubfs] $$f"; \
+	    ${CROSS_PREFIX}gcc ${X86_64_KCFLAGS} ${UBIXFS_KERN_INCS} -std=c99 -c ${CURDIR}/$$f -o $$o || exit 1; \
+	done
 	${CROSS_PREFIX}ld -T ${CURDIR}/sys/compile/ldscript.x86_64 -o ${OBJ_DIR}/boot/kernel ${OBJ_DIR}/obj/sys/*.o
 	@echo "x86_64 bring-up kernel linked: ${OBJ_DIR}/boot/kernel"
 

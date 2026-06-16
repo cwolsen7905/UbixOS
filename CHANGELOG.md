@@ -8,6 +8,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **x86_64 boots off the UbixFS pool as root** (parity with i386 K5/M3 + aarch64
+  K5/M4).  The kernel now links the portable UbixFS pool driver (`UBIXFS_KERN_SRCS`
+  added to the `kernel-x86_64` build) and `boot/main.c` prefers the pool partition
+  (MBR type 0x9C — `vtblk0s3`, already staged with the full world by
+  `mkimage-arm.sh`) as `/`, mounted via the bcache raw vdev, falling back to the FAT
+  partition (`vtblk0s1`) on a bad/absent pool.  A new `x86_64_virtio_blk_pool_minor()`
+  locates the pool partition (sibling of aarch64's), and the cold-boot dataset-read
+  race is handled with the same settle-spin retry as i386/aarch64.  Added `strcpy`
+  to the x86_64 freestanding string set (`kern/ksupport.c`) — the pool driver's
+  directory code needs it.  Verified headless: `/bin/init` + all services load from
+  the pool and the full graphical desktop (login → Settings) comes up on the pool
+  root.  Closes the root-filesystem parity gap with the other two arches.
 - **x86_64 audio — AC'97 driver + /dev/audio.** A new `sys/arch/x86_64/dev/ac97.c`
   drives QEMU's Intel 82801AA AC'97 (PCI 8086:2415) and registers the device-model
   char node `/dev/audio` (major 20) with the same `dev_char_write`/`dev_char_ioctl`

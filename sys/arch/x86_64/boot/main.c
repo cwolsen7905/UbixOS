@@ -12,12 +12,13 @@
 #include <ubixos/sched.h>
 #include <ubixos/tty.h> /* tty_init — pty pool + VT100 engine */
 #include <x86_64/pcpu.h>
-#include <fs/vfs/vfs.h>       /* vfs_init, VFS_TYPE_FAT/DEVFS/PROCFS */
-#include <fs/vfs/mount.h>     /* vfs_mount */
-#include <fs/vfs/file.h>      /* vfs_opendir/readdir/closedir, kDIR_t, struct kdirent */
-#include <fs/fat/fat.h>       /* fat_init */
-#include <fs/devfs/devfs.h>   /* devfs_init — /dev/{null,zero,tty,...} */
-#include <fs/procfs/procfs.h> /* procfs_init — /proc */
+#include <fs/vfs/vfs.h>         /* vfs_init, VFS_TYPE_FAT/DEVFS/PROCFS */
+#include <fs/vfs/mount.h>       /* vfs_mount */
+#include <fs/vfs/file.h>        /* vfs_opendir/readdir/closedir, kDIR_t, struct kdirent */
+#include <fs/fat/fat.h>         /* fat_init */
+#include <fs/devfs/devfs.h>     /* devfs_init — /dev/{null,zero,tty,...} */
+#include <fs/procfs/procfs.h>   /* procfs_init — /proc */
+#include <fs/ubixfs/ubfs_vfs.h> /* ubfs_vfs_init/set_raw — UbixFS pool root */
 
 /**
  * x86-64 kernel C entry.  @mb_magic / @mb_info are the boot magic + info pointer
@@ -152,9 +153,10 @@ void kmain_x86_64(u32 mb_magic, u32 mb_info)
 	if (virtio_blk_init() == 0)
 	{
 		vfs_init();
-		fat_init();    /* register the FAT driver with the VFS */
-		devfs_init();  /* register devfs + queue /dev/{null,zero,tty,console,...} */
-		procfs_init(); /* register procfs (/proc) */
+		fat_init();      /* register the FAT driver with the VFS */
+		ubfs_vfs_init(); /* register the UbixFS pool driver (before any pool mount) */
+		devfs_init();    /* register devfs + queue /dev/{null,zero,tty,console,...} */
+		procfs_init();   /* register procfs (/proc) */
 
 		/* Wire COM1 into the VFS console fileops so login/shell stdin/stdout work. */
 		x86_64_console_tty_init();
@@ -177,11 +179,51 @@ void kmain_x86_64(u32 mb_magic, u32 mb_info)
 		/* Probe the AC'97 audio controller and register /dev/audio (for aural). */
 		x86_64_ac97_init();
 
-		/* Partition 1 (vtblk0s1, major 1 / minor 1) is the FAT volume. */
-		if (vfs_mount(1, 1, 0, VFS_TYPE_FAT, "/", "rw") == 0)
+		/* Prefer the UbixFS pool as root (parity with i386 K5/M3 + aarch64 K5/M4):
+		 * the pool lives on its own MBR partition (type 0x9C) staged with the full
+		 * world by mkimage-arm.sh, mounted via the bcache raw vdev.  A bad/absent pool
+		 * unwinds cleanly (initfs fails -> mountpoint freed), so we fall back to the
+		 * FAT partition (vtblk0s1).  The dataset read can transiently miss on the very
+		 * first cold reads, so retry a few times with a settle-spin (no scheduler
+		 * yet) before giving up — the long-standing "works on the second boot" race. */
+		int root_is_pool = 0;
+		int pool_minor = x86_64_virtio_blk_pool_minor();
+		if (pool_minor > 0)
+		{
+			int rc, mtry;
+			ubfs_vfs_set_raw(1);
+			rc = vfs_mount(1, pool_minor, 0, VFS_TYPE_UBIXFS, "/", "rw");
+			for (mtry = 0; rc != 0 && mtry < 8; mtry++)
+			{
+				volatile int s;
+				for (s = 0; s < 2000000; s++)
+					; /* brief settle delay; no scheduler yet */
+				rc = vfs_mount(1, pool_minor, 0, VFS_TYPE_UBIXFS, "/", "rw");
+			}
+			if (rc == 0)
+			{
+				fileDescriptor_t *probe = fopen("/bin/init", "r");
+				if (probe != 0)
+				{
+					fclose(probe);
+					root_is_pool = 1;
+					serial_puts(
+					    "vfs: mounted UbixFS pool root on vtblk0s3 (raw) — pool root live\n");
+				}
+				else
+					serial_puts(
+					    "ubixfs: pool is / but /bin/init missing — falling through to FAT\n");
+			}
+		}
+
+		/* Partition 1 (vtblk0s1, major 1 / minor 1) is the FAT volume — the fallback
+		 * root when the pool is unavailable. */
+		if (root_is_pool || vfs_mount(1, 1, 0, VFS_TYPE_FAT, "/", "rw") == 0)
 		{
 			kDIR_t *d = vfs_opendir("/");
-			serial_puts("vfs: mounted FAT root on vtblk0s1; readdir / :\n");
+			if (!root_is_pool)
+				serial_puts("vfs: mounted FAT root on vtblk0s1 (fallback)\n");
+			serial_puts("vfs: readdir / :\n");
 			if (d != 0)
 			{
 				struct kdirent e;
@@ -194,7 +236,7 @@ void kmain_x86_64(u32 mb_magic, u32 mb_info)
 					n++;
 				}
 				vfs_closedir(d);
-				serial_puts("vfs: FAT root readable — disk-backed root works on x86_64.\n");
+				serial_puts("vfs: root readable — disk-backed root works on x86_64.\n");
 			}
 			else
 				serial_puts("vfs: opendir(/) failed\n");

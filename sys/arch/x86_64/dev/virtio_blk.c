@@ -341,3 +341,18 @@ int md_disk_list(struct disk_hw *out, int max)
 	out[0].model[sizeof(out[0].model) - 1] = '\0';
 	return (1);
 }
+
+/**
+ * @return the device minor of the MBR UbixFS pool partition (type 0x9C) on the
+ * virtio-blk disk, or -1 if absent.  Used by boot to mount the pool as root.
+ * Sibling of aarch64_virtio_blk_pool_minor.
+ */
+int x86_64_virtio_blk_pool_minor(void)
+{
+	int i;
+
+	for (i = 0; i < g_npart; i++)
+		if (g_parts[i].type == MBR_TYPE_UBPOOL)
+			return (g_parts[i].minor);
+	return (-1);
+}

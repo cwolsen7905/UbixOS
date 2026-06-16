@@ -165,6 +165,7 @@ struct ubx_device;
 int virtio_blk_init(void);
 int virtio_blk_read(struct ubx_device *dev, u32 lba, u32 count, void *buf);
 int virtio_blk_write(struct ubx_device *dev, u32 lba, u32 count, void *buf);
+int x86_64_virtio_blk_pool_minor(void); /* minor of the MBR UbixFS pool (0x9C), or -1 */
 
 /* vmm/vmm_machdep.c — physical page allocator setup (Phase 3). */
 void x86_64_mem_init(void);

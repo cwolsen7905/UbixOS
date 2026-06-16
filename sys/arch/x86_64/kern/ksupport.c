@@ -50,6 +50,15 @@ char *strncpy(char *dst, const char *src, unsigned long n)
 	return dst;
 }
 
+/* --- strcpy (used by the UbixFS pool driver's directory code) ----------------- */
+char *strcpy(char *dst, const char *src)
+{
+	char *d = dst;
+	while ((*d++ = *src++) != '\0')
+		;
+	return dst;
+}
+
 /* --- atomic spinlock (x86 xchg via the gcc builtin) --------------------------- */
 
 void spinLockInit(spinLock_t lock)
