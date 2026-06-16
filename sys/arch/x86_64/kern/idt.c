@@ -171,6 +171,18 @@ void x86_64_exception(struct x86_64_trapframe *tf)
 		return; /* tf now holds the restored context */
 	}
 
+	/* Copy-on-write: a write fault (#PF with error bit 1 set) on a PTE_COW page —
+	 * hand the writer a private, writable copy and resume.  Works from ring 3 (a
+	 * user store) and ring 0 (the kernel writing a user COW page).  A write fault on
+	 * a non-COW read-only page returns -1 and falls through to the real fault path. */
+	if (tf->vector == 14 && (tf->error & 0x2) && _current != 0 && _current->md.md_cr3 != 0)
+	{
+		u64 fault_va;
+		__asm__ __volatile__("mov %%cr2, %0" : "=r"(fault_va));
+		if (x86_64_cow_fault(_current->md.md_cr3, fault_va, (int)_current->id) == 0)
+			return; /* resolved — retry the faulting store */
+	}
+
 	__asm__ __volatile__("mov %%cr2, %0" : "=r"(cr2));
 
 	serial_puts("\n*** x86_64 exception: ");

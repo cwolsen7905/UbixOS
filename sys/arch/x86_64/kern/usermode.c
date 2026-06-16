@@ -123,6 +123,7 @@ u64 x86_64_ring0_stack_top(void)
 #define PTE_US 0x4
 #define PTE_PS 0x80     /* 2 MB page (a big page maps no sub-table to free) */
 #define PTE_WIRED 0x200 /* available bit 9: fork shares this page verbatim (no COW/copy) */
+#define PTE_COW 0x400   /* available bit 10: copy-on-write — frame shared read-only */
 #define PTE_ADDR_MASK (~0xFFFUL)
 
 #define USER_CODE_VA 0x40000000UL  /* 1 GB — first VA above the shared low-1 GB identity */
@@ -222,6 +223,73 @@ void x86_64_map_fb_page(uintptr_t pml4_phys, u64 va, u64 phys)
 	((u64 *)P2V(pt))[(va >> 12) & 0x1FF] =
 	    (phys & PTE_ADDR_MASK) | PTE_P | PTE_US | PTE_RW | PTE_WIRED | 0x10 /* PCD */;
 	__asm__ __volatile__("invlpg (%0)" : : "r"((void *)(uintptr_t)va) : "memory");
+}
+
+/**
+ * Map a copy-on-write user page @va -> @phys (read-only + PTE_COW + user) in the
+ * space rooted at @pml4_phys.  fork shares the frame this way in both parent and
+ * child; the first write faults into x86_64_cow_fault, which hands the writer a
+ * private writable copy.
+ */
+void x86_64_map_user_page_cow(u64 pml4_phys, u64 va, u64 phys)
+{
+	uintptr_t pdpt = next_table(pml4_phys, (unsigned)((va >> 39) & 0x1FF));
+	uintptr_t pd = next_table(pdpt, (unsigned)((va >> 30) & 0x1FF));
+	uintptr_t pt = next_table(pd, (unsigned)((va >> 21) & 0x1FF));
+
+	((u64 *)P2V(pt))[(va >> 12) & 0x1FF] = (phys & PTE_ADDR_MASK) | PTE_P | PTE_US | PTE_COW; /* RO */
+}
+
+/**
+ * Resolve a write fault at user VA @va in @pml4_phys on a copy-on-write page: give
+ * the writer a private, writable copy.  Allocate a frame, copy the shared page into
+ * it, repoint the PTE at the copy (writable, COW cleared), and drop this writer's
+ * reference to the old frame (the COW counter; the frame is freed at the last
+ * sharer).  A write fault on a page that is NOT PTE_COW is a genuine access
+ * violation — left for the caller (SIGSEGV / task kill).  Mirrors aarch64's
+ * pmap_cow_fault + i386's vmm_page_fault COW path.
+ *
+ * @return 0 if it was a COW page and was resolved (retry the write); -1 otherwise.
+ */
+int x86_64_cow_fault(u64 pml4_phys, u64 va, int pid)
+{
+	u64 *t = (u64 *)P2V(pml4_phys);
+	u64 *pte_slot;
+	u64 e, pte, old, neu, attrs;
+
+	if (pml4_phys == 0)
+		return -1;
+	e = t[(va >> 39) & 0x1FF];
+	if ((e & PTE_P) == 0)
+		return -1;
+	t = (u64 *)P2V(e & PTE_ADDR_MASK);
+	e = t[(va >> 30) & 0x1FF];
+	if ((e & PTE_P) == 0 || (e & PTE_PS))
+		return -1;
+	t = (u64 *)P2V(e & PTE_ADDR_MASK);
+	e = t[(va >> 21) & 0x1FF];
+	if ((e & PTE_P) == 0 || (e & PTE_PS))
+		return -1;
+	t = (u64 *)P2V(e & PTE_ADDR_MASK);
+	pte_slot = &t[(va >> 12) & 0x1FF];
+	pte = *pte_slot;
+
+	if ((pte & PTE_P) == 0 || (pte & PTE_COW) == 0)
+		return -1; /* not a COW page → a real write to a read-only page */
+
+	old = pte & PTE_ADDR_MASK;
+	neu = vmm_find_free_page(pid);
+	if (neu == 0)
+		return -1; /* out of memory → caller terminates the task */
+	memcpy(P2V(neu), P2V(old), PAGE_SIZE);
+
+	/* Private writable copy: same flags, but writable and no longer COW. */
+	attrs = (pte & ~PTE_ADDR_MASK & ~(u64)PTE_COW) | PTE_RW;
+	*pte_slot = (neu & PTE_ADDR_MASK) | attrs;
+	__asm__ __volatile__("invlpg (%0)" : : "r"((void *)(uintptr_t)va) : "memory");
+
+	adjust_cow_counter((uintptr_t)old, -1); /* release this writer's hold on the shared frame */
+	return 0;
 }
 
 /**

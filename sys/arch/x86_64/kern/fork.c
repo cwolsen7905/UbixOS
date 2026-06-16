@@ -1,9 +1,12 @@
 /*-
  * Copyright (c) 2002-2026 The UbixOS Project.  All rights reserved.
  *
- * x86-64 fork(2) (Phase 5e).  Creates a child task with a deep copy of the
- * parent's user address space and a duplicate of the fork-syscall trapframe (with
- * rax = 0 so the child's fork returns 0).  The child's kernel stack is seeded so
+ * x86-64 fork(2) (Phase 5e).  Creates a child task that shares the parent's user
+ * pages copy-on-write (PTE_COW + the MI COW refcount; the first writer of either
+ * side faults into x86_64_cow_fault for a private copy) and a duplicate of the
+ * fork-syscall trapframe (with rax = 0 so the child's fork returns 0).  Wired
+ * pages (framebuffer / shared window buffers) are shared verbatim, MMIO is
+ * skipped.  The child's kernel stack is seeded so
  * its first dispatch lands in ret_from_fork (syscall_entry.S) — the shared
  * pop-and-SYSRETQ tail — resuming it in ring 3 at the fork return point.  Sibling
  * of aarch64's aarch64_fork (kern/proc.c).
@@ -17,21 +20,26 @@
 #include <string.h>
 
 #define PTE_P 0x1
+#define PTE_RW 0x2
 #define PTE_US 0x4
 #define PTE_PS 0x80     /* 2 MB page (skip — kernel identity, never copied) */
 #define PTE_WIRED 0x200 /* available bit 9: share verbatim across fork (no copy) */
+#define PTE_COW 0x400   /* available bit 10: copy-on-write (frame shared read-only) */
 #define PTE_ADDR_MASK (~0xFFFUL)
 #define FRAME_SLOTS 7 /* 6 callee-saved + return address (matches cpu_switch.S) */
 
 extern void ret_from_fork(void);
 extern void x86_64_map_user_page_wired(uintptr_t pml4_phys, u64 va, u64 phys);
+extern void x86_64_map_user_page_cow(u64 pml4_phys, u64 va, u64 phys);
+extern int adjust_cow_counter(uintptr_t base_addr, int adjustment);
 extern u_int32_t numPages; /* RAM page count; frame >= numPages => MMIO (vmm.h) */
 
 /**
- * Deep-copy the parent's USER pages (the private PDPT[1..] region under PML4[0],
- * i.e. VAs >= 1 GB) into a fresh address space.  The kernel low-1 GB identity
- * (PDPT[0]) + the kernel higher half are shared by create_user_space; only the
- * user leaves are duplicated.  @return the child PML4 (physical), or 0.
+ * Copy-on-write the parent's USER pages (the private PDPT[1..] region under
+ * PML4[0], i.e. VAs >= 1 GB) into a fresh address space: both spaces reference the
+ * same frames read-only until one writes.  The kernel low-1 GB identity (PDPT[0]) +
+ * the kernel higher half are shared by create_user_space; only the user leaves are
+ * re-mapped.  @return the child PML4 (physical), or 0.
  */
 static u64 x86_64_fork_copy(u64 parent_pml4)
 {
@@ -56,7 +64,7 @@ static u64 x86_64_fork_copy(u64 parent_pml4)
 			for (ti = 0; ti < 512; ti++)
 			{
 				u64 pte = ppt[ti];
-				u64 va, frame, phys;
+				u64 va, phys;
 				if ((pte & PTE_P) == 0 || (pte & PTE_US) == 0)
 					continue;
 				va = ((u64)pi << 30) | ((u64)di << 21) | ((u64)ti << 12);
@@ -78,11 +86,24 @@ static u64 x86_64_fork_copy(u64 parent_pml4)
 					continue;
 				}
 
-				frame = vmm_find_free_page(sysID);
-				if (frame == 0)
-					return 0;
-				memcpy(P2V(frame), P2V(phys), PAGE_SIZE);
-				x86_64_map_user_page_to(child, va, frame, (pte & 0x2) ? 1 : 0);
+				/* Copy-on-write: share the frame read-only in BOTH parent and child;
+				 * the first writer faults into x86_64_cow_fault for a private copy.
+				 * Mark the parent RO+COW the first time the frame is shared, then bump
+				 * the COW refcount by 2 (parent + child) — or by 1 if it was already
+				 * COW from an earlier fork.  Matches i386/aarch64's COW convention. */
+				{
+					int already = (pte & PTE_COW) != 0;
+					if (!already)
+					{
+						ppt[ti] = (pte & ~(u64)PTE_RW) | PTE_COW; /* parent: RO + COW */
+						__asm__ __volatile__("invlpg (%0)"
+						                     :
+						                     : "r"((void *)(uintptr_t)va)
+						                     : "memory");
+					}
+					x86_64_map_user_page_cow(child, va, phys); /* child: RO + COW, same frame */
+					adjust_cow_counter((uintptr_t)phys, already ? 1 : 2);
+				}
 			}
 		}
 	}

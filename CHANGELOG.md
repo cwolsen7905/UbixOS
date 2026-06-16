@@ -8,6 +8,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **x86_64 copy-on-write fork.** `fork` no longer deep-copies the parent's user
+  pages — it shares them read-only in both spaces (`PTE_COW`, software bit 10) and
+  bumps the MI COW refcount (`adjust_cow_counter`, `+2` first share / `+1` if already
+  COW — the i386/aarch64 convention), so a fresh `fork` allocates no page frames.
+  The first writer (ring 3 or ring 0) takes a `#PF`, which `x86_64_cow_fault`
+  resolves by handing it a private writable copy and releasing its COW reference; the
+  frame is freed at the last sharer (the existing COW-aware `free_page` +
+  `x86_64_free_user_space`).  Wired pages (framebuffer / shared window buffers) are
+  still shared verbatim and MMIO skipped.  This closes the biggest memory-efficiency
+  gap with aarch64.  Verified: the desktop, the deep `term → tcsh` fork chain, and
+  `ls` all run cleanly (every process writes to COW'd pages post-fork → the fault
+  path is exercised continuously), 0 faults.
 - **x86_64 SMP — the application processors boot.** The secondary CPUs now come out
   of reset and execute 64-bit kernel code.  A new `boot/ap_trampoline.S` walks an AP
   from its 16-bit real-mode SIPI entry through protected mode to 64-bit long mode on
