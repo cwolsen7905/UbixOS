@@ -11,11 +11,9 @@
  * drive the ABI.
  */
 
-/* Pointer-returning: callers dereference the result, so return NULL. */
-void *ubx_device_find()
-{
-	return 0;
-}
+/* ubx_device_find (the devfs char/block lookup that delegates to g_device_find)
+ * is the real implementation in dev/ac97.c — it needs <sys/bus.h>/<sys/descrip.h>
+ * whose prototypes conflict with this file's deliberately-loose K&R stubs. */
 long inportByte()
 {
 	return -1;

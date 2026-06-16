@@ -174,6 +174,9 @@ void kmain_x86_64(u32 mb_magic, u32 mb_info)
 		 * init handoff, once the scheduler can run the tcpip + RX threads). */
 		x86_64_virtio_net_init();
 
+		/* Probe the AC'97 audio controller and register /dev/audio (for aural). */
+		x86_64_ac97_init();
+
 		/* Partition 1 (vtblk0s1, major 1 / minor 1) is the FAT volume. */
 		if (vfs_mount(1, 1, 0, VFS_TYPE_FAT, "/", "rw") == 0)
 		{

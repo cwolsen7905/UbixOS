@@ -8,6 +8,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **x86_64 audio — AC'97 driver + /dev/audio.** A new `sys/arch/x86_64/dev/ac97.c`
+  drives QEMU's Intel 82801AA AC'97 (PCI 8086:2415) and registers the device-model
+  char node `/dev/audio` (major 20) with the same `dev_char_write`/`dev_char_ioctl`
+  contract as i386's `sys/pci/ac97.c` and aarch64's `dev/virtio_sound.c`, so the
+  `aural` mixer + `libaudio` veneer run unchanged.  AC'97 (not virtio-sound) because
+  the bring-up speaks only legacy virtio-pci while QEMU's virtio-sound is modern-only
+  — same reason the framebuffer uses std-VGA.  Poll-based (no IRQ, like the other
+  x86_64 virtio drivers): `dev_char_write` stages PCM into a software ring and drains
+  it into a 32-entry bus-master BDL, keeping a small window of buffers queued just
+  ahead of the play head and advancing LVI (which also resumes the engine from an
+  underrun).  The enabling glue: x86_64's `ubx_device_find` (was a `-1` stub) now
+  delegates to the `g_device_find` hook so devfs char-write/ioctl resolves
+  `/dev/audio` (mirrors aarch64 ksupport).  Verified end-to-end headless: a 440 Hz
+  square wave written through the driver is captured at QEMU's AC97 output as PCM
+  with the exact ±8000 amplitude.  Closes the last desktop-parity gap with aarch64.
 - **x86_64 Disk Utility + Activity Monitor data layers (the app-suite parity pass).**
   Implemented the last three machine-dependent hooks the desktop apps need on x86_64,
   all previously stubbed to `-1`:

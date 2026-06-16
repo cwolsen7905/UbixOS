@@ -412,7 +412,8 @@ run-x86_64:
 	  -drive file=${DISK_IMAGE_X86_64},format=raw,if=none,id=hd0 \
 	  -device virtio-blk-pci,drive=hd0,disable-modern=true \
 	  -netdev user,id=n0 \
-	  -device virtio-net-pci,netdev=n0,disable-modern=true
+	  -device virtio-net-pci,netdev=n0,disable-modern=true \
+	  -audiodev coreaudio,id=snd0 -device AC97,audiodev=snd0
 
 # Headless x86_64 run: serial only to stdout, no display (the bring-up console for
 # debugging).  Ctrl-A X quits.
@@ -421,7 +422,8 @@ run-debug-x86_64:
 	  -drive file=${DISK_IMAGE_X86_64},format=raw,if=none,id=hd0 \
 	  -device virtio-blk-pci,drive=hd0,disable-modern=true \
 	  -netdev user,id=n0 \
-	  -device virtio-net-pci,netdev=n0,disable-modern=true
+	  -device virtio-net-pci,netdev=n0,disable-modern=true \
+	  -audiodev coreaudio,id=snd0 -device AC97,audiodev=snd0
 
 # musl libc per-arch knobs.  i386 uses the FreeBSD stack ABI (-m32, no SSE) and a
 # hand-rolled libgcc32; aarch64 uses the stock SVC ABI + the real libgcc.  Both

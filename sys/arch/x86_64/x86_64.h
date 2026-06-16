@@ -150,6 +150,9 @@ void x86_64_mouse_init(void);
 int x86_64_virtio_net_init(void); /* probe the virtio-net-pci device */
 int x86_64_net_init(void);        /* start lwIP (tcpip thread + DHCP) over it */
 
+/* dev/ac97.c — Intel AC'97 audio; registers /dev/audio (major 20). */
+int x86_64_ac97_init(void);
+
 /* kern/madt.c — ACPI MADT CPU enumeration into the MI cpu_enum table (SMP phase 1). */
 void x86_64_enum_cpus(void);
 
