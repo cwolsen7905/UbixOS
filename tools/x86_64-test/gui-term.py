@@ -77,7 +77,7 @@ def main():
 
     qemu = subprocess.Popen([
         "qemu-system-x86_64", "-m", "256", "-smp", "2",
-        "-kernel", KERNEL, "-display", "none", "-vga", "std",
+        "-cpu", "qemu64,+x2apic", "-kernel", KERNEL, "-display", "none", "-vga", "std",
         "-serial", "file:" + SERIAL,
         "-drive", "file=%s,format=raw,if=none,id=hd0" % IMAGE,
         "-device", "virtio-blk-pci,drive=hd0,disable-modern=true",
