@@ -60,14 +60,6 @@ long sys_getcwd()
 {
 	return -1;
 }
-long sys_getkbd()
-{
-	return -1;
-}
-long sys_getmouse()
-{
-	return -1;
-}
 long sys_getvfscwd()
 {
 	return -1;
