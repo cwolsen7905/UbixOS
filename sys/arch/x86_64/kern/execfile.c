@@ -89,14 +89,40 @@ static char *read_elf_file(const char *path, int *out_size)
  *
  * @return the user-space stack pointer (16-byte aligned, points at argc).
  */
-static u64 build_dyn_stack(
-    u8 *frame, u64 page_uva, char **argv, int argc, char **envp, int envc, const elf64_load_info_t *mi, u64 interp_base)
+static u64 build_dyn_stack(u8 *frame,
+                           u64 page_uva,
+                           char **argv,
+                           int argc,
+                           char **envp,
+                           int envc,
+                           const elf64_load_info_t *mi,
+                           u64 interp_base,
+                           u64 limit)
 {
 	u8 *p = frame + PAGE_SIZE;
 	u64 argv_uva[MAXARG], envp_uva[MAXARG], random_uva;
 	u64 *vec;
 	int i, k = 0, nvec;
+	size_t need;
 #define UVA(ptr) (page_uva + (u64)((u8 *)(ptr) - frame))
+
+	/* The argv/env strings + the AT_RANDOM block + the argc/argv/envp/auxv vector
+	 * are all laid down below the top of the stack, descending from @frame's top.
+	 * @limit is how far down that may go (the reserved, physically-contiguous arg
+	 * region).  Size it up front and bail cleanly on overflow rather than writing
+	 * past the region and corrupting adjacent kernel memory (a huge environment
+	 * must fail the exec, not silently scribble). */
+	nvec = 1 + argc + 1 + envc + 1 + 16;
+	need = 16 + 32 /* AT_RANDOM + two 16-byte alignment slacks */ + (size_t)nvec * sizeof(u64);
+	for (i = 0; i < argc; i++)
+		need += strlen(argv[i]) + 1;
+	for (i = 0; i < envc; i++)
+		need += strlen(envp[i]) + 1;
+	if (need > limit)
+	{
+		kprintf("execve: argv+env (%u bytes) exceeds the %u-byte stack arg region\n", (u32)need, (u32)limit);
+		return 0;
+	}
 
 	for (i = 0; i < argc; i++)
 	{
@@ -200,22 +226,41 @@ static int load_dynamic(
 		start_entry = ii.entry; /* enter the dynamic linker, not the main exe */
 	}
 
-	/* Map a multi-page stack; the auxv/argv vector lives in the top page. */
+	/* Allocate the whole stack as one *contiguous* run of frames.  The argv/env/auxv
+	 * vector is laid down from the top descending, and contiguous frames keep both
+	 * the kernel P2V view and the user VA linear — so the vector can span as many
+	 * pages as it needs (the pointer math in build_dyn_stack stays valid across page
+	 * boundaries) instead of being capped at a single page.  256 KB (DYN_STACK_PAGES)
+	 * is readily available at the early-boot execs; a contiguous-alloc failure fails
+	 * the exec cleanly rather than corrupting. */
 	{
-		uintptr_t top_frame = 0;
+		uintptr_t stack_base;
+		uintptr_t top_kv;
 		int i;
+
+		stack_base = vmm_find_free_pages_contig(DYN_STACK_PAGES, sysID);
+		if (stack_base == 0)
+			return -1;
+		memset((void *)P2V(stack_base), 0, (size_t)DYN_STACK_PAGES * PAGE_SIZE);
 		for (i = 0; i < DYN_STACK_PAGES; i++)
-		{
-			uintptr_t f = vmm_find_free_page(sysID);
-			if (f == 0)
-				return -1;
-			memset((void *)P2V(f), 0, PAGE_SIZE);
-			x86_64_map_user_page_to(pml4, DYN_STACK_VA + (u64)i * PAGE_SIZE, (u64)f, 1);
-			if (i == DYN_STACK_PAGES - 1)
-				top_frame = f;
-		}
-		*out_usp = build_dyn_stack(
-		    (u8 *)P2V(top_frame), DYN_STACK_TOP - PAGE_SIZE, argv, argc, envp, envc, &mi, interp_base);
+			x86_64_map_user_page_to(
+			    pml4, DYN_STACK_VA + (u64)i * PAGE_SIZE, (u64)(stack_base + (uintptr_t)i * PAGE_SIZE), 1);
+
+		/* build_dyn_stack writes top-down from the topmost page.  Reserve the lower
+		 * half of the stack for runtime growth; the argv/env/auxv vector may use the
+		 * top half (128 KB) — far beyond any real argv + environment. */
+		top_kv = (uintptr_t)P2V(stack_base + (uintptr_t)(DYN_STACK_PAGES - 1) * PAGE_SIZE);
+		*out_usp = build_dyn_stack((u8 *)top_kv,
+		                           DYN_STACK_TOP - PAGE_SIZE,
+		                           argv,
+		                           argc,
+		                           envp,
+		                           envc,
+		                           &mi,
+		                           interp_base,
+		                           (u64)(DYN_STACK_PAGES / 2) * PAGE_SIZE);
+		if (*out_usp == 0)
+			return -1;
 	}
 
 	*out_entry = start_entry;

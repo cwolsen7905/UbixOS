@@ -386,6 +386,18 @@ First entries of the 3.0 series (64-bit only: x86_64 + aarch64).  Development on
     mirroring aarch64's `pmap_free_user_space`.  Verified: desktop login + terminal
     still clean (0 faults) with the teardown running on every process's exec.
 
+  - *Phase 5e — multi-page initial stack (argv/env no longer 1-page-capped).* The
+    SysV initial stack's argv/env strings + auxv vector were all written into the
+    single top stack page; a large argv + environment would silently run past it and
+    corrupt adjacent kernel memory.  `load_dynamic` now allocates the whole stack as
+    one **contiguous** run of frames (`vmm_find_free_pages_contig`), so the vector —
+    laid down top-down — can span pages with both the kernel P2V view and the user VA
+    staying linear (the pointer math in `build_dyn_stack` is unbroken across page
+    boundaries).  `build_dyn_stack` gained a `limit` (the top half of the stack,
+    128 KB) and now sizes the argv/env/auxv up front, failing the exec cleanly with a
+    log if it would overflow instead of scribbling.  Verified: desktop login + the
+    tcsh terminal (`HOME`/`SHELL`/`TERM` env) still clean (0 faults).
+
   **With mmap/execve/fork/signals in place, the x86_64 kernel can now load, run,
   fork, and signal real on-disk binaries — the full runtime a userland needs.**
   `bmake TARGET=x86_64` builds the bring-up kernel only (the x86_64 userland/world is
