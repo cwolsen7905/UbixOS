@@ -41,6 +41,39 @@ struct __timespec {
     long tv_nsec; /* and nanoseconds */
 };
 
+#if defined(__x86_64__)
+/*
+ * x86-64: the kernel fills the struct musl reads as its `struct kstat`
+ * (contrib/musl/arch/x86_64/kstat.h — the Linux x86_64 layout), NOT the FreeBSD
+ * layout below.  The FreeBSD layout's 8-byte `long` time fields precede st_size
+ * on LP64, pushing st_size to byte 72; musl's x86_64 kstat reads st_size at byte
+ * 48, so fstat()/stat() reported a bogus size (e.g. the desktop PNG wallpaper
+ * failed to load).  This branch is byte-identical to musl's kstat (144 bytes,
+ * st_size @ 48) so every fstat-by-size caller is correct.  i386 (ILP32) and
+ * aarch64 keep the FreeBSD layout below — unchanged.  sys_fstat/stat/lstat only
+ * write the 11 fields named here; the rest mirror musl's kstat padding.
+ */
+struct stat {
+    __uint64_t st_dev;
+    __uint64_t st_ino;
+    __uint64_t st_nlink;
+    __uint32_t st_mode;
+    __uint32_t st_uid;
+    __uint32_t st_gid;
+    __uint32_t __pad0;
+    __uint64_t st_rdev;
+    __int64_t st_size;
+    __int64_t st_blksize;
+    __int64_t st_blocks;
+    __int64_t st_atime;
+    __int64_t __st_atimensec;
+    __int64_t st_mtime;
+    __int64_t __st_mtimensec;
+    __int64_t st_ctime;
+    __int64_t __st_ctimensec;
+    __int64_t __kstat_pad[3];
+};
+#else
 struct stat {
     __dev_t st_dev; /* inode's device */
     ino_t st_ino; /* inode's number */
@@ -66,6 +99,7 @@ struct stat {
     unsigned int :(8 / 2) * (16 - (int) sizeof(struct __timespec));
     unsigned int :(8 / 2) * (16 - (int) sizeof(struct __timespec));
 };
+#endif /* __x86_64__ */
 
 /* Linux statx structure — used by sys_statx (slot 383) */
 #define AT_EMPTY_PATH   0x1000

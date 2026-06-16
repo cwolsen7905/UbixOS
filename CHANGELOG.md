@@ -12,15 +12,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   at 1024×768 (4:3); it now uses 1280×720 (3.7 MB, well within the 16 MB LFB).
 
 ### Fixed
-- **x86_64 desktop wallpaper now renders.** objGFX's PNG loader sized the file with
-  `fstat()`, but the kernel's FreeBSD-derived `struct stat` doesn't place `st_size`
-  at the offset musl's x86_64 `kstat` reads, so the whole-file slurp got a bogus
-  size and every PNG wallpaper failed to load (the desktop fell back to a flat
-  background; BMPs like the login screen's `ubix.bmp` were unaffected since
-  `DecodeBMP` reads its own header).  `DecodePNG` now sizes the file with
-  `lseek(SEEK_END)` — which returns the offset via the syscall result, immune to
-  the stat ABI, and is the same path `DecodeBMP` already used.  Fixes PNG wallpapers
-  on all arches.
+- **x86_64 `fstat`/`stat` reported a bogus `st_size`.** The kernel's FreeBSD-derived
+  `struct stat` puts `st_size` after the timestamp fields; on LP64 those 8-byte
+  `long` times pushed `st_size` to byte 72, but musl's x86_64 `kstat` (which the
+  kernel actually fills) reads it at byte 48 — so every `fstat`/`stat`-by-size
+  caller on x86_64 got garbage (`ls -l` sizes, file managers, and the desktop PNG
+  wallpaper, which failed to load → flat background; BMPs were unaffected since
+  `DecodeBMP` reads its own header).  The x86_64 kernel `struct stat` is now
+  byte-identical to musl's x86_64 `kstat` (144 bytes, `st_size` @ 48), arch-gated so
+  i386 (ILP32) and aarch64 are untouched.  `ls -l /var/background` now shows correct
+  sizes.  (objGFX's `DecodePNG` was also switched to size via `lseek(SEEK_END)` — a
+  belt-and-suspenders path immune to the stat ABI that also benefits other arches.)
 
 ### Added
 - **x86_64 `sysinfo` + `nanosleep` syscalls (were `-1` stubs).** `sys_sysinfo`
