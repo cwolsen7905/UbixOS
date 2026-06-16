@@ -62,11 +62,17 @@ static u64 x86_64_fork_copy(u64 parent_pml4)
 				va = ((u64)pi << 30) | ((u64)di << 21) | ((u64)ti << 12);
 				phys = pte & PTE_ADDR_MASK;
 
-				/* Wired (PTE_WIRED) or MMIO (frame >= RAM, e.g. the framebuffer BAR)
-				 * pages are SHARED verbatim, not copied: a copy would split a shared
-				 * window buffer off its other end, and an MMIO frame has no physmap
-				 * (P2V) entry to memcpy from anyway.  Map the same physical frame. */
-				if ((pte & PTE_WIRED) || (phys >> 12) >= numPages)
+				/* MMIO (frame >= RAM, e.g. the framebuffer BAR): the child does NOT
+				 * inherit device memory — only the process that mapped it (views) uses
+				 * the live scanout, and an MMIO frame has no physmap (P2V) entry to
+				 * copy from.  Skip it. */
+				if ((phys >> 12) >= numPages)
+					continue;
+
+				/* Wired (PTE_WIRED) pages — a shared window buffer — are SHARED
+				 * verbatim, not copied: a copy would split the buffer off its other
+				 * end (compositor <-> client).  Map the same physical frame. */
+				if (pte & PTE_WIRED)
 				{
 					x86_64_map_user_page_wired(child, va, phys);
 					continue;
