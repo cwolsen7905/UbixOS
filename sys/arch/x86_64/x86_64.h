@@ -151,6 +151,10 @@ int x86_64_net_init(void);        /* start lwIP (tcpip thread + DHCP) over it */
 /* kern/madt.c — ACPI MADT CPU enumeration into the MI cpu_enum table (SMP phase 1). */
 void x86_64_enum_cpus(void);
 
+/* kern/smp.c — start the application processors (INIT-SIPI-SIPI via x2APIC). */
+int x86_64_smp_init(void);
+void x86_64_ap_entry(u32 cpuid); /* AP 64-bit entry from ap_trampoline.S */
+
 /* dev/virtio_blk.c — virtio-blk over legacy virtio-pci (Phase 5c). */
 struct ubx_device;
 int virtio_blk_init(void);

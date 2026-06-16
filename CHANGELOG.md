@@ -8,6 +8,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **x86_64 SMP — the application processors boot.** The secondary CPUs now come out
+  of reset and execute 64-bit kernel code.  A new `boot/ap_trampoline.S` walks an AP
+  from its 16-bit real-mode SIPI entry through protected mode to 64-bit long mode on
+  the **shared kernel PML4** (mirroring the BSP's `start.S`), then jumps to
+  `x86_64_ap_entry`; `kern/smp.c` drives it: enable **x2APIC** (MSR-based IPIs — no
+  LAPIC MMIO mapping needed), software-enable the LAPIC and set `LINT0=ExtINT` (so the
+  legacy 8259 PIT keeps reaching the CPU — enabling the LAPIC otherwise silences the
+  timer and freezes `sysTicks`/preemption), stage the trampoline at a low page, and
+  `INIT`-`SIPI`-`SIPI` each enumerated AP, confirming liveness via its per-CPU
+  heartbeat.  Each AP installs its own `%gs`/`struct pcpu` and parks in a halted
+  per-CPU idle (0% CPU; it does not yet pull from the run queue — real scheduler
+  participation needs run-queue locking and lands as a later unit).  Verified under
+  `-smp 2 -cpu qemu64,+x2apic`: `smp: cpu1 (apic 1) online`, and the desktop boots
+  normally with the timer intact (the BSP runs everything; 0 faults).  The run targets
+  pass `+x2apic`.
 - **x86_64 SMP phase 1 — ACPI MADT CPU enumeration.** A new `arch/x86_64/kern/madt.c`
   walks RSDP → RSDT → MADT and records each Processor Local APIC in the MI `cpu_enum`
   table (the same table i386's `madt.c` and aarch64's `/cpus` parser feed).  It reads

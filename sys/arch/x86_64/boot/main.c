@@ -81,9 +81,13 @@ void kmain_x86_64(u32 mb_magic, u32 mb_info)
 	}
 
 	/* SMP phase 1: enumerate CPUs from the ACPI MADT into the MI cpu_enum table
-	 * (the physmap is up, so the ACPI tables in low RAM are readable via P2V).
-	 * Discovery only — the APs are not started yet. */
+	 * (the physmap is up, so the ACPI tables in low RAM are readable via P2V). */
 	x86_64_enum_cpus();
+
+	/* SMP: start the application processors (INIT-SIPI-SIPI via x2APIC).  Each AP
+	 * walks to long mode on the kernel PML4 and parks in a per-CPU idle.  The BSP's
+	 * CR3 here is the kernel PML4 (no process has execve'd yet), which the APs adopt. */
+	x86_64_smp_init();
 
 	/* Phase 4a: PIC + PIT timer + interrupts. */
 	pic_remap();

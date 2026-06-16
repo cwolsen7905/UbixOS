@@ -407,7 +407,7 @@ kernel-x86_64:
 # I/O-BAR register window the bring-up driver speaks).  On Apple Silicon x86_64
 # runs under TCG (no HVF for a foreign arch), so it is emulated — slower but works.
 run-x86_64:
-	qemu-system-x86_64 -m 256 -smp ${SMP} -kernel ${OBJ_DIR}/boot/kernel \
+	qemu-system-x86_64 -m 256 -smp ${SMP} -cpu qemu64,+x2apic -kernel ${OBJ_DIR}/boot/kernel \
 	  -vga std -serial mon:stdio \
 	  -drive file=${DISK_IMAGE_X86_64},format=raw,if=none,id=hd0 \
 	  -device virtio-blk-pci,drive=hd0,disable-modern=true \
@@ -417,7 +417,7 @@ run-x86_64:
 # Headless x86_64 run: serial only to stdout, no display (the bring-up console for
 # debugging).  Ctrl-A X quits.
 run-debug-x86_64:
-	qemu-system-x86_64 -m 256 -smp ${SMP} -kernel ${OBJ_DIR}/boot/kernel -nographic \
+	qemu-system-x86_64 -m 256 -smp ${SMP} -cpu qemu64,+x2apic -kernel ${OBJ_DIR}/boot/kernel -nographic \
 	  -drive file=${DISK_IMAGE_X86_64},format=raw,if=none,id=hd0 \
 	  -device virtio-blk-pci,drive=hd0,disable-modern=true \
 	  -netdev user,id=n0 \
