@@ -293,6 +293,16 @@ First entries of the 3.0 series (64-bit only: x86_64 + aarch64).  Development on
     `bmake run TARGET=x86_64` now opens a graphical std-VGA window (serial on stdio);
     `run-debug-x86_64` is the headless serial-only variant.  (Input — keyboard/mouse
     — and the GUI terminal's pty are the next step.)
+  - *Phase 5e — native int \$0x81 4th-arg fix + window sharing.* The native-ABI
+    thunk (`int \$0x81`) leaves args in the C ABI, where the 4th arg is in **RCX**;
+    `x86_64_native_syscall` was reading **R10** (correct only for the
+    `syscall`-instruction POSIX path, which clobbers RCX).  So any native call with
+    ≥4 args dropped its 4th — notably `sys_shareregion(dst, vaddr, size, out_vaddr)`,
+    whose NULL `out_vaddr` left views handing vlogin a NULL window buffer ("failed to
+    claim window").  Reading RCX fixes it: views now creates vlogin's window with a
+    valid shared buffer (`shm=0x200023000`), keyboard input reaches the kernel
+    (polled PS/2, `dev/input.c`), and the login dialog renders.  (Routing keys into
+    vlogin's fields + the post-auth session are the remaining desktop polish.)
 
   **With mmap/execve/fork/signals in place, the x86_64 kernel can now load, run,
   fork, and signal real on-disk binaries — the full runtime a userland needs.**

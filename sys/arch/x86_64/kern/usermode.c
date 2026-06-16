@@ -492,7 +492,13 @@ void x86_64_native_syscall(struct x86_64_trapframe *tf)
 	extern void endTask(int pid);
 	extern void sched(void);
 
-	u64 args[6] = {tf->rdi, tf->rsi, tf->rdx, tf->r10, tf->r8, tf->r9};
+	/* The native int $0x81 thunk (include/sys/ubix_syscall.h) leaves args in the C
+	 * ABI registers — the 4th arg is in RCX, NOT R10.  (The `syscall`-instruction
+	 * POSIX path uses R10 because syscall clobbers RCX with the return RIP; an
+	 * interrupt gate does not, so RCX survives here.)  Reading R10 dropped the 4th
+	 * arg of e.g. sys_shareregion(dst, vaddr, size, out_vaddr) -> views got a NULL
+	 * shared-window pointer and vlogin could not claim its window. */
+	u64 args[6] = {tf->rdi, tf->rsi, tf->rdx, tf->rcx, tf->r8, tf->r9};
 	u32 n = (u32)(tf->rax & ~(u64)NATIVE_FLAG); /* strip the flag musl may OR in */
 
 	_current->td.frame = (struct trapframe *)tf;
