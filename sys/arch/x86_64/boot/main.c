@@ -80,6 +80,11 @@ void kmain_x86_64(u32 mb_magic, u32 mb_info)
 		vitals_init();
 	}
 
+	/* SMP phase 1: enumerate CPUs from the ACPI MADT into the MI cpu_enum table
+	 * (the physmap is up, so the ACPI tables in low RAM are readable via P2V).
+	 * Discovery only — the APs are not started yet. */
+	x86_64_enum_cpus();
+
 	/* Phase 4a: PIC + PIT timer + interrupts. */
 	pic_remap();
 	pit_init(100); /* 100 Hz */

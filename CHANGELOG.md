@@ -8,6 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **x86_64 SMP phase 1 — ACPI MADT CPU enumeration.** A new `arch/x86_64/kern/madt.c`
+  walks RSDP → RSDT → MADT and records each Processor Local APIC in the MI `cpu_enum`
+  table (the same table i386's `madt.c` and aarch64's `/cpus` parser feed).  It reads
+  the ACPI tables directly through the physmap (P2V) rather than i386's per-table
+  identity remap, and takes the boot CPU's APIC id from `CPUID`.  Called at boot;
+  discovery only (the APs are not started yet).  Verified under `-smp 2`: `madt:
+  enumerated 2 CPU(s) from ACPI`.  Foundation for AP startup.
 - **x86_64 network tools: `wget` + `httpsget`.** Added to the x86_64 `bin/` build
   (`libhttp` + `libbearssl` were already cross-built and the socket stack works), so
   `bmake world`/`image TARGET=x86_64` ship them.  Verified end to end against a local

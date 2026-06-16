@@ -148,6 +148,9 @@ void x86_64_mouse_init(void);
 int x86_64_virtio_net_init(void); /* probe the virtio-net-pci device */
 int x86_64_net_init(void);        /* start lwIP (tcpip thread + DHCP) over it */
 
+/* kern/madt.c — ACPI MADT CPU enumeration into the MI cpu_enum table (SMP phase 1). */
+void x86_64_enum_cpus(void);
+
 /* dev/virtio_blk.c — virtio-blk over legacy virtio-pci (Phase 5c). */
 struct ubx_device;
 int virtio_blk_init(void);
