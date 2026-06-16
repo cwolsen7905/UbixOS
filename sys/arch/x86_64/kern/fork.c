@@ -117,13 +117,16 @@ long x86_64_fork(struct x86_64_trapframe *parent_tf)
 	child->parent = _current;
 	_current->children++;
 
-	/* Inherit the open-file table so the child keeps stdin/stdout/stderr + fds. */
-	for (i = 0; i < O_FILES; i++)
-		child->td.o_files[i] = _current->td.o_files[i];
-
-	/* Inherit the current working directory (else the child's cwd is empty and
-	 * relative-path resolution in the VFS breaks). */
-	memcpy(child->oInfo.cwd, _current->oInfo.cwd, sizeof(child->oInfo.cwd));
+	/* Deep-copy the open-file table and inherit cwd / pgrp / controlling tty /
+	 * creds / QoS, then reset the child's signal state — via the MI fork helpers
+	 * (kern/fork.c), exactly as i386 and aarch64 do.  A shallow o_files *pointer*
+	 * copy is unsafe: the child would share the parent's struct file objects, so
+	 * when an ancestor (e.g. vlogin) closes its fds or exits and kfree()s them, the
+	 * child is left holding dangling pointers and faults (#GP) on its next read/
+	 * close.  fork_copy_fdtable gives the child its own copies. */
+	fork_copy_fdtable(child, &_current->td);
+	proc_fork_inherit_context(child);
+	proc_fork_signal_init(child, &_current->td);
 
 	/* Child kernel stack: a copy of the parent trapframe at the top (rax = 0), and
 	 * below it a ctx frame whose return address is ret_from_fork. */

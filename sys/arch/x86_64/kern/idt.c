@@ -179,12 +179,25 @@ void x86_64_exception(struct x86_64_trapframe *tf)
 
 	/* Fault-containment: a fault taken in ring 3 (CS RPL == 3) is the user
 	 * program's fault, not the kernel's — terminate the task and schedule on, so a
-	 * buggy app can't take down the OS (the x86_64 analog of aarch64's EL0->kill).
-	 * A ring-0 fault is a kernel bug; halt so it stays visible. */
+	 * buggy app can't take down the OS (the x86_64 analog of aarch64's EL0->kill). */
 	if ((tf->cs & 3) == 3)
 	{
 		serial_puts("  (ring-3 fault — terminating the task)\n");
 		endTask(_current ? _current->id : 0);
+		sched();
+		/* not reached */
+	}
+
+	/* A ring-0 fault while servicing a *user process's* syscall (md_usp != 0 marks a
+	 * ring-3 task) is almost always that syscall dereferencing a bad user-supplied
+	 * value — recoverable by killing the offending task rather than halting the whole
+	 * OS (e.g. a corrupt fork child passing a garbage fd).  The syscall faulted before
+	 * mutating shared state in the cases that hit this, so abandoning its kernel stack
+	 * is survivable.  A fault with no user task is a genuine kernel bug — halt. */
+	if (_current != 0 && _current->md.md_usp != 0)
+	{
+		serial_puts("  (ring-0 fault in a syscall — terminating the user task)\n");
+		endTask(_current->id);
 		sched();
 		/* not reached */
 	}

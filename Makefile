@@ -297,6 +297,7 @@ X86_64_GENERIC_SRCS = \
 	sys/kern/sched_core.c \
 	sys/kern/sched_dispatch.c \
 	sys/kern/elf64_load.c \
+	sys/kern/kern_fork.c \
 	sys/kern/syscalls.c \
 	sys/kern/syscall_dispatch.c \
 	sys/kern/descrip.c \

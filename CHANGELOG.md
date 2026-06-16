@@ -304,6 +304,23 @@ First entries of the 3.0 series (64-bit only: x86_64 + aarch64).  Development on
     (polled PS/2, `dev/input.c`), and the login dialog renders.  (Routing keys into
     vlogin's fields + the post-auth session are the remaining desktop polish.)
 
+  - *Phase 5e — graphical login completes (fork fdtable + ring-0 fault containment).*
+    The desktop now logs in end-to-end: typing `root`/`user` authenticates, the login
+    dialog is dismissed, and the themed desktop (wallpaper + taskbar with the uBixOS
+    menu, tray, and clock) comes up — with **no kernel faults**.  Two fixes: (1)
+    `x86_64_fork` was copying the open-file table by *pointer* (a shallow `o_files[i]
+    = parent[i]`), so a deep fork chain (views → vlogin → session) left the leaf
+    process sharing `struct file` objects that an ancestor `kfree`d on exit — the
+    dangling pointer then `#GP`'d on the next `read`/`close`.  It now calls the MI
+    `fork_copy_fdtable` / `proc_fork_inherit_context` / `proc_fork_signal_init`
+    helpers (`sys/kern/kern_fork.c`, added to the x86_64 build) exactly as i386 and
+    aarch64 do, giving the child its own file copies.  (2) The ring-0 exception path
+    now *contains* a fault taken while servicing a user process's syscall — it
+    terminates the offending task and reschedules (the x86_64 analog of the ring-3
+    `EL0→kill` containment) instead of halting the whole OS, so a single bad syscall
+    can no longer freeze the desktop.  Verified headless (QMP send-key + screendump,
+    `tools/x86_64-test/gui-login.py`): clean boot → auth → desktop, zero exceptions.
+
   **With mmap/execve/fork/signals in place, the x86_64 kernel can now load, run,
   fork, and signal real on-disk binaries — the full runtime a userland needs.**
   `bmake TARGET=x86_64` builds the bring-up kernel only (the x86_64 userland/world is
