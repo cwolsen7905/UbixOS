@@ -417,6 +417,17 @@ First entries of the 3.0 series (64-bit only: x86_64 + aarch64).  Development on
     now attach a `virtio-net-pci` NIC on QEMU user-net.  Verified headless: `virtio-net:
     vtnet0 ready` → `net: DHCP bound IP=10.0.2.15 gw=10.0.2.2`, with the desktop up.
 
+- **NetSurf browser on x86_64.** The `tools/build-netsurf.sh` cross-build gained an
+  x86_64 branch (PIE + SSE on + `elf_x86_64` + `ld-musl-x86_64.so.1`, like the
+  aarch64 branch), and the world's Step 4 no longer skips x86_64.  `nsfb` now builds
+  for x86_64 (a stripped PIE the loader's `EXEC_MAX` accepts) against the already
+  cross-built NetSurf C libraries (libcss/libdom/libhubbub/libnsfb/…), and the image
+  ships it with its runtime resources.  Verified: launched from Start → Applications →
+  NetSurf on the x86_64 desktop, it renders the welcome page — logo, headings, the
+  search box, and the link grid — through hubbub/libdom/libcss + libnsfb/objGFX, with
+  the address bar, toolbar, scrollbars, and "Done" status.  (NetSurf now runs on all
+  three arches.)
+
 - **select/poll over a pseudo-terminal + a socket (interactive terminal net apps).**
   `sys_select`/`sys_poll` decided stdin readiness solely via the global
   `g_console_stdin_ready` hook, which tracks the *console* (serial/VGA), not an

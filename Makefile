@@ -513,9 +513,7 @@ world:
 	@echo "***************************************************************"
 	@echo "Step 4: Build NetSurf browser (nsfb)"
 	@echo "***************************************************************"
-	@if [ "${_ARCH}" != "x86_64" ]; then \
-	    ${MAKE} netsurf; \
-	  else echo "skip: NetSurf not yet ported to x86_64 (build-netsurf.sh hardcodes elf_i386)"; fi
+	${MAKE} netsurf
 	@echo
 	@echo "***************************************************************"
 	@echo "World Build For ${_ARCH} Completed On `LC_ALL=C date`"

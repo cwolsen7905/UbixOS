@@ -39,6 +39,11 @@ if [ "$ARCH" = "aarch64" ]; then
 	# The aarch64 world is PIE (the kernel's dynamic loader expects ET_DYN), so
 	# build nsfb PIE too: Scrt1.o + -pie + -fPIC.
 	PIE_CF="-fPIC"; PIE_LD="-pie"; CRT1="$ML/Scrt1.o"
+elif [ "$ARCH" = "x86_64" ]; then
+	# Like aarch64: PIE, SSE on (the amd64 SysV ABI returns floats in XMM), no -m32.
+	ARCH_MUSL="$MUSL/arch/x86_64"; ARCH_SIMD=""; M32=""
+	ARCH_LDEMUL="elf_x86_64"; INTERP="/lib/ld-musl-x86_64.so.1"; LIBGCC32=""
+	PIE_CF="-fPIC"; PIE_LD="-pie"; CRT1="$ML/Scrt1.o"
 else
 	ARCH_MUSL="$MUSL/arch/i386"
 	ARCH_SIMD="-mno-sse -mno-sse2 -mno-mmx -mno-3dnow"; M32="-m32"
