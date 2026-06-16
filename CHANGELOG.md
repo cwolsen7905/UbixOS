@@ -375,6 +375,17 @@ First entries of the 3.0 series (64-bit only: x86_64 + aarch64).  Development on
     spinning in a pure-CPU `while(1)` loop, the taskbar clock keeps advancing
     (19:00:17 → :20 over 4 s), proving the CPU-bound task is being preempted.
 
+  - *Phase 5e — execve reclaims the replaced address space.* `sys_execve` built a
+    fresh PML4 for the new image but never freed the old one, leaking the entire
+    previous address space on every exec.  New `x86_64_free_user_space` walks the
+    private user region (PML4[0] → PDPT[1..511] → PD → PT) freeing the leaf frames
+    and intermediate tables, skipping the shared kernel identity (PDPT[0]), the
+    kernel higher half (PML4[256..511]), and `PTE_WIRED`/MMIO frames (the framebuffer
+    + cross-process shared window buffers, owned elsewhere).  `sys_execve` calls it on
+    the old PML4 *after* the CR3 switch (never free the space you are executing on),
+    mirroring aarch64's `pmap_free_user_space`.  Verified: desktop login + terminal
+    still clean (0 faults) with the teardown running on every process's exec.
+
   **With mmap/execve/fork/signals in place, the x86_64 kernel can now load, run,
   fork, and signal real on-disk binaries — the full runtime a userland needs.**
   `bmake TARGET=x86_64` builds the bring-up kernel only (the x86_64 userland/world is

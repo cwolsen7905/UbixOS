@@ -379,6 +379,7 @@ int sys_execve(struct thread *td, struct sys_execve_args *uap)
 
 	/* Replace the current task's image and enter it.  switch_to re-arms rsp0 from
 	 * kernelStack, so update md_* and load the new CR3 ourselves, then IRETQ. */
+	u64 old_pml4 = _current->md.md_cr3;
 	_current->md.md_cr3 = pml4;
 	_current->md.md_entry = entry;
 	_current->md.md_usp = usp;
@@ -391,6 +392,14 @@ int sys_execve(struct thread *td, struct sys_execve_args *uap)
 	_current->md.md_fsbase = 0;
 	__asm__ __volatile__("wrmsr" : : "c"(0xC0000100u), "a"(0u), "d"(0u));
 	__asm__ __volatile__("mov %0, %%cr3" : : "r"(pml4) : "memory");
+
+	/* Reclaim the replaced image now that we run on the new CR3 — the old space's
+	 * frames are this task's private fork-copies / load frames (wired + MMIO are
+	 * skipped, so a shared window buffer or the framebuffer is never freed).  Done
+	 * AFTER the CR3 switch: never free the address space you are executing on.
+	 * Without this every exec leaked the whole previous image. */
+	x86_64_free_user_space(old_pml4);
+
 	x86_64_iret_to_user(entry, usp); /* does not return */
 	return 0;                        /* unreachable */
 }

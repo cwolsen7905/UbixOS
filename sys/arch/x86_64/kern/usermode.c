@@ -121,6 +121,7 @@ u64 x86_64_ring0_stack_top(void)
 #define PTE_P 0x1
 #define PTE_RW 0x2
 #define PTE_US 0x4
+#define PTE_PS 0x80     /* 2 MB page (a big page maps no sub-table to free) */
 #define PTE_WIRED 0x200 /* available bit 9: fork shares this page verbatim (no COW/copy) */
 #define PTE_ADDR_MASK (~0xFFFUL)
 
@@ -287,6 +288,67 @@ uintptr_t x86_64_create_user_space(void)
 	for (unsigned i = 256; i < 512; i++)
 		pml4[i] = kpml4[i];
 	return pml4_phys;
+}
+
+/**
+ * Free a user address space created by x86_64_create_user_space: walk the private
+ * user region (PML4[0] -> PDPT[1..511] -> PD -> PT) freeing the leaf frames and the
+ * intermediate page tables, then the PML4 itself.  Mirrors the fork-copy walk.
+ *
+ * Three things are deliberately NOT freed, because they are shared:
+ *   - PDPT[0]            the kernel low-1 GB identity PD (shared with every space)
+ *   - PML4[256..511]     the kernel higher half (shared)
+ *   - PTE_WIRED frames   the framebuffer + cross-process shared window buffers,
+ *                        owned by the mapper/peer; dropping the mapping is enough
+ *   - MMIO frames        (phys >> 12 >= numPages) have no allocator entry
+ *
+ * Used by execve to reclaim the replaced image (must run AFTER the CR3 switch to
+ * the new space — never free the space you are executing on).
+ */
+void x86_64_free_user_space(u64 pml4_phys)
+{
+	u64 *pml4, *pdpt, *pd, *pt;
+	unsigned pi, di, ti;
+
+	if (pml4_phys == 0)
+		return;
+	pml4 = (u64 *)P2V(pml4_phys);
+	if ((pml4[0] & PTE_P) == 0)
+	{
+		free_page(pml4_phys);
+		return;
+	}
+	pdpt = (u64 *)P2V(pml4[0] & PTE_ADDR_MASK);
+
+	for (pi = 1; pi < 512; pi++) /* skip PDPT[0] — shared kernel identity */
+	{
+		if ((pdpt[pi] & PTE_P) == 0)
+			continue;
+		pd = (u64 *)P2V(pdpt[pi] & PTE_ADDR_MASK);
+		for (di = 0; di < 512; di++)
+		{
+			if ((pd[di] & PTE_P) == 0 || (pd[di] & PTE_PS))
+				continue;
+			pt = (u64 *)P2V(pd[di] & PTE_ADDR_MASK);
+			for (ti = 0; ti < 512; ti++)
+			{
+				u64 pte = pt[ti];
+				u64 phys;
+				if ((pte & PTE_P) == 0)
+					continue;
+				phys = pte & PTE_ADDR_MASK;
+				/* Wired (shared window buffer / fb) or MMIO frames are owned
+				 * elsewhere — drop the mapping but never free the frame. */
+				if ((pte & PTE_WIRED) || (phys >> 12) >= numPages)
+					continue;
+				free_page((uintptr_t)phys);
+			}
+			free_page((uintptr_t)(pd[di] & PTE_ADDR_MASK)); /* the PT */
+		}
+		free_page((uintptr_t)(pdpt[pi] & PTE_ADDR_MASK)); /* the PD */
+	}
+	free_page((uintptr_t)(pml4[0] & PTE_ADDR_MASK)); /* the PDPT */
+	free_page(pml4_phys);                            /* the PML4 */
 }
 
 /** Set the kernel stack used on the next ring3->ring0 entry: the TSS rsp0 (for
