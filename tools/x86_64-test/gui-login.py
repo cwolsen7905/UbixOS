@@ -21,6 +21,7 @@ IMAGE = os.path.join(ROOT, "ubixos-x86_64.img")
 SERIAL = "/tmp/x86_64-gui-serial.log"
 QMP = "/tmp/x86_64-gui-qmp.sock"
 SHOT = "/tmp/x86_64-gui-shot.ppm"
+SHOT2 = "/tmp/x86_64-gui-shot-mouse.ppm"
 
 BOOT_WAIT = float(sys.argv[1]) if len(sys.argv) > 1 else 18.0
 
@@ -88,7 +89,26 @@ def main():
         time.sleep(6.0)                        # let the session spawn
         qmp(sock, "screendump", filename=SHOT)
         time.sleep(0.5)
-        print("screendump -> %s" % SHOT)
+        print("screendump (post-login) -> %s" % SHOT)
+
+        # Drive the PS/2 mouse: a burst of relative moves toward the lower-right,
+        # then a left click, then screendump again to see the cursor relocate.
+        print("moving mouse")
+        for _ in range(40):
+            qmp(sock, "input-send-event", events=[
+                {"type": "rel", "data": {"axis": "x", "value": 8}},
+                {"type": "rel", "data": {"axis": "y", "value": 6}},
+            ])
+            time.sleep(0.02)
+        qmp(sock, "input-send-event", events=[
+            {"type": "btn", "data": {"button": "left", "down": True}}])
+        time.sleep(0.1)
+        qmp(sock, "input-send-event", events=[
+            {"type": "btn", "data": {"button": "left", "down": False}}])
+        time.sleep(1.5)
+        qmp(sock, "screendump", filename=SHOT2)
+        time.sleep(0.5)
+        print("screendump (post-mouse) -> %s" % SHOT2)
     finally:
         qemu.terminate()
         try:

@@ -153,6 +153,9 @@ void kmain_x86_64(u32 mb_magic, u32 mb_info)
 		 * VESA LFB.  sys_mapfb hands its physical BAR to the compositor. */
 		x86_64_fb_init();
 
+		/* Enable the PS/2 mouse on the 8042 aux channel (polled by sys_getmouse). */
+		x86_64_mouse_init();
+
 		/* Partition 1 (vtblk0s1, major 1 / minor 1) is the FAT volume. */
 		if (vfs_mount(1, 1, 0, VFS_TYPE_FAT, "/", "rw") == 0)
 		{

@@ -140,6 +140,9 @@ void x86_64_iret_to_user(u64 user_rip, u64 user_rsp); /* bare IRETQ (scheduled t
 int x86_64_fb_init(void);
 void x86_64_fb_present(void);
 
+/* dev/input.c — PS/2 mouse (8042 aux channel) bring-up; sys_getmouse polls it. */
+void x86_64_mouse_init(void);
+
 /* dev/virtio_blk.c — virtio-blk over legacy virtio-pci (Phase 5c). */
 struct ubx_device;
 int virtio_blk_init(void);

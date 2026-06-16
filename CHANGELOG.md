@@ -321,6 +321,18 @@ First entries of the 3.0 series (64-bit only: x86_64 + aarch64).  Development on
     can no longer freeze the desktop.  Verified headless (QMP send-key + screendump,
     `tools/x86_64-test/gui-login.py`): clean boot → auth → desktop, zero exceptions.
 
+  - *Phase 5e — PS/2 mouse.* `dev/input.c` `sys_getmouse` was a stub; it now drives
+    the 8042 aux channel.  `x86_64_mouse_init` (called at boot after the framebuffer)
+    enables the aux device (`0xA8`), restores defaults (`0xF6`), and turns on
+    streaming reports (`0xF4`); `sys_getmouse` polls the controller, assembles the
+    standard 3-byte PS/2 packet (resyncing on the always-set bit 3, dropping overflow
+    packets), and cooks it into the `mouse_event` the compositor expects — dx, a
+    *negated* dy (PS/2 reports +Y up, the screen grows +Y down), and the L/R/M button
+    bitmask.  Keyboard and mouse share the output buffer, so each reader consumes only
+    its own bytes (status bit 5 = aux).  Verified headless (`gui-login.py` now drives
+    QMP `input-send-event` rel-moves + a click): the cursor tracks both axes in the
+    correct direction.
+
   **With mmap/execve/fork/signals in place, the x86_64 kernel can now load, run,
   fork, and signal real on-disk binaries — the full runtime a userland needs.**
   `bmake TARGET=x86_64` builds the bring-up kernel only (the x86_64 userland/world is
