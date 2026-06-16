@@ -35,6 +35,7 @@ extern "C"
 #include <sys/kbd.h>
 #include <views/display_proto.h>
 #include <ubistry/ubistry.h>
+#include <api/ubfs_pool.h>
 
 	extern char **environ; /* inherited session env, forwarded to opened apps */
 }
@@ -151,7 +152,14 @@ static bool g_addr_edit;
 static char g_addr_buf[512];
 static int g_addr_len;
 
+/* Toolbar filter box: narrows the list to names containing the substring. */
+static bool g_filter_edit;
+static char g_filter[64];
+static int g_filter_len;
+static int g_filter_x, g_filter_w; /* filter box rect (set during draw_toolbar) */
+
 static char g_status[160];
+static char g_free_str[48]; /* "1.2 GB free" for the current filesystem, or "" */
 
 /* Double-click tracking. */
 static int g_last_click_row = -1;
@@ -273,6 +281,35 @@ static void ext_of(const char *name, char *out, size_t outsz)
 }
 
 /**
+ * True if @name passes the active filter — a case-insensitive substring match,
+ * or always true when the filter is empty.
+ */
+static bool name_matches(const char *name)
+{
+	if (!g_filter[0])
+		return true;
+	size_t fl = strlen(g_filter);
+	for (const char *p = name; *p; p++)
+	{
+		size_t k = 0;
+		while (k < fl && p[k])
+		{
+			char a = p[k], b = g_filter[k];
+			if (a >= 'A' && a <= 'Z')
+				a = (char)(a - 'A' + 'a');
+			if (b >= 'A' && b <= 'Z')
+				b = (char)(b - 'A' + 'a');
+			if (a != b)
+				break;
+			k++;
+		}
+		if (k == fl)
+			return true;
+	}
+	return false;
+}
+
+/**
  * Human-facing type label for an entry ("Folder", "TXT file", "File").
  */
 static void type_of(const struct fentry *e, char *out, size_t outsz)
@@ -385,6 +422,8 @@ static int read_dir(void)
 	{
 		if (strcmp(de->d_name, ".") == 0 || strcmp(de->d_name, "..") == 0)
 			continue;
+		if (!name_matches(de->d_name))
+			continue;
 		struct fentry *e = &g_ent[g_nent];
 		snprintf(e->name, sizeof(e->name), "%s", de->d_name);
 
@@ -431,6 +470,8 @@ static void hist_push(const char *path)
 	g_hist_len = g_hist_pos + 1;
 }
 
+static void update_free_space(void);
+
 /**
  * Switch to @path and reload it.  When @record, the move is pushed onto history
  * (normal navigation); Back/Forward pass false so they don't rewrite it.
@@ -444,6 +485,46 @@ static void navigate(const char *path, bool record)
 	if (read_dir() == 0)
 		snprintf(g_status, sizeof(g_status), "%d item%s", g_nent, g_nent == 1 ? "" : "s");
 	/* On failure read_dir leaves an explanatory message in g_status. */
+	update_free_space();
+}
+
+/**
+ * Refresh g_free_str with the free space of the filesystem holding g_cwd.  Picks
+ * the mounted pool whose mountpoint is the longest prefix of the current path
+ * (statfs is stubbed in the kernel, so query the real pool capacity instead).
+ */
+static void update_free_space(void)
+{
+	g_free_str[0] = '\0';
+	struct ubix_pool_info pools[8];
+	int n = ubix_pool_query(pools, 8);
+	if (n <= 0)
+		return;
+
+	int best = -1;
+	size_t best_len = 0;
+	for (int i = 0; i < n; i++)
+	{
+		const char *mp = pools[i].mountpoint;
+		size_t l = strlen(mp);
+		if (l == 0 || strncmp(g_cwd, mp, l) != 0)
+			continue;
+		/* The match must end on a path boundary (so "/po" doesn't match "/pool"). */
+		if (mp[l - 1] != '/' && g_cwd[l] != '/' && g_cwd[l] != '\0')
+			continue;
+		if (l >= best_len)
+		{
+			best_len = l;
+			best = i;
+		}
+	}
+	if (best < 0)
+		best = 0; /* fall back to the first (root) pool */
+
+	uint64_t freeb = pools[best].free_blocks * (uint64_t)pools[best].block_size;
+	char sz[24];
+	hsize(freeb, sz, sizeof(sz));
+	snprintf(g_free_str, sizeof(g_free_str), "%s free", sz);
 }
 
 /**
@@ -884,6 +965,27 @@ static void draw_toolbar(void)
 		g_btn[i].Draw(g_surf, g_font);
 		bx += g_btn[i].w + 6;
 	}
+
+	/* Filter box on the right: a rounded field showing the filter text (or a dim
+	 * "Filter" placeholder).  Click it to type; matches narrow the list live. */
+	g_filter_w = 180;
+	g_filter_x = g_w - PAD - g_filter_w;
+	int fy = 7, fh = TOOLBAR_H - 14;
+	g_surf.ogFillRoundRect(g_filter_x, fy, g_filter_x + g_filter_w, fy + fh, 4, COL_ADDR);
+	g_surf.ogRoundRect(g_filter_x, fy, g_filter_x + g_filter_w, fy + fh, 4, g_filter_edit ? COL_SEL : COL_DIVIDER);
+	int fty = fy + (fh - (int)g_font.GetHeight()) / 2;
+	if (g_filter_edit || g_filter[0])
+	{
+		set_fg(COL_TEXT);
+		char shown[80];
+		snprintf(shown, sizeof(shown), "%s%s", g_filter, g_filter_edit ? "|" : "");
+		g_font.PutString(g_surf, g_filter_x + 8, fty, shown);
+	}
+	else
+	{
+		set_fg(COL_TEXT_DIM);
+		g_font.PutString(g_surf, g_filter_x + 8, fty, "Filter");
+	}
 }
 
 /**
@@ -1101,6 +1203,10 @@ static void draw_status(void)
 	int ty = sy + (STATUS_H - (int)g_font.GetHeight()) / 2;
 	g_font.PutString(g_surf, PAD, ty, g_status);
 
+	/* Free space, centered (only when no selection occupies the right side). */
+	if (g_free_str[0])
+		g_font.PutString(g_surf, (g_w - (int)g_font.TextWidth(g_free_str)) / 2, ty, g_free_str);
+
 	if (g_sel >= 0 && g_sel < g_nent)
 	{
 		char right[80];
@@ -1225,6 +1331,7 @@ static void run_context_action(int action)
 		case ACT_REFRESH:
 			read_dir();
 			snprintf(g_status, sizeof(g_status), "%d item%s", g_nent, g_nent == 1 ? "" : "s");
+			update_free_space();
 			break;
 		default:
 			break;
@@ -1344,6 +1451,14 @@ static void on_click(int x, int y)
 		return;
 	}
 
+	/* Editing the filter: a click outside the filter box ends the edit. */
+	if (g_filter_edit && !(y < TOOLBAR_H && x >= g_filter_x && x <= g_filter_x + g_filter_w))
+	{
+		g_filter_edit = false;
+		render();
+		return;
+	}
+
 	/* Modal: only the dialog buttons are live. */
 	if (g_mode == MODE_CONFIRM_DEL)
 	{
@@ -1364,9 +1479,16 @@ static void on_click(int x, int y)
 		return;
 	}
 
-	/* Toolbar (navigation only). */
+	/* Toolbar. */
 	if (y < TOOLBAR_H)
 	{
+		if (x >= g_filter_x && x <= g_filter_x + g_filter_w)
+		{
+			g_filter_edit = true; /* click the filter box to type */
+			g_addr_edit = false;
+			render();
+			return;
+		}
 		if (g_btn[BTN_BACK].Hit(x, y) && g_hist_pos > 0)
 			navigate(g_hist[--g_hist_pos], false);
 		else if (g_btn[BTN_FWD].Hit(x, y) && g_hist_pos + 1 < g_hist_len)
@@ -1545,6 +1667,43 @@ static void on_key(uint32_t kc)
 		{
 			g_addr_buf[g_addr_len++] = (char)kc;
 			g_addr_buf[g_addr_len] = '\0';
+		}
+		render();
+		return;
+	}
+
+	/* Editing the filter: each keystroke re-narrows the list live.  Enter keeps
+	 * the filter and leaves the box; Esc clears it. */
+	if (g_filter_edit)
+	{
+		bool changed = false;
+		if (kc == '\r' || kc == '\n')
+			g_filter_edit = false;
+		else if (kc == KEY_ESC)
+		{
+			g_filter[0] = '\0';
+			g_filter_len = 0;
+			g_filter_edit = false;
+			changed = true;
+		}
+		else if (kc == '\b' || kc == 0x7F)
+		{
+			if (g_filter_len > 0)
+			{
+				g_filter[--g_filter_len] = '\0';
+				changed = true;
+			}
+		}
+		else if (kc >= 0x20 && kc < 0x7F && g_filter_len < (int)sizeof(g_filter) - 1)
+		{
+			g_filter[g_filter_len++] = (char)kc;
+			g_filter[g_filter_len] = '\0';
+			changed = true;
+		}
+		if (changed)
+		{
+			read_dir();
+			snprintf(g_status, sizeof(g_status), "%d item%s", g_nent, g_nent == 1 ? "" : "s");
 		}
 		render();
 		return;
