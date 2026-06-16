@@ -350,8 +350,17 @@ First entries of the 3.0 series (64-bit only: x86_64 + aarch64).  Development on
     (`tools/x86_64-test/gui-term.py` drives the mouse through the start menu to launch
     Terminal, then types `ls`): the shell prompt renders and `ls` lists the root —
     full keyboard → `sys_ptyinject` → shell → VT100 → render round-trip, zero faults.
-    Known follow-up: `sys_execve` still drops the caller's argv/envp (execs with
-    `argc=1`, no env) — fine for the shell but a real gap to close.
+
+  - *Phase 5e — execve passes argv/envp (real login shell).* `sys_execve` no longer
+    drops the caller's arguments + environment: it now copies the user `argv`/`envp`
+    vectors out of the old address space (a new `copy_user_strvec`, before the CR3
+    switch invalidates them) and marshals them onto the new image's SysV stack, and
+    sets the task name/cmdline via the MI `exec_set_name_cmdline` (`kern_exec.c`, now
+    in the x86_64 build) like i386/aarch64.  Visible effect: the desktop Terminal now
+    runs the user's real shell as a **login shell** — term's `getenv("SHELL")`
+    resolves (so it launches `tcsh`, not the `/bin/shell` fallback), tcsh gets
+    `argv0="-tcsh"` + `HOME`/`TERM`, sources its login files, and `ls` works; forked
+    services show their real names in traces instead of blank.
 
   **With mmap/execve/fork/signals in place, the x86_64 kernel can now load, run,
   fork, and signal real on-disk binaries — the full runtime a userland needs.**

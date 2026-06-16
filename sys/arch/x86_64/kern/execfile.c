@@ -23,6 +23,7 @@
 #include <lib/kmalloc.h>       /* sysID */
 #include <fs/vfs/file.h>       /* fopen/fread/fclose */
 #include <x86_64/vmm_layout.h> /* DYN_MAIN_BASE/DYN_INTERP_BASE/DYN_STACK_* */
+#include <ubixos/exec.h>       /* exec_set_name_cmdline (MI, shared with i386/aarch64) */
 #include <string.h>
 
 #define AT_NULL 0
@@ -257,17 +258,48 @@ u64 x86_64_build_user_image(const void *image, u64 *out_entry, u64 *out_usp)
 }
 
 /**
+ * Copy a NULL-terminated user string vector (argv or envp) into freshly kmalloc'd
+ * kernel strings, so it survives the address-space switch in execve (the user
+ * pointers become invalid the instant CR3 is reloaded).  Sibling of aarch64's
+ * copy_user_strvec.
+ * @return the number of entries copied (0..max).  Caller kfree()s each kvec[i].
+ */
+static int copy_user_strvec(char *const *uvec, char **kvec, int max)
+{
+	int n = 0;
+
+	if (uvec == 0)
+		return 0;
+	while (n < max && uvec[n] != 0)
+	{
+		const char *us = uvec[n];
+		size_t len = 0;
+		char *ks;
+		while (us[len] != '\0' && len < 4096)
+			len++;
+		ks = (char *)kmalloc((u_int32_t)len + 1);
+		if (ks == 0)
+			break;
+		memcpy(ks, us, len);
+		ks[len] = '\0';
+		kvec[n++] = ks;
+	}
+	return n;
+}
+
+/**
  * Load the program at @path into a fresh address space via the dynamic loader
- * (PIE/dynamic and high static both work) with argv[0]=@path, and report the new
- * PML4 + start RIP + RSP.
+ * (PIE/dynamic and high static both work) with the given @argv/@envp, and report
+ * the new PML4 + start RIP + RSP.  @argv/@envp are kernel pointers (already copied
+ * out of the caller's address space).
  * @return the new PML4 (physical), or 0 on failure.
  */
-static u64 build_dynamic_from_path(const char *path, u64 *out_entry, u64 *out_usp)
+static u64 build_dynamic_argv(
+    const char *path, char **argv, int argc, char **envp, int envc, u64 *out_entry, u64 *out_usp)
 {
 	char *buf;
 	int sz;
 	u64 pml4;
-	char *argv[1];
 
 	buf = read_elf_file(path, &sz);
 	if (buf == 0)
@@ -278,8 +310,7 @@ static u64 build_dynamic_from_path(const char *path, u64 *out_entry, u64 *out_us
 		kfree(buf);
 		return 0;
 	}
-	argv[0] = (char *)path;
-	if (load_dynamic(buf, pml4, argv, 1, 0, 0, out_entry, out_usp) != 0)
+	if (load_dynamic(buf, pml4, argv, argc, envp, envc, out_entry, out_usp) != 0)
 	{
 		kfree(buf);
 		return 0;
@@ -289,17 +320,60 @@ static u64 build_dynamic_from_path(const char *path, u64 *out_entry, u64 *out_us
 }
 
 /**
+ * Load @path with the single argument argv[0]=@path and no environment (the
+ * service-spawn path: spawn_dynamic / the bring-up demos).
+ * @return the new PML4 (physical), or 0 on failure.
+ */
+static u64 build_dynamic_from_path(const char *path, u64 *out_entry, u64 *out_usp)
+{
+	char *argv[1];
+	argv[0] = (char *)path;
+	return build_dynamic_argv(path, argv, 1, 0, 0, out_entry, out_usp);
+}
+
+/**
  * execve(path, argv, envp): replace the calling task's image with the ELF at
  * @path (read off the VFS) via the dynamic loader, then enter it at ring 3 —
- * does not return on success.  argv/envp marshalling is minimal for now (argc=1,
- * argv[0]=path); the full SysV copy lands with interactive job control.
+ * does not return on success.  The caller's argv/envp vectors are copied out of
+ * the old address space (they become invalid the instant CR3 is reloaded) and
+ * marshalled onto the new image's SysV stack, so the shell/apps see their real
+ * arguments + environment (TERM/HOME/PATH/SHELL, login-shell argv0, …).
  */
 int sys_execve(struct thread *td, struct sys_execve_args *uap)
 {
 	u64 pml4, entry, usp;
+	char *kargv[MAXARG], *kenvp[MAXARG];
+	char namebuf[256];
+	int argc, envc, i;
 
 	(void)td;
-	pml4 = build_dynamic_from_path((const char *)uap->fname, &entry, &usp);
+
+	/* Copy name + argv + envp out of the OLD address space now — they are user
+	 * pointers there, and the old space is unmapped the instant we reload CR3. */
+	strncpy(namebuf, (const char *)uap->fname, sizeof(namebuf) - 1);
+	namebuf[sizeof(namebuf) - 1] = '\0';
+	argc = copy_user_strvec(uap->argv, kargv, MAXARG);
+	envc = copy_user_strvec(uap->envp, kenvp, MAXARG);
+	if (argc == 0)
+	{
+		kargv[0] = namebuf; /* always pass at least argv[0] */
+		argc = 1;
+	}
+
+	/* Task name (basename of path) + cmdline (argv joined) — MI helper shared with
+	 * i386 / aarch64.  Done while kargv[] is still live (freed below). */
+	exec_set_name_cmdline(_current, namebuf, kargv, argc);
+
+	pml4 = build_dynamic_argv((const char *)uap->fname, kargv, argc, kenvp, envc, &entry, &usp);
+
+	/* The argv/envp strings are now copied onto the new user stack; free the kernel
+	 * temporaries (but not namebuf, which is on our stack). */
+	for (i = 0; i < argc; i++)
+		if (kargv[i] != namebuf)
+			kfree(kargv[i]);
+	for (i = 0; i < envc; i++)
+		kfree(kenvp[i]);
+
 	if (pml4 == 0)
 		return -1;
 
