@@ -18,16 +18,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **x86_64 desktop is now 16:9 (1280×720).** The std-VGA framebuffer was programmed
 
 ### Fixed
-- **x86_64 per-task FPU/SSE state is now saved across context switches.** The
-  context switch saved only general-purpose registers, and the interrupt path saves
-  no XMM — so a timer-**preempted** ring-3 task could resume with another task's
-  x87/SSE/XMM state (silent FP corruption), and SMP task migration would have the
-  same problem. `switch_to` now eagerly `FXSAVE`s the outgoing task's vector state
-  and `FXRSTOR`s the incoming task's (a 16-byte-aligned 512-byte area per task;
-  zeroed for new tasks, which is a valid FXRSTOR image). Lazy/`CR0.TS`-trap FPU is
-  deliberately avoided (it is unsafe under SMP). This both fixes the latent
-  preemption bug and is the first prerequisite for true SMP scheduling. Verified:
-  desktop + objGFX (gradients/TrueType) + vDoom all render correctly.
+- **Per-task FPU/SIMD state is now saved across context switches (both arches).**
+  The context switch saved only general-purpose registers, and the interrupt/exception
+  path saves no vector registers — so a timer-**preempted** ring-3/EL0 task could
+  resume with another task's x87/SSE/XMM (x86_64) or FPSIMD `v0-v31`/FPCR (aarch64)
+  state (silent FP corruption), and SMP task migration would have the same problem.
+  `switch_to` now eagerly saves the outgoing task's vector state and restores the
+  incoming task's — `FXSAVE`/`FXRSTOR` on x86_64, `STP`/`LDP` of `q0-q31` + FPSR/FPCR
+  on aarch64 — into a 16-byte-aligned per-task area (zeroed for new tasks, a valid
+  restore image). Lazy/trap-based FPU is deliberately avoided (it is unsafe under
+  SMP). This fixes the latent preemption bug today and is the first prerequisite for
+  true SMP scheduling. Verified on both arches: desktop + objGFX (gradients/TrueType)
+  + vDoom (heavy FP) all render correctly, 0 faults.
   at 1024×768 (4:3); it now uses 1280×720 (3.7 MB, well within the 16 MB LFB).
 
 ### Fixed

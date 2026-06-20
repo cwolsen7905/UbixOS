@@ -116,6 +116,59 @@ void switch_to(kTask_t *prev, kTask_t *next)
 	__asm__ volatile("mrs %0, tpidr_el0" : "=r"(prev->md.md_tpidr));
 	__asm__ volatile("msr tpidr_el0, %0" : : "r"(next->md.md_tpidr));
 
+	/* Eagerly save the outgoing task's FPSIMD (v0-v31 + FPSR/FPCR) and restore the
+	 * incoming task's.  The kernel is -mgeneral-regs-only, so the physical q
+	 * registers still hold the OUTGOING task's user vector state here (whether we
+	 * arrived via a cooperative SVC or a timer preemption — the EL1 entry saves only
+	 * x0-x30).  CPACR_EL1.FPEN=0b11 (mmu.c) lets EL1 run these.  16-byte-align the
+	 * in-use region within md_fpu.  Lazy/trap-based FPSIMD is avoided (unsafe SMP). */
+	{
+		u_int8_t *fp_prev = (u_int8_t *)(((uintptr_t)prev->md.md_fpu + 15) & ~(uintptr_t)15);
+		u_int8_t *fp_next = (u_int8_t *)(((uintptr_t)next->md.md_fpu + 15) & ~(uintptr_t)15);
+		__asm__ __volatile__("stp q0, q1, [%0, #0]\n\t"
+		                     "stp q2, q3, [%0, #32]\n\t"
+		                     "stp q4, q5, [%0, #64]\n\t"
+		                     "stp q6, q7, [%0, #96]\n\t"
+		                     "stp q8, q9, [%0, #128]\n\t"
+		                     "stp q10, q11, [%0, #160]\n\t"
+		                     "stp q12, q13, [%0, #192]\n\t"
+		                     "stp q14, q15, [%0, #224]\n\t"
+		                     "stp q16, q17, [%0, #256]\n\t"
+		                     "stp q18, q19, [%0, #288]\n\t"
+		                     "stp q20, q21, [%0, #320]\n\t"
+		                     "stp q22, q23, [%0, #352]\n\t"
+		                     "stp q24, q25, [%0, #384]\n\t"
+		                     "stp q26, q27, [%0, #416]\n\t"
+		                     "stp q28, q29, [%0, #448]\n\t"
+		                     "stp q30, q31, [%0, #480]\n\t"
+		                     :
+		                     : "r"(fp_prev)
+		                     : "memory");
+		__asm__ volatile("mrs %0, fpsr" : "=r"(prev->md.md_fpsr));
+		__asm__ volatile("mrs %0, fpcr" : "=r"(prev->md.md_fpcr));
+		__asm__ volatile("msr fpsr, %0" : : "r"(next->md.md_fpsr));
+		__asm__ volatile("msr fpcr, %0" : : "r"(next->md.md_fpcr));
+		__asm__ __volatile__("ldp q0, q1, [%0, #0]\n\t"
+		                     "ldp q2, q3, [%0, #32]\n\t"
+		                     "ldp q4, q5, [%0, #64]\n\t"
+		                     "ldp q6, q7, [%0, #96]\n\t"
+		                     "ldp q8, q9, [%0, #128]\n\t"
+		                     "ldp q10, q11, [%0, #160]\n\t"
+		                     "ldp q12, q13, [%0, #192]\n\t"
+		                     "ldp q14, q15, [%0, #224]\n\t"
+		                     "ldp q16, q17, [%0, #256]\n\t"
+		                     "ldp q18, q19, [%0, #288]\n\t"
+		                     "ldp q20, q21, [%0, #320]\n\t"
+		                     "ldp q22, q23, [%0, #352]\n\t"
+		                     "ldp q24, q25, [%0, #384]\n\t"
+		                     "ldp q26, q27, [%0, #416]\n\t"
+		                     "ldp q28, q29, [%0, #448]\n\t"
+		                     "ldp q30, q31, [%0, #480]\n\t"
+		                     :
+		                     : "r"(fp_next)
+		                     : "memory");
+	}
+
 	aarch64_ctx_switch(&prev->md.md_kstack, next->md.md_kstack);
 }
 
