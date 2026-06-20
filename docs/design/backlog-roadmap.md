@@ -20,7 +20,7 @@ alignment.  Check items off as they land.
 | sound-server (aural) | 🟢 ~50% | mixer server not built; /dev/audio works single-client |
 | activity-monitor | ⬜ not started | needs kernel tick accounting first |
 | smp (i386) | 🟢 P0–2.3 | APs built but never launched; P3 interlocked |
-| self-hosting | 🟡 foundation (P4 partial) | rewritten `self-hosting-plan.md`: Track A = TCC userland self-host (x86_64; needs bmake+sh port), Track B = Clang+lld (kernel) |
+| self-hosting | 🟡 foundation (mtime/fchmod gap) | `self-hosting-plan.md` v3: **Clang/LLVM + lld** (not TCC), targets aarch64+x86_64, one toolchain for world *and* kernel; needs bmake+sh port + 4–8 GB image |
 | session | 🟢 P0 done | session_id field + SessionManager + lock screen left |
 | fbcon | ⬜ not started | the console-first sink |
 
