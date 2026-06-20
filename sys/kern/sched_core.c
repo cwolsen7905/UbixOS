@@ -328,6 +328,17 @@ void rq_enqueue_locked(kTask_t *t)
 		/* run_queue[pri] stays pointing at head for O(1) dequeue. */
 	}
 	t->on_rq = 1;
+
+	/* SMP: a task just became runnable — poke other CPUs so an idle one wakes and
+	 * runs it (arch_smp_reschedule sends a reschedule IPI; a weak no-op on arches
+	 * whose APs are parked).  Caller holds schedulerSpinLock. */
+	arch_smp_reschedule();
+}
+
+/* Default: no SMP wakeup (single-CPU scheduling, or an arch whose APs are parked).
+ * x86_64 provides a strong override (kern/smp.c) that IPIs its online APs. */
+__attribute__((weak)) void arch_smp_reschedule(void)
+{
 }
 
 void rq_dequeue_locked(kTask_t *t)

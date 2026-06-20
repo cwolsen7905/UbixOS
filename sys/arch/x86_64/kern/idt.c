@@ -48,6 +48,7 @@ static struct idt_ptr g_idt_ptr;
 extern void *isr_stub_table[48]; /* isr.S — 32 CPU exceptions + 16 PIC IRQ stubs */
 extern void isr_syscall(void);   /* isr.S — the int 0x80 (vector 128) entry */
 extern void isr_syscall81(void); /* isr.S — the int 0x81 (vector 129) native-ABI entry */
+extern void isr_resched(void);   /* isr.S — reschedule IPI (vector 0xFD): EOI + iretq */
 
 #define IDT_GATE_USER 0xEE /* present, DPL3, 64-bit interrupt gate (ring 3 may invoke) */
 
@@ -73,6 +74,8 @@ void idt_init(void)
 	idt_set_gate(0x80, (void *)isr_syscall, IDT_GATE_USER);
 	/* Vector 0x81: DPL3 — the UbixOS-native ABI (lib/ubix_api: MPI, ubix_getcwd). */
 	idt_set_gate(0x81, (void *)isr_syscall81, IDT_GATE_USER);
+	/* Vector 0xFD: the SMP reschedule IPI (DPL0 — kernel/IPI only). */
+	idt_set_gate(0xFD, (void *)isr_resched, IDT_GATE_INT);
 
 	g_idt_ptr.limit = (u16)(sizeof(g_idt) - 1);
 	g_idt_ptr.base = (u64)&g_idt[0];

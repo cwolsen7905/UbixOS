@@ -99,6 +99,27 @@ isr_syscall81:
 	pushq $129
 	jmp isr_common
 
+	/* Reschedule IPI (vector 0xFD).  A minimal interrupt: its only purpose is to
+	 * wake an idle AP out of `hlt` so its idle loop re-runs sched() and picks up
+	 * newly-enqueued work — the wake IS the interrupt, so the handler just sends the
+	 * x2APIC EOI and IRETQs.  Saves only the three regs it clobbers (rax/rcx/rdx for
+	 * the EOI wrmsr); all other registers are untouched, so a spurious IPI to a busy
+	 * CPU is harmless.  The kernel owns %gs (no swapgs), and this handler never reads
+	 * it. */
+	.globl isr_resched
+isr_resched:
+	pushq %rax
+	pushq %rcx
+	pushq %rdx
+	movl $0x80B, %ecx /* x2APIC EOI MSR */
+	xorl %eax, %eax
+	xorl %edx, %edx
+	wrmsr
+	popq %rdx
+	popq %rcx
+	popq %rax
+	iretq
+
 	/*
 	 * Common entry: save GP regs (rax pushed last -> lowest address -> rsp), pass
 	 * the trapframe pointer in rdi, call the C handler, restore, pop vector+error,

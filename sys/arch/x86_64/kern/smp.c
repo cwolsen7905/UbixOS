@@ -10,16 +10,18 @@
  * trampoline (boot/ap_trampoline.S), walks to 64-bit long mode on the shared
  * kernel PML4, and lands in x86_64_ap_entry().
  *
- * This is the bring-up milestone: an AP executes 64-bit kernel code and parks in
- * a per-CPU idle (bumping its pcpu heartbeat so the BSP can confirm it is alive).
- * Real scheduler participation (run-queue locking) is a later, interlocked step.
+ * Each AP then enters the shared scheduler (x86_64_ap_entry): it becomes a
+ * per-CPU idle task and runs runnable threads off the (SMP-safe) run queue in
+ * parallel with the BSP, sleeping in hlt — woken by the reschedule IPI — when
+ * nothing is runnable.
  */
 
 #include "../x86_64.h"
 #include <x86_64/pcpu.h>
 #include <ubixos/cpu_enum.h>
 #include <ubixos/vitals.h>
-#include <ubixos/sched.h> /* schedNewTask, set_current, sched, QOS_IDLE — AP scheduler entry */
+#include <ubixos/sched.h>          /* schedNewTask, set_current, sched, QOS_IDLE — AP scheduler entry */
+#include <ubixos/sched_internal.h> /* ready_mask — idle-loop missed-wakeup guard */
 #include <lib/kmalloc.h>
 #include <string.h>
 
@@ -88,10 +90,33 @@ static void delay_short(void) /* ~SIPI->SIPI gap */
 		__asm__ __volatile__("pause");
 }
 
+#define RESCHED_VECTOR 0xFD   /* SMP reschedule IPI (isr_resched in isr.S / idt.c) */
+#define ICR_FIXED 0x00000000u /* delivery mode = Fixed (vector in low 8 bits) */
+
 /** Send an x2APIC IPI: @cmd (delivery mode + vector + flags) to @apicid. */
 static void send_ipi(u32 apicid, u32 cmd)
 {
 	wrmsr64(MSR_X2APIC_ICR, ((u64)apicid << 32) | cmd);
+}
+
+/**
+ * Wake the application processors so an idle one re-runs sched() and picks up
+ * newly-enqueued work.  Called (as arch_smp_reschedule) from the MI run-queue
+ * enqueue.  Sends a fixed reschedule IPI to every online AP except the caller's
+ * own CPU; a busy AP ignores it (isr_resched just EOIs), an idle (hlt'd) AP wakes.
+ * Runs under schedulerSpinLock — a single wrmsr per AP, so it is cheap.
+ */
+void arch_smp_reschedule(void)
+{
+	u32 self = curcpu()->cpuid;
+	int c;
+
+	for (c = 1; c < MAXCPU; c++)
+	{
+		if ((u32)c == self || g_pcpu[c].heartbeat == 0)
+			continue; /* not this CPU, and only CPUs that came online */
+		send_ipi(g_pcpu[c].apicid, RESCHED_VECTOR | ICR_FIXED | ICR_ASSERT);
+	}
 }
 
 /**
@@ -101,9 +126,10 @@ static void send_ipi(u32 apicid, u32 cmd)
  * off the (now SMP-safe) run queue and runs them in parallel with the BSP.
  *
  * The idle task is QOS_IDLE and is installed as curcpu()->idle so sched() dispatches
- * it explicitly (never enqueued).  With no per-CPU timer/IPI yet, the idle loop
- * busy-polls sched() (pause) instead of halting — a CPU-bound idle, refined once the
- * reschedule IPI + per-CPU timer land.  Does not return.
+ * it explicitly (never enqueued).  When no task is runnable the idle loop sleeps in
+ * hlt and is woken by the reschedule IPI (arch_smp_reschedule, sent on enqueue).
+ * Does not return.  (A per-CPU LAPIC timer for preempting a CPU-bound task ON the AP,
+ * and TLB-shootdown IPIs for multi-threaded address spaces, are still to come.)
  */
 void x86_64_ap_entry(u32 cpuid)
 {
@@ -125,11 +151,23 @@ void x86_64_ap_entry(u32 cpuid)
 	set_current(idle);
 	curcpu()->idle = idle;
 
-	__asm__ __volatile__("sti"); /* take IPIs (reschedule/TLB shootdown, once wired) */
 	for (;;)
 	{
-		sched();                       /* pull + run a ready task, or fall back to idle */
-		__asm__ __volatile__("pause"); /* busy-poll until the per-CPU timer/IPI lands */
+		sched(); /* pull + run a ready task; returns here when only idle is runnable */
+
+		/* Idle: sleep in hlt until a reschedule IPI (from another CPU enqueuing work)
+		 * wakes us.  Close the missed-wakeup window with IRQs disabled — check the run
+		 * queue once more; if work appeared, loop without sleeping, else `sti; hlt`
+		 * atomically (a pending IPI is delivered only after hlt, so it always wakes
+		 * us).  ready_mask is read locklessly as a hint: a stale "empty" still gets
+		 * the enqueuer's IPI, and sched() re-checks under the lock. */
+		__asm__ __volatile__("cli");
+		if (ready_mask != 0)
+		{
+			__asm__ __volatile__("sti");
+			continue;
+		}
+		__asm__ __volatile__("sti; hlt");
 	}
 }
 

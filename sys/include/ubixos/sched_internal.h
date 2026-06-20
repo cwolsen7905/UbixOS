@@ -48,6 +48,10 @@ void pid_hash_remove(kTask_t *t);
 
 /* Run-queue helpers — caller must hold schedulerSpinLock. */
 void rq_enqueue_locked(kTask_t *t);
+
+/* SMP: poke other CPUs so an idle one wakes to run newly-enqueued work.  Weak
+ * no-op by default (sched_core.c); x86_64 (kern/smp.c) IPIs its online APs. */
+void arch_smp_reschedule(void);
 void rq_dequeue_locked(kTask_t *t);
 
 #endif /* _UBIXOS_SCHED_INTERNAL_H */
