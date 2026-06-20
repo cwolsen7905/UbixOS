@@ -4,11 +4,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What This Is
 
-uBixOS is a hobby/research operating system written in C and C++ (plus assembly), developed since 2002. It began as an x86 (i386) OS — booting via GRUB2/multiboot on bare metal or QEMU with a FAT32 root — and is now **dual-architecture**: a second **AArch64 (arm64)** port boots on QEMU `virt` and is the **primary forward target** (heading for Raspberry Pi / Orange Pi).
+uBixOS is a hobby/research operating system written in C and C++ (plus assembly), developed since 2002. It began as an x86 (i386) OS — booting via GRUB2/multiboot on bare metal or QEMU with a FAT32 root — and is now **64-bit-only on master**: **AArch64 (arm64)** is the **default and primary forward target** (heading for Raspberry Pi / Orange Pi), with **x86_64** as the second supported architecture. **32-bit i386 is frozen**: as of 2026-06-20 it is no longer maintained on master and lives on only for compatibility in the **`releng/2`** branch (the last 2.x line).
 
 **Product identity — read before making any architecture decision:** uBixOS is *console-first, graphical-optional, one tree, profile-driven, MMU-class only*. The kernel and base system are display-agnostic; the graphical stack (`views` compositor + `objGFX`) is a userland *layer*, not the foundation. "IoT" and "desktop" are the same MMU-class hardware running different userland profiles; MCU-class (no-MMU) and locked phone hardware are out of scope. See **`docs/design/console-and-arch-convergence-plan.md`** for the full identity + the current console/arch-convergence plan, and `docs/design/cross-arch-plan.md` for the arm64 roadmap.
 
-**Always build and keep BOTH architectures green** — never break i386 while advancing aarch64. Build each with `bmake kernel world TARGET=i386` and `bmake kernel world TARGET=aarch64`.
+**Always build and keep BOTH 64-bit architectures green** — never break x86_64 while advancing aarch64 (or vice versa). **aarch64 is the default/primary target; x86_64 is the abstraction anchor** (the reference that keeps the MI/MD split honest — the role i386 used to play, now that PC-style x86_64 and virtio aarch64 are the two diverse arches). Build each with `bmake kernel world TARGET=aarch64` and `bmake kernel world TARGET=x86_64`. **i386 is frozen on `releng/2` and is NOT maintained on master** — do not spend effort keeping i386 green here, and do not let i386 constraints block 64-bit work. (32-bit fixes go to `releng/2`.)
 
 ## Build System
 
@@ -32,9 +32,12 @@ bmake image            # fresh bootable disk image (ubixos-arm.img via mkimage-a
 bmake run-aarch64      # launch QEMU virt (graphical, virtio-gpu, HVF on Apple Silicon)
 bmake run-debug-aarch64 # headless QEMU virt, serial to serial.log
 
-# i386 (the abstraction anchor — keep it green) — TARGET=i386 on every command
-bmake kernel world TARGET=i386    # → build/i386/
-bmake run TARGET=i386             # launch QEMU with ubixos.img
+# x86_64 (the abstraction anchor — keep it green) — TARGET=x86_64 on every command
+bmake kernel world TARGET=x86_64  # → build/x86_64/
+bmake run-x86_64 TARGET=x86_64    # launch QEMU (std-VGA desktop, TCG on Apple Silicon)
+
+# i386 is FROZEN on releng/2 (not maintained on master); build only if specifically
+# working that legacy branch: bmake kernel world TARGET=i386  # → build/i386/
 
 bmake clean            # clean all build artifacts
 ```
