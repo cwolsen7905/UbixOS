@@ -206,13 +206,10 @@ AT_BASE, AT_ENTRY, or AT_PHDR are wrong. Having serial debug output (`kprintf` i
 
 ## Relationship to Self-Hosting Plan
 
-This plan is a prerequisite for `docs/design/clang-selfhost-plan.md` Phase 6 (Stage 0
-Clang). The self-hosting plan's Phase 1 (anonymous mmap) is satisfied by Phase 1–2 here.
-File-backed mmap (self-hosting Phase 2) is already partially working and will be hardened
-as part of Phase 7 testing when musl's rtld mmaps `libc.so` segments.
-
-Once dynamic linking works, update `clang-selfhost-plan.md` to reflect that Phases 1–2
-are complete.
+This plan is a prerequisite for `docs/design/self-hosting-plan.md` Track B (Stage 0
+Clang). The self-hosting plan's anonymous mmap is satisfied by Phase 1–2 here.
+File-backed mmap is already working and was hardened by the shared file-page cache
+(the aarch64 memory work), as the self-hosting plan's verified-foundation table notes.
 
 ---
 

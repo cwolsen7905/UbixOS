@@ -8,7 +8,7 @@
 > at-rest identity into a runtime-enforced multi-user model.
 >
 > Companion to `ubixfs-pool-plan.md` (the inode that carries `mode/uid/gid` is
-> the on-disk source of truth) and `clang-selfhost-plan.md` (a self-hosting OS
+> the on-disk source of truth) and `self-hosting-plan.md` (a self-hosting OS
 > wants real `/usr` permissions). Cross-arch by construction — all of it lives in
 > the generic credential + VFS layers; neither `sys/arch/` tree is touched.
 
