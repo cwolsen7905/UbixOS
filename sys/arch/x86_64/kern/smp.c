@@ -101,7 +101,8 @@ static void send_ipi(u32 apicid, u32 cmd)
  */
 void x86_64_ap_entry(u32 cpuid)
 {
-	x86_64_pcpu_install(cpuid);
+	x86_64_pcpu_install(cpuid);         /* GS_BASE -> g_pcpu[cpuid]; curcpu() valid */
+	x86_64_ap_load_gdt_tss(cpuid);      /* shared GDT + this CPU's TSS + the shared IDT */
 	curcpu()->heartbeat = 0xA5 + cpuid; /* liveness marker the BSP polls */
 	__asm__ __volatile__("cli");
 	for (;;)

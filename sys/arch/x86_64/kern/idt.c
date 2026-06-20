@@ -79,6 +79,16 @@ void idt_init(void)
 	__asm__ __volatile__("lidt %0" : : "m"(g_idt_ptr));
 }
 
+/**
+ * Load the (already-built) shared IDT on the calling CPU.  The IDT table itself
+ * is BSP-global and lives on the shared kernel PML4, so an AP only re-runs lidt —
+ * no per-CPU IDT is needed.  Called from x86_64_ap_load_gdt_tss.
+ */
+void idt_load(void)
+{
+	__asm__ __volatile__("lidt %0" : : "m"(g_idt_ptr));
+}
+
 static const char *const g_exc_names[32] = {"#DE divide error",
                                             "#DB debug",
                                             "NMI",

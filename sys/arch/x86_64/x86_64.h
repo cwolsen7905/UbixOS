@@ -89,6 +89,8 @@ int kprintf(const char *fmt, ...);
 
 /* idt.c — 64-bit IDT + exception handling (Phase 2). */
 void idt_init(void);
+void idt_load(void);                  /* AP: adopt the shared IDT (lidt) */
+void x86_64_ap_load_gdt_tss(u32 cpuid); /* AP: shared GDT + its own TSS + IDT */
 
 /*
  * Trapframe pushed by the ISR stubs (isr.S): GP registers (r15 at the lowest

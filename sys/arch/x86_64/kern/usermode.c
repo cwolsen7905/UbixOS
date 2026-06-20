@@ -28,9 +28,13 @@
 
 #define KCODE_SEL 0x08
 #define KDATA_SEL 0x10
-#define TSS_SEL 0x28
+/* Per-CPU TSS: 5 fixed segment slots, then 2 GDT slots (a 16-byte 64-bit TSS
+ * descriptor) for each CPU.  CPU c's TSS selector is slot (5 + 2c) -> byte
+ * (5+2c)*8 = 0x28 + 0x10*c.  cpu0 (BSP) keeps the historical 0x28. */
+#define TSS_SEL_FIXED 5
+#define TSS_SEL(cpu) (u16)((TSS_SEL_FIXED + 2 * (cpu)) * 8)
 
-#define GDT_SLOTS 7 /* null,kcode,kdata,udata,ucode + TSS(2 slots) */
+#define GDT_SLOTS (5 + 2 * MAXCPU) /* null,kcode,kdata,udata,ucode + 2/CPU TSS */
 
 /* 64-bit TSS.  Only rsp0 + iomap_base matter to us; rsp0 is the kernel stack the
  * CPU switches to when an interrupt or syscall enters ring 0 from ring 3. */
@@ -54,19 +58,19 @@ struct gdt_ptr
 } __attribute__((packed));
 
 static u64 g_gdt[GDT_SLOTS];
-static struct tss64 g_tss;
+static struct tss64 g_tss[MAXCPU]; /* one TSS per CPU (SMP: each CPU's own rsp0) */
 
-/* A dedicated ring-0 stack the CPU loads (TSS.rsp0) when an interrupt fires while
- * running ring-3 code, until per-task kernel stacks drive rsp0 (Phase 5b). */
-static u8 g_ring0_stack[16384] __attribute__((aligned(16)));
+/* Per-CPU ring-0 stack the CPU loads (TSS.rsp0) when an interrupt fires while
+ * running ring-3 code, before a per-task kernel stack drives rsp0 (set_user_kstack). */
+static u8 g_ring0_stack[MAXCPU][16384] __attribute__((aligned(16)));
 
 /**
- * Write the 16-byte 64-bit TSS system descriptor into the two GDT slots at
- * TSS_SEL.  @base is the TSS address, @limit its size - 1.
+ * Write CPU @cpu's 16-byte 64-bit TSS system descriptor into its two GDT slots.
+ * @base is the TSS address, @limit its size - 1.
  */
-static void gdt_set_tss(u64 base, u32 limit)
+static void gdt_set_tss(int cpu, u64 base, u32 limit)
 {
-	u64 *lo = &g_gdt[TSS_SEL / 8];
+	u64 *lo = &g_gdt[TSS_SEL_FIXED + 2 * cpu];
 	u64 *hi = lo + 1;
 
 	*lo = (limit & 0xFFFF) | ((base & 0xFFFFFF) << 16) | ((u64)0x89 << 40) /* P | type=9 (avail 64-bit TSS) */
@@ -89,9 +93,16 @@ void x86_64_usermode_init(void)
 	g_gdt[3] = 0x0000F20000000000UL; /* 0x18 user data     (P,DPL3,RW) */
 	g_gdt[4] = 0x0020FA0000000000UL; /* 0x20 user code64   (P,DPL3,exec,L) */
 
-	g_tss.rsp0 = (u64)(unsigned long)(g_ring0_stack + sizeof(g_ring0_stack));
-	g_tss.iomap_base = sizeof(struct tss64); /* no I/O bitmap */
-	gdt_set_tss((u64)(unsigned long)&g_tss, sizeof(struct tss64) - 1);
+	/* Populate every CPU's TSS + its GDT descriptor up front, so an AP only has to
+	 * lgdt this shared table and ltr its own selector (x86_64_ap_load_gdt_tss).
+	 * Each TSS starts with its CPU's dedicated ring-0 stack; set_user_kstack later
+	 * repoints rsp0 at the running task's kernel stack. */
+	for (int c = 0; c < MAXCPU; c++)
+	{
+		g_tss[c].rsp0 = (u64)(unsigned long)(g_ring0_stack[c] + sizeof(g_ring0_stack[c]));
+		g_tss[c].iomap_base = sizeof(struct tss64); /* no I/O bitmap */
+		gdt_set_tss(c, (u64)(unsigned long)&g_tss[c], sizeof(struct tss64) - 1);
+	}
 
 	gp.limit = sizeof(g_gdt) - 1;
 	gp.base = (u64)(unsigned long)&g_gdt[0];
@@ -105,14 +116,35 @@ void x86_64_usermode_init(void)
 	                     :
 	                     : "r"((u16)KDATA_SEL));
 
-	/* Load the task register with the TSS selector. */
-	__asm__ __volatile__("ltr %0" : : "r"((u16)TSS_SEL));
+	/* BSP (cpu 0) loads its own TSS. */
+	__asm__ __volatile__("ltr %0" : : "r"(TSS_SEL(0)));
 }
 
-/** @return the ring-0 stack top the TSS uses (for callers that re-arm rsp0). */
+/**
+ * An application processor adopts the shared GDT + IDT and loads ITS OWN TSS.
+ * Called from x86_64_ap_entry once the AP is on the kernel PML4.  The BSP already
+ * built every CPU's TSS descriptor in x86_64_usermode_init.
+ */
+void x86_64_ap_load_gdt_tss(u32 cpuid)
+{
+	struct gdt_ptr gp;
+
+	gp.limit = sizeof(g_gdt) - 1;
+	gp.base = (u64)(unsigned long)&g_gdt[0];
+	__asm__ __volatile__("lgdt %0" : : "m"(gp));
+	__asm__ __volatile__("movw %0, %%ds\n\t"
+	                     "movw %0, %%es\n\t"
+	                     "movw %0, %%ss\n\t"
+	                     :
+	                     : "r"((u16)KDATA_SEL));
+	__asm__ __volatile__("ltr %0" : : "r"(TSS_SEL(cpuid)));
+	idt_load(); /* adopt the shared IDT so this CPU can take interrupts */
+}
+
+/** @return cpu 0's ring-0 stack top (for callers that re-arm rsp0). */
 u64 x86_64_ring0_stack_top(void)
 {
-	return (u64)(unsigned long)(g_ring0_stack + sizeof(g_ring0_stack));
+	return (u64)(unsigned long)(g_ring0_stack[0] + sizeof(g_ring0_stack[0]));
 }
 
 /* -------------------------------------------------------------------------- *
@@ -453,7 +485,7 @@ void x86_64_free_user_space(u64 pml4_phys)
  * CPU does not stack-switch).  Called from switch_to for each task. */
 void x86_64_set_user_kstack(u64 top)
 {
-	g_tss.rsp0 = top;
+	g_tss[curcpu()->cpuid].rsp0 = top; /* this CPU's TSS — per-CPU rsp0 under SMP */
 	curcpu()->kernel_rsp = top;
 }
 
