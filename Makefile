@@ -57,11 +57,10 @@ _USB_FLAGS!= test -f ${USB_IMAGE} && \
 
 # ── Primary targets ──────────────────────────────────────────────────────────
 
-.PHONY: all kernel kernel-i386 kernel-aarch64 kernel-x86_64 run-x86_64 run-debug-x86_64 musl-libc world makeuser image image-i386 image-aarch64 image-arm usb-image \
+.PHONY: all kernel kernel-aarch64 kernel-x86_64 run-x86_64 run-debug-x86_64 musl-libc world makeuser image image-aarch64 image-arm usb-image \
         mount-image unmount-image \
         install-kernel install-world install \
-        run run-debug run-i386 run-debug-i386 run-aarch64 run-debug-aarch64 \
-        run-en0 run-shared \
+        run-aarch64 run-debug-aarch64 \
         kernel-to-image clean-kernel clean
 
 # `all` is arch-aware: every MMU-class arch builds the full system (kernel + world
@@ -69,14 +68,10 @@ _USB_FLAGS!= test -f ${USB_IMAGE} && \
 # the std-VGA framebuffer), same as i386/aarch64.
 all: kernel world image
 
-# `kernel` is arch-dispatched.  i386 builds the full tree (sys/Makefile); aarch64
-# builds the minimal Phase-11 bring-up image (start.S + boot.c) standalone, since
-# the generic subsystems aren't ported to aarch64 yet.
+# `kernel` is arch-dispatched.  master is 64-bit only: aarch64 (default) + x86_64,
+# each built standalone from the top Makefile (explicit GENERIC_SRCS lists + a
+# per-arch `find sys/arch/<arch>`).  i386 is frozen on releng/2 — not built here.
 kernel: kernel-${_ARCH}
-
-kernel-i386:
-	@mkdir -p ${OBJ_DIR}/boot ${OBJ_DIR}/obj/sys
-	@cd sys;${MAKE}
 
 # AArch64 bring-up kernel: assemble the entry, compile the PL011 banner, link at
 # the QEMU `virt` RAM base.  Standalone — does NOT descend into sys/Makefile.
@@ -430,12 +425,11 @@ run-debug-x86_64:
 	  -device virtio-net-pci,netdev=n0,disable-modern=true \
 	  -audiodev coreaudio,id=snd0 -device AC97,audiodev=snd0
 
-# musl libc per-arch knobs.  i386 uses the FreeBSD stack ABI (-m32, no SSE) and a
-# hand-rolled libgcc32; aarch64 uses the stock SVC ABI + the real libgcc.  Both
-# build with the FreeBSD syscall numbers (arch/<arch>/bits/syscall.h.in).
-# Userland (unlike the kernel) needs FP/SIMD — musl's math code uses double/float,
-# which is incompatible with -mgeneral-regs-only.  The kernel enables EL0 FP
-# access (CPACR_EL1) so these instructions run at EL0.
+# musl libc per-arch knobs (64-bit only on master).  aarch64 uses the stock SVC
+# ABI; x86_64 the SysV amd64 ABI.  Both build with the FreeBSD syscall numbers
+# (arch/<arch>/bits/syscall.h.in) + the real libgcc.  Userland (unlike the kernel)
+# needs FP/SIMD — musl's math uses double/float (the kernel enables EL0 FP access
+# on aarch64 so these run at EL0).  (i386's -m32/libgcc32 knobs live on releng/2.)
 .if ${_ARCH} == "aarch64"
 MUSL_USER_CFLAGS = -march=armv8-a -ffreestanding -fno-stack-protector
 MUSL_LIBCC       = ${LIBGCC}
@@ -447,9 +441,7 @@ MUSL_USER_CFLAGS = -ffreestanding -fno-stack-protector
 MUSL_LIBCC       = ${LIBGCC}
 MUSL_LDEMULATION = elf_x86_64
 .else
-MUSL_USER_CFLAGS = ${CROSS_M32} -mno-sse -mno-sse2 -mno-mmx -mno-3dnow -ffreestanding -fno-stack-protector
-MUSL_LIBCC       = ${OBJ_DIR}/lib/libgcc32.a
-MUSL_LDEMULATION = elf_i386
+.error Unsupported TARGET '${_ARCH}' on master — only aarch64 + x86_64 (i386 is on releng/2).
 .endif
 
 musl-libc:
@@ -558,15 +550,9 @@ makeuser:
 	@echo "==> etc/userdb updated (PBKDF2-hashed)"
 
 # `image` is arch-dispatched so it can never stage one arch's world into the
-# other arch's image.  i386 builds the GRUB/FAT ubixos.img; aarch64 builds the
-# virtio-blk ubixos-arm.img via image-arm.  Without this, `bmake image
-# TARGET=aarch64` (or `bmake TARGET=aarch64`, which runs `all`) would clobber
-# the i386 ubixos.img with aarch64 binaries.
+# other arch's image: aarch64 -> ubixos-arm.img, x86_64 -> ubixos-x86_64.img,
+# both via tools/mkimage-arm.sh.
 image: image-${_ARCH}
-
-image-i386: makeuser
-	@echo "==> Disk image root filesystem: FS=${FS}"
-	@BUILD=${OBJ_DIR} KERNEL=${OBJ_DIR}/boot/kernel FS=${FS} SRCTOP=${.CURDIR} sh tools/mkimage.sh ${DISK_IMAGE}
 
 # aarch64 disk image: a raw FAT32 image with the dynamically-linked world + the
 # musl dynamic linker, mounted at "/" via virtio-blk.  Run after
@@ -685,9 +671,8 @@ install: install-world install-kernel
 # ── QEMU ─────────────────────────────────────────────────────────────────────
 
 # `run` / `run-debug` are arch dispatchers — they invoke the per-arch recipe for
-# the selected ${_ARCH}.  `bmake run` boots i386 today; `bmake run TARGET=aarch64`
-# boots the aarch64 kernel in QEMU `virt` once it exists.  The i386 recipes below
-# are unchanged (just renamed to run-i386 / run-debug-i386).
+# the selected ${_ARCH}.  `bmake run` boots aarch64 (the default); `bmake run
+# TARGET=x86_64` boots the x86_64 kernel.  (i386 run recipes live on releng/2.)
 # vCPU count for every run target.  Minimum 2 so SMP / CPU-enumeration is always
 # exercised on both arches; override with `bmake run SMP=4`.
 SMP ?= 2
@@ -700,35 +685,6 @@ DISK_IMAGE_ARM?=ubixos-arm.img
 _ARM_DISK_FLAGS!= test -f ${DISK_IMAGE_ARM} && \
 	echo "-drive file=${DISK_IMAGE_ARM},format=raw,if=none,id=hd0 -device virtio-blk-device,drive=hd0" || \
 	echo ""
-
-# ── i386 (PC: IDE disk, e1000, AC97, UHCI keyboard) ─────────────────────────
-# Boot the disk image in QEMU (primary IDE master, boot from HD).
-# Serial output is captured to serial.log for post-mortem inspection.
-# If usb.img exists it is attached as a USB mass-storage device.
-run-i386:
-	qemu-system-i386 -m 256 -smp ${SMP} -drive file=${DISK_IMAGE},format=raw,if=ide,index=0 \
-	  -machine pc \
-	  -device piix3-usb-uhci,id=uhci-bus \
-	  -device usb-kbd,bus=uhci-bus.0,port=1 \
-	  ${_USB_FLAGS} \
-	  -serial file:serial.log -vga std \
-	  -device e1000,netdev=net0 -netdev user,id=net0 \
-	  -object filter-dump,id=f1,netdev=net0,file=/tmp/e1000dump.pcap \
-	  -audiodev coreaudio,id=snd0 -device AC97,audiodev=snd0 \
-	  -d guest_errors,unimp -D /tmp/qemu_debug.log \
-	  --trace "e1000_*"
-
-# Headless i386 run: no display, serial to stdout.  Ctrl-C to stop.
-# If usb.img exists it is attached as a USB mass-storage device.
-run-debug-i386:
-	qemu-system-i386 -m 256 -smp ${SMP} -drive file=${DISK_IMAGE},format=raw,if=ide,index=0 \
-	  -machine pc \
-	  -device piix3-usb-uhci,id=uhci-bus \
-	  -device usb-kbd,bus=uhci-bus.0,port=1 \
-	  ${_USB_FLAGS} \
-	  -nographic \
-	  -device e1000,netdev=net0 -netdev user,id=net0 \
-	  -object filter-dump,id=f1,netdev=net0,file=/tmp/e1000dump.pcap
 
 # ── aarch64 (QEMU `virt`: virtio devices, HVF accel on Apple Silicon) ───────
 # Boots the kernel directly via -kernel (no GRUB / disk needed for early
@@ -754,36 +710,6 @@ run-debug-aarch64:
 	  ${_ARM_DISK_FLAGS} \
 	  -device virtio-net-device,netdev=net0 -netdev user,id=net0 \
 	  -nographic
-
-# Headless run with a NE2000 (RTL8029) NIC instead of the e1000, to exercise the
-# ne2k driver.  net_init falls back to ne2k when no e1000 is present.  Frames are
-# dumped to /tmp/ne2kdump.pcap (decode with: tcpdump -nr /tmp/ne2kdump.pcap).
-run-ne2k:
-	qemu-system-i386 -m 256 -smp ${SMP} -drive file=${DISK_IMAGE},format=raw,if=ide,index=0 \
-	  -machine pc \
-	  -device piix3-usb-uhci,id=uhci-bus \
-	  -device usb-kbd,bus=uhci-bus.0,port=1 \
-	  ${_USB_FLAGS} \
-	  -nographic \
-	  -device ne2k_pci,netdev=net0 -netdev user,id=net0 \
-	  -object filter-dump,id=f1,netdev=net0,file=/tmp/ne2kdump.pcap
-
-# Bridge NIC to en0 (requires sudo on macOS — vmnet-bridged needs entitlements).
-# The VM appears on your LAN and gets a real IP from your router's DHCP server.
-# Use this to bypass QEMU SLIRP and verify the e1000 driver against a real DHCP.
-run-en0:
-	sudo qemu-system-i386 -m 256 -smp ${SMP} -drive file=${DISK_IMAGE},format=raw,if=ide,index=0 \
-	  -serial file:serial.log -vga std \
-	  -device e1000,netdev=net0 -netdev vmnet-bridged,id=net0,ifname=en0 \
-	  -object filter-dump,id=f1,netdev=net0,file=/tmp/e1000dump.pcap
-
-# vmnet-shared: macOS NAT + its own DHCP server, also requires sudo.
-# Useful when en0 is Wi-Fi and bridged mode is unreliable.
-run-shared:
-	sudo qemu-system-i386 -m 256 -smp ${SMP} -drive file=${DISK_IMAGE},format=raw,if=ide,index=0 \
-	  -serial file:serial.log -vga std \
-	  -device e1000,netdev=net0 -netdev vmnet-shared,id=net0 \
-	  -object filter-dump,id=f1,netdev=net0,file=/tmp/e1000dump.pcap
 
 # ── Maintenance ───────────────────────────────────────────────────────────────
 
