@@ -19,6 +19,7 @@
 #include <x86_64/pcpu.h>
 #include <ubixos/cpu_enum.h>
 #include <ubixos/vitals.h>
+#include <ubixos/sched.h> /* schedNewTask, set_current, sched, QOS_IDLE — AP scheduler entry */
 #include <lib/kmalloc.h>
 #include <string.h>
 
@@ -95,18 +96,41 @@ static void send_ipi(u32 apicid, u32 cmd)
 
 /**
  * AP 64-bit C entry (reached from ap_trampoline.S once in long mode on the kernel
- * PML4).  Install this CPU's per-CPU GS, mark it alive, and park.  Does not
- * return.  Real scheduler entry is a later step; for now the AP idles halted so it
- * costs 0% and cannot race the (unlocked) run queue.
+ * PML4).  Set up this CPU's per-CPU GS + execution environment, become a dedicated
+ * idle task, and enter the shared scheduler: from here the AP pulls runnable tasks
+ * off the (now SMP-safe) run queue and runs them in parallel with the BSP.
+ *
+ * The idle task is QOS_IDLE and is installed as curcpu()->idle so sched() dispatches
+ * it explicitly (never enqueued).  With no per-CPU timer/IPI yet, the idle loop
+ * busy-polls sched() (pause) instead of halting — a CPU-bound idle, refined once the
+ * reschedule IPI + per-CPU timer land.  Does not return.
  */
 void x86_64_ap_entry(u32 cpuid)
 {
+	kTask_t *idle;
+
 	x86_64_pcpu_install(cpuid);         /* GS_BASE -> g_pcpu[cpuid]; curcpu() valid */
 	x86_64_ap_load_gdt_tss(cpuid);      /* shared GDT + this CPU's TSS + the shared IDT */
 	curcpu()->heartbeat = 0xA5 + cpuid; /* liveness marker the BSP polls */
-	__asm__ __volatile__("cli");
+
+	/* Become this CPU's idle task.  schedNewTask gives it a kTask_t + kernel stack
+	 * and links it into taskList; we run on the AP's own stack until the first
+	 * switch_to away saves our context into idle->md.md_kstack. */
+	idle = schedNewTask();
+	idle->md.md_cr3 = g_kernel_cr3; /* idle runs in the kernel address space */
+	idle->priority = QOS_IDLE;
+	idle->base_priority = QOS_IDLE;
+	idle->state = RUNNING;
+	__builtin_strncpy(idle->name, "idle", sizeof(idle->name) - 1);
+	set_current(idle);
+	curcpu()->idle = idle;
+
+	__asm__ __volatile__("sti"); /* take IPIs (reschedule/TLB shootdown, once wired) */
 	for (;;)
-		__asm__ __volatile__("hlt");
+	{
+		sched();                       /* pull + run a ready task, or fall back to idle */
+		__asm__ __volatile__("pause"); /* busy-poll until the per-CPU timer/IPI lands */
+	}
 }
 
 /**

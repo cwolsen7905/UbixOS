@@ -44,10 +44,10 @@
 
 #include <ubixos/sched.h>
 #include <ubixos/sched_internal.h>
-#if defined(__i386__)
-#include <i386/pcpu.h> /* curcpu() — per-CPU idle thread (smp-plan Phase 3) */
-#elif defined(__aarch64__)
-#include <aarch64/pcpu.h> /* curcpu() — per-CPU idle thread (smp-plan M3) */
+#if defined(__aarch64__)
+#include <aarch64/pcpu.h> /* curcpu() — per-CPU idle thread */
+#elif defined(__x86_64__)
+#include <x86_64/pcpu.h> /* curcpu() — per-CPU idle thread (SMP AP idle) */
 #endif
 #include <ubixos/spinlock.h>
 #include <ubixos/vitals.h>
@@ -272,11 +272,12 @@ void sched()
 	 * quantum.  On aarch64 the idle thread is still a normal enqueued task, so
 	 * cpu_idle is NULL there and every path below is byte-for-byte unchanged.
 	 */
-#if defined(__i386__) || defined(__aarch64__)
+	/* This CPU's dedicated idle thread (never enqueued; dispatched explicitly when
+	 * ready_mask == 0).  curcpu()->idle is NULL for any CPU that has not installed
+	 * one — the BSP on x86_64/aarch64 keeps its boot task as the de-facto idle
+	 * (always runnable), so cpu_idle stays NULL there and every path below is
+	 * unchanged; an SMP application processor sets its own idle in x86_64_ap_entry. */
 	kTask_t *cpu_idle = curcpu()->idle;
-#else
-	kTask_t *cpu_idle = NULL;
-#endif
 
 	if (_current != NULL && _current->state == RUNNING && _current != cpu_idle)
 	{
