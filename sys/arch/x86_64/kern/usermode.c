@@ -128,6 +128,7 @@ void x86_64_usermode_init(void)
 void x86_64_ap_load_gdt_tss(u32 cpuid)
 {
 	struct gdt_ptr gp;
+	u64 cr;
 
 	gp.limit = sizeof(g_gdt) - 1;
 	gp.base = (u64)(unsigned long)&g_gdt[0];
@@ -139,6 +140,20 @@ void x86_64_ap_load_gdt_tss(u32 cpuid)
 	                     : "r"((u16)KDATA_SEL));
 	__asm__ __volatile__("ltr %0" : : "r"(TSS_SEL(cpuid)));
 	idt_load(); /* adopt the shared IDT so this CPU can take interrupts */
+
+	/* Per-CPU CPU features the BSP set up in start.S + x86_64_syscall_init, which
+	 * the AP trampoline does NOT (these MSRs/control bits are per-CPU): without them
+	 * a user task dispatched on this AP faults — sysretq #UDs without EFER.SCE, and
+	 * SSE/FXSAVE #UD without CR4.OSFXSR / with CR0.EM. */
+	__asm__ __volatile__("mov %%cr4, %0" : "=r"(cr));
+	cr |= 0x600;                                       /* OSFXSR (bit 9) | OSXMMEXCPT (bit 10) */
+	__asm__ __volatile__("mov %0, %%cr4" : : "r"(cr)); /* PAE is already set by the trampoline */
+	__asm__ __volatile__("mov %%cr0, %0" : "=r"(cr));
+	cr &= ~(u64)0x4; /* clear EM (no FPU emulation) */
+	cr |= 0x2;       /* set MP */
+	__asm__ __volatile__("mov %0, %%cr0" : : "r"(cr));
+	__asm__ __volatile__("fninit");
+	x86_64_syscall_init(); /* EFER.SCE + STAR + LSTAR + SFMASK (per-CPU MSRs) */
 }
 
 /** @return cpu 0's ring-0 stack top (for callers that re-arm rsp0). */
