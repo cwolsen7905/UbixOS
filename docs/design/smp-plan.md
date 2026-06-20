@@ -52,6 +52,7 @@ Legend: ✅ done & verified · 🟡 partial · ⬜ not started
 | 3.5| Scheduler accounting — per-task `run_ticks`, per-CPU `busy/idle_ticks` | ✅ | done 2026-06-11, both arches boot-verified.  `sched_account_tick()` (MI, `sched_core.c`) charged once per timer IRQ from i386 `timerInt` + aarch64 `timer_tick`; idle tagged via `g_idle_task`; surfaced as `/proc/<pid>/stat` utime + new `/proc/stat`.  Uniprocessor (single busy/idle pair); per-CPU split deferred to Phase 4 |
 | 4  | SMP scheduling — global run queue under one lock | ⬜ | two cores run threads |
 | 4  | Per-task FPU/SIMD save+restore (eager, both arches) | ✅ | 2026-06-20: switch_to FXSAVE/FXRSTOR (x86_64) + STP/LDP q0-q31 (aarch64); fixes latent EL0/ring3-preempt FP corruption + enables SMP migration; commits 4b52f0aba + cca7fb800 |
+| 4  | SMP-safe dispatch — run-queue lock held across switch_to | ✅ | 2026-06-20: sched() holds schedulerSpinLock across switch_to, released by the resumed context (sched_resume_unlock + first-run trampolines, both arches); closes the dequeue-before-save race.  Verified uniprocessor (desktop+vDoom both arches).  commit b2ef7c040 |
 | 5  | TLB shootdown IPIs | ⬜ | |
 | 6  | Per-CPU run queues + load balancing + affinity | ⬜ | optimization layer |
 
