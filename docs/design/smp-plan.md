@@ -50,7 +50,7 @@ Legend: ✅ done & verified · 🟡 partial · ⬜ not started
 | 3  | Per-CPU LAPIC timer + reschedule IPI | ⬜ | |
 | 3  | LAPIC EOI path | ⬜ | still 8259-only |
 | 3.5| Scheduler accounting — per-task `run_ticks`, per-CPU `busy/idle_ticks` | ✅ | done 2026-06-11, both arches boot-verified.  `sched_account_tick()` (MI, `sched_core.c`) charged once per timer IRQ from i386 `timerInt` + aarch64 `timer_tick`; idle tagged via `g_idle_task`; surfaced as `/proc/<pid>/stat` utime + new `/proc/stat`.  Uniprocessor (single busy/idle pair); per-CPU split deferred to Phase 4 |
-| 4  | SMP scheduling — global run queue under one lock | ⬜ | two cores run threads |
+| 4  | SMP scheduling — APs run threads off the shared run queue | ✅ | 2026-06-20 (x86_64): per-CPU TSS (15b3c120e) + AP enters sched as a per-CPU idle (447ccabf7) + reschedule IPI hlt/wake (63ec2690b).  Verified desktop+vDoom, 0 faults.  TODO: per-CPU timer (AP preemption), TLB shootdown (multi-threaded), aarch64 port |
 | 4  | Per-task FPU/SIMD save+restore (eager, both arches) | ✅ | 2026-06-20: switch_to FXSAVE/FXRSTOR (x86_64) + STP/LDP q0-q31 (aarch64); fixes latent EL0/ring3-preempt FP corruption + enables SMP migration; commits 4b52f0aba + cca7fb800 |
 | 4  | SMP-safe dispatch — run-queue lock held across switch_to | ✅ | 2026-06-20: sched() holds schedulerSpinLock across switch_to, released by the resumed context (sched_resume_unlock + first-run trampolines, both arches); closes the dequeue-before-save race.  Verified uniprocessor (desktop+vDoom both arches).  commit b2ef7c040 |
 | 5  | TLB shootdown IPIs | ⬜ | |
