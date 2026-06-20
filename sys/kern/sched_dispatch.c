@@ -83,6 +83,23 @@ static inline u_int8_t quantum_for_priority(u_int8_t pri)
 }
 
 /**
+ * Release schedulerSpinLock from the context the scheduler switched INTO.
+ *
+ * SMP-safe dispatch holds schedulerSpinLock across switch_to (so a task is not
+ * visible in the run queue until its outgoing context has been fully saved);
+ * the lock is therefore released by whatever the scheduler resumed — an existing
+ * task picks back up inside sched() (just after switch_to) and calls this, while
+ * a freshly-dispatched task starts at its first-run trampoline
+ * (kthread_trampoline / user_trampoline / ret_from_fork) which calls this before
+ * running the task.  Callable from asm trampolines.  IRQs stay disabled; the
+ * resumer restores its own saved IRQ state afterwards.
+ */
+void sched_resume_unlock(void)
+{
+	spinUnlock(&schedulerSpinLock);
+}
+
+/**
  * The scheduler: age, reap, and dispatch the highest-priority ready task.
  *
  * Called from the timer tick and from voluntary yields.  Picks the next task
@@ -347,23 +364,27 @@ void sched()
 
 	_current->state = RUNNING;
 
-	spinUnlock(&schedulerSpinLock);
-
 	/*
-	 * Software context switch (replaces the hardware `ljmp $0x20`).  switch_to
-	 * saves prev's kernel context and resumes next; prev resumes here on its next
-	 * scheduling slot with IF cleared (cpu_switch restored the EFLAGS saved under
-	 * the cli above), so re-enable interrupts explicitly.
+	 * SMP-safe context switch: hold schedulerSpinLock ACROSS switch_to (do NOT
+	 * release it here) so the outgoing task is not visible in the run queue until
+	 * its context has been fully saved — otherwise a second CPU could dequeue it
+	 * and load its registers before this CPU finished saving them.  The lock is
+	 * released by the context the switch resumes INTO: an existing task picks back
+	 * up just below (sched_resume_unlock) and a freshly-dispatched task releases it
+	 * from its first-run trampoline.  switch_to runs with IRQs disabled.
 	 *
-	 * Skip when the highest-priority runnable task is the one already running
-	 * (prev == next): there is nothing to save or restore, and cpu_switch's
+	 * Skip the switch when the highest-priority runnable task is the one already
+	 * running (prev == next): there is nothing to save or restore, and cpu_switch's
 	 * self-switch is unsafe — it reads next_ksp before saving prev, so for
 	 * prev == next it would discard the live frame and resume a stale one.  This
 	 * happens when a just-woken, I/O-boosted task (e.g. the NIC RX thread) is the
-	 * sole task at the top priority.
+	 * sole task at the top priority.  In that case there was no switch, so we still
+	 * hold the lock WE took above — release it here too.
 	 */
 	if (prev != _current)
 		switch_to(prev, _current);
+
+	sched_resume_unlock(); /* release the lock taken by whoever scheduled us in */
 
 #if defined(__aarch64__)
 	/*
@@ -378,9 +399,8 @@ void sched()
 	restore_flags(flags);
 #else
 	/*
-	 * i386 runs a preemptible kernel (syscalls execute with IF set).  cpu_switch
-	 * restored prev's EFLAGS saved under the cli above (IF cleared), so re-enable
-	 * interrupts explicitly.
+	 * x86_64 runs a preemptible-from-ring3 kernel.  cpu_switch restored this task's
+	 * EFLAGS saved under the cli above (IF cleared), so re-enable interrupts.
 	 */
 	sti();
 #endif

@@ -63,6 +63,7 @@ static void kthread_trampoline(void)
 	void (*entry)(void *) = (void (*)(void *))(unsigned long)_current->md.md_entry;
 	void *arg = (void *)(unsigned long)_current->md.md_arg;
 
+	sched_resume_unlock(); /* release the run-queue lock held across the dispatch switch */
 	__asm__ __volatile__("sti");
 	entry(arg);
 	for (;;) /* a kernel thread returning is unexpected — park */
@@ -77,6 +78,7 @@ static void kthread_trampoline(void)
  */
 static void user_trampoline(void)
 {
+	sched_resume_unlock(); /* release the run-queue lock held across the dispatch switch */
 	x86_64_iret_to_user(_current->md.md_entry, _current->md.md_usp);
 }
 

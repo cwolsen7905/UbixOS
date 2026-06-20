@@ -130,5 +130,9 @@ el1_invalid:
 	.global ret_from_fork
 	.type ret_from_fork, %function
 ret_from_fork:
+	/* Release the run-queue lock held across the dispatch switch (SMP-safe sched).
+	 * SP points at the trapframe; the bl's callee frame sits below it and x30 is
+	 * restored by KERNEL_EXIT, so the trapframe is untouched. */
+	bl sched_resume_unlock
 	KERNEL_EXIT
 	.size ret_from_fork, . - ret_from_fork

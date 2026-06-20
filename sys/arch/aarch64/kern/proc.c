@@ -57,6 +57,7 @@ void md_new_task(kTask_t *t)
  */
 static void user_trampoline(void)
 {
+	sched_resume_unlock(); /* release the run-queue lock held across the dispatch switch */
 	aarch64_eret_to_el0(_current->md.md_entry, _current->md.md_usp);
 }
 
@@ -70,6 +71,7 @@ static void kthread_trampoline(void)
 	void (*entry)(void *) = (void (*)(void *))(uintptr_t)_current->md.md_entry;
 	void *arg = (void *)(uintptr_t)_current->md.md_arg;
 
+	sched_resume_unlock();               /* release the run-queue lock held across the switch */
 	__asm__ volatile("msr daifclr, #2"); /* enable IRQ for the new thread */
 	entry(arg);                          /* arg is 0 for no-arg entries (extra x0 ignored) */
 	for (;;)                             /* a kernel thread returning is unexpected — park */

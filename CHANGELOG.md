@@ -17,6 +17,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   functional change to aarch64/x86_64.
 - **x86_64 desktop is now 16:9 (1280×720).** The std-VGA framebuffer was programmed
 
+### Changed
+- **Scheduler dispatch is now SMP-safe (run-queue lock held across the switch).**
+  `sched()` previously released `schedulerSpinLock` *before* `switch_to`, with the
+  outgoing task already re-queued — fine on a uniprocessor, but under SMP a second
+  CPU could dequeue that task and load its registers before this CPU finished saving
+  them. The lock is now held across `switch_to` and released by the context the
+  scheduler resumes *into*: an existing task picks back up in `sched()` (new MI
+  `sched_resume_unlock()`), and a freshly-dispatched task releases it from its
+  first-run trampoline (`kthread_trampoline`/`user_trampoline`/`ret_from_fork`, both
+  arches). No behavioural change on the current single-CPU scheduling, but it removes
+  the core race blocking AP scheduling. Verified on both arches: desktops boot and
+  vDoom runs (every fork/exec/thread/preempt exercises the new lock hand-off), 0
+  deadlocks/faults.
+
 ### Fixed
 - **Per-task FPU/SIMD state is now saved across context switches (both arches).**
   The context switch saved only general-purpose registers, and the interrupt/exception

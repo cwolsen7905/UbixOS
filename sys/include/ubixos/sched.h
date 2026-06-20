@@ -155,6 +155,10 @@ kTask_t *sched_getDelTask();
 int sched_tgid_others_alive(pidType tgid, pidType self); /* other live threads sharing the AS */
 void sched_yield();
 void sched();
+/* Release schedulerSpinLock from the context the scheduler resumed into (held
+ * across switch_to for SMP safety).  Called by sched() after the switch and by
+ * every first-run trampoline (kthread_trampoline/user_trampoline/ret_from_fork). */
+void sched_resume_unlock(void);
 
 /*
  * Scheduler accounting (smp-plan Phase 3.5).  Called once per timer interrupt

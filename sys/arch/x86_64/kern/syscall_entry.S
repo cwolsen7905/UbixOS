@@ -59,6 +59,10 @@ x86_64_syscall_entry:
 	.globl ret_from_fork
 	.type ret_from_fork, @function
 ret_from_fork:
+	/* Release the run-queue lock held across the dispatch switch (SMP-safe sched).
+	 * call/ret is RSP-balanced, so the trapframe below is untouched; the clobbered
+	 * caller-saved regs are about to be overwritten by the pops anyway. */
+	call sched_resume_unlock
 	popq %rax /* rax = return value the handler stored (0 for the forked child) */
 	popq %rbx
 	popq %rcx
