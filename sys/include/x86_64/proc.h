@@ -21,6 +21,12 @@ struct md_proc
 	u_int64_t md_brk;       /* current program break for brk()/sbrk() (0 = uninit)      */
 	u_int64_t md_fsbase;    /* user TLS base (FS.base); saved/restored per task         */
 	u_int64_t md_arg;       /* first-dispatch arg for a kernel thread (passed in rdi)   */
+	/* FXSAVE area (x87 + SSE/XMM), saved/restored eagerly per task in switch_to so a
+	 * preempted task's vector regs survive (the ISR path does not save XMM) and an
+	 * SMP-migrated task carries its FP state.  512 bytes + 16 slack so the in-use
+	 * region can be 16-byte aligned regardless of the kTask_t allocation alignment.
+	 * A zeroed buffer is a valid FXRSTOR image (FCW/MXCSR 0 have no reserved bits). */
+	u_int8_t md_fpu[512 + 16];
 };
 
 struct taskStruct; /* == kTask_t */

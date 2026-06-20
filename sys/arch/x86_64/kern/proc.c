@@ -120,6 +120,20 @@ void switch_to(kTask_t *prev, kTask_t *next)
 	                     :
 	                     : "c"(0xC0000100u), "a"((u32)next->md.md_fsbase), "d"((u32)(next->md.md_fsbase >> 32)));
 
+	/* Eagerly save the outgoing task's x87/SSE state and restore the incoming
+	 * task's.  The kernel is built -mno-sse, so the physical XMM registers still
+	 * hold the OUTGOING task's user vector state here (whether we arrived via a
+	 * cooperative yield or a timer preemption — the ISR path saves only GPRs).
+	 * FXSAVE/FXRSTOR need a 16-byte-aligned 512-byte area; align within md_fpu.
+	 * CR4.OSFXSR is set at boot, so the XMM half is included; CR0.TS is clear, so
+	 * no #NM trap.  Lazy/TS-trap FPU is deliberately avoided (it is unsafe on SMP). */
+	{
+		u8 *fp_prev = (u8 *)(((uintptr_t)prev->md.md_fpu + 15) & ~(uintptr_t)15);
+		u8 *fp_next = (u8 *)(((uintptr_t)next->md.md_fpu + 15) & ~(uintptr_t)15);
+		__asm__ __volatile__("fxsave (%0)" : : "r"(fp_prev) : "memory");
+		__asm__ __volatile__("fxrstor (%0)" : : "r"(fp_next) : "memory");
+	}
+
 	x86_64_ctx_switch((u64 *)&prev->md.md_kstack, (u64)next->md.md_kstack);
 }
 

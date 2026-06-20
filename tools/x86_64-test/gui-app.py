@@ -35,7 +35,7 @@ SERIAL = "/tmp/x86_64-app-%s-serial.log" % NAME
 QMP = "/tmp/x86_64-app-%s-qmp.sock" % NAME
 SHOT = "/tmp/x86_64-app-%s.ppm" % NAME
 
-MENU_TOP = 564  # start menu top y (5 items + footer, anchored above the 32px taskbar)
+MENU_TOP = 516  # 1280x720: taskbar at 688, start menu anchored above
 
 
 def qmp(sock, cmd, **args):

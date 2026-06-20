@@ -8,7 +8,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Changed
+- **i386 retired from master.** 32-bit support is frozen on `releng/2`; master is
+  now 64-bit only — **aarch64** (default/primary) + **x86_64** (the abstraction
+  anchor that keeps the MI/MD split honest). Removed the isolated i386 kernel tree
+  (`sys/arch/i386`, `sys/isa`, `sys/pci`, `sys/init`, the orchestration Makefiles,
+  `ldscript.i386`) and the Makefile i386 targets; `TARGET=i386` now errors with a
+  pointer to `releng/2`. 64-bit builds were never compiling these, so there is no
+  functional change to aarch64/x86_64.
 - **x86_64 desktop is now 16:9 (1280×720).** The std-VGA framebuffer was programmed
+
+### Fixed
+- **x86_64 per-task FPU/SSE state is now saved across context switches.** The
+  context switch saved only general-purpose registers, and the interrupt path saves
+  no XMM — so a timer-**preempted** ring-3 task could resume with another task's
+  x87/SSE/XMM state (silent FP corruption), and SMP task migration would have the
+  same problem. `switch_to` now eagerly `FXSAVE`s the outgoing task's vector state
+  and `FXRSTOR`s the incoming task's (a 16-byte-aligned 512-byte area per task;
+  zeroed for new tasks, which is a valid FXRSTOR image). Lazy/`CR0.TS`-trap FPU is
+  deliberately avoided (it is unsafe under SMP). This both fixes the latent
+  preemption bug and is the first prerequisite for true SMP scheduling. Verified:
+  desktop + objGFX (gradients/TrueType) + vDoom all render correctly.
   at 1024×768 (4:3); it now uses 1280×720 (3.7 MB, well within the 16 MB LFB).
 
 ### Fixed
