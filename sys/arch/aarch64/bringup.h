@@ -34,6 +34,7 @@ extern char vectors_el1[]; /* vector table base (vectors.S) */
 void gic_init(void);
 void gic_secondary_init(void); /* AP: bring up this CPU's GICC (smp-plan M2) */
 void gic_enable_intid(unsigned intid);
+void aarch64_gic_send_resched(unsigned cpu); /* SMP: poke one CPU's reschedule IPI */
 int aarch64_irq_dispatch(void); /* EL1 IRQ vector; returns non-zero on a timer tick */
 
 /* timer.c — ARM generic timer (EL1 physical, PPI 30). */

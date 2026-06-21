@@ -11,6 +11,7 @@
  */
 
 #include "bringup.h"
+#include <aarch64/pcpu.h>       /* curcpu() — preempt only on the BSP under SMP */
 #include <ubixos/sched.h>       /* _current — identify the faulting task in dumps */
 #include <ubixos/endtask.h>     /* endTask — terminate a faulting user process */
 #include <ubixos/signal.h>      /* signal_check / sys_sigreturn + AARCH64_SIGTRAMP_RETADDR */
@@ -72,8 +73,16 @@ void aarch64_exception(u_int64_t kind, void *frame)
 		 * busy-polling a virtio ring during boot — must run to its next voluntary
 		 * sched_yield()/block instead of being preempted mid-spin: the aarch64
 		 * resume of a preempted EL1 spin is what wedges the desktop launch.
-		 * Kernel threads already cooperate (RX poll yields, tcpip blocks). */
-		if (ticked && from_el0 && _current != 0)
+		 * Kernel threads already cooperate (RX poll yields, tcpip blocks).
+		 *
+		 * SMP: preempt only on the BSP.  A secondary (AP) runs a purely cooperative
+		 * scheduler — its timer tick wakes it from wfi to poll the run queue but must
+		 * NOT sched() here to time-slice a running EL0 task.  Async preemption from
+		 * interrupt context on a secondary, concurrent with the BSP, is the path that
+		 * corrupts the kernel context save/restore (proven on x86_64); the stable
+		 * model is BSP-only preemption + cooperative APs.  A CPU-bound task on an AP
+		 * runs until it blocks; the BSP still time-slices everything that runs there. */
+		if (ticked && from_el0 && _current != 0 && curcpu()->cpuid == 0)
 		{
 			_current->td.frame = tf;
 			signal_check(tf); /* deliver Ctrl-C etc. to a CPU-bound foreground task */

@@ -21,13 +21,28 @@
 #define AP_STACK_SIZE 16384 /* must match apentry.S */
 
 /*
- * smp-plan: release the APs into the SCHEDULER (M3), default OFF.  The AP
- * scheduler entry works, but true SMP still has uniprocessor assumptions that
- * corrupt or exhaust state under concurrent load (the atomic spinlock + kmalloc
- * are fixed; the page-table/fork allocation path still leaks/OOMs — M4 hardening
- * + TLB shootdown remain).  With this 0, the APs still come up and take their own
- * per-CPU timer ticks (M2, verified stable) but stay parked at the release gate.
- * Set to 1 to experiment with APs pulling real tasks.  Mirrors i386 SMP_ENABLE_APS.
+ * smp-plan: release the APs into the SCHEDULER (M3).  Cooperative parallel SMP —
+ * the APs pull READY tasks off the shared run queue in parallel with the BSP,
+ * mirroring the model proven on x86_64.  Phase-0 hardening landed the two fixes
+ * that real-display testing needed: the virtio-blk request path is now serialised
+ * (sys/arch/aarch64/dev/virtio_blk.c — a concurrent disk read no longer returns a
+ * stale sector, the cause of the failed-first-login), and a GICv2 SGI reschedule
+ * IPI (arch_smp_reschedule below) wakes an idle AP immediately on enqueue instead
+ * of its 10 ms timer poll (the cause of the laggy/dead mouse).  The APs stay
+ * *cooperative*: their timer wakes wfi but never preempts a running EL0 task —
+ * only the BSP time-slices (see aarch64_exception) — which avoids the
+ * async-interrupt-preemption-on-a-secondary corruption deferred on x86_64.
+ *
+ * DEFAULT 0 (parked).  Cooperative SMP on this 2002-era scheduler (one global run
+ * queue + one global lock held across the switch) booted the desktop + ran vDoom,
+ * and the dangerous sleep/wakeup corruption it exposed is fixed (sched_block).  But
+ * real-display testing showed the design is too fragile for daily use — the
+ * cooperative AP idle loop either busy-spins a core or sleeps and intermittently
+ * misses a wakeup (frozen desktop).  SMP is being redone on a per-CPU-run-queue
+ * scheduler (v2) selectable by a compile flag — see docs/design/smp-scheduler-v2-
+ * plan.md.  The Phase-0 fixes here (virtio-blk lock, reschedule SGI, BSP-only
+ * preempt gate) are correct and stay for v2.  (ubixfs is also not yet SMP-safe —
+ * intermittent "not loadable".)
  */
 #define AARCH64_SMP_ENABLE_APS 0
 
@@ -156,6 +171,35 @@ void aarch64_smp_release_aps(void)
 	__asm__ __volatile__("dmb ish");
 	g_arm_ap_go = 1;
 	kprintf("smp: released %u application processor(s) into the scheduler\n", (n > 1) ? n - 1 : 0);
+}
+
+/**
+ * arch_smp_reschedule (strong override of the weak no-op in sched_core.c): poke
+ * every other CPU's reschedule IPI so an idle one wakes from wfi, re-runs
+ * sched_yield(), and picks up work just enqueued under schedulerSpinLock — instead
+ * of waiting up to 10 ms for its own next timer tick.  This is what makes input/MPI
+ * wakeups to a task parked on a secondary prompt.  No-op until the APs are released
+ * (single CPU before that; and the GIC is fully up by release time).  Sends to the
+ * BSP too (cpu 0), so an AP enqueuing work wakes an idle BSP.  Runs under
+ * schedulerSpinLock — a couple of GICD_SGIR writes, cheap.
+ */
+void arch_smp_reschedule(void)
+{
+	unsigned self, c, n;
+
+	if (!g_arm_ap_go)
+		return; /* APs not scheduling yet — only the BSP is running */
+
+	self = curcpu()->cpuid;
+	n = smp_cpu_count();
+	if (n > MAXCPU)
+		n = MAXCPU;
+	for (c = 0; c < n; c++)
+	{
+		if (c == self)
+			continue;
+		aarch64_gic_send_resched(c);
+	}
 }
 
 /**

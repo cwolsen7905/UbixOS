@@ -23,12 +23,19 @@
 
 #define GICD_CTLR 0x000
 #define GICD_ISENABLER 0x100
+#define GICD_SGIR 0xF00 /* Software-Generated Interrupt Register (write-only) */
 #define GICC_CTLR 0x000
 #define GICC_PMR 0x004
 #define GICC_IAR 0x00C
 #define GICC_EOIR 0x010
 
 #define GICC_SPURIOUS 1020 /* INTIDs >= 1020 are spurious */
+
+/* SMP reschedule IPI: SGI 0.  arch_smp_reschedule() (apsmp.c) sends it to wake an
+ * idle secondary out of wfi so it re-runs sched_yield() and picks up newly enqueued
+ * work — the aarch64 analogue of x86_64's 0xFD reschedule IPI.  The wake IS the
+ * point; the handler just EOIs (no preempt — APs stay cooperative). */
+#define RESCHED_SGI 0
 
 /**
  * Bring up the GICv2: enable the distributor and CPU interface and unmask all
@@ -39,6 +46,7 @@ void gic_init(void)
 	GICD(GICD_CTLR) = 1;   /* enable distributor */
 	GICC(GICC_PMR) = 0xFF; /* allow every priority */
 	GICC(GICC_CTLR) = 1;   /* enable CPU interface */
+	gic_enable_intid(RESCHED_SGI); /* receive the reschedule IPI (banked GICD_ISENABLER0) */
 }
 
 /**
@@ -50,6 +58,21 @@ void gic_secondary_init(void)
 {
 	GICC(GICC_PMR) = 0xFF;
 	GICC(GICC_CTLR) = 1;
+	gic_enable_intid(RESCHED_SGI); /* this AP must receive the reschedule IPI (banked) */
+}
+
+/**
+ * Send the reschedule IPI (RESCHED_SGI) to a single CPU @cpu.
+ *
+ * GICD_SGIR with TargetListFilter=0 (use CPUTargetList) and CPUTargetList = 1<<cpu.
+ * On QEMU `virt` the GIC CPU-interface number equals the cpu index, so a cpuid maps
+ * straight to its target bit.  The dsb orders the run-queue enqueue (done by the
+ * caller under schedulerSpinLock) before the wake so the woken CPU sees the work.
+ */
+void aarch64_gic_send_resched(unsigned cpu)
+{
+	__asm__ volatile("dsb ish" ::: "memory");
+	GICD(GICD_SGIR) = ((1u << (cpu & 0xFF)) << 16) | (RESCHED_SGI & 0x0F);
 }
 
 /**
@@ -80,6 +103,8 @@ int aarch64_irq_dispatch(void)
 
 	if (intid == 27) /* EL1 virtual (generic) timer PPI */
 		timer_tick();
+	else if (intid == RESCHED_SGI) /* SMP reschedule IPI — the wake itself is the work */
+		;                      /* fall through to EOI; the AP re-runs sched_yield after ERET */
 	else
 		kprintf("irq: unexpected intid %u\n", intid);
 
