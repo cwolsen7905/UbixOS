@@ -308,21 +308,34 @@ static struct auth_response do_auth(const std::string &reply_mbox,
 	msg.header = AUTHD_MSG_REQUEST;
 	::memcpy(msg.data, &req, sizeof(req));
 
+	/* Drain any stale reply left in our mailbox from an earlier attempt, so we
+	 * accept only THIS request's response (otherwise a slow first attempt's late
+	 * reply would be consumed by the next attempt). */
+	mpi_message_t rmsg;
+	while (mpi_fetchMessage(reply_mbox.c_str(), &rmsg) == 0)
+		;
+
 	if (mpi_postMessage(AUTHD_MBOX, AUTHD_MSG_REQUEST, &msg) != 0)
 		return resp; /* authd not reachable */
 
-	mpi_message_t rmsg;
-	for (int i = 0; i < 2000; i++)
+	/* Block for the reply rather than spin a fixed number of yields.  authd verifies
+	 * with PBKDF2 (50k iterations) which takes tens of ms; under SMP it runs in
+	 * parallel on another core, so a brief yield-poll elapses long before the hash
+	 * completes and mis-reports a correct-but-slow login as rejected ("incorrect on
+	 * first attempt").  mpi_waitMessage sleeps until a message arrives; the loop
+	 * skips any non-response message and bounds the total wait (~5 s) against a dead
+	 * authd. */
+	for (int i = 0; i < 50; i++)
 	{
-		if (mpi_fetchMessage(reply_mbox.c_str(), &rmsg) == 0 && rmsg.header == AUTHD_MSG_RESPONSE)
+		if (mpi_waitMessage(reply_mbox.c_str(), &rmsg, 10 /* ticks ≈ 100 ms */) == 0 &&
+		    rmsg.header == AUTHD_MSG_RESPONSE)
 		{
 			::memcpy(&resp, rmsg.data, sizeof(resp));
 			return resp;
 		}
-		ubix::yield();
 	}
 
-	return resp; /* timeout */
+	return resp; /* timeout — authd unresponsive */
 }
 
 /* ------------------------------------------------------------------ */

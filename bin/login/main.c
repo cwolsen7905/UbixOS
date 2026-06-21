@@ -95,6 +95,11 @@ do_auth(const char *username, const char *password)
 	msg.header = AUTHD_MSG_REQUEST;
 	memcpy(msg.data, &req, sizeof(req));
 
+	/* Drain any stale reply from a prior attempt so we match THIS request's
+	 * response, not an earlier (late) one. */
+	while (mpi_fetchMessage(reply_mbox, &rmsg) == 0)
+		;
+
 	/* Retry until authd's mailbox exists — it may still be starting up. */
 	for (waited = 0; waited < 2000; waited++) {
 		if (mpi_postMessage(AUTHD_MBOX, AUTHD_MSG_REQUEST, &msg) == 0)
@@ -106,14 +111,16 @@ do_auth(const char *username, const char *password)
 		}
 	}
 
-	/* Poll for response — authd replies promptly */
-	for (waited = 0; waited < 1000; waited++) {
-		if (mpi_fetchMessage(reply_mbox, &rmsg) == 0 &&
+	/* Block for the reply.  authd verifies with PBKDF2 (50k iterations) which takes
+	 * tens of ms — far longer than a brief yield-poll, especially under SMP where
+	 * authd runs in parallel — so wait properly instead of timing out and reporting
+	 * a correct-but-slow login as a failure.  Bounded (~5 s) against a dead authd. */
+	for (waited = 0; waited < 50; waited++) {
+		if (mpi_waitMessage(reply_mbox, &rmsg, 10 /* ticks ~= 100 ms */) == 0 &&
 		    rmsg.header == AUTHD_MSG_RESPONSE) {
 			memcpy(&resp, rmsg.data, sizeof(resp));
 			return (resp);
 		}
-		sched_yield();
 	}
 
 	printf("login: timeout waiting for authd\n");
