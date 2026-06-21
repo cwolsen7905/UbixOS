@@ -10,6 +10,7 @@
  */
 
 #include "x86_64.h"
+#include <x86_64/pcpu.h>        /* curcpu() — report the faulting CPU in the dump */
 #include <ubixos/sched.h>       /* _current, sched() — ring-3 fault containment */
 #include <ubixos/endtask.h>     /* endTask */
 #include <sys/trap.h>           /* struct trapframe */
@@ -219,6 +220,10 @@ void x86_64_exception(struct x86_64_trapframe *tf)
 	serial_puthex(cr2);
 	serial_puts(" pid=");
 	serial_putdec(_current ? (int)_current->id : -1);
+	serial_puts(" cpu=");
+	serial_putdec((int)curcpu()->cpuid);
+	serial_puts(" name=");
+	serial_puts(_current ? (char *)_current->name : (char *)"(none)");
 	serial_puts("\n");
 
 	/* Fault-containment: a fault taken in ring 3 (CS RPL == 3) is the user
