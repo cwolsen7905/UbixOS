@@ -41,8 +41,20 @@ extern struct spinLock schedulerSpinLock;
 
 /* Phase 2: priority run queues. */
 #define SCHED_PRIORITIES 32
-extern kTask_t  *run_queue[SCHED_PRIORITIES];
-extern u_int32_t  ready_mask;          /* bit N set ↔ run_queue[N] non-empty */
+
+/*
+ * A run queue: the priority buckets + a summary bitmask for the O(1) pick.  Today
+ * there is a single global instance (g_rq) shared under schedulerSpinLock — the
+ * 2002 uniprocessor design.  The per-CPU scheduler (v2) gives each CPU its own
+ * struct runqueue with its own lock; see docs/design/smp-scheduler-v2-plan.md.
+ * Either way a task lives in exactly one run queue at a time (t->on_rq).
+ */
+struct runqueue
+{
+	kTask_t  *bucket[SCHED_PRIORITIES]; /* circular FIFO list head per priority band */
+	u_int32_t ready_mask;               /* bit N set ↔ bucket[N] is non-empty */
+};
+extern struct runqueue g_rq;
 
 void pid_hash_remove(kTask_t *t);
 

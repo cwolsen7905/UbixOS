@@ -52,8 +52,8 @@ kTask_t *taskList = 0x0;
 struct spinLock schedulerSpinLock = SPIN_LOCK_INITIALIZER;
 
 /* Phase 2: 32 per-priority run queues + bitmask (Windows ReadySummary trick). */
-kTask_t *run_queue[SCHED_PRIORITIES];
-u_int32_t ready_mask = 0;
+/* The single global run queue (uniprocessor design; v2 makes this per-CPU). */
+struct runqueue g_rq;
 
 static kTask_t *delList = 0x0;
 static u_int32_t nextID = 1;
@@ -307,15 +307,15 @@ void rq_enqueue_locked(kTask_t *t)
 		return;
 
 	pri = (int)t->priority;
-	head = run_queue[pri];
+	head = g_rq.bucket[pri];
 
 	if (head == NULL)
 	{
 		/* First task at this priority — circular singleton. */
 		t->rq_next = t;
 		t->rq_prev = t;
-		run_queue[pri] = t;
-		ready_mask |= (1u << pri);
+		g_rq.bucket[pri] = t;
+		g_rq.ready_mask |= (1u << pri);
 	}
 	else
 	{
@@ -325,7 +325,7 @@ void rq_enqueue_locked(kTask_t *t)
 		t->rq_prev = tail;
 		tail->rq_next = t;
 		head->rq_prev = t;
-		/* run_queue[pri] stays pointing at head for O(1) dequeue. */
+		/* g_rq.bucket[pri] stays pointing at head for O(1) dequeue. */
 	}
 	t->on_rq = 1;
 
@@ -353,15 +353,15 @@ void rq_dequeue_locked(kTask_t *t)
 	if (t->rq_next == t)
 	{
 		/* Only task in this queue. */
-		run_queue[pri] = NULL;
-		ready_mask &= ~(1u << pri);
+		g_rq.bucket[pri] = NULL;
+		g_rq.ready_mask &= ~(1u << pri);
 	}
 	else
 	{
 		t->rq_prev->rq_next = t->rq_next;
 		t->rq_next->rq_prev = t->rq_prev;
-		if (run_queue[pri] == t)
-			run_queue[pri] = t->rq_next;
+		if (g_rq.bucket[pri] == t)
+			g_rq.bucket[pri] = t->rq_next;
 	}
 	t->rq_next = NULL;
 	t->rq_prev = NULL;
@@ -905,15 +905,15 @@ int sched_wait_event_timeout(void *chan, int (*cond)(void *arg), void *arg, u_in
 			              sleep_wake_cb,
 			              _current);
 		_current->state = WAIT;
-		spinUnlock(&schedulerSpinLock);
-		restore_flags(flags);
 
-		/* Switch away.  Returns once a wakeup (signal or the timeout callout)
-		 * re-enqueues us and we are re-dispatched; loop and re-test. */
-		sched();
-
-		save_flags(flags);
-		cli();
+		/* Switch away WITHOUT releasing schedulerSpinLock first.  sched_block() keeps
+		 * the lock held continuously from this WAIT mark across the context switch off
+		 * our stack (the resumer releases it) — closing the SMP sleep race where a
+		 * waker on another CPU re-enqueues this WAIT task and a third CPU runs it on
+		 * our kernel stack before we have left it.  Returns once a wakeup (signal or
+		 * the timeout callout) re-enqueues us and we are re-dispatched, with the lock
+		 * released and IRQs still disabled — ready to re-test the condition. */
+		sched_block();
 	}
 
 	/* Cancel any still-armed timeout so it cannot fire after we return (or

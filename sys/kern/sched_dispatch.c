@@ -100,18 +100,29 @@ void sched_resume_unlock(void)
 }
 
 /**
- * The scheduler: age, reap, and dispatch the highest-priority ready task.
+ * The scheduler core: age, reap, and dispatch the highest-priority ready task,
+ * then switch_to() it.
  *
- * Called from the timer tick and from voluntary yields.  Picks the next task
- * via the O(1) ready_mask, then performs the machine-dependent switch_to().
+ * @param preheld  0 for the normal entry (sched(): acquire schedulerSpinLock here,
+ *                 bail if another CPU holds it).  1 for the sleep entry
+ *                 (sched_block(): the caller ALREADY holds schedulerSpinLock with
+ *                 IRQs disabled and has marked _current non-runnable).  The sleep
+ *                 case must keep the lock held continuously from "mark WAIT" through
+ *                 the switch off this task's stack — otherwise, on SMP, a waker on
+ *                 another CPU could re-enqueue the WAIT task and a third CPU run it
+ *                 on the same kernel stack before this one finished switching away
+ *                 (torn LR/SP — the SMP context-switch corruption).  The lock is
+ *                 released from the resumed side (sched_resume_unlock), as always.
+ *                 With preheld=1 the caller owns IRQ state, so this never restores
+ *                 flags; with preheld=0 behaviour is byte-for-byte the old sched().
  */
-void sched()
+static void sched_common(int preheld)
 {
 	kTask_t *prev = 0x0;
 	kTask_t *delTask = 0x0;
 	kTask_t *next = 0x0;
 	kTask_t *t = 0x0;
-	u_int32_t flags;
+	u_int32_t flags = 0;
 
 	/* Stir the CSPRNG with timer-tick jitter (lock-free, every tick). */
 	krandom_stir(0);
@@ -148,13 +159,17 @@ void sched()
 	 * across the locked section closes that window (and the timer's spinTryLock
 	 * bail handles the genuinely-reentrant timer case).
 	 */
-	save_flags(flags);
-	cli();
-	if (spinTryLock(&schedulerSpinLock))
+	if (!preheld)
 	{
-		restore_flags(flags);
-		return;
+		save_flags(flags);
+		cli();
+		if (spinTryLock(&schedulerSpinLock))
+		{
+			restore_flags(flags);
+			return;
+		}
 	}
+	/* preheld: the caller already holds schedulerSpinLock with IRQs disabled. */
 
 	/* --- Phase 3.4: starvation aging — scan every ~50 ms --- */
 	{
@@ -287,7 +302,8 @@ void sched()
 		{
 			/* Realtime only: never preempt — runs until it voluntarily blocks. */
 			spinUnlock(&schedulerSpinLock);
-			restore_flags(flags);
+			if (!preheld)
+				restore_flags(flags);
 			return;
 		}
 
@@ -297,7 +313,8 @@ void sched()
 		if (_current->quantum > 0)
 		{
 			spinUnlock(&schedulerSpinLock);
-			restore_flags(flags);
+			if (!preheld)
+				restore_flags(flags);
 			return;
 		}
 
@@ -321,7 +338,7 @@ void sched()
 		rq_enqueue_locked(_current);
 	}
 
-	if (ready_mask == 0)
+	if (g_rq.ready_mask == 0)
 	{
 		/*
 		 * Nothing in the shared run queue.  On i386 run this CPU's pinned idle
@@ -336,16 +353,17 @@ void sched()
 		else
 		{
 			spinUnlock(&schedulerSpinLock);
-			restore_flags(flags);
+			if (!preheld)
+				restore_flags(flags);
 			return;
 		}
 	}
 	else
 	{
 		/* Pick the highest-priority ready task (highest set bit). */
-		int pri = 31 - __builtin_clz(ready_mask);
-		/* run_queue[pri] is a circular list; head is the next to run. */
-		next = run_queue[pri];
+		int pri = 31 - __builtin_clz(g_rq.ready_mask);
+		/* g_rq.bucket[pri] is a circular list; head is the next to run. */
+		next = g_rq.bucket[pri];
 		/* Dequeue (removes next and rotates head to next->rq_next). */
 		rq_dequeue_locked(next);
 	}
@@ -387,6 +405,15 @@ void sched()
 
 	sched_resume_unlock(); /* release the lock taken by whoever scheduled us in */
 
+	/*
+	 * Sleep entry (preheld): the caller (sched_block from sched_wait_event) owns the
+	 * IRQ state and restores it itself once it is re-dispatched, so leave it alone.
+	 * `preheld` is a local, preserved on this task's stack across the switch, so the
+	 * value seen here on resume is this task's own — even after migrating CPUs.
+	 */
+	if (preheld)
+		return;
+
 #if defined(__aarch64__)
 	/*
 	 * aarch64 runs a non-preemptible kernel: EL1 syscall/exception handlers run
@@ -407,6 +434,28 @@ void sched()
 #endif
 
 	return;
+}
+
+/**
+ * Normal scheduler entry: acquire schedulerSpinLock (bail if another CPU holds it),
+ * dispatch, and switch.  Called from the timer tick and voluntary yields.
+ */
+void sched()
+{
+	sched_common(0);
+}
+
+/**
+ * Sleep scheduler entry: switch away from a task that has just marked itself
+ * non-runnable, holding schedulerSpinLock continuously across the switch so no
+ * waker on another CPU can re-enqueue it (and a third CPU run it on the same kernel
+ * stack) before it has left its stack.  The caller MUST hold schedulerSpinLock with
+ * IRQs disabled and have set _current->state to a non-runnable value; this returns
+ * (lock released by the resumer, IRQs still disabled) once the task is re-dispatched.
+ */
+void sched_block(void)
+{
+	sched_common(1);
 }
 
 /**

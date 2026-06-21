@@ -162,7 +162,7 @@ void x86_64_ap_entry(u32 cpuid)
 		 * us).  ready_mask is read locklessly as a hint: a stale "empty" still gets
 		 * the enqueuer's IPI, and sched() re-checks under the lock. */
 		__asm__ __volatile__("cli");
-		if (ready_mask != 0)
+		if (g_rq.ready_mask != 0)
 		{
 			__asm__ __volatile__("sti");
 			continue;

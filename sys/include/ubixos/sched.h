@@ -155,6 +155,10 @@ kTask_t *sched_getDelTask();
 int sched_tgid_others_alive(pidType tgid, pidType self); /* other live threads sharing the AS */
 void sched_yield();
 void sched();
+/* Sleep entry: switch away from a task that has just marked itself non-runnable,
+ * with schedulerSpinLock held continuously across the switch (SMP sleep-race fix).
+ * Caller holds schedulerSpinLock + IRQs disabled and has set _current non-runnable. */
+void sched_block(void);
 /* Release schedulerSpinLock from the context the scheduler resumed into (held
  * across switch_to for SMP safety).  Called by sched() after the switch and by
  * every first-run trampoline (kthread_trampoline/user_trampoline/ret_from_fork). */
