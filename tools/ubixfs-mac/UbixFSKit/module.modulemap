@@ -1,0 +1,8 @@
+// Clang module exposing the UbixFSKit Obj-C facade to Swift.  Swift code does
+// `import UbixFSKit` and sees UbixFSSession + UbixFSEntry; the C core and the
+// vdev shim stay private implementation details (compiled into the same target).
+module UbixFSKit {
+	header "UbixFSSession.h"
+	header "UbixFSEntry.h"
+	export *
+}

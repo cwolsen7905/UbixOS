@@ -1,0 +1,9 @@
+# Build artifacts for the UbixFS macOS browser (host-only tooling).
+build/
+UbixFSKit/libubixfskit.a
+UbixFSKit/image_test
+UbixFSKit/objc_test
+UbixFSKit/*.o
+UbixFSKit/raw.pool
+UbixFSKit/disk.img
+*.dSYM/

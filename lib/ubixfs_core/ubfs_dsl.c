@@ -66,10 +66,10 @@ static int dataset_get(ubfs_dsl_t *dsl, uint64_t ds_obj, ubfs_dataset_phys_t *dp
 
 int ubfs_dsl_create_fs(ubfs_dsl_t *dsl, const char *name, uint64_t *ds_obj)
 {
-	ubfs_dmu_os_t       fs_os;
-	ubfs_blkptr_t       fs_bp;
+	ubfs_dmu_os_t fs_os;
+	ubfs_blkptr_t fs_bp;
 	ubfs_dataset_phys_t dp;
-	uint64_t            obj;
+	uint64_t obj;
 
 	ubfs_dmu_objset_create(dsl->pool, UBFS_OST_FS, &fs_os);
 	if (ubfs_dmu_objset_sync(&fs_os, &fs_bp) < 0)
@@ -92,10 +92,10 @@ int ubfs_dsl_create_fs(ubfs_dsl_t *dsl, const char *name, uint64_t *ds_obj)
 
 int ubfs_dsl_create_volume(ubfs_dsl_t *dsl, const char *name, uint64_t volsize, uint64_t *ds_obj)
 {
-	ubfs_dmu_os_t       zv_os;
-	ubfs_blkptr_t       zv_bp;
+	ubfs_dmu_os_t zv_os;
+	ubfs_blkptr_t zv_bp;
 	ubfs_dataset_phys_t dp;
-	uint64_t            obj, dataobj;
+	uint64_t obj, dataobj;
 
 	ubfs_dmu_objset_create(dsl->pool, UBFS_OST_VOL, &zv_os);
 	dataobj = ubfs_dmu_object_alloc(&zv_os, UBFS_OT_VOL, UBFS_BT_NONE); /* volume data object */
@@ -124,6 +124,31 @@ int ubfs_dsl_lookup(ubfs_dsl_t *dsl, const char *name, uint64_t *ds_obj)
 	return ubfs_dir_lookup(&dsl->mos, UBFS_MOS_DIR_OBJ, name, ds_obj, NULL);
 }
 
+/* Trampoline: adapt the dir iterator's (name,obj,type) to the dataset cb, which
+ * does not care about the directory-entry type (datasets are added with type 0). */
+struct dsl_foreach_ctx
+{
+	ubfs_dsl_cb cb;
+	void *arg;
+};
+
+static int dsl_foreach_trampoline(void *arg, const char *name, uint64_t obj, uint8_t type)
+{
+	struct dsl_foreach_ctx *c = (struct dsl_foreach_ctx *)arg;
+
+	(void)type;
+	return c->cb(c->arg, name, obj);
+}
+
+int ubfs_dsl_foreach(ubfs_dsl_t *dsl, ubfs_dsl_cb cb, void *arg)
+{
+	struct dsl_foreach_ctx ctx;
+
+	ctx.cb = cb;
+	ctx.arg = arg;
+	return ubfs_dir_foreach(&dsl->mos, UBFS_MOS_DIR_OBJ, dsl_foreach_trampoline, &ctx);
+}
+
 int ubfs_dsl_open_dataset(ubfs_dsl_t *dsl, uint64_t ds_obj, ubfs_dataset_phys_t *dp, ubfs_dmu_os_t *os)
 {
 	if (dataset_get(dsl, ds_obj, dp) < 0)
@@ -134,7 +159,7 @@ int ubfs_dsl_open_dataset(ubfs_dsl_t *dsl, uint64_t ds_obj, ubfs_dataset_phys_t 
 int ubfs_dsl_sync_dataset(ubfs_dsl_t *dsl, uint64_t ds_obj, ubfs_dmu_os_t *os)
 {
 	ubfs_dataset_phys_t dp;
-	ubfs_blkptr_t       bp;
+	ubfs_blkptr_t bp;
 
 	if (ubfs_dmu_objset_sync(os, &bp) < 0)
 		return -1;
