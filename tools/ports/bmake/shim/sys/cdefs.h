@@ -23,9 +23,9 @@
 #ifndef __dead
 #define __dead __attribute__((__noreturn__))
 #endif
-#ifndef __unused
-#define __unused __attribute__((__unused__))
-#endif
+/* NB: do NOT define __unused — musl uses it as a struct-field name (e.g. x86_64
+ * bits/stat.h `long __unused[3]`), and bmake uses __attribute__((__unused__))
+ * directly, never bare __unused. */
 #ifndef __printflike
 #define __printflike(fmtarg, firstvararg) __attribute__((__format__(__printf__, fmtarg, firstvararg)))
 #endif

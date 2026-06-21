@@ -20,34 +20,45 @@ bmake -C tools/ports/bmake            # default TARGET=aarch64
 bmake -C tools/ports/bmake TARGET=x86_64
 ```
 
-## Status
+## Status — WORKING
 
 | Step | State |
 |---|---|
 | Fetch pinned tarball + verify SHA-256 | ✅ via `mk/ports.mk` |
 | Extract → `build/ports/bmake-20240212/` (gitignored) | ✅ |
-| Apply `patches/*.patch` | ✅ (none needed yet) |
 | `sys/cdefs.h` shim (musl ships none; make.h needs it) | ✅ `shim/sys/cdefs.h` |
-| **`config.h` for musl** | ⬜ **the remaining crux** |
-| Per-file cross-compile + link against musl | ⬜ |
-| In-OS run (`bmake` parses a real tree Makefile) | ⬜ (also gated on a stable kernel) |
+| `config.h` for musl | ✅ `config.h` (configure-on-host + musl adaptation) |
+| Cross-compile + link both arches → `build/${TARGET}/bin/bmake` | ✅ via `build.sh` |
+| **In-OS: runs + evaluates a variable from a real makefile** | ✅ `-V V` → the value, exit 0 |
 
-## The remaining work (the cross-build)
+Verified on aarch64 in UbixOS over the serial console: `bmake -r -V MACHINE`
+prints `aarch64` (the compiled-in machine) and `bmake -r -f <makefile> -V V`
+parses a real file and prints the variable — clean exit.
 
-bmake is autoconf-based. Normally `configure` detects the host's features and
-writes `config.h`, which then selects which of bmake's bundled compat shims
-(`getopt.c`, `realpath.c`, `setenv.c`, `strlcpy.c`, `sigaction.c`, `dirname.c`,
-`stresep.c`, …) to compile — musl provides most of them, so only a subset is
-built.
+### How `config.h` was produced
 
-We **cross-compile** against musl-freestanding (`-nostdlib -nostdinc`), so
-`configure` can't link/run its target test-programs. The standard fix for porting
-an autoconf program to an embedded/freestanding target is to **author `config.h`
-by hand** from `config.h.in` + the known musl feature set, then build with the
-uBixOS world toolchain. That `config.h` (+ the per-file compile iteration it
-drives via `build.mk`) is the next focused step. Feasibility is validated: with
-the shim + the world musl include flags, the core sources compile past the
-header-setup stage.
+bmake is autoconf-based; `configure` can't run target test-programs under
+`-nostdlib`, so we ran `configure` **on the host** to get a real baseline
+`config.h`, then adapted the handful of musl differences (disabled
+`HAVE_SYS_SIGLIST`, `HAVE_SYSCTL`, `HAVE_SYS_SYSCTL_H`, and `HAVE_MMAP` — see
+below). `config.h` then drives the source set; `build.sh` compiles that set with
+the uBixOS world musl flags and links like a world program (musl crt + ld.so).
+`USE_META`/filemon are off (no kernel filemon support, and plain bmake is what
+self-hosting needs).
 
-When `config.h` lands here, `do-build` picks it up automatically and links
-`build/${TARGET}/bin/bmake`.
+## Known follow-ups (not bmake bugs)
+
+1. **`HAVE_MMAP` disabled** — bmake `mmap`s makefiles by default; doing so on
+   uBixOS **SIGABRTs** reading a real file. Disabling `HAVE_MMAP` (read() path)
+   makes it work. The underlying **file-backed mmap** fault is a kernel issue —
+   self-hosting-plan Phase 2.  Re-enable once that's fixed.
+2. **Recipe execution needs `/bin/sh`** — bmake shells recipes out to `/bin/sh`
+   (self-hosting-plan Phase 2) and the world needs `printf`/coreutils. Variable
+   evaluation + parsing work today; running recipes waits on the shell.
+
+## Build
+
+```
+bmake -C tools/ports/bmake            # default TARGET=aarch64
+bmake -C tools/ports/bmake TARGET=x86_64
+```

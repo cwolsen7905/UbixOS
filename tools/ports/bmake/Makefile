@@ -46,18 +46,10 @@ PORT_CFLAGS = -nostdlib -nostdinc -fno-builtin -fPIC -O -DMAKE_NATIVE \
 # musl's feature set) + the per-file compile iteration is the remaining port
 # work; see README.md.  fetch / extract / patch (the framework) are complete.
 do-build:
-.if exists(${.CURDIR}/config.h)
 	@echo "==> cross-build bmake for ${TARGET}"
 	@cp ${.CURDIR}/config.h ${WRKSRC}/config.h
-	@cd ${WRKSRC} && ${MAKE} -f ${.CURDIR}/build.mk \
-	    CC="${CC}" PORT_CFLAGS="${PORT_CFLAGS}" \
-	    BUILD="${BUILD}" MUSL_ARCH="${MUSL_ARCH}"
-.else
-	@echo "==> bmake port: config.h not authored yet — cross-build is WIP."
-	@echo "    DONE: fetch + verify SHA + extract + patch (the ports framework)."
-	@echo "    NEXT: author config.h (musl) + iterate the per-file compile/link."
-	@echo "    See tools/ports/bmake/README.md."
-	@false
-.endif
+	@WRKSRC="${WRKSRC}" CC="${CC}" PORT_CFLAGS="${PORT_CFLAGS}" \
+	    BUILD="${BUILD}" MUSL_ARCH="${MUSL_ARCH}" \
+	    sh ${.CURDIR}/build.sh
 
 .include "${.CURDIR}/../../../mk/ports.mk"
