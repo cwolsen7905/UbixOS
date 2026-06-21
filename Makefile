@@ -60,7 +60,7 @@ _USB_FLAGS!= test -f ${USB_IMAGE} && \
 .PHONY: all kernel kernel-aarch64 kernel-x86_64 run-x86_64 run-debug-x86_64 musl-libc world makeuser image image-aarch64 image-arm usb-image \
         mount-image unmount-image \
         install-kernel install-world install \
-        run-aarch64 run-debug-aarch64 \
+        run-aarch64 run-debug-aarch64 run-claude \
         kernel-to-image clean-kernel clean
 
 # `all` is arch-aware: every MMU-class arch builds the full system (kernel + world
@@ -710,6 +710,27 @@ run-debug-aarch64:
 	  ${_ARM_DISK_FLAGS} \
 	  -device virtio-net-device,netdev=net0 -netdev user,id=net0 \
 	  -nographic
+
+# Agent (Claude) run: the graphical desktop opens in a window for the human, AND
+# the serial console is exposed on a unix socket so the coding agent can type
+# commands + read text output directly — no driving the GUI over VNC.  Serial is
+# tee'd to a logfile so the full boot is captured even before the agent connects.
+#   serial socket : /tmp/ubixos-claude.sock        (interactive — `nc -U` or pipe)
+#   serial log    : /tmp/ubixos-claude-serial.log
+#   qemu monitor  : /tmp/ubixos-claude-mon.sock     (screenshot/sendkey fallback)
+run-claude:
+	@echo "==> UbixOS desktop opens in a window; agent serial on /tmp/ubixos-claude.sock"
+	qemu-system-aarch64 -machine virt,gic-version=2 -accel hvf -cpu host -m 512 -smp ${SMP} \
+	  -kernel ${OBJ_DIR}/boot/kernel \
+	  -global virtio-mmio.force-legacy=false \
+	  ${_ARM_DISK_FLAGS} \
+	  -device virtio-net-device,netdev=net0 -netdev user,id=net0 \
+	  -device virtio-gpu-device \
+	  -device virtio-keyboard-device -device virtio-mouse-device \
+	  -audiodev coreaudio,id=snd0 -device virtio-sound-device,audiodev=snd0 \
+	  -chardev socket,id=claudeser,path=/tmp/ubixos-claude.sock,server=on,wait=off,logfile=/tmp/ubixos-claude-serial.log \
+	  -serial chardev:claudeser \
+	  -monitor unix:/tmp/ubixos-claude-mon.sock,server,nowait
 
 # ── Maintenance ───────────────────────────────────────────────────────────────
 

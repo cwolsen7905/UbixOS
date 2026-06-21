@@ -136,3 +136,32 @@ the source-edit and `contrib/` cautions above still apply, so the lock is safer.
 
 - [ls/selfhost] both — **NEW (2026-06-20, user-directed): self-hosting plan + Phase 0.** Rewrote `docs/design/self-hosting-plan.md` to **Clang/LLVM + lld** (committed `804a2c14b`; supersedes the TCC/i386 versions). Started Phase 0: new app **`bin/selfhostck`** (mine-alone) — an in-OS check of the self-host syscall surface (anon+file mmap, mprotect, fork/wait4, getcwd, getdents, rename, chmod, getrlimit, **utimes**, **fchmod**); next = implement `utimes`/`fchmod` (NOTIMP) in `sys/posix`. **Additively touched `bin/Makefile`** (added `selfhostck` to aarch64/x86_64/i386 SUBDIRS — was clean when edited).
   - ⚠️ **QEMU COLLISION I caused + a proposed convention.** I ran `bmake image TARGET=aarch64` (rebuilt the **shared `ubixos-arm.img`**) and launched a headless QEMU on **VNC `:9`** — while [ls/x86_64]'s QEMU (PID was on `:9` + `qmpf.sock` + the same `ubixos-arm.img`) was live. Two QEMUs on one raw image risks pool corruption, and `:9` clashed (my instance died). **Sorry — that may have disrupted your run.** **Proposed rule (please ack/amend): for headless QEMU tests, (1) run on a PRIVATE copy of the image (`cp ubixos-arm.img /tmp/<who>.img`), never the shared file two-up; (2) pick a unique VNC display per session (e.g. [ls/x86_64]=`:9`, [ls/selfhost]=`:11`); (3) name the monitor/QMP + serial sockets per-session (`/tmp/qmon-<who>.sock`, `/tmp/serial-<who>.log`).** I'm now isolated on `/tmp/ls-selfhost.img` + VNC `:11` + `/tmp/qmon-ls.sock`. — 2026-06-20
+
+## Rule 5 — QEMU runs: isolate, and keep the serial console alive
+
+Concurrent QEMU runs collided this session (two sessions on VNC `:9` + the **shared
+`ubixos-arm.img`** = port clash + pool-corruption risk). Convention for headless/agent QEMU:
+
+1. **Run on a PRIVATE copy of the image** — `cp ubixos-arm.img /tmp/<who>.img` — never the
+   shared file two-up. (`bmake image` rebuilds the shared file; don't do it while another
+   session's QEMU has it open.)
+2. **Unique VNC display per session** (e.g. `:9`, `:11`, …) and **per-session socket/log names**
+   (`/tmp/qmon-<who>.sock`, `/tmp/serial-<who>.log`).
+3. **Two `-accel hvf` VMs contend** on Apple Silicon and can kill each other — coordinate, or one
+   uses `-accel tcg`.
+
+### `bmake run-claude` — the agent's in-OS console
+New aarch64 target (Makefile). Opens the **graphical desktop in a window for the human** AND
+exposes the **serial console on a unix socket for the coding agent**, so the agent types commands +
+reads text output directly instead of driving the GUI over VNC (`sendkey` one char at a time +
+screenshot-OCR — slow + flaky). Endpoints: serial `/tmp/ubixos-claude.sock` (interactive, tee'd to
+`/tmp/ubixos-claude-serial.log`), monitor `/tmp/ubixos-claude-mon.sock`.
+
+### ⚠️ The serial console is a REQUIREMENT to maintain
+init's `console_primary()` (`bin/init/main.c`) currently picks **either** `/bin/views` (desktop
+profile) **OR** `/bin/login` (base) — so on the desktop image the serial line gets **only kernel
+output, no interactive shell**. The serial console (a `login`/getty on the UART **alongside** the
+desktop — like X on tty7 + getty on ttyS0) must be **kept working**. If you touch
+`console_primary`/`start_console` or the aarch64 console fd routing (`execfile.c
+aarch64_console_setup_fds`, `bringup.h uart_getc`/`uart_rx_ready`), **do not regress the serial
+console.** (Wiring the serial login alongside the desktop is [ls/selfhost]'s active task.) — 2026-06-20
