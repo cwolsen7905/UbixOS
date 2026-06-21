@@ -170,8 +170,11 @@ static int vmm_demand_file_page(vm_map_entry_t *vma, u_int32_t mem_addr)
 		return (0);
 	asm volatile("invlpg (%0)" : : "r"(pg) : "memory");
 	memset((void *)pg, 0, PAGE_SIZE);
-	if (bfd->mp != NULL && bfd->mp->fs != NULL && bfd->mp->fs->vfsRead != NULL)
-		bfd->mp->fs->vfsRead(bfd, (void *)pg, foff, PAGE_SIZE);
+	/* Positional, vfs_io_lock-serialised read — same lock fread() uses — so a
+	 * demand-paged file read can't race a concurrent FS read on another CPU through
+	 * the shared FAT/device state (SMP "not loadable").  Was an unlocked direct
+	 * vfsRead. */
+	vfs_pread_locked(bfd, (void *)pg, foff, PAGE_SIZE);
 
 	if (ro)
 	{

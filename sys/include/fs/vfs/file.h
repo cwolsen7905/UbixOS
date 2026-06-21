@@ -44,68 +44,74 @@ int getchar();
 #define SEEK_CUR 1
 #define SEEK_END 2
 
-#define VBLKSHIFT       12
-#define VBLKSIZE        (1 << VBLKSHIFT)
-#define SBLOCKSIZE      8192
-#define DEV_BSHIFT      9               /* log2(DEV_BSIZE) */
-#define DEV_BSIZE       (1<<DEV_BSHIFT)
+#define VBLKSHIFT 12
+#define VBLKSIZE (1 << VBLKSHIFT)
+#define SBLOCKSIZE 8192
+#define DEV_BSHIFT 9 /* log2(DEV_BSIZE) */
+#define DEV_BSIZE (1 << DEV_BSHIFT)
 
 #define MAX_OFILES 256
 
-struct dmadat {
-    char blkbuf[VBLKSIZE]; /* filesystem blocks */
-    char indbuf[VBLKSIZE]; /* indir blocks */
-    char sbbuf[SBLOCKSIZE]; /* superblock */
-    char secbuf[DEV_BSIZE]; /* for MBR/disklabel */
+struct dmadat
+{
+	char blkbuf[VBLKSIZE];  /* filesystem blocks */
+	char indbuf[VBLKSIZE];  /* indir blocks */
+	char sbbuf[SBLOCKSIZE]; /* superblock */
+	char secbuf[DEV_BSIZE]; /* for MBR/disklabel */
 };
 
-typedef struct fileDescriptor {
-    struct fileDescriptor *prev;
-    struct fileDescriptor *next;
-    struct vfs_mountPoint *mp;
-    u_int32_t ino;
-    u_int16_t status;
-    u_int16_t mode;
-    off_t offset;
-    u_int32_t size;
-    u_int16_t length;
-    u_int32_t start;
-    char fileName[512];
-    char *buffer;
-    struct cacheNode *cacheNode;
-    u_int32_t perms;
-    struct dmadat *dmadat;
-    int dsk_meta;
-    u_int32_t resid;
-    struct inode inode;
-    int fd_type;
-    void *res;
-    int dup;
+typedef struct fileDescriptor
+{
+	struct fileDescriptor *prev;
+	struct fileDescriptor *next;
+	struct vfs_mountPoint *mp;
+	u_int32_t ino;
+	u_int16_t status;
+	u_int16_t mode;
+	off_t offset;
+	u_int32_t size;
+	u_int16_t length;
+	u_int32_t start;
+	char fileName[512];
+	char *buffer;
+	struct cacheNode *cacheNode;
+	u_int32_t perms;
+	struct dmadat *dmadat;
+	int dsk_meta;
+	u_int32_t resid;
+	struct inode inode;
+	int fd_type;
+	void *res;
+	int dup;
 } fileDescriptor_t;
 
-typedef struct userFileDescriptorStruct {
-    struct fileDescriptor *fd;
-    u_int32_t fdSize;
+typedef struct userFileDescriptorStruct
+{
+	struct fileDescriptor *fd;
+	u_int32_t fdSize;
 } userFileDescriptor;
 
 /* Kernel-side directory handle used by vfs_opendir/readdir/closedir */
-typedef struct kDIR {
-    struct vfs_mountPoint *mp;
-    void *dirHandle;   /* filesystem-specific state (e.g. FL_DIR* for FAT) */
+typedef struct kDIR
+{
+	struct vfs_mountPoint *mp;
+	void *dirHandle; /* filesystem-specific state (e.g. FL_DIR* for FAT) */
 } kDIR_t;
 
 /* Userland-visible dirent / DIR passed through syscalls */
-struct kdirent {
-    u_int32_t d_ino;
-    u_int8_t  d_type;
-    char     d_name[256];
+struct kdirent
+{
+	u_int32_t d_ino;
+	u_int8_t d_type;
+	char d_name[256];
 };
 #define KDT_REG 8
 #define KDT_DIR 4
 
-typedef struct {
-    kDIR_t        *dd_handle;  /* kernel kDIR_t pointer */
-    struct kdirent dd_ent;
+typedef struct
+{
+	kDIR_t *dd_handle; /* kernel kDIR_t pointer */
+	struct kdirent dd_ent;
 } kDIR_user_t;
 
 extern fileDescriptor_t *fdTable;
@@ -114,19 +120,23 @@ fileDescriptor_t *fopen(const char *, const char *);
 int fclose(fileDescriptor_t *);
 
 /* UBU */
-struct sys_fwrite_args {
-    void *buf;
-    size_t nbytes;
-    size_t nmemb;
-    userFileDescriptor *fd;
+struct sys_fwrite_args
+{
+	void *buf;
+	size_t nbytes;
+	size_t nmemb;
+	userFileDescriptor *fd;
 };
 
 int unlink(const char *path);
 int feof(fileDescriptor_t *fd);
 int fgetc(fileDescriptor_t *fd);
 size_t fread(void *ptr, size_t size, size_t nmemb, fileDescriptor_t *fd);
+/* Positional, vfs_io_lock-serialised read at an explicit offset (no fd->offset use) —
+ * for the demand-pager / file-backed mmap fault.  SMP-safe; see file.c. */
+size_t vfs_pread_locked(fileDescriptor_t *fd, void *buf, off_t off, size_t len);
 size_t fwrite(void *ptr, int size, int nmemb, fileDescriptor_t *fd);
-int kern_fseek(fileDescriptor_t*, u_int32_t, int);
+int kern_fseek(fileDescriptor_t *, u_int32_t, int);
 
 int sysFseek(userFileDescriptor *, long, int);
 
@@ -134,9 +144,9 @@ kDIR_t *vfs_opendir(const char *path);
 int vfs_readdir(kDIR_t *dir, struct kdirent *ent);
 int vfs_closedir(kDIR_t *dir);
 
-//Good
-//int sysChDir(const char *path);
-//void chDir(const char *path);
+// Good
+// int sysChDir(const char *path);
+// void chDir(const char *path);
 char *verifyDir(const char *path);
 
 /* New Syscall */

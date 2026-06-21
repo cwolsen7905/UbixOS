@@ -641,6 +641,34 @@ size_t fread(void *ptr, size_t size, size_t nmemb, fileDescriptor_t *fd)
 	return (i);
 }
 
+/**
+ * Positional file read under vfs_io_lock: read @len bytes at absolute file offset
+ * @off into @buf, WITHOUT touching fd->offset.
+ *
+ * The demand-pager (vmm_page_fault) and aarch64 file-backed mmap fault each read a
+ * page at a specific offset.  Doing that as "fd->offset = foff; fread(...)" races on
+ * SMP: fd->offset is shared mutable state and the assignment sits outside the lock, so
+ * two CPUs faulting pages of the same mmap'd file (e.g. a shared library) clobber each
+ * other's offset and read the wrong page — the intermittent "not loadable" / wrong
+ * data.  Passing the offset explicitly removes the shared scratch entirely; the lock
+ * serialises the FS/device access exactly as fread() does.
+ *
+ * @return bytes read.
+ */
+size_t vfs_pread_locked(fileDescriptor_t *fd, void *buf, off_t off, size_t len)
+{
+	size_t i;
+
+	if (fd == 0x0 || fd->mp == 0x0 || fd->mp->fs == 0x0 || fd->mp->fs->vfsRead == 0x0)
+		return (0x0);
+
+	spinLock(&vfs_io_lock);
+	i = fd->mp->fs->vfsRead(fd, buf, off, len);
+	spinUnlock(&vfs_io_lock);
+
+	return (i);
+}
+
 size_t fwrite(void *ptr, int size, int nmemb, fileDescriptor_t *fd)
 {
 	int res = 0x0;

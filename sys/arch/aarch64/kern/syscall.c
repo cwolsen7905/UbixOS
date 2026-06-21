@@ -208,9 +208,11 @@ static u_int64_t sc_mmap(u_int64_t addr, u_int64_t len, u_int64_t prot, u_int64_
 					}
 				}
 
-				/* Miss: read the file into the reserved private frame. */
-				fp->fd->offset = foff;
-				if (fread((void *)priv, 1, chunk, fp->fd) == 0 && !cacheable)
+				/* Miss: read the file into the reserved private frame.  Positional
+				 * (vfs_pread_locked) — NOT "fd->offset = foff; fread()" — so two CPUs
+				 * faulting pages of the same mmap'd file (e.g. a shared library) can't
+				 * clobber the shared fd->offset around the read (SMP "not loadable"). */
+				if (vfs_pread_locked(fp->fd, (void *)priv, foff, chunk) == 0 && !cacheable)
 					break; /* EOF on a private mapping: leave the rest zero (bss tail) */
 
 				/* Cacheable and the frame fits a 32-bit cache key: publish it shared. */
