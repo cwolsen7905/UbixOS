@@ -36,6 +36,13 @@
 #include <ubixos/cpu_enum.h> /* CPU_ENUM_MAX, smp_cpu_count — per-core CPU accounting */
 #include <lib/kmalloc.h>
 #include <lib/kprintf.h>
+#if defined(__aarch64__)
+#include <aarch64/pcpu.h> /* curcpu() — per-CPU run queue (CONFIG_SCHED_PERCPU) + MAXCPU */
+#elif defined(__x86_64__)
+#include <x86_64/pcpu.h>
+#elif defined(__i386__)
+#include <i386/pcpu.h>
+#endif
 #include <string.h>
 #if defined(__i386__)
 #include <i386/pcpu.h> /* smp_processor_id(), curcpu() — which CPU a tick is charged to */
@@ -52,8 +59,31 @@ kTask_t *taskList = 0x0;
 struct spinLock schedulerSpinLock = SPIN_LOCK_INITIALIZER;
 
 /* Phase 2: 32 per-priority run queues + bitmask (Windows ReadySummary trick). */
-/* The single global run queue (uniprocessor design; v2 makes this per-CPU). */
-struct runqueue g_rq;
+/* Run-queue storage.  With CONFIG_SCHED_PERCPU 0 only g_rq[0] is ever used (the
+ * single global queue); with 1 each CPU schedules from g_rq[its cpuid]. */
+_Static_assert(SCHED_MAX_CPUS >= MAXCPU, "SCHED_MAX_CPUS must cover every CPU");
+struct runqueue g_rq[SCHED_MAX_CPUS];
+
+/** @return the run queue this CPU schedules from. */
+struct runqueue *this_rq(void)
+{
+#if CONFIG_SCHED_PERCPU
+	return (&g_rq[curcpu()->cpuid]);
+#else
+	return (&g_rq[0]);
+#endif
+}
+
+/** @return run queue @cpu (the CPU a task is enqueued on, t->rq_cpu). */
+struct runqueue *cpu_rq(unsigned cpu)
+{
+#if CONFIG_SCHED_PERCPU
+	return (&g_rq[cpu]);
+#else
+	(void)cpu;
+	return (&g_rq[0]);
+#endif
+}
 
 static kTask_t *delList = 0x0;
 static u_int32_t nextID = 1;
@@ -302,20 +332,31 @@ void rq_enqueue_locked(kTask_t *t)
 	int pri;
 	kTask_t *head;
 	kTask_t *tail;
+	struct runqueue *rq;
 
 	if (t == NULL || t->on_rq)
 		return;
 
+	/* Place on this CPU's run queue and record the home so a remote dequeue (a
+	 * waker on another CPU) finds the right queue.  With CONFIG_SCHED_PERCPU 0 this
+	 * is always cpu 0 / g_rq[0]. */
+#if CONFIG_SCHED_PERCPU
+	t->rq_cpu = curcpu()->cpuid;
+#else
+	t->rq_cpu = 0;
+#endif
+	rq = cpu_rq(t->rq_cpu);
+
 	pri = (int)t->priority;
-	head = g_rq.bucket[pri];
+	head = rq->bucket[pri];
 
 	if (head == NULL)
 	{
 		/* First task at this priority — circular singleton. */
 		t->rq_next = t;
 		t->rq_prev = t;
-		g_rq.bucket[pri] = t;
-		g_rq.ready_mask |= (1u << pri);
+		rq->bucket[pri] = t;
+		rq->ready_mask |= (1u << pri);
 	}
 	else
 	{
@@ -325,7 +366,7 @@ void rq_enqueue_locked(kTask_t *t)
 		t->rq_prev = tail;
 		tail->rq_next = t;
 		head->rq_prev = t;
-		/* g_rq.bucket[pri] stays pointing at head for O(1) dequeue. */
+		/* rq->bucket[pri] stays pointing at head for O(1) dequeue. */
 	}
 	t->on_rq = 1;
 
@@ -344,24 +385,26 @@ __attribute__((weak)) void arch_smp_reschedule(void)
 void rq_dequeue_locked(kTask_t *t)
 {
 	int pri;
+	struct runqueue *rq;
 
 	if (t == NULL || !t->on_rq)
 		return;
 
+	rq = cpu_rq(t->rq_cpu); /* the queue this task was enqueued on */
 	pri = (int)t->priority;
 
 	if (t->rq_next == t)
 	{
 		/* Only task in this queue. */
-		g_rq.bucket[pri] = NULL;
-		g_rq.ready_mask &= ~(1u << pri);
+		rq->bucket[pri] = NULL;
+		rq->ready_mask &= ~(1u << pri);
 	}
 	else
 	{
 		t->rq_prev->rq_next = t->rq_next;
 		t->rq_next->rq_prev = t->rq_prev;
-		if (g_rq.bucket[pri] == t)
-			g_rq.bucket[pri] = t->rq_next;
+		if (rq->bucket[pri] == t)
+			rq->bucket[pri] = t->rq_next;
 	}
 	t->rq_next = NULL;
 	t->rq_prev = NULL;

@@ -338,10 +338,12 @@ static void sched_common(int preheld)
 		rq_enqueue_locked(_current);
 	}
 
-	if (g_rq.ready_mask == 0)
+	struct runqueue *rq = this_rq(); /* this CPU's run queue (g_rq[0] when flag 0) */
+
+	if (rq->ready_mask == 0)
 	{
 		/*
-		 * Nothing in the shared run queue.  On i386 run this CPU's pinned idle
+		 * Nothing in this CPU's run queue.  On i386 run this CPU's pinned idle
 		 * thread (never enqueued); if we are already on it there is nothing to
 		 * switch to.  On aarch64 cpu_idle is NULL and the idle thread is a normal
 		 * enqueued task, so this path is the original "return without switching".
@@ -361,9 +363,9 @@ static void sched_common(int preheld)
 	else
 	{
 		/* Pick the highest-priority ready task (highest set bit). */
-		int pri = 31 - __builtin_clz(g_rq.ready_mask);
-		/* g_rq.bucket[pri] is a circular list; head is the next to run. */
-		next = g_rq.bucket[pri];
+		int pri = 31 - __builtin_clz(rq->ready_mask);
+		/* rq->bucket[pri] is a circular list; head is the next to run. */
+		next = rq->bucket[pri];
 		/* Dequeue (removes next and rotates head to next->rq_next). */
 		rq_dequeue_locked(next);
 	}

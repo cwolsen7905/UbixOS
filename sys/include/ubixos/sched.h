@@ -102,6 +102,7 @@ typedef struct taskStruct {
     u_int8_t   base_priority;     /* QoS floor — boosts never go below this */
     u_int8_t   boost_quanta;      /* ticks remaining on temporary I/O priority boost */
     u_int8_t   on_rq;             /* 1 if currently in a run queue */
+    u_int32_t  rq_cpu;            /* which CPU's run queue (g_rq index) it is on (v2) */
     struct taskStruct *rq_next;  /* per-priority run queue forward link */
     struct taskStruct *rq_prev;  /* per-priority run queue backward link */
     int       t_stopped_sig;     /* signal that caused STOPPED state (0 if not stopped) */

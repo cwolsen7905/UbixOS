@@ -43,18 +43,37 @@ extern struct spinLock schedulerSpinLock;
 #define SCHED_PRIORITIES 32
 
 /*
- * A run queue: the priority buckets + a summary bitmask for the O(1) pick.  Today
- * there is a single global instance (g_rq) shared under schedulerSpinLock — the
- * 2002 uniprocessor design.  The per-CPU scheduler (v2) gives each CPU its own
- * struct runqueue with its own lock; see docs/design/smp-scheduler-v2-plan.md.
- * Either way a task lives in exactly one run queue at a time (t->on_rq).
+ * v2 per-CPU scheduler selector (docs/design/smp-scheduler-v2-plan.md).
+ *   0 (default) — one global run queue under schedulerSpinLock (the 2002 design;
+ *                 UP + the current x86_64 cooperative SMP).  this_rq()/cpu_rq()
+ *                 always resolve to g_rq[0], so behaviour is unchanged.
+ *   1           — per-CPU run queues: each CPU schedules from g_rq[cpuid] under its
+ *                 own rq_lock.  Built + validated behind this flag before it becomes
+ *                 the SMP default.
+ */
+#define CONFIG_SCHED_PERCPU 0
+
+/* Run-queue storage is an array sized for the worst case; index 0 is the only one
+ * used when CONFIG_SCHED_PERCPU is 0.  Must be >= MAXCPU (asserted in sched_core.c). */
+#define SCHED_MAX_CPUS 8
+
+/*
+ * A run queue: the priority buckets + a summary bitmask for the O(1) pick + (v2) its
+ * own lock.  A task lives in exactly one run queue at a time (t->on_rq); t->rq_cpu
+ * records which one.  See docs/design/smp-scheduler-v2-plan.md.
  */
 struct runqueue
 {
 	kTask_t  *bucket[SCHED_PRIORITIES]; /* circular FIFO list head per priority band */
 	u_int32_t ready_mask;               /* bit N set ↔ bucket[N] is non-empty */
+	struct spinLock rq_lock;            /* v2: per-CPU run-queue lock (unused when flag 0) */
 };
-extern struct runqueue g_rq;
+extern struct runqueue g_rq[SCHED_MAX_CPUS];
+
+/* This CPU's run queue / a specific CPU's run queue.  With CONFIG_SCHED_PERCPU 0 both
+ * always return &g_rq[0] (the single global queue). */
+struct runqueue *this_rq(void);
+struct runqueue *cpu_rq(unsigned cpu);
 
 void pid_hash_remove(kTask_t *t);
 
