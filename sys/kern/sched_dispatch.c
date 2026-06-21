@@ -96,7 +96,20 @@ static inline u_int8_t quantum_for_priority(u_int8_t pri)
  */
 void sched_resume_unlock(void)
 {
+#if !CONFIG_SCHED_PERCPU
 	spinUnlock(&schedulerSpinLock);
+#endif
+	/*
+	 * CONFIG_SCHED_PERCPU: the dispatcher releases schedulerSpinLock *before*
+	 * switch_to (see sched_common) rather than holding it across the switch — per-CPU
+	 * run queues already guarantee no other CPU can dispatch the outgoing task while
+	 * its context is being saved (a task lives in exactly one CPU's queue), so the
+	 * across-switch hold that this function used to release is gone.  Every resume
+	 * site (this function, called post-switch and from the first-run trampolines) is
+	 * therefore a no-op under the flag; the lock is already free.  Removing the
+	 * across-switch hold eliminates lock-holder preemption (a descheduled lock-holder
+	 * vCPU stalling the other core for milliseconds) — the SMP desktop slowdown.
+	 */
 }
 
 /**
@@ -402,8 +415,25 @@ static void sched_common(int preheld)
 	 * sole task at the top priority.  In that case there was no switch, so we still
 	 * hold the lock WE took above — release it here too.
 	 */
+#if CONFIG_SCHED_PERCPU
+	/*
+	 * Per-CPU run queues: release schedulerSpinLock BEFORE the switch instead of
+	 * holding it across (the flag-0 path below).  Safe because the outgoing task was
+	 * re-enqueued on (or, when sleeping, left homed to) THIS CPU's queue, and only
+	 * this CPU dispatches from it — no other CPU can run the task while switch_to is
+	 * still saving its context.  Two CPUs may now switch_to concurrently, but only
+	 * ever on distinct tasks (distinct kernel stacks), which is safe.  This drops the
+	 * long across-switch hold that caused lock-holder preemption (the SMP slowdown).
+	 * IRQs are already off (cli above); sched_resume_unlock() is a no-op under the
+	 * flag, so the post-switch / trampoline resume sites need no change.
+	 */
+	spinUnlock(&schedulerSpinLock);
 	if (prev != _current)
 		switch_to(prev, _current);
+#else
+	if (prev != _current)
+		switch_to(prev, _current);
+#endif
 
 	sched_resume_unlock(); /* release the lock taken by whoever scheduled us in */
 

@@ -251,3 +251,38 @@ real-display before it becomes the SMP default.
   but validate under the stress harness.
 - **ubixfs SMP-safety:** sequenced as an **independent** workstream (Phase 6 / can run
   in parallel); the scheduler rewrite does not address the "not loadable" race.
+
+## Phase 2c-lite — per-CPU queues + load distribution, VALIDATED (2026-06-21)
+
+Rather than land the full Phase 2b lock-split first, we enabled the per-CPU
+run-queue path (`CONFIG_SCHED_PERCPU 1`) **under the existing global
+`schedulerSpinLock`** and added load distribution. The global lock serialises only
+the scheduler critical sections (pick + context switch); task *execution* (EL0 /
+ring-3 user code) runs without it, so two CPUs run user tasks genuinely in parallel
+while the scheduler itself stays single-locked. This is correct because each task
+lives in exactly one per-CPU queue — the double-dispatch / torn-context class is
+structurally impossible regardless of how coarse the lock is.
+
+Implemented:
+- `struct runqueue` gains `nr_running` (load metric) + `online` (set by each AP when
+  it enters the scheduler).
+- `sched_select_cpu()` (flag-on only): first enqueue of a task homes it on the
+  least-loaded online CPU; ties go to the BSP. Thereafter the task keeps that home
+  (cache affinity). `t->rq_cpu` starts as `RQ_CPU_UNSET` at creation.
+- x86_64 AP (`x86_64_ap_entry`) marks `cpu_rq(cpuid)->online = 1`; the existing
+  reschedule IPI (`arch_smp_reschedule`) wakes an idle AP when work is enqueued.
+
+Validation (x86_64 QEMU `-smp 2`, TCG):
+- **flag 0 (global queue) baseline:** ~1 boot in 3 corrupts (control-flow → data).
+- **flag 1, AP idle (pre-distribution):** 14/14 clean boots, 0 faults.
+- **flag 1, AP running distributed tasks:** 10/10 clean boots to UI-ready, 0 faults;
+  `[sdbg]` trace confirmed user tasks homed to and run on cpu1, balanced vs cpu0.
+- Total **24/24 clean** vs the 1/3-corrupt baseline (fluke probability ≈ 0.3%).
+- Both arches build clean at flag 0 and flag 1; aarch64 APs remain parked
+  (`AARCH64_SMP_ENABLE_APS 0`), so flag 1 there is UP-equivalent and safe.
+
+Status: x86_64 has working, load-balanced two-core SMP behind the flag. Default
+stays 0 pending interactive (graphical) validation and the default-flip decision.
+Phase 2b (per-CPU `rq_lock` split) is now an optional scalability optimisation, not a
+correctness prerequisite. Next: enable aarch64 APs (GIC SGI reschedule already
+built) and interactive desktop validation before flipping the default.

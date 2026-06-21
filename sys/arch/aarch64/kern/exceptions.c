@@ -11,12 +11,13 @@
  */
 
 #include "bringup.h"
-#include <aarch64/pcpu.h>       /* curcpu() — preempt only on the BSP under SMP */
-#include <ubixos/sched.h>       /* _current — identify the faulting task in dumps */
-#include <ubixos/endtask.h>     /* endTask — terminate a faulting user process */
-#include <ubixos/signal.h>      /* signal_check / sys_sigreturn + AARCH64_SIGTRAMP_RETADDR */
-#include <sys/trap.h>           /* struct trapframe (aarch64 layout) */
-#include <sys/sysproto_posix.h> /* struct sys_sigreturn_args */
+#include <aarch64/pcpu.h>          /* curcpu() — preempt only on the BSP under SMP */
+#include <ubixos/sched.h>          /* _current — identify the faulting task in dumps */
+#include <ubixos/sched_internal.h> /* CONFIG_SCHED_PERCPU — secondary EL0 preemption gate */
+#include <ubixos/endtask.h>        /* endTask — terminate a faulting user process */
+#include <ubixos/signal.h>         /* signal_check / sys_sigreturn + AARCH64_SIGTRAMP_RETADDR */
+#include <sys/trap.h>              /* struct trapframe (aarch64 layout) */
+#include <sys/sysproto_posix.h>    /* struct sys_sigreturn_args */
 
 enum
 {
@@ -75,14 +76,17 @@ void aarch64_exception(u_int64_t kind, void *frame)
 		 * resume of a preempted EL1 spin is what wedges the desktop launch.
 		 * Kernel threads already cooperate (RX poll yields, tcpip blocks).
 		 *
-		 * SMP: preempt only on the BSP.  A secondary (AP) runs a purely cooperative
-		 * scheduler — its timer tick wakes it from wfi to poll the run queue but must
-		 * NOT sched() here to time-slice a running EL0 task.  Async preemption from
-		 * interrupt context on a secondary, concurrent with the BSP, is the path that
-		 * corrupts the kernel context save/restore (proven on x86_64); the stable
-		 * model is BSP-only preemption + cooperative APs.  A CPU-bound task on an AP
-		 * runs until it blocks; the BSP still time-slices everything that runs there. */
+		 * SMP: with per-CPU run queues (CONFIG_SCHED_PERCPU) every core time-slices its
+		 * own EL0 task.  This is safe because a secondary preempts its OWN _current into
+		 * its OWN queue — no other CPU dispatches it, so the double-dispatch / torn
+		 * context-save corruption that forced BSP-only preemption on the single global
+		 * queue (proven on x86_64) cannot occur.  Under the legacy global queue
+		 * (flag 0) preemption stays BSP-only and the secondaries are cooperative. */
+#if CONFIG_SCHED_PERCPU
+		if (ticked && from_el0 && _current != 0)
+#else
 		if (ticked && from_el0 && _current != 0 && curcpu()->cpuid == 0)
+#endif
 		{
 			_current->td.frame = tf;
 			signal_check(tf); /* deliver Ctrl-C etc. to a CPU-bound foreground task */

@@ -120,6 +120,19 @@ void arch_smp_reschedule(void)
 }
 
 /**
+ * Targeted reschedule (arch_smp_reschedule_cpu override): wake exactly @cpu so it
+ * re-runs the scheduler and picks up work just enqueued on its per-CPU run queue.
+ * One x2APIC IPI, no broadcast — the per-CPU-run-queue fast path.  No-op for the
+ * caller's own CPU or a CPU that never came online.  Runs under schedulerSpinLock.
+ */
+void arch_smp_reschedule_cpu(unsigned cpu)
+{
+	if (cpu >= MAXCPU || cpu == curcpu()->cpuid || g_pcpu[cpu].heartbeat == 0)
+		return;
+	send_ipi(g_pcpu[cpu].apicid, RESCHED_VECTOR | ICR_FIXED | ICR_ASSERT);
+}
+
+/**
  * AP 64-bit C entry (reached from ap_trampoline.S once in long mode on the kernel
  * PML4).  Set up this CPU's per-CPU GS + execution environment, become a dedicated
  * idle task, and enter the shared scheduler: from here the AP pulls runnable tasks
@@ -150,6 +163,10 @@ void x86_64_ap_entry(u32 cpuid)
 	__builtin_strncpy(idle->name, "idle", sizeof(idle->name) - 1);
 	set_current(idle);
 	curcpu()->idle = idle;
+
+	/* Advertise this CPU's run queue as a placement target (v2 load distribution):
+	 * sched_select_cpu() will now home freshly-runnable tasks here. */
+	cpu_rq(cpuid)->online = 1;
 
 	for (;;)
 	{

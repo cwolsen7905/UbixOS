@@ -307,6 +307,7 @@ kTask_t *schedNewTask()
 	 * task never gets its first dispatch (last_run_tick==0 skips aging). */
 	tmpTask->last_run_tick = systemVitals ? systemVitals->sysTicks : 1;
 	tmpTask->on_rq = 0;
+	tmpTask->rq_cpu = RQ_CPU_UNSET; /* home queue chosen on first enqueue (v2 distribution) */
 
 	spinLock(&schedulerSpinLock);
 	tmpTask->id = nextID++;
@@ -327,6 +328,44 @@ kTask_t *schedNewTask()
  * Phase 2: run-queue helpers — caller must hold schedulerSpinLock.
  * ----------------------------------------------------------------------- */
 
+#if CONFIG_SCHED_PERCPU
+/**
+ * Pick the home CPU for a task being made runnable for the first time.
+ *
+ * Policy: BSP-biased spill.  The BSP (cpu 0) is preemptive and low-latency; the
+ * secondaries are cooperative (no per-CPU preemption timer yet), so an interactive
+ * task pinned to one renders with poor latency.  A quiet desktop therefore stays
+ * entirely on the BSP (behaving like uniprocessor — its known-good speed) and work
+ * spills to a secondary only when the BSP has a real backlog of ready tasks
+ * (nr_running >= SCHED_SPILL_THRESH).  Among the secondaries the least-loaded online
+ * one wins, and only if it is shorter than the BSP.  Caller holds schedulerSpinLock.
+ * @return the chosen cpuid.
+ */
+static unsigned sched_select_cpu(void)
+{
+	unsigned best = 0; /* BSP is always online — the default home */
+	u_int32_t best_n = g_rq[0].nr_running;
+	unsigned c;
+
+	/* Keep light (interactive) load on the preemptive BSP; only balance to a
+	 * secondary once the BSP is genuinely backed up. */
+	if (best_n < SCHED_SPILL_THRESH)
+		return (0);
+
+	for (c = 1; c < MAXCPU; c++)
+	{
+		if (!g_rq[c].online)
+			continue;
+		if (g_rq[c].nr_running < best_n)
+		{
+			best = c;
+			best_n = g_rq[c].nr_running;
+		}
+	}
+	return (best);
+}
+#endif
+
 void rq_enqueue_locked(kTask_t *t)
 {
 	int pri;
@@ -337,11 +376,13 @@ void rq_enqueue_locked(kTask_t *t)
 	if (t == NULL || t->on_rq)
 		return;
 
-	/* Place on this CPU's run queue and record the home so a remote dequeue (a
-	 * waker on another CPU) finds the right queue.  With CONFIG_SCHED_PERCPU 0 this
-	 * is always cpu 0 / g_rq[0]. */
+	/* Choose the home run queue and record it so a remote dequeue (a waker on
+	 * another CPU) finds the right queue.  First enqueue picks the least-loaded
+	 * online CPU; thereafter the task keeps that home (cache affinity).  With
+	 * CONFIG_SCHED_PERCPU 0 every task lives on cpu 0 / g_rq[0]. */
 #if CONFIG_SCHED_PERCPU
-	t->rq_cpu = curcpu()->cpuid;
+	if (t->rq_cpu == RQ_CPU_UNSET)
+		t->rq_cpu = sched_select_cpu();
 #else
 	t->rq_cpu = 0;
 #endif
@@ -369,17 +410,34 @@ void rq_enqueue_locked(kTask_t *t)
 		/* rq->bucket[pri] stays pointing at head for O(1) dequeue. */
 	}
 	t->on_rq = 1;
+	rq->nr_running++;
 
-	/* SMP: a task just became runnable — poke other CPUs so an idle one wakes and
-	 * runs it (arch_smp_reschedule sends a reschedule IPI; a weak no-op on arches
-	 * whose APs are parked).  Caller holds schedulerSpinLock. */
+	/* SMP: a task just became runnable — wake the CPU whose queue it landed on so an
+	 * idle one re-runs the scheduler and picks it up. */
+#if CONFIG_SCHED_PERCPU
+	/* Per-CPU queues: poke ONLY the target CPU, and only when it is not us (the task
+	 * is on our own queue → we will dispatch it ourselves on the way out; no IPI).
+	 * This kills the old broadcast-on-every-enqueue storm that interrupted the BSP on
+	 * every secondary enqueue (and vice versa) — a major source of the SMP slowdown. */
+	if (t->rq_cpu != (u_int32_t)curcpu()->cpuid)
+		arch_smp_reschedule_cpu(t->rq_cpu);
+#else
+	/* Single global queue: any idle AP may run it (no per-CPU home). */
 	arch_smp_reschedule();
+#endif
 }
 
 /* Default: no SMP wakeup (single-CPU scheduling, or an arch whose APs are parked).
  * x86_64 provides a strong override (kern/smp.c) that IPIs its online APs. */
 __attribute__((weak)) void arch_smp_reschedule(void)
 {
+}
+
+/* Default targeted wakeup: no-op (UP, or an arch whose APs are parked).  x86_64
+ * (kern/smp.c) and aarch64 (kern/apsmp.c) override to IPI exactly @cpu. */
+__attribute__((weak)) void arch_smp_reschedule_cpu(unsigned cpu)
+{
+	(void)cpu;
 }
 
 void rq_dequeue_locked(kTask_t *t)
@@ -409,6 +467,8 @@ void rq_dequeue_locked(kTask_t *t)
 	t->rq_next = NULL;
 	t->rq_prev = NULL;
 	t->on_rq = 0;
+	if (rq->nr_running > 0)
+		rq->nr_running--;
 }
 
 void sched_killTree(pidType id)

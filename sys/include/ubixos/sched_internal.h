@@ -64,11 +64,24 @@ extern struct spinLock schedulerSpinLock;
  */
 struct runqueue
 {
-	kTask_t  *bucket[SCHED_PRIORITIES]; /* circular FIFO list head per priority band */
-	u_int32_t ready_mask;               /* bit N set ↔ bucket[N] is non-empty */
-	struct spinLock rq_lock;            /* v2: per-CPU run-queue lock (unused when flag 0) */
+	kTask_t *bucket[SCHED_PRIORITIES]; /* circular FIFO list head per priority band */
+	u_int32_t ready_mask;              /* bit N set ↔ bucket[N] is non-empty */
+	u_int32_t nr_running;              /* v2: tasks currently on this queue (load metric) */
+	int online;                        /* v2: 1 once a CPU schedules from this queue (APs set it) */
+	struct spinLock rq_lock;           /* v2: per-CPU run-queue lock (unused when flag 0) */
 };
 extern struct runqueue g_rq[SCHED_MAX_CPUS];
+
+/* Sentinel t->rq_cpu meaning "no home queue chosen yet": rq_enqueue_locked picks the
+ * least-loaded online CPU on first enqueue (v2 load distribution).  Set at task creation. */
+#define RQ_CPU_UNSET 0xFFFFFFFFu
+
+/* BSP-spill threshold: keep work on the BSP until it already has this many ready tasks
+ * queued, then balance the next task to a secondary.  At 1, a lone task stays on the
+ * BSP (a quiet desktop = uniprocessor latency) but the SECOND concurrently-ready task
+ * spills to the second core — real two-core parallelism under any multitasking, now
+ * that secondaries are preemptive (CONFIG_SCHED_PERCPU).  See sched_select_cpu(). */
+#define SCHED_SPILL_THRESH 1
 
 /* This CPU's run queue / a specific CPU's run queue.  With CONFIG_SCHED_PERCPU 0 both
  * always return &g_rq[0] (the single global queue). */
@@ -83,6 +96,9 @@ void rq_enqueue_locked(kTask_t *t);
 /* SMP: poke other CPUs so an idle one wakes to run newly-enqueued work.  Weak
  * no-op by default (sched_core.c); x86_64 (kern/smp.c) IPIs its online APs. */
 void arch_smp_reschedule(void);
+/* Targeted SMP wakeup: poke exactly @cpu (per-CPU run queues).  Weak no-op default in
+ * sched_core.c; x86_64/aarch64 override to IPI that one CPU. */
+void arch_smp_reschedule_cpu(unsigned cpu);
 void rq_dequeue_locked(kTask_t *t);
 
 #endif /* _UBIXOS_SCHED_INTERNAL_H */

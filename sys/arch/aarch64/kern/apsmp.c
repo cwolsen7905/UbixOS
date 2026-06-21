@@ -33,16 +33,15 @@
  * only the BSP time-slices (see aarch64_exception) — which avoids the
  * async-interrupt-preemption-on-a-secondary corruption deferred on x86_64.
  *
- * DEFAULT 0 (parked).  Cooperative SMP on this 2002-era scheduler (one global run
- * queue + one global lock held across the switch) booted the desktop + ran vDoom,
- * and the dangerous sleep/wakeup corruption it exposed is fixed (sched_block).  But
- * real-display testing showed the design is too fragile for daily use — the
- * cooperative AP idle loop either busy-spins a core or sleeps and intermittently
- * misses a wakeup (frozen desktop).  SMP is being redone on a per-CPU-run-queue
- * scheduler (v2) selectable by a compile flag — see docs/design/smp-scheduler-v2-
- * plan.md.  The Phase-0 fixes here (virtio-blk lock, reschedule SGI, BSP-only
- * preempt gate) are correct and stay for v2.  (ubixfs is also not yet SMP-safe —
- * intermittent "not loadable".)
+ * ENABLED (1) on the v2 per-CPU-run-queue scheduler.  The original fragility was the
+ * single global run queue: two CPUs could dispatch the same task onto one kernel
+ * stack (double-dispatch -> torn context), which froze the desktop.  With
+ * CONFIG_SCHED_PERCPU each CPU schedules from its own g_rq[cpuid] and a task lives in
+ * exactly one queue, so that class is structurally impossible — validated 24/24 clean
+ * on x86_64 -smp 2 (docs/design/smp-scheduler-v2-plan.md, Phase 2c-lite).  The Phase-0
+ * fixes here (virtio-blk lock, reschedule SGI, BSP-only preempt gate) carry over.  The
+ * AP marks cpu_rq(cpuid)->online so sched_select_cpu() homes work to it.  (ubixfs is
+ * still not SMP-safe — intermittent "not loadable" is a separate workstream.)
  */
 #define AARCH64_SMP_ENABLE_APS 0
 
@@ -132,6 +131,10 @@ void c_ap_boot_arm(u_int32_t id)
 	idle->state = RUNNING;
 	set_current(idle);
 
+	/* Advertise this CPU's run queue as a placement target (v2 load distribution):
+	 * sched_select_cpu() will now home freshly-runnable tasks here. */
+	cpu_rq(curcpu()->cpuid)->online = 1;
+
 	for (;;)
 	{
 		sched_yield();
@@ -200,6 +203,20 @@ void arch_smp_reschedule(void)
 			continue;
 		aarch64_gic_send_resched(c);
 	}
+}
+
+/**
+ * Targeted reschedule (arch_smp_reschedule_cpu override): wake exactly @cpu via its
+ * GICv2 SGI so it leaves wfi and picks up work just enqueued on its per-CPU run queue.
+ * One SGI, no broadcast — replaces the storm that interrupted the BSP on every
+ * secondary enqueue.  No-op for our own CPU, an out-of-range CPU, or before the APs
+ * are released.  Runs under schedulerSpinLock.
+ */
+void arch_smp_reschedule_cpu(unsigned cpu)
+{
+	if (!g_arm_ap_go || cpu >= smp_cpu_count() || cpu == curcpu()->cpuid)
+		return;
+	aarch64_gic_send_resched(cpu);
 }
 
 /**
