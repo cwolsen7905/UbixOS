@@ -138,12 +138,18 @@ bmake runs recipes via `sh -c`. Verify `bin/shell` is sh-enough or vendor a smal
 POSIX sh (dash/oksh subset). Gap-fill `rm`/`mv`/`test`/`sed`/`install`/`cmp`.
 
 ### Phase 3 — Stage 0: cross-build Clang + lld for uBixOS
+**LLVM is acquired as a *port*, not vendored** — a pinned tarball + checksum +
+committed patch series + a gitignored cache, per
+[`third-party-ports-plan.md`](third-party-ports-plan.md) (LLVM is its worked
+example: `tools/ports/llvm/`). Direct-committing ~1 GB of LLVM source into the
+repo is explicitly rejected there.
+
 On the host, build a **static** Clang + lld + `llvm-ar`/`ranlib`/`objcopy`, X86
 *and* AArch64 backends, **JIT disabled** (no MCJIT/ORC — saves size + exec-page
-mmaps), via a `tools/ubixos.cmake` toolchain file encoding sysroot/includes/linker
-flags. Cross-build **compiler-rt** for the target. Install to `/usr/bin/clang`,
-`/usr/bin/ld.lld`, etc. Goal: on-device `clang hello.c -o hello -fuse-ld=lld`
-runs.
+mmaps), via the port's `ubixos.cmake` toolchain file (sysroot/includes/linker
+flags). Cross-build **compiler-rt** for the target. Install to `/usr/bin/clang`,
+`/usr/bin/ld.lld`, etc. `mkimage` stages the patched source to `/usr/src/llvm` for
+the Stage-1 build. Goal: on-device `clang hello.c -o hello -fuse-ld=lld` runs.
 
 ### Phase 4 — Stage 1: first native Clang build in-OS
 `bmake` + Stage-0 Clang build Clang+lld from `/usr/src/llvm`. Expect: memory
@@ -186,9 +192,10 @@ The tree is built by **BSD make**; the Makefiles use `.if`/`.else`, `.for`, `!=`
 `.CURDIR`, `.include`, `${MAKE}` recursion. `bin/make` (558-line "minimal
 POSIX-subset make") cannot parse these.
 
-- **Source**: vendor NetBSD portable `bmake` (public-domain/BSD; designed to build
-  on foreign hosts, ships `boot-strap`) into `contrib/bmake/`. FreeBSD
-  `usr.bin/make` is the alternative.
+- **Source**: NetBSD portable `bmake` (public-domain/BSD; designed to build on
+  foreign hosts, ships `boot-strap`). As a new dependency it comes in as a **port**
+  (`tools/ports/bmake/`) per [`third-party-ports-plan.md`](third-party-ports-plan.md),
+  not a `contrib/` vendor. FreeBSD `usr.bin/make` is the alternative.
 - **Dependencies** (all present or near): `dirent`/`getdents` ✅, `fork`/`execve`/
   `wait4` ✅, `mmap` ✅, `stat`/`getcwd`/`rename` ✅, `sigaction` ✅, plus a working
   `/bin/sh` (Phase 2). Soft spots: `utimes` (NOTIMP — bmake stats mtimes; Phase 0
