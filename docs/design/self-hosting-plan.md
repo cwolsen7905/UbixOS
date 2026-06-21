@@ -126,7 +126,16 @@ In-OS `selfhost/test_*.c`: anon + file-backed `mmap`; `fork`+`exit`→`wait4` de
 (NOTIMP today) so make's dependency tracking works. Grow the image + stress the FAT
 write path (the capacity work above). *Independently useful regardless of compiler.*
 
-### Phase 1 — Port bmake (keystone; user-requested)
+### Phase 1 — Port bmake (keystone) — ✅ BUILT + RUNS (2026-06-21)
+**Done:** `tools/ports/bmake/` (the first port; proved `mk/ports.mk`).  bmake
+cross-builds on both arches and runs in UbixOS — verified on aarch64 over the
+serial console: `bmake -r -V MACHINE` → `aarch64`, and it parses a real makefile
+file + evaluates a variable, clean exit.  Two follow-ups it surfaced, both **Phase
+2** (not bmake bugs): (1) bmake's default makefile **`mmap` SIGABRTs** → a
+file-backed-mmap kernel bug; worked around by disabling `HAVE_MMAP`.  (2) **recipe
+execution needs `/bin/sh`** + coreutils (`printf` etc.).  So: parsing/variable
+eval works today; running recipes is the Phase 2 gate.
+
 The build *is* bmake. The in-tree `bin/make` toy can't parse the tree's Makefiles.
 Vendor NetBSD portable `bmake` (public-domain/BSD, ships a `boot-strap`) into
 `contrib/bmake/`, **cross-build it** (host → uBixOS) so it's available before
