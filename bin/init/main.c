@@ -51,10 +51,6 @@
 #define CONSOLE_DESKTOP "/bin/views"
 #define CONSOLE_BASE "/bin/login"
 
-static char *argv_console[2] = {
-    CONSOLE_DESKTOP,
-    NULL,
-};
 static char *envp_login[6] = {
     "HOME=/",
     "PWD=/",
@@ -160,20 +156,14 @@ static void start_initd_services(void)
 }
 
 /*
- * Launch the system-console primary (CONSOLE_PRIMARY) on slot 0 and keep it
- * alive.  Runs in a forked child so init can return to its idle/reaper loop;
- * the child claims the system console with settty(0) and respawns the program
- * whenever it exits (e.g. logout), the way the retired ttyd's getty loop did —
- * but for a single console, with no switchable VTs.
+ * Console supervisor (runs as a forked child of init): claim the system console
+ * (settty is a no-op on aarch64 — fds 0/1/2 are already wired to the console) and
+ * respawn @prog forever, so logout re-prompts, the way the retired ttyd's getty
+ * loop did — for a single console, no switchable VTs.  Never returns.
  */
-static void start_console(void)
+static void console_supervisor(const char *prog)
 {
-	const char *primary = console_primary();
-	int pid;
-
-	pid = fork();
-	if (pid != 0)
-		return; /* init (parent) continues to its idle loop */
+	char *av[2];
 
 	if (settty(0) != 0)
 	{
@@ -181,24 +171,59 @@ static void start_console(void)
 		exit(1);
 	}
 
-	argv_console[0] = (char *)primary;
-	printf("init: console primary = %s\n", primary);
+	av[0] = (char *)prog;
+	av[1] = NULL;
+	printf("init: console = %s\n", prog);
 	for (;;)
 	{
 		int p = fork();
 		if (p == 0)
 		{
-			execve(primary, argv_console, envp_login);
-			printf("init: failed to exec %s\n", primary);
+			execve(prog, av, envp_login);
+			printf("init: failed to exec %s\n", prog);
 			exit(1);
 		}
 		if (p < 0)
 		{
-			printf("init: fork for console primary failed\n");
+			printf("init: fork for %s failed\n", prog);
 			exit(1);
 		}
 		waitpid(p, NULL, 0);
 	}
+}
+
+/*
+ * Launch the system-console primary and keep it alive in a supervised child, so
+ * init can return to its idle/reaper loop.
+ *
+ * In the desktop profile we ALSO run a text login on the serial console (PL011),
+ * so the serial line is an interactive shell *alongside* the GUI — the
+ * X-on-tty7 + getty-on-ttyS0 model.  The two never fight: the serial login owns
+ * fd 0/1/2 (the PL011 console fileops), while the compositor uses the framebuffer
+ * (sys_mapfb) and virtio keyboard, ignoring its console fds.  This keeps the
+ * serial console maintained (e.g. for `bmake run-claude`).  The base/headless
+ * profile already IS a serial login, so it needs no second one.
+ */
+static void start_console(void)
+{
+	const char *primary = console_primary();
+
+	if (strcmp(primary, CONSOLE_DESKTOP) == 0)
+	{
+		if (fork() == 0)
+		{
+			console_supervisor(CONSOLE_BASE); /* /bin/login on the serial console */
+			exit(0);                          /* unreachable */
+		}
+	}
+
+	if (fork() == 0)
+	{
+		console_supervisor(primary); /* desktop compositor (or login for base) */
+		exit(0);                     /* unreachable */
+	}
+
+	/* init (parent) returns to its idle/reaper loop. */
 }
 
 int main(int argc, char **argv, char **envp)
