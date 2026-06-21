@@ -25,6 +25,7 @@
 #include <vmm/vmm.h>
 #include <vmm/paging.h>
 #include <lib/kmalloc.h>
+#include <ubixos/spinlock.h>
 #include <string.h>
 
 /* QEMU `virt` virtio-mmio window: 32 slots of 0x200 bytes at 0x0a000000. */
@@ -125,6 +126,14 @@ static int g_ready;                  /* non-zero once attached */
 static struct ubx_device g_blk_dev;  /* the whole-disk block device (vtblk0) */
 static struct ubx_blk_ops g_blk_ops; /* its block ops */
 
+/* SMP: the request path reuses one set of DMA buffers (g_hdr/g_data/g_status) and
+ * one virtqueue (g_desc/g_avail/g_used), so two CPUs issuing concurrent block ops
+ * would clobber each other's request and return another sector's data (the failed-
+ * first-userdb-read under SMP).  Serialise the whole submit->poll-complete path.  A
+ * plain spinlock is safe here: the section takes no other lock, and the kernel does
+ * not preempt at EL1 so a timer IRQ landing on the holder cannot reschedule it. */
+static struct spinLock g_blk_lock = SPIN_LOCK_INITIALIZER;
+
 /* MBR partitions discovered on the disk (vtblk0sN).  The pool root lives on one
  * of these (type 0x9C); vfs_mount resolves it by minor via the find hook. */
 static struct ubp_partition g_parts[MBR_MAX_PARTITIONS];
@@ -180,6 +189,7 @@ static int virtio_blk_read(struct ubx_device *dev, u_int32_t lba, u_int32_t coun
 	if (!g_ready)
 		return (-1);
 
+	spinLock(&g_blk_lock);
 	for (u_int32_t i = 0; i < count; i++)
 	{
 		g_hdr->type = VIRTIO_BLK_T_IN;
@@ -213,9 +223,13 @@ static int virtio_blk_read(struct ubx_device *dev, u_int32_t lba, u_int32_t coun
 		dsb();
 
 		if (*g_status != VIRTIO_BLK_S_OK)
+		{
+			spinUnlock(&g_blk_lock);
 			return (-1);
+		}
 		memcpy((u_int8_t *)buf + (u_int64_t)i * 512, g_data, 512);
 	}
+	spinUnlock(&g_blk_lock);
 	return (0);
 }
 
@@ -235,6 +249,7 @@ static int virtio_blk_write(struct ubx_device *dev, u_int32_t lba, u_int32_t cou
 	if (!g_ready)
 		return (-1);
 
+	spinLock(&g_blk_lock);
 	for (u_int32_t i = 0; i < count; i++)
 	{
 		memcpy(g_data, (const u_int8_t *)buf + (u_int64_t)i * 512, 512);
@@ -270,8 +285,12 @@ static int virtio_blk_write(struct ubx_device *dev, u_int32_t lba, u_int32_t cou
 		dsb();
 
 		if (*g_status != VIRTIO_BLK_S_OK)
+		{
+			spinUnlock(&g_blk_lock);
 			return (-1);
+		}
 	}
+	spinUnlock(&g_blk_lock);
 	return (0);
 }
 

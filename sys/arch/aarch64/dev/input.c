@@ -21,9 +21,17 @@
 #include <sys/thread.h>
 #include <isa/kbd.h>   /* struct kbd_event */
 #include <isa/mouse.h> /* struct mouse_event */
+#include <ubixos/spinlock.h>
 
 /* virtio-input poll (sys/arch/aarch64/dev/virtio_input.c). */
 int virtio_input_poll(void (*deliver)(int dev, u_int16_t type, u_int16_t code, u_int32_t value));
+
+/* SMP: sys_getkbd (terminal) and sys_getmouse (views) run on different CPUs and
+ * both call input_drain(), which drains EVERY virtio-input device and writes both
+ * cooked rings — so two concurrent callers race the shared virtqueue indices and
+ * ring head/tail pointers, dropping events (the dead mouse under SMP).  Serialise
+ * the whole drain + ring read with one lock. */
+static struct spinLock g_input_lock = SPIN_LOCK_INITIALIZER;
 
 /* Linux input ABI subset (linux/input-event-codes.h). */
 #define EV_SYN 0x00
@@ -258,15 +266,18 @@ static void input_drain(void)
  */
 int sys_getkbd(struct thread *td, struct sys_getkbd_args *args)
 {
+	spinLock(&g_input_lock);
 	input_drain();
 
 	if (g_kbd_tail == g_kbd_head)
 	{
+		spinUnlock(&g_input_lock);
 		td->td_retval[0] = -1;
 		return (-1);
 	}
 	*args->ev = g_kbd_ring[g_kbd_tail];
 	g_kbd_tail = (g_kbd_tail + 1) % RING;
+	spinUnlock(&g_input_lock);
 	td->td_retval[0] = 0;
 	return (0);
 }
@@ -279,15 +290,18 @@ int sys_getkbd(struct thread *td, struct sys_getkbd_args *args)
  */
 int sys_getmouse(struct thread *td, struct sys_getmouse_args *args)
 {
+	spinLock(&g_input_lock);
 	input_drain();
 
 	if (g_mouse_tail == g_mouse_head)
 	{
+		spinUnlock(&g_input_lock);
 		td->td_retval[0] = -1;
 		return (-1);
 	}
 	*args->ev = g_mouse_ring[g_mouse_tail];
 	g_mouse_tail = (g_mouse_tail + 1) % RING;
+	spinUnlock(&g_input_lock);
 	td->td_retval[0] = 0;
 	return (0);
 }

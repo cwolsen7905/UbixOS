@@ -18,6 +18,7 @@
 #include "pci.h"
 #include <vmm/vmm.h>     /* vmm_find_free_pages_contig, PAGE_SIZE */
 #include <lib/kmalloc.h> /* sysID */
+#include <ubixos/spinlock.h>
 #include <string.h>
 #include <sys/bus.h>      /* struct ubx_device / ubx_blk_ops */
 #include <sys/descrip.h>  /* g_device_find hook (vfs_mount resolves to us) */
@@ -104,6 +105,13 @@ static struct ubx_blk_ops g_blk_ops; /* its block ops */
 static struct ubp_partition g_parts[MBR_MAX_PARTITIONS];
 static int g_npart;
 
+/* SMP: the request path reuses one set of DMA buffers + one virtqueue, so two CPUs
+ * issuing concurrent block ops would clobber each other and return another sector's
+ * data.  Serialise the whole submit->poll-complete path.  Plain spinlock: the
+ * section takes no other lock, and the kernel preempts only ring 3 (this driver runs
+ * at ring 0), so a timer/IPI on the holder cannot reschedule it.  Mirrors aarch64. */
+static struct spinLock g_blk_lock = SPIN_LOCK_INITIALIZER;
+
 /** @return ALIGN(@x, @a). */
 static u64 align_up(u64 x, u64 a)
 {
@@ -137,6 +145,7 @@ int virtio_blk_read(struct ubx_device *dev, u32 lba, u32 count, void *buf)
 	if (!g_ready)
 		return -1;
 
+	spinLock(&g_blk_lock);
 	for (u32 i = 0; i < count; i++)
 	{
 		g_hdr->type = VIRTIO_BLK_T_IN;
@@ -158,9 +167,13 @@ int virtio_blk_read(struct ubx_device *dev, u32 lba, u32 count, void *buf)
 		g_desc[2].next = 0;
 
 		if (submit_and_wait() != 0)
+		{
+			spinUnlock(&g_blk_lock);
 			return -1;
+		}
 		memcpy((u8 *)buf + (u64)i * 512, g_data, 512);
 	}
+	spinUnlock(&g_blk_lock);
 	return 0;
 }
 
@@ -171,6 +184,7 @@ int virtio_blk_write(struct ubx_device *dev, u32 lba, u32 count, void *buf)
 	if (!g_ready)
 		return -1;
 
+	spinLock(&g_blk_lock);
 	for (u32 i = 0; i < count; i++)
 	{
 		memcpy(g_data, (const u8 *)buf + (u64)i * 512, 512);
@@ -193,8 +207,12 @@ int virtio_blk_write(struct ubx_device *dev, u32 lba, u32 count, void *buf)
 		g_desc[2].next = 0;
 
 		if (submit_and_wait() != 0)
+		{
+			spinUnlock(&g_blk_lock);
 			return -1;
+		}
 	}
+	spinUnlock(&g_blk_lock);
 	return 0;
 }
 
