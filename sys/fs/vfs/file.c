@@ -173,7 +173,9 @@ void sysRmDir(const char *path)
 	if (dir_path[0] == '\0')
 		dir_path = "/";
 
+	spinLock(&vfs_io_lock);
 	mp->fs->vfsRemDir(dir_path, mp);
+	spinUnlock(&vfs_io_lock);
 }
 
 int sys_mkdir(struct thread *td, struct sys_mkdir_args *args)
@@ -733,8 +735,10 @@ int fputc(int ch, fileDescriptor_t *fd)
 	if (fd != 0x0 && fd->mp->fs->vfsWrite != NULL)
 	{
 		char c = (char)ch;
+		spinLock(&vfs_io_lock);
 		fd->mp->fs->vfsWrite(fd, &c, fd->offset, 1);
 		fd->offset++;
+		spinUnlock(&vfs_io_lock);
 		return (unsigned char)ch;
 	}
 	/* Return NULL If FD Is Not Found */
@@ -753,9 +757,14 @@ int fgetc(fileDescriptor_t *fd)
 	unsigned char ch = 0x0;
 	if (fd != 0x0)
 	{
-		if (fd->mp->fs->vfsRead(fd, (char *)&ch, fd->offset, 1) == 0)
+		size_t got;
+		spinLock(&vfs_io_lock);
+		got = fd->mp->fs->vfsRead(fd, (char *)&ch, fd->offset, 1);
+		if (got != 0)
+			fd->offset++;
+		spinUnlock(&vfs_io_lock);
+		if (got == 0)
 			return (-1); /* EOF */
-		fd->offset++;
 		return (int)ch;
 	}
 	return (-1);
@@ -1063,7 +1072,10 @@ int sysMkDir(const char *path)
 
 	memset(&mkdir_fd, 0, sizeof(mkdir_fd));
 	mkdir_fd.mp = mp;
-	if (mp->fs->vfsMakeDir(fullpath, &mkdir_fd) != 0)
+	spinLock(&vfs_io_lock);
+	int rc = mp->fs->vfsMakeDir(fullpath, &mkdir_fd);
+	spinUnlock(&vfs_io_lock);
+	if (rc != 0)
 		return (-EIO);
 	return (0);
 }
@@ -1117,7 +1129,10 @@ int unlink(const char *node)
 	}
 	/* Propagate the FS result — callers like mv's copy+unlink fallback
 	 * and rm need to know whether the entry actually went away. */
-	if (mp->fs->vfsUnlink(fs_path, mp) != 0)
+	spinLock(&vfs_io_lock);
+	int urc = mp->fs->vfsUnlink(fs_path, mp);
+	spinUnlock(&vfs_io_lock);
+	if (urc != 0)
 		return (-EIO);
 
 	return (0);
@@ -1180,7 +1195,14 @@ kDIR_t *vfs_opendir(const char *path)
 	memset(dir, 0x0, sizeof(kDIR_t));
 	dir->mp = mp;
 
-	if (mp->fs->vfsOpenDir(dirPath, dir) != 0x1)
+	/* Directory metadata hits the same non-re-entrant pool reader as fread/fopen, so
+	 * serialise it across CPUs under vfs_io_lock too — otherwise a concurrent exec's
+	 * lookup races a readdir and corrupts the reader (the intermittent boot-time
+	 * "cannot load interp" failure). */
+	spinLock(&vfs_io_lock);
+	int opened = (mp->fs->vfsOpenDir(dirPath, dir) == 0x1);
+	spinUnlock(&vfs_io_lock);
+	if (!opened)
 	{
 		kfree(dir);
 		return (0x0);
@@ -1191,9 +1213,14 @@ kDIR_t *vfs_opendir(const char *path)
 
 int vfs_readdir(kDIR_t *dir, struct kdirent *ent)
 {
+	int ret;
+
 	if (dir == 0x0 || ent == 0x0 || dir->mp == 0x0 || dir->mp->fs->vfsReadDir == 0x0)
 		return (-1);
-	return (dir->mp->fs->vfsReadDir(dir, ent));
+	spinLock(&vfs_io_lock);
+	ret = dir->mp->fs->vfsReadDir(dir, ent);
+	spinUnlock(&vfs_io_lock);
+	return (ret);
 }
 
 int vfs_closedir(kDIR_t *dir)
@@ -1202,7 +1229,11 @@ int vfs_closedir(kDIR_t *dir)
 	if (dir == 0x0)
 		return (-1);
 	if (dir->mp != 0x0 && dir->mp->fs->vfsCloseDir != 0x0)
+	{
+		spinLock(&vfs_io_lock);
 		ret = dir->mp->fs->vfsCloseDir(dir);
+		spinUnlock(&vfs_io_lock);
+	}
 	kfree(dir);
 	return (ret);
 }
