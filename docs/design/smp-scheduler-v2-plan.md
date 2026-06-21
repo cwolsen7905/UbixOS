@@ -188,6 +188,56 @@ through them, **global lock unchanged** (UP-identical; correct-but-serialised SM
 race-free idle. x86_64 validates each before aarch64. This sequencing keeps every
 intermediate buildable and UP-green.
 
+## Phase 2b lock-split design (the detailed plan)
+
+Today `schedulerSpinLock` is one lock guarding five different things. The split:
+
+| Protects | v2 lock | Notes |
+|---|---|---|
+| run-queue buckets + ready_mask of CPU N; the switch on CPU N | `g_rq[N].rq_lock` (per-CPU) | hot path; held across `switch_to`, released by the resumer |
+| `taskList` + `pid_hash` (insert/remove/walk) | `g_tasklist_lock` (global) | reap, fork insert, signal/pgrp walks, `wait_find_child` |
+| callout list | `g_callout_lock` (global) | armed from sleepers; fired from maintenance |
+
+**Lock order (must be global): `g_tasklist_lock` → `g_callout_lock` → `rq_lock`.**
+A holder of an inner lock never takes an outer one. Cross-CPU run-queue access
+(migration, remote wakeup) orders the two `rq_lock`s by ascending CPU id.
+
+**The crux — get maintenance out of the dispatch hot path.** Today `sched()` runs
+aging + dead-task reap + `callout_run_expired` on *every* call, all under the one
+lock. With per-CPU queues that would force `g_tasklist_lock` into the hot path and
+re-serialise everything (no win, and it's exactly the busy-spin/global-contention v2
+exists to remove). So they move:
+
+- **Aging** becomes **per-CPU**: each CPU ages only the tasks in *its own*
+  `g_rq[cpuid]` (walk that rq's buckets, not the global taskList), under `rq_lock`.
+  No taskList walk, no cross-CPU lock, runs in the local tick.
+- **Reap** (ZOMBIE→DEAD→free) moves to a low-rate maintenance pass (every K ticks,
+  or a dedicated reaper kthread) under `g_tasklist_lock`; when it wakes a waiting
+  parent it takes that parent's `rq_lock` to enqueue (order: tasklist → rq).
+- **Callouts**: `callout_run_expired` runs in the local tick under `g_callout_lock`;
+  `sleep_wake_cb` enqueues the woken task by taking the target `rq_lock` (order:
+  callout → rq). Arming/cancelling a callout takes only `g_callout_lock`.
+
+So the steady-state `schedule()` (yield/block/preempt) takes **only**
+`this_rq()->rq_lock`: do per-CPU aging, pick, `switch_to`, resumer releases
+`rq_lock`. No global lock in the common case — that is the whole point.
+
+**Sleep path under the split.** `sched_wait_event_timeout`: take `g_callout_lock`
+to arm the timeout, then `this_rq()->rq_lock`, set WAIT, dequeue, and `sched_block()`
+switches away holding `rq_lock` (released from the resumer) — same anti-race
+discipline as today, now per-CPU. A remote waker (`sched_wakeup_chan`,
+`sched_io_wakeup`) walks `taskList` under `g_tasklist_lock`, and for each task to
+wake takes `cpu_rq(t->rq_cpu)->rq_lock` to enqueue + IPIs that CPU.
+
+**Why flag-off is untouched.** Every one of these is inside `#if
+CONFIG_SCHED_PERCPU`; with the flag 0 the single `g_rq[0]` + `schedulerSpinLock`
+path is compiled exactly as today. The flag-on path is a parallel `schedule_percpu()`
+(and per-path sleep/wakeup helpers) selected by `sched()`/`sched_block()` —
+duplicated control flow, shared leaf helpers — so neither path's locking leaks into
+the other. It is only *bootable+testable* once all of 2b lands (the split is
+all-or-nothing), then validated with the flag on under the stress harness +
+real-display before it becomes the SMP default.
+
 ## Decisions (approved 2026-06-20)
 
 - **Affinity v0:** strict — a woken task stays on its last CPU unless that CPU is
