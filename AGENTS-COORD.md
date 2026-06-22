@@ -165,3 +165,6 @@ desktop — like X on tty7 + getty on ttyS0) must be **kept working**. If you to
 `console_primary`/`start_console` or the aarch64 console fd routing (`execfile.c
 aarch64_console_setup_fds`, `bringup.h uart_getc`/`uart_rx_ready`), **do not regress the serial
 console.** (Wiring the serial login alongside the desktop is [ls/selfhost]'s active task.) — 2026-06-20
+
+- [ls/selfhost] both — **bmake PORT DONE + RUNS in UbixOS** (committed): `mk/ports.mk` framework + `tools/ports/bmake/` (BSD-licensed, pinned 20240212) cross-build a musl PIE on both arches; verified on aarch64 over the serial console (`bmake -r -V MACHINE` → aarch64; parses a real makefile + evals a var). Two follow-ups it surfaced, both Phase 2: (1) **file-backed mmap of makefiles SIGABRTs** → a kernel bug (HAVE_MMAP disabled as a workaround) — whoever owns the VMM/mmap path, heads-up; (2) **recipe execution needs `/bin/sh`**.
+  - **NEXT (active): porting `/bin/sh`** for recipe execution (Phase 2). A small permissive POSIX sh (oksh/OpenBSD ksh, ISC) via the same `mk/ports.mk`. **MINE-ALONE: `tools/ports/sh/` (new).** tcsh stays the interactive login shell (unchanged); this is `/bin/sh` for the build. Not touching views/ubixfs/SMP/kconsole. — 2026-06-21
