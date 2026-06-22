@@ -126,7 +126,9 @@ struct crumb
 };
 
 /* ── state ──────────────────────────────────────────────────────────────────*/
-static const char g_mbox[] = "files";
+/* Per-instance reply mailbox ("files.<pid>"); a fixed name collides on the second
+ * instance's mpi_createMbox so only one Files window could open.  Filled in main(). */
+static char g_mbox[32] = "files";
 static const char g_views[] = "views";
 
 static ogSurface g_surf;
@@ -2012,6 +2014,7 @@ static void on_key(uint32_t kc)
  */
 int main(int argc, char **argv)
 {
+	snprintf(g_mbox, sizeof(g_mbox), "files.%d", (int)getpid());
 	mpi_createMbox((char *)g_mbox);
 
 	/* Pick a starting directory: an absolute path argument, else the session

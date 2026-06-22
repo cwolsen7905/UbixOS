@@ -27,14 +27,19 @@
  */
 
 #include <lib/kconsole.h>
+#include <ubixos/spinlock.h>
+#include <ubixos/wait.h>
 
 /*
- * The registered sink list and the primary-suspend flag.  Both are touched only
- * from the (single-threaded) kprintf path and from the compositor's claim /
- * release of the screen, so no locking is required at this layer.
+ * The registered sink list and the primary-suspend flag.  Registration happens
+ * once at boot; emit is the hot path.  Under SMP two CPUs can kprintf at once, so
+ * kconsole_emit serialises on g_console_lock with IRQs disabled (an ISR on the same
+ * CPU may also kprintf — IRQ-off prevents a non-recursive self-deadlock) so each
+ * line is emitted atomically instead of interleaving characters on the serial port.
  */
 static struct kconsole *g_console_list = 0;
 static int g_primary_suspended = 0;
+static struct spinLock g_console_lock = SPIN_LOCK_INITIALIZER;
 
 /**
  * Register a console sink.
@@ -70,10 +75,16 @@ void kconsole_emit(const char *s)
 {
 	struct kconsole *kc;
 	const char *p;
+	u_int32_t flags;
 
 	if (s == 0)
 		return;
 
+	/* Serialise the whole string across CPUs with IRQs disabled (see g_console_lock
+	 * note above) so concurrent kprintf()s don't interleave character-by-character. */
+	save_flags(flags);
+	cli();
+	spinLock(&g_console_lock);
 	for (kc = g_console_list; kc != 0; kc = kc->next)
 	{
 		if (g_primary_suspended && (kc->flags & (KC_PRIMARY | KC_SUSPENDABLE)) == (KC_PRIMARY | KC_SUSPENDABLE))
@@ -83,6 +94,8 @@ void kconsole_emit(const char *s)
 		for (p = s; *p != '\0'; p++)
 			kc->putc((int)(unsigned char)*p);
 	}
+	spinUnlock(&g_console_lock);
+	restore_flags(flags);
 }
 
 /**

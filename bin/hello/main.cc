@@ -59,7 +59,9 @@ extern "C" {
 
 #define RGB(r, g, b) ((uint32_t)(((r) << 16) | ((g) << 8) | (b)))
 
-static const char g_mbox[] = "hello";
+/* Per-instance reply mailbox ("hello.<pid>"); a fixed name collides on the second
+ * instance's mpi_createMbox.  Filled in by claim_window(). */
+static char g_mbox[32] = "hello";
 static const char g_views[] = "views";
 
 static uint32_t win_id;
@@ -76,6 +78,7 @@ static ogScalableFont font;
 static int
 claim_window(void)
 {
+	snprintf(g_mbox, sizeof(g_mbox), "hello.%d", (int)getpid());
 	if (mpi_createMbox((char *)g_mbox) != 0) {
 		printf("hello: mpi_createMbox failed\n");
 		return -1;

@@ -65,7 +65,9 @@ static uint32_t type_color(uint8_t t)
 }
 
 /* ── state ──────────────────────────────────────────────────────────────────*/
-static const char g_mbox[] = "diskutil";
+/* Per-instance reply mailbox ("diskutil.<pid>") so multiple instances can coexist;
+ * a fixed name collides on the second mpi_createMbox.  Filled in at claim time. */
+static char g_mbox[32] = "diskutil";
 static const char g_views[] = "views";
 
 static ogSurface g_surf;
@@ -370,6 +372,7 @@ int main(int argc, char **argv)
 	(void)argc;
 	(void)argv;
 
+	snprintf(g_mbox, sizeof(g_mbox), "diskutil.%d", (int)getpid());
 	mpi_createMbox((char *)g_mbox);
 
 	mpi_message_t msg;

@@ -122,7 +122,9 @@ struct prow
 };
 
 /* ── state ──────────────────────────────────────────────────────────────────*/
-static const char g_mbox[] = "activity";
+/* Per-instance reply mailbox ("activity.<pid>") so multiple instances can coexist;
+ * a fixed name collides on the second mpi_createMbox.  Filled in at claim time. */
+static char g_mbox[32] = "activity";
 static const char g_views[] = "views";
 
 static ogSurface g_surf;
@@ -165,8 +167,8 @@ static int g_core_count = 1;   /* cpuN lines seen in /proc/stat                 
 static int g_perf_percore = 0; /* 0 = one combined graph, 1 = a graph per core        */
 /* Toggle button hit-rect (set in draw_performance, tested in on_click). */
 static int g_perf_btn_x, g_perf_btn_y, g_perf_btn_w, g_perf_btn_h;
-static unsigned long g_mem_total_kb;        /* /proc/meminfo MemTotal             */
-static unsigned long g_mem_used_kb;         /* /proc/meminfo MemUsed              */
+static unsigned long g_mem_total_kb; /* /proc/meminfo MemTotal             */
+static unsigned long g_mem_used_kb;  /* /proc/meminfo MemUsed              */
 
 /* ── helpers ────────────────────────────────────────────────────────────────*/
 
@@ -295,7 +297,7 @@ static unsigned long long read_total_ticks(unsigned long long *idle_out)
 static int read_core_ticks(unsigned long long tot[], unsigned long long idl[])
 {
 	char buf[512];
-	int  count = 0;
+	int count = 0;
 	char *p;
 
 	if (slurp("/proc/stat", buf, sizeof(buf)) <= 0)
@@ -622,7 +624,12 @@ static void draw_performance(void)
 			snprintf(buf, sizeof(buf), "CPU %d   %d%%", c, g_core_x10[c] / 10);
 			set_fg(COL_TEXT_DIM);
 			g_font.PutString(g_surf, gx, gy, buf);
-			draw_graph(gx, gy + label_h, cell_w, cell_h - label_h, g_core_hist[c], COL_GRAPH_CPU,
+			draw_graph(gx,
+			           gy + label_h,
+			           cell_w,
+			           cell_h - label_h,
+			           g_core_hist[c],
+			           COL_GRAPH_CPU,
 			           COL_GRAPH_CPU_FILL);
 		}
 	}
@@ -841,6 +848,7 @@ int main(int argc, char **argv)
 	(void)argc;
 	(void)argv;
 
+	snprintf(g_mbox, sizeof(g_mbox), "activity.%d", (int)getpid());
 	mpi_createMbox((char *)g_mbox);
 
 	mpi_message_t msg;

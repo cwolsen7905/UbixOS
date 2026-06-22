@@ -71,20 +71,23 @@ DG_Init(void)
 		return;
 	}
 
-	/* VESA not yet initialised — ask the kernel display driver to set it up */
+	/* VESA not yet initialised — ask the kernel display driver to set it up.
+	 * Per-instance reply mailbox ("doom.<pid>") so a fixed name can't collide. */
 	mpi_message_t msg, reply;
+	char mbox[32];
+	snprintf(mbox, sizeof(mbox), "doom.%d", (int)getpid());
 	memset(&msg, 0, sizeof(msg));
 	msg.header = 0x82;
-	memcpy(msg.data, "doom", 5);
+	strncpy((char *)msg.data, mbox, sizeof(msg.data) - 1);
 
-	mpi_createMbox("doom");
+	mpi_createMbox(mbox);
 	mpi_postMessage("system", 0x82, &msg);
 
 	/* Block until system replies */
-	while (mpi_fetchMessage("doom", &reply) != 0)
+	while (mpi_fetchMessage(mbox, &reply) != 0)
 		usleep(1000);
 
-	mpi_destroyMbox("doom");
+	mpi_destroyMbox(mbox);
 
 	if (reply.data[0] == 0) {
 		fprintf(stderr, "doom: VESA init failed\n");
