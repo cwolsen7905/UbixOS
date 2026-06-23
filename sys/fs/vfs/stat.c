@@ -36,6 +36,23 @@
 #include <sys/descrip.h>
 #include <string.h>
 
+/**
+ * Report regular files as executable.
+ *
+ * uBixOS has no per-file permission enforcement yet (sys_access is permissive),
+ * and the image tools store world binaries on the UbixFS pool as 0644 — so a
+ * mode-bit-checking exec (e.g. oksh's access()+stat X_OK pre-check) refuses to
+ * run them.  Add the execute bits to regular files so they can be exec'd,
+ * matching the FAT path (which already reports 0755).  Stopgap until the image
+ * tools store real exec bits / the multi-user security model lands.
+ */
+static u_int32_t stat_exec_fixup(u_int32_t mode)
+{
+	if ((mode & 0170000) == 0100000) /* S_IFREG */
+		mode |= 0111;
+	return (mode);
+}
+
 int _sys_stat(char *path, struct stat *sb, int flags)
 {
 	int error = 0;
@@ -115,6 +132,7 @@ int _sys_stat(char *path, struct stat *sb, int flags)
 		/* FAT stores no mode bits; fall back to a regular-file mode. */
 		if (sb->st_mode == 0)
 			sb->st_mode = 0x81ED; /* S_IFREG | 0755 */
+		sb->st_mode = stat_exec_fixup(sb->st_mode);
 
 		fclose(fd);
 	}
@@ -161,6 +179,7 @@ int sys_fstat(struct thread *td, struct sys_fstat_args *args)
 		args->sb->st_atime = fd->inode.u.ufs2_i.di_atime;
 		args->sb->st_mtime = fd->inode.u.ufs2_i.di_mtime;
 		args->sb->st_ctime = fd->inode.u.ufs2_i.di_ctime;
+		args->sb->st_mode = stat_exec_fixup(args->sb->st_mode);
 	}
 
 	td->td_retval[0] = error;
@@ -217,6 +236,7 @@ int sys_fstatat(struct thread *td, struct sys_fstatat_args *args)
 
 		if (sb->st_mode == 0)
 			sb->st_mode = 0x81ED; /* S_IFREG | 0755 */
+		sb->st_mode = stat_exec_fixup(sb->st_mode);
 		if (sb->st_nlink == 0)
 			sb->st_nlink = 1;
 		if (sb->st_size == 0 && fd->size != 0)
@@ -445,6 +465,7 @@ int sys_statx(struct thread *td, struct sys_statx_args *args)
 		stx->stx_mode = fd->inode.u.ufs2_i.di_mode;
 		if ((stx->stx_mode & 0170000) == 0)
 			stx->stx_mode |= 0100755; /* fallback for FSes that don't set di_mode */
+		stx->stx_mode = stat_exec_fixup(stx->stx_mode);
 		stx->stx_ino = fd->ino;
 		stx->stx_size = fd->size;
 		stx->stx_blocks = (fd->size + 511) / 512;
@@ -518,6 +539,7 @@ int sys_statx(struct thread *td, struct sys_statx_args *args)
 				stx->stx_mode = fd->inode.u.ufs2_i.di_mode;
 				if ((stx->stx_mode & 0170000) == 0)
 					stx->stx_mode |= 0100755;
+				stx->stx_mode = stat_exec_fixup(stx->stx_mode);
 			}
 			stx->stx_ino = fd->ino ? fd->ino : (u_int64_t)(uintptr_t)fd;
 			stx->stx_size = fd->size;
