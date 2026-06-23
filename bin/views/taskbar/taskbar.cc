@@ -105,13 +105,21 @@ static uint32_t scale_color(uint32_t c, int num, int den)
  * Re-derive the taskbar palette from the session user's accent colour.  Called
  * at startup and whenever a DISPLAY_THEME message arrives.
  */
-static void apply_theme(void)
+static bool apply_theme(void)
 {
 	const char *user = getenv("USER");
-	int accent;
+	int accent = 0;
 
-	if (ubistry_get_for_int((user && user[0]) ? user : nullptr, "views/theme/accent", &accent) != 0)
-		return; /* keep current palette if the key is missing */
+	/* Resolve the accent: per-user first (ubistry_get_for falls back to the system
+	 * value internally).  A zero result is pure black — never a real accent colour, so
+	 * treat it as unset (a missing/zeroed per-user override) and force the seeded
+	 * system default rather than blacking out the whole bar. */
+	if (ubistry_get_for_int((user && user[0]) ? user : nullptr, "views/theme/accent", &accent) != 0 ||
+	    ((uint32_t)accent & 0x00FFFFFFu) == 0)
+	{
+		if (ubistry_get_int("/views/theme/accent", &accent) != 0 || ((uint32_t)accent & 0x00FFFFFFu) == 0)
+			return false; /* ubistry not ready / nothing usable — keep palette, retry later */
+	}
 
 	/* Derived so the window-button fill equals the title-bar accent (a) and the
 	 * bar sits a touch darker — matching the compositor's chrome. */
@@ -122,6 +130,7 @@ static void apply_theme(void)
 	TB_BTN_P = scale_color(a, 13, 10);
 	FLY_BG_C = scale_color(a, 9, 10);
 	FLY_ITEM_C = scale_color(a, 13, 10);
+	return true;
 }
 
 /* ------------------------------------------------------------------ */
@@ -1441,7 +1450,11 @@ int main(int argc, char **argv)
 		return 1;
 	}
 
-	apply_theme(); /* derive the palette from the user's accent before first paint */
+	/* Derive the palette from the user's accent before first paint.  This can fail if
+	 * ubistry isn't serving yet at taskbar startup (an ordering race that SMP timing
+	 * makes likely — the symptom is a gray bar instead of the theme accent); the event
+	 * loop below retries until it succeeds. */
+	bool theme_loaded = apply_theme();
 
 	Taskbar tb;
 	if (!tb.init(mbox, FONT_PATH))
@@ -1458,6 +1471,10 @@ int main(int argc, char **argv)
 		if (t != last_sec)
 		{
 			last_sec = t;
+			/* Theme not loaded yet (ubistry wasn't ready at startup)?  Keep trying
+			 * until it answers, then repaint with the real accent. */
+			if (!theme_loaded && apply_theme())
+				theme_loaded = true;
 			tb.refresh_volume(); /* pick up volume/mute changes once a second */
 			tb.draw();
 			tb.send_flip();
@@ -1477,7 +1494,8 @@ int main(int argc, char **argv)
 
 			if (reply.header == DISPLAY_THEME)
 			{
-				apply_theme();
+				if (apply_theme())
+					theme_loaded = true;
 				tb.draw();
 				tb.send_flip();
 				continue;

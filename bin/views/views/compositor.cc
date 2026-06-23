@@ -251,7 +251,11 @@ void Compositor::set_desktop_from_registry()
 	 * slate-blue (modern) rather than the old saturated primary blue. */
 	g_theme_decor_bg = FB_RGB(0x33, 0x3C, 0x4C);
 	g_theme_decor_hi = FB_RGB(0x4A, 0x55, 0x68);
-	if (ubistry_get_for_int(u, "views/theme/accent", &ival) == 0)
+	/* Per-user accent first, then the seeded system value; reject a zero (pure black)
+	 * result as "unset" so a missing/zeroed per-user override can't black out the title
+	 * bar (it would just keep the slate default set above). */
+	if ((ubistry_get_for_int(u, "views/theme/accent", &ival) == 0 && ((uint32_t)ival & 0x00FFFFFFu) != 0) ||
+	    (ubistry_get_int("/views/theme/accent", &ival) == 0 && ((uint32_t)ival & 0x00FFFFFFu) != 0))
 	{
 		uint32_t a = (uint32_t)ival & 0x00FFFFFFu;
 		g_theme_decor_bg = a;
