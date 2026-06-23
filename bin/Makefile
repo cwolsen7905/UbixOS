@@ -12,7 +12,7 @@
 # bespoke i386 static-link Makefile; the *test asm programs
 # (clonetest/tlstest/futextest) are i386-only.
 .if ${_ARCH} == "aarch64"
-SUBDIRS = logd authd automountd init login shell cp fdisk format disklabel ubistry ubpool ubfs ubdisk diskutil activity files ls mount uname cat ln basename cut date dirname env find grep head less mkdir more mv rm sleep sort sed stat tail touch tr uniq wc which expr cmp install diff printf awk syscheck make bmakerepro filetest pipetest selfhostck ed ttytest ping nc tcsh vi netcfg udptest fbtest views vlogin vdoom tessera aural
+SUBDIRS = logd authd automountd init login shell cp fdisk format disklabel ubistry ubpool ubfs ubdisk diskutil activity files ls mount uname cat ln basename cut date dirname env find grep head less mkdir more mv rm sleep sort sed stat tail touch tr uniq wc which expr cmp install diff printf awk syscheck make filetest pipetest selfhostck ed ttytest ping nc tcsh vi netcfg udptest fbtest views vlogin vdoom tessera aural
 .elif ${_ARCH} == "x86_64"
 # x86_64 (Track C port) builds the same core CLI + ported-desktop subset as
 # aarch64: the boot triad, coreutils/system tools, and the graphics stack, plus the
