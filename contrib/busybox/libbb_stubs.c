@@ -1221,13 +1221,12 @@ void bb_putchar_stderr(char ch)
 /* Read a line including the trailing newline into a freshly-malloc'd
  * buffer.  *end gets the terminating char (newline or EOF=0).  Returns
  * NULL on EOF with no bytes read; otherwise a NUL-terminated string. */
-char *bb_get_chunk_from_file(FILE *file, int *end)
+char *bb_get_chunk_from_file(FILE *file, size_t *end)
 {
 	size_t cap = 128;
 	size_t len = 0;
 	char *buf = xmalloc(cap);
 	int c;
-	int terminator = 0;
 
 	for (;;) {
 		c = getc(file);
@@ -1244,13 +1243,15 @@ char *bb_get_chunk_from_file(FILE *file, int *end)
 			buf = xrealloc(buf, cap);
 		}
 		buf[len++] = (char)c;
-		if (c == '\n') {
-			terminator = '\n';
+		if (c == '\n')
 			break;
-		}
 	}
 	buf[len] = '\0';
-	if (end) *end = terminator;
+	/* Real busybox stores the chunk LENGTH here (callers like sed do
+	 * temp[len-1]); the previous stub stored the terminator char, which only
+	 * worked for callers passing NULL (sort). */
+	if (end)
+		*end = len;
 	return buf;
 }
 
