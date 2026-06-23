@@ -1814,3 +1814,84 @@ unsigned isqrt(unsigned long long n)
 	}
 	return (unsigned)x;
 }
+
+/* ── helpers for awk ──────────────────────────────────────────────────────── */
+
+void bb_die_memory_exhausted(void)
+{
+	bb_simple_error_msg_and_die("out of memory");
+}
+
+/* Return a pointer to the first char of @name that is not part of a C
+ * identifier (or @name itself if it doesn't start one). */
+char *endofname(const char *name)
+{
+	const char *p = name;
+	if (*p == '_' || (*p >= 'a' && *p <= 'z') || (*p >= 'A' && *p <= 'Z')) {
+		for (p++; *p == '_' || (*p >= 'a' && *p <= 'z') ||
+		          (*p >= 'A' && *p <= 'Z') || (*p >= '0' && *p <= '9'); p++)
+			;
+	}
+	return (char *)p;
+}
+
+char *itoa(int n)
+{
+	static char buf[16];
+	snprintf(buf, sizeof(buf), "%d", n);
+	return buf;
+}
+
+void *mempcpy(void *dst, const void *src, size_t n)
+{
+	memcpy(dst, src, n);
+	return (char *)dst + n;
+}
+
+FILE *xfopen(const char *path, const char *mode)
+{
+	FILE *fp = fopen(path, mode);
+	if (!fp)
+		bb_perror_msg_and_die("can't open '%s'", path);
+	return fp;
+}
+
+/* Read the whole of @fd into a freshly malloc'd, NUL-terminated buffer.
+ * *sizep (if non-NULL) is a size hint on entry and the byte count on exit. */
+void *xmalloc_read(int fd, size_t *sizep)
+{
+	size_t cap = (sizep && *sizep) ? *sizep : 4096;
+	size_t total = 0;
+	char *buf = xmalloc(cap + 1);
+
+	for (;;) {
+		ssize_t r;
+		if (total >= cap) {
+			cap *= 2;
+			buf = xrealloc(buf, cap + 1);
+		}
+		r = read(fd, buf + total, cap - total);
+		if (r < 0) {
+			free(buf);
+			return NULL;
+		}
+		if (r == 0)
+			break;
+		total += (size_t)r;
+	}
+	buf[total] = '\0';
+	if (sizep)
+		*sizep = total;
+	return buf;
+}
+
+int xopen_stdin(const char *path)
+{
+	int fd;
+	if (path[0] == '-' && path[1] == '\0')
+		return 0;
+	fd = open(path, O_RDONLY);
+	if (fd < 0)
+		bb_perror_msg_and_die("can't open '%s'", path);
+	return fd;
+}

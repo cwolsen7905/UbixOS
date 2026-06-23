@@ -1,12 +1,12 @@
-#	@(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: releng/11.1/usr.bin/printf/Makefile 265420 2014-05-06 04:22:01Z imp $
+# bin/printf/Makefile — FreeBSD printf(1) built against musl for UbixOS.
 
-.include <src.opts.mk>
+include ../../Makefile.incl
+include ../Makefile.incl
 
-PROG=	printf
+BINARY = printf
+OBJS   = printf.o
+SRCS   = printf.c
 
-.if ${MK_TESTS} != "no"
-SUBDIR+= tests
-.endif
+EXTRA_CFLAGS = -w
 
-.include <ubix.prog.mk>
+.include "${UBIX_MK}/ubix.musl.prog.mk"

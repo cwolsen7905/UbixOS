@@ -650,7 +650,18 @@ unsigned xuname2uid(const char *name);
 unsigned xgroup2gid(const char *name);
 int spawn_and_wait(char **argv);
 unsigned isqrt(unsigned long long n);
+#define ENABLE_FEATURE_AWK_GNU_EXTENSIONS 1
+#define IF_FEATURE_AWK_GNU_EXTENSIONS(...) __VA_ARGS__
+#define ENABLE_FEATURE_AWK_LIBM 0
+#define ENABLE_FEATURE_ALLOW_EXEC 0
 void xfunc_die(void);
+void bb_die_memory_exhausted(void);
+char *endofname(const char *name);
+char *itoa(int n);
+void *mempcpy(void *dst, const void *src, size_t n);
+FILE *xfopen(const char *path, const char *mode);
+void *xmalloc_read(int fd, size_t *sizep);
+int xopen_stdin(const char *path);
 
 /* IF_NOT_FEATURE_FIND_*(t) — inverse gates. */
 #define _BB_FIND_NGATE(name)  _BB_FIND_NGATE2(ENABLE_FEATURE_FIND_##name)
@@ -929,6 +940,9 @@ char      *strftime_YYYYMMDDHHMMSS(char *buf, unsigned len, time_t *tp);
  * get the C/POSIX behaviour they'd see in a clean musl. */
 #define LC_TIME 2
 #define LC_ALL  6
+#ifndef LC_NUMERIC
+#define LC_NUMERIC 1
+#endif
 static inline char *setlocale(int category, const char *locale)
 {
 	(void)category; (void)locale;
