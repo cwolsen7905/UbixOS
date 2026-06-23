@@ -69,6 +69,12 @@ static void handle_get(struct ub_query_req *q)
 		r->type = (uint8_t)UB_STR;
 		r->value[0] = '\0';
 	}
+	/* Echo the request sequence so the client can correlate this reply to its request:
+	 * every GET reply shares header UB_MSG_VALUE, so under SMP a reply for one query
+	 * can land in the reply mailbox while the client waits on another (the taskbar's
+	 * accent read picking up a volume reply = 100 → blue bar).  The client matches on
+	 * this seq and discards any mismatched (stale/crossed) reply. */
+	r->seq = q->seq;
 	rmsg.header = UB_MSG_VALUE;
 	if (q->reply_mbox[0] != '\0')
 		mpi_postMessage(q->reply_mbox, UB_MSG_VALUE, &rmsg);
@@ -86,6 +92,7 @@ static void handle_enum(struct ub_query_req *q)
 	memset(&rmsg, 0, sizeof(rmsg));
 	r->count = ub_enum(q->path, r->names, (int)sizeof(r->names), &trunc);
 	r->truncated = (uint8_t)trunc;
+	r->seq = q->seq; /* correlate reply to request (see handle_get) */
 	rmsg.header = UB_MSG_CHILDREN;
 	if (q->reply_mbox[0] != '\0')
 		mpi_postMessage(q->reply_mbox, UB_MSG_CHILDREN, &rmsg);

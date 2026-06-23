@@ -74,6 +74,7 @@ struct ub_query_req
 {
 	char reply_mbox[UB_MBOX_MAX];
 	char path[UB_PATH_MAX];
+	uint32_t seq; /* client request id, echoed in the reply for correlation */
 };
 
 /* UB_MSG_VALUE reply payload. */
@@ -82,6 +83,7 @@ struct ub_value_rsp
 	int32_t ok;   /* 1 = found, 0 = not found */
 	uint8_t type; /* ub_type_t of the value */
 	char value[UB_VAL_MAX];
+	uint32_t seq; /* echoes ub_query_req.seq so the client matches reply↔request */
 };
 
 /* UB_MSG_SET request payload. */
@@ -98,6 +100,7 @@ struct ub_children_rsp
 	int32_t count;     /* number of children (may exceed what fits in names) */
 	uint8_t truncated; /* 1 = names[] does not list every child */
 	char names[UB_NAMES_MAX];
+	uint32_t seq; /* echoes ub_query_req.seq so the client matches reply↔request */
 };
 
 /* UB_MSG_DEL request payload. */

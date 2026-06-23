@@ -46,6 +46,12 @@
 static char g_reply[UB_MBOX_MAX];
 static int g_reply_ready = 0;
 
+/* Monotonic per-request id, echoed by the daemon so a reply is matched to the
+ * request that asked for it.  Without this, every GET reply shares header
+ * UB_MSG_VALUE, so under SMP a reply for one query (e.g. /aural/volume = 100) can be
+ * consumed by another query's wait (the taskbar's accent read → a blue bar). */
+static uint32_t g_seq = 0;
+
 /**
  * Lazily create this process's reply mailbox ("ubistry.r.<pid>") and return it.
  */
@@ -64,7 +70,7 @@ static const char *reply_mbox(void)
  * Wait for a reply with the wanted header on our reply mailbox.
  * @return 0 on success, -1 if the daemon never answers.
  */
-static int wait_reply(uint32_t want, mpi_message_t *out)
+static int wait_reply(uint32_t want, uint32_t seq, mpi_message_t *out)
 {
 	int spins = 0;
 
@@ -73,8 +79,16 @@ static int wait_reply(uint32_t want, mpi_message_t *out)
 		if (mpi_fetchMessage(g_reply, out) == 0)
 		{
 			if (out->header == want)
-				return (0);
-			/* stale/unexpected reply — keep waiting */
+			{
+				/* The seq lives at a different offset per reply type — read it from
+				 * the matching struct so a crossed reply (right header, wrong query)
+				 * is discarded rather than mistaken for ours. */
+				uint32_t rseq = (want == UB_MSG_VALUE) ? ((struct ub_value_rsp *)out->data)->seq
+				                                       : ((struct ub_children_rsp *)out->data)->seq;
+				if (rseq == seq)
+					return (0);
+			}
+			/* stale/crossed reply from an earlier request — discard, keep waiting */
 		}
 		else
 		{
@@ -94,10 +108,13 @@ int ubistry_get_str(const char *path, char *buf, int len)
 	if (path == NULL || buf == NULL || len <= 0)
 		return (-1);
 
+	uint32_t seq = ++g_seq;
+
 	reply_mbox();
 	memset(&msg, 0, sizeof(msg));
 	snprintf(q->reply_mbox, sizeof(q->reply_mbox), "%s", g_reply);
 	snprintf(q->path, sizeof(q->path), "%s", path);
+	q->seq = seq;
 	msg.header = UB_MSG_GET;
 	/* If the registry daemon's mailbox doesn't exist (e.g. no ubistry running),
 	 * the post fails — bail immediately instead of spinning UB_WAIT_SPINS for a
@@ -105,7 +122,7 @@ int ubistry_get_str(const char *path, char *buf, int len)
 	if (mpi_postMessage(UBISTRY_MBOX, UB_MSG_GET, &msg) != 0)
 		return (-1);
 
-	if (wait_reply(UB_MSG_VALUE, &rep) != 0 || !r->ok)
+	if (wait_reply(UB_MSG_VALUE, seq, &rep) != 0 || !r->ok)
 		return (-1);
 	snprintf(buf, (size_t)len, "%s", r->value);
 	return (0);
@@ -170,15 +187,18 @@ int ubistry_enum(const char *path, char *names_buf, int len)
 	if (path == NULL || names_buf == NULL || len <= 0)
 		return (-1);
 
+	uint32_t seq = ++g_seq;
+
 	reply_mbox();
 	memset(&msg, 0, sizeof(msg));
 	snprintf(q->reply_mbox, sizeof(q->reply_mbox), "%s", g_reply);
 	snprintf(q->path, sizeof(q->path), "%s", path);
+	q->seq = seq;
 	msg.header = UB_MSG_ENUM;
 	if (mpi_postMessage(UBISTRY_MBOX, UB_MSG_ENUM, &msg) != 0)
 		return (-1); /* no registry daemon — don't spin waiting for a reply */
 
-	if (wait_reply(UB_MSG_CHILDREN, &rep) != 0)
+	if (wait_reply(UB_MSG_CHILDREN, seq, &rep) != 0)
 		return (-1);
 	snprintf(names_buf, (size_t)len, "%s", r->names);
 	return (r->count);
