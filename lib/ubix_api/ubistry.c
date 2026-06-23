@@ -40,17 +40,12 @@
 #include <sys/mpi.h>
 #include <ubistry/ubistry.h>
 
-/* Yields to wait for a reply before giving up (daemon down → fall back). */
-#define UB_WAIT_SPINS 200000
+/* Per-wait blocking timeout (scheduler ticks) for a reply before giving up — the
+ * daemon answers promptly, so this only bounds the "daemon wedged" case. */
+#define UB_REPLY_TIMEOUT 200
 
 static char g_reply[UB_MBOX_MAX];
 static int g_reply_ready = 0;
-
-/* Monotonic per-request id, echoed by the daemon so a reply is matched to the
- * request that asked for it.  Without this, every GET reply shares header
- * UB_MSG_VALUE, so under SMP a reply for one query (e.g. /aural/volume = 100) can be
- * consumed by another query's wait (the taskbar's accent read → a blue bar). */
-static uint32_t g_seq = 0;
 
 /**
  * Lazily create this process's reply mailbox ("ubistry.r.<pid>") and return it.
@@ -66,39 +61,6 @@ static const char *reply_mbox(void)
 	return (g_reply);
 }
 
-/**
- * Wait for a reply with the wanted header on our reply mailbox.
- * @return 0 on success, -1 if the daemon never answers.
- */
-static int wait_reply(uint32_t want, uint32_t seq, mpi_message_t *out)
-{
-	int spins = 0;
-
-	for (;;)
-	{
-		if (mpi_fetchMessage(g_reply, out) == 0)
-		{
-			if (out->header == want)
-			{
-				/* The seq lives at a different offset per reply type — read it from
-				 * the matching struct so a crossed reply (right header, wrong query)
-				 * is discarded rather than mistaken for ours. */
-				uint32_t rseq = (want == UB_MSG_VALUE) ? ((struct ub_value_rsp *)out->data)->seq
-				                                       : ((struct ub_children_rsp *)out->data)->seq;
-				if (rseq == seq)
-					return (0);
-			}
-			/* stale/crossed reply from an earlier request — discard, keep waiting */
-		}
-		else
-		{
-			if (++spins > UB_WAIT_SPINS)
-				return (-1);
-			sched_yield();
-		}
-	}
-}
-
 int ubistry_get_str(const char *path, char *buf, int len)
 {
 	mpi_message_t msg, rep;
@@ -108,21 +70,15 @@ int ubistry_get_str(const char *path, char *buf, int len)
 	if (path == NULL || buf == NULL || len <= 0)
 		return (-1);
 
-	uint32_t seq = ++g_seq;
-
 	reply_mbox();
 	memset(&msg, 0, sizeof(msg));
 	snprintf(q->reply_mbox, sizeof(q->reply_mbox), "%s", g_reply);
 	snprintf(q->path, sizeof(q->path), "%s", path);
-	q->seq = seq;
 	msg.header = UB_MSG_GET;
-	/* If the registry daemon's mailbox doesn't exist (e.g. no ubistry running),
-	 * the post fails — bail immediately instead of spinning UB_WAIT_SPINS for a
-	 * reply that will never come.  Callers fall back to their defaults. */
-	if (mpi_postMessage(UBISTRY_MBOX, UB_MSG_GET, &msg) != 0)
-		return (-1);
-
-	if (wait_reply(UB_MSG_VALUE, seq, &rep) != 0 || !r->ok)
+	/* mpi_call correlates the reply to THIS request via the kernel envelope
+	 * (msg_id/in_reply_to), so a crossed reply (e.g. a /aural/volume answer) can't be
+	 * mistaken for ours.  A missing daemon mailbox makes the post fail → fall back. */
+	if (mpi_call(UBISTRY_MBOX, g_reply, &msg, UB_MSG_VALUE, &rep, UB_REPLY_TIMEOUT) != 0 || !r->ok)
 		return (-1);
 	snprintf(buf, (size_t)len, "%s", r->value);
 	return (0);
@@ -187,19 +143,13 @@ int ubistry_enum(const char *path, char *names_buf, int len)
 	if (path == NULL || names_buf == NULL || len <= 0)
 		return (-1);
 
-	uint32_t seq = ++g_seq;
-
 	reply_mbox();
 	memset(&msg, 0, sizeof(msg));
 	snprintf(q->reply_mbox, sizeof(q->reply_mbox), "%s", g_reply);
 	snprintf(q->path, sizeof(q->path), "%s", path);
-	q->seq = seq;
 	msg.header = UB_MSG_ENUM;
-	if (mpi_postMessage(UBISTRY_MBOX, UB_MSG_ENUM, &msg) != 0)
-		return (-1); /* no registry daemon — don't spin waiting for a reply */
-
-	if (wait_reply(UB_MSG_CHILDREN, seq, &rep) != 0)
-		return (-1);
+	if (mpi_call(UBISTRY_MBOX, g_reply, &msg, UB_MSG_CHILDREN, &rep, UB_REPLY_TIMEOUT) != 0)
+		return (-1); /* no registry daemon / no correlated reply — fall back */
 	snprintf(names_buf, (size_t)len, "%s", r->names);
 	return (r->count);
 }

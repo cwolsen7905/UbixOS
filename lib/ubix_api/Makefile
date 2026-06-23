@@ -12,6 +12,7 @@ OBJDIR  = ${OBJ_DIR}/obj/ubix_api
 OBJS    = ubixcwd.o ttyctrl.o settty.o pty.o ubistry.o ulog.o views.o \
           pidstatus.o netcfg.o display.o ubfspool.o ubixdisk.o \
           mpi_creatembox.o mpi_postmessage.o mpi_fetchmessage.o mpi_waitmessage.o mpi_destroymbox.o \
+          mpi_rpc.o \
           sys_gettimeofday.o gettime.o sysinfo.o
 
 # Programs link -lubix_api → libubix_api.so (resolved from /lib at runtime via rpath),

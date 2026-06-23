@@ -49,8 +49,9 @@ int ubistry_init_mbox(const char *name)
 /**
  * Handle UB_MSG_GET: look up a value and reply UB_MSG_VALUE to reply_mbox.
  */
-static void handle_get(struct ub_query_req *q)
+static void handle_get(mpi_message_t *reqmsg)
 {
+	struct ub_query_req *q = (struct ub_query_req *)reqmsg->data;
 	mpi_message_t rmsg;
 	struct ub_value_rsp *r = (struct ub_value_rsp *)rmsg.data;
 	ub_type_t t = UB_STR;
@@ -69,22 +70,20 @@ static void handle_get(struct ub_query_req *q)
 		r->type = (uint8_t)UB_STR;
 		r->value[0] = '\0';
 	}
-	/* Echo the request sequence so the client can correlate this reply to its request:
-	 * every GET reply shares header UB_MSG_VALUE, so under SMP a reply for one query
-	 * can land in the reply mailbox while the client waits on another (the taskbar's
-	 * accent read picking up a volume reply = 100 → blue bar).  The client matches on
-	 * this seq and discards any mismatched (stale/crossed) reply. */
-	r->seq = q->seq;
-	rmsg.header = UB_MSG_VALUE;
+	/* mpi_reply tags the answer with reqmsg->msg_id (envelope in_reply_to) so the
+	 * client's mpi_call matches it to its request — every GET reply shares header
+	 * UB_MSG_VALUE, so without correlation a reply for one query could be consumed by
+	 * another query's wait (the taskbar's accent read picking up a volume reply). */
 	if (q->reply_mbox[0] != '\0')
-		mpi_postMessage(q->reply_mbox, UB_MSG_VALUE, &rmsg);
+		mpi_reply(q->reply_mbox, reqmsg, UB_MSG_VALUE, &rmsg);
 }
 
 /**
  * Handle UB_MSG_ENUM: list children and reply UB_MSG_CHILDREN to reply_mbox.
  */
-static void handle_enum(struct ub_query_req *q)
+static void handle_enum(mpi_message_t *reqmsg)
 {
+	struct ub_query_req *q = (struct ub_query_req *)reqmsg->data;
 	mpi_message_t rmsg;
 	struct ub_children_rsp *r = (struct ub_children_rsp *)rmsg.data;
 	int trunc = 0;
@@ -92,10 +91,9 @@ static void handle_enum(struct ub_query_req *q)
 	memset(&rmsg, 0, sizeof(rmsg));
 	r->count = ub_enum(q->path, r->names, (int)sizeof(r->names), &trunc);
 	r->truncated = (uint8_t)trunc;
-	r->seq = q->seq; /* correlate reply to request (see handle_get) */
 	rmsg.header = UB_MSG_CHILDREN;
 	if (q->reply_mbox[0] != '\0')
-		mpi_postMessage(q->reply_mbox, UB_MSG_CHILDREN, &rmsg);
+		mpi_reply(q->reply_mbox, reqmsg, UB_MSG_CHILDREN, &rmsg);
 }
 
 /** Dispatch a single registry request. */
@@ -104,10 +102,10 @@ static void handle_one(mpi_message_t *msg)
 	switch (msg->header)
 	{
 		case UB_MSG_GET:
-			handle_get((struct ub_query_req *)msg->data);
+			handle_get(msg);
 			break;
 		case UB_MSG_ENUM:
-			handle_enum((struct ub_query_req *)msg->data);
+			handle_enum(msg);
 			break;
 		case UB_MSG_SET:
 		{
