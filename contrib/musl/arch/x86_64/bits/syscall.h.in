@@ -482,6 +482,20 @@
 #undef  __NR_lseek
 #define __NR_lseek		478
 
+/* rlimit: FreeBSD getrlimit=194 / setrlimit=195; prlimit64 is Linux-only and its Linux
+ * number (340) IS the FreeBSD sigprocmask slot.  Left as-is, musl's getrlimit()/
+ * setrlimit() (which try prlimit64 first) invoked the kernel's sigprocmask with garbage
+ * args.  Map get/setrlimit to FreeBSD's numbers and point prlimit64 out-of-range so the
+ * kernel returns ENOSYS and musl falls back to the real getrlimit(194)/setrlimit(195). */
+#undef  __NR_getrlimit
+#define __NR_getrlimit		194
+#undef  __NR_setrlimit
+#define __NR_setrlimit		195
+#undef  __NR_ugetrlimit
+#define __NR_ugetrlimit		194
+#undef  __NR_prlimit64
+#define __NR_prlimit64		1024
+
 /* wait4: Linux=114, UbixOS=7 */
 #undef  __NR_wait4
 #define __NR_wait4		7
