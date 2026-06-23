@@ -1721,13 +1721,14 @@ static unsigned vgetopt32(char **argv, const char *applet_opts, va_list ap)
 		n++;
 	}
 
-	/* Compact argv: shift remaining args so applets see them starting at argv[1]. */
-	if (n > 1) {
-		int dst = 1;
-		while (argv[n])
-			argv[dst++] = argv[n++];
-		argv[dst] = NULL;
-	}
+	/* Match the real getopt32 contract: leave argv intact and set `optind` to
+	 * the first non-option index, so applets can use BOTH `argv += optind` and
+	 * argv[argc - 1].  The previous version compacted argv to argv[1..] without
+	 * setting optind; that broke applets (e.g. ln) which read argv[argc - 1]
+	 * with the original argc — the removed options left a NULL hole there.
+	 * (`argv += optind` still lands on the first non-option, as before, since
+	 * the option scan stops at the first non-'-' arg, so options are leading.) */
+	optind = n;
 
 	option_mask32 = mask;
 	return mask;
