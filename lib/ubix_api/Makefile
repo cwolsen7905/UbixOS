@@ -5,18 +5,22 @@ include ../Makefile.incl
 
 OBJDIR  = ${OBJ_DIR}/obj/ubix_api
 
-# Objects for the dynamic .so (original ABI — picked up by old-libc programs)
-OBJS_SO = ubixcwd.o ttyctrl.o
-
-# Objects for the static ubix_api.a used by musl-linked programs.
-# pidStatus and MPI stubs duplicate symbols in the old libc; they must NOT
-# land in the source tree where LIBRARIES globs would pick them up.
-OBJS_A  = ubixcwd.o ttyctrl.o settty.o pty.o ubistry.o ulog.o views.o \
+# The full object set.  Every symbol here is ubix-specific (ubistry_*, mpi_*, ubix_*,
+# pidStatus, pty_*, tty_*, ubix_getcwd, …) with NO musl libc collision, so the whole
+# set ships in the shared object.  mount()/unmount() — which DID collide with musl's
+# mount() — moved to bin/automountd (its only caller) as fsmount.c.
+OBJS    = ubixcwd.o ttyctrl.o settty.o pty.o ubistry.o ulog.o views.o \
           pidstatus.o netcfg.o display.o ubfspool.o ubixdisk.o \
           mpi_creatembox.o mpi_postmessage.o mpi_fetchmessage.o mpi_waitmessage.o mpi_destroymbox.o \
-          sys_gettimeofday.o gettime.o mount.o sysinfo.o
+          sys_gettimeofday.o gettime.o sysinfo.o
 
-OUTPUT  = ubix_api.so
+# Programs link -lubix_api → libubix_api.so (resolved from /lib at runtime via rpath),
+# so a fix to any of these objects is picked up by rebuilding the .so alone, with no
+# app relink.  The static .a is still built for the rare consumer that bakes it in.
+OBJS_SO = ${OBJS}
+OBJS_A  = ${OBJS}
+
+OUTPUT  = libubix_api.so
 
 .PATH.o: ${OBJDIR}
 
@@ -47,9 +51,12 @@ OUTPUT  = ubix_api.so
 all: lib.so lib.a
 
 lib.so: $(OBJS_SO)
-	$(CC) ${CROSS_M32} -nostdlib -shared -Wl,-soname,ubix_api.so -Wl,-m,${MUSL_LDEMULATION} \
-		-o ${OBJ_DIR}/lib/$(OUTPUT) \
-		${OBJS_SO:S|^|${OBJDIR}/|}
+	@mkdir -p ${OBJ_DIR}/lib
+	$(LD) -m ${MUSL_LDEMULATION} -shared -soname libubix_api.so \
+		${OBJS_SO:S|^|${OBJDIR}/|} \
+		-L${OBJ_DIR}/lib -lc \
+		-o ${OBJ_DIR}/lib/$(OUTPUT)
+
 
 lib.a: $(OBJS_A)
 	$(AR) rcs ${OBJ_DIR}/lib/ubix_api.a \
