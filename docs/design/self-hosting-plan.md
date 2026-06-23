@@ -67,7 +67,7 @@ binutils (`llvm-ar`, `llvm-ranlib`, `llvm-objcopy`, `llvm-nm`). Reasons:
 | **Linker (userland + kernel)** | **lld** | ⬜ built with Clang; honors the kernel **linker script** → no binutils. |
 | **ar / ranlib / objcopy / nm** | `llvm-ar` etc. | ⬜ built alongside Clang/lld from the LLVM tree. |
 | **make** | **bmake** | ⬜ **only a toy in-tree.** `bin/make` is a 558-line "minimal POSIX-subset make" — it cannot parse the tree's BSD Makefiles (`.if`/`.for`/`!=`/`.CURDIR`/`.include`). **Real bmake must be ported** (user-requested; see the bmake section). |
-| **shell** | `/bin/sh` | 🟡 `bin/shell` + tcsh exist; bmake shells recipes out to a **POSIX `sh -c`**, and tcsh is not `sh`. Need a verified `/bin/sh`. |
+| **shell** | `/bin/sh` | ✅ **oksh ported** (`tools/ports/sh/`, public-domain), runs in-OS, builtins + external exec work. bmake *recipe* exec via `sh -c` is blocked on the signal-after-COW-fork kernel bug (Phase 2). |
 | **coreutils** | bin/* | 🟡 `cp`/`cat`/`ls`/`mkdir`/… exist; a `bmake world` also leans on `rm`, `mv`, `test`/`[`, `sed`, `install`, `mkdir -p`, `cmp` — gap-fill as the build surfaces them. |
 | **C/C++ runtime libs** | musl + libcxx/libcxxabi + compiler-rt | 🟡 musl + libcxx are vendored and cross-built today; on-device we either rebuild them with Clang or ship prebuilt and relink. **compiler-rt** (Clang's builtins/`libgcc` equivalent) must be cross-built for the target. |
 | **headers / libs / src** | image | ✅ `/usr/include`, `/usr/src` (full tree), `/lib` are staged per the CLAUDE.md layout. |
@@ -88,8 +88,8 @@ the substrate Clang/lld and the build tools run on. Corrections from v1 flagged.
 | Anonymous mmap | ✅ | via **`mmap2` slot 477**. ⚠️ v1 cited 197 — that "old mmap" entry is `SYSCALL_INVALID`. LLVM's allocators, musl malloc, and lld's mmap of inputs all need this. |
 | munmap / mprotect | ✅ | `munmap` (73), `mprotect` (74) `VALID`. mprotect matters for any JIT (disable LLVM JIT/ORC to avoid exec-page churn). |
 | File-backed mmap + shared page cache | ✅ | demand-paged; shared file-page cache (aarch64 memory work). lld + Clang mmap object files and headers. |
-| fork / execve | ✅ | `fork` (2), `execve` (59); COW fork both arches. The Clang **driver** forks `cc1`/lld per step. |
-| wait4 / SIGCHLD / zombies | ✅ | `wait4` (7) `VALID`; signal Phases 1–5 complete. |
+| fork / execve / **vfork** | ✅ | `fork` (2), `execve` (59); COW fork both arches. **vfork** fixed 2026-06-22 (musl was emitting the Linux clone syscall; now aliased to fork). The Clang **driver** + bmake fork per step. |
+| wait4 / SIGCHLD / zombies | 🟡 | `wait4` (7) `VALID`; signal Phases 1–5 complete — **but** delivering a signal to a userland *handler* after a COW fork SIGSEGVs on aarch64 (found via bmake's SIGCHLD handler; handed to `[ls/smp]`). Blocks any forking program that handles SIGCHLD. |
 | rename / getdirentries / getcwd | ✅ | (128 / 196 / 326). |
 | symlink | ✅ syscall | (57) wired — but the **ubixfs pool root has no symlinks**; LLVM/CMake install steps that symlink may fail on the pool FS. |
 | chmod / getrlimit / setrlimit / sigaction | ✅ | (15 / 194 / 195 / 416). rlimits size the compiler's stacks. |
@@ -142,9 +142,31 @@ Vendor NetBSD portable `bmake` (public-domain/BSD, ships a `boot-strap`) into
 Clang lands, point it at `/bin/sh`. Milestone: `bmake` runs a real tree Makefile
 (`bin/hello/Makefile`) on-device. (See the bmake section for dependencies.)
 
-### Phase 2 — POSIX `/bin/sh` + coreutils
-bmake runs recipes via `sh -c`. Verify `bin/shell` is sh-enough or vendor a small
-POSIX sh (dash/oksh subset). Gap-fill `rm`/`mv`/`test`/`sed`/`install`/`cmp`.
+### Phase 2 — POSIX `/bin/sh` + coreutils — 🟡 sh DONE; recipe exec blocked on one kernel bug
+**`/bin/sh` DONE (2026-06-22):** ported **oksh** (portable OpenBSD ksh,
+public-domain) as `tools/ports/sh/` via `mk/ports.mk` — cross-builds both arches,
+runs in UbixOS, builtins **and external programs** work. (`bin/shell`/tcsh are not
+POSIX `sh`; oksh is OpenBSD's `/bin/sh`.) Two kernel/fs bugs surfaced + fixed
+porting it:
+- **vfork ABI fix (committed):** musl's `vfork.s` (both arches) hardcoded the
+  *Linux* clone syscall number (aarch64 `220`, x86_64 `58`), colliding with the
+  FreeBSD ABI's `__semctl`/`readlink`. Aliased `vfork`→`fork` (COW makes it cheap).
+- **exec-bit stat fix (committed):** the UbixFS pool stores world binaries as
+  `0644`; shells that pre-check `access()`+`stat X_OK` (oksh) refused to exec them.
+  `sys/fs/vfs/stat.c` now reports regular files executable (stopgap until the image
+  tools store real `0755` / the security model lands).
+
+**🔴 Blocker — bmake recipe execution:** `bmake -r -V` parses + evaluates, but
+running a recipe/`!=` via `/bin/sh` hits a **signal-delivery-after-COW-fork
+SIGSEGV**: bmake's `/bin/sh` child runs + exits cleanly, then the kernel
+instruction-aborts delivering `SIGCHLD` to bmake's handler. Handed to the SMP
+agent (`[ls/smp]` — it's their signal/sched/COW area) with a full repro; resume
+recipe verification once fixed. (oksh's own fork+exec+wait works — it reaps via
+SIG_DFL — so it's specific to delivering to a userland *handler* after COW fork.)
+
+**Still TODO:** coreutils gap-fill — `rm`/`mv`/`test`/`[`/`sed`/`install`/`cmp`/
+`printf` (recipes that call external tools need these once the SIGCHLD bug clears).
+Also the file-backed-mmap SIGABRT from Phase 1 (re-enables bmake's `HAVE_MMAP`).
 
 ### Phase 3 — Stage 0: cross-build Clang + lld for uBixOS
 **LLVM is acquired as a *port*, not vendored** — a pinned tarball + checksum +
@@ -251,8 +273,8 @@ compiler that also gives C++, optimization, aarch64, and (via lld) the kernel.
    LLVM backend, reuses device model). Recommendation: aarch64.
 2. **Runtime libs on-device:** rebuild musl + libcxx + compiler-rt with Clang, or
    ship prebuilt and only relink? (Rebuilding is the complete answer.)
-3. **`/bin/sh`:** is `bin/shell` POSIX-`sh` enough for bmake, or vendor a small sh?
-   Decide before Phase 1.
+3. **`/bin/sh`:** ✅ **RESOLVED (2026-06-22)** — ported **oksh** (`tools/ports/sh/`);
+   `bin/shell`/tcsh are not POSIX `sh`. Runs in-OS.
 4. **Build-time mitigation:** how much can be cross-built once (Stage 0) vs must be
    native? Stage sub-projects; consider distcc-style offload later.
 5. **LLVM version + size trimming:** which LLVM release; X86+AArch64 only; JIT off;
@@ -264,3 +286,9 @@ compiler that also gives C++, optimization, aarch64, and (via lld) the kernel.
 One toolchain covers world *and* kernel (lld drives the kernel ldscript), targets
 **aarch64 + x86_64** (i386 frozen). Supersedes the TCC-userland v2 and the
 i386-only v1.*
+
+*v3.1 — 2026-06-22. Phase 1 (**bmake**) + most of Phase 2 (**`/bin/sh`** = oksh
+port) built and running in-OS; **vfork** + **exec-bit** kernel/fs fixes committed.
+Phase 2 now gated on one delegated kernel bug (signal-delivery-after-COW-fork,
+with `[ls/smp]`) before bmake runs recipes; coreutils gap-fill is the remaining
+Phase 2 work.*
