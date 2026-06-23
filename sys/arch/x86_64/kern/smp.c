@@ -23,6 +23,7 @@
 #include <ubixos/sched.h>          /* schedNewTask, set_current, sched, QOS_IDLE — AP scheduler entry */
 #include <ubixos/sched_internal.h> /* ready_mask — idle-loop missed-wakeup guard */
 #include <lib/kmalloc.h>
+#include <lib/kconsole.h> /* kconsole_enable_mp — engage console locking once SMP is live */
 #include <string.h>
 
 #define MSR_APIC_BASE 0x1B     /* IA32_APIC_BASE: bit11 = global enable, bit10 = x2APIC */
@@ -212,6 +213,10 @@ int x86_64_smp_init(void)
 		kprintf("smp: x2APIC not supported; APs not started (BSP only)\n");
 		return 0;
 	}
+
+	/* SMP is about to come up and the MMU is long since on — safe to engage console
+	 * locking so the APs' kprintf()s don't interleave with the BSP's. */
+	kconsole_enable_mp();
 
 	/* Capture the kernel PML4 (current CR3 at early boot) — the APs run on it. */
 	__asm__ __volatile__("mov %%cr3, %0" : "=r"(g_kernel_cr3));

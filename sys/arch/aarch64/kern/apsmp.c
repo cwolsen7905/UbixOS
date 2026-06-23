@@ -15,6 +15,7 @@
 #include <ubixos/sched.h>          /* kTask_t, sched_yield, set_current, QOS_IDLE */
 #include <ubixos/sched_internal.h> /* schedNewTask, sched_set_priority */
 #include <lib/kprintf.h>
+#include <lib/kconsole.h> /* kconsole_enable_mp — engage console locking once SMP is live */
 #include <string.h>
 #include "../bringup.h" /* aarch64_mmu_enable_secondary, aarch64_vbar_init, c_ap_boot_arm, aarch64_kernel_l1 */
 
@@ -43,7 +44,7 @@
  * AP marks cpu_rq(cpuid)->online so sched_select_cpu() homes work to it.  (ubixfs is
  * still not SMP-safe — intermittent "not loadable" is a separate workstream.)
  */
-#define AARCH64_SMP_ENABLE_APS 0
+#define AARCH64_SMP_ENABLE_APS 1
 
 /*
  * smp-plan M3 AP-release gate.  The APs come up (M1/M2) before the scheduler and
@@ -171,6 +172,7 @@ void aarch64_smp_release_aps(void)
 		g_pcpu[id].idle = idle;             /* the AP adopts this as its _current */
 	}
 
+	kconsole_enable_mp(); /* SMP about to be live + MMU long up — safe to lock the console */
 	__asm__ __volatile__("dmb ish");
 	g_arm_ap_go = 1;
 	kprintf("smp: released %u application processor(s) into the scheduler\n", (n > 1) ? n - 1 : 0);

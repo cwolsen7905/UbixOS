@@ -216,6 +216,13 @@ static void sched_common(int preheld)
 		}
 	}
 
+	/* --- Periodic load balance (CONFIG_SCHED_PERCPU): migrate one queued task from a
+	 * busy core to an idle one so a few CPU-bound apps actually spread across cores.
+	 * BSP-only + rate-limited internally; a no-op under the global-queue flag.  Guarded
+	 * by a boot warm-up + a kernel-thread skip so it only moves steady-state CPU-bound
+	 * user work (the DOOMs), never the compositor mid-startup. --- */
+	sched_balance_locked();
+
 	/* --- Timed-sleep / timer expiry: fire any callouts whose deadline elapsed
 	 * (sched_wait_event_timeout arms one per timed sleep; lwIP protocol timers
 	 * ride these via tcpip_thread).  O(1) — only the expiry-sorted list head is

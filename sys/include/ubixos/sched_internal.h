@@ -51,7 +51,7 @@ extern struct spinLock schedulerSpinLock;
  *                 own rq_lock.  Built + validated behind this flag before it becomes
  *                 the SMP default.
  */
-#define CONFIG_SCHED_PERCPU 0
+#define CONFIG_SCHED_PERCPU 1
 
 /* Run-queue storage is an array sized for the worst case; index 0 is the only one
  * used when CONFIG_SCHED_PERCPU is 0.  Must be >= MAXCPU (asserted in sched_core.c). */
@@ -68,6 +68,7 @@ struct runqueue
 	u_int32_t ready_mask;              /* bit N set ↔ bucket[N] is non-empty */
 	u_int32_t nr_running;              /* v2: tasks currently on this queue (load metric) */
 	int online;                        /* v2: 1 once a CPU schedules from this queue (APs set it) */
+	int running_idle;                  /* v2: 1 if this CPU ran its idle thread last tick (balance hint) */
 	struct spinLock rq_lock;           /* v2: per-CPU run-queue lock (unused when flag 0) */
 };
 extern struct runqueue g_rq[SCHED_MAX_CPUS];
@@ -82,6 +83,29 @@ extern struct runqueue g_rq[SCHED_MAX_CPUS];
  * spills to the second core — real two-core parallelism under any multitasking, now
  * that secondaries are preemptive (CONFIG_SCHED_PERCPU).  See sched_select_cpu(). */
 #define SCHED_SPILL_THRESH 1
+
+/* Periodic load-balance interval (scheduler ticks).  Every ~this often the BSP pulls
+ * one queued task off a busy core onto an idle one — soft affinity (rq_cpu is a
+ * preference, not a lock) the way modern schedulers balance.  See sched_balance_locked(). */
+#define SCHED_BALANCE_INTERVAL 10
+
+/* Don't load-balance until the system is past boot: migrating a latency-critical
+ * system task (the compositor) mid-startup-handshake wedges the desktop.  By this
+ * many ticks the desktop is fully up and only steady-state CPU-bound work remains. */
+#define SCHED_BALANCE_WARMUP 2000
+
+/* Per-task migration cooldown (scheduler ticks): a task the balancer just moved to
+ * another core is pinned there for at least this long before it can be migrated again.
+ * This is the real anti-ping-pong damper — without it a CPU-bound task that keeps a
+ * donor core busy while the recipient repeatedly goes idle bounces back and forth on
+ * consecutive balance passes.  Chosen well above SCHED_BALANCE_INTERVAL so a moved
+ * task settles (warms its new cache) before it's a candidate again. */
+#define SCHED_MIGRATE_COOLDOWN 100
+
+/* Trace each balancer migration to the kernel console.  Useful during SMP bring-up
+ * to watch task placement; off by default — on a busy core the migrations are
+ * frequent enough to drown real log output. */
+#define SCHED_BALANCE_DEBUG 0
 
 /* This CPU's run queue / a specific CPU's run queue.  With CONFIG_SCHED_PERCPU 0 both
  * always return &g_rq[0] (the single global queue). */
@@ -100,5 +124,10 @@ void arch_smp_reschedule(void);
  * sched_core.c; x86_64/aarch64 override to IPI that one CPU. */
 void arch_smp_reschedule_cpu(unsigned cpu);
 void rq_dequeue_locked(kTask_t *t);
+
+/* Periodic load balancer (CONFIG_SCHED_PERCPU): migrate one queued task from a busy
+ * core to an idle one.  Caller holds schedulerSpinLock; a no-op except on the BSP at
+ * the balance interval.  Weak/no-op under flag 0. */
+void sched_balance_locked(void);
 
 #endif /* _UBIXOS_SCHED_INTERNAL_H */

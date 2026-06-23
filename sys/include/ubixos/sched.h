@@ -30,7 +30,8 @@
 #define _UBIXOS_SCHED_H
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 #include <sys/types.h>
@@ -45,204 +46,221 @@ extern "C" {
 #define NO_GROUP -1
 #define NR_GROUPS 32
 
-typedef enum {
-  PLACEHOLDER = -2, DEAD = -1, NEW = 0, READY = 1, RUNNING = 2, IDLE = 3, WAIT = 5, UNINTERRUPTIBLE = 6, INTERRUPTIBLE = 7,
-  STOPPED = 8,
-  ZOMBIE  = 9   /* exited, awaiting parent wait() collection */
-} tState;
+	typedef enum
+	{
+		PLACEHOLDER = -2,
+		DEAD = -1,
+		NEW = 0,
+		READY = 1,
+		RUNNING = 2,
+		IDLE = 3,
+		WAIT = 5,
+		UNINTERRUPTIBLE = 6,
+		INTERRUPTIBLE = 7,
+		STOPPED = 8,
+		ZOMBIE = 9 /* exited, awaiting parent wait() collection */
+	} tState;
 
-struct osInfo {
-    u_int8_t timer;
-    u_int8_t v86Task;
-    bool v86If;
-    u_int32_t vmStart;
-    u_int32_t stdinSize;
-    u_int32_t controlKeys;
-    char *stdin;
-    char cwd[1024]; /* current working dir */
-    u_int8_t gpf;
-};
+	struct osInfo
+	{
+		u_int8_t timer;
+		u_int8_t v86Task;
+		bool v86If;
+		u_int32_t vmStart;
+		u_int32_t stdinSize;
+		u_int32_t controlKeys;
+		char *stdin;
+		char cwd[1024]; /* current working dir */
+		u_int8_t gpf;
+	};
 
-typedef struct taskStruct {
-    pidType id;
-    char name[256];
-    char cmdline[1024];
-    struct taskStruct *prev;
-    struct taskStruct *next;
-    struct md_proc md;
-    struct osInfo oInfo;
-    //fileDescriptor *imageFd;
-    fileDescriptor_t *files[MAX_OFILES];
-    tState state;
-    u_int32_t uid, gid;
-    u_int16_t euid, suid;
-    u_int16_t egid, sgid;
-    u_int16_t usedMath;
-    tty_term *term;
-    struct thread td;
-    struct {
-        struct inode *pwd;
-        struct inode *root;
-        struct inode *exec;
-    } inodes;
-    u_int32_t counter;
-    u_int16_t groups[NR_GROUPS];
-    pidType ppid;
-    u_int32_t pgrp;
-    u_int32_t sid;        /* session ID — set by setsid(), inherited by fork */
-    tty_term *ct_tty;   /* controlling terminal — set by TIOCSCTTY, cleared by setsid() */
-    u_int32_t children; // Hack for WAIT
-    u_int32_t last_exit; // Hack For WAIT
-    struct taskStruct *parent;
-    char username[256];
-    u_int32_t *kernelStack;
-    struct taskStruct *hash_next; /* PID hash chain — Phase 1.5 */
-    u_int8_t   quantum;            /* ticks remaining in current time slice */
-    u_int8_t   priority;          /* current scheduling priority (0–31) */
-    u_int8_t   base_priority;     /* QoS floor — boosts never go below this */
-    u_int8_t   boost_quanta;      /* ticks remaining on temporary I/O priority boost */
-    u_int8_t   on_rq;             /* 1 if currently in a run queue */
-    u_int32_t  rq_cpu;            /* which CPU's run queue (g_rq index) it is on (v2) */
-    struct taskStruct *rq_next;  /* per-priority run queue forward link */
-    struct taskStruct *rq_prev;  /* per-priority run queue backward link */
-    int       t_stopped_sig;     /* signal that caused STOPPED state (0 if not stopped) */
-    void      *wait_chan;        /* sleep/wakeup channel: address slept on, NULL if not blocked */
-    struct callout sleep_callout; /* timed-sleep timeout (armed by sched_wait_event_timeout) */
-    u_int32_t  last_run_tick;     /* sysTicks when last dispatched (starvation aging) */
-    u_int64_t  run_ticks;         /* total scheduler ticks this task has been the running thread
-                                   * (charged one per timer interrupt by sched_account_tick).
-                                   * Units are raw timer ticks; userland forms ratios (HZ-free). */
-    vm_map_t  vm_map;            /* VMA red-black tree — O(log n) mmap/fault lookup */
-    pidType    tgid;             /* thread-group id (leader's pid); == id for a normal process.
-                                  * Threads created via rfork(RFMEM) share the leader's tgid and
-                                  * its address space (cr3); endTask tears the address space down
-                                  * only when the last task of a tgid exits. */
-    u_int8_t   reap_free_as;     /* 1 = this task's reap frees the (shared) page tables/dir.
-                                  * Set by endTask: 1 for a normal process or the last thread of a
-                                  * tgid, 0 for a non-last thread (whose siblings still use the AS). */
-    u_int32_t  tls_base;         /* per-thread userland TLS base (the %gs:0 self-pointer).
-                                  * Installed into the shared LDT[1] descriptor by set_thread_area
-                                  * and re-installed by cpu_switch on every resume: all threads in
-                                  * an address space share one LDT[1] slot, so each switch must
-                                  * restore the resuming thread's own base.  0 = no TLS (kernel
-                                  * threads, or a process before its first set_thread_area). */
-    int       *clear_tid;        /* CLONE_CHILD_CLEARTID: user address the kernel zeroes and
-                                  * futex-wakes when this thread exits (endTask).  musl uses it to
-                                  * release the thread-list lock held across pthread_exit.  NULL for
-                                  * a normal process or a thread created without the flag. */
-} kTask_t;
+	typedef struct taskStruct
+	{
+		pidType id;
+		char name[256];
+		char cmdline[1024];
+		struct taskStruct *prev;
+		struct taskStruct *next;
+		struct md_proc md;
+		struct osInfo oInfo;
+		// fileDescriptor *imageFd;
+		fileDescriptor_t *files[MAX_OFILES];
+		tState state;
+		u_int32_t uid, gid;
+		u_int16_t euid, suid;
+		u_int16_t egid, sgid;
+		u_int16_t usedMath;
+		tty_term *term;
+		struct thread td;
+		struct
+		{
+			struct inode *pwd;
+			struct inode *root;
+			struct inode *exec;
+		} inodes;
+		u_int32_t counter;
+		u_int16_t groups[NR_GROUPS];
+		pidType ppid;
+		u_int32_t pgrp;
+		u_int32_t sid;       /* session ID — set by setsid(), inherited by fork */
+		tty_term *ct_tty;    /* controlling terminal — set by TIOCSCTTY, cleared by setsid() */
+		u_int32_t children;  // Hack for WAIT
+		u_int32_t last_exit; // Hack For WAIT
+		struct taskStruct *parent;
+		char username[256];
+		u_int32_t *kernelStack;
+		struct taskStruct *hash_next; /* PID hash chain — Phase 1.5 */
+		u_int8_t quantum;             /* ticks remaining in current time slice */
+		u_int8_t priority;            /* current scheduling priority (0–31) */
+		u_int8_t base_priority;       /* QoS floor — boosts never go below this */
+		u_int8_t boost_quanta;        /* ticks remaining on temporary I/O priority boost */
+		u_int8_t on_rq;               /* 1 if currently in a run queue */
+		u_int32_t rq_cpu;             /* which CPU's run queue (g_rq index) it is on (v2) */
+		u_int32_t last_migrate_tick;  /* sysTicks of this task's last cross-core migration (v2 load
+		                               * balancer cooldown) — 0 = never migrated.  Damps ping-pong:
+		                               * a just-moved task can't be moved again for SCHED_MIGRATE_COOLDOWN
+		                               * ticks.  See sched_balance_locked(). */
+		struct taskStruct *rq_next;   /* per-priority run queue forward link */
+		struct taskStruct *rq_prev;   /* per-priority run queue backward link */
+		int t_stopped_sig;            /* signal that caused STOPPED state (0 if not stopped) */
+		void *wait_chan;              /* sleep/wakeup channel: address slept on, NULL if not blocked */
+		struct callout sleep_callout; /* timed-sleep timeout (armed by sched_wait_event_timeout) */
+		u_int32_t last_run_tick;      /* sysTicks when last dispatched (starvation aging) */
+		u_int64_t run_ticks;          /* total scheduler ticks this task has been the running thread
+		                               * (charged one per timer interrupt by sched_account_tick).
+		                               * Units are raw timer ticks; userland forms ratios (HZ-free). */
+		vm_map_t vm_map;              /* VMA red-black tree — O(log n) mmap/fault lookup */
+		pidType tgid;                 /* thread-group id (leader's pid); == id for a normal process.
+		                               * Threads created via rfork(RFMEM) share the leader's tgid and
+		                               * its address space (cr3); endTask tears the address space down
+		                               * only when the last task of a tgid exits. */
+		u_int8_t reap_free_as;        /* 1 = this task's reap frees the (shared) page tables/dir.
+		                               * Set by endTask: 1 for a normal process or the last thread of a
+		                               * tgid, 0 for a non-last thread (whose siblings still use the AS). */
+		u_int32_t tls_base;           /* per-thread userland TLS base (the %gs:0 self-pointer).
+		                               * Installed into the shared LDT[1] descriptor by set_thread_area
+		                               * and re-installed by cpu_switch on every resume: all threads in
+		                               * an address space share one LDT[1] slot, so each switch must
+		                               * restore the resuming thread's own base.  0 = no TLS (kernel
+		                               * threads, or a process before its first set_thread_area). */
+		int *clear_tid;               /* CLONE_CHILD_CLEARTID: user address the kernel zeroes and
+		                               * futex-wakes when this thread exits (endTask).  musl uses it to
+		                               * release the thread-list lock held across pthread_exit.  NULL for
+		                               * a normal process or a thread created without the flag. */
+	} kTask_t;
 
-/*
- * QoS classes — stored as base_priority.  The scheduler never drops a task
- * below its QoS floor.  Inspired by macOS DISPATCH_QOS_CLASS_*.
- */
-typedef enum {
-    QOS_IDLE             =  0,  /* per-system idle thread — runs only when nothing else is ready */
-    QOS_BACKGROUND       =  4,  /* maintenance work, automountd */
-    QOS_UTILITY          =  8,  /* compilation, long-running tools */
-    QOS_DEFAULT          = 12,  /* default — inherited from parent */
-    QOS_USER_INITIATED   = 18,  /* action the user explicitly started */
-    QOS_USER_INTERACTIVE = 22,  /* direct UI interaction */
-    QOS_KERNEL           = 24,  /* kernel threads and device drivers */
-    QOS_REALTIME         = 31,  /* hard-deadline (fixed, never decayed) */
-} qos_class_t;
+	/*
+	 * QoS classes — stored as base_priority.  The scheduler never drops a task
+	 * below its QoS floor.  Inspired by macOS DISPATCH_QOS_CLASS_*.
+	 */
+	typedef enum
+	{
+		QOS_IDLE = 0,              /* per-system idle thread — runs only when nothing else is ready */
+		QOS_BACKGROUND = 4,        /* maintenance work, automountd */
+		QOS_UTILITY = 8,           /* compilation, long-running tools */
+		QOS_DEFAULT = 12,          /* default — inherited from parent */
+		QOS_USER_INITIATED = 18,   /* action the user explicitly started */
+		QOS_USER_INTERACTIVE = 22, /* direct UI interaction */
+		QOS_KERNEL = 24,           /* kernel threads and device drivers */
+		QOS_REALTIME = 31,         /* hard-deadline (fixed, never decayed) */
+	} qos_class_t;
 
-int sched_init();
-int sched_setStatus(pidType, tState);
-void sched_killTree(pidType);
-int sched_deleteTask(pidType);
-int sched_addDelTask(kTask_t *);
-kTask_t *sched_getDelTask();
-int sched_tgid_others_alive(pidType tgid, pidType self); /* other live threads sharing the AS */
-void sched_yield();
-void sched();
-/* Sleep entry: switch away from a task that has just marked itself non-runnable,
- * with schedulerSpinLock held continuously across the switch (SMP sleep-race fix).
- * Caller holds schedulerSpinLock + IRQs disabled and has set _current non-runnable. */
-void sched_block(void);
-/* Release schedulerSpinLock from the context the scheduler resumed into (held
- * across switch_to for SMP safety).  Called by sched() after the switch and by
- * every first-run trampoline (kthread_trampoline/user_trampoline/ret_from_fork). */
-void sched_resume_unlock(void);
+	int sched_init();
+	int sched_setStatus(pidType, tState);
+	void sched_killTree(pidType);
+	int sched_deleteTask(pidType);
+	int sched_addDelTask(kTask_t *);
+	kTask_t *sched_getDelTask();
+	int sched_tgid_others_alive(pidType tgid, pidType self); /* other live threads sharing the AS */
+	void sched_yield();
+	void sched();
+	/* Sleep entry: switch away from a task that has just marked itself non-runnable,
+	 * with schedulerSpinLock held continuously across the switch (SMP sleep-race fix).
+	 * Caller holds schedulerSpinLock + IRQs disabled and has set _current non-runnable. */
+	void sched_block(void);
+	/* Release schedulerSpinLock from the context the scheduler resumed into (held
+	 * across switch_to for SMP safety).  Called by sched() after the switch and by
+	 * every first-run trampoline (kthread_trampoline/user_trampoline/ret_from_fork). */
+	void sched_resume_unlock(void);
 
-/*
- * Scheduler accounting (smp-plan Phase 3.5).  Called once per timer interrupt
- * from each arch's timer ISR (i386 timerInt, aarch64 timer_tick) — NOT from
- * sched(), which also runs on voluntary yields and would over-count.  Charges
- * one tick to the running thread's run_ticks and to the per-CPU busy/idle
- * counters (the idle thread, g_idle_task, counts as idle).  Uniprocessor today;
- * per-CPU split arrives with SMP Phase 4.
- */
-void sched_account_tick(void);
-u_int64_t sched_cpu_busy_ticks(void); /* all-CPU total: ticks running a non-idle thread */
-u_int64_t sched_cpu_idle_ticks(void); /* all-CPU total: ticks in the idle thread         */
-/* Per-core accounting (Activity Monitor per-core graphs). */
-u_int64_t sched_cpu_busy_ticks_n(unsigned cpu);
-u_int64_t sched_cpu_idle_ticks_n(unsigned cpu);
-unsigned sched_cpu_acct_count(void); /* CPUs to report in /proc/stat (>= 1) */
+	/*
+	 * Scheduler accounting (smp-plan Phase 3.5).  Called once per timer interrupt
+	 * from each arch's timer ISR (i386 timerInt, aarch64 timer_tick) — NOT from
+	 * sched(), which also runs on voluntary yields and would over-count.  Charges
+	 * one tick to the running thread's run_ticks and to the per-CPU busy/idle
+	 * counters (the idle thread, g_idle_task, counts as idle).  Uniprocessor today;
+	 * per-CPU split arrives with SMP Phase 4.
+	 */
+	void sched_account_tick(void);
+	u_int64_t sched_cpu_busy_ticks(void); /* all-CPU total: ticks running a non-idle thread */
+	u_int64_t sched_cpu_idle_ticks(void); /* all-CPU total: ticks in the idle thread         */
+	/* Per-core accounting (Activity Monitor per-core graphs). */
+	u_int64_t sched_cpu_busy_ticks_n(unsigned cpu);
+	u_int64_t sched_cpu_idle_ticks_n(unsigned cpu);
+	unsigned sched_cpu_acct_count(void); /* CPUs to report in /proc/stat (>= 1) */
 
-/*
- * Machine-dependent resident-set count: number of physical pages currently
- * mapped into @t's user address space (for /proc/<pid>/statm).  Walks the task's
- * page tables.  aarch64 implements a real walk (all RAM is identity-mapped, so a
- * task's page tables are directly reachable); i386 returns 0 for now (procfs
- * falls back to the VMA-tree sum).  Returns 0 for kernel threads / unsupported.
- */
-u_int32_t md_resident_pages(kTask_t *t);
-extern kTask_t *g_idle_task;          /* the per-system idle thread (set in main.c) */
+	/*
+	 * Machine-dependent resident-set count: number of physical pages currently
+	 * mapped into @t's user address space (for /proc/<pid>/statm).  Walks the task's
+	 * page tables.  aarch64 implements a real walk (all RAM is identity-mapped, so a
+	 * task's page tables are directly reachable); i386 returns 0 for now (procfs
+	 * falls back to the VMA-tree sum).  Returns 0 for kernel threads / unsupported.
+	 */
+	u_int32_t md_resident_pages(kTask_t *t);
+	extern kTask_t *g_idle_task; /* the per-system idle thread (set in main.c) */
 
-/* Scheduler state-transition API — always use these instead of direct
- * task->state assignments.  Phase 2 will add run-queue management here. */
-void sched_ready(kTask_t *t);           /* READY  — task is runnable        */
-void sched_dead(kTask_t *t);            /* DEAD   — task has exited          */
-void sched_sleep(kTask_t *t, tState s); /* WAIT / UNINTERRUPTIBLE — blocked  */
-void sched_wakeup(kTask_t *t);          /* RUNNING — unblocked, back to work */
-void sched_stop(kTask_t *t, int sig);   /* STOPPED — suspended by signal     */
-void sched_zombie(kTask_t *t);          /* ZOMBIE  — exited, awaiting wait() */
-void sched_io_wakeup(kTask_t *t);       /* I/O done: boost +4, re-enqueue    */
-void sched_pi_boost(kTask_t *t, u_int8_t pri);  /* PI: raise t to pri if higher      */
+	/* Scheduler state-transition API — always use these instead of direct
+	 * task->state assignments.  Phase 2 will add run-queue management here. */
+	void sched_ready(kTask_t *t);                  /* READY  — task is runnable        */
+	void sched_dead(kTask_t *t);                   /* DEAD   — task has exited          */
+	void sched_sleep(kTask_t *t, tState s);        /* WAIT / UNINTERRUPTIBLE — blocked  */
+	void sched_wakeup(kTask_t *t);                 /* RUNNING — unblocked, back to work */
+	void sched_stop(kTask_t *t, int sig);          /* STOPPED — suspended by signal     */
+	void sched_zombie(kTask_t *t);                 /* ZOMBIE  — exited, awaiting wait() */
+	void sched_io_wakeup(kTask_t *t);              /* I/O done: boost +4, re-enqueue    */
+	void sched_pi_boost(kTask_t *t, u_int8_t pri); /* PI: raise t to pri if higher      */
 
-/*
- * Wait-channel sleep/wakeup (replaces sched_yield() busy-wait loops).
- *
- * sched_wait_event(chan, cond, arg): block _current on the address `chan` until
- * cond(arg) returns nonzero, truly leaving the run queue (CPU goes idle instead
- * of spinning).  cond is re-checked with interrupts disabled before each sleep,
- * so it is race-free against a waker that sets the condition then calls
- * sched_wakeup_chan(chan) — including a waker in interrupt context.
- *
- * sched_wakeup_chan(chan): make every task sleeping on `chan` runnable again
- * (I/O-boosted).  Safe to call from an ISR: it never yields (schedulerSpinLock
- * is only ever held with interrupts disabled, so it is free when an IRQ fires).
- */
-void sched_wait_event(void *chan, int (*cond)(void *arg), void *arg);
-void sched_wakeup_chan(void *chan);
+	/*
+	 * Wait-channel sleep/wakeup (replaces sched_yield() busy-wait loops).
+	 *
+	 * sched_wait_event(chan, cond, arg): block _current on the address `chan` until
+	 * cond(arg) returns nonzero, truly leaving the run queue (CPU goes idle instead
+	 * of spinning).  cond is re-checked with interrupts disabled before each sleep,
+	 * so it is race-free against a waker that sets the condition then calls
+	 * sched_wakeup_chan(chan) — including a waker in interrupt context.
+	 *
+	 * sched_wakeup_chan(chan): make every task sleeping on `chan` runnable again
+	 * (I/O-boosted).  Safe to call from an ISR: it never yields (schedulerSpinLock
+	 * is only ever held with interrupts disabled, so it is free when an IRQ fires).
+	 */
+	void sched_wait_event(void *chan, int (*cond)(void *arg), void *arg);
+	void sched_wakeup_chan(void *chan);
 
-/*
- * Like sched_wait_event() but also returns after `ticks` scheduler ticks even
- * if cond never holds (the timer's per-tick scan wakes timed sleepers).  Needed
- * for lwIP's tcpip_thread, which waits with a deadline to drive protocol timers.
- * @return 0 if cond was satisfied, 1 if the timeout expired first.
- */
-int sched_wait_event_timeout(void *chan, int (*cond)(void *arg), void *arg, u_int32_t ticks);
+	/*
+	 * Like sched_wait_event() but also returns after `ticks` scheduler ticks even
+	 * if cond never holds (the timer's per-tick scan wakes timed sleepers).  Needed
+	 * for lwIP's tcpip_thread, which waits with a deadline to drive protocol timers.
+	 * @return 0 if cond was satisfied, 1 if the timeout expired first.
+	 */
+	int sched_wait_event_timeout(void *chan, int (*cond)(void *arg), void *arg, u_int32_t ticks);
 
-/* Permanently set a task's QoS floor + current priority (re-homing it in the
- * run queue if enqueued).  Used to drop the idle thread to QOS_IDLE. */
-void sched_set_priority(kTask_t *t, u_int8_t pri);
-void sched_pi_restore(kTask_t *t);             /* PI: drop t back to base_priority  */
+	/* Permanently set a task's QoS floor + current priority (re-homing it in the
+	 * run queue if enqueued).  Used to drop the idle thread to QOS_IDLE. */
+	void sched_set_priority(kTask_t *t, u_int8_t pri);
+	void sched_pi_restore(kTask_t *t); /* PI: drop t back to base_priority  */
 
-void schedEndTask(pidType pid);
-kTask_t *schedNewTask();
-kTask_t *schedFindTask(u_int32_t id);
+	void schedEndTask(pidType pid);
+	kTask_t *schedNewTask();
+	kTask_t *schedFindTask(u_int32_t id);
 
-/* MI fork helpers (sys/kern/kern_fork.c) shared by the per-arch fork paths.
- * fork_copy_fdtable: deep-copy the parent's open-file table into the child.
- * proc_fork_inherit_context: inherit cwd/pgrp/sid/ct_tty/term/creds/QoS.
- * proc_fork_signal_init: clear pending signals, inherit dispositions + mask
- * (call AFTER the arch address-space copy — see the function comment). */
-void fork_copy_fdtable(kTask_t *child, struct thread *ptd);
-void proc_fork_inherit_context(kTask_t *child);
-void proc_fork_signal_init(kTask_t *child, struct thread *ptd);
+	/* MI fork helpers (sys/kern/kern_fork.c) shared by the per-arch fork paths.
+	 * fork_copy_fdtable: deep-copy the parent's open-file table into the child.
+	 * proc_fork_inherit_context: inherit cwd/pgrp/sid/ct_tty/term/creds/QoS.
+	 * proc_fork_signal_init: clear pending signals, inherit dispositions + mask
+	 * (call AFTER the arch address-space copy — see the function comment). */
+	void fork_copy_fdtable(kTask_t *child, struct thread *ptd);
+	void proc_fork_inherit_context(kTask_t *child);
+	void proc_fork_signal_init(kTask_t *child, struct thread *ptd);
 
 /*
  * _current — the thread running on the calling CPU.
@@ -261,17 +279,17 @@ void proc_fork_signal_init(kTask_t *child, struct thread *ptd);
  * current starts NULL.
  */
 #ifdef __i386__
-static inline kTask_t *get_current(void)
-{
-	kTask_t *p;
-	__asm__ __volatile__("movl %%gs:8, %0" : "=r"(p));
-	return p;
-}
+	static inline kTask_t *get_current(void)
+	{
+		kTask_t *p;
+		__asm__ __volatile__("movl %%gs:8, %0" : "=r"(p));
+		return p;
+	}
 
-static inline void set_current(kTask_t *t)
-{
-	__asm__ __volatile__("movl %0, %%gs:8" : : "r"(t) : "memory");
-}
+	static inline void set_current(kTask_t *t)
+	{
+		__asm__ __volatile__("movl %0, %%gs:8" : : "r"(t) : "memory");
+	}
 
 #define _current (get_current())
 #elif defined(__aarch64__)
@@ -324,11 +342,10 @@ extern kTask_t *_current;
 #define set_current(t) (_current = (t))
 #endif
 
-extern kTask_t *_usedMath;
+	extern kTask_t *_usedMath;
 
 #ifdef __cplusplus
 }
 #endif
-
 
 #endif

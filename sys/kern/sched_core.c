@@ -185,9 +185,17 @@ void sched_account_tick(void)
 		 * than ~100% whenever the machine is idle. */
 		cur->run_ticks++;
 		g_cpu_busy_ticks[cpu]++;
+#if CONFIG_SCHED_PERCPU
+		g_rq[cpu].running_idle = 0;
+#endif
 	}
 	else
+	{
 		g_cpu_idle_ticks[cpu]++;
+#if CONFIG_SCHED_PERCPU
+		g_rq[cpu].running_idle = 1;
+#endif
+	}
 }
 
 /** @return busy ticks for CPU @cpu (0 if out of range). */
@@ -470,6 +478,123 @@ void rq_dequeue_locked(kTask_t *t)
 	if (rq->nr_running > 0)
 		rq->nr_running--;
 }
+
+#if CONFIG_SCHED_PERCPU
+/**
+ * Periodic load balancer: migrate one queued (READY, not running) task from a busy
+ * core to an idle one.
+ *
+ * rq_cpu is a soft home (cache affinity), not a hard lock — like a modern scheduler,
+ * the balancer overrides it under imbalance.  This is what makes a few CPU-bound
+ * tasks that all started on one core actually spread to the others: placement at
+ * creation only sees the ready-queue depth, so two CPU-bound apps launched while a
+ * core looked idle both pin to it and time-share one core while another sits idle.
+ *
+ * Runs on the BSP only, at SCHED_BALANCE_INTERVAL, with schedulerSpinLock held (called
+ * from the dispatcher's maintenance pass).  Moves exactly one task per pass to avoid
+ * thrashing.  Migrating a queued task is safe: it is not running, so no other CPU can
+ * be mid-switch on it.  running_idle / nr_running are read as best-effort hints.
+ */
+void sched_balance_locked(void)
+{
+	static u_int32_t last_balance = 0;
+	u_int32_t now = systemVitals ? systemVitals->sysTicks : 0;
+	unsigned recip = ~0u; /* an online, idle core to receive work */
+	unsigned donor = ~0u; /* the busiest core with a queued task to give */
+	u_int32_t donor_load = 0;
+	unsigned c;
+	struct runqueue *drq;
+	kTask_t *t = NULL;
+	u_int32_t mask;
+
+	if (acct_cpu() != 0) /* BSP only — one balancer, no two cores migrating at once */
+		return;
+	if (now < SCHED_BALANCE_WARMUP) /* let the desktop finish its startup handshake */
+		return;
+	if (now - last_balance < SCHED_BALANCE_INTERVAL)
+		return;
+	last_balance = now;
+
+	/* Recipient: the first online core that ran idle last tick with an empty queue. */
+	for (c = 0; c < MAXCPU; c++)
+	{
+		if (c != 0 && !g_rq[c].online)
+			continue;
+		if (g_rq[c].running_idle && g_rq[c].nr_running == 0)
+		{
+			recip = c;
+			break;
+		}
+	}
+	if (recip == ~0u)
+		return; /* no idle core to offload onto */
+
+	/* Donor: the online core (not the recipient) with the most queued tasks. */
+	for (c = 0; c < MAXCPU; c++)
+	{
+		if (c == recip)
+			continue;
+		if (c != 0 && !g_rq[c].online)
+			continue;
+		if (g_rq[c].nr_running > donor_load)
+		{
+			donor_load = g_rq[c].nr_running;
+			donor = c;
+		}
+	}
+	if (donor == ~0u || donor_load < 1)
+		return; /* nothing waiting anywhere — no imbalance to fix */
+
+	/* Pick a victim from the donor, scanning its migratable ready bands from least to
+	 * most urgent.  Two filters:
+	 *   - Never migrate kernel/realtime threads (band >= 24): they may carry per-CPU
+	 *     assumptions, and moving a system daemon is rarely the win.  (A task's priority
+	 *     equals its bucket index, so masking off bands >= 24 enforces this.)
+	 *   - Skip any task still in its post-migration cooldown — this is what stops a
+	 *     CPU-bound task from bouncing back and forth on consecutive passes when the
+	 *     recipient keeps going idle (donor load regrows from bursty work).
+	 * Within a band the circular bucket list is walked head→tail; the first eligible
+	 * task wins.  If every queued task is high-priority or cooling down, skip this pass. */
+	drq = &g_rq[donor];
+	mask = drq->ready_mask & ((1u << 24) - 1); /* migratable bands only (priority < 24) */
+	while (mask != 0)
+	{
+		int b = __builtin_ctz(mask);
+		kTask_t *head = drq->bucket[b];
+		kTask_t *it = head;
+
+		if (it != NULL)
+		{
+			do
+			{
+				if ((u_int32_t)(now - it->last_migrate_tick) >= SCHED_MIGRATE_COOLDOWN)
+				{
+					t = it;
+					break;
+				}
+				it = it->rq_next;
+			} while (it != head);
+		}
+		if (t != NULL)
+			break;
+		mask &= ~(1u << b);
+	}
+	if (t == NULL)
+		return; /* nothing eligible — every queued task is high-priority or in cooldown */
+
+	rq_dequeue_locked(t);       /* off the donor queue */
+	t->rq_cpu = recip;          /* re-home (soft affinity follows the task) */
+	t->last_migrate_tick = now; /* start the cooldown so it can't bounce straight back */
+	rq_enqueue_locked(t);       /* onto the recipient; also IPIs it (rq_cpu != BSP) */
+#if SCHED_BALANCE_DEBUG
+	kprintf("[bal] pid %i cpu%u->cpu%u (donor_load=%u)\n", t->id, donor, recip, donor_load);
+#endif
+}
+#else
+void sched_balance_locked(void)
+{
+}
+#endif
 
 void sched_killTree(pidType id)
 {

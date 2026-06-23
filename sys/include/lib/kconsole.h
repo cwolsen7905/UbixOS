@@ -58,6 +58,10 @@ struct kconsole
 
 void kconsole_register(struct kconsole *kc);
 void kconsole_emit(const char *s);
+/* Engage SMP console locking; call once the MMU is on and SMP is coming up (before
+ * releasing the APs).  Before this, kconsole_emit emits unlocked (single-CPU + the
+ * lock's atomics are unsafe pre-MMU). */
+void kconsole_enable_mp(void);
 void kconsole_suspend_primary(void);
 void kconsole_resume_primary(void);
 

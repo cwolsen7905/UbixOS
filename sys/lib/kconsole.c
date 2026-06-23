@@ -41,6 +41,22 @@ static struct kconsole *g_console_list = 0;
 static int g_primary_suspended = 0;
 static struct spinLock g_console_lock = SPIN_LOCK_INITIALIZER;
 
+/*
+ * Console locking is engaged only once SMP is active (kconsole_enable_mp, called
+ * just before the APs are released).  Early boot is single-CPU AND runs before the
+ * MMU is enabled — and the spinlock's LDXR/STXR exclusive monitor is undefined on
+ * pre-MMU memory: TCG tolerates it but HVF hangs the very first kprintf ("boot OK")
+ * before the MMU comes up.  So before SMP, kconsole_emit emits unlocked (no other CPU
+ * exists to race it); after, it serialises.
+ */
+static volatile int g_console_mp = 0;
+
+/** Engage console locking (call once SMP is up + MMU on, before releasing APs). */
+void kconsole_enable_mp(void)
+{
+	g_console_mp = 1;
+}
+
 /**
  * Register a console sink.
  *
@@ -80,8 +96,24 @@ void kconsole_emit(const char *s)
 	if (s == 0)
 		return;
 
-	/* Serialise the whole string across CPUs with IRQs disabled (see g_console_lock
-	 * note above) so concurrent kprintf()s don't interleave character-by-character. */
+	/* Before SMP is up, emit unlocked: single-CPU, and the lock's atomics are unsafe
+	 * pre-MMU (see g_console_mp note).  Once SMP is active, serialise the whole string
+	 * with IRQs disabled so concurrent kprintf()s don't interleave character-by-char. */
+	if (!g_console_mp)
+	{
+		for (kc = g_console_list; kc != 0; kc = kc->next)
+		{
+			if (g_primary_suspended &&
+			    (kc->flags & (KC_PRIMARY | KC_SUSPENDABLE)) == (KC_PRIMARY | KC_SUSPENDABLE))
+				continue;
+			if (kc->putc == 0)
+				continue;
+			for (p = s; *p != '\0'; p++)
+				kc->putc((int)(unsigned char)*p);
+		}
+		return;
+	}
+
 	save_flags(flags);
 	cli();
 	spinLock(&g_console_lock);
