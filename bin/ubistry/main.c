@@ -52,18 +52,22 @@ int main(int argc, char **argv)
 
 	ub_root(); /* materialise the root container */
 
-	if (persist_load(UBISTRY_DB) != 0)
-		ulogf(ULOG_WARNING, "ubistry: %s not found — starting empty", UBISTRY_DB);
-
-	/* Create the serving mailbox LAST, so a client (or the boot path) that sees
-	 * the "ubistry" mailbox exist knows the registry is fully loaded and ready —
-	 * no window where a GET races an unpopulated db. */
+	/* Create the serving mailbox FIRST so that requests arriving while we load the db
+	 * are QUEUED, not rejected.  The desktop daemons start concurrently under SMP and a
+	 * client (the compositor reading its accent + wallpaper) can query us before we have
+	 * finished initialising; an MPI mailbox is a queue, so holding those requests until
+	 * we drain them below is what "don't respond until initialised" means in practice.
+	 * Crucially we send NO reply until persist_load() has run and ubistry_process_messages()
+	 * starts, so a queued GET can never race an unpopulated registry. */
 	if (ubistry_init_mbox(UBISTRY_MBOX) != 0)
 		exit(1);
 
+	if (persist_load(UBISTRY_DB) != 0)
+		ulogf(ULOG_WARNING, "ubistry: %s not found — starting empty", UBISTRY_DB);
+
 	ulogf(ULOG_INFO, "ubistry: ready (db %s)", UBISTRY_DB);
 
-	ubistry_process_messages(); /* drain anything queued during startup */
+	ubistry_process_messages(); /* drain everything queued during startup */
 	for (;;)
 	{
 		/* Block on the mailbox instead of busy-polling.  When the db is clean,
