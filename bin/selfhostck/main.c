@@ -235,12 +235,50 @@ static void t_fchmod(void)
 	check("fchmod", rc == 0, rc == 0 ? "" : strerror(errno));
 }
 
+/* symlink + readlink + follow-on-open (ubixfs): create a link, read it back,
+ * and open through it.  Runs before t_fork_wait so it isn't pre-empted by the
+ * known signal-after-fork bug. */
+static void t_symlink(void)
+{
+	const char *link = "/slk_test";
+	const char *tgt = "/etc/motd";
+	char buf[128];
+	int n, fd;
+
+	unlink(link);
+	if (symlink(tgt, link) != 0)
+	{
+		check("symlink create", 0, strerror(errno));
+		return;
+	}
+	check("symlink create", 1, "");
+
+	n = readlink(link, buf, sizeof(buf) - 1);
+	if (n < 0)
+		check("symlink readlink", 0, strerror(errno));
+	else
+	{
+		buf[n] = '\0';
+		check("symlink readlink", strcmp(buf, tgt) == 0, buf);
+	}
+
+	fd = open(link, O_RDONLY);
+	check("symlink follow-open", fd >= 0, fd >= 0 ? "opened via link" : strerror(errno));
+	if (fd >= 0)
+		close(fd);
+	unlink(link);
+}
+
 int main(void)
 {
+	/* Unbuffered: a later check (t_fork_wait) can crash on the known
+	 * signal-after-fork bug, and buffered [PASS] lines would be lost. */
+	setvbuf(stdout, NULL, _IONBF, 0);
 	printf("== uBixOS self-host foundation check ==\n");
 	t_mmap_anon();
 	t_mmap_file();
 	t_mprotect();
+	t_symlink();
 	t_fork_wait();
 	t_getcwd();
 	t_readdir();

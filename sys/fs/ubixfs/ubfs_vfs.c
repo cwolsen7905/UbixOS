@@ -310,6 +310,107 @@ static int ubfs_vfs_initfs(struct vfs_mountPoint *mp)
 }
 
 /**
+ * If @obj is a symlink, resolve it to the object it ultimately points at,
+ * updating @obj in place.  @path is the (pool-relative) path @obj was reached
+ * by — used as the base for relative link targets.  Bounded to 8 hops so a
+ * symlink cycle returns an error instead of looping forever.
+ *
+ * @return 0 on success (obj is a non-link, possibly after following), -1 on a
+ *         dangling or looping link.
+ */
+static int ubfs_follow_symlink(struct ubfs_mount *m, uint64_t *obj, const char *path)
+{
+	char cur[1024];
+	char target[1024];
+	int hops;
+
+	snprintf(cur, sizeof(cur), "%s", path);
+	for (hops = 0; hops < 8; hops++)
+	{
+		ubfs_inode_t in;
+		int n;
+
+		if (ubfs_fs_getattr(&m->fs, *obj, &in) < 0)
+			return (0);
+		if ((in.mode & UBFS_S_IFMT) != UBFS_S_IFLNK)
+			return (0); /* not (or no longer) a link: done */
+
+		n = ubfs_fs_readlink(&m->fs, *obj, target, sizeof(target) - 1);
+		if (n <= 0)
+			return (-1);
+		target[n] = '\0';
+
+		if (target[0] == '/')
+		{
+			snprintf(cur, sizeof(cur), "%s", target); /* absolute (pool-relative) */
+		}
+		else
+		{
+			/* relative: resolve against the directory holding the link */
+			char dir[1024];
+			int i, slash = -1;
+			snprintf(dir, sizeof(dir), "%s", cur);
+			for (i = 0; dir[i] != '\0'; i++)
+				if (dir[i] == '/')
+					slash = i;
+			dir[slash + 1] = '\0'; /* keep through the final slash (or empty) */
+			snprintf(cur, sizeof(cur), "%s%s", dir, target);
+		}
+
+		if (ubfs_fs_lookup(&m->fs, cur, obj) < 0)
+			return (-1); /* dangling */
+	}
+	return (-1); /* too many hops: a cycle */
+}
+
+/**
+ * vfsSymlink: create @linkpath (full path) as a symlink containing @target.
+ *
+ * @return 0 on success, -1 on failure.
+ */
+static int ubfs_vfs_symlink(const char *target, const char *linkpath, void *vmp)
+{
+	struct vfs_mountPoint *mp = (struct vfs_mountPoint *)vmp;
+	struct ubfs_mount *m;
+	uint64_t obj;
+
+	if (mp == 0 || mp->fsInfo == 0 || target == 0)
+		return (-1);
+	m = (struct ubfs_mount *)mp->fsInfo;
+	if (!m->writable)
+		return (-1);
+
+	ubfs_touch_clock(m);
+	if (ubfs_fs_symlink(&m->fs, pool_relative(mp, linkpath), target, 0, 0, &obj) < 0)
+		return (-1);
+	return (ubfs_commit(m));
+}
+
+/**
+ * vfsReadlink: read @path's symlink target into @buf.
+ *
+ * @return the target length on success, -1 if @path is missing or not a link.
+ */
+static int ubfs_vfs_readlink(const char *path, char *buf, int bufsz, void *vmp)
+{
+	struct vfs_mountPoint *mp = (struct vfs_mountPoint *)vmp;
+	struct ubfs_mount *m;
+	uint64_t obj;
+	ubfs_inode_t in;
+
+	if (mp == 0 || mp->fsInfo == 0 || buf == 0 || bufsz <= 0)
+		return (-1);
+	m = (struct ubfs_mount *)mp->fsInfo;
+	if (ubfs_fs_lookup(&m->fs, pool_relative(mp, path), &obj) < 0)
+		return (-1);
+	if (ubfs_fs_getattr(&m->fs, obj, &in) < 0)
+		return (-1);
+	if ((in.mode & UBFS_S_IFMT) != UBFS_S_IFLNK)
+		return (-1); /* not a symlink (EINVAL) */
+	return (ubfs_fs_readlink(&m->fs, obj, buf, (uint64_t)bufsz));
+}
+
+/**
  * vfsOpenFile: resolve @path within the pool and attach an open-file handle.
  *
  * @return 1 on success, 0 if the path does not exist.
@@ -353,6 +454,10 @@ static int ubfs_vfs_open(const char *path, fileDescriptor_t *fd)
 			return (0);
 		ubfs_commit(m);
 	}
+
+	/* If @obj is a symlink, open what it points at (bounded follow). */
+	if (ubfs_follow_symlink(m, &obj, path) < 0)
+		return (0); /* dangling or looping link */
 
 	f = (struct ubfs_file *)kmalloc(sizeof(*f));
 	if (f == 0)
@@ -681,6 +786,8 @@ int ubfs_vfs_init(void)
 	    (void *)ubfs_vfs_readdir,  /* vfsReadDir */
 	    (void *)ubfs_vfs_closedir, /* vfsCloseDir */
 	    (void *)ubfs_vfs_close,    /* vfsClose */
+	    (void *)ubfs_vfs_symlink,  /* vfsSymlink */
+	    (void *)ubfs_vfs_readlink, /* vfsReadlink */
 	};
 
 	if (vfsRegisterFS(fs) != 0)

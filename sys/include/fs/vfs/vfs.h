@@ -37,107 +37,117 @@
 #include <ubixos/wait.h>
 
 /* vfsType identifiers — used in struct fileSystem and vfs_mountPoint comparisons */
-#define VFS_TYPE_DEVFS   0x01
-#define VFS_TYPE_PROCFS  0x02
-#define VFS_TYPE_RAMFS   0x03
-#define VFS_TYPE_FAT     0xFA
-#define VFS_TYPE_UFS     0xAA
-#define VFS_TYPE_UBIXFS  0x55 /* UbixFS pooled copy-on-write filesystem (lite-ZFS) */
+#define VFS_TYPE_DEVFS 0x01
+#define VFS_TYPE_PROCFS 0x02
+#define VFS_TYPE_RAMFS 0x03
+#define VFS_TYPE_FAT 0xFA
+#define VFS_TYPE_UFS 0xAA
+#define VFS_TYPE_UBIXFS 0x55 /* UbixFS pooled copy-on-write filesystem (lite-ZFS) */
 
 #define MAY_EXEC 1
 #define MAY_WRITE 2
 #define MAY_READ 4
 
-#define maxFd   32
+#define maxFd 32
 #define fdAvail 1
-#define fdOpen  2
-#define fdRead  3
-#define fdEof   4
+#define fdOpen 2
+#define fdRead 3
+#define fdEof 4
 
-#define fileRead    0x0001
-#define fileWrite   0x0002
-#define fileBinary  0x0004
-#define fileAppend  0x0008
-#define fileTrunc   0x0010  /* truncate on open (O_TRUNC / "w"); distinct from write access */
+#define fileRead 0x0001
+#define fileWrite 0x0002
+#define fileBinary 0x0004
+#define fileAppend 0x0008
+#define fileTrunc 0x0010 /* truncate on open (O_TRUNC / "w"); distinct from write access */
 
 /*!
  \brief filesSystem Structure
 
  not sure if we should allow function to point to NULL
  */
-struct fileSystem {
-    struct fileSystem *prev;
-    struct fileSystem *next;
-    int (*vfsInitFS)(void*); /*!< pointer to inialization routine */
-    int (*vfsRead)(void*, char*, off_t, long); /*!< pointer to read routine */
-    int (*vfsWrite)(void*, char*, off_t, long); /*!< pointer to write routine */
-    int (*vfsOpenFile)(void*, void*); /*!< pointer to openfile routine */
-    int (*vfsUnlink)(char*, void*); /*!< pointer to unlink routine */
-    int (*vfsMakeDir)(char*, void*); /*!< pointer to makedir routine */
-    int (*vfsRemDir)(char*, void*); /*!< pointer to remdir routine; second arg is vfs_mountPoint* */
-    int (*vfsSync)(void); /*!< pointer to sync routine */
-    int vfsType; /*!< vfs type id */
-    int (*vfsOpenDir)(const char *, kDIR_t *);   /* open directory for listing */
-    int (*vfsReadDir)(kDIR_t *, struct kdirent *); /* read next entry */
-    int (*vfsCloseDir)(kDIR_t *);                  /* close directory */
-    int (*vfsClose)(void *);                        /* close open file (may be NULL) */
+struct fileSystem
+{
+	struct fileSystem *prev;
+	struct fileSystem *next;
+	int (*vfsInitFS)(void *);                      /*!< pointer to inialization routine */
+	int (*vfsRead)(void *, char *, off_t, long);   /*!< pointer to read routine */
+	int (*vfsWrite)(void *, char *, off_t, long);  /*!< pointer to write routine */
+	int (*vfsOpenFile)(void *, void *);            /*!< pointer to openfile routine */
+	int (*vfsUnlink)(char *, void *);              /*!< pointer to unlink routine */
+	int (*vfsMakeDir)(char *, void *);             /*!< pointer to makedir routine */
+	int (*vfsRemDir)(char *, void *);              /*!< pointer to remdir routine; second arg is vfs_mountPoint* */
+	int (*vfsSync)(void);                          /*!< pointer to sync routine */
+	int vfsType;                                   /*!< vfs type id */
+	int (*vfsOpenDir)(const char *, kDIR_t *);     /* open directory for listing */
+	int (*vfsReadDir)(kDIR_t *, struct kdirent *); /* read next entry */
+	int (*vfsCloseDir)(kDIR_t *);                  /* close directory */
+	int (*vfsClose)(void *);                       /* close open file (may be NULL) */
+	int (*vfsSymlink)(const char *target, const char *linkpath, void *mp); /* create symlink (may be NULL) */
+	int (*vfsReadlink)(const char *path,
+	                   char *buf,
+	                   int bufsz,
+	                   void *mp); /* read symlink target into buf, returns length or <0 (may be NULL) */
 };
 
-struct inode_operations {
-    struct file_operations *default_file_ops;
-    int (*create)(struct inode*, const char*, int, int, struct inode**);
-    int (*lookup)(struct inode*, const char*, int, struct inode**);
-    int (*link)(struct inode*, struct inode*, const char*, int);
-    int (*unlink)(struct inode*, const char*, int);
-    int (*symlink)(struct inode*, const char*, int, const char*);
-    int (*mkdir)(struct inode*, const char*, int, int);
-    int (*rmdir)(struct inode*, const char*, int);
-    int (*mknod)(struct inode*, const char*, int, int, int);
-    int (*rename)(struct inode*, const char*, int, struct inode*, const char*, int);
-    int (*readlink)(struct inode*, char*, int);
-    int (*follow_link)(struct inode*, struct inode*, int, int, struct inode**);
-    int (*bmap)(struct inode*, int);
-    void (*truncate)(struct inode*);
-    int (*permission)(struct inode*, int);
+struct inode_operations
+{
+	struct file_operations *default_file_ops;
+	int (*create)(struct inode *, const char *, int, int, struct inode **);
+	int (*lookup)(struct inode *, const char *, int, struct inode **);
+	int (*link)(struct inode *, struct inode *, const char *, int);
+	int (*unlink)(struct inode *, const char *, int);
+	int (*symlink)(struct inode *, const char *, int, const char *);
+	int (*mkdir)(struct inode *, const char *, int, int);
+	int (*rmdir)(struct inode *, const char *, int);
+	int (*mknod)(struct inode *, const char *, int, int, int);
+	int (*rename)(struct inode *, const char *, int, struct inode *, const char *, int);
+	int (*readlink)(struct inode *, char *, int);
+	int (*follow_link)(struct inode *, struct inode *, int, int, struct inode **);
+	int (*bmap)(struct inode *, int);
+	void (*truncate)(struct inode *);
+	int (*permission)(struct inode *, int);
 };
 
 /* VFS Functions */
 int vfs_init();
 int vfsRegisterFS(struct fileSystem);
-struct fileSystem* vfs_findFS(int);
+struct fileSystem *vfs_findFS(int);
 
-struct super_operations {
-    void (*read_inode)(struct inode*);
-    int (*notify_change)(int flags, struct inode*);
-    void (*write_inode)(struct inode*);
-    void (*put_inode)(struct inode*);
-    void (*put_super)(struct super_block*);
-    void (*write_super)(struct super_block*);
-    void (*statfs)(struct super_block*, struct statfs*);
-    int (*remount_fs)(struct super_block*, int*, char*);
+struct super_operations
+{
+	void (*read_inode)(struct inode *);
+	int (*notify_change)(int flags, struct inode *);
+	void (*write_inode)(struct inode *);
+	void (*put_inode)(struct inode *);
+	void (*put_super)(struct super_block *);
+	void (*write_super)(struct super_block *);
+	void (*statfs)(struct super_block *, struct statfs *);
+	int (*remount_fs)(struct super_block *, int *, char *);
 };
 
-struct super_block {
-    __dev_t s_dev;
-    unsigned long s_blocksize;
-    unsigned char s_blocksize_bits;
-    unsigned char s_lock;
-    unsigned char s_rd_only;
-    unsigned char s_dirt;
-    struct super_operations *s_op;
-    unsigned long s_flags;
-    unsigned long s_magic;
-    unsigned long s_time;
-    struct inode *s_covered;
-    struct inode *s_mounted;
-    struct wait_queue *s_wait;
-    union {
-        struct msdos_sb_info msdos_sb;
-        /*
-         struct fs ufs1_sb;
-         struct fs ufs2_sb;
-         */
-    } u;
+struct super_block
+{
+	__dev_t s_dev;
+	unsigned long s_blocksize;
+	unsigned char s_blocksize_bits;
+	unsigned char s_lock;
+	unsigned char s_rd_only;
+	unsigned char s_dirt;
+	struct super_operations *s_op;
+	unsigned long s_flags;
+	unsigned long s_magic;
+	unsigned long s_time;
+	struct inode *s_covered;
+	struct inode *s_mounted;
+	struct wait_queue *s_wait;
+	union
+	{
+		struct msdos_sb_info msdos_sb;
+		/*
+		 struct fs ufs1_sb;
+		 struct fs ufs2_sb;
+		 */
+	} u;
 };
 
 #endif

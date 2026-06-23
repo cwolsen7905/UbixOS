@@ -1138,6 +1138,69 @@ int unlink(const char *node)
 	return (0);
 }
 
+/**
+ * Create @linkpath as a symbolic link containing @target.  Routes to the
+ * filesystem's vfsSymlink op (full path, like vfsMakeDir).
+ *
+ * @return 0 on success, -errno on failure.
+ */
+int vfs_symlink(const char *target, const char *linkpath)
+{
+	char fullpath[1024];
+	struct vfs_mountPoint *mp = 0x0;
+
+	if (target == NULL || linkpath == NULL || linkpath[0] == '\0')
+		return (-EINVAL);
+
+	if (linkpath[0] != '/')
+		snprintf(fullpath, sizeof(fullpath), "%s%s", _current->oInfo.cwd, linkpath);
+	else
+		strncpy(fullpath, linkpath, sizeof(fullpath) - 1);
+	fullpath[sizeof(fullpath) - 1] = '\0';
+
+	mp = vfs_findMount(fullpath);
+	if (mp == 0x0 || mp->fs == 0x0)
+		return (-ENOENT);
+	if (mp->fs->vfsSymlink == NULL)
+		return (-ENOSYS);
+
+	spinLock(&vfs_io_lock);
+	int rc = mp->fs->vfsSymlink(target, fullpath, mp);
+	spinUnlock(&vfs_io_lock);
+	return (rc == 0) ? 0 : -EIO;
+}
+
+/**
+ * Read the target of the symlink at @path into @buf (not NUL-terminated).
+ *
+ * @return the target length on success, -errno on failure.
+ */
+int vfs_readlink(const char *path, char *buf, int bufsz)
+{
+	char fullpath[1024];
+	struct vfs_mountPoint *mp = 0x0;
+
+	if (path == NULL || path[0] == '\0' || buf == NULL || bufsz <= 0)
+		return (-EINVAL);
+
+	if (path[0] != '/')
+		snprintf(fullpath, sizeof(fullpath), "%s%s", _current->oInfo.cwd, path);
+	else
+		strncpy(fullpath, path, sizeof(fullpath) - 1);
+	fullpath[sizeof(fullpath) - 1] = '\0';
+
+	mp = vfs_findMount(fullpath);
+	if (mp == 0x0 || mp->fs == 0x0)
+		return (-ENOENT);
+	if (mp->fs->vfsReadlink == NULL)
+		return (-EINVAL); /* not a link / unsupported */
+
+	spinLock(&vfs_io_lock);
+	int rc = mp->fs->vfsReadlink(fullpath, buf, bufsz, mp);
+	spinUnlock(&vfs_io_lock);
+	return (rc < 0) ? -EINVAL : rc;
+}
+
 kDIR_t *vfs_opendir(const char *path)
 {
 	char fileName[1024];

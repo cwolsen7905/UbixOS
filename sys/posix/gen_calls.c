@@ -263,11 +263,17 @@ int lutimes(struct thread *td, struct lutimes_args *uap)
  * for "the filesystem does not support symlinks", so report that honestly rather
  * than silently succeeding.
  */
+int vfs_symlink(const char *target, const char *linkpath); /* sys/fs/vfs/file.c */
+
+/**
+ * symlink(target, linkpath) — create a symbolic link @linkpath containing
+ * @target.  Routes to the VFS (ubixfs implements it; FAT/devfs return ENOSYS).
+ */
 int symlink(struct thread *td, struct symlink_args *uap)
 {
-	(void)uap;
-	td->td_retval[0] = -EPERM;
-	return (EPERM);
+	int rc = vfs_symlink(uap->target, uap->path);
+	td->td_retval[0] = rc;
+	return (rc < 0) ? -rc : 0;
 }
 
 int sys_kill(struct thread *td, struct sys_kill_args *uap)

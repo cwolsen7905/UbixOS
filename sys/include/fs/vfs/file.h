@@ -129,6 +129,8 @@ struct sys_fwrite_args
 };
 
 int unlink(const char *path);
+int vfs_symlink(const char *target, const char *linkpath);
+int vfs_readlink(const char *path, char *buf, int bufsz);
 int feof(fileDescriptor_t *fd);
 int fgetc(fileDescriptor_t *fd);
 size_t fread(void *ptr, size_t size, size_t nmemb, fileDescriptor_t *fd);

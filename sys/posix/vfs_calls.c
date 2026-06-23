@@ -549,6 +549,22 @@ int sys_readlink(struct thread *thr, struct sys_readlink_args *args)
 		return (0);
 	}
 
+	/* Real filesystem symlink (ubixfs): ask the FS for the target.  Returns the
+	 * target length, or <0 if @path is missing / not a link (fall through). */
+	{
+		char target[1024];
+		int tn = vfs_readlink(path, target, (int)sizeof(target));
+		if (tn >= 0)
+		{
+			size_t n = (size_t)tn;
+			if ((size_t)args->count < n)
+				n = (size_t)args->count;
+			memcpy(args->buf, target, n);
+			thr->td_retval[0] = (int)n;
+			return (0);
+		}
+	}
+
 	/*
 	 * uBixOS filesystems (FAT/devfs) have no symbolic links, so no existing
 	 * path is ever a symlink.  POSIX requires readlink() on an existing
