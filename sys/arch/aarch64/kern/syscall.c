@@ -443,7 +443,9 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args)
 			return sc_brk(args[0]);
 
 		case SYS_FORK:
-			/* args is the trapframe; the child resumes here returning 0. */
+			/* args is the trapframe; the child resumes here returning 0.
+			 * vfork is aliased to fork in musl (it tail-calls fork()), so it
+			 * arrives here too — no separate vfork syscall path is needed. */
 			return (u_int64_t)aarch64_fork(args);
 
 		case SYS_EXECVE:
