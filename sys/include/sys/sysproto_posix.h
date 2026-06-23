@@ -44,13 +44,20 @@ struct msghdr;
 
 #ifndef PAD_
 #define PAD_(t) (sizeof(register_t) <= sizeof(t) ? 0 : sizeof(register_t) - sizeof(t))
-#if BYTE_ORDER == LITTLE_ENDIAN
+/*
+ * Little-endian arg padding, UNCONDITIONALLY.  This used to key off
+ * `#if BYTE_ORDER == LITTLE_ENDIAN`, but those macros are only defined by the lwIP
+ * net headers — so the branch taken varied by translation unit (a .c that pulled
+ * them in took the big-endian `#else`, one that didn't took LE).  That gave the
+ * SAME uap struct DIFFERENT field offsets in different TUs: e.g. a leading `int how`
+ * landed at offset 0 in one TU and offset 4 in another, so on aarch64 (register_t=8)
+ * the generic dispatcher's raw-register copy was read at the wrong offset and a
+ * leading int came back 0 (sys_sigprocmask saw how=0 → SIG_BLOCK silently no-op'd →
+ * SIGCHLD unblocked across fork → bmake hung/faulted).  All UbixOS targets are
+ * little-endian, so pin the LE layout here and the struct is identical everywhere.
+ */
 #define PADL_(t) 0
 #define PADR_(t) PAD_(t)
-#else
-#define PADL_(t) PAD_(t)
-#define PADR_(t) 0
-#endif
 #endif
 
 struct sys_exit_args

@@ -35,13 +35,13 @@
 
 #define PAD_(t) (sizeof(register_t) <= sizeof(t) ? 0 : sizeof(register_t) - sizeof(t))
 
-#if BYTE_ORDER == LITTLE_ENDIAN
+/* Little-endian arg padding, UNCONDITIONALLY — see the long note in
+ * sysproto_posix.h.  `#if BYTE_ORDER == LITTLE_ENDIAN` varied by translation unit
+ * (those macros are only defined by the lwIP net headers), giving the same uap
+ * struct different field offsets in different TUs and corrupting leading small args.
+ * All UbixOS targets are little-endian; pin the LE layout so it is identical everywhere. */
 #define PADL_(t) 0
 #define PADR_(t) PAD_(t)
-#else
-#define PADL_(t) PAD_(t)
-#define PADR_(t) 0
-#endif
 
 // Protos
 struct sys_mpiCreateMbox_args
