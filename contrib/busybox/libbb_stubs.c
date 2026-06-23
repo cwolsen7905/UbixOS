@@ -1763,3 +1763,54 @@ unsigned getopt32long(char **argv, const char *applet_opts,
 /* Each applet's bin/<applet>/main.c supplies the actual main() that calls
  * <applet>_main.  Keeping main() out of this shared shim means the same
  * libbb_stubs.o source works for vi, wc, head, tail, etc. */
+
+/* ── UbixOS additions for install/cmp ─────────────────────────────────────── */
+
+/* busybox logging mode global (cmp -s sets it to 0 to suppress errors). */
+int logmode = LOGMODE_STDIO;
+
+/* Resolve a user/group token: numeric -> its value, else look it up via @fn. */
+unsigned get_ug_id(const char *s, unsigned (*xname2id)(const char *))
+{
+	if (s[0] >= '0' && s[0] <= '9') {
+		char *end;
+		unsigned long v = strtoul(s, &end, 10);
+		if (*end == '\0')
+			return (unsigned)v;
+	}
+	return xname2id(s);
+}
+
+/* UbixOS has no passwd/group database yet; map any name to root (0). */
+unsigned xuname2uid(const char *name)  { (void)name; return 0; }
+unsigned xgroup2gid(const char *name)  { (void)name; return 0; }
+
+/* spawn_and_wait: run argv to completion, return its exit status.  Stubbed as a
+ * no-op (success) for now — its only in-tree caller is `install -s` (spawn
+ * strip), and fork+exec+wait currently hits the signal-after-fork kernel bug.
+ * install without -s works fully; -s just skips the strip. */
+int spawn_and_wait(char **argv)
+{
+	(void)argv;
+	return 0;
+}
+
+/* xfunc_die / isqrt — small libbb helpers (used by diff). */
+void xfunc_die(void)
+{
+	exit(xfunc_error_retval);
+}
+
+unsigned isqrt(unsigned long long n)
+{
+	unsigned long long x, y;
+	if (n == 0)
+		return 0;
+	x = n;
+	y = (x + 1) / 2;
+	while (y < x) {
+		x = y;
+		y = (x + n / x) / 2;
+	}
+	return (unsigned)x;
+}

@@ -637,6 +637,20 @@
 #define IF_FEATURE_FIND_CTIME(...)      _BB_FIND_GATE(CTIME)(__VA_ARGS__)
 #define IF_FEATURE_FIND_SAMEFILE(...)   _BB_FIND_GATE(SAMEFILE)(__VA_ARGS__)
 #define IF_DESKTOP(...)                 _BB_FIND_GATE_0(__VA_ARGS__)
+/* UbixOS additions for install/cmp (ENABLE_DESKTOP==0, long-opts off). */
+#define IF_NOT_DESKTOP(...)                 __VA_ARGS__
+#define IF_FEATURE_INSTALL_LONG_OPTIONS(...)
+#ifndef LOGMODE_STDIO
+#define LOGMODE_STDIO 1
+#endif
+#define XATOOFF(a) ((off_t)strtoull((a), NULL, 0))
+extern int logmode;
+unsigned get_ug_id(const char *s, unsigned (*xname2id)(const char *));
+unsigned xuname2uid(const char *name);
+unsigned xgroup2gid(const char *name);
+int spawn_and_wait(char **argv);
+unsigned isqrt(unsigned long long n);
+void xfunc_die(void);
 
 /* IF_NOT_FEATURE_FIND_*(t) — inverse gates. */
 #define _BB_FIND_NGATE(name)  _BB_FIND_NGATE2(ENABLE_FEATURE_FIND_##name)
