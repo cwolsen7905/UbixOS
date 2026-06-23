@@ -216,6 +216,49 @@ int chmod(struct thread *td, struct chmod_args *uap)
 }
 
 /*
+ * fchmod(fd, mode) — the fd-relative twin of chmod().  Same rationale: the FAT/
+ * devfs roots store no permission bits, so report success rather than failing a
+ * build tool that fchmod()s a file it just created (cp -p, install).
+ */
+int fchmod(struct thread *td, struct fchmod_args *uap)
+{
+	(void)uap;
+	td->td_retval[0] = 0;
+	return (0);
+}
+
+/*
+ * utimes(path, times) / futimes(fd, times) / lutimes(path, times) — set a file's
+ * access/modification times.  The FAT-era filesystems do not store settable
+ * timestamps, so these are non-failing no-ops (like chmod): build tools and
+ * archivers (touch, install, cp -p, tar, bmake) call them on files they create
+ * and must not hard-fail.  NOTE: because nothing is stored, make's *incremental*
+ * mtime dependency tracking is unreliable — clean-from-scratch builds are fine;
+ * real timestamp persistence on the ubixfs pool inode is a separate follow-up
+ * (see docs/design/self-hosting-plan.md Phase 0).
+ */
+int utimes(struct thread *td, struct utimes_args *uap)
+{
+	(void)uap;
+	td->td_retval[0] = 0;
+	return (0);
+}
+
+int futimes(struct thread *td, struct futimes_args *uap)
+{
+	(void)uap;
+	td->td_retval[0] = 0;
+	return (0);
+}
+
+int lutimes(struct thread *td, struct lutimes_args *uap)
+{
+	(void)uap;
+	td->td_retval[0] = 0;
+	return (0);
+}
+
+/*
  * symlink(target, path) — the FAT root has no symbolic links.  POSIX uses EPERM
  * for "the filesystem does not support symlinks", so report that honestly rather
  * than silently succeeding.

@@ -161,7 +161,7 @@ struct syscall_entry systemCalls_posix[] = {
     {ARG_COUNT(sys_writev_args), "writev", (sys_call_t *)sys_writev, SYSCALL_VALID},                            /* 121 - writev */
     {0, "settimeofday", sys_invalid, SYSCALL_NOTIMP},                                                           /* 122 - settimeofday */
     {0, "fchown", sys_invalid, SYSCALL_NOTIMP},                                                                 /* 123 - fchown */
-    {0, "fchmod", sys_invalid, SYSCALL_NOTIMP},                                                                 /* 124 - fchmod */
+    {ARG_COUNT(fchmod_args), "fchmod", (sys_call_t *)fchmod, SYSCALL_VALID},                                    /* 124 - fchmod */
     {0, "old recvfrom", sys_invalid, SYSCALL_INVALID},                                                          /* 125 - Invalid */
     {0, "setreuid", sys_invalid, SYSCALL_NOTIMP},                                                               /* 126 - setreuid */
     {0, "setregid", sys_invalid, SYSCALL_NOTIMP},                                                               /* 127 - setregid */
@@ -175,7 +175,7 @@ struct syscall_entry systemCalls_posix[] = {
     {0, "socketpair", sys_invalid, SYSCALL_NOTIMP},                                                             /* 135 - socketpair */
     {ARG_COUNT(sys_mkdir_args), "mkdir", (sys_call_t *)sys_mkdir, SYSCALL_VALID},                               /* 136 - mkdir */
     {ARG_COUNT(sys_rmdir_args), "rmdir", (sys_call_t *)sys_rmdir, SYSCALL_VALID},                               /* 137 - rmdir */
-    {0, "utimes", sys_invalid, SYSCALL_NOTIMP},                                                                 /* 138 - utimes */
+    {ARG_COUNT(utimes_args), "utimes", (sys_call_t *)utimes, SYSCALL_VALID},                                    /* 138 - utimes */
     {0, "obsolete sigreturn", sys_invalid, SYSCALL_INVALID},                                                    /* 139 - Invalid */
     {0, "adjtime", sys_invalid, SYSCALL_NOTIMP},                                                                /* 140 - adjtime */
     {0, "old getpeername", sys_invalid, SYSCALL_INVALID},                                                       /* 141 - Invalid */
@@ -243,7 +243,7 @@ struct syscall_entry systemCalls_posix[] = {
     {0, "mlock", sys_invalid, SYSCALL_NOTIMP},                                                                  /* 203 - Invalid */
     {0, "munlock", sys_invalid, SYSCALL_NOTIMP},                                                                /* 204 - Invalid */
     {0, "undelete", sys_invalid, SYSCALL_NOTIMP},                                                               /* 205 - Invalid */
-    {0, "futimes", sys_invalid, SYSCALL_NOTIMP},                                                                /* 206 - Invalid */
+    {ARG_COUNT(futimes_args), "futimes", (sys_call_t *)futimes, SYSCALL_VALID},                                 /* 206 - Invalid */
     {ARG_COUNT(sys_getpgid_args), "getpgid", (sys_call_t *)sys_getpgid, SYSCALL_VALID},                         /* 207 - getpgid */
     {0, "reboot", sys_invalid, SYSCALL_NOTIMP},                                                                 /* 208 - Invalid */
     {0, "poll", sys_invalid, SYSCALL_NOTIMP},                                                                   /* 209 - Invalid */
@@ -313,7 +313,7 @@ struct syscall_entry systemCalls_posix[] = {
     {0, "No Call", sys_invalid, SYSCALL_INVALID},                                                               /* 273 - Invalid */
     {0, "lchmod", sys_invalid, SYSCALL_NOTIMP},                                                                 /* 274 - Invalid */
     {0, "netbsd_lchown", sys_invalid, SYSCALL_NOTIMP},                                                          /* 275 - Invalid */
-    {0, "lutimes", sys_invalid, SYSCALL_NOTIMP},                                                                /* 276 - Invalid */
+    {ARG_COUNT(lutimes_args), "lutimes", (sys_call_t *)lutimes, SYSCALL_VALID},                                 /* 276 - Invalid */
     {0, "netbsd_msync", sys_invalid, SYSCALL_NOTIMP},                                                           /* 277 - Invalid */
     {0, "nstat", sys_invalid, SYSCALL_NOTIMP},                                                                  /* 278 - Invalid */
     {0, "nfstat", sys_invalid, SYSCALL_NOTIMP},                                                                 /* 279 - Invalid */

@@ -429,6 +429,50 @@ struct symlink_args
 	char path_r_[PADR_(char *)];
 };
 
+struct fchmod_args
+{
+	char fd_l_[PADL_(int)];
+	int fd;
+	char fd_r_[PADR_(int)];
+
+	char mode_l_[PADL_(int)];
+	int mode;
+	char mode_r_[PADR_(int)];
+};
+
+struct utimes_args
+{
+	char path_l_[PADL_(char *)];
+	char *path;
+	char path_r_[PADR_(char *)];
+
+	char tptr_l_[PADL_(void *)];
+	void *tptr; /* const struct timeval[2] *, ignored by the no-op stub */
+	char tptr_r_[PADR_(void *)];
+};
+
+struct futimes_args
+{
+	char fd_l_[PADL_(int)];
+	int fd;
+	char fd_r_[PADR_(int)];
+
+	char tptr_l_[PADL_(void *)];
+	void *tptr;
+	char tptr_r_[PADR_(void *)];
+};
+
+struct lutimes_args
+{
+	char path_l_[PADL_(char *)];
+	char *path;
+	char path_r_[PADR_(char *)];
+
+	char tptr_l_[PADL_(void *)];
+	void *tptr;
+	char tptr_r_[PADR_(void *)];
+};
+
 struct sys_fstatfs_args
 {
 	char fd_l_[PADL_(int)];
@@ -1300,6 +1344,10 @@ int access(struct thread *td, struct access_args *uap);
 int fstatfs(struct thread *td, struct sys_fstatfs_args *uap);
 int mprotect(struct thread *td, struct mprotect_args *uap);
 int chmod(struct thread *td, struct chmod_args *uap);
+int fchmod(struct thread *td, struct fchmod_args *uap);
+int utimes(struct thread *td, struct utimes_args *uap);
+int futimes(struct thread *td, struct futimes_args *uap);
+int lutimes(struct thread *td, struct lutimes_args *uap);
 int symlink(struct thread *td, struct symlink_args *uap);
 
 int sys_statfs(struct thread *td, struct sys_statfs_args *args);
