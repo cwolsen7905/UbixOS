@@ -41,7 +41,12 @@ struct mpi_message
 {
 	char data[MESSAGE_LENGTH];
 	u_int32_t header;
-	pidType pid;
+	pidType pid;           /* src pid — kernel-stamped on post (not user-settable) */
+	u_int32_t msg_id;      /* kernel-stamped monotonic id, unique per posted message;
+	                        * written back into the poster's buffer so it can match a
+	                        * reply.  0 is never assigned (reserved as "none"). */
+	u_int32_t in_reply_to; /* set by a replier to the request's msg_id (0 = not a reply);
+	                        * carried verbatim so the requester can correlate the answer. */
 	struct mpi_message *next;
 };
 

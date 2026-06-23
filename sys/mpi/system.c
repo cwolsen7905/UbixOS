@@ -36,6 +36,18 @@
 static mpi_mbox_t *mboxList = 0x0;
 static struct spinLock mpiSpinLock = SPIN_LOCK_INITIALIZER;
 
+/* Monotonic source of message ids (envelope correlation).  Read/incremented only
+ * under mpiSpinLock, so it is SMP-safe.  0 is reserved to mean "no id". */
+static u_int32_t g_mpi_seq = 0;
+
+/** @return the next nonzero message id.  Caller must hold mpiSpinLock. */
+static u_int32_t mpi_next_id(void)
+{
+	if (++g_mpi_seq == 0)
+		g_mpi_seq = 1;
+	return (g_mpi_seq);
+}
+
 /*****************************************************************************************
 
  Function: static mpiMbox_t * mpiFindMbox(char *name)
@@ -153,6 +165,9 @@ int mpi_spam(u_int32_t type, void *data)
 
 		message->header = type;
 		memcpy(message->data, data, MESSAGE_LENGTH);
+		message->pid = _current->id;
+		message->msg_id = mpi_next_id();
+		message->in_reply_to = 0; /* a broadcast is never a reply */
 		message->next = 0x0;
 
 		if (mbox->msg == 0x0)
@@ -205,7 +220,13 @@ int mpi_postMessage(char *name, u_int32_t type, mpi_message_t *msg)
 	message->header = msg->header;
 	memcpy(message->data, msg->data, MESSAGE_LENGTH);
 	message->pid = _current->id;
+	message->msg_id = mpi_next_id();         /* unique id for this message (correlation) */
+	message->in_reply_to = msg->in_reply_to; /* carry the replier's correlation tag */
 	message->next = 0x0;
+
+	/* Hand the assigned id back to the poster (the user buffer is mapped here) so a
+	 * caller awaiting a reply knows which msg_id to match against in_reply_to. */
+	msg->msg_id = message->msg_id;
 
 	if (mbox->msg == 0x0)
 	{
@@ -286,6 +307,8 @@ int mpi_fetchMessage(char *name, mpi_message_t *msg)
 	msg->header = mbox->msg->header;
 	memcpy(msg->data, mbox->msg->data, MESSAGE_LENGTH);
 	msg->pid = mbox->msg->pid;
+	msg->msg_id = mbox->msg->msg_id;           /* envelope: id of this message */
+	msg->in_reply_to = mbox->msg->in_reply_to; /* envelope: request it answers (0 = none) */
 
 	tmpMsg = mbox->msg;
 	mbox->msg = mbox->msg->next;

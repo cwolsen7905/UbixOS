@@ -34,21 +34,40 @@
 
 #define MESSAGE_LENGTH 248
 
-struct mpi_message {
-  char               data[MESSAGE_LENGTH];
-  uint32_t             header;
-  struct mpi_message *next;
-  };
+/*
+ * MUST stay byte-identical to the kernel's struct mpi_message (sys/include/mpi/mpi.h):
+ * the MPI syscalls hand this user buffer straight to the kernel with no copyin/out, so
+ * the kernel reads/writes these fields at their struct offsets in the caller's buffer.
+ * The envelope (pid/msg_id/in_reply_to) lets a reply be matched to its request — see
+ * mpi_call()/mpi_reply().
+ */
+struct mpi_message
+{
+	char data[MESSAGE_LENGTH];
+	uint32_t header;
+	int pid;              /* src pid — kernel-stamped on post */
+	uint32_t msg_id;      /* kernel-stamped id, written back into the poster's buffer */
+	uint32_t in_reply_to; /* a replier sets this to the request's msg_id (0 = not a reply) */
+	struct mpi_message *next;
+};
 
 typedef struct mpi_message mpi_message_t;
 
-
 int mpi_createMbox(const char *);
 int mpi_destroyMbox(const char *);
-int mpi_postMessage(const char *,uint32_t,mpi_message_t *);
-int mpi_fetchMessage(const char *,mpi_message_t *);
-int mpi_waitMessage(const char *,mpi_message_t *,uint32_t); /* blocking fetch; timeout in ticks (0 = forever) */
-int mpi_fpam(uint32_t type,void *);
+int mpi_postMessage(const char *, uint32_t, mpi_message_t *);
+int mpi_fetchMessage(const char *, mpi_message_t *);
+int mpi_waitMessage(const char *, mpi_message_t *, uint32_t); /* blocking fetch; timeout in ticks (0 = forever) */
+int mpi_fpam(uint32_t type, void *);
+
+/* Request/reply over MPI with envelope correlation (see lib/ubix_api/mpi_rpc.c). */
+int mpi_call(const char *dest,
+             const char *reply_mbox,
+             mpi_message_t *req,
+             uint32_t want_header,
+             mpi_message_t *reply,
+             uint32_t timeout);
+int mpi_reply(const char *reply_mbox, mpi_message_t *req, uint32_t header, mpi_message_t *rsp);
 
 #endif
 
@@ -83,4 +102,3 @@ int mpi_fpam(uint32_t type,void *);
 
  END
  ***/
-
