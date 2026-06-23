@@ -1,10 +1,10 @@
 # (C) 2002-2026 The UbixOS Project
 # ubix.musl.cxx.ubix.prog.mk — C++ programs with dynamic musl libc, dynamic
-#                               libobjgfx, static libcxx/libcxxabi, and static
-#                               ubix_api (MPI, syscall wrappers).
+#                               libobjgfx, static libcxx/libcxxabi, and dynamic
+#                               libubix_api (MPI, syscall wrappers).
 #
 # Use for programs that need graphics (objgfx), C++ stdlib, MPI, and POSIX.
-# libc and libobjgfx are resolved at runtime from /lib/.
+# libc, libobjgfx, and libubix_api are resolved at runtime from /lib/.
 #
 # Required variables set before .include:
 #   BINARY   — output binary name
@@ -69,10 +69,9 @@ $(BINARY): $(OBJS)
 		${MUSL_CRT1} \
 		${MUSL_LIB}/crti.o \
 		${_OBJS_FULL} \
-		${OBJ_DIR}/lib/ubix_api.a \
 		-Wl,--start-group \
 		${EXTRA_LIBS} \
-		-L${OBJ_DIR}/lib -lc -lobjgfx \
+		-L${OBJ_DIR}/lib -lubix_api -lc -lobjgfx \
 		${OBJ_DIR}/lib/libcxx.a \
 		${OBJ_DIR}/lib/libcxxabi.a \
 		${MUSL_LIBGCC_COMPAT} \

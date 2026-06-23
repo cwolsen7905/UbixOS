@@ -4,8 +4,8 @@
 # Use for programs that need both POSIX (via musl) and UbixOS-specific APIs:
 # pidStatus, mpi_createMbox, mpi_postMessage, mpi_fetchMessage, ubix_getcwd.
 #
-# musl is resolved from /lib/libc.so at runtime.  ubix_api.a is linked
-# statically because only a subset of its symbols are in ubix_api.so.
+# musl and libubix_api are both resolved from /lib/*.so at runtime — a fix to the
+# native API is picked up by rebuilding libubix_api.so alone, with no app relink.
 #
 # The UbixOS-specific headers (<sys/mpi.h>, <sys/sys.h>, <api/ubix.h>, etc.)
 # are exposed via -I${SRCTOP}/include appended AFTER the musl include paths,
@@ -48,10 +48,9 @@ $(BINARY): $(OBJS)
 		${MUSL_CRT1} \
 		${MUSL_LIB}/crti.o \
 		${_OBJS_FULL} \
-		${OBJ_DIR}/lib/ubix_api.a \
 		-Wl,--start-group \
 		${EXTRA_LIBS} \
-		-L${OBJ_DIR}/lib -lc \
+		-L${OBJ_DIR}/lib -lubix_api -lc \
 		${MUSL_LIBGCC_COMPAT} \
 		${LIBGCC} \
 		-Wl,--end-group \

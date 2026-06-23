@@ -93,7 +93,7 @@ mmd -i "${IMG}@@1M" ::/bin ::/lib ::/etc
 # the soname programs record in DT_NEEDED.
 mcopy -i "${IMG}@@1M" "${BUILD}/lib/libc.so" ::/lib/libc.so
 mcopy -i "${IMG}@@1M" "${BUILD}/lib/libc.so" "::/lib/ld-musl-${ARCH}.so.1"
-[ -f "${BUILD}/lib/ubix_api.so" ] && mcopy -i "${IMG}@@1M" "${BUILD}/lib/ubix_api.so" ::/lib/ubix_api.so || true
+[ -f "${BUILD}/lib/libubix_api.so" ] && mcopy -i "${IMG}@@1M" "${BUILD}/lib/libubix_api.so" ::/lib/libubix_api.so || true
 # Crypto libs for the real authd (PBKDF2 over BearSSL).
 [ -f "${BUILD}/lib/libpw.so" ] && mcopy -i "${IMG}@@1M" "${BUILD}/lib/libpw.so" ::/lib/libpw.so || true
 [ -f "${BUILD}/lib/libbearssl.so" ] && mcopy -i "${IMG}@@1M" "${BUILD}/lib/libbearssl.so" ::/lib/libbearssl.so || true

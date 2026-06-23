@@ -38,6 +38,6 @@ EXTRA_CFLAGS = \
     -w \
     -std=gnu99
 
-EXTRA_LIBS = ${OBJ_DIR}/lib/libaudio.a ${OBJ_DIR}/lib/ubix_api.a
+EXTRA_LIBS = ${OBJ_DIR}/lib/libaudio.a -L${OBJ_DIR}/lib -lubix_api
 
 .include "${UBIX_MK}/ubix.musl.prog.mk"

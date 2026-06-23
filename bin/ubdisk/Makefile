@@ -6,6 +6,6 @@ BINARY = ubdisk
 OBJS   = main.o
 
 EXTRA_CFLAGS = -I${SRCTOP}/include
-EXTRA_LIBS   = ${OBJ_DIR}/lib/ubix_api.a   # ubix_disk_query (native syscall 68)
+EXTRA_LIBS   = -L${OBJ_DIR}/lib -lubix_api   # ubix_disk_query (native syscall 68)
 
 .include "${UBIX_MK}/ubix.musl.prog.mk"

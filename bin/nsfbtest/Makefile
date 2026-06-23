@@ -6,11 +6,10 @@ BINARY = nsfbtest
 OBJS   = main.o
 
 EXTRA_CFLAGS = -I${SRCTOP}/contrib/libnsfb/include
-# --export-dynamic: libnsfb.so's ubix surface resolves mpi_* (from ubix_api.a,
-# linked into this exe) at load via the executable's dynamic symbol table.
+# --export-dynamic: keep this exe's dynamic symbols visible so libnsfb.so's ubix
+# surface backend can resolve mpi_* at load (now provided by libubix_api.so, which is
+# also in the global scope as a DT_NEEDED of this exe — harmless to keep exported).
 EXTRA_LDFLAGS = -Wl,--export-dynamic
-# ubix_api.a after libnsfb.so (both inside the mk's --start-group) so the
-# surface backend's mpi_* references resolve.
-EXTRA_LIBS    = ${OBJ_DIR}/lib/libnsfb.so ${OBJ_DIR}/lib/ubix_api.a
+EXTRA_LIBS    = ${OBJ_DIR}/lib/libnsfb.so -L${OBJ_DIR}/lib -lubix_api
 
 .include "${UBIX_MK}/ubix.musl.ubix.prog.mk"

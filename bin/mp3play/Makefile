@@ -6,7 +6,7 @@ include ../Makefile.incl
 BINARY = mp3play
 OBJS   = mp3play.o
 
-EXTRA_LIBS = ${OBJ_DIR}/lib/libaudio.a ${OBJ_DIR}/lib/ubix_api.a
+EXTRA_LIBS = ${OBJ_DIR}/lib/libaudio.a -L${OBJ_DIR}/lib -lubix_api
 
 .include "${UBIX_MK}/ubix.musl.prog.mk"
 
