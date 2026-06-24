@@ -4,7 +4,7 @@
 # Toolchain (CC/CXX/AS/AR/LD/NM/OBJCOPY/RANLIB) + TC_NOSTDINC/TC_STDFLAG come
 # from ubix.toolchain.mk (set + exported by Makefile.incl).
 
-CFLAGS = ${CROSS_M32} -nostdlib ${TC_NOSTDINC} ${TC_STDFLAG} -fno-builtin -Wno-unused-command-line-argument -fPIC -MMD -MP
+CFLAGS = ${CROSS_M32} -nostdlib ${TC_NOSTDINC} -fno-builtin -Wno-unused-command-line-argument -fPIC -MMD -MP
 
 MUSL_SRC = ${SRCTOP}/contrib/musl
 MUSL_OBJ = ${OBJ_DIR}/obj/musl

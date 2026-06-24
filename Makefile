@@ -218,7 +218,7 @@ kernel-aarch64:
 	@${CROSS_PREFIX}gcc -march=armv8-a -mgeneral-regs-only -static -nostdlib -nostartfiles \
 	    -ffreestanding -fno-pic -fno-pie -O2 -Wl,-Ttext=0x100000000 -e _start \
 	    ${CURDIR}/tools/aarch64-user/hello.c -o ${OBJ_DIR}/hello.elf || exit 1
-	@cd ${OBJ_DIR} && ${CROSS_PREFIX}objcopy -I binary -O elf64-littleaarch64 -B aarch64 \
+	@cd ${OBJ_DIR} && ${OBJCOPY} -I binary -O elf64-littleaarch64 -B aarch64 \
 	    hello.elf ${OBJ_DIR}/obj/sys/hello_embed.o || exit 1
 	@echo "embedding the musl-linked demo (built only if musl libc exists)"
 	@if [ -f ${OBJ_DIR}/lib/libc.a ]; then \
@@ -233,7 +233,7 @@ kernel-aarch64:
 	else \
 	    head -c 16 /dev/zero > ${OBJ_DIR}/hello_musl.elf; \
 	fi
-	@cd ${OBJ_DIR} && ${CROSS_PREFIX}objcopy -I binary -O elf64-littleaarch64 -B aarch64 \
+	@cd ${OBJ_DIR} && ${OBJCOPY} -I binary -O elf64-littleaarch64 -B aarch64 \
 	    hello_musl.elf ${OBJ_DIR}/obj/sys/hello_musl_embed.o || exit 1
 	@echo "embedding the static boot triad init/login/sh + spin + mpitest + authd_min (built only if musl libc exists)"
 	@for prog in init login sh spin mpitest pipetest faulttest dirtest authd_min; do \
@@ -250,7 +250,7 @@ kernel-aarch64:
 	        head -c 16 /dev/zero > ${OBJ_DIR}/$$prog.elf; \
 	    fi; \
 	    echo "${CROSS_PREFIX}objcopy [embed] $$prog.elf"; \
-	    ( cd ${OBJ_DIR} && ${CROSS_PREFIX}objcopy -I binary -O elf64-littleaarch64 -B aarch64 \
+	    ( cd ${OBJ_DIR} && ${OBJCOPY} -I binary -O elf64-littleaarch64 -B aarch64 \
 	        $$prog.elf ${OBJ_DIR}/obj/sys/$${prog}_embed.o ) || exit 1; \
 	done
 	@echo "embedding a dynamic (PIE) hello + libc.so (the musl dynamic linker) for the linker test"
@@ -268,16 +268,16 @@ kernel-aarch64:
 	    head -c 16 /dev/zero > ${OBJ_DIR}/hello_dyn.elf; \
 	    head -c 16 /dev/zero > ${OBJ_DIR}/ld-musl-aarch64.so.1; \
 	fi
-	@cd ${OBJ_DIR} && ${CROSS_PREFIX}objcopy -I binary -O elf64-littleaarch64 -B aarch64 \
+	@cd ${OBJ_DIR} && ${OBJCOPY} -I binary -O elf64-littleaarch64 -B aarch64 \
 	    hello_dyn.elf ${OBJ_DIR}/obj/sys/hello_dyn_embed.o || exit 1
-	@cd ${OBJ_DIR} && ${CROSS_PREFIX}objcopy -I binary -O elf64-littleaarch64 -B aarch64 \
+	@cd ${OBJ_DIR} && ${OBJCOPY} -I binary -O elf64-littleaarch64 -B aarch64 \
 	    ld-musl-aarch64.so.1 ${OBJ_DIR}/obj/sys/ldmusl_embed.o || exit 1
 	@echo "embedding a real world binary (busybox cat, PIE) to prove the relinked world runs"
 	@if [ -f ${OBJ_DIR}/bin/cat ]; then cp ${OBJ_DIR}/bin/cat ${OBJ_DIR}/worldcat; \
 	 else head -c 16 /dev/zero > ${OBJ_DIR}/worldcat; fi
-	@cd ${OBJ_DIR} && ${CROSS_PREFIX}objcopy -I binary -O elf64-littleaarch64 -B aarch64 \
+	@cd ${OBJ_DIR} && ${OBJCOPY} -I binary -O elf64-littleaarch64 -B aarch64 \
 	    worldcat ${OBJ_DIR}/obj/sys/worldcat_embed.o || exit 1
-	${CROSS_PREFIX}ld -T ${CURDIR}/sys/compile/ldscript.aarch64 -o ${OBJ_DIR}/boot/kernel ${OBJ_DIR}/obj/sys/*.o
+	${LD} -T ${CURDIR}/sys/compile/ldscript.aarch64 -o ${OBJ_DIR}/boot/kernel ${OBJ_DIR}/obj/sys/*.o
 	@echo "aarch64 bring-up kernel linked: ${OBJ_DIR}/boot/kernel"
 
 # x86-64 bring-up kernel: assemble the long-mode entry, compile the COM1 banner,
@@ -755,10 +755,10 @@ kernel-to-image:
 	mcopy -o -i ${DISK_IMAGE}@@1M ${OBJ_DIR}/boot/kernel ::/kernel/kernel
 
 clean-kernel:
-	(cd sys;${MAKE} clean)
+	rm -rf ${OBJ_DIR}/obj/sys ${OBJ_DIR}/boot
 
 clean:
-	(cd sys;${MAKE} clean)
+	rm -rf ${OBJ_DIR}/obj/sys ${OBJ_DIR}/boot
 	(cd bin;${WMAKE} clean)
 	(cd lib;${WMAKE} clean)
 	(cd libexec;${WMAKE} clean)

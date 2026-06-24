@@ -15,5 +15,5 @@ INCLUDES = -I${MUSL_SRC}/include \
            -I${MUSL_SRC}/arch/${MUSL_ARCH} \
            -I${MUSL_SRC}/arch/generic \
            -I${SRCTOP}/include
-CFLAGS = ${CROSS_M32} ${WFLAGS} -Wall -nostdlib ${TC_NOSTDINC} ${TC_STDFLAG} -fno-builtin -fno-exceptions -fno-rtti -O \
+CFLAGS = ${CROSS_M32} ${WFLAGS} -Wall -nostdlib ${TC_NOSTDINC} -fno-builtin -fno-exceptions -fno-rtti -O \
          ${ARCH_NOSIMD} -fPIC -MMD -MP

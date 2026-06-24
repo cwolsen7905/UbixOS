@@ -10,7 +10,7 @@
 
 BUILD_DIR?=${SRCTOP}/build
 
-CFLAGS = ${CROSS_M32} -nostdlib ${TC_NOSTDINC} ${TC_STDFLAG} -fno-builtin -fno-exceptions -fno-rtti \
+CFLAGS = ${CROSS_M32} -nostdlib ${TC_NOSTDINC} -fno-builtin -fno-exceptions -fno-rtti \
          -Wno-unused-command-line-argument \
          ${ARCH_NOSIMD} -MMD -MP
 LDFLAGS = -Wl,-m,${MUSL_LDEMULATION}
