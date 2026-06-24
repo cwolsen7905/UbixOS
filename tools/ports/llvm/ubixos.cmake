@@ -64,7 +64,9 @@ set(_build  "${UBIXOS_SRCTOP}/build/${UBIXOS_TARGET}")
 set(_libcxx "${UBIXOS_SRCTOP}/contrib/libcxx")
 
 # musl-freestanding include search (mirrors tools/ports/{bmake,sh}).
-set(_musl_paths "-isystem ${_musl}/include -isystem ${_build}/obj/musl/obj/include -isystem ${_musl}/arch/${_musl_arch} -isystem ${_musl}/arch/generic")
+# Shim dir supplies headers musl lacks but LLVM expects (machine/endian.h, …).
+set(_shim "${UBIXOS_SRCTOP}/tools/ports/llvm/shim")
+set(_musl_paths "-isystem ${_shim} -isystem ${_musl}/include -isystem ${_build}/obj/musl/obj/include -isystem ${_musl}/arch/${_musl_arch} -isystem ${_musl}/arch/generic")
 
 # C++ search order matters: libc++'s <cstddef>/<cstdint>/... pull in libc++'s OWN
 # <stddef.h>/<stdint.h> wrappers (which #include_next the C one), so libc++'s
