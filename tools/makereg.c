@@ -60,6 +60,8 @@ static const struct reg_entry g_defaults[] = {
     {"/views/startmenu/1/items/0/exec", "\"/bin/vdoom\""},
     {"/views/startmenu/1/items/1/label", "\"Tessera\""},
     {"/views/startmenu/1/items/1/exec", "\"/bin/tessera\""},
+    {"/views/startmenu/1/items/2/label", "\"Cubitaire\""},
+    {"/views/startmenu/1/items/2/exec", "\"/bin/cubitaire\""},
 
     {"/views/startmenu/2/label", "\"Utilities\""},
     {"/views/startmenu/2/items/0/label", "\"Files\""},
