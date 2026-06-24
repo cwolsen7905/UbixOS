@@ -30,6 +30,28 @@ linux|linux console:\
 	:nd=\E[C:rc=\E8:sc=\E7:se=\E[27m:sf=^J:so=\E[7m:sr=\EM:\
 	:ta=^I:ue=\E[24m:up=\E[A:us=\E[4m:
 
+# xterm — the TERM value almost every ssh client sends (xterm, xterm-color,
+# xterm-256color).  One entry aliased to all three so tgetent() resolves them
+# instead of falling back to "dumb".  Uses old-BSD termcap params only (tcsh's
+# bundled tgetent has no terminfo %p/%? support); Co#256 advertises 256 colours,
+# AF/AB give the 8-colour SGR set (256-colour apps emit \E[38;5;Nm directly).
+xterm-256color|xterm-color|xterm|X11 terminal emulator:\
+	:am:km:mi:ms:xn:\
+	:co#80:li#24:it#8:Co#256:pa#32767:\
+	:AL=\E[%dL:DC=\E[%dP:DL=\E[%dM:IC=\E[%d@:\
+	:al=\E[L:dc=\E[P:dl=\E[M:ic=\E[@:\
+	:bl=^G:cd=\E[J:ce=\E[K:cl=\E[H\E[2J:cm=\E[%i%d;%dH:cr=^M:\
+	:do=^J:ho=\E[H:le=^H:nd=\E[C:up=\E[A:ta=^I:\
+	:k1=\EOP:k2=\EOQ:k3=\EOR:k4=\EOS:k5=\E[15~:\
+	:k6=\E[17~:k7=\E[18~:k8=\E[19~:k9=\E[20~:k;=\E[21~:\
+	:kD=\E[3~:kI=\E[2~:kN=\E[6~:kP=\E[5~:kb=\177:\
+	:kd=\EOB:kl=\EOD:kr=\EOC:ku=\EOA:kh=\EOH:@7=\EOF:\
+	:mb=\E[5m:md=\E[1m:me=\E[0m:mr=\E[7m:\
+	:se=\E[27m:so=\E[7m:ue=\E[24m:us=\E[4m:\
+	:sf=^J:sr=\EM:sc=\E7:rc=\E8:\
+	:ks=\E[?1h\E=:ke=\E[?1l\E>:\
+	:AF=\E[3%dm:AB=\E[4%dm:op=\E[39;49m:
+
 # Dumb terminal — fallback for unknown TERM values
 dumb:\
 	:am:\
