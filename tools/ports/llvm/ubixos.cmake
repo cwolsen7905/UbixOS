@@ -17,11 +17,13 @@
 set(CMAKE_SYSTEM_NAME Generic)          # uBixOS is not a CMake-known system
 set(CMAKE_SYSTEM_VERSION 1)
 
+# Forward our cache vars into CMake's internal try_compile sub-projects (compiler
+# ABI detection etc.); otherwise they are undefined there and this file would
+# abort before setting the compiler ("CMAKE_C_COMPILER not set").
+set(CMAKE_TRY_COMPILE_PLATFORM_VARIABLES UBIXOS_SRCTOP UBIXOS_TARGET)
+
 if(NOT DEFINED UBIXOS_TARGET)
   set(UBIXOS_TARGET aarch64)
-endif()
-if(NOT DEFINED UBIXOS_SRCTOP)
-  message(FATAL_ERROR "UBIXOS_SRCTOP must be set (-DUBIXOS_SRCTOP=...)")
 endif()
 
 if(UBIXOS_TARGET STREQUAL "x86_64")
@@ -36,26 +38,42 @@ else()
   set(_triple aarch64-ubixos-musl)
 endif()
 
-set(_musl   "${UBIXOS_SRCTOP}/contrib/musl")
-set(_build  "${UBIXOS_SRCTOP}/build/${UBIXOS_TARGET}")
-set(_libcxx "${UBIXOS_SRCTOP}/contrib/libcxx")
-
-# uBixOS world toolchain (the same x86_64-elf-/aarch64-elf- cross-gcc + musl
-# the rest of the world builds with — see CLAUDE.md).
+# --- compiler (set FIRST, before anything that could abort) ------------------
+# uBixOS world toolchain (the same x86_64-elf-/aarch64-elf- cross-gcc the rest of
+# the world builds with — see CLAUDE.md).
 set(CMAKE_C_COMPILER   "${_cross}gcc")
 set(CMAKE_CXX_COMPILER "${_cross}g++")
 set(CMAKE_ASM_COMPILER "${_cross}gcc")
 set(CMAKE_AR           "${_cross}ar"     CACHE FILEPATH "")
 set(CMAKE_RANLIB       "${_cross}ranlib" CACHE FILEPATH "")
+set(CMAKE_C_COMPILER_TARGET   "${_triple}")
+set(CMAKE_CXX_COMPILER_TARGET "${_triple}")
+
+# CMake can't run target test-binaries; skip the compiler sanity link and make
+# its ABI try_compile build a static lib (compile-only, no link).
+set(CMAKE_C_COMPILER_WORKS   1)
+set(CMAKE_CXX_COMPILER_WORKS 1)
+set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
+
+if(NOT DEFINED UBIXOS_SRCTOP)
+  message(FATAL_ERROR "UBIXOS_SRCTOP must be set (-DUBIXOS_SRCTOP=...)")
+endif()
+
+set(_musl   "${UBIXOS_SRCTOP}/contrib/musl")
+set(_build  "${UBIXOS_SRCTOP}/build/${UBIXOS_TARGET}")
+set(_libcxx "${UBIXOS_SRCTOP}/contrib/libcxx")
 
 # musl-freestanding include search (mirrors tools/ports/{bmake,sh}).
-set(_musl_inc "-nostdinc -isystem ${_musl}/include -isystem ${_build}/obj/musl/obj/include -isystem ${_musl}/arch/${_musl_arch} -isystem ${_musl}/arch/generic")
-set(_cxx_inc  "-nostdinc++ -isystem ${_libcxx}/include")
+set(_musl_paths "-isystem ${_musl}/include -isystem ${_build}/obj/musl/obj/include -isystem ${_musl}/arch/${_musl_arch} -isystem ${_musl}/arch/generic")
 
+# C++ search order matters: libc++'s <cstddef>/<cstdint>/... pull in libc++'s OWN
+# <stddef.h>/<stdint.h> wrappers (which #include_next the C one), so libc++'s
+# include dir MUST come before musl's.  -nostdinc/-nostdinc++ drop the defaults.
+#
 # LLVM is C++17 and big; build it without exceptions/RTTI (LLVM supports this via
 # LLVM_ENABLE_EH/RTTI=OFF) since uBixOS's libc++ is currently -fno-exceptions.
-set(CMAKE_C_FLAGS_INIT   "${_musl_inc} -fPIC -ffunction-sections -fdata-sections")
-set(CMAKE_CXX_FLAGS_INIT "${_musl_inc} ${_cxx_inc} -fPIC -fno-exceptions -fno-rtti -ffunction-sections -fdata-sections")
+set(CMAKE_C_FLAGS_INIT   "-nostdinc ${_musl_paths} -fPIC -ffunction-sections -fdata-sections")
+set(CMAKE_CXX_FLAGS_INIT "-nostdinc -nostdinc++ -isystem ${_libcxx}/include ${_musl_paths} -fPIC -fno-exceptions -fno-rtti -ffunction-sections -fdata-sections")
 
 # Static final binaries (no shared-lib mess on the target yet).
 set(CMAKE_EXE_LINKER_FLAGS_INIT "-static -L${_build}/lib")
@@ -66,8 +84,3 @@ set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
 set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
 set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
 set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
-
-# CMake can't run target test-binaries; skip its compiler sanity link.
-set(CMAKE_C_COMPILER_WORKS   1)
-set(CMAKE_CXX_COMPILER_WORKS 1)
-set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
