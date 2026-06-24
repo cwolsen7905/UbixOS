@@ -664,7 +664,8 @@ static kTask_t *wait_find_child(int want_pid, int options, int *wstatus)
 		if (t->state == DEAD || t->state == ZOMBIE)
 		{
 			if (wstatus)
-				*wstatus = W_EXITED(t->exit_code & 0xff);
+				*wstatus = t->exit_signal ? (t->exit_signal & 0x7f) /* W_SIGNALED */
+				                          : W_EXITED(t->exit_code & 0xff);
 			if (t->prev != NULL)
 				t->prev->next = t->next;
 			else

@@ -309,6 +309,7 @@ void signal_check(struct trapframe *frame)
 				        sig,
 				        _current->id,
 				        _current->name);
+				_current->exit_signal = (u_int8_t)(sig & 0x7f); /* wait4 W_SIGNALED */
 				endTask(_current->id);
 				sched_yield();
 				/* not reached */

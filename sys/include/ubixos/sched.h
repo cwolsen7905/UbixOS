@@ -102,11 +102,12 @@ extern "C"
 		u_int16_t groups[NR_GROUPS];
 		pidType ppid;
 		u_int32_t pgrp;
-		u_int32_t sid;       /* session ID — set by setsid(), inherited by fork */
-		tty_term *ct_tty;    /* controlling terminal — set by TIOCSCTTY, cleared by setsid() */
-		u_int32_t children;  // Hack for WAIT
-		u_int32_t last_exit; // Hack For WAIT
-		u_int32_t exit_code; /* low 8 bits of exit(2)'s code, saved at exit for wait4 (W_EXITED) */
+		u_int32_t sid;        /* session ID — set by setsid(), inherited by fork */
+		tty_term *ct_tty;     /* controlling terminal — set by TIOCSCTTY, cleared by setsid() */
+		u_int32_t children;   // Hack for WAIT
+		u_int32_t last_exit;  // Hack For WAIT
+		u_int32_t exit_code;  /* low 8 bits of exit(2)'s code, saved at exit for wait4 (W_EXITED) */
+		u_int8_t exit_signal; /* terminating signal if killed (0 = normal exit), for wait4 (W_SIGNALED) */
 		struct taskStruct *parent;
 		char username[256];
 		u_int32_t *kernelStack;
