@@ -72,18 +72,30 @@ changing knobs.
 Legend: ✅ done · 🟡 partial · ⬜ not started
 
 ### Phase 0 — Instrumentation & Reproduction (do first)
-- ⬜ **lwIP stats on.** Enable `LWIP_STATS` + `MEMP_STATS` + `MEM_STATS` +
-  `LINK_STATS` + `ETHARP_STATS` and expose them read-only via
-  `/proc/net/lwip` (or a `sysctl`). Watch `*.max` / `*.err` / `*.drop`.
-- ⬜ **`tcpip_thread` liveness probe.** A counter bumped each
-  `tcpip_thread` loop + each `sys_check_timeouts`, surfaced in procfs, so we can
-  see if it stalls during a "ping drop."
-- ⬜ **Repro harness.** Scripted `ping -f` + parallel `ssh` connect/disconnect
-  loop against the QEMU guest; record when echo stops and correlate with the
-  liveness counter and pool `.err` deltas. This converts "feels unstable" into a
-  signal we can bisect.
-- ⬜ **Decide the root cause** from the data: starvation vs. pool vs. timer vs.
-  sys_arch race. The later phases are conditional on this.
+- ✅ **lwIP stats on.** All `*_STATS` were already enabled in `lwipopts.h`.
+  Exposed read-only via **`/proc/lwip`** (`procfs.c` PFILE_LWIP →
+  `lwip_stats_format()` in `sys_arch.c`): per-protocol recv/xmit/drop/err, heap
+  used/avail/err, and every memp pool **by name** (used/max/total/err — the
+  name table is the memp_std.h X-macro, so indices stay aligned). Verified on
+  aarch64; both arches green. Early read: the only pool ever at capacity is
+  `SYS_TIMEOUT` (6/6), which is lwIP's standing cyclic timers — by design, not
+  exhaustion (a useful negative result).
+- ✅ **`tcpip_thread` liveness probe.** `g_lwip_mbox_fetches` (sys_arch.c) bumped
+  on every `sys_arch_mbox_fetch` — tcpip_thread blocks there each loop, so it
+  advances whenever the net thread runs. Surfaced as `tcpip_mbox_fetches:` in
+  `/proc/lwip`. A stalled counter under live traffic == starvation.
+- ✅ **Repro harness.** `tools/lwip-stress.sh <host> [secs]` — runs an ICMP
+  flood + an ssh connect/disconnect storm against the box while sampling
+  `/proc/lwip` every ~2 s from one interactive session; prints the mbox-fetch
+  delta per sample and flags **STALL** (liveness tick didn't advance) and any
+  pool/proto err or full pool, then the ping/connect loss summary. Converts
+  "feels unstable" into a bisectable signal. **NOTE: must run on real hardware**
+  — the QEMU-slirp backend has its own RX-stall (no background traffic → ring
+  idles) that doesn't occur on HW, so QEMU can't reproduce the real instability.
+- ⬜ **Decide the root cause** from a real-hardware harness run: starvation
+  (STALL while link.recv climbs) vs. pool (err / full) vs. timer vs. sys_arch
+  race. The later phases are conditional on this. (Heap `max` high-water reads 0
+  — a minor MEM_STATS quirk to confirm separately; `used` is accurate.)
 
 ### Phase 1 — Stability / correctness (the actual bug-fixes)
 - ⬜ **Blocking, not polling, in every lwIP-adjacent kernel thread.** Audit

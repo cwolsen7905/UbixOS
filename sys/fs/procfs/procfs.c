@@ -75,6 +75,11 @@
 #define PFILE_STAT_GLOBAL 8 /* /proc/stat — per-CPU busy/idle tick counters */
 #define PFILE_STATM    9   /* /proc/<pid>/statm — memory sizes in pages */
 #define PFILE_UPTIME   10  /* /proc/uptime — seconds since boot, idle seconds */
+#define PFILE_LWIP     11  /* /proc/lwip — lwIP stats + tcpip liveness (lwip-audit) */
+
+/* lwIP counter snapshot, defined in the net stack (sys/net/net/sys_arch.c);
+ * net is always linked into the kernel. */
+extern int lwip_stats_format(char *buf, int bufsz);
 
 /* procfs_dir_state.type values */
 #define PDIR_ROOT  0
@@ -537,6 +542,16 @@ procfs_open(char *file, fileDescriptor_t *fd)
 		return 1;
 	}
 
+	/* Global files: /proc/lwip — lwIP stats + tcpip_thread liveness */
+	if (strcmp(pidstr, "lwip") == 0 && *rest == '\0') {
+		char tmp2[2048];
+		int  mlen = lwip_stats_format(tmp2, sizeof(tmp2));
+		fd->ino   = 0;
+		fd->start = PFILE_LWIP;
+		fd->size  = (u_int32_t)mlen;
+		return 1;
+	}
+
 	/* Global files: /proc/uptime */
 	if (strcmp(pidstr, "uptime") == 0 && *rest == '\0') {
 		char tmp2[64];
@@ -679,6 +694,19 @@ procfs_read(fileDescriptor_t *fd, char *data, off_t offset, long size)
 	if (fd->start == PFILE_STAT_GLOBAL) {
 		char     mtmp[512]; /* aggregate + up to CPU_ENUM_MAX per-core lines */
 		int      mlen = procfs_build_stat_global(mtmp, sizeof(mtmp));
+		long     mn;
+		if (offset >= (long)mlen)
+			return 0;
+		mn = (long)mlen - offset;
+		if (mn > size)
+			mn = size;
+		memcpy(data, mtmp + offset, mn);
+		return (int)mn;
+	}
+
+	if (fd->start == PFILE_LWIP) {
+		char     mtmp[2048];
+		int      mlen = lwip_stats_format(mtmp, sizeof(mtmp));
 		long     mn;
 		if (offset >= (long)mlen)
 			return 0;
@@ -843,7 +871,7 @@ procfs_readdir(kDIR_t *dir, struct kdirent *ent)
 	/* ── Root: global files first, then live task dirs ── */
 	if (s->type == PDIR_ROOT) {
 		/* Phases 0..N-1: emit global synthetic files, one per readdir call */
-		static const char *const procfs_root_files[] = { "mounts", "meminfo", "stat", "uptime" };
+		static const char *const procfs_root_files[] = { "mounts", "meminfo", "stat", "uptime", "lwip" };
 		if (s->root_phase < (int)(sizeof(procfs_root_files) / sizeof(procfs_root_files[0]))) {
 			strncpy(ent->d_name, procfs_root_files[s->root_phase], sizeof(ent->d_name) - 1);
 			ent->d_name[sizeof(ent->d_name) - 1] = '\0';

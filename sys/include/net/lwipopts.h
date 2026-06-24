@@ -80,7 +80,14 @@
 #define MEMP_NUM_TCP_PCB_LISTEN   8
 #define MEMP_NUM_TCP_SEG   64
 #define MEMP_NUM_TCPIP_MSG_API   8
-#define MEMP_NUM_TCPIP_MSG_INPKT   8
+/* Inbound-packet messages queued to tcpip_thread.  Was 8 — far too small for a
+ * real LAN's burst/broadcast traffic, and inconsistent with SYS_MBOX_SIZE=100
+ * (the mailbox could hold 100 but the pool capped live inbound packets at 8).
+ * When this pool is empty, tcpip_input() drops the packet before it reaches the
+ * IP/ICMP layer — observed as TCPIP_MSG_INPKT err climbing and ping failing
+ * (lwip-audit).  32 absorbs a real burst while staying under PBUF_POOL_SIZE (64)
+ * so queued packets can't starve the RX pbuf supply. */
+#define MEMP_NUM_TCPIP_MSG_INPKT   32
 #define MEMP_NUM_UDP_PCB   4
 #define PBUF_POOL_SIZE   64
 

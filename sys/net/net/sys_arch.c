@@ -12,6 +12,8 @@
 #include "net/sys.h"
 #include "net/opt.h"
 #include "net/stats.h"
+#include "net/netif.h"    /* netif_list + ip4 accessors for /proc/lwip */
+#include "net/ip4_addr.h" /* ip4addr_ntoa_r */
 #include <net/arch/sys_arch.h>
 
 #include <ubixos/spinlock.h>
@@ -293,11 +295,19 @@ err_t sys_mbox_trypost(struct sys_mbox **mb, void *msg) {
   return ERR_OK;
 }
 
+/* tcpip_thread liveness tick (lwip-audit Phase 0): tcpip_thread's main loop
+ * blocks in a mailbox fetch every iteration, so this counter advances whenever
+ * the net thread runs.  If it stalls while traffic is arriving, tcpip_thread is
+ * being starved (the cooperative-scheduler instability).  Read-only via
+ * /proc/lwip; formatted by lwip_stats_format(). */
+volatile u_int32_t g_lwip_mbox_fetches = 0;
+
 u_int32_t sys_arch_mbox_fetch(struct sys_mbox **mb, void **msg, u_int32_t timeout) {
   u_int32_t time_needed = 0x0;
   struct sys_mbox *mbox = 0x0;
 
   LWIP_ASSERT("invalid mbox", (mb != NULL) && (*mb != NULL));
+  g_lwip_mbox_fetches++;
   mbox = *mb;
 
   /* The mutex lock is quick so we don't bother with the timeout
@@ -340,6 +350,80 @@ u_int32_t sys_arch_mbox_fetch(struct sys_mbox **mb, void **msg, u_int32_t timeou
   sys_sem_signal(&mbox->lock);
 
   return time_needed;
+}
+
+#if MEMP_STATS
+/* Pool names in lwip_stats.memp[] order — built from the same memp_std.h X-macro
+ * list memp.c uses for memp_pools[], so the indices line up.  Only `desc` is
+ * kept; the num/size args (and their struct sizeofs) are discarded by the
+ * preprocessor, so no lwIP type definitions are pulled in. */
+static const char *const g_memp_names[] = {
+#define LWIP_MEMPOOL(name, num, size, desc) desc,
+#include "net/priv/memp_std.h"
+};
+#endif
+
+/**
+ * Snapshot key lwIP counters into a text buffer for /proc/lwip (lwip-audit
+ * Phase 0).  Surfaces the tcpip_thread liveness tick, per-protocol error/drop
+ * counters, and heap + memp-pool high-water marks — so pool exhaustion (a pool
+ * at used==max or err>0) and a stalled net thread become observable instead of
+ * silent.  @return bytes written (clamped to bufsz).
+ */
+int lwip_stats_format(char *buf, int bufsz) {
+  int n = 0;
+#define LWSNAP(...) do { if (n < bufsz) n += snprintf(buf + n, (size_t)(bufsz - n), __VA_ARGS__); } while (0)
+  /* Interfaces first: address/mask/gateway + link state, so /proc/lwip doubles
+   * as a quick "what's my IP" check. */
+  for (struct netif *nif = netif_list; nif != NULL; nif = nif->next) {
+    char ip[16], nm[16], gw[16];
+    ip4addr_ntoa_r(netif_ip4_addr(nif), ip, sizeof(ip));
+    ip4addr_ntoa_r(netif_ip4_netmask(nif), nm, sizeof(nm));
+    ip4addr_ntoa_r(netif_ip4_gw(nif), gw, sizeof(gw));
+    LWSNAP("netif %c%c%u: ip=%s mask=%s gw=%s mtu=%u %s%s\n", nif->name[0], nif->name[1], (u_int32_t)nif->num, ip, nm,
+           gw, (u_int32_t)nif->mtu, (nif->flags & NETIF_FLAG_UP) ? "up" : "down",
+           (nif->flags & NETIF_FLAG_LINK_UP) ? " link-up" : "");
+  }
+  LWSNAP("tcpip_mbox_fetches: %u\n", g_lwip_mbox_fetches);
+#if LINK_STATS
+  LWSNAP("link: recv=%u xmit=%u drop=%u memerr=%u lenerr=%u err=%u\n", (u_int32_t)lwip_stats.link.recv,
+         (u_int32_t)lwip_stats.link.xmit, (u_int32_t)lwip_stats.link.drop, (u_int32_t)lwip_stats.link.memerr,
+         (u_int32_t)lwip_stats.link.lenerr, (u_int32_t)lwip_stats.link.err);
+#endif
+#if IP_STATS
+  LWSNAP("ip:   recv=%u xmit=%u drop=%u chkerr=%u lenerr=%u\n", (u_int32_t)lwip_stats.ip.recv,
+         (u_int32_t)lwip_stats.ip.xmit, (u_int32_t)lwip_stats.ip.drop, (u_int32_t)lwip_stats.ip.chkerr,
+         (u_int32_t)lwip_stats.ip.lenerr);
+#endif
+#if TCP_STATS
+  LWSNAP("tcp:  recv=%u xmit=%u drop=%u rterr=%u memerr=%u err=%u\n", (u_int32_t)lwip_stats.tcp.recv,
+         (u_int32_t)lwip_stats.tcp.xmit, (u_int32_t)lwip_stats.tcp.drop, (u_int32_t)lwip_stats.tcp.rterr,
+         (u_int32_t)lwip_stats.tcp.memerr, (u_int32_t)lwip_stats.tcp.err);
+#endif
+#if UDP_STATS
+  LWSNAP("udp:  recv=%u xmit=%u drop=%u chkerr=%u\n", (u_int32_t)lwip_stats.udp.recv, (u_int32_t)lwip_stats.udp.xmit,
+         (u_int32_t)lwip_stats.udp.drop, (u_int32_t)lwip_stats.udp.chkerr);
+#endif
+#if ICMP_STATS
+  LWSNAP("icmp: recv=%u xmit=%u drop=%u lenerr=%u chkerr=%u err=%u\n", (u_int32_t)lwip_stats.icmp.recv,
+         (u_int32_t)lwip_stats.icmp.xmit, (u_int32_t)lwip_stats.icmp.drop, (u_int32_t)lwip_stats.icmp.lenerr,
+         (u_int32_t)lwip_stats.icmp.chkerr, (u_int32_t)lwip_stats.icmp.err);
+#endif
+#if MEM_STATS
+  LWSNAP("heap: used=%u max=%u avail=%u err=%u\n", (u_int32_t)lwip_stats.mem.used, (u_int32_t)lwip_stats.mem.max,
+         (u_int32_t)lwip_stats.mem.avail, (u_int32_t)lwip_stats.mem.err);
+#endif
+#if MEMP_STATS
+  for (int i = 0; i < MEMP_MAX; i++) {
+    struct stats_mem *m = lwip_stats.memp[i];
+    if (m == NULL || (m->max == 0 && m->used == 0 && m->err == 0))
+      continue;
+    LWSNAP("pool %-16s used=%u max=%u total=%u err=%u\n", g_memp_names[i], (u_int32_t)m->used, (u_int32_t)m->max,
+           (u_int32_t)m->avail, (u_int32_t)m->err);
+  }
+#endif
+#undef LWSNAP
+  return n;
 }
 
 u_int32_t sys_arch_mbox_tryfetch(struct sys_mbox **mb, void **msg) {
