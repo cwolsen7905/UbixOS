@@ -1,0 +1,4 @@
+# Valid login shells (checked by sshd/getusershell).
+/bin/tcsh
+/bin/sh
+/bin/oksh

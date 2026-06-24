@@ -12,6 +12,12 @@
 # Invoked by Makefile with WRKSRC/CC/BUILD/MUSL_ARCH/PORT_CFLAGS in the env.
 set -e
 : "${WRKSRC:?}" "${CC:?}" "${AR:?}" "${BUILD:?}" "${MUSL_ARCH:?}" "${PORT_CFLAGS:?}" "${PORTDIR:?}" "${WORLDINC:?}"
+# ld emulation matching the world build (share/mk/ubix.musl.vars.mk).
+case "$MUSL_ARCH" in
+	aarch64) LDEMUL=aarch64elf ;;
+	x86_64)  LDEMUL=elf_x86_64 ;;
+	*)       LDEMUL=aarch64elf ;;
+esac
 
 cd "$WRKSRC"
 
@@ -113,11 +119,17 @@ DEST="$BUILD/usr/sbin"
 link() {
 	out="$1"; shift
 	echo "  link $out"
-	$CC -nostdlib \
+	# Link layout mirrors the world prog.mk (share/mk/ubix.musl.ubix.prog.mk):
+	# explicit -m emulation + the libs inside --start-group/--end-group, so the
+	# dynamic relocations for libubix_api imports resolve correctly at runtime
+	# (without the group, the call to mpi_* jumped to the un-based symbol offset).
+	$CC -nostdlib -Wl,-m,"$LDEMUL" \
 		"$BUILD/obj/musl/lib/Scrt1.o" "$BUILD/obj/musl/lib/crti.o" \
 		"$@" \
+		-Wl,--start-group \
 		"$LTC/libtomcrypt.a" "$LTM/libtommath.a" \
 		-L"$BUILD/lib" $EXTRA_LIBS -lc "$LIBGCC" \
+		-Wl,--end-group \
 		"$BUILD/obj/musl/lib/crtn.o" \
 		-Wl,-dynamic-linker,/lib/ld-musl-"$MUSL_ARCH".so.1 -Wl,-rpath,/lib -pie \
 		-Wl,-z,noexecstack \

@@ -46,7 +46,10 @@ MUSL_INC = -I${MUSL}/include -I${BUILD}/obj/musl/obj/include \
            -I${MUSL}/arch/${MUSL_ARCH} -I${MUSL}/arch/generic
 SHIM_INC = -I${.CURDIR}/../bmake/shim   # reuse the sys/cdefs.h shim
 
-PORT_CFLAGS = -nostdlib -nostdinc -fno-builtin -fPIC -O2 ${SHIM_INC} ${MUSL_INC}
+# -O1 (not -O2): libtommath/libtomcrypt are optimization-sensitive under the
+# freestanding cross-build (the oksh/bmake ports use -O); -O2 was triggering a
+# NULL-bignum LTC_ARGCHK abort in the bundled crypto at runtime.
+PORT_CFLAGS = -nostdlib -nostdinc -fno-builtin -fPIC -O1 ${SHIM_INC} ${MUSL_INC}
 
 do-build:
 	@echo "==> cross-build Dropbear (sshd) for ${TARGET}"
