@@ -75,7 +75,10 @@ _USB_FLAGS!= test -f ${USB_IMAGE} && \
 # `all` is arch-aware: every MMU-class arch builds the full system (kernel + world
 # + image).  x86_64 now boots its musl world to the graphical desktop (views over
 # the std-VGA framebuffer), same as i386/aarch64.
-all: kernel world image
+# world BEFORE kernel: the kernel embeds musl-linked demo programs (init/login/sh,
+# the linker test, worldcat) into its image, so it needs world's musl libc + bin/
+# already built.  Building kernel first fails after a clean (no bits/alltypes.h).
+all: world kernel image
 
 # `kernel` is arch-dispatched.  master is 64-bit only: aarch64 (default) + x86_64,
 # each built standalone from the top Makefile (explicit GENERIC_SRCS lists + a
@@ -200,19 +203,19 @@ kernel-aarch64:
 	@mkdir -p ${OBJ_DIR}/boot ${OBJ_DIR}/obj/sys
 	@for f in `find ${CURDIR}/sys/arch/aarch64 -name '*.S'`; do \
 	    o=${OBJ_DIR}/obj/sys/`basename $$f .S`.o; \
-	    sh ${CURDIR}/tools/kbuild-cc.sh "${CROSS_PREFIX}gcc [asm] " $$o $$f ${KERN_CC} ${KERN_CCFLAGS} ${AARCH64_KCFLAGS} || exit 1; \
+	    sh ${CURDIR}/tools/kbuild-cc.sh "${KERN_CC} [asm] " $$o $$f ${KERN_CC} ${KERN_CCFLAGS} ${AARCH64_KCFLAGS} || exit 1; \
 	done
 	@for f in `find ${CURDIR}/sys/arch/aarch64 -name '*.c'`; do \
 	    o=${OBJ_DIR}/obj/sys/`basename $$f .c`.o; \
-	    sh ${CURDIR}/tools/kbuild-cc.sh "${CROSS_PREFIX}gcc [c]   " $$o $$f ${KERN_CC} ${KERN_CCFLAGS} ${AARCH64_KCFLAGS} -std=c99 || exit 1; \
+	    sh ${CURDIR}/tools/kbuild-cc.sh "${KERN_CC} [c]   " $$o $$f ${KERN_CC} ${KERN_CCFLAGS} ${AARCH64_KCFLAGS} -std=c99 || exit 1; \
 	done
 	@for f in ${AARCH64_GENERIC_SRCS}; do \
 	    o=${OBJ_DIR}/obj/sys/`basename $$f .c`.o; \
-	    sh ${CURDIR}/tools/kbuild-cc.sh "${CROSS_PREFIX}gcc [gen] " $$o ${CURDIR}/$$f ${KERN_CC} ${KERN_CCFLAGS} ${AARCH64_KCFLAGS} -std=c99 || exit 1; \
+	    sh ${CURDIR}/tools/kbuild-cc.sh "${KERN_CC} [gen] " $$o ${CURDIR}/$$f ${KERN_CC} ${KERN_CCFLAGS} ${AARCH64_KCFLAGS} -std=c99 || exit 1; \
 	done
 	@for f in ${UBIXFS_KERN_SRCS}; do \
 	    o=${OBJ_DIR}/obj/sys/`basename $$f .c`.o; \
-	    sh ${CURDIR}/tools/kbuild-cc.sh "${CROSS_PREFIX}gcc [ubfs]" $$o ${CURDIR}/$$f ${KERN_CC} ${KERN_CCFLAGS} ${AARCH64_KCFLAGS} ${UBIXFS_KERN_INCS} -std=c99 || exit 1; \
+	    sh ${CURDIR}/tools/kbuild-cc.sh "${KERN_CC} [ubfs]" $$o ${CURDIR}/$$f ${KERN_CC} ${KERN_CCFLAGS} ${AARCH64_KCFLAGS} ${UBIXFS_KERN_INCS} -std=c99 || exit 1; \
 	done
 	@echo "${CROSS_PREFIX}gcc [user] tools/aarch64-user/hello.c -> hello.elf (embedded)"
 	@${CROSS_PREFIX}gcc -march=armv8-a -mgeneral-regs-only -static -nostdlib -nostartfiles \
