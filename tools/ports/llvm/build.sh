@@ -44,9 +44,22 @@ echo "==> [1/2] runtimes (full libc++) for ${TARGET}"
 	-DLIBCXX_ENABLE_SHARED=OFF -DLIBCXXABI_ENABLE_SHARED=OFF -DLIBUNWIND_ENABLE_SHARED=OFF \
 	-DLIBCXX_CXX_ABI=libcxxabi -DLIBCXXABI_USE_LLVM_UNWINDER=ON \
 	-DLIBCXXABI_ENABLE_STATIC_UNWINDER=ON -DLIBCXX_HAS_MUSL_LIBC=ON \
+	-DLIBCXXABI_HAS_CXA_THREAD_ATEXIT_IMPL=OFF \
 	-DLLVM_INCLUDE_TESTS=OFF -DLIBCXX_INCLUDE_BENCHMARKS=OFF \
 	-DLIBCXX_INCLUDE_TESTS=OFF -DLIBCXXABI_INCLUDE_TESTS=OFF
+# CMAKE_SYSTEM_NAME=Linux makes libc++abi assume glibc's __cxa_thread_atexit_impl,
+# which musl lacks — OFF selects libc++abi's self-contained pthread-key fallback.
 "${NINJA}" -C "${RTBLD}"
+
+# ── 1b. Empty musl stub archives ─────────────────────────────────────────────
+# musl folds libm/librt/libdl/libpthread/... into libc.a, but LLVM's CMake still
+# emits explicit -lm/-lrt/-ldl; empty archives satisfy the linker (real symbols
+# come from libc.a).  ubixos-clang.cmake adds -L${WRKSRC}/musl-stublibs.
+echo "==> [1b] musl stub archives"
+mkdir -p "${WRKSRC}/musl-stublibs"
+for _l in m rt dl pthread util execinfo; do
+	"${LLVM18}/llvm-ar" rcs "${WRKSRC}/musl-stublibs/lib${_l}.a"
+done
 
 # ── 2. clang + lld for uBixOS (against the libc++ above) ──────────────────────
 echo "==> [2/2] clang+lld for ${TARGET}"

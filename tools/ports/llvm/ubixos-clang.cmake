@@ -54,8 +54,18 @@ set(CMAKE_C_FLAGS_INIT   "-nostdlibinc ${_musl_inc} -fPIC -ffunction-sections -f
 # -nostdinc++ + the built libc++'s configured include; -fno-exceptions/-rtti per LLVM.
 set(CMAKE_CXX_FLAGS_INIT "-nostdlibinc -nostdinc++ -isystem ${_rt}/include/c++/v1 ${_musl_inc} -fPIC -fno-exceptions -fno-rtti -ffunction-sections -fdata-sections")
 
-# Final static binaries: our libc++/abi/unwind + musl, via lld.
-set(CMAKE_EXE_LINKER_FLAGS_INIT "-static -fuse-ld=lld -L${_rt}/lib -L${_build}/lib -lc++ -lc++abi -lunwind")
+# Final static binaries — freestanding musl link (clang's default Linux recipe
+# wants gcc-style crtbegin/crtend + separate -lm/-lrt/-ldl + -lgcc, none of which
+# exist with musl).  So -nostdlib and provide everything: musl crt + libc, our
+# libc++/abi/unwind, and the cross-gcc's libgcc for the compiler builtins.
+#   start files (crt1/crti) go BEFORE the objects (here);
+#   libs + crtn go AFTER the objects (CMAKE_CXX_STANDARD_LIBRARIES).
+# Empty stub archives satisfy LLVM's explicit -lm/-lrt/-ldl/-lpthread/... — musl
+# folds all of those into libc.a, so the separate libs don't exist (see build.sh).
+set(_gcclib "/opt/homebrew/opt/aarch64-elf-gcc/lib/gcc/aarch64-elf/16.1.0")
+set(_stub   "${UBIXOS_SRCTOP}/build/ports/llvm-18.1.8/musl-stublibs")
+set(CMAKE_EXE_LINKER_FLAGS_INIT "-nostdlib -static -fuse-ld=lld ${_build}/obj/musl/lib/crt1.o ${_build}/obj/musl/lib/crti.o")
+set(CMAKE_CXX_STANDARD_LIBRARIES "-L${_rt}/lib -L${_build}/lib -L${_gcclib} -L${_stub} -Wl,--start-group -lc++ -lc++abi -lunwind -lc -lgcc -Wl,--end-group ${_build}/obj/musl/lib/crtn.o")
 
 set(CMAKE_FIND_ROOT_PATH "${_rt}" "${_build}" "${_musl}")
 set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
