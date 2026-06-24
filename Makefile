@@ -23,10 +23,11 @@ WORLD_LIBEXEC_SRC=${CURDIR}/libexec
 WORLD_BIN_SRC=${CURDIR}/bin
 WORLD_INC="-I${CURDIR}/include -I${CURDIR}/lib/objgfx40/ -I${CURDIR}/contrib/libcxxabi/include"
 # Toolchain (CC/CXX/AS/AR/LD/NM/OBJCOPY/RANLIB) is selected centrally by
-# ubix.toolchain.mk (gcc cross by default, clang/lld under TOOLCHAIN=clang) and
-# passed to the world sub-makes here.  The tool names are single words, so they
-# pass cleanly as command-line variables.
-WORLD_FLAGS=_ARCH=${_ARCH} CC="${CC}" CXX="${CXX}" AS="${AS}" AR="${AR}" LD="${LD}" NM="${NM}" OBJDUMP= OBJCOPY="${OBJCOPY}" RANLIB="${RANLIB}"
+# ubix.toolchain.mk and reaches the world sub-makes via the exported TOOLCHAIN:
+# each sub-make re-includes ubix.toolchain.mk and recomputes the tools.  We do NOT
+# pass them here, because the clang profile's CC is multi-word (clang --target …
+# --ld-path …) and bmake would mis-split it as a command-line variable.
+WORLD_FLAGS=_ARCH=${_ARCH} OBJDUMP=
 
 WMAKE=${MAKE} ${WORLD_FLAGS} CROSS_M32="${CROSS_M32}" INCLUDE=${WORLD_INC} BUILD_DIR=${OBJ_DIR}
 

@@ -31,19 +31,36 @@ _UBIX_TOOLCHAIN_MK = 1
 TOOLCHAIN ?= gcc
 
 .if ${TOOLCHAIN} == "clang"
-# clang/lld/llvm-* profile.  In-OS the bare tools are in PATH; clang's default
-# target + default linker (lld) are baked in, so no --target/-fuse-ld here.
-# Hard '=' (not ?=) so these win over bmake's builtin CC=cc etc.; a command-line
-# assignment (e.g. CC="… --target=…" for host cross-validation) still overrides.
-CLANG    ?= clang
-CC       = ${CLANG}
-CXX      = ${CLANG}++
-AS       = ${CLANG}
-AR       = llvm-ar
-LD       = ld.lld
-NM       = llvm-nm
-OBJCOPY  = llvm-objcopy
-RANLIB   = llvm-ranlib
+# clang/lld/llvm-* profile.  In-OS the bare tools are in PATH and clang's default
+# target + default linker (lld) are baked in.  On the host (Homebrew llvm@18) we
+# cross-drive: point at that clang and inject --target + --ld-path so a host
+# `bmake world/kernel TOOLCHAIN=clang` builds the aarch64/x86_64 system from macOS.
+# CC carries the flags; that is safe because the world sub-makes recompute CC from
+# the *exported* TOOLCHAIN (below), so a multi-word CC is never passed as a bare
+# command-line word (which bmake would mis-split).  Hard '=' so these beat bmake's
+# builtin CC=cc; a command-line CC= still overrides.
+_LLVM18 = /opt/homebrew/opt/llvm@18/bin
+.if exists(${_LLVM18}/clang)
+_CLANG   ?= ${_LLVM18}/clang
+_CLANGXX ?= ${_LLVM18}/clang++
+_LLVMBIN ?= ${_LLVM18}/
+_TGT     ?= --target=${_ARCH}-unknown-linux-musl
+_LDPATH  ?= --ld-path=${_LLVM18}/ld.lld
+.else
+_CLANG   ?= clang
+_CLANGXX ?= clang++
+_LLVMBIN ?=
+_TGT     ?=
+_LDPATH  ?=
+.endif
+CC       = ${_CLANG} ${_TGT} ${_LDPATH}
+CXX      = ${_CLANGXX} ${_TGT} ${_LDPATH}
+AS       = ${_CLANG} ${_TGT}
+AR       = ${_LLVMBIN}llvm-ar
+LD       = ${_LLVMBIN}ld.lld
+NM       = ${_LLVMBIN}llvm-nm
+OBJCOPY  = ${_LLVMBIN}llvm-objcopy
+RANLIB   = ${_LLVMBIN}llvm-ranlib
 # clang's -nostdinc would also drop its resource headers (stdbool.h, stddef.h);
 # -nostdlibinc keeps them while still excluding the host's system headers.
 TC_NOSTDINC ?= -nostdlibinc
@@ -69,6 +86,8 @@ TC_NOSTDINC ?= -nostdinc
 TC_STDFLAG  ?=
 .endif
 
-.export CC CXX AS AR LD NM OBJCOPY RANLIB TC_NOSTDINC TC_STDFLAG
+# Export TOOLCHAIN so world sub-makes (which re-include this file) recompute the
+# same toolchain instead of inheriting a possibly multi-word CC as a command word.
+.export TOOLCHAIN CC CXX AS AR LD NM OBJCOPY RANLIB TC_NOSTDINC TC_STDFLAG
 
 .endif # _UBIX_TOOLCHAIN_MK
