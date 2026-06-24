@@ -58,6 +58,7 @@
 /* Exit Syscall */
 int sys_exit(struct thread *td, struct sys_exit_args *args)
 {
+	_current->exit_code = (u_int32_t)(args->status & 0xff); /* saved for wait4 (W_EXITED) */
 	endTask(_current->id);
 	return (0x0);
 }
@@ -596,6 +597,7 @@ int sys_readv(struct thread *td, struct sys_readv_args *uap)
 /* exit_group — exit all threads in the process (alias to sys_exit) */
 int sys_exit_group(struct thread *td, struct sys_exit_group_args *uap)
 {
+	_current->exit_code = (u_int32_t)(uap->status & 0xff); /* saved for wait4 (W_EXITED) */
 	endTask(_current->id);
 	return (0);
 }
@@ -662,7 +664,7 @@ static kTask_t *wait_find_child(int want_pid, int options, int *wstatus)
 		if (t->state == DEAD || t->state == ZOMBIE)
 		{
 			if (wstatus)
-				*wstatus = W_EXITED(0);
+				*wstatus = W_EXITED(t->exit_code & 0xff);
 			if (t->prev != NULL)
 				t->prev->next = t->next;
 			else

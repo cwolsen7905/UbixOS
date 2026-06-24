@@ -95,6 +95,7 @@ static void do_exit(u_int64_t code)
 	kprintf("[kernel] EL0 process exit(%lu)\n", code);
 	if (_current != 0 && _current->md.md_usp != 0)
 	{
+		_current->exit_code = (u_int32_t)(code & 0xff); /* saved for wait4 (W_EXITED) */
 		endTask(_current->id);
 		sched_yield();
 	}

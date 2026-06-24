@@ -752,7 +752,7 @@ int aarch64_wait4(int want_pid, int *status, int options)
 			 * wait4 but passes only x0 — x1 (status) is garbage; only write a
 			 * pointer that is in the user VA range. */
 			if (status != NULL && (uintptr_t)status >= 0x100000000UL)
-				*status = 0; /* exit code not yet propagated; report 0 */
+				*status = (int)((child->exit_code & 0xff) << 8); /* W_EXITED(code) */
 			return ((int)child->id);
 		}
 
@@ -793,7 +793,7 @@ int aarch64_wait4(int want_pid, int *status, int options)
 			 * wait4 but passes only x0 — x1 (status) is garbage; only write a
 			 * pointer that is in the user VA range. */
 			if (status != NULL && (uintptr_t)status >= 0x100000000UL)
-				*status = 0;
+				*status = (int)((child->exit_code & 0xff) << 8); /* W_EXITED(code) */
 			return ((int)child->id);
 		}
 		sched_yield();

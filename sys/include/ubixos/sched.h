@@ -106,6 +106,7 @@ extern "C"
 		tty_term *ct_tty;    /* controlling terminal — set by TIOCSCTTY, cleared by setsid() */
 		u_int32_t children;  // Hack for WAIT
 		u_int32_t last_exit; // Hack For WAIT
+		u_int32_t exit_code; /* low 8 bits of exit(2)'s code, saved at exit for wait4 (W_EXITED) */
 		struct taskStruct *parent;
 		char username[256];
 		u_int32_t *kernelStack;
