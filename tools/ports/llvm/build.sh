@@ -22,7 +22,8 @@ echo "==> [1/2] host tblgen"
 	-DCMAKE_BUILD_TYPE=Release \
 	-DLLVM_ENABLE_PROJECTS=clang \
 	-DLLVM_TARGETS_TO_BUILD="X86;AArch64" \
-	-DLLVM_ENABLE_RTTI=OFF -DLLVM_ENABLE_EH=OFF
+	-DLLVM_ENABLE_RTTI=OFF -DLLVM_ENABLE_EH=OFF \
+	-DLLVM_INCLUDE_TESTS=OFF -DLLVM_INCLUDE_BENCHMARKS=OFF
 "${NINJA}" -C "${HOSTBLD}" -j"${JOBS}" llvm-tblgen clang-tblgen
 
 # ── 2. Cross-build clang + lld for uBixOS ────────────────────────────────────
