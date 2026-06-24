@@ -3,14 +3,8 @@
 
 .include "${UBIX_MK}/ubix.platform.mk"
 
-CC=${CROSS_PREFIX}gcc
-CXX=${CROSS_PREFIX}g++
-AS=${CROSS_PREFIX}as
-AR=${CROSS_PREFIX}ar
-LD=${CROSS_PREFIX}ld
-NM=${CROSS_PREFIX}nm
-OBJCOPY=${CROSS_PREFIX}objcopy
-RANLIB=${CROSS_PREFIX}ranlib
+# Toolchain (CC/CXX/AS/AR/LD/NM/OBJCOPY/RANLIB) + TC_NOSTDINC/TC_STDFLAG come
+# from ubix.toolchain.mk (set + exported by Makefile.incl).
 
 LDFLAGS = -Bshareable
 
@@ -21,5 +15,5 @@ INCLUDES = -I${MUSL_SRC}/include \
            -I${MUSL_SRC}/arch/${MUSL_ARCH} \
            -I${MUSL_SRC}/arch/generic \
            -I${SRCTOP}/include
-CFLAGS = ${CROSS_M32} ${WFLAGS} -Wall -nostdlib -nostdinc -fno-builtin -fno-exceptions -fno-rtti -O \
+CFLAGS = ${CROSS_M32} ${WFLAGS} -Wall -nostdlib ${TC_NOSTDINC} ${TC_STDFLAG} -fno-builtin -fno-exceptions -fno-rtti -O \
          ${ARCH_NOSIMD} -fPIC -MMD -MP

@@ -28,10 +28,10 @@ Legend: ☑ done · ◐ in progress · ☐ todo · ⊘ blocked
 ### Phase B — Native (in-OS) toolchain profile
 | # | Step | Status | Note |
 |---|------|--------|------|
-| B1 | `share/mk/ubix.target.native.mk` (clang/ld.lld/llvm-*, empty CROSS_PREFIX) | ☐ | |
-| B2 | In-OS profile selection in `ubix.platform.mk` | ☐ | host unaffected |
-| B3 | Confirm `ubix.musl.prog.mk` clang/lld link rule (crt, -pie, dyld) | ☐ | |
-| B4 | Verify host-side by cross-driving `CC=clang --target=aarch64-…-musl` | ☐ | flag shakeout |
+| B1 | `share/mk/ubix.toolchain.mk` (gcc default + clang/ld.lld/llvm-* branch) | ☑ | central seam; gcc byte-identical |
+| B2 | Toolchain-agnostic consumers (bin/lib/libexec incl + 5 musl mk + WORLD_FLAGS) | ☑ | `TC_NOSTDINC`/`TC_STDFLAG`; in-OS auto-detect deferred to E |
+| B3 | Confirm clang/lld link rule (crt, -pie, dyld) | ☑ | clang cat = aarch64 musl PIE |
+| B4 | Host cross-drive `CC=clang --target=…`; gcc full world green | ☑ | deltas: `-nostdlibinc`, `-std=gnu23`, `aarch64linux` |
 
 ### Phase C — Stage source tree + obj dir into the image
 | # | Step | Status | Note |

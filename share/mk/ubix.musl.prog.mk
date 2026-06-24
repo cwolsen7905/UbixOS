@@ -20,7 +20,7 @@ EXTRA_CFLAGS  ?=
 
 MUSL_INC = ${MUSL_BASE_INC} -I${SRCTOP}/include
 
-MUSL_CFLAGS = ${CROSS_M32} -nostdlib -nostdinc -fno-builtin \
+MUSL_CFLAGS = ${CROSS_M32} -nostdlib ${TC_NOSTDINC} ${TC_STDFLAG} -fno-builtin \
               ${ARCH_NOSIMD} ${MUSL_PIE_CFLAGS} -MMD -MP \
               -Wa,--noexecstack -Wall -O
 

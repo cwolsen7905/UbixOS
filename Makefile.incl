@@ -51,3 +51,6 @@ OBJ_DIR ?= ${SRCTOP}/build/${_ARCH}
 
 .include "${UBIX_MK}/ubix.platform.mk"
 .include "${UBIX_MK}/ubix.target.${_ARCH}.mk"
+# Toolchain selection (gcc cross by default, clang/lld for self-hosting).  After
+# platform + target so CROSS_PREFIX / MUSL_LDEMULATION are resolved first.
+.include "${UBIX_MK}/ubix.toolchain.mk"

@@ -22,11 +22,11 @@ WORLD_LIB_SRC=${CURDIR}/lib
 WORLD_LIBEXEC_SRC=${CURDIR}/libexec
 WORLD_BIN_SRC=${CURDIR}/bin
 WORLD_INC="-I${CURDIR}/include -I${CURDIR}/lib/objgfx40/ -I${CURDIR}/contrib/libcxxabi/include"
-.if defined(CROSS_PREFIX) && !empty(CROSS_PREFIX)
-WORLD_FLAGS=_ARCH=${_ARCH} CC="${CROSS_PREFIX}gcc" CXX="${CROSS_PREFIX}g++" AS="${CROSS_PREFIX}as" AR="${CROSS_PREFIX}ar" LD="${CROSS_PREFIX}ld" NM="${CROSS_PREFIX}nm" OBJDUMP= OBJCOPY="${CROSS_PREFIX}objcopy" RANLIB="${CROSS_PREFIX}ranlib"
-.else
-WORLD_FLAGS=_ARCH=${_ARCH} CC="cc" CXX="c++" AS="as" AR="ar" LD="ld" NM=nm OBJDUMP= OBJCOPY="objcopy" RANLIB=ranlib
-.endif
+# Toolchain (CC/CXX/AS/AR/LD/NM/OBJCOPY/RANLIB) is selected centrally by
+# ubix.toolchain.mk (gcc cross by default, clang/lld under TOOLCHAIN=clang) and
+# passed to the world sub-makes here.  The tool names are single words, so they
+# pass cleanly as command-line variables.
+WORLD_FLAGS=_ARCH=${_ARCH} CC="${CC}" CXX="${CXX}" AS="${AS}" AR="${AR}" LD="${LD}" NM="${NM}" OBJDUMP= OBJCOPY="${OBJCOPY}" RANLIB="${RANLIB}"
 
 WMAKE=${MAKE} ${WORLD_FLAGS} CROSS_M32="${CROSS_M32}" INCLUDE=${WORLD_INC} BUILD_DIR=${OBJ_DIR}
 

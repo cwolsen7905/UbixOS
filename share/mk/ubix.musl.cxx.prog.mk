@@ -18,7 +18,7 @@ EXTRA_CFLAGS  ?=
 MUSL_INC = ${MUSL_BASE_INC}
 
 CXX_CFLAGS = ${CROSS_M32} -std=c++20 \
-             -nostdlib -nostdinc -nostdinc++ -fno-builtin \
+             -nostdlib ${TC_NOSTDINC} -nostdinc++ -fno-builtin \
              -fno-rtti -fno-exceptions \
              ${ARCH_NOSIMD} -MMD -MP \
              -Wa,--noexecstack -Wall -O \
@@ -40,13 +40,13 @@ OBJDIR ?= ${OBJ_DIR}/obj/bin/${.CURDIR:T}
 
 .c.o:
 	@mkdir -p ${OBJDIR}
-	$(CC) ${CROSS_M32} -nostdlib -nostdinc -fno-builtin \
+	$(CC) ${CROSS_M32} -nostdlib ${TC_NOSTDINC} -fno-builtin \
 		${ARCH_NOSIMD} -MMD -MP -Wall -O \
 		$(MUSL_INC) -I${SRCTOP}/include -MT ${.TARGET:T} -c -o ${OBJDIR}/${.TARGET:T} ${.IMPSRC}
 
 .S.o:
 	@mkdir -p ${OBJDIR}
-	$(CC) ${CROSS_M32} -nostdlib -nostdinc -Wall \
+	$(CC) ${CROSS_M32} -nostdlib ${TC_NOSTDINC} -Wall \
 		-MT ${.TARGET:T} -c -o ${OBJDIR}/${.TARGET:T} ${.IMPSRC}
 
 _OBJS_FULL = ${OBJS:S|^|${OBJDIR}/|}
