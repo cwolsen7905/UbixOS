@@ -1,58 +1,47 @@
 /*-
  * Copyright (c) 2002-2026 The UbixOS Project.
  *
- * clonetest — end-to-end test for the rfork(RFMEM)/clone() thread-create path
- * (kernel sys_rfork + the clone wrapper), independent of TLS/futex.
+ * clonetest — end-to-end test for the x86_64 rfork(RFMEM)/clone() thread-create
+ * path (kernel sys_rfork + the asm wrapper), independent of TLS/futex.
  *
- * It spawns one thread on a caller-supplied stack and has it write two SHARED
- * globals.  If main() observes those writes, then: the syscall created a
- * runnable context, that context shares main()'s address space (it wrote our
- * globals), and the scheduler ran it — i.e. clone() works.  The thread then
- * exits; main keeps running, which also exercises the "non-last thread exits"
- * address-space refcount (its exit must NOT tear down the shared AS).
+ * Spawns one thread on a caller-supplied stack; the thread writes two SHARED
+ * globals.  If main() observes those writes, then the syscall created a runnable
+ * context that shares main()'s address space and the scheduler ran it => clone()
+ * works.  The thread exits; main keeps running (exercises "non-last thread exits").
  */
-
+#include <unistd.h>
+#include <sched.h>
 #include <stdio.h>
 
-/* Shared with the spawned thread via the common address space. */
-volatile int g_ran = 0;
-volatile int g_arg = 0;
+extern long spawn_thread(int (*fn)(void *), void *stack_top, void *arg);
 
-extern int spawn_thread(int (*fn)(void *), void *stack_top, void *arg);
+static volatile int g_ran = 0;
+static volatile long g_wrote = 0;
+static char g_stack[65536];
 
-static char g_tstack[16384];
-
-/* Runs on the new thread's stack, in main()'s address space.  Avoids anything
- * needing TLS (no errno/stdio here) — just touches shared memory and returns
- * (the wrapper turns the return into SYS_exit). */
-static int thread_fn(void *arg)
+static int worker(void *arg)
 {
-	g_arg = (int)(long)arg;
+	g_wrote = (long)arg + 42; /* write a SHARED global (proves shared AS) */
 	g_ran = 1;
 	return 7;
 }
 
 int main(void)
 {
-	int tid;
-	volatile long i;
+	long tid;
+	int spins;
 
+	write(1, "CLONE-ENTER\n", 12); /* raw syscall, before any musl stdio */
 	setvbuf(stdout, NULL, _IONBF, 0);
-	printf("clonetest: spawning a thread in the shared address space...\n");
+	printf("CLONE: spawning shared-AS thread...\n");
+	tid = spawn_thread(worker, g_stack + sizeof(g_stack), (void *)100);
+	printf("CLONE: rfork returned tid=%ld\n", tid);
 
-	tid = spawn_thread(thread_fn, g_tstack + sizeof(g_tstack), (void *)0x1234);
-	printf("clonetest: parent: spawn_thread() returned tid=%d\n", tid);
+	for (spins = 0; !g_ran && spins < 2000000; spins++)
+		sched_yield();
 
-	/* Yield CPU by spinning until the thread sets the shared flag (or we give
-	 * up).  Preemptive scheduling should run the thread during this loop. */
-	for (i = 0; i < 2000000000L && !g_ran; i++)
-		;
-
-	if (g_ran)
-		printf("clonetest: PASS -- thread ran in our AS; g_arg=0x%x (expect 0x1234)\n", g_arg);
-	else
-		printf("clonetest: FAIL -- thread never ran (g_ran still 0)\n");
-
-	printf("clonetest: parent exiting\n");
+	printf("CLONE RESULT: ran=%d wrote=%ld (want 142) tid=%ld -> %s\n",
+	       g_ran, g_wrote, tid,
+	       (tid > 0 && g_ran && g_wrote == 142) ? "PASS" : "FAIL");
 	return 0;
 }

@@ -623,6 +623,10 @@ void x86_64_syscall(struct x86_64_trapframe *tf)
 	{
 		tf->rax = (u64)x86_64_fork(tf);
 	}
+	else if (tf->rax == 251) /* rfork(RFMEM) — thread create (shares the AS) */
+	{
+		tf->rax = (u64)x86_64_rfork(tf);
+	}
 	else if (tf->rax == 158) /* arch_prctl — musl's TLS setup (no FreeBSD nr) */
 	{
 		extern void machine_set_tls(struct thread * td, uintptr_t base);

@@ -182,3 +182,83 @@ long x86_64_fork(struct x86_64_trapframe *parent_tf)
 
 	return child->id;
 }
+
+/**
+ * rfork(RFMEM) — thread create: a new task SHARING the caller's address space
+ * (same CR3, not a copy), running on a caller-supplied user stack, resuming at the
+ * caller's rfork() return point with rax = 0 — so musl's clone.s child path runs
+ * the thread function.  It joins the caller's thread group (tgid), so endTask frees
+ * the shared address space only when the last task of the group exits.
+ *
+ * SysV args (musl clone.s -> rfork, FreeBSD slot 251): rdi = flags (informational;
+ * v1 always shares the AS), rsi = child user-stack top, rdx = TLS base (0 if none).
+ *
+ * @return the new thread's tid to the caller; the new thread itself sees 0.
+ */
+long x86_64_rfork(struct x86_64_trapframe *parent_tf)
+{
+	u64 child_stack = parent_tf->rsi;
+	u64 tls = parent_tf->rdx;
+	kTask_t *child;
+	u8 *top;
+	struct x86_64_trapframe *ctf;
+	u64 *ctx;
+	int i;
+
+	kprintf("[rfork] caller=%d stack=0x%lx tls=0x%lx rip=0x%lx\n", _current ? _current->id : -1,
+	        (unsigned long)child_stack, (unsigned long)tls, (unsigned long)parent_tf->rip);
+
+	child = schedNewTask();
+
+	/* SHARE the caller's address space (same PML4) — the defining difference from
+	 * fork(), which copies it. */
+	child->md.md_cr3 = _current->md.md_cr3;
+	child->md.md_usp = child_stack;
+	child->md.md_entry = 0; /* unused — the trapframe drives the return */
+	child->md.md_fsbase = tls != 0 ? tls : _current->md.md_fsbase;
+	child->md.md_mmap_next = _current->md.md_mmap_next;
+	child->md.md_brk = _current->md.md_brk;
+	child->parent = _current;
+	_current->children++;
+
+	/* Same thread group => shared AS; endTask's sched_tgid_others_alive() check
+	 * frees the address space only when the LAST thread of the group exits. */
+	child->tgid = _current->tgid;
+
+	/* Shallow-share the fd table: threads share open files.  Free the placeholder
+	 * fds schedNewTask() made for 0-2, then point at the caller's file objects.
+	 * (x86_64 uses the MI endTask, which does not close/free fds, so a non-last
+	 * thread exiting cannot drop a shared file out from under its siblings.) */
+	for (i = 0; i < O_FILES; i++)
+	{
+		if (child->td.o_files[i] != NULL)
+		{
+			kfree(child->td.o_files[i]);
+			child->td.o_files[i] = NULL;
+		}
+		child->td.o_files[i] = _current->td.o_files[i];
+	}
+
+	proc_fork_inherit_context(child);
+	proc_fork_signal_init(child, &_current->td);
+
+	/* Child kernel stack: the caller's trapframe with rax = 0 (the child's rfork
+	 * return), its own user stack + a fresh frame base; below it a ctx frame whose
+	 * return address is ret_from_fork (the shared pop-and-SYSRETQ tail to ring 3). */
+	top = (u8 *)child->kernelStack + 65536; /* KSTACK_SIZE (schedNewTask) */
+	ctf = (struct x86_64_trapframe *)(top - sizeof(struct x86_64_trapframe));
+	memcpy(ctf, parent_tf, sizeof(struct x86_64_trapframe));
+	ctf->rax = 0;           /* the new thread sees rfork() == 0 */
+	ctf->rsp = child_stack; /* its own user stack */
+	ctf->rbp = 0;           /* fresh frame base */
+
+	ctx = (u64 *)((u8 *)ctf - FRAME_SLOTS * 8);
+	for (i = 0; i < FRAME_SLOTS; i++)
+		ctx[i] = 0;
+	ctx[FRAME_SLOTS - 1] = (u64)(uintptr_t)ret_from_fork;
+
+	child->md.md_kstack = (u64)(uintptr_t)ctx;
+	sched_ready(child);
+
+	return child->id;
+}
