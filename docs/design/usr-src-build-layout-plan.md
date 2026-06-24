@@ -63,10 +63,11 @@ Legend: ☑ done · ◐ in progress · ☐ todo · ⊘ blocked
 ### Phase E — Host kernel green under `TOOLCHAIN=clang` (both arches)
 | # | Step | Status | Note |
 |---|------|--------|------|
-| E1 | Kernel recipe uses `${KERN_CC}`/`ld.lld`/`llvm-objcopy` under clang | ☐ | the `find … | kbuild-cc.sh` loop + link |
-| E2 | Inline asm / `-mgeneral-regs-only` / ISA flags clang-clean | ☐ | aarch64 + x86_64 |
-| E3 | `ldscript.${ARCH}` links under `ld.lld` | ☐ | lld honors GNU scripts |
-| E4 | Both kernels boot under QEMU (clang-built) | ☐ | the real green gate |
+| E1 | Kernel recipe compiler → `${KERN_CC}`/`${KERN_CCFLAGS}` under clang | ◐ | `d13e0fd65`; compile=clang. Link/embeds still gcc/binutils |
+| E2 | Inline asm / `-mgeneral-regs-only` / ISA flags clang-clean (aarch64) | ☑ | only proc.c FPSIMD asm needed `.arch_extension fp`; 150 objs compile |
+| E3 | `ldscript.aarch64` links under `ld.lld` + `llvm-objcopy` embeds | ☐ | currently aarch64-elf-ld; objcopy `-O elf64-littleaarch64` name risk |
+| E4 | **aarch64 clang kernel boots under QEMU** | ☑ | boots → pool mount → init → daemons (FPSIMD ctx-switch proven) |
+| E5 | x86_64 kernel under clang (parameterize its recipe + boot) | ☐ | repeat E for x86_64 |
 
 ### Phase F — In-OS build (now that the clang build is host-green)
 | # | Step | Status | Note |
