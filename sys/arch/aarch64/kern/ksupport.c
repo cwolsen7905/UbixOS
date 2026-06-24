@@ -32,6 +32,7 @@
 #include <mpi/mpi.h>     /* mpi_destroyProcessMboxes — free a task's mailboxes on exit */
 #include <sys/descrip.h> /* g_device_find — bus-device lookup hook (ubx_device_find shim) */
 #include <sys/bus.h>     /* struct ubx_device */
+#include <sys/sysproto_posix.h> /* sys_close — close the task's fds on exit (pipe-EOF) */
 
 /* systemVitals is now the real generic vitals node (sys/kern/vitals.c),
  * allocated by vitals_init() during kmain bring-up. */
@@ -188,6 +189,20 @@ void endTask(pidType pid)
 	(void)pid;
 	if (_current != 0)
 	{
+		/* Close the task's open fds so shared pipe/socket ends drop their refcount.
+		 * The full reap path is unported on aarch64, so without this an exiting writer
+		 * never releases its pipe write-end: a parent blocked reading that pipe (e.g.
+		 * bmake's Cmd_Exec — fork + read child output) never sees EOF and hangs. */
+		for (int fd = 0; fd < O_FILES; fd++)
+		{
+			if (_current->td.o_files[fd] != 0)
+			{
+				struct sys_close_args ca;
+				ca.fd = fd;
+				sys_close(&_current->td, &ca);
+			}
+		}
+
 		/* Free the task's MPI mailboxes so their names/pids do not leak — a leaked
 		 * mailbox blocks a relaunched owner (e.g. a respawned authd/login) from
 		 * recreating it. */
