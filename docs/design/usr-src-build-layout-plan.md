@@ -56,18 +56,19 @@ Legend: ☑ done · ◐ in progress · ☐ todo · ⊘ blocked
 | D1 | Host cross-drive seam in `ubix.toolchain.mk` (`.export TOOLCHAIN`; auto-detect homebrew clang) | ☑ | `f6bce7cc7`; no manual CC |
 | D2 | **All 77 aarch64 world binaries build clean under clang** (C + C++) | ☑ | `-linux-musl` triple (GNU link driver) + `-U__linux__/__unix__/__gnu_linux__` (match gcc macros) |
 | D3 | musl libc — reuse gcc-built `libc.a` (clang apps link it; ABI-compatible) | ☑ | musl self-rebuild under clang deferred (its gmake) |
-| D4 | libcxx/libcxxabi + objgfx under clang (currently gcc-built; apps link fine) | ☐ | optional polish; C++ apps already green vs gcc libs |
+| D4 | libcxx/libcxxabi + objgfx + all libs under clang | ☑ | objgfx C++ built clean (fixed `-std=gnu23` leak into C++ via shared CFLAGS) |
 | D5 | **x86_64 world green under clang (79 bins)** | ☑ | `-none-elf` picks Darwin linker for x86_64 on macOS → use `-linux-musl`+`-U` uniformly |
 | D6 | netsurf clean-rebuild `mv` bug in `build-netsurf.sh` (pre-existing, not toolchain) | ☐ | only bites a clean rebuild; nsfb caches |
 
 ### Phase E — Host kernel green under `TOOLCHAIN=clang` (both arches)
 | # | Step | Status | Note |
 |---|------|--------|------|
-| E1 | Kernel recipe compiler → `${KERN_CC}`/`${KERN_CCFLAGS}` under clang | ◐ | `d13e0fd65`; compile=clang. Link/embeds still gcc/binutils |
+| E1 | Kernel recipe compiler → `${KERN_CC}`/`${KERN_CCFLAGS}` under clang | ☑ | `d13e0fd65` |
 | E2 | Inline asm / `-mgeneral-regs-only` / ISA flags clang-clean (aarch64) | ☑ | only proc.c FPSIMD asm needed `.arch_extension fp`; 150 objs compile |
-| E3 | `ldscript.aarch64` links under `ld.lld` + `llvm-objcopy` embeds | ☐ | currently aarch64-elf-ld; objcopy `-O elf64-littleaarch64` name risk |
-| E4 | **aarch64 clang kernel boots under QEMU** | ☑ | boots → pool mount → init → daemons (FPSIMD ctx-switch proven) |
+| E3 | `ldscript.aarch64` links under `ld.lld` + `llvm-objcopy` embeds | ☑ | `816f3a226`; `-O elf64-littleaarch64` works |
+| E4 | **aarch64 clang kernel boots under QEMU (fully LLVM)** | ☑ | clang+llvm-objcopy+ld.lld → boots → pool → init → daemons |
 | E5 | x86_64 kernel under clang (parameterize its recipe + boot) | ☐ | repeat E for x86_64 |
+| E6 | **clang is the DEFAULT** (`TOOLCHAIN=gcc` = legacy) + `bmake clean` fixed | ☑ | `29cbce8c7`/`816f3a226`; netsurf clang fixes `d18bfeae8` |
 
 ### Phase F — In-OS build (now that the clang build is host-green)
 | # | Step | Status | Note |
