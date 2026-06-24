@@ -39,18 +39,24 @@ TOOLCHAIN ?= gcc
 # the *exported* TOOLCHAIN (below), so a multi-word CC is never passed as a bare
 # command-line word (which bmake would mis-split).  Hard '=' so these beat bmake's
 # builtin CC=cc; a command-line CC= still overrides.
+# Target triple: aarch64-unknown-none-elf (not -linux-musl).  The proven gcc world
+# is built with aarch64-elf-gcc, whose only OS-ish predefine is __ELF__.  A
+# -linux-musl triple additionally defines __linux__/__unix__/__gnu_linux__, which
+# flips ports (tcsh, …) onto Linux-only code paths uBixOS never compiled and that
+# assume Linux features it lacks.  -none-elf reproduces gcc's predefines exactly,
+# so the world compiles the same code.  Passed explicitly so the in-OS clang
+# (whose built-in default is linux-musl) is overridden to match the host build.
 _LLVM18 = /opt/homebrew/opt/llvm@18/bin
+_TGT     = --target=${_ARCH}-unknown-none-elf
 .if exists(${_LLVM18}/clang)
 _CLANG   ?= ${_LLVM18}/clang
 _CLANGXX ?= ${_LLVM18}/clang++
 _LLVMBIN ?= ${_LLVM18}/
-_TGT     ?= --target=${_ARCH}-unknown-linux-musl
 _LDPATH  ?= --ld-path=${_LLVM18}/ld.lld
 .else
 _CLANG   ?= clang
 _CLANGXX ?= clang++
 _LLVMBIN ?=
-_TGT     ?=
 _LDPATH  ?=
 .endif
 CC       = ${_CLANG} ${_TGT} ${_LDPATH}
