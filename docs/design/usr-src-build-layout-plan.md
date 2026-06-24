@@ -36,11 +36,11 @@ Legend: ☑ done · ◐ in progress · ☐ todo · ⊘ blocked
 ### Phase C — Stage source tree + obj dir into the image
 | # | Step | Status | Note |
 |---|------|--------|------|
-| C1 | `tools/stage-src.sh`: `ubfs cpr` repo → `…:/usr/src` (excl build/.git, trim libcxx) | ☐ | |
-| C2 | Create `/usr/obj/${ARCH}` + `/usr/share/mk` on pool; log staged size | ☐ | |
-| C3 | Wire into image target (avoid contested mkimage.sh hunk) | ☐ | |
-| C4 | Reconcile CLAUDE.md "Installed layout" table | ☐ | |
-| C5 | Verify via `ubfs ls` (`/usr/src/Makefile`, `/usr/obj/aarch64`, `/usr/share/mk`) | ☐ | |
+| C1 | `tools/stage-src.sh`: `ubfs cpr` repo → `…:/usr/src` (excl build/.git/images) | ☑ | MBR-parse for pool offset; resilient loop |
+| C2 | Create `/usr/obj/${ARCH}` + `/usr/share/mk` on pool | ☑ | full tree staged (~200 MB, fits) |
+| C3 | `bmake stage-src` target (standalone — no mkimage.sh edit) | ☑ | arch-dispatched |
+| C4 | Reconcile CLAUDE.md "Installed layout" table | ☑ | added obj/share/mk + stage-src column |
+| C5 | Verify via `ubfs ls` (`/usr/src/sys`, `/usr/obj/aarch64`, `/usr/share/mk`) | ☑ | all present; pool intact |
 
 ### Phase D — Close in-OS build-tool gaps
 | # | Step | Status | Note |

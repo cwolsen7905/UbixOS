@@ -61,16 +61,17 @@ The disk image (`ubixos.img`) can be mounted on macOS with `bmake mount-image` o
 
 ### Installed layout on the disk image
 
-| Path | Contents |
-|------|----------|
-| `/bin`, `/lib`, `/libexec` | Compiled world binaries and libraries |
-| `/boot/kernel/kernel` | Kernel binary |
-| `/boot/grub/` | GRUB config and modules |
-| `/etc/` | System config (`userdb`, `fstab`, `motd`) |
-| `/usr/include/` | Userland headers (for self-hosted builds) |
-| `/usr/src/` | Full source tree (kernel + world, no build artifacts) |
+| Path | Contents | Staged by |
+|------|----------|-----------|
+| `/bin`, `/lib`, `/usr/bin`, `/usr/sbin`, `/usr/lib` | Compiled world binaries and libraries | `bmake image` |
+| `/usr/bin/{clang,ld.lld,llvm-*}` + `/usr/lib/clang/18/include` | Stage-0 self-hosting toolchain (when `build/${ARCH}/usr` is populated) | `bmake image` |
+| `/boot/kernel/kernel`, `/boot/grub/` | Kernel binary + GRUB config | `bmake image` |
+| `/etc/` | System config (`userdb`, `fstab`, `motd`) | `bmake image` |
+| `/usr/src/` | Full source tree (kernel + world, no `build/`/`.git`/image artifacts) | **`bmake stage-src`** |
+| `/usr/obj/${ARCH}/` | On-device build output (`OBJ_DIR` target) | **`bmake stage-src`** |
+| `/usr/share/mk/` | Installed bmake macros (FreeBSD convention) | **`bmake stage-src`** |
 
-The `/usr/src` layout mirrors FreeBSD convention to support eventual self-hosted compilation.
+`bmake image` builds the bootable world pool. The FreeBSD-style **`/usr/src` → `/usr/obj`** source tree is a **separate** step — `bmake stage-src` (after `bmake image`) — so `bmake` can rebuild the system on-device. See `docs/design/usr-src-build-layout-plan.md`.
 
 ### macOS prerequisites
 

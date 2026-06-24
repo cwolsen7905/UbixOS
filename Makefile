@@ -566,6 +566,16 @@ image-aarch64: image-arm
 image-arm:
 	@PROFILE=${PROFILE} sh tools/mkimage.sh ${DISK_IMAGE_ARM} ${OBJ_DIR}
 
+# Stage the source tree into the built image's UbixFS pool as a FreeBSD-style
+# /usr/src, plus /usr/obj/${_ARCH} (build output) + /usr/share/mk, so `bmake`
+# can build the system from /usr/src on-device.  Run AFTER `bmake image`.  Kept
+# separate from mkimage.sh (see docs/design/usr-src-build-layout-plan.md).
+stage-src: stage-src-${_ARCH}
+stage-src-aarch64:
+	@sh tools/stage-src.sh ${DISK_IMAGE_ARM} aarch64
+stage-src-x86_64:
+	@sh tools/stage-src.sh ${DISK_IMAGE_X86_64} x86_64
+
 # x86_64 disk image: the SAME raw FAT32 + musl-ld.so layout as aarch64 (mkimage.sh
 # is arch-parameterised via ARCH=), mounted at "/" via virtio-blk-pci.  Run after
 # `bmake world TARGET=x86_64`; boot with run-x86_64.
