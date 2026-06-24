@@ -92,6 +92,7 @@ kernel: kernel-${_ARCH}
 # objects can link in), with the aarch64 ISA flags from KERN_TARGET_CFLAGS.
 AARCH64_KCFLAGS = ${KERN_TARGET_CFLAGS} -DDEBUG_SYSCTL -O -Wall -Wno-incompatible-pointer-types \
 	-nostdlib ${TC_NOSTDINC} -fno-builtin -fno-exceptions -ffreestanding -fno-pie -fno-pic \
+	-fno-strict-aliasing \
 	-fno-stack-protector -mno-outline-atomics -I${CURDIR}/sys/include -I${CURDIR}/sys/arch/aarch64
 
 # Arch-neutral kernel sources now linked into the aarch64 kernel.  Grows as more
@@ -289,6 +290,7 @@ kernel-aarch64:
 # widened i386 drivers link in as the port grows.
 X86_64_KCFLAGS = ${KERN_TARGET_CFLAGS} -O -Wall -Wno-incompatible-pointer-types -nostdlib -nostdinc \
 	-fno-builtin -fno-exceptions -ffreestanding -fno-pie -fno-pic -fno-stack-protector \
+	-fno-strict-aliasing \
 	-I${CURDIR}/sys/include -I${CURDIR}/sys/arch/x86_64
 
 # Arch-neutral kernel sources linked into the x86_64 kernel.  Grows as the port

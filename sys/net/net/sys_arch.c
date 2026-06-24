@@ -632,6 +632,18 @@ int sys_socket(struct thread *td, struct sys_socket_args *args) {
   if (error)
     return (error);
 
+  /* uBixOS is IP-only (lwIP); there is no AF_UNIX/AF_LOCAL.  Reject other
+   * families with EAFNOSUPPORT specifically — NOT a generic error — because
+   * musl's __nscd_query() probes with socket(AF_UNIX) and treats EAFNOSUPPORT as
+   * "no nscd, fall through to /etc/group".  Any other errno makes getgrouplist()
+   * (hence initgroups()) fail, which aborts an ssh login with the misleading
+   * "Error changing user group". */
+  if (args->domain != AF_INET && args->domain != AF_INET6) {
+    fdestroy(td, nfp, fd);
+    td->td_retval[0] = -EAFNOSUPPORT;
+    return (EAFNOSUPPORT);
+  }
+
   /* Strip Linux-only flags musl ORs into type; lwIP only understands the
    * low byte (SOCK_STREAM=1, SOCK_DGRAM=2, SOCK_RAW=3). */
   nfp->socket = lwip_socket(args->domain, args->type & 0xFF, args->protocol);
@@ -655,12 +667,26 @@ int sys_socket(struct thread *td, struct sys_socket_args *args) {
 
 int sys_setsockopt(struct thread *td, struct sys_setsockopt_args *args) {
   struct file *fd = 0x0;
+  void *kval = 0x0;
   getfd(td, &fd, args->s);
   if (!fd) { td->td_retval[0] = -1; return (-1); }
 
-  td->td_retval[0] = lwip_setsockopt(fd->socket, args->level, args->name, args->val, args->valsize);
+  /* Copy the user optval into a kernel buffer before handing it to lwIP.  With
+   * LWIP_TCPIP_CORE_LOCKING off, lwip_setsockopt posts optval to tcpip_thread,
+   * which runs in a context with NO user mappings — dereferencing the raw user
+   * pointer there faults (a wild user address such as 0x18003fa1c).  This is the
+   * same kernel-buffer pattern sys_connect/sys_read/sys_write already use. */
+  if (args->val != 0x0 && args->valsize > 0) {
+    kval = kmalloc(args->valsize);
+    if (kval == 0x0) { td->td_retval[0] = -1; return (-1); }
+    memcpy(kval, args->val, args->valsize);
+  }
+
+  td->td_retval[0] = lwip_setsockopt(fd->socket, args->level, args->name, kval != 0x0 ? kval : args->val, args->valsize);
   td->td_retval[0] = 0;
 
+  if (kval != 0x0)
+    kfree(kval);
   return (0);
 }
 
