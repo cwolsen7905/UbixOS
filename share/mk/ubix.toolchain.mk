@@ -28,7 +28,12 @@
 .if !defined(_UBIX_TOOLCHAIN_MK)
 _UBIX_TOOLCHAIN_MK = 1
 
-TOOLCHAIN ?= gcc
+# Default toolchain.  Flipped to clang (2026-06-24) so a bare `bmake` builds the
+# self-hosting toolchain by default — the way to shake out gcc→clang bugs in
+# normal use.  Build with the legacy cross-GNU toolchain via `TOOLCHAIN=gcc`.
+# NOTE: the kernel still *links* with binutils ld + gcc-built embeds under clang
+# (only the compile is clang) until Phase E3 (ld.lld + llvm-objcopy) lands.
+TOOLCHAIN ?= clang
 
 .if ${TOOLCHAIN} == "clang"
 # clang/lld/llvm-* profile.  In-OS the bare tools are in PATH and clang's default
