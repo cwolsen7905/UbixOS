@@ -19,6 +19,7 @@
 #include <vmm/vm_filecache.h> /* vm_filecache_unref_phys (shared file-cache pages) */
 #include <lib/kmalloc.h>      /* sysID */
 #include <string.h>
+#include <sys/errno.h>       /* EINVAL (prlimit64) */
 #include <ubixos/sched.h>    /* _current, sched(), kTask_t */
 #include <ubixos/endtask.h>  /* endTask */
 #include <x86_64/pcpu.h>     /* curcpu() — per-CPU kernel RSP for the syscall entry */
@@ -633,6 +634,30 @@ void x86_64_syscall(struct x86_64_trapframe *tf)
 		if (tf->rdi == 0x1002) /* ARCH_SET_FS: point FS.base at the musl TCB */
 			machine_set_tls(&_current->td, (uintptr_t)tf->rsi);
 		tf->rax = 0;
+	}
+	else if (tf->rax == 1024) /* prlimit64(pid, resource, new, old) — FreeBSD has
+	                           * no prlimit64; musl routes get/setrlimit through it
+	                           * (see aarch64 syscall.c).  Args: RDI/RSI/RDX/R10. */
+	{
+		int resource = (int)tf->rsi;
+		u_int64_t *newl = (u_int64_t *)(uintptr_t)tf->rdx;
+		u_int64_t *oldl = (u_int64_t *)(uintptr_t)tf->r10;
+		if (resource < 0 || resource >= RLIM_NLIMITS)
+			tf->rax = (u64)-EINVAL;
+		else
+		{
+			if (oldl != 0)
+			{
+				oldl[0] = (u_int64_t)_current->td.rlim[resource].rlim_cur;
+				oldl[1] = (u_int64_t)_current->td.rlim[resource].rlim_max;
+			}
+			if (newl != 0)
+			{
+				_current->td.rlim[resource].rlim_cur = (rlim_t)newl[0];
+				_current->td.rlim[resource].rlim_max = (rlim_t)newl[1];
+			}
+			tf->rax = 0;
+		}
 	}
 	else if (tf->rax == SYS_WRITE && (tf->rdi == 1 || tf->rdi == 2))
 	{

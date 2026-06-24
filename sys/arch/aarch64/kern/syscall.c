@@ -14,6 +14,7 @@
 
 #include "bringup.h"
 #include <sys/types.h>
+#include <sys/errno.h>          /* EINVAL (prlimit64) */
 #include <ubixos/sched.h>       /* _current, sched_yield */
 #include <ubixos/endtask.h>     /* endTask */
 #include <vmm/vmm.h>            /* address-space helpers */
@@ -68,6 +69,10 @@ register_t ksyscall_dispatch(
 #define SYS_LSEEK 478
 #define SYS_SET_TID_ADDRESS 258
 #define SYS_RT_SIGPROCMASK 340 /* musl blocks/restores signals around fork() */
+/* FreeBSD has no prlimit64; musl's aarch64 ABI hardcodes __NR_prlimit64=1024 and
+ * routes get/setrlimit through it, so it lands out of the FreeBSD table's range.
+ * Implement it natively against the per-thread rlim[] table. */
+#define SYS_PRLIMIT64 1024
 
 /* MMAP_BASE / BRK_BASE (and the exec loader's DYN_ and USER_STACK_ regions) now
  * live in <aarch64/vmm_layout.h> — the single source of truth for the user-VA
@@ -443,6 +448,31 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args)
 
 		case SYS_BRK:
 			return sc_brk(args[0]);
+
+		case SYS_PRLIMIT64:
+		{
+			/* prlimit64(pid, resource, const rlimit64 *new, rlimit64 *old):
+			 * pid is ignored (per-thread limits); read/write the 64-bit limit
+			 * pair against the current thread's rlim[] (rlim_t is int64_t, so
+			 * the layout matches musl's struct rlimit64). */
+			int resource = (int)args[1];
+			u_int64_t *newl = (u_int64_t *)(uintptr_t)args[2];
+			u_int64_t *oldl = (u_int64_t *)(uintptr_t)args[3];
+
+			if (resource < 0 || resource >= RLIM_NLIMITS)
+				return (u_int64_t)-EINVAL;
+			if (oldl != 0)
+			{
+				oldl[0] = (u_int64_t)_current->td.rlim[resource].rlim_cur;
+				oldl[1] = (u_int64_t)_current->td.rlim[resource].rlim_max;
+			}
+			if (newl != 0)
+			{
+				_current->td.rlim[resource].rlim_cur = (rlim_t)newl[0];
+				_current->td.rlim[resource].rlim_max = (rlim_t)newl[1];
+			}
+			return 0;
+		}
 
 		case SYS_FORK:
 			/* args is the trapframe; the child resumes here returning 0.
