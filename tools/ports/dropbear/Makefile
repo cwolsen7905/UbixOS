@@ -17,6 +17,11 @@
 # (build/ports/dropbear-*) is shared, not arch-homed, so a concurrent
 # aarch64 + x86_64 build corrupts the shared object files.
 
+# do-build is defined below (before the ports.mk include, as the framework
+# requires), which would otherwise make it the default goal and skip
+# fetch/extract/patch from a clean tree.  Pin the default to ports.mk's `all`.
+.MAIN: all
+
 PORT_NAME     = dropbear
 PORT_VERSION  = 2025.88
 PORT_URL      = https://matt.ucc.asn.au/dropbear/releases/dropbear-${PORT_VERSION}.tar.bz2
@@ -47,6 +52,7 @@ do-build:
 	@echo "==> cross-build Dropbear (sshd) for ${TARGET}"
 	@WRKSRC="${WRKSRC}" CC="${CC}" AR="${AR}" PORT_CFLAGS="${PORT_CFLAGS}" \
 	    BUILD="${BUILD}" MUSL_ARCH="${MUSL_ARCH}" PORTDIR="${.CURDIR}" \
+	    WORLDINC="${SRCTOP}/include" \
 	    sh ${.CURDIR}/build.sh
 
 .include "${.CURDIR}/../../../mk/ports.mk"

@@ -1,0 +1,27 @@
+--- a/src/svr-runopts.c
++++ b/src/svr-runopts.c
+@@ -160,7 +160,10 @@
+ 	svr_opts.bannerfile = NULL;
+ 	svr_opts.banner = NULL;
+ 	svr_opts.forced_command = NULL;
+-	svr_opts.forkbg = 1;
++	/* uBixOS: run in the foreground.  initd forks a supervised child per service
++	 * (bin/init/main.c) and execs the binary with NO arguments, so there is no
++	 * `-F` to pass — the daemon must default to foreground so init owns it. */
++	svr_opts.forkbg = 0;
+ 	svr_opts.norootlogin = 0;
+ #ifdef HAVE_GETGROUPLIST
+ 	svr_opts.restrict_group = NULL;
+@@ -174,7 +177,11 @@
+ 	svr_opts.inetdmode = 0;
+ 	svr_opts.portcount = 0;
+ 	svr_opts.hostkey = NULL;
+-	svr_opts.delay_hostkey = 0;
++	/* uBixOS: default to on-demand (ephemeral) host keys — equivalent to `-R`.
++	 * With no `-r` host-key files and no args to pass, the server generates keys
++	 * in memory at startup so a bare `/usr/sbin/dropbear` works out of the box.
++	 * Persisting keys to /etc/dropbear via dropbearkey is a follow-up. */
++	svr_opts.delay_hostkey = 1;
+ 	svr_opts.pidfile = expand_homedir_path(DROPBEAR_PIDFILE);
+ 	svr_opts.authorized_keys_dir = "~/.ssh";
+ #if DROPBEAR_SVR_LOCALANYFWD

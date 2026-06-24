@@ -11,7 +11,7 @@
 #
 # Invoked by Makefile with WRKSRC/CC/BUILD/MUSL_ARCH/PORT_CFLAGS in the env.
 set -e
-: "${WRKSRC:?}" "${CC:?}" "${AR:?}" "${BUILD:?}" "${MUSL_ARCH:?}" "${PORT_CFLAGS:?}" "${PORTDIR:?}"
+: "${WRKSRC:?}" "${CC:?}" "${AR:?}" "${BUILD:?}" "${MUSL_ARCH:?}" "${PORT_CFLAGS:?}" "${PORTDIR:?}" "${WORLDINC:?}"
 
 cd "$WRKSRC"
 
@@ -94,9 +94,11 @@ KEYOBJS="dropbearkey"
 
 # -DDROPBEAR_SERVER selects the server build of the common objects (Dropbear's
 # Makefile sets this per-program; we build the server + its keygen only).
+# -I$WORLDINC exposes the uBixOS world headers (<authd.h>, <sys/mpi.h>) used by
+# the authd password-auth patch (svr-authpasswd.c).
 echo "==> dropbear objects"
 for n in $COMMONOBJS $CLISVROBJS $SVROBJS $KEYOBJS; do printf 'src/%s.c\n' "$n"; done \
-	| pcompile "$CFLAGS $LTC_INC -DDROPBEAR_SERVER"
+	| pcompile "$CFLAGS $LTC_INC -DDROPBEAR_SERVER -I$WORLDINC"
 
 obj_paths() { for n in $1; do printf 'src/%s.o ' "$n"; done; }
 
@@ -106,6 +108,8 @@ obj_paths() { for n in $1; do printf 'src/%s.o ' "$n"; done; }
 # docs/design/filesystem-hierarchy-plan.md).  mkimage-arm.sh copies the staging
 # tree into the image verbatim.
 DEST="$BUILD/usr/sbin"
+# $EXTRA_LIBS (per-binary, before -lc) lets dropbear pull in libubix_api for the
+# authd MPI round-trip while dropbearkey stays libc-only.
 link() {
 	out="$1"; shift
 	echo "  link $out"
@@ -113,12 +117,15 @@ link() {
 		"$BUILD/obj/musl/lib/Scrt1.o" "$BUILD/obj/musl/lib/crti.o" \
 		"$@" \
 		"$LTC/libtomcrypt.a" "$LTM/libtommath.a" \
-		-L"$BUILD/lib" -lc "$LIBGCC" \
+		-L"$BUILD/lib" $EXTRA_LIBS -lc "$LIBGCC" \
 		"$BUILD/obj/musl/lib/crtn.o" \
 		-Wl,-dynamic-linker,/lib/ld-musl-"$MUSL_ARCH".so.1 -Wl,-rpath,/lib -pie \
+		-Wl,-z,noexecstack \
 		-o "$DEST/$out"
 }
 mkdir -p "$DEST"
-link dropbear    $(obj_paths "$COMMONOBJS") $(obj_paths "$CLISVROBJS") $(obj_paths "$SVROBJS")
-link dropbearkey $(obj_paths "$COMMONOBJS") $(obj_paths "$KEYOBJS")
+EXTRA_LIBS="-lubix_api" \
+	link dropbear $(obj_paths "$COMMONOBJS") $(obj_paths "$CLISVROBJS") $(obj_paths "$SVROBJS")
+EXTRA_LIBS="" \
+	link dropbearkey $(obj_paths "$COMMONOBJS") $(obj_paths "$KEYOBJS")
 echo "==> built $DEST/dropbear + dropbearkey"

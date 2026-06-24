@@ -113,6 +113,27 @@ Each phase ends bootable on **both** arches; enforcement stays off until Phase 3
 - **Behaviour-preserving** — values are identical to today, just typed and
   centralised. Verify both arches still boot to a shell.
 
+#### Phase 1b — authd projects `/etc/passwd` (single source of truth)
+*Added 2026-06-23 (driven by the Dropbear sshd port — see
+`tools/ports/dropbear/`).* Today identity lives only in authd's binary
+`/etc/userdb`. But POSIX userland reaches identity through musl's
+`getpwnam`/`getpwuid`/`getpwent`, which read a text **`/etc/passwd`** — needed by
+Dropbear (uid/gid/home/shell lookup before auth) and by `ls -l`, `id`, `whoami`,
+`stat`, etc. To avoid **two competing identity stores**, keep **authd as the
+sole authority** and make `/etc/passwd` a *derived projection*:
+- authd **writes `/etc/passwd` from `/etc/userdb` on init**, and **rewrites it on
+  every user add/remove/modify** (once those management ops exist — authd is
+  read-only today). `/etc/passwd` is identity only (`name:x:uid:gid:gecos:home:
+  shell`); the `x` means "credentials live with the authority", never a hash.
+- This **removes the hand-maintained `etc/passwd`** currently shipped as a
+  stopgap for the Dropbear port — authd generates it instead.
+- **FreeBSD-faithful end state** (per `feedback_posix_emulate_freebsd`): grow this
+  toward FreeBSD's scheme — world-readable `/etc/passwd` + root-only
+  `/etc/master.passwd` (hashes) + `pwd.db`/`spwd.db` Berkeley-DB indexes that
+  `getpwnam` reads — with authd owning all of them. The PBKDF2 hashes currently
+  in `/etc/userdb` become `master.passwd`'s hash column. Keeps uBixOS one
+  coherent unix, not a Linux/BSD hybrid.
+
 ### Phase 2 — The syscalls (still no enforcement)
 - `chmod`/`fchmod`, `chown`/`fchown`/`lchown`, `umask`, `getgroups`/`setgroups`.
 - Real POSIX `setuid`/`setgid`/`seteuid`/`setegid`/`setresuid` semantics
