@@ -56,6 +56,17 @@ fi
 GMAKE=make
 command -v gmake >/dev/null 2>&1 && GMAKE=gmake
 
+# NetSurf's own buildsystem reads generic env vars (BUILD, CC, TARGET, …) and
+# folds them into its build-dir name + toolchain detection.  uBixOS's bmake
+# exports a pile of those (BUILD/OBJ_DIR + the whole TOOLCHAIN=clang tool set),
+# which poisons NetSurf's build (e.g. a build dir literally named
+# build-/Users/.../build/aarch64-...).  Run every NetSurf gmake through a clean
+# env so only the flags we pass explicitly below take effect.  (Shell vars like
+# $BUILD/$SRCTOP stay usable here — env -u only scrubs the child's environment.)
+NSENV="env -u BUILD -u OBJ_DIR -u SRCTOP -u UBIX_MK -u TOOLCHAIN \
+  -u CC -u CXX -u AS -u LD -u AR -u NM -u OBJCOPY -u RANLIB \
+  -u TC_NOSTDINC -u TC_STDFLAG -u KERN_CC -u KERN_CCFLAGS"
+
 echo "==> NetSurf cross-build (nsfb)"
 
 # 0. Build nsgenbind (host tool) — generates the DOM<->JS Duktape bindings -----
@@ -73,7 +84,7 @@ if [ ! -x "$NSGENBIND_BIN" ]; then
 	# rather than hunting for a <triplet>-gcc that doesn't exist on macOS.
 	( cd "$NSGENBIND_SRC"
 	  PATH="${BISON_PATH:+$BISON_PATH:}/usr/bin:$PATH" \
-	    "$GMAKE" NSSHARED="$NSBUILD" CC=cc >"$BUILD/nsgenbind-build.log" 2>&1 )
+	    $NSENV "$GMAKE" NSSHARED="$NSBUILD" CC=cc >"$BUILD/nsgenbind-build.log" 2>&1 )
 	GEN=$(ls -d "$NSGENBIND_SRC"/build-*/nsgenbind 2>/dev/null | head -1)
 	[ -n "$GEN" ] || { echo "ERROR: nsgenbind build failed (see $BUILD/nsgenbind-build.log)" >&2; exit 1; }
 	mkdir -p "$BUILD/netsurf-tools"
@@ -151,10 +162,12 @@ cd "$NS"
 HOSTOS=$(uname -s)
 ACTIVE="$NS/build/${HOSTOS}-framebuffer"
 STASH="$BUILD/netsurf-fb-obj"
+mkdir -p "$NS/build"                      # ensure the build root exists (a clean tree lacks it,
+                                          # so the cache-restore mv below has a target dir)
 rm -rf "$NS"/build/*-framebuffer          # evict any other arch's resident objects
 [ -d "$STASH" ] && mv "$STASH" "$ACTIVE"  # restore this arch's cache for an incremental build
 echo "==> Compiling NetSurf (log: $LOG)"
-"$GMAKE" -j"$JOBS" -k \
+$NSENV "$GMAKE" -j"$JOBS" -k \
 	TARGET=framebuffer \
 	NSBUILD="$NSBUILD" \
 	CC="${CROSS}gcc" BUILD_CC=cc AR="${CROSS}ar" \
