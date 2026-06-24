@@ -505,16 +505,55 @@ int sys_rename(struct thread *td, struct sys_rename_args *args)
 	if (dst_fs[0] == '\0')
 		dst_fs = "/";
 
-	/* Only FAT supports rename today. */
-	if (src_mp->fs->vfsType != 0xFA)
+	if (src_mp->fs->vfsType == 0xFA)
 	{
-		td->td_retval[0] = -EXDEV;
-		return (EXDEV);
-	}
-
-	{
-		/* FAT rename via the fs hook (path B); -1/error where unsupported. */
+		/* FAT has a native rename hook (path B). */
 		if (g_fs_rename == NULL || g_fs_rename(src_mp->fsInfo, src_fs, dst_fs) != 0)
+		{
+			td->td_retval[0] = -EIO;
+			return (EIO);
+		}
+	}
+	else
+	{
+		/* Other filesystems (ubixfs) have no rename primitive: fall back to
+		 * copy-the-file + unlink-the-source.  Not atomic and file-only (fopen
+		 * rejects directories), but makes rename(2) work on the pool root for
+		 * the common case (build tools, mv's non-EXDEV path).  src/dst are on the
+		 * same mount (checked above), so this never crosses devices. */
+		fileDescriptor_t *in = fopen(src_full, "rb");
+		fileDescriptor_t *out;
+		char *buf;
+		size_t n;
+
+		if (in == NULL)
+		{
+			/* Missing source, or a directory (fopen rejects dirs). */
+			td->td_retval[0] = -ENOENT;
+			return (ENOENT);
+		}
+		out = fopen(dst_full, "wb");
+		if (out == NULL)
+		{
+			fclose(in);
+			td->td_retval[0] = -EIO;
+			return (EIO);
+		}
+		buf = (char *)kmalloc(4096);
+		if (buf == NULL)
+		{
+			fclose(out);
+			fclose(in);
+			td->td_retval[0] = -ENOMEM;
+			return (ENOMEM);
+		}
+		while ((n = fread(buf, 1, 4096, in)) > 0)
+			fwrite(buf, (int)n, 1, out);
+		kfree(buf);
+		fclose(out);
+		fclose(in);
+
+		if (unlink(src_full) < 0)
 		{
 			td->td_retval[0] = -EIO;
 			return (EIO);
