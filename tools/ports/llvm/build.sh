@@ -15,8 +15,22 @@ set -e
 : "${WRKSRC:?}" "${BUILD:?}" "${TARGET:?}" "${SRCTOP:?}" "${PORTDIR:?}"
 
 LLVM18="/opt/homebrew/opt/llvm@18/bin"
+HOSTBLD="${WRKSRC}/build-host"
 RTBLD="${WRKSRC}/build-rt-${TARGET}"
 CROSSBLD="${WRKSRC}/build-${TARGET}"
+
+# ── 0. Host-native tblgens ───────────────────────────────────────────────────
+# Homebrew@18 ships llvm-tblgen + clang-tblgen but NOT llvm-min-tblgen, which a
+# cross-build also needs natively — so build the three for the host.  (Small
+# vs a full host LLVM.)
+echo "==> [0/2] host tblgens"
+"${CMAKE}" -G Ninja -S "${WRKSRC}/llvm" -B "${HOSTBLD}" \
+	-DCMAKE_BUILD_TYPE=Release \
+	-DLLVM_ENABLE_PROJECTS=clang \
+	-DLLVM_TARGETS_TO_BUILD="X86;AArch64" \
+	-DLLVM_INCLUDE_TESTS=OFF -DLLVM_INCLUDE_BENCHMARKS=OFF \
+	-DLLVM_ENABLE_RTTI=OFF -DLLVM_ENABLE_EH=OFF
+"${NINJA}" -C "${HOSTBLD}" llvm-tblgen clang-tblgen llvm-min-tblgen
 
 # ── 1. Full libc++ / libc++abi / libunwind for uBixOS ────────────────────────
 echo "==> [1/2] runtimes (full libc++) for ${TARGET}"
@@ -41,7 +55,7 @@ echo "==> [2/2] clang+lld for ${TARGET}"
 	-DUBIXOS_SRCTOP="${SRCTOP}" -DUBIXOS_TARGET="${TARGET}" \
 	-DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="${BUILD}/usr" \
 	-DLLVM_ENABLE_PROJECTS="clang;lld" -DLLVM_TARGETS_TO_BUILD="X86;AArch64" \
-	-DLLVM_NATIVE_TOOL_DIR="${LLVM18}" \
+	-DLLVM_NATIVE_TOOL_DIR="${HOSTBLD}/bin" \
 	-DLLVM_INCLUDE_TESTS=OFF -DLLVM_INCLUDE_BENCHMARKS=OFF \
 	-DLLVM_ENABLE_RTTI=OFF -DLLVM_ENABLE_EH=OFF \
 	-DLLVM_ENABLE_ZLIB=OFF -DLLVM_ENABLE_ZSTD=OFF -DLLVM_ENABLE_LIBXML2=OFF \
