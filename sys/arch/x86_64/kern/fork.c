@@ -205,9 +205,6 @@ long x86_64_rfork(struct x86_64_trapframe *parent_tf)
 	u64 *ctx;
 	int i;
 
-	kprintf("[rfork] caller=%d stack=0x%lx tls=0x%lx rip=0x%lx\n", _current ? _current->id : -1,
-	        (unsigned long)child_stack, (unsigned long)tls, (unsigned long)parent_tf->rip);
-
 	child = schedNewTask();
 
 	/* SHARE the caller's address space (same PML4) — the defining difference from

@@ -252,6 +252,81 @@ int aarch64_fork(u_int64_t *parent_tf)
 }
 
 /**
+ * rfork(RFMEM) — thread create: a new task SHARING the caller's address space
+ * (same TTBR0, not a copy), running on a caller-supplied user stack, resuming at
+ * the caller's rfork() return point with x0 = 0 — so musl's clone.s child path runs
+ * the thread function.  It joins the caller's thread group (tgid), so endTask frees
+ * the shared address space + fd table only when the last task of the group exits.
+ *
+ * @parent_tf is the caller's trapframe; the SysV-on-aarch64 syscall args are its
+ * x0..x2: x0 = flags (informational; v1 always shares), x1 = child user-stack top,
+ * x2 = TLS base (TPIDR_EL0; 0 if none).
+ *
+ * @return the new thread's tid to the caller; the new thread itself sees 0.
+ */
+int aarch64_rfork(u_int64_t *parent_tf)
+{
+	u_int64_t child_stack = parent_tf[1];
+	u_int64_t tls = parent_tf[2];
+	kTask_t *child;
+	u_int8_t *top;
+	u_int64_t *tf, *ctx;
+	int i;
+
+	child = schedNewTask();
+
+	/* SHARE the caller's address space (same L1) — the defining difference from
+	 * fork(), which copies it via pmap_fork_copy. */
+	child->md.md_ttbr0 = _current->md.md_ttbr0;
+	child->md.md_usp = child_stack; /* its own user SP; marks a user task */
+	child->md.md_entry = 0;         /* unused — the trapframe drives the return */
+	child->md.md_tpidr = tls != 0 ? tls : _current->md.md_tpidr;
+
+	child->parent = _current;
+	_current->children++;
+
+	/* Same thread group => shared AS + fd table; endTask's sched_tgid_others_alive()
+	 * frees them only when the LAST thread of the group exits. */
+	child->tgid = _current->tgid;
+
+	proc_fork_inherit_context(child);
+	proc_fork_signal_init(child, &_current->td);
+
+	/* Shallow-share the fd table: threads share open files.  Free the placeholder
+	 * fds schedNewTask() made for 0-2, then point at the caller's file objects.
+	 * (endTask closes them only for the last thread of the tgid — guarded there.) */
+	for (i = 0; i < O_FILES; i++)
+	{
+		if (child->td.o_files[i] != 0)
+		{
+			kfree(child->td.o_files[i]);
+			child->td.o_files[i] = 0;
+		}
+		child->td.o_files[i] = _current->td.o_files[i];
+	}
+
+	/* Build the child kernel stack: a copy of the caller's trapframe (x0 = 0, its own
+	 * user SP, fresh frame pointer), and below it a ctx frame that ret_from_fork's
+	 * into it. */
+	top = (u_int8_t *)child->kernelStack + KSTACK_SIZE;
+	tf = (u_int64_t *)(top - TRAPFRAME_SIZE);
+	memcpy(tf, parent_tf, TRAPFRAME_SIZE);
+	tf[0] = 0;                        /* the new thread sees rfork() == 0 */
+	tf[TF_SLOT_SP_EL0] = child_stack; /* its own user stack */
+	tf[29] = 0;                       /* fresh frame pointer (x29) */
+
+	ctx = (u_int64_t *)((u_int8_t *)tf - FRAME_SLOTS * 8);
+	for (i = 0; i < (int)FRAME_SLOTS; i++)
+		ctx[i] = 0;
+	ctx[LR_SLOT] = (u_int64_t)(uintptr_t)ret_from_fork;
+
+	child->md.md_kstack = (u_int64_t)(uintptr_t)ctx;
+	sched_ready(child);
+
+	return child->id;
+}
+
+/**
  * Create a kernel thread that runs @tproc(@arg) at EL1, scheduled by the generic
  * scheduler.  AArch64 implementation of the MI execThread() (declared in
  * <ubixos/exec.h>): the i386 version delivers @arg via the cdecl stack; here it

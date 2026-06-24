@@ -35,7 +35,7 @@ void gic_init(void);
 void gic_secondary_init(void); /* AP: bring up this CPU's GICC (smp-plan M2) */
 void gic_enable_intid(unsigned intid);
 void aarch64_gic_send_resched(unsigned cpu); /* SMP: poke one CPU's reschedule IPI */
-int aarch64_irq_dispatch(void); /* EL1 IRQ vector; returns non-zero on a timer tick */
+int aarch64_irq_dispatch(void);              /* EL1 IRQ vector; returns non-zero on a timer tick */
 
 /* timer.c — ARM generic timer (EL1 physical, PPI 30). */
 void timer_init(void);
@@ -50,7 +50,7 @@ void aarch64_mmu_enable_secondary(void); /* AP: reuse the BSP's page tables (smp
 /* apsmp.c — start the application processors via PSCI CPU_ON (smp-plan M1).
  * Each AP lands in secondary_entry (apentry.S) -> c_ap_boot_arm(). */
 void aarch64_smp_start_aps(void);
-void c_ap_boot_arm(u_int32_t id); /* AP C entry, called from apentry.S */
+void c_ap_boot_arm(u_int32_t id);   /* AP C entry, called from apentry.S */
 void aarch64_smp_release_aps(void); /* M3: create per-AP idle tasks + release APs into the scheduler */
 
 /* vmm_machdep.c — read real RAM size from the DTB /memory node (x0 at entry).
@@ -111,6 +111,7 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args);
 
 /* proc.c — fork(): child resumes at the caller's EL0 point with a copied space. */
 int aarch64_fork(u_int64_t *parent_tf);
+int aarch64_rfork(u_int64_t *parent_tf); /* rfork(RFMEM): thread create, shares the AS + fd table */
 
 /* syscalldemo.c — map a user page, drop to EL0, exercise the SVC path. */
 void aarch64_syscall_demo(void);

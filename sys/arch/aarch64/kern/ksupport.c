@@ -29,9 +29,9 @@
 #include <ubixos/vitals.h>
 #include <ubixos/callout.h>
 #include <sys/shutdown.h>
-#include <mpi/mpi.h>     /* mpi_destroyProcessMboxes — free a task's mailboxes on exit */
-#include <sys/descrip.h> /* g_device_find — bus-device lookup hook (ubx_device_find shim) */
-#include <sys/bus.h>     /* struct ubx_device */
+#include <mpi/mpi.h>            /* mpi_destroyProcessMboxes — free a task's mailboxes on exit */
+#include <sys/descrip.h>        /* g_device_find — bus-device lookup hook (ubx_device_find shim) */
+#include <sys/bus.h>            /* struct ubx_device */
 #include <sys/sysproto_posix.h> /* sys_close — close the task's fds on exit (pipe-EOF) */
 
 /* systemVitals is now the real generic vitals node (sys/kern/vitals.c),
@@ -192,14 +192,21 @@ void endTask(pidType pid)
 		/* Close the task's open fds so shared pipe/socket ends drop their refcount.
 		 * The full reap path is unported on aarch64, so without this an exiting writer
 		 * never releases its pipe write-end: a parent blocked reading that pipe (e.g.
-		 * bmake's Cmd_Exec — fork + read child output) never sees EOF and hangs. */
-		for (int fd = 0; fd < O_FILES; fd++)
+		 * bmake's Cmd_Exec — fork + read child output) never sees EOF and hangs.
+		 *
+		 * Threads (rfork(RFMEM)) SHALLOW-share one fd table across a tgid, so only the
+		 * LAST thread of the group may close/free them — an earlier thread exiting must
+		 * leave the shared fd objects intact for its still-running siblings. */
+		if (sched_tgid_others_alive(_current->tgid, _current->id) == 0)
 		{
-			if (_current->td.o_files[fd] != 0)
+			for (int fd = 0; fd < O_FILES; fd++)
 			{
-				struct sys_close_args ca;
-				ca.fd = fd;
-				sys_close(&_current->td, &ca);
+				if (_current->td.o_files[fd] != 0)
+				{
+					struct sys_close_args ca;
+					ca.fd = fd;
+					sys_close(&_current->td, &ca);
+				}
 			}
 		}
 

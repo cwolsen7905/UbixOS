@@ -37,6 +37,7 @@ register_t ksyscall_dispatch(
 #define SYS_EXIT 1
 #define SYS_READ 3
 #define SYS_FORK 2
+#define SYS_RFORK 251 /* FreeBSD ABI — rfork(RFMEM) thread create (musl __clone -> rfork) */
 #define SYS_WRITE 4
 #define SYS_OPEN 5
 #define SYS_CLOSE 6
@@ -448,6 +449,11 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args)
 			 * vfork is aliased to fork in musl (it tail-calls fork()), so it
 			 * arrives here too — no separate vfork syscall path is needed. */
 			return (u_int64_t)aarch64_fork(args);
+
+		case SYS_RFORK:
+			/* rfork(RFMEM) thread create — args is the trapframe; x0=flags,
+			 * x1=child stack, x2=TLS.  The new thread SHARES this AS + fd table. */
+			return (u_int64_t)aarch64_rfork(args);
 
 		case SYS_EXECVE:
 			/* execve(path, argv, envp): replace the current image + restart EL0.
