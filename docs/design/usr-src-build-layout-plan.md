@@ -20,10 +20,10 @@ Legend: ☑ done · ◐ in progress · ☐ todo · ⊘ blocked
 ### Phase A — Relocatable bmake (host stays green)
 | # | Step | Status | Note |
 |---|------|--------|------|
-| A1 | `SRCTOP` robust without git (derive from `Makefile.incl` location) | ☐ | |
-| A2 | `OBJ_DIR=/usr/obj/${_ARCH}` override verified; reconcile root-Makefile default | ☐ | |
-| A3 | Fix `install-world` relative `build/{bin,lib,libexec}` → `${OBJ_DIR}` | ☐ | |
-| A4 | Verify: `bmake world OBJ_DIR=/tmp/obj-test`; both arches green no-override | ☐ | regression gate |
+| A1 | `SRCTOP` robust without git (derive from `Makefile.incl` location) | ☑ | `.PARSEDIR:tA`; resolves from root+subdir |
+| A2 | `OBJ_DIR=/usr/obj/${_ARCH}` override verified; reconcile root-Makefile default | ☑ | override honored; removed dup default |
+| A3 | Fix `install-world` relative `build/{bin,lib,libexec}` → `${OBJ_DIR}` | ☑ | |
+| A4 | Verify: both arches green no-override; OBJ_DIR relocates whole link | ☑ | both kernels + bin/cat green; link all `${OBJ_DIR}` |
 
 ### Phase B — Native (in-OS) toolchain profile
 | # | Step | Status | Note |

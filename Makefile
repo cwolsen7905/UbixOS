@@ -11,7 +11,10 @@ MKOBJDIRS=no
 
 include Makefile.incl
 
-OBJ_DIR?= ${CURDIR}/build/${_ARCH}
+# OBJ_DIR is set by Makefile.incl (${SRCTOP}/build/${_ARCH} by default) and is
+# overridable on the command line, e.g. OBJ_DIR=/usr/obj/${_ARCH} for an
+# on-device /usr/src -> /usr/obj build.  No redefinition here — a second `?=`
+# would just shadow the shared default with the same value.
 
 CLEANDIR=clean
 
@@ -635,9 +638,9 @@ install-world:
 	@${MAKE} mount-image
 	@echo
 	@echo "--- Step 1: World binaries and libraries"
-	find build/bin     -maxdepth 1 -type f -exec cp {} ${MOUNT_POINT}/bin/     \;
-	find build/lib     -maxdepth 1 -type f -exec cp {} ${MOUNT_POINT}/lib/     \;
-	find build/libexec -maxdepth 1 -type f -exec cp {} ${MOUNT_POINT}/libexec/ \;
+	find ${OBJ_DIR}/bin     -maxdepth 1 -type f -exec cp {} ${MOUNT_POINT}/bin/     \;
+	find ${OBJ_DIR}/lib     -maxdepth 1 -type f -exec cp {} ${MOUNT_POINT}/lib/     \;
+	find ${OBJ_DIR}/libexec -maxdepth 1 -type f -exec cp {} ${MOUNT_POINT}/libexec/ \;
 	@echo "--- Step 2: System config"
 	cp -pr etc/* ${MOUNT_POINT}/etc/
 	@echo "--- Step 2b: Assets → /var"

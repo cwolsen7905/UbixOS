@@ -24,11 +24,19 @@ REMOVE = rm -rf
 
 FD_DEVICE = /dev/md0
 
-# Compute the repo root once via git; derive UBIX_MK and OBJ_DIR from it.
-# The .if !defined guard means child makes inherit these via the environment
-# and skip the git call entirely.
+# Compute the source-tree root once, from the location of THIS file: Makefile.incl
+# lives at the tree root, so ${.PARSEDIR:tA} is its absolute, normalized directory
+# regardless of where bmake was invoked or whether the tree is a git checkout.
+# This makes a .git-less /usr/src (the on-device source tree) resolve SRCTOP exactly
+# like the repo does on the host — the prerequisite for building from /usr/src into
+# /usr/obj.  The .if !defined guard means child makes inherit SRCTOP via the
+# environment and skip recomputing.  Fallbacks (git probe, then .CURDIR) cover the
+# unlikely case where .PARSEDIR is unavailable.
 .if !defined(SRCTOP)
+SRCTOP := ${.PARSEDIR:tA}
+.if empty(SRCTOP)
 SRCTOP != cd "${.CURDIR}" && git rev-parse --show-toplevel 2>/dev/null | tr -d '\n'
+.endif
 .if empty(SRCTOP)
 SRCTOP = ${.CURDIR}
 .endif
