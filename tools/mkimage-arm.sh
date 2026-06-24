@@ -1,10 +1,17 @@
 #!/bin/sh
-# mkimage-arm.sh — build a FAT32 disk image for the aarch64 (QEMU virt) port.
+# mkimage-arm.sh — build an MBR disk image for the aarch64 (QEMU virt) port.
 #
-# Lays the dynamically-linked world + the musl dynamic linker into a raw FAT32
-# image (BPB at sector 0, no partition table — the virtio-blk root the kernel
-# mounts at "/").  Attach it with the run-aarch64 / run-debug-aarch64 targets,
-# which select the modern virtio-mmio transport the driver needs.
+# Partition layout (shared by the two 64-bit arches this script serves):
+#   FAT32 (type 0x0C)  — BOOT ONLY.  Carries the kernel for GRUB-style boot.
+#                        aarch64/x86_64 here are loaded by QEMU (-kernel), so in
+#                        practice the FAT holds only /boot/kernel/kernel (and is
+#                        empty if no kernel was built).  It is NO LONGER a
+#                        fallback world root — the UbixFS pool is the sole
+#                        content store now (kernel boot.c prefers the pool as /).
+#   swap  (type 0x82)  — raw swap.
+#   UbixFS pool (0x9C) — the native CoW root the kernel mounts at "/".  Built
+#                        DIRECTLY from build/${ARCH}/ + the asset sources; it is
+#                        no longer mirrored out of the FAT.
 #
 # Requires mtools (brew install mtools).  Run after `bmake world TARGET=aarch64`.
 #
@@ -13,18 +20,17 @@ set -e
 
 # ARCH selects the world build dir + the musl dynamic-linker soname.  Defaults to
 # aarch64 (this script's original target); the x86_64 port reuses the identical
-# FAT-root layout (PVH -kernel + virtio-blk), passing ARCH=x86_64.
+# layout (PVH -kernel + virtio-blk), passing ARCH=x86_64.
 ARCH=${ARCH:-aarch64}
 IMG=${1:-ubixos-arm.img}
 BUILD=${2:-build/${ARCH}}
-# MBR-partitioned layout (plan K5/M4): FAT32 (fallback root + parity with i386) +
-# swap + UbixFS pool (the native CoW root the kernel mounts at /).  The kernel is
-# loaded by QEMU (-kernel), so FAT is not a boot partition here — it is the
-# fallback root that keeps the desktop bootable while the raw-pool root beds in.
-FAT_SIZE_MB=48      # FAT32 partition (type 0x0C) — fallback root (full world)
-SWAP_SIZE_MB=16     # raw swap partition (type 0x82) — parity; unused on aarch64
-POOL_SIZE_MB=96     # UbixFS pool partition (type 0x9C) — the raw root /
-POOL_FS_MB=88       # pool filesystem size inside that partition
+# MBR-partitioned layout: FAT32 (boot only) + swap + UbixFS pool (the native CoW
+# root the kernel mounts at /).  The kernel is loaded by QEMU (-kernel), so FAT
+# is not a boot partition here — it is boot-only parity for the GRUB path.
+FAT_SIZE_MB=64      # FAT32 partition (type 0x0C) — boot only (kernel for GRUB)
+SWAP_SIZE_MB=256    # raw swap partition (type 0x82)
+POOL_SIZE_MB=3080   # UbixFS pool partition (type 0x9C) — the raw root /
+POOL_FS_MB=3072     # pool filesystem size inside that partition (self-hosting: world + src + tools)
 SIZE_MB=$(( 1 + FAT_SIZE_MB + SWAP_SIZE_MB + POOL_SIZE_MB + 4 ))
 
 # Image profile (docs/design/console-and-arch-convergence-plan.md Phase 4):
@@ -87,161 +93,154 @@ POOL_LBA=$(cat "${IMG}.poollba"); rm -f "${IMG}.poollba"
 # Format the FAT32 partition (partition 1 begins at LBA 2048 = 1 MB).
 mformat -i "${IMG}@@1M" -F ::
 
-mmd -i "${IMG}@@1M" ::/bin ::/lib ::/etc
+# ── FAT is boot-only ─────────────────────────────────────────────────────────
+# Carry just the kernel for the GRUB-style boot path.  aarch64/x86_64 here load
+# the kernel via QEMU -kernel, so this is parity/future-GRUB; the FAT holds
+# nothing else (the world lives entirely in the UbixFS pool below).
+if [ -f "${BUILD}/boot/kernel" ]; then
+	mmd -i "${IMG}@@1M" ::/boot ::/boot/kernel 2>/dev/null || true
+	mcopy -o -i "${IMG}@@1M" "${BUILD}/boot/kernel" ::/boot/kernel/kernel
+	echo "mkimage-arm: FAT (boot-only) carries /boot/kernel/kernel"
+else
+	echo "mkimage-arm: FAT left empty (no ${BUILD}/boot/kernel; kernel loaded via QEMU -kernel)"
+fi
 
-# musl's dynamic linker IS libc.so; install it under both the INTERP path and
-# the soname programs record in DT_NEEDED.
-mcopy -i "${IMG}@@1M" "${BUILD}/lib/libc.so" ::/lib/libc.so
-mcopy -i "${IMG}@@1M" "${BUILD}/lib/libc.so" "::/lib/ld-musl-${ARCH}.so.1"
-[ -f "${BUILD}/lib/libubix_api.so" ] && mcopy -i "${IMG}@@1M" "${BUILD}/lib/libubix_api.so" ::/lib/libubix_api.so || true
-# Crypto libs for the real authd (PBKDF2 over BearSSL).
-[ -f "${BUILD}/lib/libpw.so" ] && mcopy -i "${IMG}@@1M" "${BUILD}/lib/libpw.so" ::/lib/libpw.so || true
-[ -f "${BUILD}/lib/libbearssl.so" ] && mcopy -i "${IMG}@@1M" "${BUILD}/lib/libbearssl.so" ::/lib/libbearssl.so || true
+# ── Build the root tree on the host, then lay it into the UbixFS pool ─────────
+# STAGE mirrors the on-disk root layout exactly; `ubfs cpr` copies each top-level
+# dir into the pool in one mount/commit cycle.  cpr skips symlinks, so the musl
+# dynamic linker is installed as a real second copy (not a symlink).
+STAGE=$(mktemp -d -t ubixstage)
+mkdir -p "${STAGE}"/bin "${STAGE}"/lib "${STAGE}"/sbin \
+         "${STAGE}"/usr/bin "${STAGE}"/usr/sbin "${STAGE}"/usr/lib \
+         "${STAGE}"/etc "${STAGE}"/etc/init.d \
+         "${STAGE}"/var/log
+
+# libc.so IS musl's dynamic linker; install it under the DT_NEEDED soname and
+# expose the INTERP path (/lib/ld-musl-${ARCH}.so.1) as a symlink to it.  cpr
+# preserves the symlink into the pool, and the kernel's ubixfs resolver follows
+# it (relative target, resolved against /lib) when loading the program interp.
+cp "${BUILD}/lib/libc.so" "${STAGE}/lib/libc.so"
+ln -s libc.so "${STAGE}/lib/ld-musl-${ARCH}.so.1"
+for _l in libubix_api libpw libbearssl; do
+	[ -f "${BUILD}/lib/${_l}.so" ] && cp "${BUILD}/lib/${_l}.so" "${STAGE}/lib/${_l}.so" || true
+done
 # Desktop-only shared libraries: objGFX (compositor + every GUI app) and the
 # NetSurf stack.  The base profile ships none of them.
 if [ "${PROFILE}" = desktop ]; then
-	[ -f "${BUILD}/lib/libobjgfx.so" ] && mcopy -i "${IMG}@@1M" "${BUILD}/lib/libobjgfx.so" ::/lib/libobjgfx.so || true
-	for _l in libcss libdom libhubbub libparserutils libwapcaplet libnsfb \
-	          libnsgif libnsbmp libnsutils libutf8proc libz libhttp; do
-		[ -f "${BUILD}/lib/${_l}.so" ] && mcopy -i "${IMG}@@1M" "${BUILD}/lib/${_l}.so" "::/lib/${_l}.so" || true
+	for _l in libobjgfx libcss libdom libhubbub libparserutils libwapcaplet \
+	          libnsfb libnsgif libnsbmp libnsutils libutf8proc libz libhttp; do
+		[ -f "${BUILD}/lib/${_l}.so" ] && cp "${BUILD}/lib/${_l}.so" "${STAGE}/lib/${_l}.so" || true
 	done
 fi
 
 # The whole world (all dynamically-linked PIE binaries).  Skip *.dbg sidecars
-# (unstripped debug copies, e.g. nsfb.dbg) — they are gdb-only and would bloat
-# the image (and re-trip the kernel loader's EXEC_MAX).
+# (unstripped debug copies) and, for the base profile, the graphical apps.
 for b in "${BUILD}"/bin/*; do
 	case "${b}" in *.dbg) continue ;; esac
 	[ -f "${b}" ] || continue
 	_bn=$(basename "${b}")
-	# Base profile: skip the graphical apps (their absence — chiefly /bin/views —
-	# is what makes the kernel boot to the text console instead of the desktop).
 	if [ "${PROFILE}" != desktop ]; then
 		case "${DESKTOP_BINS}" in *" ${_bn} "*) continue ;; esac
 	fi
-	mcopy -i "${IMG}@@1M" "${b}" "::/bin/${_bn}"
+	cp "${b}" "${STAGE}/bin/${_bn}"
 done
 
-# System config files (etc/), mirroring mkimage.sh.  resolv.conf is the
-# critical one: musl's gethostbyname()/getaddrinfo() read /etc/resolv.conf for
-# the nameserver, and with no file they fall back to 127.0.0.1 — so every
-# hostname lookup (NetSurf, wget, ping <host>) fails.  Also brings the shell rc
-# (csh.cshrc/csh.login), motd, termcap, fstab to parity with the i386 image.
+# /usr-hierarchy: copy build/${ARCH}/{sbin,usr/bin,usr/sbin,usr/lib} verbatim.
+for _sub in sbin usr/bin usr/sbin usr/lib; do
+	[ -d "${BUILD}/${_sub}" ] || continue
+	for b in "${BUILD}/${_sub}"/*; do
+		case "${b}" in *.dbg) continue ;; esac
+		[ -f "${b}" ] || continue
+		cp "${b}" "${STAGE}/${_sub}/$(basename "${b}")"
+	done
+done
+
+# System config files (etc/), mirroring mkimage.sh.  resolv.conf is the critical
+# one (musl reads it for the nameserver); also csh.cshrc/csh.login, motd,
+# termcap, fstab to parity with the i386 image.
 for f in etc/*; do
-	[ -f "$f" ] && mcopy -o -i "${IMG}@@1M" "$f" ::/etc/
+	[ -f "$f" ] && cp "$f" "${STAGE}/etc/"
 done
 if [ -d etc/init.d ]; then
-	mmd -i "${IMG}@@1M" ::/etc/init.d 2>/dev/null || true
-	for f in etc/init.d/*; do [ -f "$f" ] && mcopy -o -i "${IMG}@@1M" "$f" ::/etc/init.d/; done
+	for f in etc/init.d/*; do [ -f "$f" ] && cp "$f" "${STAGE}/etc/init.d/"; done
 fi
-
-# Credentials for login (root / user), matching the i386 image.  Staged after
-# etc/* so tools/userdb (the build's canonical copy) wins over any etc/userdb.
-[ -f tools/userdb ] && mcopy -o -i "${IMG}@@1M" tools/userdb ::/etc/userdb || true
+# Credentials for login (root / user).  Staged last so tools/userdb (the build's
+# canonical copy) wins over any etc/userdb.
+[ -f tools/userdb ] && cp tools/userdb "${STAGE}/etc/userdb" || true
 
 # --- desktop-profile assets (the base profile ships none of these) ----------
 if [ "${PROFILE}" = desktop ]; then
+	mkdir -p "${STAGE}"/var/fonts "${STAGE}"/var/background "${STAGE}"/var/db \
+	         "${STAGE}"/usr/local/share/netsurf
 
-# DOOM IWAD — vdoom defaults to /bin/doom1.wad (matches the i386 image); without
-# it the game opens a black window.  Search the same locations as mkimage.sh so
-# the arm image picks up a WAD in ~/Downloads even when it is not in tools/.
-_doom_wad=""
-for _candidate in "tools/doom1.wad" "$HOME/Downloads/doom1.wad"; do
-	[ -f "$_candidate" ] && { _doom_wad="$_candidate"; break; }
-done
-if [ -n "$_doom_wad" ]; then
-	mcopy -o -i "${IMG}@@1M" "$_doom_wad" ::/bin/doom1.wad
-	echo "mkimage-arm: installed DOOM IWAD: $_doom_wad -> /bin/doom1.wad"
-else
-	echo "mkimage-arm: doom1.wad not found (tools/ or ~/Downloads) — vdoom will be a black window"
-fi
+	# DOOM IWAD — vdoom defaults to /bin/doom1.wad.  Search tools/ then ~/Downloads.
+	_doom_wad=""
+	for _candidate in "tools/doom1.wad" "$HOME/Downloads/doom1.wad"; do
+		[ -f "$_candidate" ] && { _doom_wad="$_candidate"; break; }
+	done
+	if [ -n "$_doom_wad" ]; then
+		cp "$_doom_wad" "${STAGE}/bin/doom1.wad"
+		echo "mkimage-arm: installed DOOM IWAD: $_doom_wad -> /bin/doom1.wad"
+	else
+		echo "mkimage-arm: doom1.wad not found (tools/ or ~/Downloads) — vdoom will be a black window"
+	fi
 
-# TrueType fonts for objGFX's scalable-font backend (vlogin/taskbar/term load
-# /var/fonts/DejaVuSans*.ttf) + desktop wallpapers.
-mmd -i "${IMG}@@1M" ::/var ::/var/fonts ::/var/background ::/var/log 2>/dev/null || true
-for f in tools/*.ttf; do [ -f "$f" ] && mcopy -o -i "${IMG}@@1M" "$f" ::/var/fonts/; done
-for f in tools/backgrounds/*.bmp tools/backgrounds/*.png; do
-	[ -f "$f" ] && mcopy -o -i "${IMG}@@1M" "$f" ::/var/background/
-done
+	# TrueType fonts for objGFX's scalable-font backend + desktop wallpapers.
+	for f in tools/*.ttf; do [ -f "$f" ] && cp "$f" "${STAGE}/var/fonts/"; done
+	for f in tools/backgrounds/*.bmp tools/backgrounds/*.png; do
+		[ -f "$f" ] && cp "$f" "${STAGE}/var/background/"
+	done
 
-# ubistry registry seed (wallpaper/theme/per-user prefs) — the daemon loads it
-# from /var/db/ubistry.db at startup.
-mmd -i "${IMG}@@1M" ::/var/db 2>/dev/null || true
-# Regenerate the ubistry seed from its single source of truth (tools/makereg.c);
-# tools/ubistry.db is a build artifact (not tracked) so the image always matches
-# the committed defaults table.
-_makereg="$(mktemp -t ubxmakereg.XXXXXX)" && cc -o "$_makereg" tools/makereg.c \
-	&& ( cd tools && "$_makereg" >/dev/null ) && rm -f "$_makereg"
-[ -f tools/ubistry.db ] && mcopy -o -i "${IMG}@@1M" tools/ubistry.db ::/var/db/ubistry.db || true
+	# ubistry registry seed.  Regenerate from its single source of truth
+	# (tools/makereg.c); tools/ubistry.db is a build artifact (not tracked).
+	_makereg="$(mktemp -t ubxmakereg.XXXXXX)" && cc -o "$_makereg" tools/makereg.c \
+		&& ( cd tools && "$_makereg" >/dev/null ) && rm -f "$_makereg"
+	[ -f tools/ubistry.db ] && cp tools/ubistry.db "${STAGE}/var/db/ubistry.db" || true
 
-# NetSurf browser runtime resources (Messages, CSS, icons) at the path baked into
-# nsfb's resource search list, plus the stb_truetype faces (8.3 names so the FAT
-# driver never disambiguates colliding long-name aliases).  Mirrors mkimage.sh.
-if [ -d contrib/netsurf-res ]; then
-	mmd -i "${IMG}@@1M" ::/usr ::/usr/local ::/usr/local/share ::/usr/local/share/netsurf 2>/dev/null || true
-	mcopy -s -i "${IMG}@@1M" contrib/netsurf-res/* ::/usr/local/share/netsurf/
-	install_face() { [ -f "tools/$1" ] && mcopy -o -i "${IMG}@@1M" "tools/$1" "::/usr/local/share/netsurf/$2"; }
-	install_face DejaVuSans.ttf                 SANS.TTF
-	install_face DejaVuSans-Bold.ttf            SANSB.TTF
-	install_face DejaVuSans-Oblique.ttf         SANSI.TTF
-	install_face DejaVuSans-BoldOblique.ttf     SANSBI.TTF
-	install_face DejaVuSerif.ttf                SERIF.TTF
-	install_face DejaVuSerif-Bold.ttf           SERIFB.TTF
-	install_face DejaVuSerif-Italic.ttf         SERIFI.TTF
-	install_face DejaVuSerif-BoldItalic.ttf     SERIFBI.TTF
-	install_face DejaVuSansMono.ttf             MONO.TTF
-	install_face DejaVuSansMono-Bold.ttf        MONOB.TTF
-	install_face DejaVuSansMono-Oblique.ttf     MONOI.TTF
-	install_face DejaVuSansMono-BoldOblique.ttf MONOBI.TTF
-	echo "mkimage-arm: installed NetSurf resources (/usr/local/share/netsurf)"
-fi
-
+	# NetSurf browser runtime resources + the stb_truetype faces (8.3 names so the
+	# FAT driver never disambiguates colliding long-name aliases).
+	if [ -d contrib/netsurf-res ]; then
+		cp -R contrib/netsurf-res/. "${STAGE}/usr/local/share/netsurf/"
+		install_face() { [ -f "tools/$1" ] && cp "tools/$1" "${STAGE}/usr/local/share/netsurf/$2"; }
+		install_face DejaVuSans.ttf                 SANS.TTF
+		install_face DejaVuSans-Bold.ttf            SANSB.TTF
+		install_face DejaVuSans-Oblique.ttf         SANSI.TTF
+		install_face DejaVuSans-BoldOblique.ttf     SANSBI.TTF
+		install_face DejaVuSerif.ttf                SERIF.TTF
+		install_face DejaVuSerif-Bold.ttf           SERIFB.TTF
+		install_face DejaVuSerif-Italic.ttf         SERIFI.TTF
+		install_face DejaVuSerif-BoldItalic.ttf     SERIFBI.TTF
+		install_face DejaVuSansMono.ttf             MONO.TTF
+		install_face DejaVuSansMono-Bold.ttf        MONOB.TTF
+		install_face DejaVuSansMono-Oblique.ttf     MONOI.TTF
+		install_face DejaVuSansMono-BoldOblique.ttf MONOBI.TTF
+		echo "mkimage-arm: staged NetSurf resources (/usr/local/share/netsurf)"
+	fi
 fi # end desktop-profile assets
 
-# UbixFS pool (plan K2/K3): stage a small file-backed (loopback) pool as
-# /pool.img, which the kernel mounts read-write at /pool.  Built with the host
-# `ubfs` CLI from the same portable core the kernel links.  Both profiles carry
-# it — the native copy-on-write filesystem demo and the path off FAT.
+# ── UbixFS pool ROOT (plan K5/M4): build the pool directly from STAGE and write
+#    it into the raw pool partition (type 0x9C).  The kernel mounts this as / via
+#    the virtio-blk MBR partition device + the bcache raw vdev — the same path
+#    proven on i386.  The host `ubfs` is the same portable core. ───────────────
 if ( cd tools/ubixfs && bmake ubfs ) >/dev/null 2>&1 && [ -x tools/ubixfs/ubfs ]; then
 	UBFS=tools/ubixfs/ubfs
-	POOL=$(mktemp -t ubixpool).img
-	"${UBFS}" mkpool "${POOL}" 2M >/dev/null
-	printf 'Hello from a UbixFS pool!\nThis file lives in a lite-ZFS dataset.\n' >"${POOL}.hello"
-	printf 'uBixOS native copy-on-write filesystem (lite-ZFS): pool + datasets,\nper-block Fletcher checksums, transaction-group commit.\n' >"${POOL}.readme"
-	"${UBFS}" mkdir "${POOL}" /etc >/dev/null
-	"${UBFS}" cp "${POOL}.hello"  "${POOL}:/hello.txt"   >/dev/null
-	"${UBFS}" cp "${POOL}.readme" "${POOL}:/etc/readme"  >/dev/null
-	mcopy -o -i "${IMG}@@1M" "${POOL}" ::/pool.img
-	rm -f "${POOL}" "${POOL}.hello" "${POOL}.readme"
-	echo "mkimage-arm: staged UbixFS pool at /pool.img (kernel mounts it at /pool)"
-else
-	echo "mkimage-arm: skipped /pool.img (host ubfs tool unavailable)"
-fi
-
-# ── UbixFS pool ROOT (plan K5/M4): mirror the finished FAT root into the raw pool
-#    partition (type 0x9C).  The kernel mounts this as / via the virtio-blk MBR
-#    partition device + the bcache raw vdev — the same path proven on i386.  The
-#    FAT partition remains a fallback root.  Extract the FAT tree to a host dir and
-#    cpr it into the pool (the host `ubfs` is the same portable core). ──────────
-if [ -x "${UBFS:-}" ] && [ -n "${POOL_LBA:-}" ]; then
-	echo "mkimage-arm: building UbixFS pool root (mirror of FAT root) -> raw partition LBA ${POOL_LBA}"
+	echo "mkimage-arm: building UbixFS pool root (${POOL_FS_MB} MB) from build/${ARCH} -> raw partition LBA ${POOL_LBA}"
 	WPOOL=$(mktemp -t ubixroot).img
-	MIRROR=$(mktemp -d -t ubixmirror)
 	"${UBFS}" mkpool "${WPOOL}" "${POOL_FS_MB}M" >/dev/null
-	# Extract every top-level dir from the FAT partition (skip the loopback demo
-	# pool.img — the pool is the root now, not a file inside it).
-	for _d in bin lib etc usr var; do
-		mcopy -s -i "${IMG}@@1M" "::/${_d}" "${MIRROR}/" 2>/dev/null || true
-	done
-	for _d in "${MIRROR}"/*; do
+	for _d in "${STAGE}"/*; do
 		[ -d "${_d}" ] && "${UBFS}" cpr "${_d}" "${WPOOL}:/$(basename "${_d}")" >/dev/null 2>&1
 	done
-	_mib=$(du -m "${MIRROR}" 2>/dev/null | tail -1 | cut -f1)
+	_mib=$(du -m "${STAGE}" 2>/dev/null | tail -1 | cut -f1)
 	dd if="${WPOOL}" of="${IMG}" bs=512 seek="${POOL_LBA}" conv=notrunc 2>/dev/null
-	rm -rf "${WPOOL}" "${MIRROR}"
 	echo "mkimage-arm: installed pool root (~${_mib} MiB) -> UbixFS pool / (LBA ${POOL_LBA})"
+	echo "mkimage-arm: done — pool /bin contents:"
+	"${UBFS}" ls "${WPOOL}" /bin 2>/dev/null | head -20
+	rm -rf "${WPOOL}"
+else
+	echo "mkimage-arm: ERROR — host ubfs tool unavailable; pool root not built" >&2
+	rm -rf "${STAGE}"
+	exit 1
 fi
 
-echo "mkimage-arm: done — contents:"
-mdir -i "${IMG}@@1M" ::/bin | tail -n +4 | head -20
+rm -rf "${STAGE}"
 echo "  (boot with: bmake run-debug-aarch64 TARGET=aarch64)"
