@@ -30,7 +30,7 @@
 #define INITIAL_FRAME 8 /* u64 slots: argc, argv[0]=NULL, envp[0]=NULL, auxv{6,PAGE_SIZE}{0,0}, pad */
 #define AT_PAGESZ 6     /* auxv: aarch64 musl reads PAGE_SIZE from here (else malloc fails) */
 
-#define EXEC_MAX (4 * 1024 * 1024) /* cap on an ELF image we'll load (libc.so ~1 MB) */
+#define EXEC_MAX (256 * 1024 * 1024) /* cap on an ELF image we'll load (self-hosted clang ~100 MB) */
 #define INITIAL_KSTACK_SIZE 65536  /* 64 KB kernelStack (matches schedNewTask kmalloc + KSTACK_SIZE) */
 
 /* SysV auxiliary-vector types (Linux/musl ABI — musl's __libc_start_main reads

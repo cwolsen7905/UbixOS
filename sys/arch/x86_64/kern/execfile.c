@@ -36,7 +36,7 @@
 #define AT_ENTRY 9
 #define AT_RANDOM 25
 
-#define EXEC_MAX (4 * 1024 * 1024) /* cap on an ELF image we'll load (libc.so ~1 MB) */
+#define EXEC_MAX (256 * 1024 * 1024) /* cap on an ELF image we'll load (self-hosted clang ~100 MB) */
 #define MAXARG 48                  /* cap on argv/envp entries marshalled into a new image */
 
 #define EXEC_STACK_VA 0x40020000UL /* single-page stack for the static bring-up path */
