@@ -463,7 +463,6 @@ ip4_input(struct pbuf *p, struct netif *inp)
   /* match packet against an interface, i.e. is this packet for us? */
   if (ip4_addr_ismulticast(ip4_current_dest_addr())) {
 #if LWIP_IGMP
-kpanic("A");
     if ((inp->flags & NETIF_FLAG_IGMP) && (igmp_lookfor_group(inp, ip4_current_dest_addr()))) {
       /* IGMP snooping switches need 0.0.0.0 to be allowed as source address (RFC 4541) */
       ip4_addr_t allsystems;
@@ -477,7 +476,6 @@ kpanic("A");
       netif = NULL;
     }
 #else /* LWIP_IGMP */
-kpanic("B");
     if ((netif_is_up(inp)) && (!ip4_addr_isany_val(*netif_ip4_addr(inp)))) {
       netif = inp;
     } else {
