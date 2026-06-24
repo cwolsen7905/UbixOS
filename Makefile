@@ -30,6 +30,11 @@ WMAKE=${MAKE} ${WORLD_FLAGS} CROSS_M32="${CROSS_M32}" INCLUDE=${WORLD_INC} BUILD
 DISK_IMAGE?=ubixos.img
 DISK_IMAGE_X86_64?=ubixos-x86_64.img
 
+# Host interface to bridge the guest onto for SSH access.  vmnet-bridged
+# requires QEMU to run as root (or with the com.apple.vm.networking entitlement).
+# Override on the command line: bmake run-aarch64 BRIDGE_IF=en1
+BRIDGE_IF?=en0
+
 # USB mass-storage test image (64 MB FAT32, populated by bmake usb-image).
 # bmake run attaches it automatically if the file exists.
 USB_IMAGE?=usb.img
@@ -399,11 +404,11 @@ kernel-x86_64:
 # I/O-BAR register window the bring-up driver speaks).  On Apple Silicon x86_64
 # runs under TCG (no HVF for a foreign arch), so it is emulated — slower but works.
 run-x86_64:
-	qemu-system-x86_64 -m 256 -smp ${SMP} -cpu qemu64,+x2apic -kernel ${OBJ_DIR}/boot/kernel \
+	sudo qemu-system-x86_64 -m 256 -smp ${SMP} -cpu qemu64,+x2apic -kernel ${OBJ_DIR}/boot/kernel \
 	  -vga std -serial mon:stdio \
 	  -drive file=${DISK_IMAGE_X86_64},format=raw,if=none,id=hd0 \
 	  -device virtio-blk-pci,drive=hd0,disable-modern=true \
-	  -netdev user,id=n0 \
+	  -netdev vmnet-bridged,id=n0,ifname=${BRIDGE_IF} \
 	  -device virtio-net-pci,netdev=n0,disable-modern=true \
 	  -audiodev coreaudio,id=snd0 -device AC97,audiodev=snd0
 
@@ -413,7 +418,7 @@ run-debug-x86_64:
 	qemu-system-x86_64 -m 256 -smp ${SMP} -cpu qemu64,+x2apic -kernel ${OBJ_DIR}/boot/kernel -nographic \
 	  -drive file=${DISK_IMAGE_X86_64},format=raw,if=none,id=hd0 \
 	  -device virtio-blk-pci,drive=hd0,disable-modern=true \
-	  -netdev user,id=n0 \
+	  -netdev vmnet-bridged,id=n0,ifname=${BRIDGE_IF} \
 	  -device virtio-net-pci,netdev=n0,disable-modern=true \
 	  -audiodev coreaudio,id=snd0 -device AC97,audiodev=snd0
 
@@ -683,11 +688,11 @@ _ARM_DISK_FLAGS!= test -f ${DISK_IMAGE_ARM} && \
 # bring-up); virtio-blk is attached only if ${DISK_IMAGE_ARM} exists.  HVF gives
 # near-native speed since host and guest are both ARM64.  Serial → serial.log.
 run-aarch64:
-	qemu-system-aarch64 -machine virt,gic-version=2 -accel hvf -cpu host -m 512 -smp ${SMP} \
+	sudo qemu-system-aarch64 -machine virt,gic-version=2 -accel hvf -cpu host -m 512 -smp ${SMP} \
 	  -kernel ${OBJ_DIR}/boot/kernel \
 	  -global virtio-mmio.force-legacy=false \
 	  ${_ARM_DISK_FLAGS} \
-	  -device virtio-net-device,netdev=net0 -netdev user,id=net0 \
+	  -device virtio-net-device,netdev=net0 -netdev vmnet-bridged,id=net0,ifname=${BRIDGE_IF} \
 	  -device virtio-gpu-device \
 	  -device virtio-keyboard-device -device virtio-mouse-device \
 	  -audiodev coreaudio,id=snd0 -device virtio-sound-device,audiodev=snd0 \
@@ -695,6 +700,9 @@ run-aarch64:
 
 # Headless aarch64 run: serial to stdout — the bring-up console.  Ctrl-A X quits.
 # force-legacy=false selects the modern (v2) virtio-mmio transport the driver needs.
+# Uses user-mode (NAT) networking so it needs no sudo / vmnet entitlement — the
+# guest DHCPs a 10.0.2.x address from QEMU's built-in stack.  (run-aarch64, the
+# human graphical run, keeps bridged networking.)
 run-debug-aarch64:
 	qemu-system-aarch64 -machine virt,gic-version=2 -accel hvf -cpu host -m 512 -smp ${SMP} \
 	  -kernel ${OBJ_DIR}/boot/kernel \
@@ -707,6 +715,8 @@ run-debug-aarch64:
 # the serial console is exposed on a unix socket so the coding agent can type
 # commands + read text output directly — no driving the GUI over VNC.  Serial is
 # tee'd to a logfile so the full boot is captured even before the agent connects.
+# Uses user-mode (NAT) networking so the agent can launch it with no sudo / vmnet
+# entitlement (the guest DHCPs a 10.0.2.x address).  run-aarch64 keeps bridged.
 #   serial socket : /tmp/ubixos-claude.sock        (interactive — `nc -U` or pipe)
 #   serial log    : /tmp/ubixos-claude-serial.log
 #   qemu monitor  : /tmp/ubixos-claude-mon.sock     (screenshot/sendkey fallback)
