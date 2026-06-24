@@ -28,7 +28,7 @@ target with `TARGET=` (alias for `TARGET_ARCH=`). **The default is now aarch64**
 bmake                  # kernel + world (default, aarch64) → build/aarch64/
 bmake kernel           # kernel only → build/aarch64/boot/kernel
 bmake world            # userland only → build/aarch64/{bin,lib,libexec}/
-bmake image            # fresh bootable disk image (ubixos-arm.img via mkimage-arm.sh)
+bmake image            # fresh bootable disk image (ubixos-arm.img via mkimage.sh)
 bmake run-aarch64      # launch QEMU virt (graphical, virtio-gpu, HVF on Apple Silicon)
 bmake run-debug-aarch64 # headless QEMU virt, serial to serial.log
 
@@ -283,7 +283,7 @@ Boots on QEMU `virt` (HVF on Apple Silicon) to a full **graphical desktop** matc
 - **vDoom** runs (windowed). Sockets/lwIP (DHCP), mmap/fork/execve, and musl dynamic linking are all functional.
 - Cooperative scheduling, EL0 via a 100 Hz timer; LP64. musl emits FreeBSD syscall numbers.
 - **Still bring-up**: a hand-rolled syscall `switch` (falls through to the shared table) and a `sys/arch/aarch64/bringup/` dir holding demos + the real exec path. The convergence backlog (unify syscall dispatch, factor fork/exec, graduate `bringup/`, console rework) is tracked in `docs/design/console-and-arch-convergence-plan.md`.
-- Build/run: `bmake kernel world TARGET=aarch64`; image via `tools/mkimage-arm.sh` (or `bmake image-arm`); `bmake run-aarch64 TARGET=aarch64` (graphical, virtio-gpu) or `bmake run-debug-aarch64 TARGET=aarch64` (serial-only, `-nographic`). HVF "Assertion failed: (isv)" means a real bad-pointer store — debug under `-accel tcg` to get the faulting address.
+- Build/run: `bmake kernel world TARGET=aarch64`; image via `tools/mkimage.sh` (or `bmake image-arm`); `bmake run-aarch64 TARGET=aarch64` (graphical, virtio-gpu) or `bmake run-debug-aarch64 TARGET=aarch64` (serial-only, `-nographic`). HVF "Assertion failed: (isv)" means a real bad-pointer store — debug under `-accel tcg` to get the faulting address.
 
 **Key lessons learned (i386)**:
 - Use `x86_64-elf-gcc -m32` — the `i386-elf-gcc` Homebrew formula is unmaintained.

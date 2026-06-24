@@ -548,7 +548,7 @@ makeuser:
 
 # `image` is arch-dispatched so it can never stage one arch's world into the
 # other arch's image: aarch64 -> ubixos-arm.img, x86_64 -> ubixos-x86_64.img,
-# both via tools/mkimage-arm.sh.
+# both via tools/mkimage.sh.
 image: image-${_ARCH}
 
 # aarch64 disk image: a raw FAT32 image with the dynamically-linked world + the
@@ -561,13 +561,13 @@ PROFILE ?= desktop
 image-aarch64: image-arm
 
 image-arm:
-	@PROFILE=${PROFILE} sh tools/mkimage-arm.sh ${DISK_IMAGE_ARM} ${OBJ_DIR}
+	@PROFILE=${PROFILE} sh tools/mkimage.sh ${DISK_IMAGE_ARM} ${OBJ_DIR}
 
-# x86_64 disk image: the SAME raw FAT32 + musl-ld.so layout as aarch64 (mkimage-arm
+# x86_64 disk image: the SAME raw FAT32 + musl-ld.so layout as aarch64 (mkimage.sh
 # is arch-parameterised via ARCH=), mounted at "/" via virtio-blk-pci.  Run after
 # `bmake world TARGET=x86_64`; boot with run-x86_64.
 image-x86_64:
-	@PROFILE=${PROFILE} ARCH=x86_64 sh tools/mkimage-arm.sh ${DISK_IMAGE_X86_64} ${OBJ_DIR}
+	@PROFILE=${PROFILE} ARCH=x86_64 sh tools/mkimage.sh ${DISK_IMAGE_X86_64} ${OBJ_DIR}
 
 # Build a small FAT32 USB test image with a README.  Attach to QEMU via
 # bmake run (auto-detected when usb.img exists) or mount manually with hdiutil.

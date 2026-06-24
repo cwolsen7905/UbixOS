@@ -105,7 +105,7 @@ obj_paths() { for n in $1; do printf 'src/%s.o ' "$n"; done; }
 # ── 5. Link PIE musl binaries ────────────────────────────────────────────────
 # Staged into $BUILD/usr/sbin to mirror the target FS layout (POSIX /usr split —
 # system daemons + admin tools live in /usr/sbin; see
-# docs/design/filesystem-hierarchy-plan.md).  mkimage-arm.sh copies the staging
+# docs/design/filesystem-hierarchy-plan.md).  mkimage.sh copies the staging
 # tree into the image verbatim.
 DEST="$BUILD/usr/sbin"
 # $EXTRA_LIBS (per-binary, before -lc) lets dropbear pull in libubix_api for the

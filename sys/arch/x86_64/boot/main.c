@@ -181,7 +181,7 @@ void kmain_x86_64(u32 mb_magic, u32 mb_info)
 
 		/* Prefer the UbixFS pool as root (parity with i386 K5/M3 + aarch64 K5/M4):
 		 * the pool lives on its own MBR partition (type 0x9C) staged with the full
-		 * world by mkimage-arm.sh, mounted via the bcache raw vdev.  A bad/absent pool
+		 * world by mkimage.sh, mounted via the bcache raw vdev.  A bad/absent pool
 		 * unwinds cleanly (initfs fails -> mountpoint freed), so we fall back to the
 		 * FAT partition (vtblk0s1).  The dataset read can transiently miss on the very
 		 * first cold reads, so retry a few times with a settle-spin (no scheduler

@@ -30,19 +30,48 @@
 #define ROOT_DS "root"
 
 /* ── file-backed vdev ───────────────────────────────────────────────────────*/
+static int64_t parse_size(const char *s); /* fwd: split_img_offset needs it */
+
+/* A backing file plus the byte window the pool occupies within it.  `base` lets a
+ * pool be authored in place inside a larger image (e.g. an MBR partition) instead
+ * of in its own file: block 0 maps to byte `base`, not byte 0.  `size` (0 = whole
+ * file) bounds every access to [base, base+size) — belt-and-suspenders against a
+ * stray block index clobbering the MBR or an adjacent partition. */
 struct fdev
 {
 	int fd;
+	uint64_t base; /* byte offset of block 0 within the backing file */
+	uint64_t size; /* window length in bytes (0 = unbounded) */
 };
 static int fdr(void *c, uint64_t b, void *buf)
 {
-	return pread(((struct fdev *)c)->fd, buf, UBFS_BLOCK_SIZE, (off_t)b * UBFS_BLOCK_SIZE) == UBFS_BLOCK_SIZE ? 0
+	struct fdev *d = (struct fdev *)c;
+	if (d->size && (b + 1) * UBFS_BLOCK_SIZE > d->size)
+		return -1;
+	return pread(d->fd, buf, UBFS_BLOCK_SIZE, (off_t)d->base + (off_t)b * UBFS_BLOCK_SIZE) == UBFS_BLOCK_SIZE ? 0
 	                                                                                                          : -1;
 }
 static int fdw(void *c, uint64_t b, const void *buf)
 {
-	return pwrite(((struct fdev *)c)->fd, buf, UBFS_BLOCK_SIZE, (off_t)b * UBFS_BLOCK_SIZE) == UBFS_BLOCK_SIZE ? 0
+	struct fdev *d = (struct fdev *)c;
+	if (d->size && (b + 1) * UBFS_BLOCK_SIZE > d->size)
+		return -1;
+	return pwrite(d->fd, buf, UBFS_BLOCK_SIZE, (off_t)d->base + (off_t)b * UBFS_BLOCK_SIZE) == UBFS_BLOCK_SIZE ? 0
 	                                                                                                           : -1;
+}
+
+/* Strip an optional "@<offset>" suffix off an image spec, in place:
+ * "disk.img@321M" -> img="disk.img", *base = 321*1024*1024.  The offset accepts
+ * K/M/G suffixes (parse_size).  No '@' -> base 0 (a standalone single-pool file). */
+static void split_img_offset(char *img, uint64_t *base)
+{
+	char *at = strrchr(img, '@');
+	*base = 0;
+	if (at)
+	{
+		*base = (uint64_t)parse_size(at + 1);
+		*at = '\0';
+	}
 }
 
 /* An opened pool + its root filesystem dataset. */
@@ -58,9 +87,16 @@ struct mount
 	uint64_t ds_obj;
 };
 
-static int mount_pool(struct mount *m, const char *img, int rw)
+static int mount_pool(struct mount *m, const char *imgspec, int rw)
 {
+	char img[1024];
+	uint64_t base;
+
 	memset(m, 0, sizeof(*m));
+	strncpy(img, imgspec, sizeof(img) - 1);
+	img[sizeof(img) - 1] = '\0';
+	split_img_offset(img, &base);
+	m->dev.base = base;
 	m->dev.fd = open(img, rw ? O_RDWR : O_RDONLY);
 	if (m->dev.fd < 0)
 	{
@@ -73,7 +109,10 @@ static int mount_pool(struct mount *m, const char *img, int rw)
 	{
 		struct stat st;
 		fstat(m->dev.fd, &st);
-		m->io.size_blocks = (uint64_t)st.st_size / UBFS_BLOCK_SIZE;
+		/* Window = everything after `base`.  ubfs_pool_open re-reads the true pool
+		 * size from the on-disk label, so this only has to be an upper bound. */
+		m->dev.size = (uint64_t)st.st_size - base;
+		m->io.size_blocks = m->dev.size / UBFS_BLOCK_SIZE;
 	}
 	if (ubfs_pool_open(&m->io, &m->p) < 0)
 	{
@@ -160,10 +199,12 @@ static int imgref(const char *s, char *img, const char **p)
 
 /* ── subcommands ────────────────────────────────────────────────────────────*/
 
-static int cmd_mkpool(const char *img, const char *sizestr)
+static int cmd_mkpool(const char *imgspec, const char *sizestr)
 {
 	int64_t bytes = parse_size(sizestr);
-	int fd = open(img, O_RDWR | O_CREAT | O_TRUNC, 0644);
+	char img[1024];
+	uint64_t base;
+	int fd;
 	struct fdev dev;
 	ubfs_vdev_io_t io;
 	ubfs_pool_t *p;
@@ -173,12 +214,26 @@ static int cmd_mkpool(const char *img, const char *sizestr)
 	ubfs_fs_t fs;
 	uint64_t ds;
 
-	if (fd < 0 || ftruncate(fd, bytes) < 0)
+	memset(&dev, 0, sizeof(dev));
+	strncpy(img, imgspec, sizeof(img) - 1);
+	img[sizeof(img) - 1] = '\0';
+	split_img_offset(img, &base);
+
+	/* In-place (base != 0): the image is pre-sized by the caller; open it without
+	 * O_TRUNC and never ftruncate — both would destroy the partition table and the
+	 * other partitions.  Standalone (base == 0): create/truncate a fresh pool file. */
+	if (base)
+		fd = open(img, O_RDWR);
+	else
+		fd = open(img, O_RDWR | O_CREAT | O_TRUNC, 0644);
+	if (fd < 0 || (base == 0 && ftruncate(fd, bytes) < 0))
 	{
 		perror(img);
 		return 1;
 	}
 	dev.fd = fd;
+	dev.base = base;
+	dev.size = (uint64_t)bytes;
 	io.ctx = &dev;
 	io.read = fdr;
 	io.write = fdw;
@@ -614,6 +669,9 @@ static void usage(void)
 {
 	fprintf(stderr,
 	        "usage:\n"
+	        "  any <img> may carry an '@<offset>' suffix (e.g. disk.img@321M) to\n"
+	        "  author/open the pool in place at that byte offset inside a larger\n"
+	        "  image — e.g. an MBR partition.  Without it the pool is the whole file.\n"
 	        "  ubfs mkpool <img> <size>\n"
 	        "  ubfs mkdir  <img> <path>\n"
 	        "  ubfs cp     <hostfile> <img>:<path>   (copy in)\n"

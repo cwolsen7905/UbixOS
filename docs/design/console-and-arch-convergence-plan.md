@@ -346,7 +346,7 @@ i386 keeps VGA text + COM1 (its VESA LFB is owned by `views`; a kernel fb
 console would conflict) — done for the arch that needs it.
 
 **Phase 4 — Image profiles. ✅ DONE (aarch64, 2026-06-10, `a7837bcdb`).**
-`mkimage-arm.sh PROFILE=base|desktop`: a **base** image ships the CLI world only
+`mkimage.sh PROFILE=base|desktop`: a **base** image ships the CLI world only
 (no compositor/apps/desktop libs/resources); a **desktop** image is the full
 stack.  `boot.c` branches on `/bin/views` being staged — present → the
 desktop chain, absent → the BASE console chain (`authd` + `/bin/login` on the

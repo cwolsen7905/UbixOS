@@ -25,7 +25,7 @@ bmake -C tools/ports/dropbear TARGET=x86_64   # x86_64  -> build/x86_64/usr/sbin
 
 Binaries stage into `build/${ARCH}/usr/sbin/` to mirror the target FS layout —
 sshd is a system daemon, so it homes in **`/usr/sbin`** per the POSIX `/usr`-split
-migration (`docs/design/filesystem-hierarchy-plan.md`). `tools/mkimage-arm.sh`
+migration (`docs/design/filesystem-hierarchy-plan.md`). `tools/mkimage.sh`
 copies the staging tree into the image verbatim.
 
 Cross-built against the musl-freestanding world toolchain (like the `bmake`/`sh`

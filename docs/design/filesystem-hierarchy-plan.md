@@ -20,7 +20,7 @@ the UbixFS pool.**
 - **Now (transitional):** the kernel boots from a FAT `/boot` (GRUB/loader reads
   FAT). i386 already homes the *world* in the UbixFS pool (FAT carries only
   boot); aarch64/x86_64 still stage the world onto the FAT image via
-  `mkimage-arm.sh` while the pool-as-root path is finished.
+  `mkimage.sh` while the pool-as-root path is finished.
 - **Next:** once **GRUB can read the UbixFS pool**, the FAT boot partition goes
   away entirely — kernel + world all live in the pool.
 - **After that:** FAT support is retained **only** for mounting *removable* media
@@ -69,14 +69,14 @@ usrmerge (Phase 3) becomes viable as soon as the pool is the universal root.
 The world build stages into an FS-shaped tree under `build/${ARCH}/`:
 `build/${ARCH}/{bin,lib,libexec}` today, now joined by
 `build/${ARCH}/{sbin,usr/bin,usr/sbin,usr/lib}` as things migrate. The image
-builder (`tools/mkimage-arm.sh`, used by **both** aarch64 and x86_64) mirrors the
+builder (`tools/mkimage.sh`, used by **both** aarch64 and x86_64) mirrors the
 staging tree into the FAT image verbatim. The dropbear port links straight into
 `build/${ARCH}/usr/sbin/`.
 
 ## Migration plan (incremental)
 
 - **Phase 0 (this pass):** establish the directories + staging convention;
-  `mkimage-arm.sh` creates `/sbin /usr /usr/bin /usr/sbin /usr/lib` and copies the
+  `mkimage.sh` creates `/sbin /usr /usr/bin /usr/sbin /usr/lib` and copies the
   new staging dirs. **dropbear/dropbearkey → `/usr/sbin`** as the first citizens.
 - **Phase 1:** migrate the existing daemons (`authd`, `netcfg`, `logd`,
   `ubistry`, `automountd`, `aural`) to `/usr/sbin`, updating their `etc/init.d/*`
@@ -89,6 +89,6 @@ staging tree into the FAT image verbatim. The dropbear port links straight into
 ## Notes
 
 - **i386 (`tools/mkimage.sh`) is out of scope** — frozen on `releng/2`; it uses a
-  separate STAGE→UbixFS-pool flow. Only `mkimage-arm.sh` is updated here.
+  separate STAGE→UbixFS-pool flow. Only `mkimage.sh` is updated here.
 - Nothing in `/bin` is *removed* in Phase 0 — purely additive, so the change is
   safe to land before the daemons migrate.
