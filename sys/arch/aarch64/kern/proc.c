@@ -212,6 +212,17 @@ int aarch64_fork(u_int64_t *parent_tf)
 	child->md.md_usp = parent_tf[TF_SLOT_SP_EL0]; /* same user SP (copied space); marks a user task */
 	child->md.md_entry = 0;                       /* unused — the trapframe drives the return */
 
+	/* Inherit the parent's mmap cursor + heap break.  The child's address space is
+	 * a copy of the parent's, so its inherited shared libraries, mmap regions, and
+	 * brk all live at the same VAs.  schedNewTask() zeroed these, and a zero
+	 * md_mmap_next makes the dispatcher restart the cursor at MMAP_BASE — so the
+	 * child's first post-fork mmap would land on top of an inherited library (e.g.
+	 * libubix_api.so), replacing its executable text with an anonymous RW page and
+	 * faulting (UXN) the moment the child calls into it.  Only fork-without-exec
+	 * hits this; execve resets both cursors itself for the fresh image. */
+	child->md.md_mmap_next = _current->md.md_mmap_next;
+	child->md.md_brk = _current->md.md_brk;
+
 	/* Parent linkage so wait4() can find + reap this child (and so the generic
 	 * sched() reaper notifies the right parent). */
 	child->parent = _current;
