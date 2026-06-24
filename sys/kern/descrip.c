@@ -67,6 +67,8 @@ struct fileOps *g_console_ops = 0x0;
 /* Pty (FD_TYPE_TTYV) fileops; see sys/include/sys/descrip.h.  NULL until the tty
  * layer installs it (it does so only where it differs from g_console_ops). */
 struct fileOps *g_tty_ops = 0x0;
+/* Raw pty master (FD_TYPE_PTMASTER) fileops; installed by tty_init(). */
+struct fileOps *g_ptm_ops = 0x0;
 void *(*g_tty_find)(u_int16_t slot) = 0x0;
 /* sys_ioctl hooks (path B): installed by the tty + devfs/device layers; NULL on
  * arches that don't link them, where the corresponding ioctls become no-ops. */
@@ -245,6 +247,13 @@ static int close_fdslot(struct thread *td, int fd)
 		case FD_TYPE_TTYV:
 			return fdestroy(td, f, fd);
 
+		case FD_TYPE_PTMASTER:
+			/* Run the master close (SIGHUP slave + free ring/slot) before destroying
+			 * the fd; sys_close() also does this, but dup2()/teardown reach here. */
+			if (f->f_ops != NULL && f->f_ops->close != NULL)
+				f->f_ops->close(f, td, fd);
+			return fdestroy(td, f, fd);
+
 		case FD_TYPE_PIPE:
 			if (f->data != NULL)
 			{
@@ -316,6 +325,12 @@ static int duplicate_descriptor(struct thread *td, int from, int to)
 		else if (fp->pipe_end == PIPE_END_WRITE)
 			pi->wfdCNT++;
 	}
+
+	/* posix_openpt master: dropbear dup2()s the master onto the channel fds, so
+	 * the dup must share the ref — else closing the original tears the pty down
+	 * (SIGHUP) while the relay still holds a copy. */
+	if (fp->fd_type == FD_TYPE_PTMASTER)
+		pty_master_fork_ref((int)(uintptr_t)fp->data);
 
 	td->o_files[to] = (void *)dup_fp;
 	return (0);
@@ -414,6 +429,37 @@ int sys_ioctl(struct thread *td, struct sys_ioctl_args *args)
 	 * Truncate to 32 bits so it matches the case labels.  No-op on i386, where
 	 * u_long is already 32-bit. */
 	args->com = (u_int32_t)args->com;
+
+	/* Raw posix_openpt master (FD_TYPE_PTMASTER): fd->data holds the pts/pool slot.
+	 * Service the pty-master ioctls musl issues from openpty()/ptsname()/unlockpt()
+	 * and forward window-size changes to the slave so the SSH client can resize. */
+	if (tty_fp != NULL && tty_fp->fd_type == FD_TYPE_PTMASTER)
+	{
+		int slot = (int)(uintptr_t)tty_fp->data;
+
+		switch (args->com)
+		{
+			case TIOCGPTN: /* ptsname(): slave unit number */
+				if (args->data != NULL)
+					*(int *)args->data = slot;
+				td->td_retval[0] = 0;
+				return (0);
+			case TIOCSPTLCK: /* unlockpt(): master is always unlocked */
+				td->td_retval[0] = 0;
+				return (0);
+			case TIOCSWINSZ: /* SSH window-size change → slave winsize */
+			{
+				tty_term *mt = g_tty_find ? (tty_term *)g_tty_find((u_int16_t)slot) : NULL;
+				if (mt != NULL && args->data != NULL)
+					mt->t_winsize = *(struct winsize *)args->data;
+				td->td_retval[0] = 0;
+				return (0);
+			}
+			default:
+				td->td_retval[0] = 0; /* accept-and-ignore other master ioctls */
+				return (0);
+		}
+	}
 
 	/* FD_TYPE_TTYV fds carry their own tty_term in fd->data. */
 	tty_term *term;
@@ -674,6 +720,10 @@ int sys_select(struct thread *td, struct sys_select_args *args)
 	int kern_to_lwip_w[MAX_FILES]; /* kernel fd → lwIP socket for write set */
 	int tty_rd_fds[MAX_FILES];     /* read fds that are pseudo-terminals (FD_TYPE_TTYV) */
 	int n_tty_rd;
+	int ptm_rd_fds[MAX_FILES];     /* read fds that are posix_openpt masters (FD_TYPE_PTMASTER) */
+	int n_ptm_rd;
+	int pty_wr_fds[MAX_FILES];     /* write fds that are pty master/slave (always writable) */
+	int n_pty_wr;
 	int max_lwip;
 	int has_stdin_rd;
 	struct timeval zero_tv;
@@ -686,6 +736,8 @@ int sys_select(struct thread *td, struct sys_select_args *args)
 	max_lwip = 0;
 	has_stdin_rd = 0;
 	n_tty_rd = 0;
+	n_ptm_rd = 0;
+	n_pty_wr = 0;
 
 	/* Copy and clear input sets immediately so args->in/ou become result sets. */
 	if (args->in)
@@ -745,6 +797,12 @@ int sys_select(struct thread *td, struct sys_select_args *args)
 					 * checked per-fd in the poll loop via its own line buffer. */
 					tty_rd_fds[n_tty_rd++] = i;
 				}
+				else if (f && f->fd_type == FD_TYPE_PTMASTER)
+				{
+					/* posix_openpt master: readable when the slave produced output
+					 * (checked per-fd in the poll loop via ptm_output_pending). */
+					ptm_rd_fds[n_ptm_rd++] = i;
+				}
 				else if (f && f->fd_type == FD_TYPE_TTY)
 				{
 					/* /dev/tty — the process's controlling terminal: global hook. */
@@ -768,6 +826,12 @@ int sys_select(struct thread *td, struct sys_select_args *args)
 				FD_SET(f->socket, &lwip_wfds);
 				if (f->socket + 1 > max_lwip)
 					max_lwip = f->socket + 1;
+			}
+			else if (f && (f->fd_type == FD_TYPE_PTMASTER || f->fd_type == FD_TYPE_TTYV))
+			{
+				/* pty master/slave: writes go to a bounded ring/line buffer and never
+				 * block — always writable (set + counted in the poll loop). */
+				pty_wr_fds[n_pty_wr++] = i;
 			}
 		}
 	}
@@ -845,6 +909,27 @@ int sys_select(struct thread *td, struct sys_select_args *args)
 					FD_SET(tty_rd_fds[j], args->in);
 				total++;
 			}
+		}
+
+		/* posix_openpt master read fds — ready when the slave (shell) has produced
+		 * output for the master (dropbear) to forward to the SSH channel. */
+		for (j = 0; j < n_ptm_rd; j++)
+		{
+			struct file *mf = td->o_files[ptm_rd_fds[j]];
+			if (mf != NULL && ptm_output_pending((int)(uintptr_t)mf->data) > 0)
+			{
+				if (args->in)
+					FD_SET(ptm_rd_fds[j], args->in);
+				total++;
+			}
+		}
+
+		/* pty master/slave write fds — always writable. */
+		for (j = 0; j < n_pty_wr; j++)
+		{
+			if (args->ou)
+				FD_SET(pty_wr_fds[j], args->ou);
+			total++;
 		}
 
 		if (total > 0)

@@ -27,6 +27,7 @@
  */
 
 #include <ubixos/access.h>
+#include <sys/errno.h> /* EPERM (setuid/setgid failure) */
 
 /************************************************************************
 
@@ -43,12 +44,17 @@
  ************************************************************************/
 int sys_setUID(struct thread *td, struct sys_setUID_args *args)
 {
+	/* Must set td_retval[0] (the dispatcher returns it): a bare `return 0` left a
+	 * stale value, so userland setuid() saw a spurious failure — dropbear's session
+	 * child then aborted with "Error changing user". */
 	if (_current->uid == 0x0)
 	{
 		_current->uid = args->uid;
+		td->td_retval[0] = 0;
 		return (0);
 	}
-	return (-1);
+	td->td_retval[0] = -EPERM;
+	return (EPERM);
 }
 
 int sys_getUID(struct thread *td, void *uap)
@@ -73,16 +79,16 @@ int sys_getGID(struct thread *td, void *uap)
 
 int sys_setGID(struct thread *td, struct sys_setGID_args *uap)
 {
-
+	/* As sys_setUID: set td_retval[0] or userland setgid() reads a stale value and
+	 * dropbear aborts the session with "Error changing user group". */
 	if (_current->gid == 0x0)
 	{
-
 		_current->gid = uap->gid;
-
+		td->td_retval[0] = 0;
 		return (0);
 	}
-
-	return (-1);
+	td->td_retval[0] = -EPERM;
+	return (EPERM);
 }
 
 int in_group_p(gid_t grp)

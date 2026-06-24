@@ -1,0 +1,27 @@
+--- a/src/sshpty.c
++++ b/src/sshpty.c
+@@ -53,18 +53,16 @@
+ 	char *name;
+ 	int i;
+ 
+-	i = openpty(ptyfd, ttyfd, NULL, NULL, NULL);
++	/* uBixOS: pass namebuf so openpty() returns the slave name (/dev/pts/N)
++	 * directly — the Linux ttyname()/proc-fd lookup dropbear would otherwise use
++	 * is not wired here. */
++	(void)name;
++	i = openpty(ptyfd, ttyfd, namebuf, NULL, NULL);
+ 	if (i < 0) {
+-		dropbear_log(LOG_WARNING, 
++		dropbear_log(LOG_WARNING,
+ 				"pty_allocate: openpty: %.100s", strerror(errno));
+ 		return 0;
+-	}
+-	name = ttyname(*ttyfd);
+-	if (!name) {
+-		dropbear_exit("ttyname fails for openpty device");
+ 	}
+-
+-	strlcpy(namebuf, name, namebuflen);	/* possible truncation */
+ 	return 1;
+ #else /* HAVE_OPENPTY */
+ #ifdef HAVE__GETPTY

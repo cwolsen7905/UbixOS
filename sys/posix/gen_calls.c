@@ -229,6 +229,21 @@ int fchmod(struct thread *td, struct fchmod_args *uap)
 }
 
 /**
+ * chown/lchown/fchown/fchownat — accept-and-ignore.  uBixOS does not enforce file
+ * ownership yet (see docs/design/multiuser-security-plan.md), so these report
+ * success without changing anything.  Without this an ownership-setting caller —
+ * e.g. dropbear chowning its pty slave to the login user — treats the -ENOSYS as
+ * fatal and aborts the session.  TODO: real enforcement once struct ucred + the
+ * vfs_access chokepoint land.
+ */
+int chown_noop(struct thread *td, void *uap)
+{
+	(void)uap;
+	td->td_retval[0] = 0;
+	return (0);
+}
+
+/**
  * fsync(fd) — no-op success.  uBixOS filesystems write through / commit on
  * close, so there is no per-fd dirty buffer cache to flush; returning success
  * lets programs that fsync before rename (e.g. dropbear's host-key save)

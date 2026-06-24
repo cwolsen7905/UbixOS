@@ -16,9 +16,13 @@ void __cxa_pure_virtual(void)     { abort(); }
 void __cxa_deleted_virtual(void)  { abort(); }
 
 // ---------------------------------------------------------------------------
-// DSO handle — data symbol used as cookie by __cxa_atexit.
+// DSO handle — data symbol used as cookie by __cxa_atexit.  GCC emits the
+// reference from an executable's global-ctor TU (_GLOBAL__sub_I_*) as a HIDDEN
+// symbol (the crtbegin convention); a default-visibility definition leaves the
+// hidden ref unresolved ("hidden symbol __dso_handle isn't defined").  Mark it
+// hidden so it satisfies that reference when libcxxabi.a is linked statically.
 // ---------------------------------------------------------------------------
-void *__dso_handle = 0;
+__attribute__((visibility("hidden"))) void *__dso_handle = 0;
 
 // ---------------------------------------------------------------------------
 // Static-local initialisation guards (Itanium ABI, single-threaded).

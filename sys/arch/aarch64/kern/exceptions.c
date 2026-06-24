@@ -18,6 +18,9 @@
 #include <ubixos/signal.h>         /* signal_check / sys_sigreturn + AARCH64_SIGTRAMP_RETADDR */
 #include <sys/trap.h>              /* struct trapframe (aarch64 layout) */
 #include <sys/sysproto_posix.h>    /* struct sys_sigreturn_args */
+#include <ubixos/callout.h>        /* callout_run_expired — wake timed sleepers from the timer IRQ */
+#include <ubixos/spinlock.h>       /* spinTryLock — re-entrancy-safe sched-lock grab in the ISR */
+#include <ubixos/vitals.h>         /* systemVitals->sysTicks — current callout deadline clock */
 
 enum
 {
@@ -90,7 +93,27 @@ void aarch64_exception(u_int64_t kind, void *frame)
 		{
 			_current->td.frame = tf;
 			signal_check(tf); /* deliver Ctrl-C etc. to a CPU-bound foreground task */
-			sched();          /* preempt the user task */
+			sched();          /* preempt the user task — sched() also fires expired callouts */
+		}
+		else if (ticked && curcpu()->cpuid == 0)
+		{
+			/* Timer interrupted an EL1 (kernel) context — a non-preemptible point, so
+			 * we must NOT context-switch here (resuming a preempted EL1 spin corrupts
+			 * the desktop launch; see the preempt gate above).  But we MUST still
+			 * advance time-based wakeups: otherwise a process that spends a long time
+			 * in EL1 — e.g. dropbear busy-polling in sys_select's sched_yield loop —
+			 * starves the virtio-net RX poll thread (its sched_wait_event_timeout
+			 * callout never fires) and lwIP's protocol timers, so inbound packets pile
+			 * up unread (SSH input freezes; pings/connections drop intermittently).
+			 * Running the expired callouts only marks those sleepers READY; they run on
+			 * the next voluntary sched_yield(), so there is no unsafe switch here.
+			 * BSP-only (callouts are a global list) + trylock so we silently skip the
+			 * tick if the interrupted context already holds the scheduler lock. */
+			if (!spinTryLock(&schedulerSpinLock))
+			{
+				callout_run_expired(systemVitals->sysTicks);
+				spinUnlock(&schedulerSpinLock);
+			}
 		}
 		return;
 	}

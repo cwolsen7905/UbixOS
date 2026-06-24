@@ -108,6 +108,43 @@ int sys_open(struct thread *td, struct sys_open_args *args)
 	return (kern_openat(td, AT_FDCWD, args->path, args->flags, args->mode));
 }
 
+/**
+ * posix_openpt(2) — allocate a pseudo-terminal master.
+ *
+ * FreeBSD-faithful: returns a raw master fd directly (no /dev/ptmx).  The slave
+ * is reached at /dev/pts/<n>, where <n> is obtained via ioctl(TIOCGPTN) on the
+ * master (see sys_ioctl).  @flags (O_RDWR|O_NOCTTY) are accepted but the master
+ * is always read-write and never a controlling terminal.
+ *
+ * @return master fd, or -EAGAIN (pool exhausted) / -EMFILE (fd table full).
+ */
+int sys_posix_openpt(struct thread *td, struct sys_posix_openpt_args *args)
+{
+	struct file *nfp = 0x0;
+	int fd = 0;
+	int slot;
+
+	(void)args;
+	slot = pty_open_master();
+	if (slot < 0)
+	{
+		td->td_retval[0] = -EAGAIN;
+		return (EAGAIN);
+	}
+	if (falloc(td, &nfp, &fd) != 0)
+	{
+		pty_close_master(slot);
+		td->td_retval[0] = -EMFILE;
+		return (EMFILE);
+	}
+	nfp->fd = NULL;
+	nfp->fd_type = FD_TYPE_PTMASTER;
+	nfp->data = (void *)(uintptr_t)slot;
+	nfp->f_ops = g_ptm_ops;
+	td->td_retval[0] = fd;
+	return (0);
+}
+
 int sys_openat(struct thread *td, struct sys_openat_args *args)
 {
 	return (kern_openat(td, args->fd, args->path, args->flag, (int)args->mode));
@@ -746,6 +783,46 @@ int kern_openat(struct thread *thr, int afd, char *path, int flags, int mode)
 				nfp->f_ops = g_tty_ops ? g_tty_ops : g_console_ops;
 				/* POSIX: session leader opening a terminal without
 				 * O_NOCTTY implicitly acquires it as controlling tty. */
+				if (!(oflags & O_NOCTTY) && _current->ct_tty == NULL)
+				{
+					_current->ct_tty = t;
+					if (t->t_pgrp == 0)
+						t->t_pgrp = (int)_current->pgrp;
+				}
+				thr->td_retval[0] = fd;
+				return (0);
+			}
+		}
+	}
+
+	/* /dev/pts/N — pseudo-terminal slave (posix_openpt slave side).  Resolves to
+	 * the pool slot whose raw master posix_openpt() handed out; opened by the
+	 * dropbear session child as the shell's controlling terminal.  Same fd shape
+	 * as /dev/ttyvN (FD_TYPE_TTYV slave), but keyed by the pts unit number. */
+	{
+		const char *pp = NULL;
+		if (strncmp(path, "/dev/pts/", 9) == 0)
+			pp = path + 9;
+		if (pp != NULL && *pp >= '0' && *pp <= '9')
+		{
+			int n = 0;
+			const char *p = pp;
+			while (*p >= '0' && *p <= '9')
+				n = n * 10 + (*p++ - '0');
+			if (*p == '\0')
+			{
+				int slot = pty_slot_for_pts(n);
+				tty_term *t = (slot >= 0 && g_tty_find) ? (tty_term *)g_tty_find((u_int16_t)slot) : NULL;
+				if (t == NULL)
+				{
+					fdestroy(thr, nfp, fd);
+					thr->td_retval[0] = ENODEV;
+					return (ENODEV);
+				}
+				nfp->fd = NULL;
+				nfp->fd_type = FD_TYPE_TTYV;
+				nfp->data = t;
+				nfp->f_ops = g_tty_ops ? g_tty_ops : g_console_ops;
 				if (!(oflags & O_NOCTTY) && _current->ct_tty == NULL)
 				{
 					_current->ct_tty = t;

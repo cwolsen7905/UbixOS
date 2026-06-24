@@ -116,8 +116,14 @@ fi
 STAGE=$(mktemp -d -t ubixstage)
 mkdir -p "${STAGE}"/bin "${STAGE}"/lib "${STAGE}"/sbin \
          "${STAGE}"/usr/bin "${STAGE}"/usr/sbin "${STAGE}"/usr/lib \
-         "${STAGE}"/etc "${STAGE}"/etc/init.d \
-         "${STAGE}"/var/log
+         "${STAGE}"/etc "${STAGE}"/etc/init.d "${STAGE}"/etc/dropbear \
+         "${STAGE}"/var/log \
+         "${STAGE}"/home/root "${STAGE}"/home/guest \
+         "${STAGE}"/home/reddawg "${STAGE}"/home/bsd
+# Home directories for the /etc/passwd users — a login shell (tcsh) chdirs to
+# $HOME, so these must exist or the ssh session bails ("Failed chdir /home/...").
+# sshd (dropbear) generates + persists its host key into /etc/dropbear on first
+# connection (delay_hostkey); the dir must exist since dropbear won't mkdir it.
 
 # libc.so IS musl's dynamic linker; install it under the DT_NEEDED soname and
 # expose the INTERP path (/lib/ld-musl-${ARCH}.so.1) as a symlink to it.  cpr

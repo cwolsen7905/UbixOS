@@ -113,20 +113,30 @@ Each phase ends bootable on **both** arches; enforcement stays off until Phase 3
 - **Behaviour-preserving** — values are identical to today, just typed and
   centralised. Verify both arches still boot to a shell.
 
-#### Phase 1b — authd projects `/etc/passwd` (single source of truth)
-*Added 2026-06-23 (driven by the Dropbear sshd port — see
+#### Phase 1b — authd projects `/etc/passwd` **and `/etc/group`** (single source of truth)
+*Added 2026-06-23, extended 2026-06-24 (driven by the Dropbear sshd port — see
 `tools/ports/dropbear/`).* Today identity lives only in authd's binary
 `/etc/userdb`. But POSIX userland reaches identity through musl's
-`getpwnam`/`getpwuid`/`getpwent`, which read a text **`/etc/passwd`** — needed by
-Dropbear (uid/gid/home/shell lookup before auth) and by `ls -l`, `id`, `whoami`,
-`stat`, etc. To avoid **two competing identity stores**, keep **authd as the
-sole authority** and make `/etc/passwd` a *derived projection*:
-- authd **writes `/etc/passwd` from `/etc/userdb` on init**, and **rewrites it on
-  every user add/remove/modify** (once those management ops exist — authd is
-  read-only today). `/etc/passwd` is identity only (`name:x:uid:gid:gecos:home:
-  shell`); the `x` means "credentials live with the authority", never a hash.
-- This **removes the hand-maintained `etc/passwd`** currently shipped as a
-  stopgap for the Dropbear port — authd generates it instead.
+`getpwnam`/`getpwuid`/`getpwent` (text **`/etc/passwd`**) *and*
+`getgrnam`/`getgrgid`/`getgrouplist`/`initgroups` (text **`/etc/group`**) — both
+needed by Dropbear (uid/gid/home/shell lookup before auth, then
+`setgid`+`initgroups` to drop privilege) and by `ls -l`, `id`, `whoami`, `stat`,
+etc. To avoid **competing identity stores**, keep **authd as the sole authority**
+and make **both `/etc/passwd` and `/etc/group` *derived projections*** of
+`/etc/userdb`:
+- authd **writes `/etc/passwd` + `/etc/group` from `/etc/userdb` on init**, and
+  **rewrites them on every user/group add/remove/modify** (once those management
+  ops exist — authd is read-only today). `/etc/passwd` is identity only
+  (`name:x:uid:gid:gecos:home:shell`); `/etc/group` is
+  `name:*:gid:member,member,...`; the `x`/`*` mean "credentials live with the
+  authority", never a hash. ⇒ `/etc/userdb` must grow a group table (gid → name +
+  members) as the authoritative source the projection reads.
+- This **removes the hand-maintained `etc/passwd` AND `etc/group`** currently
+  shipped as stopgaps for the Dropbear port — authd generates them instead.
+  (Until then, the static `etc/group` exists so `initgroups()`/`getgrnam("tty")`
+  succeed; without it — or without a correct `socket(AF_UNIX)`→`EAFNOSUPPORT`,
+  which musl's `__nscd_query` needs to fall through to `/etc/group` — an ssh login
+  aborts with "Error changing user group".)
 - **FreeBSD-faithful end state** (per `feedback_posix_emulate_freebsd`): grow this
   toward FreeBSD's scheme — world-readable `/etc/passwd` + root-only
   `/etc/master.passwd` (hashes) + `pwd.db`/`spwd.db` Berkeley-DB indexes that

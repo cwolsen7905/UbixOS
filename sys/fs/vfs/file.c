@@ -446,6 +446,7 @@ int sys_fchdir(struct thread *td, struct sys_fchdir_args *args)
 	fd = fdd->fd;
 
 	snprintf(_current->oInfo.cwd, sizeof(_current->oInfo.cwd), "%s", fd->fileName);
+	td->td_retval[0] = 0; /* set the result register (bare return left it stale) */
 	return (error);
 }
 

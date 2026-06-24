@@ -44,6 +44,7 @@
 #include <string.h>
 #include <sys/descrip.h> /* struct file, struct fileOps (path B fileops) */
 #include <sys/errno.h>
+#include <sys/fcntl.h> /* O_NONBLOCK (raw master non-blocking read) */
 #if defined(__i386__)
 #include <i386/signal.h> /* SIGINT/SIGTTIN/... signal numbers */
 #include <sys/io.h>
@@ -65,6 +66,10 @@ static tty_term *terms = 0x0;
 #if defined(__i386__)
 tty_term *tty_foreground = 0x0;
 #endif
+
+/* Defined below pty_free(); forward-declared so tty_print()'s raw-master tap
+ * (which streams slave output to a posix_openpt master) can call it. */
+void ptm_output(tty_term *term, const char *s);
 static struct spinLock tty_spinLock = SPIN_LOCK_INITIALIZER;
 
 /* Scratch for tty_resize content preservation (too big for the kernel stack). */
@@ -462,12 +467,54 @@ static struct fileOps tty_ops = {
  * arch); tty_init() installs &tty_ops into it.  On arches without a TTY layer it
  * stays NULL and the generic syscall core's tty fall-throughs error cleanly. */
 
+/* ── raw pty master (FD_TYPE_PTMASTER) fileops — fp->data holds the pool slot ── */
+
+static int ptm_fo_read(struct file *fp, struct thread *td, void *vbuf, size_t nbyte)
+{
+	int r = ptm_read((int)(uintptr_t)fp->data, vbuf, (int)nbyte, (fp->f_flag & O_NONBLOCK) != 0);
+
+	/* Path-B convention (see tty_fo_read): set td_retval[0] = bytes / -errno and
+	 * return 0 / errno.  Without setting td_retval[0] the caller's read() got a
+	 * stale value — dropbear read garbage on the master, saw EOF, and closed it. */
+	td->td_retval[0] = r;
+	return (r < 0 ? -r : 0);
+}
+
+static int ptm_fo_write(struct file *fp, struct thread *td, const void *vbuf, size_t nbyte)
+{
+	int r = ptm_write((int)(uintptr_t)fp->data, vbuf, (int)nbyte);
+
+	td->td_retval[0] = r;
+	return (r < 0 ? -r : 0);
+}
+
+static int ptm_fo_close(struct file *fp, struct thread *td, int fd)
+{
+	pty_close_master((int)(uintptr_t)fp->data);
+	/* Free the descriptor slot (as socket_fo_close does) — sys_close() returns our
+	 * result without doing it.  Omitting this left the closed master fd lingering
+	 * in the table, so a later close (dropbear's pre-exec close(3..maxfd)) hit it
+	 * AGAIN, double-decrementing the master refcount to 0 and tearing the pty down
+	 * mid-session — SIGHUP'ing the freshly-exec'd shell off its controlling tty. */
+	if (fdestroy(td, fp, fd) != 0)
+		kprintf("sys_close: fdestroy failed for pty master fd %d\n", fd);
+	td->td_retval[0] = 0;
+	return (0);
+}
+
+static struct fileOps ptm_ops = {
+    .read = ptm_fo_read,
+    .write = ptm_fo_write,
+    .close = ptm_fo_close,
+};
+
 int tty_init()
 {
 	int i = 0x0;
 
 	/* The pty (FD_TYPE_TTYV) fileops — used by the GUI terminal on every arch. */
 	g_tty_ops = &tty_ops;
+	g_ptm_ops = &ptm_ops; /* raw posix_openpt master fileops */
 	g_tty_find = (void *(*)(u_int16_t))tty_find;
 	g_tty_inject = (void (*)(void *, char))tty_inject;
 	g_tty_signal = (void (*)(void *, int))signal_post_tty;
@@ -507,6 +554,10 @@ int tty_init()
 		terms[i].t_type = TTY_TYPE_VGA;
 		terms[i].t_eof = 0;
 		terms[i].t_stopped = 0;
+		terms[i].t_outbuf = NULL; /* no raw master until pty_open_master() attaches one */
+		terms[i].t_has_master = 0;
+		terms[i].t_pts_num = 0;
+		terms[i].t_master_refs = 0;
 		/* Fixed physical terminals are always live; pty pool starts free. */
 		terms[i].t_inuse = (i < TTY_PTY_BASE) ? 1 : 0;
 
@@ -861,6 +912,14 @@ int tty_print(char *string, tty_term *term)
 	/* IXON: output suspended by Ctrl-S */
 	if (term->t_stopped)
 		return (0);
+
+	/* Raw pty master attached (posix_openpt): stream bytes verbatim to the master
+	 * fd and skip the VT100 cell grid — the remote SSH client does the rendering. */
+	if (term->t_has_master)
+	{
+		ptm_output(term, string);
+		return (0);
+	}
 
 	spinLock(&tty_spinLock);
 
@@ -1277,6 +1336,10 @@ int pty_alloc(void)
 
 		t->t_inuse = 1;
 		t->t_type = TTY_TYPE_PTY;
+		t->t_outbuf = NULL; /* no raw master unless pty_open_master() attaches one */
+		t->t_has_master = 0;
+		t->t_pts_num = 0;
+		t->t_master_refs = 0;
 		t->tty_pointer = t->tty_buffer;
 		t->tty_x = 0;
 		t->tty_y = 0;
@@ -1330,6 +1393,168 @@ void pty_free(int slot)
 	terms[slot].t_inuse = 0;
 	terms[slot].t_pgrp = 0;
 	terms[slot].owner = 0;
+}
+
+/* ─────────────────────── raw pty master (posix_openpt) ─────────────────────── */
+
+/**
+ * Push one byte into a pty's raw master output ring (drops on overflow — a master
+ * that cannot keep up loses output rather than blocking the slave's writer).
+ */
+static void ptm_push(tty_term *term, char c)
+{
+	int next = (term->t_outhead + 1) & (TTY_OUTBUF_SIZE - 1);
+
+	if (next == term->t_outtail)
+		return; /* ring full */
+	term->t_outbuf[term->t_outhead] = c;
+	term->t_outhead = next;
+}
+
+/**
+ * Stream slave output bytes to the raw master ring, applying OPOST/ONLCR (bare
+ * \n → \r\n) so a remote terminal advances correctly, then wake the master
+ * reader.  Called from tty_print() when a master is attached — the SSH client
+ * renders, so the VT100 cell-grid path is bypassed entirely.
+ */
+void ptm_output(tty_term *term, const char *s)
+{
+	if (term->t_outbuf == NULL)
+		return;
+	for (; *s != '\0'; s++)
+	{
+		if (*s == '\n' && (term->t_termios.c_oflag & ONLCR))
+			ptm_push(term, '\r');
+		ptm_push(term, *s);
+	}
+	sched_wakeup_chan(&term->t_outhead);
+}
+
+/** Wait predicate: raw master has output queued, or the slot was torn down. */
+static int ptm_has_output(void *arg)
+{
+	tty_term *t = (tty_term *)arg;
+
+	return (t->t_outhead != t->t_outtail || !t->t_inuse);
+}
+
+/**
+ * Allocate a pseudo-terminal with a raw master (posix_openpt).  Returns the pool
+ * slot — also the pts unit number, so the slave is /dev/pts/<slot> — or -1 if the
+ * pool is exhausted or the ring cannot be allocated.
+ */
+int pty_open_master(void)
+{
+	int slot = pty_alloc();
+
+	if (slot < 0)
+		return (-1);
+	terms[slot].t_outbuf = (char *)kmalloc(TTY_OUTBUF_SIZE);
+	if (terms[slot].t_outbuf == NULL)
+	{
+		pty_free(slot);
+		return (-1);
+	}
+	terms[slot].t_outhead = 0;
+	terms[slot].t_outtail = 0;
+	terms[slot].t_has_master = 1;
+	terms[slot].t_pts_num = slot;
+	terms[slot].t_master_refs = 1;
+	return (slot);
+}
+
+/**
+ * A fork() dup'd a master fd, so two processes now hold it (e.g. dropbear's
+ * connection process forks a session child that closes its inherited master);
+ * bump the ref so the first close() does not tear the pty down under the other.
+ */
+void pty_master_fork_ref(int slot)
+{
+	if (slot < TTY_PTY_BASE || slot >= TTY_MAX_TERMS)
+		return;
+	if (terms[slot].t_inuse && terms[slot].t_has_master)
+		terms[slot].t_master_refs++;
+}
+
+/** Drop a master reference; SIGHUP the slave + free the ring/slot at the last. */
+void pty_close_master(int slot)
+{
+	if (slot < TTY_PTY_BASE || slot >= TTY_MAX_TERMS)
+		return;
+	if (terms[slot].t_master_refs > 1)
+	{
+		terms[slot].t_master_refs--; /* another fd still holds the master */
+		return;
+	}
+	terms[slot].t_master_refs = 0;
+	terms[slot].t_has_master = 0;
+	if (terms[slot].t_outbuf != NULL)
+	{
+		kfree(terms[slot].t_outbuf);
+		terms[slot].t_outbuf = NULL;
+	}
+	pty_free(slot);                            /* SIGHUP slave + release slot */
+	sched_wakeup_chan(&terms[slot].t_outhead); /* unblock any pending ptm_read */
+}
+
+/**
+ * Drain a raw master's output ring into @dst (blocks until the slave produces
+ * output, or returns 0 at EOF when the slot is torn down).
+ *
+ * @return bytes read, 0 at hangup, -1 for an invalid slot.
+ */
+int ptm_read(int slot, void *dst, int n, int nonblock)
+{
+	tty_term *t;
+	char *d = (char *)dst;
+	int got = 0;
+
+	if (slot < TTY_PTY_BASE || slot >= TTY_MAX_TERMS || !terms[slot].t_inuse)
+		return (-1);
+	t = &terms[slot];
+	if (n <= 0)
+		return (0);
+	while (t->t_outhead == t->t_outtail)
+	{
+		if (!t->t_inuse)
+			return (0); /* hangup → EOF */
+		if (nonblock)
+			return (-EAGAIN); /* dropbear relays the master with O_NONBLOCK + select */
+		sched_wait_event(&t->t_outhead, ptm_has_output, t);
+	}
+	while (got < n && t->t_outtail != t->t_outhead)
+	{
+		d[got++] = t->t_outbuf[t->t_outtail];
+		t->t_outtail = (t->t_outtail + 1) & (TTY_OUTBUF_SIZE - 1);
+	}
+	return (got);
+}
+
+/** Feed master-written bytes (client keystrokes) into the slave line discipline. */
+int ptm_write(int slot, const void *src, int n)
+{
+	return (tty_inject_user(slot, (const char *)src, n));
+}
+
+/** Bytes queued for the master to read (for select/poll readiness). */
+int ptm_output_pending(int slot)
+{
+	tty_term *t;
+
+	if (slot < TTY_PTY_BASE || slot >= TTY_MAX_TERMS || !terms[slot].t_inuse)
+		return (0);
+	t = &terms[slot];
+	return ((t->t_outhead - t->t_outtail) & (TTY_OUTBUF_SIZE - 1));
+}
+
+/** Map a /dev/pts/<n> unit number back to its (master-owning) pool slot, or -1. */
+int pty_slot_for_pts(int pts_num)
+{
+	if (pts_num < TTY_PTY_BASE || pts_num >= TTY_MAX_TERMS)
+		return (-1);
+	if (!terms[pts_num].t_inuse || !terms[pts_num].t_has_master)
+		return (-1);
+	return (pts_num);
 }
 
 /**

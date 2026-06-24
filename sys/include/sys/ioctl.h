@@ -89,6 +89,12 @@ struct winsize {
 #define TIOCSETAF       _IOW('t', 22, struct termios)  /* flush, then set */
 #define TIOCGWINSZ      _IOR('t', 104, struct winsize) /* get window size */
 #define TIOCSWINSZ      _IOW('t', 103, struct winsize) /* set window size */
+/* posix_openpt master ioctls.  These are Linux-only ioctls (FreeBSD names the
+ * slave differently); musl's openpty()/ptsname()/unlockpt() issue them, so the
+ * values match musl's generic bits/ioctl.h verbatim and are handled only on a
+ * FD_TYPE_PTMASTER fd. */
+#define TIOCGPTN        0x80045430 /* ptsname(): get the slave pts unit number */
+#define TIOCSPTLCK      0x40045431 /* unlockpt(): (un)lock the slave — no-op here */
 #define TIOCDRAIN       _IO('t',  94)                  /* wait for output to drain */
 #define TIOCFLUSH       _IOW('t', 16, int)             /* flush input/output queues */
 #define TIOCEXCL        _IO('t',  13)                  /* set exclusive use */

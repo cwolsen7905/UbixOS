@@ -7,9 +7,10 @@
 
 int posix_openpt(int flags)
 {
-	int r = open("/dev/ptmx", flags);
-	if (r < 0 && errno == ENOSPC) errno = EAGAIN;
-	return r;
+	/* uBixOS: FreeBSD-style posix_openpt(2) — a real syscall returning a raw pty
+	 * master fd.  No Linux /dev/ptmx device; the slave is /dev/pts/N (see the
+	 * kernel's sys_posix_openpt + sys_ioctl TIOCGPTN). */
+	return __syscall_ret(__syscall(SYS_posix_openpt, flags));
 }
 
 int grantpt(int fd)

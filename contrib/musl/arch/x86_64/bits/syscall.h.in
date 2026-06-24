@@ -877,3 +877,8 @@
 /* setgroups: Linux=81, UbixOS=80 */
 #undef  __NR_setgroups
 #define __NR_setgroups		80
+
+/* posix_openpt: FreeBSD ABI slot 504.  uBixOS implements it natively — the master
+ * is a raw pty, the slave is /dev/pts/N (see sys/posix/vfs_calls.c); musl's
+ * posix_openpt()/openpty() call it instead of opening Linux's /dev/ptmx. */
+#define __NR_posix_openpt	504

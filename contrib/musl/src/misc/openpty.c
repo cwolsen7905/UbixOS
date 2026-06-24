@@ -12,7 +12,8 @@ int openpty(int *pm, int *ps, char *name, const struct termios *tio, const struc
 	int m, s, n=0, cs;
 	char buf[20];
 
-	m = open("/dev/ptmx", O_RDWR|O_NOCTTY);
+	/* uBixOS: open the master via posix_openpt(2) (no Linux /dev/ptmx device). */
+	m = posix_openpt(O_RDWR|O_NOCTTY);
 	if (m < 0) return -1;
 
 	pthread_setcancelstate(PTHREAD_CANCEL_DISABLE, &cs);

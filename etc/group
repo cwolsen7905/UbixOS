@@ -1,0 +1,12 @@
+# uBixOS /etc/group — group database for getgrgid()/getgrnam()/getgrouplist().
+#
+# STOPGAP companion to /etc/passwd: hand-maintained to support the sshd login
+# path (initgroups()/getgrouplist() + pty ownership's getgrnam("tty")).  Slated
+# to become a derived projection authd regenerates from /etc/userdb — see
+# docs/design/multiuser-security-plan.md Phase 1b.
+#
+# Format: groupname:password:gid:member,member,...
+wheel:*:0:root,reddawg,bsd
+guest:*:1:guest
+tty:*:4:
+daemon:*:2:

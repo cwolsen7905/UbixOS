@@ -189,19 +189,25 @@ void endTask(pidType pid)
 	(void)pid;
 	if (_current != 0)
 	{
-		/* Close the task's open fds so shared pipe/socket ends drop their refcount.
-		 * The full reap path is unported on aarch64, so without this an exiting writer
-		 * never releases its pipe write-end: a parent blocked reading that pipe (e.g.
-		 * bmake's Cmd_Exec — fork + read child output) never sees EOF and hangs.
+		/* Close the task's open PIPE fds so a parent blocked reading this task's pipe
+		 * write-end sees EOF when the writer exits (the bmake Cmd_Exec case: fork +
+		 * read child output — without this it hangs forever).  ONLY pipes: the full
+		 * reaper is unported on aarch64 and never closed fds, so driving the tty/pty/
+		 * socket fileops close() from here on every exit is both unnecessary and unsafe
+		 * — closing a job-control child's inherited pty fd corrupted the still-shared
+		 * device and panicked the kernel (tcsh `ls` repeated).  Leave non-pipe fds to
+		 * the (pre-existing) no-op teardown.
 		 *
 		 * Threads (rfork(RFMEM)) SHALLOW-share one fd table across a tgid, so only the
-		 * LAST thread of the group may close/free them — an earlier thread exiting must
+		 * LAST thread of the group may close them — an earlier thread exiting must
 		 * leave the shared fd objects intact for its still-running siblings. */
 		if (sched_tgid_others_alive(_current->tgid, _current->id) == 0)
 		{
 			for (int fd = 0; fd < O_FILES; fd++)
 			{
-				if (_current->td.o_files[fd] != 0)
+				struct file *f = (struct file *)_current->td.o_files[fd];
+
+				if (f != 0 && f->fd_type == FD_TYPE_PIPE)
 				{
 					struct sys_close_args ca;
 					ca.fd = fd;

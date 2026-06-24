@@ -88,7 +88,20 @@ typedef struct tty_termNode
 	u_int16_t t_saved_x;       /* cursor save/restore (same encoding as tty_x) */
 	u_int16_t t_saved_y;
 	u_int8_t t_saved_colour;
+	/* Raw pty master (posix_openpt): when a master fd is attached, the slave's
+	 * output bytes are streamed verbatim (OPOST/ONLCR applied) into t_outbuf for
+	 * the master to read() instead of being parsed into the VT100 cell grid — the
+	 * remote SSH client renders.  Allocated by pty_open_master(), freed on the
+	 * master's close. */
+	char *t_outbuf;           /* raw master output ring (NULL = no master attached) */
+	int t_outhead;            /* producer index (slave writes / echo) */
+	int t_outtail;            /* consumer index (master read) */
+	u_int8_t t_has_master;    /* 1 = a raw master fd owns this slot's output */
+	int t_pts_num;            /* pts unit number (ptsname → /dev/pts/<n>) */
+	int t_master_refs;        /* open master fds for this slot (fork dups share it) */
 } tty_term;
+
+#define TTY_OUTBUF_SIZE 8192 /* raw master output ring capacity (power of two) */
 
 int tty_init();
 tty_term *tty_find(u_int16_t);
@@ -103,6 +116,19 @@ void tty_inject(tty_term *tty, char ch); /* push one char through line disciplin
  */
 int pty_alloc(void);
 void pty_free(int slot);
+
+/*
+ * Raw pty master (FreeBSD posix_openpt model).  pty_open_master() allocates a
+ * pool slot, attaches a raw output ring, and returns the slot; the caller wraps
+ * it in a master fd (FD_TYPE_PTMASTER).  The slave is /dev/pts/<slot's pts_num>.
+ */
+int pty_open_master(void);            /* alloc slot + ring; returns slot, -1 if full */
+void pty_close_master(int slot);      /* drop a master ref; SIGHUP + free at the last */
+void pty_master_fork_ref(int slot);   /* a fork dup'd a master fd — bump the ref */
+int ptm_read(int slot, void *dst, int n, int nonblock); /* drain raw output; -EAGAIN if empty+nonblock */
+int ptm_write(int slot, const void *src, int n); /* feed slave input via line discipline */
+int ptm_output_pending(int slot);     /* bytes available for the master to read (select) */
+int pty_slot_for_pts(int pts_num);    /* /dev/pts/<n> → pool slot, or -1 */
 void tty_hangup_by_owner(pidType pid); /* SIGHUP + release ptys owned by a dying process */
 int tty_inject_user(int slot, const char *buf, int n);
 int tty_snapshot(int slot, void *dst, u_int16_t *x, u_int16_t *y);

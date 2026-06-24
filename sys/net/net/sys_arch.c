@@ -411,6 +411,20 @@ sys_thread_t sys_thread_new(const char *name, void (*thread)(void *arg), void *a
   threads = new_thread;
   spinUnlock(&netThreadSpinlock);
 
+  /* Run lwIP's threads (tcpip_thread, the virtio RX poll thread) at QOS_KERNEL.
+   * They default to QOS_DEFAULT, the same band as user processes — so on the
+   * non-preemptible aarch64 scheduler a user process that busy-polls in a syscall
+   * (the SSH relay spinning in sys_select, plus tcsh spinning in tty_fo_read) wins
+   * every round-robin turn and starves tcpip_thread.  Inbound TCP segments then
+   * pile up unprocessed in its mailbox, the socket's rcvevent never fires, and
+   * select() never reports the socket readable (SSH input freeze; intermittent
+   * ping loss).  ubthread_create stores the new task's pid in ->ubthread. */
+  {
+    kTask_t *nt = schedFindTask((u_int32_t)(uintptr_t)new_thread->ubthread);
+    if (nt != NULL)
+      sched_set_priority(nt, QOS_KERNEL);
+  }
+
   return (new_thread);
 }
 

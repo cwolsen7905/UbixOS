@@ -455,6 +455,14 @@ struct fsync_args
 };
 int fsync(struct thread *td, struct fsync_args *uap);
 
+struct sys_posix_openpt_args
+{
+	char flags_l_[PADL_(int)];
+	int flags;
+	char flags_r_[PADR_(int)];
+};
+int sys_posix_openpt(struct thread *td, struct sys_posix_openpt_args *uap);
+
 struct utimes_args
 {
 	char path_l_[PADL_(char *)];
@@ -1360,6 +1368,7 @@ int fstatfs(struct thread *td, struct sys_fstatfs_args *uap);
 int mprotect(struct thread *td, struct mprotect_args *uap);
 int chmod(struct thread *td, struct chmod_args *uap);
 int fchmod(struct thread *td, struct fchmod_args *uap);
+int chown_noop(struct thread *td, void *uap);
 int utimes(struct thread *td, struct utimes_args *uap);
 int futimes(struct thread *td, struct futimes_args *uap);
 int lutimes(struct thread *td, struct lutimes_args *uap);

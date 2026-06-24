@@ -53,7 +53,7 @@ struct syscall_entry systemCalls_posix[] = {
     {ARG_COUNT(sys_fchdir_args), "fchdir", sys_fchdir, SYSCALL_VALID},                                          /* 13 */
     {0, "mknod", sys_invalid, SYSCALL_NOTIMP},                                                                  /* 14 */
     {ARG_COUNT(chmod_args), "chmod", (sys_call_t *)chmod, SYSCALL_VALID},                                  /* 15 */
-    {0, "chown", sys_invalid, SYSCALL_NOTIMP},                                                                  /* 16 */
+    {0, "chown", (sys_call_t *)chown_noop, SYSCALL_VALID},                                                                  /* 16 - chown (no-op: no ownership enforcement yet) */
     {ARG_COUNT(obreak_args), "break", (sys_call_t *)obreak, SYSCALL_VALID},                                     /* 17 */
     {0, "No Call", sys_invalid, SYSCALL_INVALID},                                                               /* 18 */
     {0, "No Call", sys_invalid, SYSCALL_INVALID},                                                               /* 19 */
@@ -117,7 +117,7 @@ struct syscall_entry systemCalls_posix[] = {
     {0, "Obsolete vlimit", sys_invalid, SYSCALL_INVALID},                                                       /*  77 - Invalid */
     {0, "mincore", sys_invalid, SYSCALL_NOTIMP},                                                                /*  78 - minicore */
     {0, "getgroups", sys_invalid, SYSCALL_NOTIMP},                                                              /*  79 - getgroups */
-    {0, "setgroups", sys_invalid, SYSCALL_NOTIMP},                                                              /*  80 - setgroups */
+    {0, "setgroups", (sys_call_t *)chown_noop, SYSCALL_VALID},                                                              /*  80 - setgroups (no-op: no group enforcement yet) */
     {ARG_COUNT(sys_getpgrp_args), "getpgrp", sys_getpgrp, SYSCALL_VALID},                                       //  81 - getpgrp
     {ARG_COUNT(sys_setpgid_args), "setpgid", sys_setpgid, SYSCALL_VALID},                                       //  82 - setpgid
     {ARG_COUNT(setitimer_args), "setitimer", (sys_call_t *)sys_setitimer, SYSCALL_VALID},                       /*  83 - setitimer */
@@ -160,7 +160,7 @@ struct syscall_entry systemCalls_posix[] = {
     {ARG_COUNT(sys_readv_args), "readv", (sys_call_t *)sys_readv, SYSCALL_VALID},                               /* 120 - readv */
     {ARG_COUNT(sys_writev_args), "writev", (sys_call_t *)sys_writev, SYSCALL_VALID},                            /* 121 - writev */
     {0, "settimeofday", sys_invalid, SYSCALL_NOTIMP},                                                           /* 122 - settimeofday */
-    {0, "fchown", sys_invalid, SYSCALL_NOTIMP},                                                                 /* 123 - fchown */
+    {0, "fchown", (sys_call_t *)chown_noop, SYSCALL_VALID},                                                                 /* 123 - fchown (no-op) */
     {ARG_COUNT(fchmod_args), "fchmod", (sys_call_t *)fchmod, SYSCALL_VALID},                                    /* 124 - fchmod */
     {0, "old recvfrom", sys_invalid, SYSCALL_INVALID},                                                          /* 125 - Invalid */
     {0, "setreuid", sys_invalid, SYSCALL_NOTIMP},                                                               /* 126 - setreuid */
@@ -219,8 +219,8 @@ struct syscall_entry systemCalls_posix[] = {
     {ARG_COUNT(sys_sigsuspend_args), "sigsuspend", sys_sigsuspend, SYSCALL_VALID},                              /* 179 - sigsuspend */
     {0, "nosys", sys_invalid, SYSCALL_NOTIMP},                                                                  /* 180 - Invalid */
     {ARG_COUNT(sys_setGID_args), "setgid", (sys_call_t *)sys_setGID, SYSCALL_VALID},                            /* 181 - setgid */
-    {0, "setegid", sys_invalid, SYSCALL_NOTIMP},                                                                // 182 - setegid
-    {0, "seteuid", sys_invalid, SYSCALL_NOTIMP},                                                                // 183 - seteuid
+    {0, "setegid", (sys_call_t *)chown_noop, SYSCALL_VALID},                                                                // 182 - setegid (no-op)
+    {0, "seteuid", (sys_call_t *)chown_noop, SYSCALL_VALID},                                                                // 183 - seteuid (no-op)
     {0, "lfs_bmapv", sys_invalid, SYSCALL_NOTIMP},                                                              /* 184 - Invalid */
     {0, "lfs_markv", sys_invalid, SYSCALL_NOTIMP},                                                              /* 185 - Invalid */
     {0, "lfs_segclean", sys_invalid, SYSCALL_NOTIMP},                                                           /* 186 - Invalid */
@@ -291,7 +291,7 @@ struct syscall_entry systemCalls_posix[] = {
     {ARG_COUNT(sys_rfork_args), "rfork", (sys_call_t *)sys_rfork, SYSCALL_VALID},                               /* 251 - rfork (thread create) */
     {0, "openbsd_poll", sys_invalid, SYSCALL_NOTIMP},                                                           /* 252 - Invalid */
     {ARG_COUNT(sys_issetugid_args), "issetugid", (sys_call_t *)sys_issetugid, SYSCALL_VALID},                   /* 253 - Invalid */
-    {0, "lchown", sys_invalid, SYSCALL_NOTIMP},                                                                 /* 254 - Invalid */
+    {0, "lchown", (sys_call_t *)chown_noop, SYSCALL_VALID},                                                                 /* 254 - lchown (no-op) */
     {0, "aio_read", sys_invalid, SYSCALL_NOTIMP},                                                               /* 255 - Invalid */
     {0, "aio_write", sys_invalid, SYSCALL_NOTIMP},                                                              /* 256 - Invalid */
     {0, "lio_listio", sys_invalid, SYSCALL_NOTIMP},                                                             /* 257 - Invalid */
@@ -528,7 +528,7 @@ struct syscall_entry systemCalls_posix[] = {
     {0, "cpuset_setaffinity", sys_invalid, SYSCALL_NOTIMP},                                                     /* 488 - Invalid */
     {0, "faccessat", sys_invalid, SYSCALL_NOTIMP},                                                              /* 489 - Invalid */
     {0, "fchmodat", sys_invalid, SYSCALL_NOTIMP},                                                               /* 490 - Invalid */
-    {0, "fchownat", sys_invalid, SYSCALL_NOTIMP},                                                               /* 491 - Invalid */
+    {0, "fchownat", (sys_call_t *)chown_noop, SYSCALL_VALID},                                                               /* 491 - fchownat (no-op) */
     {0, "fexecve", sys_invalid, SYSCALL_NOTIMP},                                                                /* 492 - Invalid */
     {ARG_COUNT(sys_fstatat_args), "fstatat", sys_fstatat, SYSCALL_VALID},                                       // 493 - fstatat
     {0, "futimesat", sys_invalid, SYSCALL_NOTIMP},                                                              /* 494 - Invalid */
@@ -541,7 +541,7 @@ struct syscall_entry systemCalls_posix[] = {
     {0, "renameat", sys_invalid, SYSCALL_NOTIMP},                                                               /* 501 - Invalid */
     {0, "symlinkat", sys_invalid, SYSCALL_NOTIMP},                                                              /* 502 - Invalid */
     {0, "unlinkat", sys_invalid, SYSCALL_NOTIMP},                                                               /* 503 - Invalid */
-    {0, "posix_openpt", sys_invalid, SYSCALL_NOTIMP},                                                           /* 504 - Invalid */
+    {ARG_COUNT(sys_posix_openpt_args), "posix_openpt", sys_posix_openpt, SYSCALL_VALID},                        /* 504 - posix_openpt */
     {0, "gssd_syscall", sys_invalid, SYSCALL_NOTIMP},                                                           /* 505 - Invalid */
     {0, "jail_get", sys_invalid, SYSCALL_NOTIMP},                                                               /* 506 - Invalid */
     {0, "jail_set", sys_invalid, SYSCALL_NOTIMP},                                                               /* 507 - Invalid */

@@ -78,6 +78,7 @@ struct uio {
 #define FD_TYPE_DIR    4   /* open directory (kDIR_t in fd->data) */
 #define FD_TYPE_TTY    5   /* opened via /dev/tty — uses process ct_tty */
 #define FD_TYPE_TTYV   6   /* opened via /dev/ttyX — specific tty_term in fd->data */
+#define FD_TYPE_PTMASTER 7 /* posix_openpt master; pty slot index in fd->data (raw byte stream) */
 
 /* Add a reference to an lwIP socket shared across a fork (mirrors the pipe
  * rfdCNT/wfdCNT bump in fork_copy_fdtable).  lwIP sockets live in one global
@@ -121,6 +122,11 @@ extern struct fileOps *g_console_ops;
  * the /dev/ttyvN open falls back to g_console_ops.  On aarch64 g_console_ops is
  * the arch UART console, so the pty layer installs its own fileops here. */
 extern struct fileOps *g_tty_ops;
+
+/* Raw pseudo-terminal master (FD_TYPE_PTMASTER) fileops, installed by tty_init().
+ * Backs posix_openpt(2): read drains the slave's raw output, write feeds the
+ * slave's line discipline, close hangs up the slave + frees the slot. */
+extern struct fileOps *g_ptm_ops;
 
 /* tty_find hook (returns a tty_term* for a slot index; void* to avoid coupling
  * the fd layer to the TTY types).  Installed by tty_init(); NULL on arches

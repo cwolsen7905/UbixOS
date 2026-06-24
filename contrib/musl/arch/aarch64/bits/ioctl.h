@@ -34,6 +34,14 @@
 #undef  TIOCSPGRP
 #define TIOCSPGRP  0x80047476U  /* _IOW('t', 118, int) */
 
+/* controlling terminal — Linux 0x540E/0x5422 → FreeBSD.  An ssh login (dropbear)
+ * setsid()s its session child and then TIOCSCTTY's the pty slave; the Linux value
+ * misses the kernel's FreeBSD case so the child can't acquire its tty and exits. */
+#undef  TIOCSCTTY
+#define TIOCSCTTY  0x20007461U  /* _IO('t', 97) */
+#undef  TIOCNOTTY
+#define TIOCNOTTY  0x20007471U  /* _IO('t', 113) */
+
 /* line discipline — Linux 0x5424/0x5423 → FreeBSD (job-control shells call
  * TIOCGETD/TIOCSETD when grabbing the controlling tty; the kernel only knows
  * the FreeBSD encodings). */
