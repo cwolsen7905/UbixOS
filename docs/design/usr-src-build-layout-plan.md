@@ -42,30 +42,38 @@ Legend: ☑ done · ◐ in progress · ☐ todo · ⊘ blocked
 | C4 | Reconcile CLAUDE.md "Installed layout" table | ☑ | added obj/share/mk + stage-src column |
 | C5 | Verify via `ubfs ls` (`/usr/src/sys`, `/usr/obj/aarch64`, `/usr/share/mk`) | ☑ | all present; pool intact |
 
-### Phase D — Close in-OS build-tool gaps
-| # | Step | Status | Note |
-|---|------|--------|------|
-| D1 | Port `find` (busybox) or replace kernel-recipe `find` with explicit list | ☐ | |
-| D2 | Confirm `sed` + `kbuild-cc.sh` run under oksh in-OS | ☐ | |
-| D3 | Map kernel `objcopy -I binary` embeds → `llvm-objcopy` (or gate off in-OS) | ☐ | |
-| D4 | musl: ship prebuilt, defer musl self-rebuild (rebuild world against it) | ☐ | |
-| D5 | Verify: dry-run kernel `find` enum + one `kbuild-cc.sh` compile in-OS | ☐ | |
+> **Plan revision (2026-06-24, user-directed):** do the gcc→clang switch on the
+> **host first** (fast edit-compile loop), get world + kernel green under
+> `TOOLCHAIN=clang` on both arches, *then* run the (already-debugged) clang build
+> in-OS. The portability bugs reproduce identically on the host, so the VM is not
+> needed to find them. Phases D/E below are now the **host** clang-green
+> milestone; the in-OS bring-up is consolidated into Phase F. `TOOLCHAIN`
+> defaults to gcc, so all of this is additive — the gcc build is untouched.
 
-### Phase E — Boot Stage-0, verify clang, first in-OS compile
+### Phase D — Host world green under `TOOLCHAIN=clang` (both arches)
 | # | Step | Status | Note |
 |---|------|--------|------|
-| E1 | Build image (Stage-0 + `/usr/src`); boot `run-debug-aarch64` (serial) | ☐ | |
-| E2 | `clang --version` + `clang -S t.c` on-device (99 MB load test) | ☐ | streaming loader fallback |
-| E3 | `clang hello.c -o hello && ./hello` (ld.lld + crt + libc) | ☐ | |
-| E4 | `bmake -C bin/cat OBJ_DIR=/usr/obj/aarch64` → on-device binary | ☐ | |
+| D1 | Host cross-drive seam in `ubix.toolchain.mk` (clang `--target` + `--ld-path` via flags, single-word CC) | ☐ | so `bmake world TOOLCHAIN=clang` works on the host |
+| D2 | C world green under clang (all `bin/*` C apps) | ◐ | `cat` already builds; sweep the rest |
+| D3 | musl libc under clang (pass CC=clang to its gmake) | ☐ | Step 0 of world |
+| D4 | libcxx/libcxxabi + C++ apps under clang (objgfx, views, …) | ☐ | C++ codegen + lld |
+| D5 | x86_64 world green under clang too | ☐ | keep both arches |
 
-### Phase F — Full in-OS world, then kernel
+### Phase E — Host kernel green under `TOOLCHAIN=clang` (both arches)
 | # | Step | Status | Note |
 |---|------|--------|------|
-| F1 | `bmake world OBJ_DIR=/usr/obj/aarch64` in-OS reproduces host world | ☐ | |
-| F2 | `bmake kernel` in-OS (find + ld.lld + llvm-objcopy) | ☐ | |
-| F3 | Reproducibility: in-OS `/usr/obj/aarch64` ≈ host `build/aarch64` | ☐ | |
-| F4 | Fold E/F outcomes into `self-hosting-plan.md` Phases 4/6/7 | ☐ | |
+| E1 | Kernel recipe uses `${KERN_CC}`/`ld.lld`/`llvm-objcopy` under clang | ☐ | the `find … | kbuild-cc.sh` loop + link |
+| E2 | Inline asm / `-mgeneral-regs-only` / ISA flags clang-clean | ☐ | aarch64 + x86_64 |
+| E3 | `ldscript.${ARCH}` links under `ld.lld` | ☐ | lld honors GNU scripts |
+| E4 | Both kernels boot under QEMU (clang-built) | ☐ | the real green gate |
+
+### Phase F — In-OS build (now that the clang build is host-green)
+| # | Step | Status | Note |
+|---|------|--------|------|
+| F1 | In-OS tool gaps: `find` (port), `sed`/`objcopy`(llvm) under oksh | ☐ | was old Phase D |
+| F2 | Boot image, `clang --version`/`-S` on-device (99 MB load; stream PT_LOAD if OOM) | ☐ | RAM bump + console driving |
+| F3 | `bmake -C bin/cat OBJ_DIR=/usr/obj/aarch64` then `bmake world` in-OS | ☐ | runs the host-green build |
+| F4 | `bmake kernel` in-OS; reproducibility vs host; fold into `self-hosting-plan.md` | ☐ | |
 
 ### Path to cleaner layout (#1 → #2)
 | # | Step | Status | Note |
@@ -202,52 +210,50 @@ the pool — without editing the contested `mkimage.sh` hunk.
 5. **Verify** — rebuild image; `ubfs ls` confirms `/usr/src/Makefile`,
    `/usr/src/share/mk`, `/usr/obj/aarch64`, `/usr/share/mk`.
 
-### Phase D — Close in-OS build-tool gaps
-Every host tool the build shells out to either exists in-OS or is removed from
-the in-OS path.
+> Reordered 2026-06-24 (user-directed): shake out the gcc→clang bugs on the
+> **host** (fast loop) before touching the VM. Phases D/E are the host
+> clang-green milestone; Phase F is the in-OS bring-up that runs the result.
 
-1. **`find`** — the kernel build enumerates sources via `find sys/arch/<arch>
-   -name '*.S'`. Port a minimal `find` (busybox has one — same pattern as the
-   ~35 coreutils already vendored) or replace the recipe's `find` with an
-   explicit list. Prefer porting `find` (reusable).
-2. **`sed`** — already vendored + verified in-OS; confirm `kbuild-cc.sh`'s usage
-   works under oksh.
-3. **Kernel embed steps** — `objcopy -I binary` blob embeds map to
-   `llvm-objcopy` in the native profile, or gate the demo-embed steps off in-OS
-   (they're bring-up artifacts).
-4. **musl via GNU make** — musl's Makefile is GNU-make syntax. For the in-OS
-   world rebuild, ship prebuilt musl and rebuild it only in a later phase
-   (rebuild world *against* existing musl first); porting `gmake` is the
-   alternative.
-5. **Verify** — dry-run the kernel `find` enumeration + one `kbuild-cc.sh`
-   compile in-OS.
+### Phase D — Host world green under `TOOLCHAIN=clang` (both arches)
+Make `bmake world TARGET=<arch> TOOLCHAIN=clang` build the entire userland on the
+host, fixing every gcc→clang portability bug in a fast edit-compile loop.
 
-### Phase E — Boot Stage-0, verify clang runs, first in-OS compile
-Prove the toolchain executes on-device and compiles one TU before a full world.
+1. **Host cross-drive seam** — extend `ubix.toolchain.mk` so the clang profile
+   works on the host (which defaults to the macOS target): inject
+   `--target=${_ARCH}-unknown-linux-musl` + `--ld-path=…/ld.lld` via the compile
+   and link **flags** (keeping `CC=clang` a single word so it passes cleanly
+   through `WORLD_FLAGS`, musl's gmake, and the libcxx Makefiles). In-OS this is
+   inert (native clang already defaults to the right target + lld).
+2. **C world** — sweep all `bin/*` C apps; `cat` already builds. Deltas so far:
+   `-nostdlibinc`, `-std=gnu23`.
+3. **musl libc** — pass `CC=clang …` to musl's GNU-make build (Step 0).
+4. **libcxx/libcxxabi + C++ apps** — C++ codegen + lld for objgfx/views/etc.
+5. **x86_64** — the same, keeping both arches green.
 
-1. **Build image** with Stage-0 + `/usr/src`; boot `run-debug-aarch64` (serial).
-2. **Smoke-test** `clang --version`, then `clang -S <tiny>.c` (exercises the
-   99 MB load under the raised `EXEC_MAX`). If the read-all-into-`kmalloc`
-   loader OOMs/faults on 99 MB, switch `read_elf_file` (both arches'
-   `kern/execfile.c`) to **stream PT_LOAD segments** from the file.
-3. **Link-test** `clang hello.c -o hello && ./hello` (exercises `ld.lld` + crt +
-   libc on-device).
-4. **First bmake compile** — `cd /usr/src && bmake -C bin/cat
-   OBJ_DIR=/usr/obj/aarch64` (native profile) → `/usr/obj/aarch64/bin/cat`.
+### Phase E — Host kernel green under `TOOLCHAIN=clang` (both arches)
+Build + boot a clang/lld kernel on the host.
 
-### Phase F — Full in-OS world (then kernel) rebuild
-`cd /usr/src && bmake world OBJ_DIR=/usr/obj/aarch64` in-OS reproduces the host
-world; then the kernel.
+1. **Recipe toolchain** — the `find … | kbuild-cc.sh` loop + link in the root
+   `Makefile` use `${CROSS_PREFIX}gcc`/`ld`/`objcopy` directly; route them through
+   `${KERN_CC}`/`${LD}`/`${OBJCOPY}` so clang/ld.lld/llvm-objcopy apply under the
+   clang profile.
+2. **ISA/asm** — `-mgeneral-regs-only`, inline asm, and the no-SIMD constraints
+   must be clang-clean on both arches.
+3. **Linker script** — `sys/compile/ldscript.${ARCH}` links under `ld.lld`.
+4. **Boot** — both clang-built kernels boot under QEMU (the real green gate).
 
-1. **World** — iterate the bin/lib gaps surfaced in E; each is a flag/path fix
-   in the native profile, not a redesign.
-2. **Kernel** — `bmake kernel` in-OS: needs `find` (D), `ld.lld` +
-   `ldscript.aarch64` (works), `llvm-objcopy`. The shell-loop recipe runs under
-   oksh.
-3. **Reproducibility** — compare in-OS `/usr/obj/aarch64` against host
-   `build/aarch64` (Stage-2 idea from `self-hosting-plan.md`).
-4. Aligns with `self-hosting-plan.md` Phases 4/6/7 — update that doc, don't
-   duplicate.
+### Phase F — In-OS build (runs the host-green clang build on-device)
+Now that the clang build is debugged on the host, bring it up in-OS.
+
+1. **Tool gaps** — port `find`; confirm `sed`/`llvm-objcopy` run under oksh
+   (was the old Phase D).
+2. **Boot + run clang** — bump RAM, drive the console (or a boot-time self-test),
+   `clang --version`/`-S` on-device. The 99 MB read-all-into-`kmalloc` load is the
+   prime OOM suspect → stream PT_LOAD segments in `kern/execfile.c` if needed.
+3. **In-OS world** — `cd /usr/src && bmake world OBJ_DIR=/usr/obj/aarch64
+   TOOLCHAIN=clang` reproduces the host-green world.
+4. **In-OS kernel** + reproducibility vs host; fold into `self-hosting-plan.md`
+   Phases 4/6/7.
 
 ## Path to the cleaner layout (#1 → #2, iterative)
 
