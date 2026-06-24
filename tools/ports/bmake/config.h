@@ -130,14 +130,16 @@
 /* Define to 1 if you have the `sigprocmask' function. */
 #define HAVE_SIGPROCMASK 1
 
-/* Define to 1 if you have the `sigsetmask' function. */
-#define HAVE_SIGSETMASK 1
+/* Define to 1 if you have the `sigsetmask. function. */
+/* uBixOS/musl: BSD-only, absent in musl */
+#undef HAVE_SIGSETMASK
 
 /* Define to 1 if you have the `sigsuspend' function. */
 #define HAVE_SIGSUSPEND 1
 
-/* Define to 1 if you have the `sigvec' function. */
-#define HAVE_SIGVEC 1
+/* Define to 1 if you have the `sigvec. function. */
+/* uBixOS/musl: BSD-only sigvec absent; its sigvec->sigaction cast is layout-broken on musl */
+#undef HAVE_SIGVEC
 
 /* Define to 1 if the system has the type `sig_atomic_t'. */
 #define HAVE_SIG_ATOMIC_T 1
