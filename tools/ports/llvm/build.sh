@@ -79,4 +79,21 @@ echo "==> [2/2] clang+lld for ${TARGET}"
 	-DCLANG_DEFAULT_LINKER=lld
 # No MCJIT/ORC: saves size + the exec-page mmap churn uBixOS avoids.
 "${NINJA}" -C "${CROSSBLD}" clang lld llvm-ar llvm-ranlib llvm-objcopy llvm-nm
-echo "==> Stage-0 cross-build done; install with: ninja -C ${CROSSBLD} install"
+
+# ── 3. Stage stripped binaries into the world root (build/${TARGET}/usr) ──────
+# mkimage.sh copies build/${TARGET}/usr verbatim into the UbixFS pool, so this is
+# how the toolchain reaches the on-device root.  Strip debug info first (clang
+# 129->99MB).  clang/lld/llvm-ar dispatch on argv[0], so ld.lld / llvm-ranlib are
+# plain copies (the pool's cpr skips symlinks).  clang finds its resource headers
+# relative to the binary at ../lib/clang/18/include.
+echo "==> [3] stage stripped toolchain into ${BUILD}/usr"
+STAGEBIN="${BUILD}/usr/bin"
+STAGEINC="${BUILD}/usr/lib/clang/18/include"
+mkdir -p "${STAGEBIN}" "${STAGEINC}"
+"${LLVM18}/llvm-strip" --strip-all "${CROSSBLD}/bin/clang-18" -o "${STAGEBIN}/clang"
+"${LLVM18}/llvm-strip" --strip-all "${CROSSBLD}/bin/lld"      -o "${STAGEBIN}/ld.lld"
+"${LLVM18}/llvm-strip" --strip-all "${CROSSBLD}/bin/llvm-ar"  -o "${STAGEBIN}/llvm-ar"
+cp "${STAGEBIN}/llvm-ar" "${STAGEBIN}/llvm-ranlib"
+cp -R "${CROSSBLD}/lib/clang/18/include/." "${STAGEINC}/"
+echo "==> Stage-0 done — staged clang/ld.lld/llvm-ar/llvm-ranlib + resource headers."
+echo "    Rebuild the image (bmake image) to put the toolchain on-device."
