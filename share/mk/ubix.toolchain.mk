@@ -39,15 +39,21 @@ TOOLCHAIN ?= gcc
 # the *exported* TOOLCHAIN (below), so a multi-word CC is never passed as a bare
 # command-line word (which bmake would mis-split).  Hard '=' so these beat bmake's
 # builtin CC=cc; a command-line CC= still overrides.
-# Target triple: aarch64-unknown-none-elf (not -linux-musl).  The proven gcc world
-# is built with aarch64-elf-gcc, whose only OS-ish predefine is __ELF__.  A
-# -linux-musl triple additionally defines __linux__/__unix__/__gnu_linux__, which
-# flips ports (tcsh, …) onto Linux-only code paths uBixOS never compiled and that
-# assume Linux features it lacks.  -none-elf reproduces gcc's predefines exactly,
-# so the world compiles the same code.  Passed explicitly so the in-OS clang
-# (whose built-in default is linux-musl) is overridden to match the host build.
+# Target triple + OS predefines.  The proven gcc world is built with
+# aarch64-elf-gcc / x86_64-elf-gcc, whose only OS-ish predefine is __ELF__.  We
+# need TWO things and they pull in opposite directions:
+#   - a triple clang lowers through its GNU/ELF link driver (a *-none-elf triple
+#     makes clang pick the *Darwin* linker for x86_64 on a macOS host → it feeds
+#     ld.lld Mach-O flags like -arch/-platform_version/-dynamic).  -linux-musl
+#     uses the GNU driver and lld accepts its flags, on both arches.
+#   - gcc's exact predefines: -linux-musl also defines __linux__/__unix(__)/
+#     __gnu_linux__, which flip ports (tcsh, …) onto Linux-only code paths the
+#     bare-metal gcc never compiled.  So strip them with _UNDEF.
+# Net: -linux-musl for the linker driver, _UNDEF to match gcc's macro set.  Both
+# are inert for the in-OS clang (its default IS linux-musl), so host == on-device.
 _LLVM18 = /opt/homebrew/opt/llvm@18/bin
-_TGT     = --target=${_ARCH}-unknown-none-elf
+_TGT     = --target=${_ARCH}-unknown-linux-musl
+_UNDEF   = -U__linux__ -U__unix__ -U__unix -U__gnu_linux__
 .if exists(${_LLVM18}/clang)
 _CLANG   ?= ${_LLVM18}/clang
 _CLANGXX ?= ${_LLVM18}/clang++
@@ -59,9 +65,9 @@ _CLANGXX ?= clang++
 _LLVMBIN ?=
 _LDPATH  ?=
 .endif
-CC       = ${_CLANG} ${_TGT} ${_LDPATH}
-CXX      = ${_CLANGXX} ${_TGT} ${_LDPATH}
-AS       = ${_CLANG} ${_TGT}
+CC       = ${_CLANG} ${_TGT} ${_UNDEF} ${_LDPATH}
+CXX      = ${_CLANGXX} ${_TGT} ${_UNDEF} ${_LDPATH}
+AS       = ${_CLANG} ${_TGT} ${_UNDEF}
 AR       = ${_LLVMBIN}llvm-ar
 LD       = ${_LLVMBIN}ld.lld
 NM       = ${_LLVMBIN}llvm-nm

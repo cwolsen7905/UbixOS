@@ -54,10 +54,10 @@ Legend: ☑ done · ◐ in progress · ☐ todo · ⊘ blocked
 | # | Step | Status | Note |
 |---|------|--------|------|
 | D1 | Host cross-drive seam in `ubix.toolchain.mk` (`.export TOOLCHAIN`; auto-detect homebrew clang) | ☑ | `f6bce7cc7`; no manual CC |
-| D2 | **All 77 aarch64 world binaries build clean under clang** (C + C++) | ☑ | `d5df9bb1f`; key fix = `-none-elf` triple (matches gcc OS macros; `-linux-musl` broke tcsh etc.) |
+| D2 | **All 77 aarch64 world binaries build clean under clang** (C + C++) | ☑ | `-linux-musl` triple (GNU link driver) + `-U__linux__/__unix__/__gnu_linux__` (match gcc macros) |
 | D3 | musl libc — reuse gcc-built `libc.a` (clang apps link it; ABI-compatible) | ☑ | musl self-rebuild under clang deferred (its gmake) |
 | D4 | libcxx/libcxxabi + objgfx under clang (currently gcc-built; apps link fine) | ☐ | optional polish; C++ apps already green vs gcc libs |
-| D5 | x86_64 world green under clang | ☐ | repeat D2 for x86_64 |
+| D5 | **x86_64 world green under clang (79 bins)** | ☑ | `-none-elf` picks Darwin linker for x86_64 on macOS → use `-linux-musl`+`-U` uniformly |
 | D6 | netsurf clean-rebuild `mv` bug in `build-netsurf.sh` (pre-existing, not toolchain) | ☐ | only bites a clean rebuild; nsfb caches |
 
 ### Phase E — Host kernel green under `TOOLCHAIN=clang` (both arches)
