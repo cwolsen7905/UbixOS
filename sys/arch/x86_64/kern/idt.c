@@ -50,6 +50,7 @@ extern void *isr_stub_table[48]; /* isr.S — 32 CPU exceptions + 16 PIC IRQ stu
 extern void isr_syscall(void);   /* isr.S — the int 0x80 (vector 128) entry */
 extern void isr_syscall81(void); /* isr.S — the int 0x81 (vector 129) native-ABI entry */
 extern void isr_resched(void);   /* isr.S — reschedule IPI (vector 0xFD): EOI + iretq */
+extern void isr_tlbflush(void);  /* isr.S — TLB-shootdown IPI (vector 0xFC): invlpg + ack + EOI */
 
 #define IDT_GATE_USER 0xEE /* present, DPL3, 64-bit interrupt gate (ring 3 may invoke) */
 
@@ -77,6 +78,8 @@ void idt_init(void)
 	idt_set_gate(0x81, (void *)isr_syscall81, IDT_GATE_USER);
 	/* Vector 0xFD: the SMP reschedule IPI (DPL0 — kernel/IPI only). */
 	idt_set_gate(0xFD, (void *)isr_resched, IDT_GATE_INT);
+	/* Vector 0xFC: the SMP TLB-shootdown IPI (DPL0 — kernel/IPI only). */
+	idt_set_gate(0xFC, (void *)isr_tlbflush, IDT_GATE_INT);
 
 	g_idt_ptr.limit = (u16)(sizeof(g_idt) - 1);
 	g_idt_ptr.base = (u64)&g_idt[0];

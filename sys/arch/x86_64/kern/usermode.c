@@ -231,7 +231,7 @@ void x86_64_map_user_page_to(uintptr_t pml4_phys, u64 va, u64 phys, int writable
 	uintptr_t pt = next_table(pd, (unsigned)((va >> 21) & 0x1FF));
 
 	((u64 *)P2V(pt))[(va >> 12) & 0x1FF] = (phys & PTE_ADDR_MASK) | PTE_P | PTE_US | (writable ? PTE_RW : 0);
-	__asm__ __volatile__("invlpg (%0)" : : "r"((void *)(uintptr_t)va) : "memory");
+	x86_64_tlb_shootdown(pml4_phys, va); /* local invlpg + flush any sibling thread's CPU */
 }
 
 /** Map a user page in the live address space (CR3 holds the physical PML4). */
@@ -255,7 +255,7 @@ void x86_64_map_user_page_wired(uintptr_t pml4_phys, u64 va, u64 phys)
 	uintptr_t pt = next_table(pd, (unsigned)((va >> 21) & 0x1FF));
 
 	((u64 *)P2V(pt))[(va >> 12) & 0x1FF] = (phys & PTE_ADDR_MASK) | PTE_P | PTE_US | PTE_RW | PTE_WIRED;
-	__asm__ __volatile__("invlpg (%0)" : : "r"((void *)(uintptr_t)va) : "memory");
+	x86_64_tlb_shootdown(pml4_phys, va); /* local invlpg + flush any sibling thread's CPU */
 }
 
 /**
@@ -271,7 +271,7 @@ void x86_64_map_fb_page(uintptr_t pml4_phys, u64 va, u64 phys)
 
 	((u64 *)P2V(pt))[(va >> 12) & 0x1FF] =
 	    (phys & PTE_ADDR_MASK) | PTE_P | PTE_US | PTE_RW | PTE_WIRED | 0x10 /* PCD */;
-	__asm__ __volatile__("invlpg (%0)" : : "r"((void *)(uintptr_t)va) : "memory");
+	x86_64_tlb_shootdown(pml4_phys, va); /* local invlpg + flush any sibling thread's CPU */
 }
 
 /**
@@ -351,7 +351,7 @@ int x86_64_cow_fault(u64 pml4_phys, u64 va, int pid)
 	/* Private writable copy: same flags, but writable and no longer shared. */
 	attrs = (pte & ~PTE_ADDR_MASK & ~(u64)(PTE_COW | PTE_SHARED)) | PTE_RW;
 	*pte_slot = (neu & PTE_ADDR_MASK) | attrs;
-	__asm__ __volatile__("invlpg (%0)" : : "r"((void *)(uintptr_t)va) : "memory");
+	x86_64_tlb_shootdown(pml4_phys, va); /* local invlpg + flush a sibling thread still on the old RO copy */
 
 	/* Release this writer's hold on the old frame: a file-cache page drops a cache
 	 * reference (freed at the last unref); a COW fork page decrements the COW count. */

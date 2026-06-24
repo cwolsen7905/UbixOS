@@ -120,6 +120,28 @@ isr_resched:
 	popq %rax
 	iretq
 
+	/* TLB-shootdown IPI (vector 0xFC).  Flush the one VA the sender published in
+	 * g_tlb_shootdown_va, acknowledge by decrementing g_tlb_shootdown_acks, then EOI +
+	 * IRETQ.  The invlpg precedes the (atomic) ack so the sender sees the flush
+	 * complete before acks reaches 0.  Lock-free + minimal (saves only rax/rcx/rdx),
+	 * like isr_resched; the kernel owns %gs (no swapgs) and this never reads it. */
+	.globl isr_tlbflush
+isr_tlbflush:
+	pushq %rax
+	pushq %rcx
+	pushq %rdx
+	movq g_tlb_shootdown_va(%rip), %rax
+	invlpg (%rax)
+	lock decl g_tlb_shootdown_acks(%rip)
+	movl $0x80B, %ecx /* x2APIC EOI MSR */
+	xorl %eax, %eax
+	xorl %edx, %edx
+	wrmsr
+	popq %rdx
+	popq %rcx
+	popq %rax
+	iretq
+
 	/*
 	 * Common entry: save GP regs (rax pushed last -> lowest address -> rsp), pass
 	 * the trapframe pointer in rdi, call the C handler, restore, pop vector+error,

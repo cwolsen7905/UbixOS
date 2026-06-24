@@ -91,8 +91,16 @@ static void delay_short(void) /* ~SIPI->SIPI gap */
 		__asm__ __volatile__("pause");
 }
 
-#define RESCHED_VECTOR 0xFD   /* SMP reschedule IPI (isr_resched in isr.S / idt.c) */
-#define ICR_FIXED 0x00000000u /* delivery mode = Fixed (vector in low 8 bits) */
+#define RESCHED_VECTOR 0xFD       /* SMP reschedule IPI (isr_resched in isr.S / idt.c) */
+#define TLB_SHOOTDOWN_VECTOR 0xFC /* SMP TLB-shootdown IPI (isr_tlbflush in isr.S / idt.c) */
+#define ICR_FIXED 0x00000000u     /* delivery mode = Fixed (vector in low 8 bits) */
+
+/* TLB-shootdown rendezvous: one VA in flight at a time, serialised by g_tlb_busy.
+ * The IPI handler (isr_tlbflush, isr.S) reads g_tlb_shootdown_va, invlpg's it, then
+ * decrements g_tlb_shootdown_acks — so those two are non-static (referenced from asm). */
+volatile u64 g_tlb_shootdown_va;
+volatile int g_tlb_shootdown_acks;
+static volatile int g_tlb_busy;
 
 /** Send an x2APIC IPI: @cmd (delivery mode + vector + flags) to @apicid. */
 static void send_ipi(u32 apicid, u32 cmd)
@@ -131,6 +139,70 @@ void arch_smp_reschedule_cpu(unsigned cpu)
 	if (cpu >= MAXCPU || cpu == curcpu()->cpuid || g_pcpu[cpu].heartbeat == 0)
 		return;
 	send_ipi(g_pcpu[cpu].apicid, RESCHED_VECTOR | ICR_FIXED | ICR_ASSERT);
+}
+
+/**
+ * Cross-CPU TLB shootdown.  After a PTE in the address space rooted at @pml4_phys
+ * has changed, flush @va from this CPU and from every other online CPU currently
+ * running that same address space (a sibling thread sharing the cr3).
+ *
+ * x86 invlpg is local-only, so a stale entry on another CPU would let a sibling
+ * thread keep using an old (e.g. pre-COW, read-only) mapping.  aarch64 needs no
+ * equivalent — its `tlbi ... is` broadcasts in hardware.
+ *
+ * Fast path: a single-threaded process (and a not-yet-live AS being built by exec)
+ * runs on at most one CPU, so the same-cr3 scan finds no remote target and this is
+ * just a local invlpg — no IPI, no spin (so the common case pays almost nothing and
+ * cannot deadlock).  Only a genuinely shared AS live elsewhere triggers the
+ * rendezvous.  The wait runs with interrupts enabled and the handler is lock-free,
+ * so servicing an inbound shootdown while we hold g_tlb_busy cannot deadlock against
+ * another sender.
+ */
+void x86_64_tlb_shootdown(u64 pml4_phys, u64 va)
+{
+	int targets[MAXCPU];
+	int nt = 0;
+	u32 self;
+	u64 rflags;
+	int c;
+
+	__asm__ __volatile__("invlpg (%0)" : : "r"((void *)(uintptr_t)va) : "memory"); /* local */
+
+	self = curcpu()->cpuid;
+	for (c = 0; c < MAXCPU; c++)
+	{
+		kTask_t *cur;
+
+		if ((u32)c == self || g_pcpu[c].heartbeat == 0)
+			continue;
+		cur = g_pcpu[c].current;
+		if (cur != 0 && cur->md.md_cr3 == pml4_phys)
+			targets[nt++] = c;
+	}
+	if (nt == 0)
+		return; /* address space not live on any other CPU — local flush sufficed */
+
+	__asm__ __volatile__("pushfq; popq %0" : "=r"(rflags)::"memory");
+	__asm__ __volatile__("sti"); /* keep IF on through the spins so we serve others' shootdowns */
+
+	while (__sync_lock_test_and_set(&g_tlb_busy, 1))
+		__asm__ __volatile__("pause");
+
+	g_tlb_shootdown_va = va;
+	__sync_synchronize();
+	g_tlb_shootdown_acks = nt;
+	__sync_synchronize();
+
+	for (c = 0; c < nt; c++)
+		send_ipi(g_pcpu[targets[c]].apicid, TLB_SHOOTDOWN_VECTOR | ICR_FIXED | ICR_ASSERT);
+
+	while (g_tlb_shootdown_acks != 0)
+		__asm__ __volatile__("pause");
+
+	__sync_lock_release(&g_tlb_busy);
+
+	if ((rflags & 0x200) == 0)
+		__asm__ __volatile__("cli"); /* restore the caller's interrupt-disable state */
 }
 
 /**

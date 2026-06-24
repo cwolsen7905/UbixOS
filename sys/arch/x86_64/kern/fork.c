@@ -33,6 +33,7 @@ extern void ret_from_fork(void);
 extern void x86_64_map_user_page_wired(uintptr_t pml4_phys, u64 va, u64 phys);
 extern void x86_64_map_user_page_cow(u64 pml4_phys, u64 va, u64 phys);
 extern void x86_64_map_user_page_shared(u64 pml4_phys, u64 va, u64 phys);
+extern void x86_64_tlb_shootdown(u64 pml4_phys, u64 va);
 extern int adjust_cow_counter(uintptr_t base_addr, int adjustment);
 extern int vm_filecache_ref_phys(u_int32_t phys);
 extern u_int32_t numPages; /* RAM page count; frame >= numPages => MMIO (vmm.h) */
@@ -110,10 +111,11 @@ static u64 x86_64_fork_copy(u64 parent_pml4)
 					if (!already)
 					{
 						ppt[ti] = (pte & ~(u64)PTE_RW) | PTE_COW; /* parent: RO + COW */
-						__asm__ __volatile__("invlpg (%0)"
-						                     :
-						                     : "r"((void *)(uintptr_t)va)
-						                     : "memory");
+						/* SMP: a sibling thread of a multi-threaded parent may be running
+						 * this same cr3 on another CPU with the page still cached RW —
+						 * shoot it down so its next write COW-faults instead of scribbling
+						 * the now-shared frame. */
+						x86_64_tlb_shootdown(parent_pml4, va);
 					}
 					x86_64_map_user_page_cow(child, va, phys); /* child: RO + COW, same frame */
 					adjust_cow_counter((uintptr_t)phys, already ? 1 : 2);

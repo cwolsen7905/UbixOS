@@ -89,7 +89,7 @@ int kprintf(const char *fmt, ...);
 
 /* idt.c — 64-bit IDT + exception handling (Phase 2). */
 void idt_init(void);
-void idt_load(void);                  /* AP: adopt the shared IDT (lidt) */
+void idt_load(void);                    /* AP: adopt the shared IDT (lidt) */
 void x86_64_ap_load_gdt_tss(u32 cpuid); /* AP: shared GDT + its own TSS + IDT */
 
 /*
@@ -115,6 +115,7 @@ u64 x86_64_create_user_space(void);
 void x86_64_free_user_space(u64 pml4_phys);                     /* reclaim a user AS (execve teardown) */
 void x86_64_map_user_page_cow(u64 pml4_phys, u64 va, u64 phys); /* fork COW share (RO) */
 int x86_64_cow_fault(u64 pml4_phys, u64 va, int pid);           /* resolve a COW write fault */
+void x86_64_tlb_shootdown(u64 pml4_phys, u64 va);               /* SMP: flush va on every CPU on this AS */
 void x86_64_set_user_kstack(u64 top);
 void x86_64_syscall_init(void); /* enable SYSCALL/SYSRET (STAR/LSTAR/SFMASK/EFER.SCE) */
 void x86_64_syscall(struct x86_64_trapframe *tf);
