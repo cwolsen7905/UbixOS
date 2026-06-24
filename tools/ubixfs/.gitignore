@@ -4,5 +4,6 @@ spa_test
 dmu_test
 dsl_test
 fs_test
+recordsize_test
 *.o
 *.dSYM/

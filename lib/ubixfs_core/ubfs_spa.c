@@ -19,16 +19,16 @@
 
 struct ubfs_pool
 {
-	ubfs_vdev_io_t     io;
+	ubfs_vdev_io_t io;
 	ubfs_vdev_config_t config;
-	ubfs_uberblock_t   ub;           /* current (highest-txg, valid) uberblock */
-	uint64_t          txg;          /* == ub.txg */
-	uint8_t          *bitmap;       /* in-memory allocation bitmap */
-	uint64_t          bitmap_start; /* first bitmap block */
-	uint64_t          bitmap_blocks;
-	uint64_t          first_data;   /* first allocatable block */
-	uint64_t          alloc_hint;
-	uint64_t          used_blocks;
+	ubfs_uberblock_t ub;   /* current (highest-txg, valid) uberblock */
+	uint64_t txg;          /* == ub.txg */
+	uint8_t *bitmap;       /* in-memory allocation bitmap */
+	uint64_t bitmap_start; /* first bitmap block */
+	uint64_t bitmap_blocks;
+	uint64_t first_data; /* first allocatable block */
+	uint64_t alloc_hint;
+	uint64_t used_blocks;
 };
 
 /* ── uberblock ring geometry ────────────────────────────────────────────────*/
@@ -42,7 +42,7 @@ static void ub_slot_loc(uint32_t slot, uint64_t *blk, uint32_t *off)
 
 static int ub_read(ubfs_pool_t *p, uint32_t slot, ubfs_uberblock_t *out)
 {
-	uint8_t  block[UBFS_BLOCK_SIZE];
+	uint8_t block[UBFS_BLOCK_SIZE];
 	uint64_t blk;
 	uint32_t off;
 
@@ -55,7 +55,7 @@ static int ub_read(ubfs_pool_t *p, uint32_t slot, ubfs_uberblock_t *out)
 
 static int ub_write(ubfs_pool_t *p, uint32_t slot, const ubfs_uberblock_t *ub)
 {
-	uint8_t  block[UBFS_BLOCK_SIZE];
+	uint8_t block[UBFS_BLOCK_SIZE];
 	uint64_t blk;
 	uint32_t off;
 
@@ -147,9 +147,9 @@ static int write_uberblock(ubfs_pool_t *p, uint64_t txg, const ubfs_blkptr_t *ro
 int ubfs_pool_format(const ubfs_vdev_io_t *io, const char *name, uint64_t guid_seed, ubfs_pool_t **out)
 {
 	ubfs_pool_t *p;
-	uint8_t     zero[UBFS_BLOCK_SIZE];
-	uint8_t     cfgblk[UBFS_BLOCK_SIZE];
-	uint64_t    i;
+	uint8_t zero[UBFS_BLOCK_SIZE];
+	uint8_t cfgblk[UBFS_BLOCK_SIZE];
+	uint64_t i;
 
 	if (io->size_blocks < LABEL_BLOCKS + 8)
 		return -1; /* too small */
@@ -217,10 +217,10 @@ fail:
 int ubfs_pool_open(const ubfs_vdev_io_t *io, ubfs_pool_t **out)
 {
 	ubfs_pool_t *p;
-	uint8_t     cfgblk[UBFS_BLOCK_SIZE];
-	uint64_t    i;
-	int         have = 0;
-	uint32_t    slot;
+	uint8_t cfgblk[UBFS_BLOCK_SIZE];
+	uint64_t i;
+	int have = 0;
+	uint32_t slot;
 
 	p = (ubfs_pool_t *)malloc(sizeof(*p));
 	if (!p)
@@ -232,6 +232,9 @@ int ubfs_pool_open(const ubfs_vdev_io_t *io, ubfs_pool_t **out)
 		goto fail;
 	memcpy(&p->config, cfgblk, sizeof(p->config));
 	if (p->config.magic != UBFS_MAGIC || p->config.version != UBFS_VERSION)
+		goto fail;
+	/* Refuse a pool that uses an incompatible feature we don't implement. */
+	if (p->config.feature_incompat & ~(uint64_t)UBFS_FEAT_INCOMPAT_SUPPORTED)
 		goto fail;
 
 	compute_layout(p, p->config.asize);
@@ -284,6 +287,18 @@ void ubfs_pool_close(ubfs_pool_t *p)
 	free(p);
 }
 
+int ubfs_pool_set_incompat(ubfs_pool_t *p, uint64_t bits)
+{
+	uint8_t cfgblk[UBFS_BLOCK_SIZE];
+
+	if ((p->config.feature_incompat & bits) == bits)
+		return 0; /* already set */
+	p->config.feature_incompat |= bits;
+	memset(cfgblk, 0, sizeof(cfgblk));
+	memcpy(cfgblk, &p->config, sizeof(p->config));
+	return p->io.write(p->io.ctx, 0, cfgblk); /* rewrite the vdev config (block 0) */
+}
+
 int ubfs_pool_commit(ubfs_pool_t *p, const ubfs_blkptr_t *rootbp)
 {
 	if (bitmap_flush(p) < 0) /* v1: in-place (atomicity vs UB flip is a Phase-3 item) */
@@ -333,6 +348,39 @@ uint64_t ubfs_alloc_block(ubfs_pool_t *p)
 	return 0; /* full */
 }
 
+uint64_t ubfs_alloc_run(ubfs_pool_t *p, uint64_t n)
+{
+	uint64_t run = 0;
+	uint64_t run_start = p->first_data;
+
+	if (n == 0)
+		return 0;
+	if (n == 1)
+		return ubfs_alloc_block(p); /* keep the hint-accelerated fast path */
+
+	/* First-fit linear scan for `n` consecutive free blocks. */
+	for (uint64_t blk = p->first_data; blk < p->config.asize; blk++)
+	{
+		if (bitmap_get(p, blk))
+		{
+			run = 0;
+			continue;
+		}
+		if (run == 0)
+			run_start = blk;
+		if (++run == n)
+		{
+			for (uint64_t b = run_start; b < run_start + n; b++)
+				bitmap_put(p, b, 1);
+			p->used_blocks += n;
+			if (run_start + n > p->alloc_hint)
+				p->alloc_hint = run_start + n;
+			return run_start;
+		}
+	}
+	return 0; /* no contiguous run of n free blocks */
+}
+
 void ubfs_free_block(ubfs_pool_t *p, uint64_t blk)
 {
 	/* The single free chokepoint (snapshot hook #3).  v1 frees immediately; a
@@ -347,6 +395,12 @@ void ubfs_free_block(ubfs_pool_t *p, uint64_t blk)
 		if (blk < p->alloc_hint)
 			p->alloc_hint = blk;
 	}
+}
+
+void ubfs_free_run(ubfs_pool_t *p, uint64_t blk, uint64_t n)
+{
+	for (uint64_t i = 0; i < n; i++)
+		ubfs_free_block(p, blk + i);
 }
 
 int ubfs_read_block(ubfs_pool_t *p, uint64_t blk, void *buf)

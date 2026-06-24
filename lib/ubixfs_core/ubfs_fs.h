@@ -32,12 +32,19 @@
 
 typedef struct ubfs_fs
 {
-	ubfs_dmu_os_t *os;  /* the filesystem dataset's object set */
-	uint64_t       now; /* timestamp stamped into inode times (caller sets it) */
+	ubfs_dmu_os_t *os;   /* the filesystem dataset's object set */
+	uint64_t now;        /* timestamp stamped into inode times (caller sets it) */
+	uint32_t recordsize; /* block size stamped onto newly created regular files */
 } ubfs_fs_t;
 
-/** Wrap an (already opened) filesystem object set. */
+/** Wrap an (already opened) filesystem object set.  recordsize defaults to one
+ *  block; call ubfs_fs_set_recordsize after opening the dataset to honor its
+ *  property. */
 void ubfs_fs_init(ubfs_fs_t *fs, ubfs_dmu_os_t *os, uint64_t now);
+
+/** Set the recordsize stamped onto *newly created* regular files (existing files
+ *  keep theirs).  Invalid values fall back to one block. */
+void ubfs_fs_set_recordsize(ubfs_fs_t *fs, uint32_t recordsize);
 
 /** Create the root directory (object UBFS_OBJ_ROOT) of a fresh fs object set. */
 int ubfs_fs_mkroot(ubfs_fs_t *fs, uint32_t uid, uint32_t gid);

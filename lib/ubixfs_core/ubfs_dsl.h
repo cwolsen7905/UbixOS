@@ -55,6 +55,15 @@ int ubfs_dsl_foreach(ubfs_dsl_t *dsl, ubfs_dsl_cb cb, void *arg);
 /** Open a dataset's object set (and read its properties). */
 int ubfs_dsl_open_dataset(ubfs_dsl_t *dsl, uint64_t ds_obj, ubfs_dataset_phys_t *dp, ubfs_dmu_os_t *os);
 
+/** True if `rsz` is a legal recordsize: a power of two from one block (4 KiB) up
+ *  to UBFS_RECORDSIZE_MAX (1 MiB). */
+int ubfs_recordsize_valid(uint64_t rsz);
+
+/** Change a dataset's `recordsize` property (affects only files created after).
+ *  @return 0 on success, negative if the value is invalid or the dataset is bad.
+ *  Caller must ubfs_dsl_sync afterwards to persist. */
+int ubfs_dsl_set_recordsize(ubfs_dsl_t *dsl, uint64_t ds_obj, uint64_t rsz);
+
 /** After modifying a dataset's object set, push its new root back into the MOS
  *  (updates the dataset's ubfs_dataset_phys.bp).  Call before ubfs_dsl_sync. */
 int ubfs_dsl_sync_dataset(ubfs_dsl_t *dsl, uint64_t ds_obj, ubfs_dmu_os_t *os);

@@ -18,7 +18,7 @@ CFLAGS  += -O2 -g -Wall -Wextra -std=c11 -I${CORE} -I${INC} -idirafter ${.CURDIR
 CORE_SRCS = ${CORE}/fletcher.c ${CORE}/ubfs_spa.c ${CORE}/ubfs_dmu.c \
             ${CORE}/ubfs_dir.c ${CORE}/ubfs_dsl.c ${CORE}/ubfs_fs.c
 
-TESTS = spa_test dmu_test dsl_test fs_test
+TESTS = spa_test dmu_test dsl_test fs_test recordsize_test
 PROGS = ubfs ${TESTS}
 
 all: ${PROGS}
@@ -33,6 +33,8 @@ dmu_test: dmu_test.c ${CORE_SRCS}
 dsl_test: dsl_test.c ${CORE_SRCS}
 	${HOSTCC} ${CFLAGS} -o ${.TARGET} ${.ALLSRC}
 fs_test: fs_test.c ${CORE_SRCS}
+	${HOSTCC} ${CFLAGS} -o ${.TARGET} ${.ALLSRC}
+recordsize_test: recordsize_test.c ${CORE_SRCS}
 	${HOSTCC} ${CFLAGS} -o ${.TARGET} ${.ALLSRC}
 
 test: ${TESTS}

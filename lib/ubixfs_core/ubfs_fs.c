@@ -4,6 +4,7 @@
  * ubfs_fs — UbixFS POSIX filesystem layer.  See ubfs_fs.h.
  */
 #include "ubfs_fs.h"
+#include "ubfs_dsl.h" /* ubfs_recordsize_valid */
 #include <string.h>
 
 /* ── inode (POSIX attrs) in the object's dnode bonus ────────────────────────*/
@@ -90,6 +91,12 @@ void ubfs_fs_init(ubfs_fs_t *fs, ubfs_dmu_os_t *os, uint64_t now)
 {
 	fs->os = os;
 	fs->now = now;
+	fs->recordsize = UBFS_BLOCK_SIZE;
+}
+
+void ubfs_fs_set_recordsize(ubfs_fs_t *fs, uint32_t recordsize)
+{
+	fs->recordsize = ubfs_recordsize_valid(recordsize) ? recordsize : UBFS_BLOCK_SIZE;
 }
 
 int ubfs_fs_mkroot(ubfs_fs_t *fs, uint32_t uid, uint32_t gid)
@@ -161,6 +168,19 @@ static int make_node(
 	obj = ubfs_dmu_object_alloc(fs->os, otype, UBFS_BT_INODE);
 	if (obj == 0)
 		return -5;
+	/* Stamp the dataset's recordsize onto new *regular* files (dirs/symlinks stay
+	 * one block).  inode_put below re-reads this dnode and preserves datablksz. */
+	if ((mode & UBFS_S_IFMT) == UBFS_S_IFREG && fs->recordsize > UBFS_BLOCK_SIZE)
+	{
+		ubfs_dnode_t dn;
+		if (ubfs_dmu_dnode_get(fs->os, obj, &dn) == 0)
+		{
+			dn.datablksz = fs->recordsize;
+			ubfs_dmu_dnode_put(fs->os, obj, &dn);
+			/* The incompat bit is set authoritatively when the first >4K record is
+			 * written (see leaf_write_cow); nothing to do here. */
+		}
+	}
 	memset(&in, 0, sizeof(in));
 	in.mode = mode;
 	in.uid = uid;

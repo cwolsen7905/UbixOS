@@ -156,6 +156,27 @@ int ubfs_dsl_open_dataset(ubfs_dsl_t *dsl, uint64_t ds_obj, ubfs_dataset_phys_t 
 	return ubfs_dmu_objset_open(dsl->pool, &dp->bp, os);
 }
 
+int ubfs_recordsize_valid(uint64_t rsz)
+{
+	if (rsz < UBFS_BLOCK_SIZE || rsz > UBFS_RECORDSIZE_MAX)
+		return 0;
+	return (rsz & (rsz - 1)) == 0; /* power of two (so also a multiple of 4 KiB) */
+}
+
+int ubfs_dsl_set_recordsize(ubfs_dsl_t *dsl, uint64_t ds_obj, uint64_t rsz)
+{
+	ubfs_dataset_phys_t dp;
+
+	if (!ubfs_recordsize_valid(rsz))
+		return -1;
+	if (dataset_get(dsl, ds_obj, &dp) < 0)
+		return -1;
+	dp.recordsize = rsz;
+	if (rsz > UBFS_BLOCK_SIZE)
+		ubfs_pool_set_incompat(dsl->pool, UBFS_FEAT_INCOMPAT_LARGE_BLOCKS);
+	return dataset_put(dsl, ds_obj, &dp);
+}
+
 int ubfs_dsl_sync_dataset(ubfs_dsl_t *dsl, uint64_t ds_obj, ubfs_dmu_os_t *os)
 {
 	ubfs_dataset_phys_t dp;
