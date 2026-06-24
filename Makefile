@@ -88,7 +88,7 @@ kernel: kernel-${_ARCH}
 # sys/include + freestanding conventions as the i386 kernel (so generic kernel
 # objects can link in), with the aarch64 ISA flags from KERN_TARGET_CFLAGS.
 AARCH64_KCFLAGS = ${KERN_TARGET_CFLAGS} -DDEBUG_SYSCTL -O -Wall -Wno-incompatible-pointer-types \
-	-nostdlib -nostdinc -fno-builtin -fno-exceptions -ffreestanding -fno-pie -fno-pic \
+	-nostdlib ${TC_NOSTDINC} -fno-builtin -fno-exceptions -ffreestanding -fno-pie -fno-pic \
 	-fno-stack-protector -mno-outline-atomics -I${CURDIR}/sys/include -I${CURDIR}/sys/arch/aarch64
 
 # Arch-neutral kernel sources now linked into the aarch64 kernel.  Grows as more
@@ -200,19 +200,19 @@ kernel-aarch64:
 	@mkdir -p ${OBJ_DIR}/boot ${OBJ_DIR}/obj/sys
 	@for f in `find ${CURDIR}/sys/arch/aarch64 -name '*.S'`; do \
 	    o=${OBJ_DIR}/obj/sys/`basename $$f .S`.o; \
-	    sh ${CURDIR}/tools/kbuild-cc.sh "${CROSS_PREFIX}gcc [asm] " $$o $$f ${CROSS_PREFIX}gcc ${AARCH64_KCFLAGS} || exit 1; \
+	    sh ${CURDIR}/tools/kbuild-cc.sh "${CROSS_PREFIX}gcc [asm] " $$o $$f ${KERN_CC} ${KERN_CCFLAGS} ${AARCH64_KCFLAGS} || exit 1; \
 	done
 	@for f in `find ${CURDIR}/sys/arch/aarch64 -name '*.c'`; do \
 	    o=${OBJ_DIR}/obj/sys/`basename $$f .c`.o; \
-	    sh ${CURDIR}/tools/kbuild-cc.sh "${CROSS_PREFIX}gcc [c]   " $$o $$f ${CROSS_PREFIX}gcc ${AARCH64_KCFLAGS} -std=c99 || exit 1; \
+	    sh ${CURDIR}/tools/kbuild-cc.sh "${CROSS_PREFIX}gcc [c]   " $$o $$f ${KERN_CC} ${KERN_CCFLAGS} ${AARCH64_KCFLAGS} -std=c99 || exit 1; \
 	done
 	@for f in ${AARCH64_GENERIC_SRCS}; do \
 	    o=${OBJ_DIR}/obj/sys/`basename $$f .c`.o; \
-	    sh ${CURDIR}/tools/kbuild-cc.sh "${CROSS_PREFIX}gcc [gen] " $$o ${CURDIR}/$$f ${CROSS_PREFIX}gcc ${AARCH64_KCFLAGS} -std=c99 || exit 1; \
+	    sh ${CURDIR}/tools/kbuild-cc.sh "${CROSS_PREFIX}gcc [gen] " $$o ${CURDIR}/$$f ${KERN_CC} ${KERN_CCFLAGS} ${AARCH64_KCFLAGS} -std=c99 || exit 1; \
 	done
 	@for f in ${UBIXFS_KERN_SRCS}; do \
 	    o=${OBJ_DIR}/obj/sys/`basename $$f .c`.o; \
-	    sh ${CURDIR}/tools/kbuild-cc.sh "${CROSS_PREFIX}gcc [ubfs]" $$o ${CURDIR}/$$f ${CROSS_PREFIX}gcc ${AARCH64_KCFLAGS} ${UBIXFS_KERN_INCS} -std=c99 || exit 1; \
+	    sh ${CURDIR}/tools/kbuild-cc.sh "${CROSS_PREFIX}gcc [ubfs]" $$o ${CURDIR}/$$f ${KERN_CC} ${KERN_CCFLAGS} ${AARCH64_KCFLAGS} ${UBIXFS_KERN_INCS} -std=c99 || exit 1; \
 	done
 	@echo "${CROSS_PREFIX}gcc [user] tools/aarch64-user/hello.c -> hello.elf (embedded)"
 	@${CROSS_PREFIX}gcc -march=armv8-a -mgeneral-regs-only -static -nostdlib -nostartfiles \

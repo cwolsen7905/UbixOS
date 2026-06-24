@@ -73,6 +73,13 @@ LD       = ${_LLVMBIN}ld.lld
 NM       = ${_LLVMBIN}llvm-nm
 OBJCOPY  = ${_LLVMBIN}llvm-objcopy
 RANLIB   = ${_LLVMBIN}llvm-ranlib
+# Kernel compiler split into binary + flags: the kernel recipe passes the
+# compiler as a single argument to kbuild-cc.sh, so the multi-word world CC
+# (clang --target … --ld-path …) can't be used there.  KERN_CC is the bare clang
+# binary; KERN_CCFLAGS carries --target + the OS-macro -U's (no --ld-path: the
+# kernel links with ${LD} directly, not via the clang driver).
+KERN_CC      = ${_CLANG}
+KERN_CCFLAGS = ${_TGT} ${_UNDEF}
 # clang's -nostdinc would also drop its resource headers (stdbool.h, stddef.h);
 # -nostdlibinc keeps them while still excluding the host's system headers.
 TC_NOSTDINC ?= -nostdlibinc
@@ -94,12 +101,14 @@ LD       = ${CROSS_PREFIX}ld
 NM       = ${CROSS_PREFIX}nm
 OBJCOPY  = ${CROSS_PREFIX}objcopy
 RANLIB   = ${CROSS_PREFIX}ranlib
+KERN_CC      = ${CROSS_PREFIX}gcc
+KERN_CCFLAGS =
 TC_NOSTDINC ?= -nostdinc
 TC_STDFLAG  ?=
 .endif
 
 # Export TOOLCHAIN so world sub-makes (which re-include this file) recompute the
 # same toolchain instead of inheriting a possibly multi-word CC as a command word.
-.export TOOLCHAIN CC CXX AS AR LD NM OBJCOPY RANLIB TC_NOSTDINC TC_STDFLAG
+.export TOOLCHAIN CC CXX AS AR LD NM OBJCOPY RANLIB TC_NOSTDINC TC_STDFLAG KERN_CC KERN_CCFLAGS
 
 .endif # _UBIX_TOOLCHAIN_MK

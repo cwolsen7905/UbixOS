@@ -127,7 +127,11 @@ void switch_to(kTask_t *prev, kTask_t *next)
 	{
 		u_int8_t *fp_prev = (u_int8_t *)(((uintptr_t)prev->md.md_fpu + 15) & ~(uintptr_t)15);
 		u_int8_t *fp_next = (u_int8_t *)(((uintptr_t)next->md.md_fpu + 15) & ~(uintptr_t)15);
-		__asm__ __volatile__("stp q0, q1, [%0, #0]\n\t"
+		/* The kernel is -mgeneral-regs-only, so clang's integrated assembler
+		 * rejects the q-register (FPSIMD) instructions below; .arch_extension fp
+		 * re-enables them for this asm block (no-op for GNU as / gcc). */
+		__asm__ __volatile__(".arch_extension fp\n\t"
+		                     "stp q0, q1, [%0, #0]\n\t"
 		                     "stp q2, q3, [%0, #32]\n\t"
 		                     "stp q4, q5, [%0, #64]\n\t"
 		                     "stp q6, q7, [%0, #96]\n\t"
@@ -146,11 +150,12 @@ void switch_to(kTask_t *prev, kTask_t *next)
 		                     :
 		                     : "r"(fp_prev)
 		                     : "memory");
-		__asm__ volatile("mrs %0, fpsr" : "=r"(prev->md.md_fpsr));
-		__asm__ volatile("mrs %0, fpcr" : "=r"(prev->md.md_fpcr));
-		__asm__ volatile("msr fpsr, %0" : : "r"(next->md.md_fpsr));
-		__asm__ volatile("msr fpcr, %0" : : "r"(next->md.md_fpcr));
-		__asm__ __volatile__("ldp q0, q1, [%0, #0]\n\t"
+		__asm__ volatile(".arch_extension fp\n\tmrs %0, fpsr" : "=r"(prev->md.md_fpsr));
+		__asm__ volatile(".arch_extension fp\n\tmrs %0, fpcr" : "=r"(prev->md.md_fpcr));
+		__asm__ volatile(".arch_extension fp\n\tmsr fpsr, %0" : : "r"(next->md.md_fpsr));
+		__asm__ volatile(".arch_extension fp\n\tmsr fpcr, %0" : : "r"(next->md.md_fpcr));
+		__asm__ __volatile__(".arch_extension fp\n\t"
+		                     "ldp q0, q1, [%0, #0]\n\t"
 		                     "ldp q2, q3, [%0, #32]\n\t"
 		                     "ldp q4, q5, [%0, #64]\n\t"
 		                     "ldp q6, q7, [%0, #96]\n\t"
