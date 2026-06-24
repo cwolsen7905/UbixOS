@@ -10,6 +10,7 @@
 #include "bringup.h"
 #include <ubixos/sched.h>
 #include <ubixos/exec.h>           /* exec_set_name_cmdline (MI exec helper) */
+#include <ubixos/signal.h>         /* signal_exec_reset — reset caught handlers on exec */
 #include <ubixos/sched_internal.h> /* taskList, pid_hash_remove */
 #include <ubixos/wait.h>           /* save_flags/cli/restore_flags */
 #include <ubixos/errno.h>          /* ECHILD */
@@ -638,6 +639,11 @@ int aarch64_exec_replace(const char *path, char *const *uargv, char *const *uenv
 	 * frames — free_page is MMIO/COW-safe).  Without this every exec leaked the
 	 * whole old address space. */
 	pmap_free_user_space((u_int64_t *)(uintptr_t)old_ttbr0);
+
+	/* POSIX: the new image inherits SIG_DFL/SIG_IGN dispositions but NOT caught
+	 * handlers — reset those so a stale handler VA (e.g. the launching shell's
+	 * SIGCHLD job-control handler) can't be entered in this image. */
+	signal_exec_reset(&_current->td);
 
 	kstack_top = (u_int64_t)(uintptr_t)((u_int8_t *)_current->kernelStack + INITIAL_KSTACK_SIZE);
 	aarch64_exec_to_el0(entry, usp, kstack_top); /* does not return */

@@ -163,6 +163,7 @@ void signal_check(struct trapframe *frame);
  * handlers.
  */
 void signal_deliver_frame(int sig, struct sigaction *sa, struct trapframe *frame, struct thread *td);
+void signal_exec_reset(struct thread *td); /* execve: reset caught handlers to SIG_DFL (POSIX) */
 
 /*
  * Deliver pending signals when returning from a timer interrupt to ring-3.

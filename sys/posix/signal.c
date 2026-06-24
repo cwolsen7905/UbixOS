@@ -326,6 +326,34 @@ void signal_check(struct trapframe *frame)
 	}
 }
 
+/**
+ * Reset signal dispositions across execve, per POSIX: a signal currently *caught*
+ * by a custom handler is restored to SIG_DFL; signals left at SIG_IGN or SIG_DFL
+ * are preserved (so is the signal mask and any pending signals).  Called from each
+ * arch's execve once it commits to the new image.
+ *
+ * Without this a new image inherits the previous program's handler addresses —
+ * e.g. a shell's SIGCHLD job-control handler (and musl's __restore_rt restorer) —
+ * which are stale text/trampoline VAs in the new image.  The fault is silent until
+ * such a signal is delivered (a child exits → SIGCHLD), then the kernel sets the
+ * EL0 PC to the stale handler and the instruction fetch aborts → SIGSEGV.  This is
+ * why a fork+wait program faulted at __restore_rt only when launched from the
+ * job-control shell, not from init (which leaves SIGCHLD at SIG_DFL).
+ */
+void signal_exec_reset(struct thread *td)
+{
+	int sig;
+
+	for (sig = 1; sig < (int)(sizeof(td->sigact) / sizeof(td->sigact[0])); sig++)
+	{
+		void *h = (void *)td->sigact[sig].sa_handler;
+
+		/* Leave SIG_DFL (0x0) and SIG_IGN (0x1) untouched; reset only real handlers. */
+		if (h != (void *)0x0 && h != (void *)0x1)
+			memset(&td->sigact[sig], 0, sizeof(struct sigaction));
+	}
+}
+
 #if defined(__i386__)
 
 /**

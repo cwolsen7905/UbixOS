@@ -24,6 +24,7 @@
 #include <fs/vfs/file.h>       /* fopen/fread/fclose */
 #include <x86_64/vmm_layout.h> /* DYN_MAIN_BASE/DYN_INTERP_BASE/DYN_STACK_* */
 #include <ubixos/exec.h>       /* exec_set_name_cmdline (MI, shared with i386/aarch64) */
+#include <ubixos/signal.h>     /* signal_exec_reset — reset caught handlers on exec */
 #include <string.h>
 
 #define AT_NULL 0
@@ -444,6 +445,11 @@ int sys_execve(struct thread *td, struct sys_execve_args *uap)
 	 * AFTER the CR3 switch: never free the address space you are executing on.
 	 * Without this every exec leaked the whole previous image. */
 	x86_64_free_user_space(old_pml4);
+
+	/* POSIX: the new image inherits SIG_DFL/SIG_IGN dispositions but NOT caught
+	 * handlers — reset those so a stale handler VA (e.g. the launching shell's
+	 * SIGCHLD job-control handler) can't be entered in this image. */
+	signal_exec_reset(&_current->td);
 
 	x86_64_iret_to_user(entry, usp); /* does not return */
 	return 0;                        /* unreachable */
