@@ -191,23 +191,19 @@ kernel-aarch64:
 	@mkdir -p ${OBJ_DIR}/boot ${OBJ_DIR}/obj/sys
 	@for f in `find ${CURDIR}/sys/arch/aarch64 -name '*.S'`; do \
 	    o=${OBJ_DIR}/obj/sys/`basename $$f .S`.o; \
-	    echo "${CROSS_PREFIX}gcc [asm] $$f"; \
-	    ${CROSS_PREFIX}gcc ${AARCH64_KCFLAGS} -c $$f -o $$o || exit 1; \
+	    sh ${CURDIR}/tools/kbuild-cc.sh "${CROSS_PREFIX}gcc [asm] " $$o $$f ${CROSS_PREFIX}gcc ${AARCH64_KCFLAGS} || exit 1; \
 	done
 	@for f in `find ${CURDIR}/sys/arch/aarch64 -name '*.c'`; do \
 	    o=${OBJ_DIR}/obj/sys/`basename $$f .c`.o; \
-	    echo "${CROSS_PREFIX}gcc [c]   $$f"; \
-	    ${CROSS_PREFIX}gcc ${AARCH64_KCFLAGS} -std=c99 -c $$f -o $$o || exit 1; \
+	    sh ${CURDIR}/tools/kbuild-cc.sh "${CROSS_PREFIX}gcc [c]   " $$o $$f ${CROSS_PREFIX}gcc ${AARCH64_KCFLAGS} -std=c99 || exit 1; \
 	done
 	@for f in ${AARCH64_GENERIC_SRCS}; do \
 	    o=${OBJ_DIR}/obj/sys/`basename $$f .c`.o; \
-	    echo "${CROSS_PREFIX}gcc [gen] $$f"; \
-	    ${CROSS_PREFIX}gcc ${AARCH64_KCFLAGS} -std=c99 -c ${CURDIR}/$$f -o $$o || exit 1; \
+	    sh ${CURDIR}/tools/kbuild-cc.sh "${CROSS_PREFIX}gcc [gen] " $$o ${CURDIR}/$$f ${CROSS_PREFIX}gcc ${AARCH64_KCFLAGS} -std=c99 || exit 1; \
 	done
 	@for f in ${UBIXFS_KERN_SRCS}; do \
 	    o=${OBJ_DIR}/obj/sys/`basename $$f .c`.o; \
-	    echo "${CROSS_PREFIX}gcc [ubfs] $$f"; \
-	    ${CROSS_PREFIX}gcc ${AARCH64_KCFLAGS} ${UBIXFS_KERN_INCS} -std=c99 -c ${CURDIR}/$$f -o $$o || exit 1; \
+	    sh ${CURDIR}/tools/kbuild-cc.sh "${CROSS_PREFIX}gcc [ubfs]" $$o ${CURDIR}/$$f ${CROSS_PREFIX}gcc ${AARCH64_KCFLAGS} ${UBIXFS_KERN_INCS} -std=c99 || exit 1; \
 	done
 	@echo "${CROSS_PREFIX}gcc [user] tools/aarch64-user/hello.c -> hello.elf (embedded)"
 	@${CROSS_PREFIX}gcc -march=armv8-a -mgeneral-regs-only -static -nostdlib -nostartfiles \
@@ -379,23 +375,19 @@ kernel-x86_64:
 	@mkdir -p ${OBJ_DIR}/boot ${OBJ_DIR}/obj/sys
 	@for f in `find ${CURDIR}/sys/arch/x86_64 -name '*.S'`; do \
 	    o=${OBJ_DIR}/obj/sys/`basename $$f .S`.o; \
-	    echo "${CROSS_PREFIX}gcc [asm] $$f"; \
-	    ${CROSS_PREFIX}gcc ${X86_64_KCFLAGS} -c $$f -o $$o || exit 1; \
+	    sh ${CURDIR}/tools/kbuild-cc.sh "${CROSS_PREFIX}gcc [asm] " $$o $$f ${CROSS_PREFIX}gcc ${X86_64_KCFLAGS} || exit 1; \
 	done
 	@for f in `find ${CURDIR}/sys/arch/x86_64 -name '*.c'`; do \
 	    o=${OBJ_DIR}/obj/sys/`basename $$f .c`.o; \
-	    echo "${CROSS_PREFIX}gcc [c]   $$f"; \
-	    ${CROSS_PREFIX}gcc ${X86_64_KCFLAGS} -std=c99 -c $$f -o $$o || exit 1; \
+	    sh ${CURDIR}/tools/kbuild-cc.sh "${CROSS_PREFIX}gcc [c]   " $$o $$f ${CROSS_PREFIX}gcc ${X86_64_KCFLAGS} -std=c99 || exit 1; \
 	done
 	@for f in ${X86_64_GENERIC_SRCS}; do \
 	    o=${OBJ_DIR}/obj/sys/`basename $$f .c`.o; \
-	    echo "${CROSS_PREFIX}gcc [gen] $$f"; \
-	    ${CROSS_PREFIX}gcc ${X86_64_KCFLAGS} -std=c99 -c ${CURDIR}/$$f -o $$o || exit 1; \
+	    sh ${CURDIR}/tools/kbuild-cc.sh "${CROSS_PREFIX}gcc [gen] " $$o ${CURDIR}/$$f ${CROSS_PREFIX}gcc ${X86_64_KCFLAGS} -std=c99 || exit 1; \
 	done
 	@for f in ${UBIXFS_KERN_SRCS}; do \
 	    o=${OBJ_DIR}/obj/sys/`basename $$f .c`.o; \
-	    echo "${CROSS_PREFIX}gcc [ubfs] $$f"; \
-	    ${CROSS_PREFIX}gcc ${X86_64_KCFLAGS} ${UBIXFS_KERN_INCS} -std=c99 -c ${CURDIR}/$$f -o $$o || exit 1; \
+	    sh ${CURDIR}/tools/kbuild-cc.sh "${CROSS_PREFIX}gcc [ubfs]" $$o ${CURDIR}/$$f ${CROSS_PREFIX}gcc ${X86_64_KCFLAGS} ${UBIXFS_KERN_INCS} -std=c99 || exit 1; \
 	done
 	${CROSS_PREFIX}ld -T ${CURDIR}/sys/compile/ldscript.x86_64 -o ${OBJ_DIR}/boot/kernel ${OBJ_DIR}/obj/sys/*.o
 	@echo "x86_64 bring-up kernel linked: ${OBJ_DIR}/boot/kernel"
