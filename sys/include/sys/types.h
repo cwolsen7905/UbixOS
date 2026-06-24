@@ -131,8 +131,12 @@ typedef __time_t time_t;
 #define _TIME_T_DECLARED
 #endif
 
-typedef u_int32_t uintmax_t;
-typedef int32_t intmax_t;
+/* uintmax_t / intmax_t are the widest integer types — 64-bit, not 32-bit.  The
+ * old u_int32_t/int32_t typedefs truncated kvprintf's `num` (declared uintmax_t)
+ * so every %lx/%jx printed only the low 32 bits of a 64-bit value (e.g. an
+ * 0x2_00000000 user VA showed as 0x0) — a kernel-wide debug-output bug. */
+typedef __uint64_t uintmax_t;
+typedef __int64_t intmax_t;
 typedef int32_t ptrdiff_t;
 typedef __uintptr_t uintptr_t;
 

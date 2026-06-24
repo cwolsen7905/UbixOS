@@ -538,6 +538,35 @@ u_int32_t sys_now() {
  * to lwip_* directly.  Each follows the syscall convention: set td_retval[0],
  * return 0 / errno.
  */
+/*
+ * lwIP socket refcounts.  lwIP keeps sockets in a single global table
+ * (MEMP_NUM_NETCONN entries, numbered from LWIP_SOCKET_OFFSET), with no notion
+ * of per-process descriptors.  fork() deep-copies the uBixOS struct file so the
+ * child aliases the SAME lwIP socket number — so close() in EITHER process must
+ * only drop the lwIP socket when the last alias goes away, mirroring the pipe
+ * rfdCNT/wfdCNT scheme.  Indexed by lwIP socket number.
+ */
+#define SOCK_REFC_MAX (LWIP_SOCKET_OFFSET + MEMP_NUM_NETCONN)
+static int g_socket_refcount[SOCK_REFC_MAX];
+
+/**
+ * Start tracking a freshly-created lwIP socket (socket()/accept()) with one
+ * reference.
+ */
+static void socket_ref_init(int sock) {
+  if (sock >= 0 && sock < SOCK_REFC_MAX)
+    g_socket_refcount[sock] = 1;
+}
+
+/**
+ * Add a reference to an lwIP socket inherited across fork.  Called from
+ * fork_copy_fdtable() for every FD_TYPE_SOCKET descriptor.
+ */
+void socket_fork_ref(int sock) {
+  if (sock >= 0 && sock < SOCK_REFC_MAX)
+    g_socket_refcount[sock]++;
+}
+
 static int socket_fo_read(struct file *fp, struct thread *td, void *buf, size_t nbyte) {
   void *kbuf = kmalloc(nbyte);
   if (!kbuf) {
@@ -566,10 +595,21 @@ static int socket_fo_write(struct file *fp, struct thread *td, const void *buf, 
 }
 
 static int socket_fo_close(struct file *fp, struct thread *td, int fd) {
-  /* Tear down the lwIP netconn before freeing the descriptor, else every closed
-   * socket leaks its netconn + lwIP slot (the small MEMP_NUM_NETCONN pool is
-   * exhausted after a few connections and socket() starts failing). */
-  lwip_close(fp->socket);
+  int sock = fp->socket;
+  int last = 1;
+
+  /* Only tear down the lwIP netconn when the LAST alias of this socket closes
+   * (fork shares the global lwIP socket — see g_socket_refcount).  Otherwise a
+   * forking server's parent close() would destroy the child's connection.
+   * Untracked sockets (out of range) fall back to the old always-close path. */
+  if (sock >= 0 && sock < SOCK_REFC_MAX) {
+    if (g_socket_refcount[sock] > 0)
+      g_socket_refcount[sock]--;
+    last = (g_socket_refcount[sock] <= 0);
+  }
+  if (last)
+    lwip_close(sock);
+
   if (fdestroy(td, fp, fd) != 0)
     kprintf("sys_close: fdestroy failed for socket fd %d\n", fd);
   td->td_retval[0] = 0;
@@ -606,6 +646,7 @@ int sys_socket(struct thread *td, struct sys_socket_args *args) {
     error = -1;
   }
   else {
+    socket_ref_init(nfp->socket);
     td->td_retval[0] = fd;
   }
 
@@ -635,13 +676,31 @@ int sys_setsockopt(struct thread *td, struct sys_setsockopt_args *args) {
  * lwip_to_posix_addr() does the reverse for addresses returned by lwIP
  * (e.g. from recvfrom) before writing them back to userland.
  */
-static void posix_to_lwip_addr(u_int8_t *dst, const u_int8_t *src, int len) {
+/*
+ * Convert + VALIDATE a userland sockaddr before it reaches lwIP.  lwIP's
+ * IS_SOCK_ADDR_* checks (in lwip_connect/bind/...) are LWIP_ERROR assertions
+ * that PANIC the kernel on a malformed address — so a bad sockaddr from
+ * userland must be rejected here, never passed through.  uBixOS speaks IPv4
+ * over lwIP today; AF_UNSPEC is allowed (lwip_connect treats it as
+ * "disconnect"), anything else (including IPv6, whose FreeBSD-ABI family number
+ * 28 differs from lwIP's 10) returns an error so the caller falls back instead
+ * of crashing the kernel.  dst must be >= 28 bytes and 4-byte aligned.
+ *
+ * @return 0 on success, -errno on a malformed/unsupported address.
+ */
+static int posix_to_lwip_addr(u_int8_t *dst, const u_int8_t *src, int len) {
   u_int16_t family;
-  if (len < 2) return;
+  if (!src || len < 2 || len > 28) return (-EINVAL);
   memcpy(dst, src, len);
   family = src[0] | ((u_int16_t)src[1] << 8); /* little-endian uint16 family */
+  if (family == AF_INET) {
+    if (len < (int)sizeof(struct sockaddr_in)) return (-EINVAL);
+  } else if (family != AF_UNSPEC) {
+    return (-EAFNOSUPPORT);
+  }
   dst[0] = (u_int8_t)len;      /* sin_len */
   dst[1] = (u_int8_t)family;   /* sin_family (low byte = AF_INET=2) */
+  return (0);
 }
 
 static void lwip_to_posix_addr(u_int8_t *dst, const u_int8_t *src, int len) {
@@ -674,15 +733,16 @@ int sys_sendto(struct thread *td, struct sys_sendto_args *args) {
   }
   memcpy(kbuf, args->buf, args->len);
 
-  if (args->to && args->tolen > 0 && args->tolen <= 28) {
+  if (args->to) {
     u_int32_t kaddr_storage[7]; /* 28 bytes, 4-byte aligned for IS_SOCK_ADDR_ALIGNED */
     u_int8_t *kaddr = (u_int8_t *)kaddr_storage;
-    posix_to_lwip_addr(kaddr, (const u_int8_t *)args->to, args->tolen);
+    int aerr = posix_to_lwip_addr(kaddr, (const u_int8_t *)args->to, args->tolen);
+    if (aerr != 0) { kfree(kbuf); td->td_retval[0] = aerr; return (-1); }
     ret = lwip_sendto(fd->socket, kbuf, args->len, args->flags,
         (void *)kaddr, args->tolen);
   } else {
-    ret = lwip_sendto(fd->socket, kbuf, args->len, args->flags,
-        args->to, args->tolen);
+    /* No destination (connected socket): pass NULL through. */
+    ret = lwip_sendto(fd->socket, kbuf, args->len, args->flags, NULL, 0);
   }
   kfree(kbuf);
   td->td_retval[0] = (ret >= 0) ? ret : -1;
@@ -743,12 +803,12 @@ int sys_connect(struct thread *td, struct sys_connect_args *args) {
   getfd(td, &fd, args->s);
   if (!fd) { td->td_retval[0] = -1; return (-1); }
 
-  if (args->name && args->namelen > 0 && args->namelen <= 28) {
-    posix_to_lwip_addr(kaddr, (const u_int8_t *)args->name, args->namelen);
-    ret = lwip_connect(fd->socket, (void *)kaddr, args->namelen);
-  } else {
-    ret = lwip_connect(fd->socket, (void *)args->name, args->namelen);
+  ret = posix_to_lwip_addr(kaddr, (const u_int8_t *)args->name, args->namelen);
+  if (ret != 0) {
+    td->td_retval[0] = ret;
+    return (-1);
   }
+  ret = lwip_connect(fd->socket, (void *)kaddr, args->namelen);
   td->td_retval[0] = ret;
   return (ret < 0 ? -1 : 0);
 }
@@ -762,12 +822,12 @@ int sys_bind(struct thread *td, struct sys_bind_args *args) {
   getfd(td, &fd, args->s);
   if (!fd) { td->td_retval[0] = -1; return (-1); }
 
-  if (args->name && args->namelen > 0 && args->namelen <= 28) {
-    posix_to_lwip_addr(kaddr, (const u_int8_t *)args->name, args->namelen);
-    ret = lwip_bind(fd->socket, (void *)kaddr, args->namelen);
-  } else {
-    ret = lwip_bind(fd->socket, (void *)args->name, args->namelen);
+  ret = posix_to_lwip_addr(kaddr, (const u_int8_t *)args->name, args->namelen);
+  if (ret != 0) {
+    td->td_retval[0] = ret;
+    return (-1);
   }
+  ret = lwip_bind(fd->socket, (void *)kaddr, args->namelen);
   td->td_retval[0] = ret;
   return (ret < 0 ? -1 : 0);
 }
@@ -808,6 +868,7 @@ int sys_accept(struct thread *td, struct sys_accept_args *args) {
   nfp->socket  = newsock;
   nfp->fd_type = 2;
   nfp->f_ops   = &socket_ops;
+  socket_ref_init(newsock);
 
   if (args->name && args->anamelen) {
     unsigned int outlen;
@@ -823,6 +884,135 @@ int sys_accept(struct thread *td, struct sys_accept_args *args) {
   }
 
   td->td_retval[0] = newfd;
+  return (0);
+}
+
+/*
+ * accept4(s, name, anamelen, flags) — the modern accept().  musl's accept()
+ * wrapper calls accept4 (FreeBSD slot 541), so without this a server (e.g.
+ * dropbear) busy-loops on ENOSYS and never accepts a connection.  Delegates to
+ * sys_accept, then applies SOCK_NONBLOCK to the new socket if requested.
+ */
+int sys_accept4(struct thread *td, struct sys_accept4_args *args) {
+  struct sys_accept_args aargs;
+  int r;
+
+  aargs.s = args->s;
+  aargs.name = args->name;
+  aargs.anamelen = args->anamelen;
+  r = sys_accept(td, &aargs);
+
+  /* SOCK_NONBLOCK (FreeBSD ABI = 0x20000000): set the accepted fd non-blocking.
+   * SOCK_CLOEXEC is ignored (no exec-time fd flags on uBixOS yet). */
+  if (r == 0 && (args->flags & 0x20000000)) {
+    struct file *nf = 0x0;
+    getfd(td, &nf, (int)td->td_retval[0]);
+    if (nf)
+      lwip_fcntl(nf->socket, F_SETFL, lwip_fcntl(nf->socket, F_GETFL, 0) | O_NONBLOCK);
+  }
+  return (r);
+}
+
+/*
+ * recv(s, buf, len, flags) — FreeBSD's obsolete-numbered recv (slot 102), which
+ * musl emits.  Equivalent to recvfrom() with no source address.
+ */
+int sys_orecv(struct thread *td, struct sys_orecv_args *args) {
+  struct file *fd = 0x0;
+  int ret;
+  void *kbuf;
+
+  getfd(td, &fd, args->s);
+  if (!fd) { td->td_retval[0] = -1; return (-1); }
+  if (args->len > 65536) { td->td_retval[0] = -EMSGSIZE; return (-1); }
+  if (!args->buf) { td->td_retval[0] = -1; return (-1); }
+  kbuf = kmalloc(args->len);
+  if (!kbuf) { td->td_retval[0] = -1; return (-1); }
+
+  ret = lwip_recv(fd->socket, kbuf, args->len, args->flags);
+  if (ret > 0)
+    memcpy(args->buf, kbuf, ret);
+  kfree(kbuf);
+  td->td_retval[0] = ret;
+  return (ret < 0 ? -1 : 0);
+}
+
+/*
+ * getsockname(fdes, asa, alen) — the local address of a socket.  Servers call
+ * it to log the bound address; lwIP returns a BSD-style sockaddr which
+ * lwip_to_posix_addr() converts back to the userland (no-sin_len) form.
+ */
+int sys_getsockname(struct thread *td, struct sys_getsockname_args *args) {
+  struct file *fd = 0x0;
+  u_int8_t kfrom[28];
+  unsigned int kfromlen = sizeof(kfrom);
+  int ret;
+
+  getfd(td, &fd, args->fdes);
+  if (!fd) { td->td_retval[0] = -1; return (-1); }
+
+  ret = lwip_getsockname(fd->socket, (void *)kfrom, &kfromlen);
+  if (ret < 0) { td->td_retval[0] = -1; return (-1); }
+
+  if (args->asa && args->alen) {
+    unsigned int outlen = (unsigned int)*args->alen;
+    if (outlen > kfromlen) outlen = kfromlen;
+    lwip_to_posix_addr((u_int8_t *)args->asa, kfrom, outlen);
+    *args->alen = (int)kfromlen;
+  }
+  td->td_retval[0] = 0;
+  return (0);
+}
+
+/*
+ * getpeername(fdes, asa, alen) — the remote address of a connected socket.
+ */
+int sys_getpeername(struct thread *td, struct sys_getpeername_args *args) {
+  struct file *fd = 0x0;
+  u_int8_t kfrom[28];
+  unsigned int kfromlen = sizeof(kfrom);
+  int ret;
+
+  getfd(td, &fd, args->fdes);
+  if (!fd) { td->td_retval[0] = -1; return (-1); }
+
+  ret = lwip_getpeername(fd->socket, (void *)kfrom, &kfromlen);
+  if (ret < 0) { td->td_retval[0] = -1; return (-1); }
+
+  if (args->asa && args->alen) {
+    unsigned int outlen = (unsigned int)*args->alen;
+    if (outlen > kfromlen) outlen = kfromlen;
+    lwip_to_posix_addr((u_int8_t *)args->asa, kfrom, outlen);
+    *args->alen = (int)kfromlen;
+  }
+  td->td_retval[0] = 0;
+  return (0);
+}
+
+/*
+ * getsockopt(s, level, name, val, avalsize) — counterpart to setsockopt; passed
+ * straight to lwIP (the level/optname numbers match the lwIP sockets layer the
+ * setsockopt path already uses).
+ */
+int sys_getsockopt(struct thread *td, struct sys_getsockopt_args *args) {
+  struct file *fd = 0x0;
+  u_int8_t kval[128];
+  unsigned int kvalsize;
+  int ret;
+
+  getfd(td, &fd, args->s);
+  if (!fd) { td->td_retval[0] = -1; return (-1); }
+  if (!args->val || !args->avalsize) { td->td_retval[0] = -EINVAL; return (-1); }
+
+  kvalsize = (unsigned int)*args->avalsize;
+  if (kvalsize > sizeof(kval)) kvalsize = sizeof(kval);
+
+  ret = lwip_getsockopt(fd->socket, args->level, args->name, kval, &kvalsize);
+  if (ret < 0) { td->td_retval[0] = -1; return (-1); }
+
+  memcpy(args->val, kval, kvalsize);
+  *args->avalsize = (int)kvalsize;
+  td->td_retval[0] = 0;
   return (0);
 }
 
@@ -873,10 +1063,10 @@ int sys_sendmsg(struct thread *td, struct sys_sendmsg_args *args) {
     off += uiov[i].iov_len;
   }
 
-  if (umsg->msg_name && umsg->msg_namelen > 0 &&
-      umsg->msg_namelen <= (int)sizeof(kaddr)) {
-    posix_to_lwip_addr(kaddr, (const u_int8_t *)umsg->msg_name,
+  if (umsg->msg_name) {
+    int aerr = posix_to_lwip_addr(kaddr, (const u_int8_t *)umsg->msg_name,
         umsg->msg_namelen);
+    if (aerr != 0) { kfree(kbuf); td->td_retval[0] = aerr; return (-1); }
     ret = lwip_sendto(fd->socket, kbuf, (int)total, flags,
         kaddr, umsg->msg_namelen);
   } else {

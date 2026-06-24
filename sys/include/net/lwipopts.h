@@ -69,7 +69,7 @@
 #define MEMP_NUM_IGMP_GROUP   8
 #define MEMP_NUM_LOCALHOSTLIST   1
 #define MEMP_NUM_NETBUF   2
-#define MEMP_NUM_NETCONN   4
+#define MEMP_NUM_NETCONN   16 /* SSH needs headroom: listen + per-connection + getaddrinfo probe sockets */
 #define MEMP_NUM_NETDB   1
 #define MEMP_NUM_NETIFAPI_MSG   MEMP_NUM_TCPIP_MSG_API
 #define MEMP_NUM_PBUF   16

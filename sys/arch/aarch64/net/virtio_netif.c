@@ -101,6 +101,16 @@ static void vnet_deliver(const u_int8_t *frame, u_int32_t len)
 		copied += n;
 	}
 	LINK_STATS_INC(link.recv);
+	/* The RX thread can deliver a frame before netif_add() has installed the
+	 * input handler (tcpip_input) — an init-order race that, under SMP, faults
+	 * by calling through a NULL g_vnet_netif.input.  Drop the frame until the
+	 * netif is fully registered. */
+	if (g_vnet_netif.input == NULL)
+	{
+		LINK_STATS_INC(link.drop);
+		pbuf_free(p);
+		return;
+	}
 	if (g_vnet_netif.input(p, &g_vnet_netif) != ERR_OK)
 		pbuf_free(p);
 }

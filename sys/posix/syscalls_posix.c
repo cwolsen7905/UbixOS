@@ -68,8 +68,8 @@ struct syscall_entry systemCalls_posix[] = {
     {ARG_COUNT(sys_sendmsg_args), "sendmsg", sys_sendmsg, SYSCALL_VALID},                                       // 28 - sendmsg
     {ARG_COUNT(sys_recvfrom_args), "recvfrom", sys_recvfrom, SYSCALL_VALID},                                    // 29 - recvfrom
     {ARG_COUNT(sys_accept_args), "accept", sys_accept, SYSCALL_VALID},                                          // 30 - accept
-    {0, "getpeername", sys_invalid, SYSCALL_NOTIMP},                                                            // 31 - getpeername
-    {0, "getsockname", sys_invalid, SYSCALL_NOTIMP},                                                            // 32 - getsockname
+    {ARG_COUNT(sys_getpeername_args), "getpeername", sys_getpeername, SYSCALL_VALID},                           // 31 - getpeername
+    {ARG_COUNT(sys_getsockname_args), "getsockname", sys_getsockname, SYSCALL_VALID},                           // 32 - getsockname
     {ARG_COUNT(sys_access_args), "access", sys_access, SYSCALL_VALID},                                          /* 33 */
     {0, "chflags", sys_invalid, SYSCALL_NOTIMP},                                                                // 34 - chflags
     {0, "fchflags", sys_invalid, SYSCALL_NOTIMP},                                                               // 35 - fchflags
@@ -132,14 +132,14 @@ struct syscall_entry systemCalls_posix[] = {
     {ARG_COUNT(sys_fcntl_args), "fcntl", sys_fcntl, SYSCALL_VALID},                                             //  92 - fcntl
     {ARG_COUNT(sys_select_args), "select", sys_select, SYSCALL_VALID},                                          // 93 - select
     {0, "setdopt", sys_invalid, SYSCALL_NOTIMP},                                                                /*  94 - setdopt */
-    {0, "fsync", sys_invalid, SYSCALL_NOTIMP},                                                                  /*  95 - fsync */
+    {ARG_COUNT(fsync_args), "fsync", (sys_call_t *)fsync, SYSCALL_VALID},                                        /*  95 - fsync (no-op) */
     {0, "setpriority", sys_invalid, SYSCALL_NOTIMP},                                                            /*  96 - setpriority */
     {ARG_COUNT(sys_socket_args), "socket", sys_socket, SYSCALL_VALID},                                          //  97 - socket
     {ARG_COUNT(sys_connect_args), "connect", sys_connect, SYSCALL_VALID},                                       /*  98 - connect */
     {0, "old accept", sys_invalid, SYSCALL_INVALID},                                                            /*  99  */
     {0, "getpriority", sys_invalid, SYSCALL_NOTIMP},                                                            /* 100 - getpriority */
     {0, "old send", sys_invalid, SYSCALL_INVALID},                                                              /* 101 */
-    {0, "old recv", sys_invalid, SYSCALL_INVALID},                                                              /* 102 */
+    {ARG_COUNT(sys_orecv_args), "recv", sys_orecv, SYSCALL_VALID},                                               /* 102 - recv (musl emits this) */
     {0, "old sigreturn", sys_invalid, SYSCALL_INVALID},                                                         /* 103 */
     {ARG_COUNT(sys_bind_args), "bind", sys_bind, SYSCALL_VALID},                                                // 104 - bind
     {ARG_COUNT(sys_setsockopt_args), "setsockopt", sys_setsockopt, SYSCALL_VALID},                              // 105 setsockopt
@@ -155,7 +155,7 @@ struct syscall_entry systemCalls_posix[] = {
     {0, "obsolete vtrace", sys_invalid, SYSCALL_INVALID},                                                       /* 115 - Invalid */
     {ARG_COUNT(sys_gettimeofday_args), "gettimeofday", sys_gettimeofday, SYSCALL_VALID},                        // 116 - gettimeofday
     {ARG_COUNT(sys_getrusage_args), "getrusage", sys_getrusage, SYSCALL_VALID},                                 /* 117 - getrusage */
-    {0, "getsockopt", sys_invalid, SYSCALL_NOTIMP},                                                             /* 118 - getsockopt */
+    {ARG_COUNT(sys_getsockopt_args), "getsockopt", sys_getsockopt, SYSCALL_VALID},                              /* 118 - getsockopt */
     {0, "resuba", sys_invalid, SYSCALL_NOTIMP},                                                                 /* 119 - resuba */
     {ARG_COUNT(sys_readv_args), "readv", (sys_call_t *)sys_readv, SYSCALL_VALID},                               /* 120 - readv */
     {ARG_COUNT(sys_writev_args), "writev", (sys_call_t *)sys_writev, SYSCALL_VALID},                            /* 121 - writev */
@@ -578,7 +578,7 @@ struct syscall_entry systemCalls_posix[] = {
     {0, "bindat", sys_invalid, SYSCALL_NOTIMP},                                                                 /* 538 - Invalid */
     {0, "connectact", sys_invalid, SYSCALL_NOTIMP},                                                             /* 539 - Invalid */
     {0, "chflagsat", sys_invalid, SYSCALL_NOTIMP},                                                              /* 540 - Invalid */
-    {0, "accept4", sys_invalid, SYSCALL_NOTIMP},                                                                /* 541 - Invalid */
+    {ARG_COUNT(sys_accept4_args), "accept4", sys_accept4, SYSCALL_VALID},                                        /* 541 - accept4 (musl's accept()) */
     {ARG_COUNT(sys_pipe2_args), "pipe2", sys_pipe2, SYSCALL_VALID},                                             /* 542 */
     {0, "aio_mlock", sys_invalid, SYSCALL_NOTIMP},                                                              /* 543 - Invalid */
     {0, "procctl", sys_invalid, SYSCALL_NOTIMP},                                                                /* 544 - Invalid */

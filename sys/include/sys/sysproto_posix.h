@@ -447,6 +447,14 @@ struct fchmod_args
 	char mode_r_[PADR_(int)];
 };
 
+struct fsync_args
+{
+	char fd_l_[PADL_(int)];
+	int fd;
+	char fd_r_[PADR_(int)];
+};
+int fsync(struct thread *td, struct fsync_args *uap);
+
 struct utimes_args
 {
 	char path_l_[PADL_(char *)];
@@ -1475,11 +1483,97 @@ struct sys_accept_args
 	char anamelen_r_[PADR_(int *)];
 };
 
+/* accept4(s, name, anamelen, flags) — modern accept; musl's accept() uses it. */
+struct sys_accept4_args
+{
+	char s_l_[PADL_(int)];
+	int s;
+	char s_r_[PADR_(int)];
+	char name_l_[PADL_(caddr_t)];
+	caddr_t name;
+	char name_r_[PADR_(caddr_t)];
+	char anamelen_l_[PADL_(int *)];
+	int *anamelen;
+	char anamelen_r_[PADR_(int *)];
+	char flags_l_[PADL_(int)];
+	int flags;
+	char flags_r_[PADR_(int)];
+};
+
+/* recv(s, buf, len, flags) — FreeBSD's obsolete-numbered recv (slot 102). */
+struct sys_orecv_args
+{
+	char s_l_[PADL_(int)];
+	int s;
+	char s_r_[PADR_(int)];
+	char buf_l_[PADL_(caddr_t)];
+	caddr_t buf;
+	char buf_r_[PADR_(caddr_t)];
+	char len_l_[PADL_(size_t)];
+	size_t len;
+	char len_r_[PADR_(size_t)];
+	char flags_l_[PADL_(int)];
+	int flags;
+	char flags_r_[PADR_(int)];
+};
+
+/* getsockname(fdes, asa, alen) / getpeername(fdes, asa, alen). */
+struct sys_getsockname_args
+{
+	char fdes_l_[PADL_(int)];
+	int fdes;
+	char fdes_r_[PADR_(int)];
+	char asa_l_[PADL_(caddr_t)];
+	caddr_t asa;
+	char asa_r_[PADR_(caddr_t)];
+	char alen_l_[PADL_(int *)];
+	int *alen;
+	char alen_r_[PADR_(int *)];
+};
+
+struct sys_getpeername_args
+{
+	char fdes_l_[PADL_(int)];
+	int fdes;
+	char fdes_r_[PADR_(int)];
+	char asa_l_[PADL_(caddr_t)];
+	caddr_t asa;
+	char asa_r_[PADR_(caddr_t)];
+	char alen_l_[PADL_(int *)];
+	int *alen;
+	char alen_r_[PADR_(int *)];
+};
+
+/* getsockopt(s, level, name, val, avalsize). */
+struct sys_getsockopt_args
+{
+	char s_l_[PADL_(int)];
+	int s;
+	char s_r_[PADR_(int)];
+	char level_l_[PADL_(int)];
+	int level;
+	char level_r_[PADR_(int)];
+	char name_l_[PADL_(int)];
+	int name;
+	char name_r_[PADR_(int)];
+	char val_l_[PADL_(caddr_t)];
+	caddr_t val;
+	char val_r_[PADR_(caddr_t)];
+	char avalsize_l_[PADL_(int *)];
+	int *avalsize;
+	char avalsize_r_[PADR_(int *)];
+};
+
 int sys_socket(struct thread *td, struct sys_socket_args *);
 int sys_connect(struct thread *td, struct sys_connect_args *);
 int sys_bind(struct thread *td, struct sys_bind_args *);
 int sys_listen(struct thread *td, struct sys_listen_args *);
 int sys_accept(struct thread *td, struct sys_accept_args *);
+int sys_accept4(struct thread *td, struct sys_accept4_args *);
+int sys_orecv(struct thread *td, struct sys_orecv_args *);
+int sys_getsockname(struct thread *td, struct sys_getsockname_args *);
+int sys_getpeername(struct thread *td, struct sys_getpeername_args *);
+int sys_getsockopt(struct thread *td, struct sys_getsockopt_args *);
 int sys_setsockopt(struct thread *td, struct sys_setsockopt_args *);
 int sys_recvfrom(struct thread *td, struct sys_recvfrom_args *);
 int sys_recvmsg(struct thread *td, struct sys_recvmsg_args *);

@@ -228,6 +228,19 @@ int fchmod(struct thread *td, struct fchmod_args *uap)
 	return (0);
 }
 
+/**
+ * fsync(fd) — no-op success.  uBixOS filesystems write through / commit on
+ * close, so there is no per-fd dirty buffer cache to flush; returning success
+ * lets programs that fsync before rename (e.g. dropbear's host-key save)
+ * proceed instead of failing on ENOSYS.
+ */
+int fsync(struct thread *td, struct fsync_args *uap)
+{
+	(void)uap;
+	td->td_retval[0] = 0;
+	return (0);
+}
+
 /*
  * utimes(path, times) / futimes(fd, times) / lutimes(path, times) — set a file's
  * access/modification times.  The FAT-era filesystems do not store settable

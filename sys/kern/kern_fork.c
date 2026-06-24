@@ -80,6 +80,13 @@ void fork_copy_fdtable(kTask_t *child, struct thread *ptd)
 			else if (parent_f->pipe_end == PIPE_END_WRITE)
 				pi->wfdCNT++;
 		}
+
+		/* lwIP sockets are a single global table; the child now aliases the
+		 * same socket, so refcount it — else the first process to close()
+		 * destroys the socket out from under the other (breaks forking network
+		 * servers like sshd: parent closes the accepted socket after fork). */
+		if (parent_f->fd_type == FD_TYPE_SOCKET)
+			socket_fork_ref(parent_f->socket);
 	}
 }
 

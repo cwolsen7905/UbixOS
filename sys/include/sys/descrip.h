@@ -79,6 +79,12 @@ struct uio {
 #define FD_TYPE_TTY    5   /* opened via /dev/tty — uses process ct_tty */
 #define FD_TYPE_TTYV   6   /* opened via /dev/ttyX — specific tty_term in fd->data */
 
+/* Add a reference to an lwIP socket shared across a fork (mirrors the pipe
+ * rfdCNT/wfdCNT bump in fork_copy_fdtable).  lwIP sockets live in one global
+ * table, so without this the parent's close() would destroy a socket the
+ * forked child still holds.  Defined in sys/net/net/sys_arch.c. */
+void socket_fork_ref(int sock);
+
 /* Pipe direction for FD_TYPE_PIPE struct files.  Stored per-file rather
  * than per-pipeInfo because dup2/fork/dup may give a single pipeInfo
  * multiple struct file aliases — each alias still represents exactly one
