@@ -25,3 +25,6 @@ etc/userdb
 contrib/netsurf/build/
 contrib/netsurf-nsgenbind/build-*/
 .buildlock
+
+# Local-only AI-agent IPC / coordination board — not part of the repo.
+AGENTS-COORD.md
