@@ -49,6 +49,7 @@
 #elif defined(__aarch64__)
 #include <aarch64/pcpu.h> /* curcpu() — which CPU a tick is charged to */
 #endif
+#include <ubixos/preempt.h> /* preempt_count scaffolding (in-kernel-preemption-plan.md step 1) */
 #include <assert.h>
 #include <sys/descrip.h>
 #include <sys/resource.h>

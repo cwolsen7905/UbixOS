@@ -31,6 +31,8 @@ struct pcpu
 	struct taskStruct *current;   /* thread running on this CPU (offset 16) */
 	struct taskStruct *idle;      /* this CPU's idle thread (pinned, never enqueued) */
 	volatile u_int32_t heartbeat; /* liveness counter an AP bumps before it schedules */
+	int32_t preempt_count; /* in-kernel preemption nesting; 0 == preemptible (in-kernel-preemption-plan.md) */
+	volatile u_int32_t resched_pending; /* a timer tick deferred a reschedule while preempt_count > 0 */
 };
 
 _Static_assert(__builtin_offsetof(struct pcpu, current) == 16,

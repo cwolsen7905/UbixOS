@@ -36,6 +36,8 @@ struct pcpu
 	u_int32_t _pad;               /* 36 */
 	u_int64_t kernel_rsp;         /* current task's kernel-stack top — offset 40 (syscall entry) */
 	u_int64_t user_rsp_scratch;   /* stash for the user RSP across syscall entry — offset 48 */
+	int32_t preempt_count; /* in-kernel preemption nesting; 0 == preemptible (in-kernel-preemption-plan.md) */
+	volatile u_int32_t resched_pending; /* a timer tick deferred a reschedule while preempt_count > 0 */
 };
 
 _Static_assert(__builtin_offsetof(struct pcpu, self) == 8, "struct pcpu.self must be at offset 8 (pcpu.h curcpu asm)");

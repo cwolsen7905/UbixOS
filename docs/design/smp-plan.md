@@ -1,5 +1,20 @@
 # UbixOS SMP + In-Kernel Preemption Design Plan
 
+> **⚠ i386 is frozen (2026-06-20) — the i386-first framing below is historical.**
+> i386 is no longer maintained on master (it lives on `releng/2`). The SMP +
+> preemption primitives this plan describes were built and **proven on x86_64**
+> (the abstraction anchor — SMP Phase 4 is done: APs run threads off the shared
+> run queue, reschedule IPI, per-task FPU, SMP-safe dispatch), not on i386. The
+> forward target is **aarch64** (the primary arch), which is **further along than
+> the i386-centric Status Matrix reflects**: verified booting `-smp 4` (PSCI core
+> bring-up + DTB enumeration, GICv2 SGI IPIs, per-CPU `CNTV` timers, per-CPU run
+> queues with least-loaded distribution, and per-core EL0 preemption). Read the
+> i386-specific sections (the "Current State (honest inventory)", and the
+> LAPIC/8259/`ap-boot.S` detail) as **historical lineage** for the x86_64
+> implementation, not as open work. The one genuinely-open cross-arch item is
+> **in-kernel (EL1/ring-0) preemption** via the shared `preempt_count` +
+> true-spinlock primitive (still ⬜).
+
 > **Scope (decided 2026-06-10):** SMP and in-kernel preemption are **one
 > problem, one plan**. The bring-up phases below are i386-first (that is where
 > the trampoline + per-CPU `%gs` work already lives); the **preemption** thread
@@ -167,6 +182,12 @@ prerequisite for "two cores running threads."
 ---
 
 ## Current State (honest inventory)
+
+> **HISTORICAL (i386, frozen on `releng/2`).** This inventory describes the i386
+> pre-SMP state and is superseded: x86_64 SMP is built (Phase 4 — APs run threads,
+> reschedule IPI, per-task FPU, SMP-safe dispatch) and aarch64 boots `-smp 4`
+> (PSCI + GICv2 + per-CPU timers/queues). Kept as the design lineage that produced
+> the x86_64 implementation, not as open work.
 
 **Present but NOT compiled** — `sys/arch/i386/Makefile` has `ap-boot.o smp.o`
 commented out ("SMP not yet wired up — smp.c needs `<string.h>` fix and AP
