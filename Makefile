@@ -730,6 +730,30 @@ run-debug-aarch64:
 	  -device virtio-net-device,netdev=net0 -netdev user,id=net0 \
 	  -nographic
 
+# TCG (software-emulated CPU) aarch64 run — for debugging the HVF "isv" abort.
+# HVF aborts opaquely when the guest makes an MMIO access it can't decode (a wild
+# pointer landing in the 0x0A000000 virtio window).  Under TCG that same access is
+# handled by the GUEST's own fault path, so the kernel logs the faulting process +
+# PC + FAR — revealing the wild-pointer source.  Slow (no HW accel); -cpu max (not
+# "host", which means HVF passthrough).  Full device set + serial on stdio so you
+# can drive it and watch the fault.  `bmake run-tcg-aarch64 AUDIO=0` drops sound.
+AUDIO?=1
+.if ${AUDIO} == "0"
+_ARM_SOUND=
+.else
+_ARM_SOUND=-audiodev coreaudio,id=snd0 -device virtio-sound-device,audiodev=snd0
+.endif
+run-tcg-aarch64:
+	sudo qemu-system-aarch64 -machine virt,gic-version=2 -accel tcg -cpu max -m 512 -smp ${SMP} \
+	  -kernel ${OBJ_DIR}/boot/kernel \
+	  -global virtio-mmio.force-legacy=false \
+	  ${_ARM_DISK_FLAGS} \
+	  -device virtio-net-device,netdev=net0 -netdev vmnet-bridged,id=net0,ifname=${BRIDGE_IF} \
+	  -device virtio-gpu-device \
+	  -device virtio-keyboard-device -device virtio-mouse-device \
+	  ${_ARM_SOUND} \
+	  -serial file:serial.log
+
 # Agent (Claude) run: the graphical desktop opens in a window for the human, AND
 # the serial console is exposed on a unix socket so the coding agent can type
 # commands + read text output directly — no driving the GUI over VNC.  Serial is

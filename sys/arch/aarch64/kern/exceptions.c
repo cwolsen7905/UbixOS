@@ -179,10 +179,11 @@ void aarch64_exception(u_int64_t kind, void *frame)
 		if ((ec == ESR_EC_DABT_LOW || ec == ESR_EC_IABT_LOW) && _current != 0)
 		{
 			u_int64_t far = READ_SYSREG(far_el1);
-			kprintf("EL0 fault: pid=%d (%s) SIGSEGV at 0x%lx (esr=0x%lx)\n",
+			kprintf("EL0 fault: pid=%d (%s) SIGSEGV at 0x%lx pc=0x%lx (esr=0x%lx)\n",
 			        _current->id,
 			        _current->name,
 			        far,
+			        tf->tf_elr,
 			        esr);
 			_current->td.frame = tf;
 			signal_post_fault(SIGSEGV, (void *)(uintptr_t)far, SEGV_MAPERR);

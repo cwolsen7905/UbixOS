@@ -243,8 +243,23 @@ static u_int32_t snd_ctl(u_int32_t reqlen, u_int32_t resplen)
 	dsb();
 	mmio_wr(VMMIO_QUEUE_NOTIFY, 0);
 
-	while (g_cq_used->idx == g_cq_last)
-		dsb();
+	/* Bounded poll: a working device completes in microseconds.  If the host
+	 * audio backend is dead (QEMU "no host audio driver"), the device may never
+	 * service the control queue — without this cap the non-preemptible kernel
+	 * busy-spins forever and wedges boot.  On timeout return a non-OK status so
+	 * the caller aborts init gracefully and the box boots without audio. */
+	{
+		u_int32_t spins = 0;
+		while (g_cq_used->idx == g_cq_last)
+		{
+			if (++spins > 100000000u)
+			{
+				kprintf("virtio-snd: control queue timeout — device not responding, skipping audio\n");
+				return (0xFFFFFFFFu); /* != VIRTIO_SND_S_OK */
+			}
+			dsb();
+		}
+	}
 	g_cq_last++;
 	dsb();
 	return resp->code; /* response header's code field carries the status */

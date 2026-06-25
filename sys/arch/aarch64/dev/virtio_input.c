@@ -142,6 +142,26 @@ static void ev_post(struct vinput_dev *d, int i)
 }
 
 /**
+ * Read one byte from MMIO with *simple* `[reg]` addressing (immediate offset 0,
+ * no writeback).
+ *
+ * HVF only populates ESR.ISV — the decoded register/size it needs to emulate an
+ * MMIO access — for loads/stores with simple addressing.  clang compiles the
+ * indexed config-name copy loop below into a post-indexed `ldrb [xN], #1`
+ * (writeback); HVF cannot decode that, so it aborts the entire VM with the
+ * "isv" assertion on the very first device-config byte (the 0x0a003708
+ * virtio-mouse crash).  Routing every device-config byte through this asm keeps
+ * the access a plain `ldrb [x]` so ISV stays valid.  (gcc emitted immediate-
+ * offset loads, which is why this only began crashing after the clang switch.)
+ */
+static inline u_int8_t mmio_rd8(volatile u_int8_t *addr)
+{
+	u_int8_t v;
+	__asm__ volatile("ldrb %w0, [%1]" : "=r"(v) : "r"(addr) : "memory");
+	return (v);
+}
+
+/**
  * Read the device's human-readable name from config space into @d->name
  * (used only to distinguish keyboard from mouse in logs).
  */
@@ -152,11 +172,11 @@ static void read_name(struct vinput_dev *d)
 	*(volatile u_int8_t *)(d->base + VMMIO_CONFIG + 0) = VIRTIO_INPUT_CFG_ID_NAME; /* select */
 	*(volatile u_int8_t *)(d->base + VMMIO_CONFIG + 1) = 0;                        /* subsel */
 	dsb();
-	size = *(volatile u_int8_t *)(d->base + VMMIO_CONFIG + 2);
+	size = mmio_rd8(d->base + VMMIO_CONFIG + 2);
 	if (size > sizeof(d->name) - 1)
 		size = sizeof(d->name) - 1;
 	for (i = 0; i < size; i++)
-		d->name[i] = *(volatile char *)(d->base + VMMIO_CONFIG + 8 + i);
+		d->name[i] = (char)mmio_rd8(d->base + VMMIO_CONFIG + 8 + i);
 	d->name[size] = '\0';
 }
 
