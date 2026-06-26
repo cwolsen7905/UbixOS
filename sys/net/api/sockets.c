@@ -2375,7 +2375,6 @@ int lwip_setsockopt(int s, int level, int optname, const void *optval, socklen_t
 	u8_t err = 0;
 	struct lwip_sock *sock = get_socket(s);
 #if !LWIP_TCPIP_CORE_LOCKING
-	kprintf("%s:%i: %i", __FILE__, __LINE__, err);
 	LWIP_SETGETSOCKOPT_DATA_VAR_DECLARE(data);
 #endif /* !LWIP_TCPIP_CORE_LOCKING */
 
@@ -2391,25 +2390,20 @@ int lwip_setsockopt(int s, int level, int optname, const void *optval, socklen_t
 	}
 
 #if LWIP_TCPIP_CORE_LOCKING
-	kprintf("%s:%i: %i", __FILE__, __LINE__, err);
 	/* core-locking can just call the -impl function */
 	LOCK_TCPIP_CORE();
 	err = lwip_setsockopt_impl(s, level, optname, optval, optlen);
 	UNLOCK_TCPIP_CORE();
 
-	kprintf("%s:%i: %i", __FILE__, __LINE__, err);
 #else /* LWIP_TCPIP_CORE_LOCKING */
 
 #if LWIP_MPU_COMPATIBLE
-	kprintf("%s:%i: %i", __FILE__, __LINE__, err);
 	/* MPU_COMPATIBLE copies the optval data, so check for max size here */
 	if (optlen > LWIP_SETGETSOCKOPT_MAXOPTLEN)
 	{
 		sock_set_errno(sock, ENOBUFS);
-		kprintf("%s:%i: %i", __FILE__, __LINE__, err);
 		return -1;
 	}
-	kprintf("%s:%i: %i", __FILE__, __LINE__, err);
 #endif /* LWIP_MPU_COMPATIBLE */
 
 	LWIP_SETGETSOCKOPT_DATA_VAR_ALLOC(data, sock);
@@ -2442,7 +2436,6 @@ int lwip_setsockopt(int s, int level, int optname, const void *optval, socklen_t
 	LWIP_SETGETSOCKOPT_DATA_VAR_FREE(data);
 #endif /* LWIP_TCPIP_CORE_LOCKING */
 
-	kprintf("%s:%i: %i", __FILE__, __LINE__, err);
 
 	sock_set_errno(sock, err);
 	return err ? -1 : 0;
