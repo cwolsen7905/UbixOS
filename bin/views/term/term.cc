@@ -544,9 +544,16 @@ int main(int argc, char **argv)
 	unsigned short cx16 = 0, cy16 = 0;
 	bool shell_exited = false;
 
+	/* Redraw pacing: each loop blocks up to ~30 ms (3 × 10 ms ticks) for the next
+	 * event instead of busy-yielding.  A client message (keystroke/focus/resize)
+	 * wakes us instantly so typing stays snappy; the timeout bounds the latency of
+	 * repainting live shell output.  The old `ubix::yield()` spin pegged a core
+	 * whenever the terminal was focused (the "slow at times" symptom). */
+	const int TERM_REDRAW_TICKS = 3;
+
 	for (;;)
 	{
-		/* Pull the latest rendered screen.  render() diffs it internally and
+		/* Repaint the latest rendered screen.  render() diffs it internally and
 		 * redraws only the cells that changed. */
 		bool got = (pty.snapshot(grid, &cx16, &cy16) == 0);
 
@@ -557,7 +564,23 @@ int main(int argc, char **argv)
 			set_title("Terminal (exited)");
 		}
 
-		while (mbox.try_fetch(reply))
+		/* The cursor is stored as a split linear offset (see tty_print). */
+		int linear = (cy16 << 8) | cx16;
+		int cx = linear % g_cols;
+		int cy = linear / g_cols;
+
+		if (got || shell_exited)
+		{
+			DirtyRect d = tv.render(grid, cx, cy, shell_exited);
+			if (d.any)
+				send_flip(d);
+		}
+
+		/* Block until a client message arrives or the redraw tick elapses. */
+		if (!mbox.wait(reply, TERM_REDRAW_TICKS))
+			continue;
+
+		do
 		{
 			if (reply.header == DISPLAY_CLOSE)
 			{
@@ -605,21 +628,7 @@ int main(int argc, char **argv)
 			int n = key_to_seq(dk->keycode, dk->pressed, seq);
 			if (n > 0)
 				pty.inject(seq, n);
-		}
-
-		/* The cursor is stored as a split linear offset (see tty_print). */
-		int linear = (cy16 << 8) | cx16;
-		int cx = linear % g_cols;
-		int cy = linear / g_cols;
-
-		if (got || shell_exited)
-		{
-			DirtyRect d = tv.render(grid, cx, cy, shell_exited);
-			if (d.any)
-				send_flip(d);
-		}
-
-		ubix::yield();
+		} while (mbox.try_fetch(reply));
 	}
 
 	return 0;
