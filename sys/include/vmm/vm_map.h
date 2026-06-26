@@ -116,4 +116,13 @@ void vm_map_free(vm_map_t *map);
  */
 int vm_map_copy(vm_map_t *dst, const vm_map_t *src);
 
+/*
+ * vmm_demand_fault — machine-independent not-present fault resolver
+ * (sys/vmm/vmm_demand.c).  Called by the arch fault handlers: if a VMA covers
+ * @far, materialise that one page (file-backed read or anon demand-zero) into
+ * @aspace_root and return 0 (retry the access); return -1 if no VMA covers @far
+ * (deliver SIGSEGV).
+ */
+int vmm_demand_fault(u_int64_t *aspace_root, uintptr_t far);
+
 #endif /* _VMM_VM_MAP_H_ */

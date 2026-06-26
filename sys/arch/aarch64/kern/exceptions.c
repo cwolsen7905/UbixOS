@@ -21,6 +21,7 @@
 #include <ubixos/callout.h>        /* callout_run_expired — wake timed sleepers from the timer IRQ */
 #include <ubixos/spinlock.h>       /* spinTryLock — re-entrancy-safe sched-lock grab in the ISR */
 #include <ubixos/vitals.h>         /* systemVitals->sysTicks — current callout deadline clock */
+#include <vmm/vm_map.h>            /* vmm_demand_fault — lazy PT_LOAD / mmap page faulting */
 
 enum
 {
@@ -170,6 +171,24 @@ void aarch64_exception(u_int64_t kind, void *frame)
 			}
 		}
 
+		/* A not-present (translation) fault on an address a VMA covers is a demand
+		 * fault — materialise that one page lazily and retry, instead of killing the
+		 * process.  Covers a data access (DABT) and an instruction fetch into a
+		 * not-yet-faulted code page (IABT — how a demand-paged text segment first
+		 * runs).  FSC 0b0001LL (0x04-0x07) is a translation fault at levels 0-3. */
+		if ((ec == ESR_EC_DABT_LOW || ec == ESR_EC_IABT_LOW) && _current != 0 &&
+		    _current->md.md_ttbr0 != 0)
+		{
+			u_int64_t fsc = esr & 0x3FUL; /* DFSC / IFSC */
+
+			if (fsc >= 0x04 && fsc <= 0x07)
+			{
+				u_int64_t far = READ_SYSREG(far_el1);
+				if (vmm_demand_fault((u_int64_t *)(uintptr_t)_current->md.md_ttbr0, (uintptr_t)far) == 0)
+					return; /* ERET and retry on the freshly-mapped page */
+			}
+		}
+
 		/* An instruction/data abort from EL0 is a fault in the process's own
 		 * code (a bad pointer, stack overflow, …).  Deliver SIGSEGV with proper
 		 * Unix semantics: a process with a handler catches it; otherwise SIG_DFL
@@ -214,6 +233,16 @@ void aarch64_exception(u_int64_t kind, void *frame)
 		{
 			if (pmap_cow_fault((u_int64_t *)(uintptr_t)_current->md.md_ttbr0, far, _current->id) == 0)
 				return; /* ERET and retry the kernel store on the private copy */
+		}
+
+		/* The kernel touching a not-yet-faulted user page on the process's behalf
+		 * mid-syscall (e.g. copying argv/buffers that live in a demand-paged VMA)
+		 * takes a same-EL translation fault (EC 0x25, FSC 0x04-0x07).  Resolve it
+		 * the same way an EL0 access would, then retry the kernel access. */
+		if (ec == 0x25 && (dfsc >= 0x04 && dfsc <= 0x07))
+		{
+			if (vmm_demand_fault((u_int64_t *)(uintptr_t)_current->md.md_ttbr0, (uintptr_t)far) == 0)
+				return; /* ERET and retry the kernel access on the mapped page */
 		}
 	}
 

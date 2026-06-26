@@ -116,7 +116,10 @@ AARCH64_GENERIC_SRCS = \
 	sys/lib/strlen.c \
 	sys/lib/rbtree.c \
 	sys/vmm/vm_filecache.c \
+	sys/vmm/vm_map.c \
+	sys/vmm/vmm_demand.c \
 	sys/kern/elf64_load.c \
+	sys/kern/elf64_demand.c \
 	sys/kern/klog.c \
 	sys/kern/descrip.c \
 	sys/kern/kern_fork.c \
@@ -302,6 +305,7 @@ X86_64_GENERIC_SRCS = \
 	sys/kern/sched_core.c \
 	sys/kern/sched_dispatch.c \
 	sys/kern/elf64_load.c \
+	sys/kern/elf64_demand.c \
 	sys/kern/kern_fork.c \
 	sys/kern/kern_exec.c \
 	sys/kern/syscalls.c \
@@ -363,6 +367,8 @@ X86_64_GENERIC_SRCS = \
 	sys/net/net/sys_arch.c \
 	sys/vmm/vmm_uregion.c \
 	sys/vmm/vm_filecache.c \
+	sys/vmm/vm_map.c \
+	sys/vmm/vmm_demand.c \
 	sys/lib/rbtree.c \
 	sys/fs/vfs/stat.c \
 	sys/fs/procfs/procfs.c \

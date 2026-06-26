@@ -152,6 +152,20 @@ Physical addresses at or above `numPages × PAGE_SIZE` (≥ 256 MB with default 
 
 When `vmmCopyVirtualSpace()` runs (during `fork()`), no physical memory is copied. Both parent and child share the same frames, marked read-only and COW. On the first write attempt a page fault fires, `pagefault.c` allocates a new frame, copies the content, and updates the faulting process's page table.
 
+### 64-bit address spaces & demand paging (aarch64 / x86_64)
+
+The two 64-bit kernels share a **machine-independent demand-paging layer**; only the page-mapping primitives are machine-dependent (the `md_*` hooks in `<sys/elf_load.h>`). New since 2026-06:
+
+| Component | Source | Role |
+|-----------|--------|------|
+| VMA tree | `sys/vmm/vm_map.c` (`vm_map_entry_t` red-black tree, `_current->vm_map`) | Per-process map of `[start,end)` regions tagged `VM_MAP_FILE` (backed by an owned `fileDescriptor`) or `VM_MAP_ANON`. *Was i386-only; now built for both 64-bit arches.* |
+| Demand-fault resolver | `sys/vmm/vmm_demand.c` (`vmm_demand_fault`) | On a not-present fault the arch handler calls this; `vm_map_lookup` finds the VMA, then a file page is read via `vfs_pread_locked` or an anon page is demand-zeroed, mapped with `md_map_user_page`. (First cut maps **private** pages; cross-process sharing of read-only file pages via `vm_filecache` is a planned optimization.) |
+| Demand ELF loader | `sys/kern/elf64_demand.c` (`elf64_load_demand`) | `execve` of a **static ET_EXEC** records file-backed + demand-zero VMAs (reading only the ELF headers) instead of eagerly copying every PT_LOAD page — so a 100 MB binary starts instantly and only touched pages load. A dynamic image (ET_DYN / PT_INTERP) falls back to the eager `elf64_load`. |
+
+The arch fault handlers (`sys/arch/aarch64/kern/exceptions.c`; x86_64 `idt.c` — pending) route a **translation / not-present** fault to `vmm_demand_fault` before delivering SIGSEGV; a **permission** write fault still goes to the COW path.
+
+**AArch64 VA layout (current + in migration).** The aarch64 kernel currently runs **entirely in TTBR0 (low VAs)** as a flat identity map (`sys/arch/aarch64/vmm/mmu.c`); `pmap_create_user_space` copies the kernel L1 so every process maps the kernel, and per-process user VAs are meant to start at **block 4 (4 GB)** (`USER_L1_MIN`). A **static `ET_EXEC` linked low (e.g. clang at `0x200000`) collides with the kernel-identity region** and corrupts the shared kernel L1. The fix in progress is the **higher-half migration** — relocate the kernel + identity to **TTBR1**, leaving all of TTBR0 for user — tracked in **`docs/design/aarch64-higher-half-plan.md`** (and the demand-paging design in `docs/design/demand-paged-exec-plan.md`). x86_64 is also kernel-low today and will follow the same migration; the MI demand-paging layer above already serves both.
+
 ---
 
 ## Process Model

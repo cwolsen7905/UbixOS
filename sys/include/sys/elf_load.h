@@ -16,6 +16,8 @@
 
 #include <sys/types.h>
 
+struct vm_map; /* sys/include/vmm/vm_map.h — opaque here (demand loader's target tree) */
+
 /**
  * Load a static ET_EXEC ELF64 image into the address space rooted at
  * @aspace_root (the top-level page-table root — aarch64 L1, x86_64 PML4).
@@ -50,6 +52,20 @@ typedef struct elf64_load_info
  * @return 0 on success; -1 on an invalid image or mapping failure.
  */
 int elf64_load_at(const void *image, u_int64_t *aspace_root, u_int64_t load_base, elf64_load_info_t *info);
+
+/**
+ * Set up a static ET_EXEC's PT_LOAD segments for DEMAND PAGING into @aspace_root,
+ * recording file-backed + demand-zero VMAs in @map instead of eagerly copying
+ * pages.  Reads only the ELF headers (not the whole file); the segment pages
+ * fault in lazily through vmm_demand_fault().  Each file-backed VMA owns its own
+ * fopen(@path); one eager page is written per segment at the file/BSS boundary.
+ *
+ * @param info  out: entry/phdr/phnum/phentsize (same fields as elf64_load_at).
+ * @return 0 if set up for demand paging; 1 if the image is dynamic (ET_DYN or
+ *         has PT_INTERP) and the caller should fall back to the eager loader;
+ *         -1 on an invalid image or a setup failure.
+ */
+int elf64_load_demand(const char *path, u_int64_t *aspace_root, struct vm_map *map, elf64_load_info_t *info);
 
 /* ---- machine-dependent hooks (implemented per 64-bit arch) ---- */
 

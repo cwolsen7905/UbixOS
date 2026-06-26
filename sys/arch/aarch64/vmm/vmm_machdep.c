@@ -431,7 +431,16 @@ int vmm_mem_map_init(void)
 	u_int32_t bitmap_size, bitmap_end_page;
 	u_int32_t num = count_memory();
 
-	bitmap_phys = ((uintptr_t)_end + PAGE_SIZE - 1) & ~((uintptr_t)PAGE_SIZE - 1);
+	/* The page bitmap is staged at the PHYSICAL address just past the kernel image,
+	 * and the frame accounting below needs that physical value.  When the kernel is
+	 * linked higher-half, _end is a high physmap VMA → convert it; when linked low
+	 * (VIRT_OFFSET=0), _end is already physical.  Detect by range so this one site
+	 * works for both builds. */
+	{
+		uintptr_t e = (uintptr_t)_end;
+		uintptr_t ephys = (e >= PHYSMAP_BASE) ? AARCH64_PHYS_OF(e) : e;
+		bitmap_phys = (ephys + PAGE_SIZE - 1) & ~((uintptr_t)PAGE_SIZE - 1);
+	}
 	vmm_mem_bitmap_init(bitmap_phys, num);
 
 	bitmap_size = num * sizeof(vmm_page_info_t);

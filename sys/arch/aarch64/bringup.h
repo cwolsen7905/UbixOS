@@ -14,6 +14,15 @@
 #include <lib/kprintf.h>  /* canonical int kprintf(const char *, ...) */
 #include <lib/kconsole.h> /* registered-sink console (kconsole_arch_init) */
 
+/* Higher-half migration (docs/design/aarch64-higher-half-plan.md): the kernel
+ * executes at high VAs through the TTBR1 physmap, where PHYSMAP_BASE + phys is the
+ * high-VA alias of physical address `phys` (== the VMA-LMA delta, ldscript
+ * VIRT_OFFSET).  Convert between a physmap/kernel VA and its physical frame with
+ * these (an immediate constant, so no cross-VMA relocation). */
+#define PHYSMAP_BASE 0xFFFFFF8000000000UL
+#define AARCH64_PHYS_OF(va) ((uintptr_t)(va) - PHYSMAP_BASE)
+#define AARCH64_VIRT_OF(pa) ((uintptr_t)(pa) + PHYSMAP_BASE)
+
 /* uart.c — PL011 console plumbing + the PL011 kconsole serial sink.  kprintf
  * itself is the shared arch-neutral entry point in sys/lib/kprintf.c. */
 void uart_putc(char c);
@@ -46,6 +55,7 @@ void aarch64_rtc_init(void); /* capture boot wall-clock epoch from the PL031 RTC
 /* mmu.c — enable the MMU with a TTBR0 identity map (39-bit VA). */
 void aarch64_mmu_init(void);
 void aarch64_mmu_enable_secondary(void); /* AP: reuse the BSP's page tables (smp-plan M1) */
+void aarch64_physmap_verify(void);       /* higher-half Phase 1: confirm TTBR1 physmap aliases low identity */
 
 /* apsmp.c — start the application processors via PSCI CPU_ON (smp-plan M1).
  * Each AP lands in secondary_entry (apentry.S) -> c_ap_boot_arm(). */

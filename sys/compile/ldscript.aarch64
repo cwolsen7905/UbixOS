@@ -1,33 +1,48 @@
-/* AArch64 bring-up linker script (QEMU `virt`).
+/* AArch64 kernel linker script (QEMU `virt`).
  *
- * `-kernel <ELF>` loads segments at their physical addresses and jumps to the
- * ELF entry.  QEMU `virt` RAM starts at 0x40000000, but QEMU also stages its own
- * boot shim there — the shim that loads x0 with the DTB pointer before entering
- * the kernel.  Linking the kernel at the RAM base overwrites that shim, so QEMU
- * skips it and we enter with x0 = 0 (no DTB).  Link 2 MB up (the arm64
- * text_offset convention) so the shim survives and hands us x0 = DTB; the
- * skipped 0x40000000..0x40200000 window stays reserved by the page allocator. */
+ * `-kernel <ELF>` loads segments at their physical (LMA) addresses and jumps to
+ * the ELF entry.  QEMU `virt` RAM starts at 0x40000000, but QEMU also stages its
+ * own boot shim there — the shim that loads x0 with the DTB pointer before
+ * entering the kernel.  Linking at the RAM base overwrites that shim, so we link
+ * 2 MB up (the arm64 text_offset convention); the skipped 0x40000000..0x40200000
+ * window stays reserved by the page allocator.
+ *
+ * HIGHER-HALF MIGRATION (docs/design/aarch64-higher-half-plan.md): the kernel is
+ * built to EXECUTE at high VAs (VMA = KERNEL_PHYS + VIRT_OFFSET, reached through
+ * the TTBR1 physmap) while LOADED at KERNEL_PHYS (LMA, via AT()).  The `.text.boot`
+ * stub stays low (VMA == LMA) so QEMU's entry and the MMU-off early boot are
+ * position-correct; it enables the MMU and branches to the high VMA, after which
+ * everything runs high.  `VIRT_OFFSET = 0` builds a conventional all-low kernel
+ * (migration Phase 2a: verify the boot restructure before flipping to high). */
 OUTPUT_FORMAT("elf64-littleaarch64")
 OUTPUT_ARCH(aarch64)
 ENTRY(_start)
 
+VIRT_OFFSET = 0x0;
+KERNEL_PHYS = 0x40200000;
+
 SECTIONS
 {
-	. = 0x40200000;
+	. = KERNEL_PHYS;
 
-	/* .text.boot (the _start entry) must come first so the ELF entry lands
-	 * at the load address. */
-	.text : {
-		*(.text.boot)
+	/* Low boot stub: VMA == LMA == KERNEL_PHYS.  Runs with the MMU off, then
+	 * enables it and branches to the high half (.text below). */
+	.text.boot : { *(.text.boot) }
+
+	/* Everything else executes at the high VMA and loads right after the stub
+	 * (LMA = VMA - VIRT_OFFSET). */
+	. = . + VIRT_OFFSET;
+
+	.text : AT(ADDR(.text) - VIRT_OFFSET) {
 		*(.text*)
 	}
 
-	.rodata : { *(.rodata*) }
-	.data   : { *(.data*) }
+	.rodata : AT(ADDR(.rodata) - VIRT_OFFSET) { *(.rodata*) }
+	.data   : AT(ADDR(.data) - VIRT_OFFSET) { *(.data*) }
 
 	. = ALIGN(16);
 	__bss_start = .;
-	.bss : {
+	.bss : AT(ADDR(.bss) - VIRT_OFFSET) {
 		*(.bss*)
 		*(COMMON)
 	}
@@ -35,10 +50,9 @@ SECTIONS
 	__bss_end = .;
 
 	/* Boot stack; _stack_top is the initial SP (grows down toward __bss_end).
-	 * 64 KB, not 16 KB: the kernel runs a real filesystem (the UbixFS lite-ZFS
-	 * core) on this stack, and its block-tree traversal nests several 4 KB
-	 * `block[BS]` frames — 16 KB overflowed past __bss_end and corrupted the
-	 * adjacent page-allocator globals (vmmMemoryMap/numPages). */
+	 * 64 KB: the kernel runs the UbixFS lite-ZFS core on this stack, whose
+	 * block-tree traversal nests several 4 KB frames — 16 KB overflowed past
+	 * __bss_end and corrupted the adjacent page-allocator globals. */
 	. = ALIGN(16);
 	. += 0x10000;
 	_stack_top = .;

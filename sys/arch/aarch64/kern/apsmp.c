@@ -58,9 +58,16 @@ volatile int g_arm_ap_go = 0;
  * the linker's _stack).  BSS, so zeroed; apentry.S carves sp from this symbol. */
 char g_ap_stack[MAXCPU][AP_STACK_SIZE] __attribute__((aligned(16)));
 
-/* secondary_entry lives in apentry.S; PSCI CPU_ON needs its physical address,
- * which equals its link address (the kernel is identity-mapped). */
+/* secondary_entry lives in apentry.S (.text.boot, linked LOW); PSCI CPU_ON needs
+ * its physical address, which equals its low link address.  Take it through an
+ * absolute-relocated pointer (R_AARCH64_ABS64 in .data) rather than referencing
+ * &secondary_entry directly: in the higher-half kernel this C runs at a high VA,
+ * and a direct adrp to the low symbol overflows the ±4 GB PC-relative range. */
 extern void secondary_entry(void);
+/* volatile, not const: const lets the optimizer fold the read back into a direct
+ * &secondary_entry adrp (re-introducing the out-of-range relocation); volatile
+ * forces the load from the absolute-relocated .data slot. */
+static void *volatile g_secondary_entry_phys = (void *)&secondary_entry;
 
 #define PSCI_CPU_ON 0xC4000003u /* SMC64/HVC64 CPU_ON function id */
 
@@ -97,7 +104,8 @@ static int64_t psci_call(u_int64_t fn, u_int64_t a0, u_int64_t a1, u_int64_t a2)
  */
 void c_ap_boot_arm(u_int32_t id)
 {
-	aarch64_mmu_enable_secondary();            /* MMU + caches on (BSP's l1_table) */
+	/* The MMU + caches were enabled by the secondary_entry stub (apentry.S) before
+	 * the branch to the high half, so we are already running translated here. */
 	aarch64_vbar_init();                       /* this CPU's EL1 vectors (banked VBAR_EL1) */
 	aarch64_pcpu_install(id, ap_read_mpidr()); /* TPIDR_EL1 -> g_pcpu[id]; _current usable */
 
@@ -228,7 +236,7 @@ void arch_smp_reschedule_cpu(unsigned cpu)
  */
 void aarch64_smp_start_aps(void)
 {
-	u_int64_t entry = (u_int64_t)(uintptr_t)&secondary_entry; /* phys == link addr */
+	u_int64_t entry = (u_int64_t)(uintptr_t)g_secondary_entry_phys; /* phys == low link addr */
 	unsigned n = smp_cpu_count();
 	unsigned online = 0;
 

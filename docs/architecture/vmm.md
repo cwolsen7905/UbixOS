@@ -136,3 +136,60 @@ x86 exception 14 (page fault) is routed to the VMM handler, which distinguishes 
 | COW fault | Write to a shared COW page | Allocate new frame, copy, update PTE, resume |
 | Demand-zero | First access to an allocated but unmapped page | Allocate zeroed frame, map, resume |
 | Invalid access | Unmapped or protected region | Deliver `SIGSEGV` to faulting process |
+
+---
+
+## 64-bit demand paging (aarch64 / x86_64)
+
+> The sections above describe the **i386** VMM (the frozen `releng/2` arch). The two
+> 64-bit kernels add a **machine-independent VMA-tracked demand-paging layer** on top of
+> the same physical allocator. Hardware is reached only through the `md_*` hooks in
+> `<sys/elf_load.h>`, so the layer is identical on aarch64 and x86_64.
+
+**VMA tree** — `sys/vmm/vm_map.c`. Each process owns a red-black tree (`_current->vm_map`)
+of `vm_map_entry_t` regions, each `[vm_start, vm_end)` tagged `VM_MAP_FILE`
+(`vm_vnode` = an owned `fileDescriptor`, `vm_offset` = file offset) or `VM_MAP_ANON`.
+`vm_map_remove`/`vm_map_free` close a file VMA's backing fd on teardown; `vm_map_copy`
+duplicates the tree for fork. *(`vm_map.c` was historically i386-only; it is now in both
+64-bit generic source lists.)*
+
+**Demand-fault resolver** — `sys/vmm/vmm_demand.c::vmm_demand_fault(aspace_root, far)`.
+The arch fault handler calls it on a **not-present (translation)** fault. It looks up the
+covering VMA; a `VM_MAP_FILE` page is read with `vfs_pread_locked` (the same
+`vfs_io_lock` `fread` uses, so demand reads are SMP-safe against concurrent FS access),
+an anon page is demand-zeroed; the frame is mapped with `md_map_user_page`. Returns 0
+(retry the access) or -1 (no VMA → SIGSEGV). The first implementation maps **private**
+pages; de-duplicating read-only file pages through `vm_filecache` is a planned
+optimization.
+
+**Demand `execve`** — `sys/kern/elf64_demand.c::elf64_load_demand`. For a **static
+ET_EXEC**, `execve` reads only the ELF headers and records a file-backed VMA per PT_LOAD
+(plus one eager page at the file/BSS boundary and an anon VMA for the BSS tail) instead of
+eagerly mapping + copying every page. A dynamic image (ET_DYN / PT_INTERP) returns to the
+eager `elf64_load` path. This is what lets a 100 MB binary (the on-device `clang`) start
+without materializing all of it up front.
+
+**Arch wiring.** aarch64 `sys/arch/aarch64/kern/exceptions.c` routes EL0 **and** EL1
+translation faults (data + instruction aborts) to `vmm_demand_fault` before SIGSEGV;
+`aarch64_exec_replace` demand-loads into a local VMA map installed only at the TTBR
+switch (so a load failure leaves the old image intact). x86_64 `idt.c` wiring is pending.
+
+## AArch64 address-space layout and the higher-half migration
+
+The aarch64 kernel currently runs **entirely in TTBR0 (low VAs)** as a flat identity map
+(`sys/arch/aarch64/vmm/mmu.c`: one L1 of 1 GB block descriptors, `EPD1=1` so TTBR1 is
+unused). `pmap_create_user_space` memcpy's the kernel L1 so every address space maps the
+kernel + peripherals; per-process user mappings are meant to live at **block 4 (4 GB) and
+up** (`USER_L1_MIN`), with blocks 0–3 shared by pointer.
+
+**Constraint:** a **static `ET_EXEC` linked at a low VA** (clang links at `0x200000`,
+block 0) lands in the kernel-identity region; mapping it makes the table walker replace
+shared 2 MB kernel-identity *blocks* with private L3 tables **in the shared kernel L1**,
+corrupting the global kernel identity. PIE binaries avoid this because they load high.
+
+**In progress:** the **higher-half migration** relocates the kernel + its identity/physmap
+to **TTBR1**, freeing all of TTBR0 for user so static low-linked binaries work and each
+TTBR0 space drops its kernel-identity copy. The hard part is unwinding the pervasive
+`phys == virt` identity assumption (introducing a `PHYSMAP_BASE`). Full phased plan +
+status: **`docs/design/aarch64-higher-half-plan.md`**. x86_64 is also kernel-low and will
+follow the same migration.

@@ -18,6 +18,7 @@
 #include <vmm/paging.h>
 #include <lib/kmalloc.h>
 #include <sys/elf_load.h>
+#include <vmm/vm_map.h> /* vm_map_t, vm_map_free, elf64_load_demand's target tree */
 #include <sys/elf64.h> /* Elf64_Ehdr — peek the type for the load base */
 #include <fs/vfs/file.h>
 #include <string.h>
@@ -45,6 +46,15 @@
 #define AT_RANDOM 25
 
 #define MAXARG 48 /* cap on argv/envp entries marshalled into a new image */
+
+/* Dynamic-linker image cache.  Every dynamic exec loads the same interpreter
+ * (/lib/ld-musl-aarch64.so.1, ~1 MB); re-reading it off the FS for each service
+ * dominated boot time (sector-by-sector reads, ~10 s each).  Read it once and
+ * keep the read-only image — elf64_load_at copies its segments per load — so all
+ * subsequent dynamic execs reuse it.  Holds the most recently loaded interp. */
+static char *g_interp_buf = NULL;
+static int g_interp_sz = 0;
+static char g_interp_path[256] = {0};
 
 /**
  * Load ELF @image into a fresh user address space and build the minimal SysV
@@ -347,6 +357,54 @@ static u_int64_t build_dyn_stack(uintptr_t phys_page,
 }
 
 /**
+ * Allocate + map the user stack and lay down the SysV argv/env/auxv vector.
+ *
+ * One *contiguous* run of frames: the vector is written top-down, and contiguous
+ * frames keep both the (identity-mapped) kernel view and the user VA linear so it
+ * may span multiple pages.  Shared by the eager (load_dynamic) and demand
+ * (elf64_load_demand) exec paths.
+ *
+ * @return 0 on success, -1 on allocation failure.
+ */
+static int build_user_stack(u_int64_t *l1,
+                            char **argv,
+                            int argc,
+                            char **envp,
+                            int envc,
+                            elf64_load_info_t *mi,
+                            u_int64_t interp_base,
+                            u_int64_t *out_usp)
+{
+	uintptr_t stack_base;
+	int i;
+
+	stack_base = vmm_find_free_pages_contig(DYN_STACK_PAGES, sysID);
+	if (stack_base == 0)
+		return (-1);
+	memset((void *)stack_base, 0, (size_t)DYN_STACK_PAGES * PAGE_SIZE);
+	for (i = 0; i < DYN_STACK_PAGES; i++)
+		pmap_map_user_page(l1,
+		                   DYN_STACK_VA + (u_int64_t)i * PAGE_SIZE,
+		                   (u_int64_t)(stack_base + (uintptr_t)i * PAGE_SIZE),
+		                   0);
+
+	/* build_dyn_stack writes top-down from the topmost page.  Reserve the lower
+	 * half for runtime growth; the argv/env/auxv vector may use the top half. */
+	*out_usp = build_dyn_stack(stack_base + (uintptr_t)(DYN_STACK_PAGES - 1) * PAGE_SIZE,
+	                           DYN_STACK_TOP - PAGE_SIZE,
+	                           argv,
+	                           argc,
+	                           envp,
+	                           envc,
+	                           mi,
+	                           interp_base,
+	                           (u_int64_t)(DYN_STACK_PAGES / 2) * PAGE_SIZE);
+	if (*out_usp == 0)
+		return (-1);
+	return (0);
+}
+
+/**
  * Load a (PIE) dynamically-linked program @image into @l1: map the main exe at
  * DYN_MAIN_BASE, read + map its PT_INTERP dynamic linker at DYN_INTERP_BASE,
  * build the SysV/auxv stack, and report the start PC (the linker's entry) + SP.
@@ -378,58 +436,47 @@ static int load_dynamic(const void *image,
 		elf64_load_info_t ii;
 		char *ibuf;
 		int isz;
+		int cached;
 
-		kprintf("dyn: interp = %s\n", interp);
-		ibuf = read_elf_file(interp, &isz);
-		if (ibuf == NULL)
+		/* Reuse the cached interpreter image if this is the same linker; otherwise
+		 * read it and keep it for next time (see g_interp_buf). */
+		cached = (g_interp_buf != NULL && strcmp(interp, g_interp_path) == 0);
+		if (cached)
 		{
-			kprintf("dyn: cannot load interp %s\n", interp);
-			return (-1);
+			ibuf = g_interp_buf;
+			isz = g_interp_sz;
+		}
+		else
+		{
+			ibuf = read_elf_file(interp, &isz);
+			if (ibuf == NULL)
+			{
+				kprintf("dyn: cannot load interp %s\n", interp);
+				return (-1);
+			}
 		}
 		interp_base = DYN_INTERP_BASE;
 		if (elf64_load_at(ibuf, l1, interp_base, &ii) != 0)
 		{
-			kfree(ibuf);
+			if (!cached)
+				kfree(ibuf);
 			return (-1);
 		}
-		kfree(ibuf);
+		if (!cached)
+		{
+			/* Install into the cache (don't free); drop a previous, different one. */
+			if (g_interp_buf != NULL)
+				kfree(g_interp_buf);
+			g_interp_buf = ibuf;
+			g_interp_sz = isz;
+			strncpy(g_interp_path, interp, sizeof(g_interp_path) - 1);
+			g_interp_path[sizeof(g_interp_path) - 1] = '\0';
+		}
 		start_entry = ii.entry; /* enter the dynamic linker, not the main exe */
 	}
 
-	/* Allocate the whole stack as one *contiguous* run of frames.  The argv/env/auxv
-	 * vector is laid down from the top descending; contiguous frames keep both the
-	 * (identity-mapped) kernel view and the user VA linear, so the vector can span
-	 * multiple pages (the pointer math in build_dyn_stack stays valid across page
-	 * boundaries) instead of being capped at the single top page.  A contiguous-alloc
-	 * failure fails the exec cleanly rather than corrupting. */
-	{
-		uintptr_t stack_base;
-		int i;
-
-		stack_base = vmm_find_free_pages_contig(DYN_STACK_PAGES, sysID);
-		if (stack_base == 0)
-			return (-1);
-		memset((void *)stack_base, 0, (size_t)DYN_STACK_PAGES * PAGE_SIZE);
-		for (i = 0; i < DYN_STACK_PAGES; i++)
-			pmap_map_user_page(l1,
-			                   DYN_STACK_VA + (u_int64_t)i * PAGE_SIZE,
-			                   (u_int64_t)(stack_base + (uintptr_t)i * PAGE_SIZE),
-			                   0);
-
-		/* build_dyn_stack writes top-down from the topmost page.  Reserve the lower
-		 * half for runtime growth; the argv/env/auxv vector may use the top half. */
-		*out_usp = build_dyn_stack(stack_base + (uintptr_t)(DYN_STACK_PAGES - 1) * PAGE_SIZE,
-		                           DYN_STACK_TOP - PAGE_SIZE,
-		                           argv,
-		                           argc,
-		                           envp,
-		                           envc,
-		                           &mi,
-		                           interp_base,
-		                           (u_int64_t)(DYN_STACK_PAGES / 2) * PAGE_SIZE);
-		if (*out_usp == 0)
-			return (-1);
-	}
+	if (build_user_stack(l1, argv, argc, envp, envc, &mi, interp_base, out_usp) != 0)
+		return (-1);
 
 	*out_entry = start_entry;
 	return (0);
@@ -578,18 +625,12 @@ static int copy_user_strvec(char *const *uvec, char **kvec, int max)
  */
 int aarch64_exec_replace(const char *path, char *const *uargv, char *const *uenvp)
 {
-	char *buf;
-	int sz, argc, envc, i;
-	u_int64_t *l1, entry, usp, kstack_top, old_ttbr0;
+	int argc, envc, i, dr;
+	u_int64_t *l1, entry = 0, usp = 0, kstack_top, old_ttbr0;
 	char namebuf[256];
 	char *kargv[MAXARG], *kenvp[MAXARG];
-
-	buf = read_elf_file(path, &sz);
-	if (buf == NULL)
-	{
-		kprintf("execve: %s not loadable\n", path);
-		return (-1);
-	}
+	elf64_load_info_t info;
+	vm_map_t newmap = VM_MAP_INIT;
 
 	/* Copy name + argv + envp out of the old address space now — they are user
 	 * pointers there and the old AS is unmapped the instant we switch TTBR0. */
@@ -605,17 +646,57 @@ int aarch64_exec_replace(const char *path, char *const *uargv, char *const *uenv
 
 	/* Task name (basename of path) + cmdline (argv joined) — MI helper shared
 	 * with i386 sys_exec.  Done here while kargv[] is still live (it is freed
-	 * below once load_dynamic has copied it onto the new user stack). */
+	 * below once the loader has copied it onto the new user stack). */
 	exec_set_name_cmdline(_current, namebuf, kargv, argc);
 
 	l1 = pmap_create_user_space();
-	if (load_dynamic(buf, l1, kargv, argc, kenvp, envc, &entry, &usp) != 0)
+
+	/* Build the new image into l1 + a private VMA tree (newmap); _current->vm_map is
+	 * swapped to it only at the point of no return below, so any load failure here
+	 * leaves the old image intact.  A static ET_EXEC is demand-paged — only the
+	 * touched pages ever load — while a dynamic image (PT_INTERP / PIE) falls back to
+	 * the eager loader, which reads the whole file. */
+	/* Demand paging is gated OFF until the higher-half migration frees TTBR0 for
+	 * static binaries (docs/design/aarch64-higher-half-plan.md) — until then no
+	 * static binary can run anyway, so skip the demand pre-check (an extra open +
+	 * header read per exec) and use the eager loader for every image. */
+	dr = 1; /* force eager; flip back to elf64_load_demand(path,l1,&newmap,&info) post-higher-half */
+	(void)info;
+	if (dr == 0)
 	{
+		if (build_user_stack(l1, kargv, argc, kenvp, envc, &info, 0, &usp) != 0)
+		{
+			vm_map_free(&newmap);
+			kprintf("execve: %s stack setup failed\n", path);
+			return (-1);
+		}
+		entry = info.entry;
+	}
+	else if (dr == 1)
+	{
+		char *buf;
+		int sz;
+
+		buf = read_elf_file(path, &sz);
+		if (buf == NULL)
+		{
+			kprintf("execve: %s not loadable\n", path);
+			return (-1);
+		}
+		if (load_dynamic(buf, l1, kargv, argc, kenvp, envc, &entry, &usp) != 0)
+		{
+			kfree(buf);
+			kprintf("execve: %s failed to load\n", path);
+			return (-1);
+		}
 		kfree(buf);
-		kprintf("execve: %s failed to load\n", path);
+	}
+	else
+	{
+		vm_map_free(&newmap);
+		kprintf("execve: %s not loadable\n", path);
 		return (-1);
 	}
-	kfree(buf);
 	/* The argv/envp strings are now copied onto the new user stack; free the
 	 * kernel temporaries (but not namebuf, which is on our stack). */
 	for (i = 0; i < argc; i++)
@@ -632,6 +713,10 @@ int aarch64_exec_replace(const char *path, char *const *uargv, char *const *uenv
 	_current->md.md_usp = usp;
 	_current->md.md_mmap_next = 0; /* fresh mmap/brk regions for the new image */
 	_current->md.md_brk = 0;
+	/* Install the new image's VMA tree (demand-fault backing), releasing the old
+	 * image's VMAs + their backing file fds.  Empty for an eager-loaded image. */
+	vm_map_free(&_current->vm_map);
+	_current->vm_map = newmap;
 	pmap_switch(l1);
 
 	/* Reclaim the replaced image's user pages now that we run on the new TTBR0

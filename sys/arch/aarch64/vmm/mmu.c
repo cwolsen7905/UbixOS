@@ -16,8 +16,13 @@
 
 #define MMU_1GB (1UL << 30)
 
+/* PHYSMAP_BASE (the TTBR1 physmap base / VMA-LMA delta) comes from bringup.h. */
+
 /* Level-1 table: 512 entries, each a 1 GB block.  4 KB aligned (one page). */
 static u_int64_t l1_table[512] __attribute__((aligned(4096)));
+
+/* TTBR1 physmap L1: the same 1 GB identity blocks, reached at PHYSMAP_BASE. */
+static u_int64_t physmap_l1[512] __attribute__((aligned(4096)));
 
 /**
  * The kernel's identity L1 root.  New address spaces (pmap_create_user_space,
@@ -61,19 +66,26 @@ static void mmu_program_regs(void)
 	__asm__ volatile("msr mair_el1, %0" : : "r"(mair));
 
 	/*
-	 * TCR_EL1: T0SZ=25 (39-bit VA → start at level 1), TG0=4KB, inner-shareable,
-	 * WB cacheable table walks, EPD1=1 (TTBR1 unused for now), IPS=40-bit PA.
+	 * TCR_EL1: 39-bit VAs both halves (T0SZ=T1SZ=25, level-1 start), 4 KB granule
+	 * (TG0=0b00, TG1=0b10), inner-shareable WB cacheable table walks, IPS=40-bit PA.
+	 * TTBR1 walks are ENABLED (EPD1=0) — the kernel physmap at PHYSMAP_BASE.  Higher-
+	 * half Phase 1: TTBR0 low identity stays up too, so behaviour is unchanged.
 	 */
-	u_int64_t tcr = (25UL << 0)    /* T0SZ */
+	u_int64_t tcr = (25UL << 0)    /* T0SZ  = 39-bit (TTBR0, user/low) */
 	                | (1UL << 8)   /* IRGN0 = WB */
 	                | (1UL << 10)  /* ORGN0 = WB */
 	                | (3UL << 12)  /* SH0   = inner */
 	                | (0UL << 14)  /* TG0   = 4KB */
-	                | (1UL << 23)  /* EPD1  = disable TTBR1 walks */
+	                | (25UL << 16) /* T1SZ  = 39-bit (TTBR1, kernel physmap) */
+	                | (1UL << 24)  /* IRGN1 = WB */
+	                | (1UL << 26)  /* ORGN1 = WB */
+	                | (3UL << 28)  /* SH1   = inner */
+	                | (2UL << 30)  /* TG1   = 4KB */
 	                | (2UL << 32); /* IPS   = 40-bit */
 	__asm__ volatile("msr tcr_el1, %0" : : "r"(tcr));
 
 	__asm__ volatile("msr ttbr0_el1, %0" : : "r"((u_int64_t)(uintptr_t)l1_table));
+	__asm__ volatile("msr ttbr1_el1, %0" : : "r"((u_int64_t)(uintptr_t)physmap_l1));
 
 	__asm__ volatile("isb");
 	__asm__ volatile("tlbi vmalle1; dsb nsh; isb");
@@ -107,6 +119,7 @@ void aarch64_mmu_init(void)
 			attr = DESC_ATTR(ATTR_NORMAL_IDX) | DESC_SH_INNER; /* RAM */
 
 		l1_table[i] = pa | attr | DESC_AF | DESC_BLOCK;
+		physmap_l1[i] = pa | attr | DESC_AF | DESC_BLOCK; /* same blocks, reached at PHYSMAP_BASE */
 	}
 
 	mmu_program_regs();
@@ -119,4 +132,21 @@ void aarch64_mmu_init(void)
 void aarch64_mmu_enable_secondary(void)
 {
 	mmu_program_regs();
+}
+
+/**
+ * Higher-half Phase 1 sanity check: confirm the TTBR1 physmap aliases the low
+ * identity.  Reads a known physical location (the kernel base) through its low VA
+ * (== phys) and through PHYSMAP_BASE + phys and reports whether they agree.
+ * Temporary scaffolding — removed once the kernel runs from the physmap.
+ */
+void aarch64_physmap_verify(void)
+{
+	volatile u_int32_t *lo = (volatile u_int32_t *)(uintptr_t)0x40200000UL;
+	volatile u_int32_t *hi = (volatile u_int32_t *)(PHYSMAP_BASE + 0x40200000UL);
+
+	kprintf("physmap: lo[0x40200000]=0x%X hi[PHYSMAP_BASE+0x40200000]=0x%X -> %s\n",
+	        *lo,
+	        *hi,
+	        (*lo == *hi) ? "MATCH" : "MISMATCH");
 }

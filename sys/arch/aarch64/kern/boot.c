@@ -140,8 +140,11 @@ void kmain_aarch64(u_int64_t dtb_phys)
 	aarch64_vbar_init();
 	kprintf("EL1 exception vectors installed (VBAR_EL1).\n");
 
-	aarch64_mmu_init();
-	kprintf("MMU enabled: TTBR0 identity map (39-bit VA), caches on.\n");
+	/* The MMU (TTBR0 identity + TTBR1 physmap) was enabled in start.S before this
+	 * C bring-up so the kernel can execute from the high half; kmain runs with it
+	 * already on (higher-half migration, docs/design/aarch64-higher-half-plan.md). */
+	kprintf("MMU active: TTBR0 identity + TTBR1 physmap (39-bit VAs), caches on.\n");
+	aarch64_physmap_verify(); /* confirm the TTBR1 physmap aliases the low identity */
 
 	/* Core init order (the embryonic kmain): size RAM from the DTB, then the
 	 * physical allocator, then the vitals node (kmalloc'd, so the allocator must
