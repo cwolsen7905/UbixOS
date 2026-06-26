@@ -40,6 +40,12 @@
 
 static u_int32_t g_free_pages = 0;
 static struct spinLock g_vmm_spin_lock = SPIN_LOCK_INITIALIZER;
+/* Rotating cursor: vmm_find_free_page resumes the bitmap scan here instead of
+ * restarting from 0 every call.  Allocations are mostly sequential, so this turns
+ * an O(numPages)-per-page scan into amortized O(1) — without it a large image
+ * (a ~100MB clang = ~25000 pages) takes O(n*numPages) to load and appears to hang.
+ * Freed pages below the cursor are still found via the wrap-around scan. */
+static u_int32_t g_vmm_free_hint = 0;
 
 u_int32_t numPages = 0;
 
@@ -142,8 +148,12 @@ uintptr_t vmm_find_free_page(pidType pid)
 retry:
 	spinLock(&g_vmm_spin_lock);
 
-	for (i = 0; i < numPages; i++)
+	/* Circular scan starting at the rotating cursor (see g_vmm_free_hint). */
+	for (u_int32_t scanned = 0; scanned < numPages; scanned++)
 	{
+		i = g_vmm_free_hint + scanned;
+		if (i >= numPages)
+			i -= numPages;
 
 		/*
 		 * If We Found A Free Page Set It To Not Available After That Set Its Own
@@ -154,6 +164,7 @@ retry:
 			vmmMemoryMap[i].status = memNotavail;
 			vmmMemoryMap[i].pid = pid;
 			g_free_pages--;
+			g_vmm_free_hint = (i + 1 < numPages) ? (i + 1) : 0;
 			if (systemVitals)
 			{
 				systemVitals->freePages = g_free_pages;

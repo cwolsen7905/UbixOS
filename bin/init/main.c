@@ -66,11 +66,22 @@ static char *envp_login[6] = {
  */
 static const char *console_primary(void)
 {
-	FILE *f = fopen(CONSOLE_DESKTOP, "r");
-	if (f != NULL)
+	int tries;
+
+	/* The desktop image stages /bin/views.  A single fopen can transiently miss it
+	 * when the filesystem read loses the virtio-blk SMP race (the same race behind
+	 * the intermittent "failed-first-login"), which would wrongly drop a desktop
+	 * image to the text console.  Retry briefly so one flaky read doesn't cost the
+	 * whole graphical session. */
+	for (tries = 0; tries < 20; tries++)
 	{
-		fclose(f);
-		return (CONSOLE_DESKTOP);
+		FILE *f = fopen(CONSOLE_DESKTOP, "r");
+		if (f != NULL)
+		{
+			fclose(f);
+			return (CONSOLE_DESKTOP);
+		}
+		usleep(50000); /* 50 ms — let the FS settle, then retry */
 	}
 	return (CONSOLE_BASE);
 }

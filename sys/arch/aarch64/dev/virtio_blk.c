@@ -26,6 +26,7 @@
 #include <vmm/paging.h>
 #include <lib/kmalloc.h>
 #include <ubixos/spinlock.h>
+#include <ubixos/sched.h> /* sched_yield — cooperative wait during disk I/O */
 #include <string.h>
 
 /* QEMU `virt` virtio-mmio window: 32 slots of 0x200 bytes at 0x0a000000. */
@@ -120,6 +121,15 @@ static struct virtq_avail *g_avail;  /* available ring */
 static struct virtq_used *g_used;    /* used ring */
 static struct virtio_blk_req *g_hdr; /* request header (DMA) */
 static u_int8_t *g_data;             /* 512-byte data bounce buffer (DMA) */
+
+/* Batched-read bounce buffer: virtio-blk reads `len/512` sectors in ONE request,
+ * so a multi-sector read needs one notify+poll instead of one per sector.  The
+ * old per-sector loop did a cooperative sched_yield per 512 bytes — ~2000 of them
+ * for a 1 MB file — which dominated boot.  64 KB (128 sectors) of contiguous DMA
+ * memory lets a big read complete in count/128 round-trips. */
+#define BLK_BATCH_SECS 128
+#define BLK_BATCH_PAGES ((BLK_BATCH_SECS * 512) / PAGE_SIZE)
+static u_int8_t *g_batch;
 static volatile u_int8_t *g_status;  /* 1-byte status (DMA) */
 static u_int16_t g_last_used;        /* last consumed used-ring index */
 static int g_ready;                  /* non-zero once attached */
@@ -178,8 +188,10 @@ static void *virtio_blk_device_find(int major, int minor)
 }
 
 /**
- * Read @count sectors starting at @lba into @buf via virtio-blk, one sector per
- * request (polling the used ring).  Matches struct ubx_blk_ops::read.
+ * Read @count sectors starting at @lba into @buf via virtio-blk, up to
+ * BLK_BATCH_SECS sectors per request (one notify + one poll per batch, not per
+ * sector — the per-sector cooperative sched_yield dominated boot).  Matches
+ * struct ubx_blk_ops::read.
  *
  * @return 0 on success, -1 on a device error.
  */
@@ -190,20 +202,24 @@ static int virtio_blk_read(struct ubx_device *dev, u_int32_t lba, u_int32_t coun
 		return (-1);
 
 	spinLock(&g_blk_lock);
-	for (u_int32_t i = 0; i < count; i++)
+	for (u_int32_t off = 0; off < count;)
 	{
+		u_int32_t n = count - off;
+		if (n > BLK_BATCH_SECS)
+			n = BLK_BATCH_SECS;
+
 		g_hdr->type = VIRTIO_BLK_T_IN;
 		g_hdr->reserved = 0;
-		g_hdr->sector = (u_int64_t)lba + i;
+		g_hdr->sector = (u_int64_t)lba + off;
 		*g_status = 0xFF;
 
-		/* Three-descriptor chain: header (R) -> data (W) -> status (W). */
+		/* Three-descriptor chain: header (R) -> data (W, n sectors) -> status (W). */
 		g_desc[0].addr = (u_int64_t)(uintptr_t)g_hdr;
 		g_desc[0].len = sizeof(struct virtio_blk_req);
 		g_desc[0].flags = VIRTQ_DESC_F_NEXT;
 		g_desc[0].next = 1;
-		g_desc[1].addr = (u_int64_t)(uintptr_t)g_data;
-		g_desc[1].len = 512;
+		g_desc[1].addr = (u_int64_t)(uintptr_t)g_batch;
+		g_desc[1].len = n * 512;
 		g_desc[1].flags = VIRTQ_DESC_F_NEXT | VIRTQ_DESC_F_WRITE;
 		g_desc[1].next = 2;
 		g_desc[2].addr = (u_int64_t)(uintptr_t)g_status;
@@ -218,7 +234,12 @@ static int virtio_blk_read(struct ubx_device *dev, u_int32_t lba, u_int32_t coun
 		mmio_wr(VMMIO_QUEUE_NOTIFY, 0);
 
 		while (g_used->idx == g_last_used)
-			dsb(); /* poll for completion */
+		{
+			dsb();
+			sched_yield(); /* cooperative wait — don't hard-spin the core through disk
+			                * I/O (was a full freeze per read/write on this non-
+			                * preemptible kernel).  No-ops before the scheduler is up. */
+		}
 		g_last_used++;
 		dsb();
 
@@ -227,7 +248,8 @@ static int virtio_blk_read(struct ubx_device *dev, u_int32_t lba, u_int32_t coun
 			spinUnlock(&g_blk_lock);
 			return (-1);
 		}
-		memcpy((u_int8_t *)buf + (u_int64_t)i * 512, g_data, 512);
+		memcpy((u_int8_t *)buf + (u_int64_t)off * 512, g_batch, (u_int64_t)n * 512);
+		off += n;
 	}
 	spinUnlock(&g_blk_lock);
 	return (0);
@@ -280,7 +302,12 @@ static int virtio_blk_write(struct ubx_device *dev, u_int32_t lba, u_int32_t cou
 		mmio_wr(VMMIO_QUEUE_NOTIFY, 0);
 
 		while (g_used->idx == g_last_used)
-			dsb(); /* poll for completion */
+		{
+			dsb();
+			sched_yield(); /* cooperative wait — don't hard-spin the core through disk
+			                * I/O (was a full freeze per read/write on this non-
+			                * preemptible kernel).  No-ops before the scheduler is up. */
+		}
 		g_last_used++;
 		dsb();
 
@@ -346,6 +373,10 @@ static int virtio_blk_setup_queue(void)
 	g_hdr = (struct virtio_blk_req *)(iopage + 0);
 	g_data = (u_int8_t *)(iopage + 64);
 	g_status = (volatile u_int8_t *)(iopage + 64 + 512);
+	/* Contiguous 64 KB DMA bounce for batched multi-sector reads. */
+	g_batch = (u_int8_t *)(uintptr_t)vmm_find_free_pages_contig(BLK_BATCH_PAGES, sysID);
+	if (g_batch == 0)
+		return (-1);
 	g_last_used = 0;
 
 	mmio_wr(VMMIO_QUEUE_DESC_LOW, (u_int32_t)(uintptr_t)g_desc);

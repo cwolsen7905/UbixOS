@@ -137,7 +137,12 @@ typedef __time_t time_t;
  * 0x2_00000000 user VA showed as 0x0) — a kernel-wide debug-output bug. */
 typedef __uint64_t uintmax_t;
 typedef __int64_t intmax_t;
-typedef int32_t ptrdiff_t;
+/* The compiler's pointer-difference type — 64-bit on LP64 (aarch64/x86_64),
+ * 32-bit on ILP32 (i386).  Was hard-coded int32_t, which truncated any 64-bit
+ * pointer cast through ptrdiff_t (e.g. lwIP's LWIP_CONST_CAST): harmless while
+ * the kernel ran at low VAs that fit in 32 bits, but a high-half kernel VA
+ * (0xFFFFFF80_........) lost its top half. */
+typedef __PTRDIFF_TYPE__ ptrdiff_t;
 typedef __uintptr_t uintptr_t;
 
 #define __ULONG_MAX     0xffffffffUL
