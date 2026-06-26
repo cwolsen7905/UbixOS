@@ -32,6 +32,15 @@ static struct timeval starttime;
 static struct spinLock netThreadSpinlock = SPIN_LOCK_INITIALIZER;
 static struct sys_thread *threads = 0x0;
 
+/* lwip-audit: pin a wedged tcpip_thread's location (declared early — sys_mbox_post
+ * below references post_blocks).  `g_lwip_mbox_returns` advances only when a fetch
+ * actually dequeues a message, so fetches > returns means tcpip is blocked in the
+ * mbox wait (a lost wakeup with messages sitting in the ring).  `g_lwip_mbox_post_blocks`
+ * counts a sys_mbox_post that had to wait for ring space — tcpip blocking while
+ * delivering into a full recv/accept mbox.  Both read via /proc/lwip. */
+volatile u_int32_t g_lwip_mbox_returns = 0;
+volatile u_int32_t g_lwip_mbox_post_blocks = 0;
+
 static u_int32_t cond_wait(ubthread_cond_t *cond, ubthread_mutex_t *mutex, u_int32_t timeout);
 static void sys_sem_free_internal(struct sys_sem *sem);
 
@@ -233,6 +242,7 @@ void sys_mbox_post(struct sys_mbox **mb, void *msg) {
 
   if ((mbox->tail - mbox->head) >= SYS_MBOX_SIZE) {
     mbox->wait_send++;
+    g_lwip_mbox_post_blocks++;
     do {
       sys_sem_signal(&mbox->lock);
       sys_arch_sem_wait(&mbox->empty, 0);
@@ -342,6 +352,7 @@ u_int32_t sys_arch_mbox_fetch(struct sys_mbox **mb, void **msg, u_int32_t timeou
   }
 
   mbox->head++;
+  g_lwip_mbox_returns++;
 
   if (mbox->wait_send) {
     sys_sem_signal(&mbox->empty);
@@ -385,6 +396,7 @@ int lwip_stats_format(char *buf, int bufsz) {
            (nif->flags & NETIF_FLAG_LINK_UP) ? " link-up" : "");
   }
   LWSNAP("tcpip_mbox_fetches: %u\n", g_lwip_mbox_fetches);
+  LWSNAP("tcpip_mbox_returns: %u  post_blocks: %u\n", g_lwip_mbox_returns, g_lwip_mbox_post_blocks);
 #if LINK_STATS
   LWSNAP("link: recv=%u xmit=%u drop=%u memerr=%u lenerr=%u err=%u\n", (u_int32_t)lwip_stats.link.recv,
          (u_int32_t)lwip_stats.link.xmit, (u_int32_t)lwip_stats.link.drop, (u_int32_t)lwip_stats.link.memerr,
