@@ -12,8 +12,18 @@ both arches and (b) gives SMP **preempt-disabling critical sections**. Today:
 
 | Arch | EL1/ring-0 preemption | Lock |
 |---|---|---|
-| x86_64 | preemptible (unconditional `sti` ends a dispatch) — uniprocessor-correct | `spinLock()` **yields** → deadlock-prone under true SMP |
+| x86_64 | **non-preemptible** (tick preempts ring-3 only; in-kernel runs to a voluntary yield — `idt.c:160` explicitly mirrors aarch64) | `spinLock()` **yields** → deadlock-prone under true SMP |
 | aarch64 | **non-preemptible** (EL1 tick only runs callouts; cooperative) | same yielding `spinLock()` |
+
+> **Correction (2026-06-25):** both 64-bit arches are **symmetric** — ring-3/EL0
+> preemption only, non-preemptive in kernel. (The "i386 is preemptible via `sti`"
+> case the smp-plan describes is i386, frozen on `releng/2`.) Consequence for the
+> step order below: "gate the tick on `preempt_count`" is **not** a standalone
+> step — there is no in-kernel reschedule to gate yet. The gate is inseparable
+> from *enabling* in-kernel preemption, and enabling it is unsafe without the
+> true spinlock already protecting critical sections. So the real order is:
+> **true spinlock first (steps 2–3), then enable in-kernel preemption (step 4),
+> with the `preempt_count` gate folded into that enable.**
 
 Target: a timer tick reschedules **iff `preempt_count == 0`**, and a held lock
 raises `preempt_count` — so "may this tick preempt?" and "is this critical
