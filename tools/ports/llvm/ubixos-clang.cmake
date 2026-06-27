@@ -62,7 +62,12 @@ set(CMAKE_CXX_FLAGS_INIT "-nostdlibinc -nostdinc++ -isystem ${_rt}/include/c++/v
 #   libs + crtn go AFTER the objects (CMAKE_CXX_STANDARD_LIBRARIES).
 # Empty stub archives satisfy LLVM's explicit -lm/-lrt/-ldl/-lpthread/... — musl
 # folds all of those into libc.a, so the separate libs don't exist (see build.sh).
-set(_gcclib "/opt/homebrew/opt/aarch64-elf-gcc/lib/gcc/aarch64-elf/16.1.0")
+# Cross-gcc libgcc for the compiler builtins (__udivti3, the 128-bit ops, …),
+# arch-derived from UBIXOS_TARGET so an x86_64 build does not pull aarch64's
+# libgcc (incompatible object format).  Glob the versioned dir so a brew
+# formula bump doesn't break the path.
+file(GLOB _gcclib_dirs "/opt/homebrew/opt/${UBIXOS_TARGET}-elf-gcc/lib/gcc/${UBIXOS_TARGET}-elf/*")
+list(GET _gcclib_dirs 0 _gcclib)
 set(_stub   "${UBIXOS_SRCTOP}/build/ports/llvm-18.1.8/musl-stublibs")
 set(CMAKE_EXE_LINKER_FLAGS_INIT "-nostdlib -static -fuse-ld=lld ${_build}/obj/musl/lib/crt1.o ${_build}/obj/musl/lib/crti.o")
 set(CMAKE_CXX_STANDARD_LIBRARIES "-L${_rt}/lib -L${_build}/lib -L${_gcclib} -L${_stub} -Wl,--start-group -lc++ -lc++abi -lunwind -lc -lgcc -Wl,--end-group ${_build}/obj/musl/lib/crtn.o")
