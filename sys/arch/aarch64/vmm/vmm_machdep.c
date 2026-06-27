@@ -24,9 +24,9 @@
 #include "bringup.h"
 #include <vmm/vmm.h>
 #include <vmm/paging.h>
-#include <lib/kmalloc.h>      /* sysID */
-#include <string.h>           /* memset */
-#include <ubixos/cpu_enum.h>  /* cpu_enum_add (smp-plan Phase 1) */
+#include <lib/kmalloc.h>     /* sysID */
+#include <string.h>          /* memset */
+#include <ubixos/cpu_enum.h> /* cpu_enum_add (smp-plan Phase 1) */
 
 /* QEMU `virt` lays physical RAM at 0x40000000.  The size is whatever QEMU was
  * given with -m; aarch64_probe_memory() reads the real figure from the DTB
@@ -271,8 +271,8 @@ void aarch64_enum_cpus(void)
 	u_int32_t totalsize, off_struct, size_struct, off_strings;
 	u_int64_t boot_hwid;
 	int depth = 0;
-	int cpus_depth = -1; /* depth of /cpus, -1 = not inside it */
-	int in_cpu = 0;      /* inside a child cpu node */
+	int cpus_depth = -1;      /* depth of /cpus, -1 = not inside it */
+	int in_cpu = 0;           /* inside a child cpu node */
 	u_int32_t addr_cells = 1; /* /cpus #address-cells (ARM/QEMU virt: 1) */
 	/* Accumulators for the cpu node currently being walked. */
 	u_int64_t cur_hwid = 0;
@@ -476,12 +476,17 @@ int vmm_mem_map_init(void)
 void *vmm_get_free_malloc_page(u_int16_t count)
 {
 	uintptr_t base = vmm_find_free_pages_contig(count, sysID);
+	void *va;
 
 	if (base == 0)
 		return NULL;
 
-	memset((void *)base, 0, (size_t)count * PAGE_SIZE);
-	return (void *)base;
+	/* Hand out a physmap VA (Convention B): kmalloc'd memory then lives in the
+	 * TTBR1 physmap and stays reachable once TTBR0 is user-only (Phase 4).
+	 * kmalloc never returns these pages to the allocator, so no reverse map. */
+	va = (void *)(uintptr_t)AARCH64_VIRT_OF(base);
+	memset(va, 0, (size_t)count * PAGE_SIZE);
+	return va;
 }
 
 /**
