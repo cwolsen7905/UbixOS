@@ -205,12 +205,12 @@ static void setup_queue(u_int32_t qsel, void *desc, void *avail, void *used)
 	if (mmio_rd(VMMIO_QUEUE_NUM_MAX) < QSIZE)
 		kprintf("virtio-snd: queue %u max < %u\n", qsel, QSIZE);
 	mmio_wr(VMMIO_QUEUE_NUM, QSIZE);
-	mmio_wr(VMMIO_QUEUE_DESC_LOW, (u_int32_t)(uintptr_t)desc);
-	mmio_wr(VMMIO_QUEUE_DESC_HIGH, (u_int32_t)((u_int64_t)(uintptr_t)desc >> 32));
-	mmio_wr(VMMIO_QUEUE_DRIVER_LOW, (u_int32_t)(uintptr_t)avail);
-	mmio_wr(VMMIO_QUEUE_DRIVER_HIGH, (u_int32_t)((u_int64_t)(uintptr_t)avail >> 32));
-	mmio_wr(VMMIO_QUEUE_DEVICE_LOW, (u_int32_t)(uintptr_t)used);
-	mmio_wr(VMMIO_QUEUE_DEVICE_HIGH, (u_int32_t)((u_int64_t)(uintptr_t)used >> 32));
+	mmio_wr(VMMIO_QUEUE_DESC_LOW, (u_int32_t)AARCH64_PHYS_OF((uintptr_t)desc));
+	mmio_wr(VMMIO_QUEUE_DESC_HIGH, (u_int32_t)(AARCH64_PHYS_OF((uintptr_t)desc) >> 32));
+	mmio_wr(VMMIO_QUEUE_DRIVER_LOW, (u_int32_t)AARCH64_PHYS_OF((uintptr_t)avail));
+	mmio_wr(VMMIO_QUEUE_DRIVER_HIGH, (u_int32_t)(AARCH64_PHYS_OF((uintptr_t)avail) >> 32));
+	mmio_wr(VMMIO_QUEUE_DEVICE_LOW, (u_int32_t)AARCH64_PHYS_OF((uintptr_t)used));
+	mmio_wr(VMMIO_QUEUE_DEVICE_HIGH, (u_int32_t)(AARCH64_PHYS_OF((uintptr_t)used) >> 32));
 	dsb();
 	mmio_wr(VMMIO_QUEUE_READY, 1);
 	dsb();
@@ -228,11 +228,11 @@ static u_int32_t snd_ctl(u_int32_t reqlen, u_int32_t resplen)
 	struct virtio_snd_hdr *resp = (struct virtio_snd_hdr *)g_resp;
 	u_int16_t head = g_cq_avail->idx % QSIZE;
 
-	g_cq_desc[0].addr = (u_int64_t)(uintptr_t)g_cmd;
+	g_cq_desc[0].addr = AARCH64_PHYS_OF((uintptr_t)g_cmd);
 	g_cq_desc[0].len = reqlen;
 	g_cq_desc[0].flags = VIRTQ_DESC_F_NEXT;
 	g_cq_desc[0].next = 1;
-	g_cq_desc[1].addr = (u_int64_t)(uintptr_t)g_resp;
+	g_cq_desc[1].addr = AARCH64_PHYS_OF((uintptr_t)g_resp);
 	g_cq_desc[1].len = resplen;
 	g_cq_desc[1].flags = VIRTQ_DESC_F_WRITE;
 	g_cq_desc[1].next = 0;
@@ -313,27 +313,30 @@ static int snd_init_device(void)
 	hdrpage = vmm_find_free_page(sysID); /* xfer + status headers */
 	if (cqpage == 0 || iopage == 0 || txpage == 0 || hdrpage == 0)
 		return (-1);
-	memset((void *)cqpage, 0, PAGE_SIZE);
-	memset((void *)txpage, 0, PAGE_SIZE);
-	memset((void *)hdrpage, 0, PAGE_SIZE);
+	/* Access all rings + DMA buffers via the physmap (Convention B); setup_queue
+	 * + every descriptor .addr hand the device PHYSICAL addresses (AARCH64_PHYS_OF
+	 * of the access pointer). */
+	memset((void *)(uintptr_t)AARCH64_VIRT_OF(cqpage), 0, PAGE_SIZE);
+	memset((void *)(uintptr_t)AARCH64_VIRT_OF(txpage), 0, PAGE_SIZE);
+	memset((void *)(uintptr_t)AARCH64_VIRT_OF(hdrpage), 0, PAGE_SIZE);
 
-	g_cq_desc = (struct virtq_desc *)(cqpage + 0);
-	g_cq_avail = (struct virtq_avail *)(cqpage + 1280);
-	g_cq_used = (struct virtq_used *)(cqpage + 2048);
-	g_cmd = (u_int8_t *)(iopage + 0);
-	g_resp = (u_int8_t *)(iopage + 2048);
+	g_cq_desc = (struct virtq_desc *)(uintptr_t)AARCH64_VIRT_OF(cqpage + 0);
+	g_cq_avail = (struct virtq_avail *)(uintptr_t)AARCH64_VIRT_OF(cqpage + 1280);
+	g_cq_used = (struct virtq_used *)(uintptr_t)AARCH64_VIRT_OF(cqpage + 2048);
+	g_cmd = (u_int8_t *)(uintptr_t)AARCH64_VIRT_OF(iopage + 0);
+	g_resp = (u_int8_t *)(uintptr_t)AARCH64_VIRT_OF(iopage + 2048);
 	g_cq_last = 0;
 
-	g_tx_desc = (struct virtq_desc *)(txpage + 0);
-	g_tx_avail = (struct virtq_avail *)(txpage + 1280);
-	g_tx_used = (struct virtq_used *)(txpage + 2048);
+	g_tx_desc = (struct virtq_desc *)(uintptr_t)AARCH64_VIRT_OF(txpage + 0);
+	g_tx_avail = (struct virtq_avail *)(uintptr_t)AARCH64_VIRT_OF(txpage + 1280);
+	g_tx_used = (struct virtq_used *)(uintptr_t)AARCH64_VIRT_OF(txpage + 2048);
 	g_tx_last = 0;
-	g_xfer = (struct virtio_snd_pcm_xfer *)(hdrpage + 0);
-	g_pst = (struct virtio_snd_pcm_status *)(hdrpage + 1024);
+	g_xfer = (struct virtio_snd_pcm_xfer *)(uintptr_t)AARCH64_VIRT_OF(hdrpage + 0);
+	g_pst = (struct virtio_snd_pcm_status *)(uintptr_t)AARCH64_VIRT_OF(hdrpage + 1024);
 	for (i = 0; i < N_PERIODS; i++)
 	{
-		g_period[i] = (u_int8_t *)(uintptr_t)vmm_find_free_page(sysID);
-		if (g_period[i] == 0)
+		g_period[i] = (u_int8_t *)(uintptr_t)AARCH64_VIRT_OF(vmm_find_free_page(sysID));
+		if (AARCH64_PHYS_OF((uintptr_t)g_period[i]) == 0)
 			return (-1);
 		g_xfer[i].stream_id = STREAM_ID;
 		g_period_busy[i] = 0;
@@ -422,15 +425,15 @@ static int snd_dev_write(struct ubx_device *dev, const char *buf, int len)
 
 	/* 3-descriptor chain: xfer header (r) -> PCM data (r) -> status (w). */
 	base = period * 3;
-	g_tx_desc[base + 0].addr = (u_int64_t)(uintptr_t)&g_xfer[period];
+	g_tx_desc[base + 0].addr = AARCH64_PHYS_OF((uintptr_t)&g_xfer[period]);
 	g_tx_desc[base + 0].len = sizeof(struct virtio_snd_pcm_xfer);
 	g_tx_desc[base + 0].flags = VIRTQ_DESC_F_NEXT;
 	g_tx_desc[base + 0].next = base + 1;
-	g_tx_desc[base + 1].addr = (u_int64_t)(uintptr_t)g_period[period];
+	g_tx_desc[base + 1].addr = AARCH64_PHYS_OF((uintptr_t)g_period[period]);
 	g_tx_desc[base + 1].len = (u_int32_t)n;
 	g_tx_desc[base + 1].flags = VIRTQ_DESC_F_NEXT;
 	g_tx_desc[base + 1].next = base + 2;
-	g_tx_desc[base + 2].addr = (u_int64_t)(uintptr_t)&g_pst[period];
+	g_tx_desc[base + 2].addr = AARCH64_PHYS_OF((uintptr_t)&g_pst[period]);
 	g_tx_desc[base + 2].len = sizeof(struct virtio_snd_pcm_status);
 	g_tx_desc[base + 2].flags = VIRTQ_DESC_F_WRITE;
 	g_tx_desc[base + 2].next = 0;

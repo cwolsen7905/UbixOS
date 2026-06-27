@@ -26,6 +26,7 @@
 #include <ubixos/tty.h> /* pty_alloc / tty_inject_user / tty_snapshot / tty_resize */
 #include <lib/kprintf.h>
 #include <lib/kconsole.h> /* kconsole_suspend_primary on fb claim */
+#include "bringup.h"      /* AARCH64_PHYS_OF — virtio_gpu_fb is a physmap VA */
 
 /* Per-process anonymous-mmap region base (matches MMAP_BASE in syscall.c); the
  * client's shared window buffers are bump-allocated from the same region. */
@@ -75,7 +76,7 @@ int sys_mapfb(struct thread *td, struct sys_mapfb_args *args)
 		return (-1);
 	}
 
-	pa = (u_int64_t)(uintptr_t)virtio_gpu_fb;
+	pa = (u_int64_t)AARCH64_PHYS_OF((uintptr_t)virtio_gpu_fb); /* fb kernel ptr is a physmap VA */
 	end = pa + (u_int64_t)virtio_gpu_pitch * virtio_gpu_height;
 	/* Wired, not a plain user page: the framebuffer is RAM-backed and owned by the
 	 * GPU, so a fork (the compositor forks vlogin) must NOT copy-on-write it — that
@@ -91,7 +92,7 @@ int sys_mapfb(struct thread *td, struct sys_mapfb_args *args)
 
 	kprintf("sys_mapfb: pid %d mapped fb pa=0x%lx va=0x%lx %ux%u pitch=%u\n",
 	        _current->id,
-	        (u_int64_t)(uintptr_t)virtio_gpu_fb,
+	        (u_int64_t)AARCH64_PHYS_OF((uintptr_t)virtio_gpu_fb),
 	        (u_int64_t)FB_USER_BASE,
 	        virtio_gpu_width,
 	        virtio_gpu_height,

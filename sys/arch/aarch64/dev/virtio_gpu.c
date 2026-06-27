@@ -229,11 +229,11 @@ static u_int32_t gpu_cmd(u_int32_t reqlen, u_int32_t resplen)
 {
 	struct virtio_gpu_ctrl_hdr *resp = (struct virtio_gpu_ctrl_hdr *)g_resp;
 
-	g_desc[0].addr = (u_int64_t)(uintptr_t)g_cmd;
+	g_desc[0].addr = AARCH64_PHYS_OF((uintptr_t)g_cmd);
 	g_desc[0].len = reqlen;
 	g_desc[0].flags = VIRTQ_DESC_F_NEXT;
 	g_desc[0].next = 1;
-	g_desc[1].addr = (u_int64_t)(uintptr_t)g_resp;
+	g_desc[1].addr = AARCH64_PHYS_OF((uintptr_t)g_resp);
 	g_desc[1].len = resplen;
 	g_desc[1].flags = VIRTQ_DESC_F_WRITE;
 	g_desc[1].next = 0;
@@ -349,22 +349,24 @@ static int gpu_setup_queue(void)
 	iopage = vmm_find_free_page(sysID);
 	if (qpage == 0 || iopage == 0)
 		return (-1);
-	memset((void *)qpage, 0, PAGE_SIZE);
-	memset((void *)iopage, 0, PAGE_SIZE);
+	/* Access the vring + cmd/resp buffers via the physmap (Convention B); the
+	 * device gets PHYSICAL qpage/iopage in the queue registers + descriptor .addr. */
+	memset((void *)(uintptr_t)AARCH64_VIRT_OF(qpage), 0, PAGE_SIZE);
+	memset((void *)(uintptr_t)AARCH64_VIRT_OF(iopage), 0, PAGE_SIZE);
 
-	g_desc = (struct virtq_desc *)(qpage + 0);
-	g_avail = (struct virtq_avail *)(qpage + 256);
-	g_used = (struct virtq_used *)(qpage + 512);
-	g_cmd = (u_int8_t *)(iopage + 0);
-	g_resp = (u_int8_t *)(iopage + 2048);
+	g_desc = (struct virtq_desc *)(uintptr_t)AARCH64_VIRT_OF(qpage + 0);
+	g_avail = (struct virtq_avail *)(uintptr_t)AARCH64_VIRT_OF(qpage + 256);
+	g_used = (struct virtq_used *)(uintptr_t)AARCH64_VIRT_OF(qpage + 512);
+	g_cmd = (u_int8_t *)(uintptr_t)AARCH64_VIRT_OF(iopage + 0);
+	g_resp = (u_int8_t *)(uintptr_t)AARCH64_VIRT_OF(iopage + 2048);
 	g_last_used = 0;
 
-	mmio_wr(VMMIO_QUEUE_DESC_LOW, (u_int32_t)(uintptr_t)g_desc);
-	mmio_wr(VMMIO_QUEUE_DESC_HIGH, (u_int32_t)((u_int64_t)(uintptr_t)g_desc >> 32));
-	mmio_wr(VMMIO_QUEUE_DRIVER_LOW, (u_int32_t)(uintptr_t)g_avail);
-	mmio_wr(VMMIO_QUEUE_DRIVER_HIGH, (u_int32_t)((u_int64_t)(uintptr_t)g_avail >> 32));
-	mmio_wr(VMMIO_QUEUE_DEVICE_LOW, (u_int32_t)(uintptr_t)g_used);
-	mmio_wr(VMMIO_QUEUE_DEVICE_HIGH, (u_int32_t)((u_int64_t)(uintptr_t)g_used >> 32));
+	mmio_wr(VMMIO_QUEUE_DESC_LOW, (u_int32_t)qpage);
+	mmio_wr(VMMIO_QUEUE_DESC_HIGH, (u_int32_t)((u_int64_t)qpage >> 32));
+	mmio_wr(VMMIO_QUEUE_DRIVER_LOW, (u_int32_t)(qpage + 256));
+	mmio_wr(VMMIO_QUEUE_DRIVER_HIGH, (u_int32_t)((u_int64_t)(qpage + 256) >> 32));
+	mmio_wr(VMMIO_QUEUE_DEVICE_LOW, (u_int32_t)(qpage + 512));
+	mmio_wr(VMMIO_QUEUE_DEVICE_HIGH, (u_int32_t)((u_int64_t)(qpage + 512) >> 32));
 	dsb();
 	mmio_wr(VMMIO_QUEUE_READY, 1);
 	mmio_wr(VMMIO_STATUS, VSTAT_ACKNOWLEDGE | VSTAT_DRIVER | VSTAT_FEATURES_OK | VSTAT_DRIVER_OK);
@@ -411,8 +413,11 @@ static int gpu_setup_display(void)
 		kprintf("virtio-gpu: framebuffer alloc (%u pages) failed\n", fbpages);
 		return (-1);
 	}
-	memset((void *)fbphys, 0, (size_t)fbpages * PAGE_SIZE);
-	virtio_gpu_fb = (u_int8_t *)fbphys;
+	/* fbphys stays physical for the device backing (ATTACH_BACKING below).  The
+	 * kernel reaches the fb (fbcon draws on it, this memset) via the physmap;
+	 * sys_mapfb converts virtio_gpu_fb back to physical to map it into userland. */
+	memset((void *)(uintptr_t)AARCH64_VIRT_OF(fbphys), 0, (size_t)fbpages * PAGE_SIZE);
+	virtio_gpu_fb = (u_int8_t *)(uintptr_t)AARCH64_VIRT_OF(fbphys);
 	virtio_gpu_width = w;
 	virtio_gpu_height = h;
 	virtio_gpu_pitch = w * 4;

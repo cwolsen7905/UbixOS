@@ -131,7 +131,7 @@ static inline void wr(volatile u_int8_t *base, u_int32_t off, u_int32_t val)
  */
 static void ev_post(struct vinput_dev *d, int i)
 {
-	d->desc[i].addr = (u_int64_t)(uintptr_t)&d->ev[i];
+	d->desc[i].addr = AARCH64_PHYS_OF((uintptr_t)&d->ev[i]);
 	d->desc[i].len = sizeof(struct virtio_input_event);
 	d->desc[i].flags = VIRTQ_DESC_F_WRITE;
 	d->desc[i].next = 0;
@@ -212,21 +212,24 @@ static int input_setup(struct vinput_dev *d)
 	evpage = vmm_find_free_page(sysID);
 	if (qpage == 0 || evpage == 0)
 		return (-1);
-	memset((void *)qpage, 0, PAGE_SIZE);
-	memset((void *)evpage, 0, PAGE_SIZE);
+	/* Access the vring + event buffer via the physmap (Convention B); the device
+	 * gets PHYSICAL qpage in the queue registers + AARCH64_PHYS_OF(&d->ev[i]) in
+	 * each descriptor .addr (ev_post). */
+	memset((void *)(uintptr_t)AARCH64_VIRT_OF(qpage), 0, PAGE_SIZE);
+	memset((void *)(uintptr_t)AARCH64_VIRT_OF(evpage), 0, PAGE_SIZE);
 
-	d->desc = (struct virtq_desc *)(qpage + 0);
-	d->avail = (struct virtq_avail *)(qpage + 256);
-	d->used = (struct virtq_used *)(qpage + 512);
-	d->ev = (struct virtio_input_event *)evpage;
+	d->desc = (struct virtq_desc *)(uintptr_t)AARCH64_VIRT_OF(qpage + 0);
+	d->avail = (struct virtq_avail *)(uintptr_t)AARCH64_VIRT_OF(qpage + 256);
+	d->used = (struct virtq_used *)(uintptr_t)AARCH64_VIRT_OF(qpage + 512);
+	d->ev = (struct virtio_input_event *)(uintptr_t)AARCH64_VIRT_OF(evpage);
 	d->last_used = 0;
 
-	wr(d->base, VMMIO_QUEUE_DESC_LOW, (u_int32_t)(uintptr_t)d->desc);
-	wr(d->base, VMMIO_QUEUE_DESC_HIGH, (u_int32_t)((u_int64_t)(uintptr_t)d->desc >> 32));
-	wr(d->base, VMMIO_QUEUE_DRIVER_LOW, (u_int32_t)(uintptr_t)d->avail);
-	wr(d->base, VMMIO_QUEUE_DRIVER_HIGH, (u_int32_t)((u_int64_t)(uintptr_t)d->avail >> 32));
-	wr(d->base, VMMIO_QUEUE_DEVICE_LOW, (u_int32_t)(uintptr_t)d->used);
-	wr(d->base, VMMIO_QUEUE_DEVICE_HIGH, (u_int32_t)((u_int64_t)(uintptr_t)d->used >> 32));
+	wr(d->base, VMMIO_QUEUE_DESC_LOW, (u_int32_t)qpage);
+	wr(d->base, VMMIO_QUEUE_DESC_HIGH, (u_int32_t)((u_int64_t)qpage >> 32));
+	wr(d->base, VMMIO_QUEUE_DRIVER_LOW, (u_int32_t)(qpage + 256));
+	wr(d->base, VMMIO_QUEUE_DRIVER_HIGH, (u_int32_t)((u_int64_t)(qpage + 256) >> 32));
+	wr(d->base, VMMIO_QUEUE_DEVICE_LOW, (u_int32_t)(qpage + 512));
+	wr(d->base, VMMIO_QUEUE_DEVICE_HIGH, (u_int32_t)((u_int64_t)(qpage + 512) >> 32));
 	dsb();
 	wr(d->base, VMMIO_QUEUE_READY, 1);
 	wr(d->base, VMMIO_STATUS, VSTAT_ACKNOWLEDGE | VSTAT_DRIVER | VSTAT_FEATURES_OK | VSTAT_DRIVER_OK);
