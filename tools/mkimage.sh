@@ -117,9 +117,14 @@ STAGE=$(mktemp -d -t ubixstage)
 mkdir -p "${STAGE}"/bin "${STAGE}"/lib "${STAGE}"/sbin \
          "${STAGE}"/usr/bin "${STAGE}"/usr/sbin "${STAGE}"/usr/lib "${STAGE}"/usr/tests \
          "${STAGE}"/etc "${STAGE}"/etc/init.d "${STAGE}"/etc/dropbear \
-         "${STAGE}"/var/log \
+         "${STAGE}"/var/log "${STAGE}"/var/tmp \
+         "${STAGE}"/tmp \
          "${STAGE}"/home/root "${STAGE}"/home/guest \
          "${STAGE}"/home/reddawg "${STAGE}"/home/bsd
+# /tmp (and /var/tmp) are the world-writable scratch dirs tools expect — clang
+# writes its intermediate .o there, and anything not honoring $TMPDIR defaults to
+# /tmp.  Sticky + world-writable (1777) like a normal Unix.
+chmod 1777 "${STAGE}/tmp" "${STAGE}/var/tmp" 2>/dev/null || true
 # Home directories for the /etc/passwd users — a login shell (tcsh) chdirs to
 # $HOME, so these must exist or the ssh session bails ("Failed chdir /home/...").
 # sshd (dropbear) generates + persists its host key into /etc/dropbear on first
@@ -270,6 +275,11 @@ if ( cd tools/ubixfs && bmake ubfs ) >/dev/null 2>&1 && [ -x tools/ubixfs/ubfs ]
 	for _d in "${STAGE}"/*; do
 		[ -d "${_d}" ] && "${UBFS}" cpr "${_d}" "${IMG}@${POOL_OFF}:/$(basename "${_d}")" >/dev/null 2>&1
 	done
+	# Guarantee the world-writable scratch dirs exist even though they are empty
+	# (cpr of an empty staging dir may no-op) — clang writes its intermediate .o to
+	# /tmp (or $TMPDIR), and tools that ignore $TMPDIR default to /tmp.
+	"${UBFS}" mkdir "${IMG}@${POOL_OFF}" /tmp >/dev/null 2>&1 || true
+	"${UBFS}" mkdir "${IMG}@${POOL_OFF}" /var/tmp >/dev/null 2>&1 || true
 	_mib=$(du -m "${STAGE}" 2>/dev/null | tail -1 | cut -f1)
 	echo "mkimage: installed pool root (~${_mib} MiB) -> UbixFS pool / (LBA ${POOL_LBA})"
 	echo "mkimage: done — pool /bin contents:"
