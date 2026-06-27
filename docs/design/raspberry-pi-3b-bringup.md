@@ -133,3 +133,62 @@ raspi3-tutorial, s-matyukevich raspberry-pi-os), the **simplest boot** (firmware
 loads a flat binary — no U-Boot, no Image header), and it **reuses our PL011
 driver**. The cost (custom BCM interrupt controller, spin-table SMP) is well-trodden
 ground with abundant reference code. The OPi/H618 remains the secondary target.
+
+## M1 implementation plan (board abstraction)
+
+From mapping the kernel's aarch64 MD layer (2026-06-27): the **higher-half migration
+is already in the tree** — the kernel runs at a high VA and reaches physical memory
+through a TTBR1 physmap (`PHYSMAP_BASE + phys`), with devices at `PHYSMAP_BASE +
+<hardcoded base>`. That's the foundation. The kernel is otherwise **monolithic /
+QEMU-hardcoded**; the Pi needs a board abstraction.
+
+### Blockers (all currently hardcoded for QEMU `virt`)
+- `sys/compile/ldscript.aarch64`: `KERNEL_PHYS = 0x40200000` — past the Pi's 1 GB
+  top; the Pi kernel must link low (firmware loads at `0x80000`).
+- `sys/arch/aarch64/vmm/vmm_machdep.c`: `AARCH64_RAM_BASE = 0x40000000` — Pi RAM
+  base is `0x0`; `g_ram_top` derives from it.
+- `sys/arch/aarch64/vmm/mmu.c`: physmap maps block 0 (0–1 GB) as **Device**. The Pi
+  has **RAM `0x0–0x3F000000` *and* the peripheral window `0x3F000000`+ in that same
+  1 GB block** → block 0 needs 2 MB granularity (RAM Normal-cacheable, peripherals
+  Device).
+- Device bases hardcoded: PL011 `0x09000000` (`uart.c`), GIC `0x08000000/0x08010000`
+  (`gic.c`), timer = CNTV via GIC INTID 27 (`timer.c`), virtio `0x0A000000`.
+- Kernel entry (`kern/start.S`) assumes **EL1 entry**; the Pi firmware enters at EL2
+  (M0.5 already has the drop to port).
+
+### The abstraction — `struct aarch64_board`
+Selected early in `boot.c` by DTB `/compatible` (`raspberrypi,3-model-b` /
+`brcm,bcm2837` vs QEMU `linux,dummy-virt` vs the H618 string). Holds:
+- **identity:** name, compatible[].
+- **memory:** `ram_base`, `kernel_phys` (LMA), the peripheral window (base/size, for
+  the 2 MB Device mapping).
+- **console:** `uart_base` + `init/putc/getc` (port M0.75's self-init PL011).
+- **intc:** `init / enable_intid / dispatch (ack→route→eoi) / send_resched` — port
+  M0.75's BCM "ARM local" controller as `bcm_intc.c`; QEMU keeps `gic.c`.
+- **timer:** `init` + kind/routing — Pi = CNTP via the local controller (M0.75);
+  QEMU = CNTV via the GIC (INTID 27).
+
+Two instances now (`board_qemu_virt`, `board_rpi3`), H618 a third later.
+
+### Sequencing (keep QEMU **and** x86_64 green at every step)
+1. **Introduce `struct aarch64_board`; refactor the QEMU path behind it** — pure
+   no-behavior-change refactor; verify QEMU still boots (the silent-breakage risk).
+2. **Per-board `KERNEL_PHYS`/`RAM_BASE`** — parameterize the linker script +
+   `vmm_machdep` (a board/build var; Pi → `0x80000`, RAM `0x0`).
+3. **Pi physmap** — 2 MB-granular block 0 (RAM Normal up to the peripheral window,
+   Device above), board-driven.
+4. **EL2→EL1 drop in the kernel entry** (port M0.5), conditional on the entry EL.
+5. **`board_rpi3`** — PL011 console + `bcm_intc` + CNTP-via-local-ctrl timer (all
+   ported from the confirmed M0.75 code) → **kernel boots to the serial console.**
+6. Then **M2** (DTB-driven), **M4** (sdhci + a ubpool partition for `/` — extend
+   `make-rpi3-sd.sh` to mirror `mkimage.sh`'s FAT-boot + ubpool layout), **M5**
+   (init → shell on serial).
+
+### ⚠️ Coordination gate
+Steps 1–4 edit the **same** aarch64 `vmm/kern` files the **higher-half lane has
+uncommitted** right now. Per AGENTS-COORD Rule 3, those can't be refactored while
+they're another lane's live WIP. **M1 execution is gated on the higher-half work
+being committed.** Until then, the new Pi board drivers (`bcm_intc.c`, the PL011
+console, the timer) can be written as *new* files without conflict, but the wiring
+(steps 1–4) waits. The confirmed M0.75 standalone code is the reference for all of
+the device pieces.
