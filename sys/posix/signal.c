@@ -71,6 +71,14 @@
 /* Pending stop signals cleared by SIGCONT. */
 #define SIGPENDSTOP_MASK ((1u << (SIGTSTP - 1)) | (1u << (SIGSTOP - 1)) | (1u << (SIGTTIN - 1)) | (1u << (SIGTTOU - 1)))
 
+/*
+ * Per-delivery signal tracing.  signal_check() runs on every syscall/exception
+ * return, so its trace fires on every SIGCHLD/etc. and floods serial.log.  Off
+ * by default; set g_debug_signals = 1 to re-enable while debugging signals.  The
+ * SIG_DFL-terminate line is always logged (rare and useful).
+ */
+int g_debug_signals = 0x0;
+
 /**
  * signal_post - enqueue a kernel signal for a task
  * @pid: target task ID
@@ -266,12 +274,13 @@ void signal_check(struct trapframe *frame)
 	if (unblocked == 0)
 		return;
 
-	kprintf("signal_check: pid=%d name=%s pending=0x%X mask=0x%X unblocked=0x%X\n",
-	        _current->id,
-	        _current->name,
-	        pending,
-	        td->sigmask.__bits[0],
-	        unblocked);
+	if (g_debug_signals)
+		kprintf("signal_check: pid=%d name=%s pending=0x%X mask=0x%X unblocked=0x%X\n",
+		        _current->id,
+		        _current->name,
+		        pending,
+		        td->sigmask.__bits[0],
+		        unblocked);
 
 	/* Pick the lowest-numbered pending unblocked signal. */
 	for (sig = 1; sig <= 31; sig++)
@@ -290,7 +299,8 @@ void signal_check(struct trapframe *frame)
 			return;
 		}
 
-		kprintf("signal_check: sig=%d handler=0x%X\n", sig, (u_int32_t)(uintptr_t)sa->sa_handler);
+		if (g_debug_signals)
+			kprintf("signal_check: sig=%d handler=0x%X\n", sig, (u_int32_t)(uintptr_t)sa->sa_handler);
 
 		if ((void *)sa->sa_handler == (void *)0x0 /* SIG_DFL */ || sa->sa_handler == NULL)
 		{
@@ -514,11 +524,12 @@ int sys_sigreturn(struct thread *td, struct sys_sigreturn_args *args)
 	struct ubx_sigcontext *scp = args->scp;
 	struct trapframe *frame = td->frame;
 
-	kprintf("sys_sigreturn: pid=%d scp=%p eip=0x%X esp=0x%X\n",
-	        _current->id,
-	        scp,
-	        scp ? scp->sc_eip : 0,
-	        scp ? scp->sc_esp : 0);
+	if (g_debug_signals)
+		kprintf("sys_sigreturn: pid=%d scp=%p eip=0x%X esp=0x%X\n",
+		        _current->id,
+		        scp,
+		        scp ? scp->sc_eip : 0,
+		        scp ? scp->sc_esp : 0);
 
 	if (scp == NULL)
 	{
