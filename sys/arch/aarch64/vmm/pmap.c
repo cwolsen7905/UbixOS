@@ -65,11 +65,12 @@ static u_int64_t *table_next(u_int64_t *table, u_int64_t idx)
 	/* Reuse only an existing table descriptor (type bits == 11).  An invalid
 	 * slot or a 1 GB/2 MB block is replaced by a freshly allocated table. */
 	if ((e & PTE_VALID) != 0 && (e & PTE_TYPE_MASK) == PTE_TABLE)
-		return (u_int64_t *)(uintptr_t)(e & PTE_ADDR_MASK);
+		return (u_int64_t *)(uintptr_t)AARCH64_VIRT_OF(e & PTE_ADDR_MASK);
 
-	u_int64_t *next = (u_int64_t *)(uintptr_t)vmm_find_free_page(sysID);
+	u_int64_t phys = vmm_find_free_page(sysID);
+	u_int64_t *next = (u_int64_t *)(uintptr_t)AARCH64_VIRT_OF(phys);
 	memset(next, 0, PAGE_SIZE);
-	table[idx] = ((u_int64_t)(uintptr_t)next & PTE_ADDR_MASK) | PTE_TABLE;
+	table[idx] = (phys & PTE_ADDR_MASK) | PTE_TABLE;
 	return next;
 }
 
@@ -165,11 +166,11 @@ u_int64_t pmap_extract(u_int64_t *l1, u_int64_t va)
 
 	if ((e & PTE_VALID) == 0 || (e & PTE_TYPE_MASK) != PTE_TABLE)
 		return 0;
-	u_int64_t *l2 = (u_int64_t *)(uintptr_t)(e & PTE_ADDR_MASK);
+	u_int64_t *l2 = (u_int64_t *)(uintptr_t)AARCH64_VIRT_OF(e & PTE_ADDR_MASK);
 	e = l2[L2_IDX(va)];
 	if ((e & PTE_VALID) == 0 || (e & PTE_TYPE_MASK) != PTE_TABLE)
 		return 0;
-	u_int64_t *l3 = (u_int64_t *)(uintptr_t)(e & PTE_ADDR_MASK);
+	u_int64_t *l3 = (u_int64_t *)(uintptr_t)AARCH64_VIRT_OF(e & PTE_ADDR_MASK);
 	e = l3[L3_IDX(va)];
 	if ((e & PTE_VALID) == 0)
 		return 0;
@@ -202,11 +203,12 @@ void md_sync_icache(uintptr_t addr, u_int64_t len)
 	__asm__ volatile("dsb ish; isb");
 }
 
-/** Reach a physical frame as a kernel pointer.  aarch64 identity-maps all RAM in
- * the kernel's low VA window, so the physical address IS a valid kernel pointer. */
+/** Reach a physical frame as a kernel pointer through the TTBR1 physmap
+ * (PHYSMAP_BASE + phys).  Valid regardless of what TTBR0 holds, so kernel phys
+ * access keeps working once TTBR0 carries only user mappings (Phase 4). */
 void *md_phys_to_virt(u_int64_t phys)
 {
-	return (void *)(uintptr_t)phys;
+	return (void *)(uintptr_t)AARCH64_VIRT_OF(phys);
 }
 
 /**
@@ -216,7 +218,7 @@ static u_int64_t *pmap_active_l1(void)
 {
 	u_int64_t ttbr0;
 	__asm__ volatile("mrs %0, ttbr0_el1" : "=r"(ttbr0));
-	return (u_int64_t *)(uintptr_t)(ttbr0 & PTE_ADDR_MASK);
+	return (u_int64_t *)(uintptr_t)AARCH64_VIRT_OF(ttbr0 & PTE_ADDR_MASK);
 }
 
 /**
@@ -231,7 +233,7 @@ static u_int64_t *pmap_active_l1(void)
  */
 u_int64_t *pmap_create_user_space(void)
 {
-	u_int64_t *l1 = (u_int64_t *)(uintptr_t)vmm_find_free_page(sysID);
+	u_int64_t *l1 = (u_int64_t *)(uintptr_t)AARCH64_VIRT_OF(vmm_find_free_page(sysID));
 
 	/* Copy the KERNEL identity L1 (not whatever is active) so this never shares
 	 * another process's user sub-tables — critical for fork correctness. */
@@ -261,13 +263,13 @@ u_int64_t *pmap_fork_copy(u_int64_t *parent)
 	{
 		if ((parent[i1] & PTE_VALID) == 0 || (parent[i1] & PTE_TYPE_MASK) != PTE_TABLE)
 			continue;
-		u_int64_t *l2 = (u_int64_t *)(uintptr_t)(parent[i1] & PTE_ADDR_MASK);
+		u_int64_t *l2 = (u_int64_t *)(uintptr_t)AARCH64_VIRT_OF(parent[i1] & PTE_ADDR_MASK);
 
 		for (i2 = 0; i2 < 512; i2++)
 		{
 			if ((l2[i2] & PTE_VALID) == 0 || (l2[i2] & PTE_TYPE_MASK) != PTE_TABLE)
 				continue;
-			u_int64_t *l3 = (u_int64_t *)(uintptr_t)(l2[i2] & PTE_ADDR_MASK);
+			u_int64_t *l3 = (u_int64_t *)(uintptr_t)AARCH64_VIRT_OF(l2[i2] & PTE_ADDR_MASK);
 
 			for (i3 = 0; i3 < 512; i3++)
 			{
@@ -352,11 +354,11 @@ int pmap_cow_fault(u_int64_t *l1, u_int64_t va, pidType pid)
 
 	if (l1 == 0 || (e & PTE_VALID) == 0 || (e & PTE_TYPE_MASK) != PTE_TABLE)
 		return -1;
-	l2 = (u_int64_t *)(uintptr_t)(e & PTE_ADDR_MASK);
+	l2 = (u_int64_t *)(uintptr_t)AARCH64_VIRT_OF(e & PTE_ADDR_MASK);
 	e = l2[L2_IDX(va)];
 	if ((e & PTE_VALID) == 0 || (e & PTE_TYPE_MASK) != PTE_TABLE)
 		return -1;
-	l3 = (u_int64_t *)(uintptr_t)(e & PTE_ADDR_MASK);
+	l3 = (u_int64_t *)(uintptr_t)AARCH64_VIRT_OF(e & PTE_ADDR_MASK);
 	pte = l3[L3_IDX(va)];
 
 	if ((pte & PTE_VALID) == 0 || (pte & (PTE_COW | PTE_SHARED)) == 0)
@@ -367,7 +369,7 @@ int pmap_cow_fault(u_int64_t *l1, u_int64_t va, pidType pid)
 	if (neu == 0)
 		return -1; /* out of memory → caller terminates the task */
 
-	memcpy((void *)neu, (const void *)old, PAGE_SIZE);
+	memcpy((void *)(uintptr_t)AARCH64_VIRT_OF(neu), (const void *)(uintptr_t)AARCH64_VIRT_OF(old), PAGE_SIZE);
 
 	/* Re-point the PTE at the private copy: same attributes, but writable at EL0
 	 * (clear AP[2]) and no longer shared. */
@@ -412,7 +414,7 @@ void pmap_free_user_space(u_int64_t *l1)
 
 		if ((l1[i1] & PTE_VALID) == 0 || (l1[i1] & PTE_TYPE_MASK) != PTE_TABLE)
 			continue;
-		l2 = (u_int64_t *)(uintptr_t)(l1[i1] & PTE_ADDR_MASK);
+		l2 = (u_int64_t *)(uintptr_t)AARCH64_VIRT_OF(l1[i1] & PTE_ADDR_MASK);
 
 		for (i2 = 0; i2 < 512; i2++)
 		{
@@ -420,7 +422,7 @@ void pmap_free_user_space(u_int64_t *l1)
 
 			if ((l2[i2] & PTE_VALID) == 0 || (l2[i2] & PTE_TYPE_MASK) != PTE_TABLE)
 				continue;
-			l3 = (u_int64_t *)(uintptr_t)(l2[i2] & PTE_ADDR_MASK);
+			l3 = (u_int64_t *)(uintptr_t)AARCH64_VIRT_OF(l2[i2] & PTE_ADDR_MASK);
 
 			for (i3 = 0; i3 < 512; i3++)
 			{
@@ -439,11 +441,11 @@ void pmap_free_user_space(u_int64_t *l1)
 					free_page((uintptr_t)(l3[i3] & PTE_ADDR_MASK));
 			}
 
-			free_page((uintptr_t)l3); /* the L3 table */
+			free_page(AARCH64_PHYS_OF((uintptr_t)l3)); /* the L3 table */
 		}
-		free_page((uintptr_t)l2); /* the L2 table */
+		free_page(AARCH64_PHYS_OF((uintptr_t)l2)); /* the L2 table */
 	}
-	free_page((uintptr_t)l1); /* the top-level L1 copy */
+	free_page(AARCH64_PHYS_OF((uintptr_t)l1)); /* the top-level L1 copy */
 }
 
 /**
@@ -453,7 +455,7 @@ void pmap_switch(u_int64_t *l1)
 {
 	__asm__ volatile("msr ttbr0_el1, %0; isb; tlbi vmalle1; dsb nsh; isb"
 	                 :
-	                 : "r"((u_int64_t)(uintptr_t)l1)
+	                 : "r"((u_int64_t)AARCH64_PHYS_OF((uintptr_t)l1))
 	                 : "memory");
 }
 

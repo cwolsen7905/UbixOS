@@ -45,7 +45,10 @@ void md_new_task(kTask_t *t)
 	/* Inherit the current (kernel) address space by default.  A user process
 	 * overrides md_ttbr0 with its own page-table root at exec time. */
 	__asm__ volatile("mrs %0, ttbr0_el1" : "=r"(ttbr0));
-	t->md.md_ttbr0 = ttbr0 & 0x0000FFFFFFFFF000UL;
+	/* md_ttbr0 is a physmap VA (Convention B): pmap_switch converts it back to the
+	 * physical TTBR0 root via AARCH64_PHYS_OF.  ttbr0 reads back the physical root,
+	 * so lift it into the physmap. */
+	t->md.md_ttbr0 = AARCH64_VIRT_OF(ttbr0 & 0x0000FFFFFFFFF000UL);
 }
 
 /**

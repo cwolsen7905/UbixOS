@@ -172,7 +172,10 @@ void aarch64_smp_release_aps(void)
 		kTask_t *idle = schedNewTask();
 		if (idle == 0)
 			continue;
-		idle->md.md_ttbr0 = (u_int64_t)(uintptr_t)aarch64_kernel_l1(); /* kernel space */
+		/* md_ttbr0 is a physmap VA (Convention B): pmap_switch converts back to the
+		 * physical root.  aarch64_kernel_l1() is the kernel L1's pointer; lift its
+		 * physical into the physmap. */
+		idle->md.md_ttbr0 = AARCH64_VIRT_OF((uintptr_t)aarch64_kernel_l1());
 		idle->md.md_entry = 0;
 		idle->md.md_usp = 0;
 		strncpy(idle->name, "idle/ap", sizeof(idle->name) - 1);
