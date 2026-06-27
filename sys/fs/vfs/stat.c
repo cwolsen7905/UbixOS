@@ -53,6 +53,20 @@ static u_int32_t stat_exec_fixup(u_int32_t mode)
 	return (mode);
 }
 
+/*
+ * Finalize a regular file's mode for stat, given the descriptor it was opened
+ * on.  procfs entries are synthetic, read-only text (meminfo, stat, …) and are
+ * never executable — reporting them as 0444 keeps `ls -F` from tagging them with
+ * a '*'.  Every other backing FS cannot record exec bits, so a regular file is
+ * marked executable (stat_exec_fixup) — binaries must stay runnable via execve.
+ */
+static u_int32_t stat_mode_for_fd(const fileDescriptor_t *fd, u_int32_t mode)
+{
+	if (fd != NULL && fd->mp != NULL && fd->mp->fs != NULL && fd->mp->fs->vfsType == VFS_TYPE_PROCFS)
+		return (0100000u | 0444u); /* S_IFREG | r--r--r-- */
+	return (stat_exec_fixup(mode));
+}
+
 int _sys_stat(char *path, struct stat *sb, int flags)
 {
 	int error = 0;
@@ -132,7 +146,7 @@ int _sys_stat(char *path, struct stat *sb, int flags)
 		/* FAT stores no mode bits; fall back to a regular-file mode. */
 		if (sb->st_mode == 0)
 			sb->st_mode = 0x81ED; /* S_IFREG | 0755 */
-		sb->st_mode = stat_exec_fixup(sb->st_mode);
+		sb->st_mode = stat_mode_for_fd(fd, sb->st_mode);
 
 		fclose(fd);
 	}
@@ -179,7 +193,7 @@ int sys_fstat(struct thread *td, struct sys_fstat_args *args)
 		args->sb->st_atime = fd->inode.u.ufs2_i.di_atime;
 		args->sb->st_mtime = fd->inode.u.ufs2_i.di_mtime;
 		args->sb->st_ctime = fd->inode.u.ufs2_i.di_ctime;
-		args->sb->st_mode = stat_exec_fixup(args->sb->st_mode);
+		args->sb->st_mode = stat_mode_for_fd(fd, args->sb->st_mode);
 	}
 
 	td->td_retval[0] = error;
@@ -236,7 +250,7 @@ int sys_fstatat(struct thread *td, struct sys_fstatat_args *args)
 
 		if (sb->st_mode == 0)
 			sb->st_mode = 0x81ED; /* S_IFREG | 0755 */
-		sb->st_mode = stat_exec_fixup(sb->st_mode);
+		sb->st_mode = stat_mode_for_fd(fd, sb->st_mode);
 		if (sb->st_nlink == 0)
 			sb->st_nlink = 1;
 		if (sb->st_size == 0 && fd->size != 0)
@@ -539,7 +553,7 @@ int sys_statx(struct thread *td, struct sys_statx_args *args)
 				stx->stx_mode = fd->inode.u.ufs2_i.di_mode;
 				if ((stx->stx_mode & 0170000) == 0)
 					stx->stx_mode |= 0100755;
-				stx->stx_mode = stat_exec_fixup(stx->stx_mode);
+				stx->stx_mode = stat_mode_for_fd(fd, stx->stx_mode);
 			}
 			stx->stx_ino = fd->ino ? fd->ino : (u_int64_t)(uintptr_t)fd;
 			stx->stx_size = fd->size;
