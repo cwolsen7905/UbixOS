@@ -127,7 +127,11 @@ static Pile g_stock, g_waste;
 static Pile g_found[4]; /* foundations (one suit each, built A..K) */
 static Pile g_tab[7];   /* tableau columns */
 
-static ogSurface g_surf;
+static ogSurface g_surf;      /* drawing target: a private back buffer (see claim_window) */
+static void *g_shm_base;      /* the compositor's shared-memory front buffer */
+static uint32_t *g_backbuf;   /* raw back-buffer pixels g_surf is attached to */
+static uint32_t g_fb_bytes;   /* framebuffer size in bytes (w*h*4) */
+static bool g_dbuf = false;   /* true when g_surf is a separate back buffer (double-buffered) */
 static ogScalableFont g_rank; /* corner + centre rank glyphs */
 static ogScalableFont g_ui;   /* title / status text */
 
@@ -595,6 +599,10 @@ static void render(void)
 		g_ui.PutString(g_surf, WIN_W - MARGIN - (int)mw, by, mus);
 	}
 
+	/* Publish the finished frame: one copy of the back buffer into the shared
+	 * front buffer, so the compositor never reads a partially-drawn window. */
+	if (g_dbuf)
+		memcpy(g_shm_base, g_backbuf, g_fb_bytes);
 	flip();
 }
 
@@ -916,7 +924,29 @@ static int claim_window(void)
 
 	struct display_ack *ack = (struct display_ack *)reply.data;
 	g_win_id = ack->window_id;
-	g_surf.ogAttach(ack->shm_base, (uint32_t)ack->w, (uint32_t)ack->h, OG_PIXFMT_32BPP);
+
+	/* Double-buffer: render into a private off-screen surface, then copy the
+	 * finished frame into the shared buffer in one pass.  The compositor only
+	 * ever sees complete frames (the shared buffer is untouched during the
+	 * full clear+redraw), which removes the drag flicker.  Fall back to drawing
+	 * straight into the shared buffer if the back-buffer allocation fails. */
+	g_shm_base = ack->shm_base;
+	g_fb_bytes = (uint32_t)ack->w * (uint32_t)ack->h * 4u;
+	g_backbuf = (uint32_t *)malloc(g_fb_bytes);
+	if (g_backbuf != NULL)
+	{
+		/* Draw into the private back buffer; render() memcpy's the finished frame
+		 * into the shared buffer verbatim, so the compositor never sees a
+		 * partially-drawn window (the drag-flicker fix). */
+		g_surf.ogAttach(g_backbuf, (uint32_t)ack->w, (uint32_t)ack->h, OG_PIXFMT_32BPP);
+		g_dbuf = true;
+	}
+	else
+	{
+		/* Out of memory: fall back to drawing straight into the shared buffer. */
+		g_surf.ogAttach(ack->shm_base, (uint32_t)ack->w, (uint32_t)ack->h, OG_PIXFMT_32BPP);
+		g_dbuf = false;
+	}
 	return 0;
 }
 
