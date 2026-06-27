@@ -122,6 +122,7 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args);
 /* proc.c — fork(): child resumes at the caller's EL0 point with a copied space. */
 int aarch64_fork(u_int64_t *parent_tf);
 int aarch64_rfork(u_int64_t *parent_tf); /* rfork(RFMEM): thread create, shares the AS + fd table */
+int aarch64_clone(u_int64_t *parent_tf); /* clone (posix_spawn): COW-copies the AS + fd table, new stack */
 
 /* syscalldemo.c — map a user page, drop to EL0, exercise the SVC path. */
 void aarch64_syscall_demo(void);

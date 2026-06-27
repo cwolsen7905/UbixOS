@@ -127,10 +127,15 @@ static u64 x86_64_fork_copy(u64 parent_pml4)
 }
 
 /**
- * fork(): @parent_tf is the caller's (fork-syscall) trapframe.  @return the
- * child's pid (the parent's fork return value), or -1 on failure.
+ * Common fork/clone body: COW-copy the caller's address space, copy the fd table +
+ * inherit context, and resume the child at the caller's return point with rax = 0.
+ * @child_sp is the child's user stack: the caller's own RSP for fork() (the copied
+ * stack), or the caller-supplied clone stack for clone() (so musl clone.s's child
+ * path runs the thread function).
+ *
+ * @return the child's pid to the caller, or -1 on failure.
  */
-long x86_64_fork(struct x86_64_trapframe *parent_tf)
+static long x86_64_fork_common(struct x86_64_trapframe *parent_tf, u64 child_sp)
 {
 	u64 child_pml4 = x86_64_fork_copy(_current->md.md_cr3);
 	kTask_t *child;
@@ -144,8 +149,8 @@ long x86_64_fork(struct x86_64_trapframe *parent_tf)
 
 	child = schedNewTask();
 	child->md.md_cr3 = child_pml4;
-	child->md.md_usp = parent_tf->rsp; /* same user SP in the copied space */
-	child->md.md_entry = 0;            /* unused — the trapframe drives the return */
+	child->md.md_usp = child_sp; /* fork: copied parent SP; clone: caller's clone stack */
+	child->md.md_entry = 0;      /* unused — the trapframe drives the return */
 	/* Inherit the parent's TLS base + heap/mmap cursors: the child runs the parent's
 	 * image (same code/data, so the same FS.base-relative TLS) until it execve's. */
 	child->md.md_fsbase = _current->md.md_fsbase;
@@ -170,7 +175,8 @@ long x86_64_fork(struct x86_64_trapframe *parent_tf)
 	top = (u8 *)child->kernelStack + 65536; /* KSTACK_SIZE (schedNewTask) */
 	ctf = (struct x86_64_trapframe *)(top - sizeof(struct x86_64_trapframe));
 	memcpy(ctf, parent_tf, sizeof(struct x86_64_trapframe));
-	ctf->rax = 0; /* the child's fork() returns 0 */
+	ctf->rax = 0;        /* the child's fork()/clone() returns 0 */
+	ctf->rsp = child_sp; /* fork: unchanged (copied SP); clone: the clone stack */
 
 	ctx = (u64 *)((u8 *)ctf - FRAME_SLOTS * 8);
 	for (i = 0; i < FRAME_SLOTS; i++)
@@ -181,6 +187,27 @@ long x86_64_fork(struct x86_64_trapframe *parent_tf)
 	sched_ready(child);
 
 	return child->id;
+}
+
+/**
+ * fork(2): COW-copy the caller's address space; the child resumes at the fork
+ * return point with rax = 0 on its (copied) stack.
+ */
+long x86_64_fork(struct x86_64_trapframe *parent_tf)
+{
+	return x86_64_fork_common(parent_tf, parent_tf->rsp);
+}
+
+/**
+ * clone() with a private address space (musl posix_spawn: CLONE_VM|CLONE_VFORK,
+ * no CLONE_THREAD/CLONE_FILES).  Unlike x86_64_rfork (which shares the AS + fds for
+ * pthreads), the child gets a COW copy + a copied fd table on the caller-supplied
+ * clone stack (rsi), so its file-actions + execve never disturb the parent — the
+ * posix_spawn child sets up fds then execve()s.
+ */
+long x86_64_clone(struct x86_64_trapframe *parent_tf)
+{
+	return x86_64_fork_common(parent_tf, parent_tf->rsi /* clone stack */);
 }
 
 /**

@@ -38,7 +38,8 @@ register_t ksyscall_dispatch(
 #define SYS_EXIT 1
 #define SYS_READ 3
 #define SYS_FORK 2
-#define SYS_RFORK 251 /* FreeBSD ABI — rfork(RFMEM) thread create (musl __clone -> rfork) */
+#define SYS_RFORK 251             /* FreeBSD ABI — musl __clone (clone.s) routes here; see SYS_RFORK case */
+#define CLONE_THREAD 0x00010000UL /* Linux clone flag in x0: set by pthread_create, clear by posix_spawn */
 #define SYS_WRITE 4
 #define SYS_OPEN 5
 #define SYS_CLOSE 6
@@ -487,9 +488,16 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args)
 			return (u_int64_t)aarch64_fork(args);
 
 		case SYS_RFORK:
-			/* rfork(RFMEM) thread create — args is the trapframe; x0=flags,
-			 * x1=child stack, x2=TLS.  The new thread SHARES this AS + fd table. */
-			return (u_int64_t)aarch64_rfork(args);
+			/* musl routes BOTH pthread_create and posix_spawn through __clone
+			 * (clone.s, patched to emit this FreeBSD rfork slot).  args is the
+			 * trapframe; x0=flags, x1=child stack, x2=TLS.  A real thread
+			 * (CLONE_THREAD) SHARES the AS + fd table (rfork/RFMEM); posix_spawn's
+			 * CLONE_VM|CLONE_VFORK child must instead get a private COW copy + a
+			 * copied fd table on the supplied stack, so its file-actions + execve
+			 * never disturb the parent — that is fork() with the child SP overridden. */
+			if (args[0] & CLONE_THREAD)
+				return (u_int64_t)aarch64_rfork(args);
+			return (u_int64_t)aarch64_clone(args);
 
 		case SYS_EXECVE:
 			/* execve(path, argv, envp): replace the current image + restart EL0.

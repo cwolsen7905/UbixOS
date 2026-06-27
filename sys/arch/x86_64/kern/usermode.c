@@ -624,9 +624,16 @@ void x86_64_syscall(struct x86_64_trapframe *tf)
 	{
 		tf->rax = (u64)x86_64_fork(tf);
 	}
-	else if (tf->rax == 251) /* rfork(RFMEM) — thread create (shares the AS) */
+	else if (tf->rax == 251) /* musl __clone (clone.s -> rfork slot): pthread vs posix_spawn */
 	{
-		tf->rax = (u64)x86_64_rfork(tf);
+		/* A real thread (CLONE_THREAD in rdi) shares the AS + fd table (rfork/RFMEM);
+		 * posix_spawn's CLONE_VM|CLONE_VFORK child must instead get a private COW copy
+		 * + a copied fd table on its clone stack, so its file-actions + execve never
+		 * disturb the parent — that is fork() with the child SP overridden. */
+		if (tf->rdi & 0x00010000UL /* CLONE_THREAD */)
+			tf->rax = (u64)x86_64_rfork(tf);
+		else
+			tf->rax = (u64)x86_64_clone(tf);
 	}
 	else if (tf->rax == 158) /* arch_prctl — musl's TLS setup (no FreeBSD nr) */
 	{

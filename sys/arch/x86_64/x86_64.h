@@ -134,6 +134,7 @@ void x86_64_native_syscall(struct x86_64_trapframe *tf); /* int $0x81 — UbixOS
 /* fork.c — fork(2): copy address space + trapframe (Phase 5e). */
 long x86_64_fork(struct x86_64_trapframe *parent_tf);
 long x86_64_rfork(struct x86_64_trapframe *parent_tf); /* rfork(RFMEM): thread create, shares the AS */
+long x86_64_clone(struct x86_64_trapframe *parent_tf); /* clone (posix_spawn): COW-copies the AS, new stack */
 void x86_64_user_demo(void);                           /* 5a one-shot (kept; superseded by proc_demo) */
 void x86_64_proc_demo(void);                           /* 5b scheduled ring-3 process */
 void x86_64_elf_demo(void);                            /* 5d-C: load a synthesized ELF64 via the MI loader */

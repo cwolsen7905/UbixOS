@@ -17,7 +17,10 @@ __clone:
 	mov x2,x4
 	mov x3,x5
 	mov x4,x6
-	mov x8,#220 // SYS_clone
+	// uBixOS is FreeBSD-ABI: Linux clone (#220) is __semctl here.  Route __clone to
+	// the FreeBSD rfork slot (#251); the kernel reads x0=flags/x1=stack and either
+	// shares the address space (CLONE_THREAD: pthreads) or COW-copies it (posix_spawn).
+	mov x8,#251 // SYS_rfork (was #220 SYS_clone — Linux number collides with __semctl)
 	svc #0
 
 	cbz x0,1f

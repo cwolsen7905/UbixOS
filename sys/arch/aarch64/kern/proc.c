@@ -202,7 +202,16 @@ void md_sched_pre_switch(kTask_t *t)
  *
  * @return the child's pid (the parent's fork return value), or -1 on failure.
  */
-int aarch64_fork(u_int64_t *parent_tf)
+/**
+ * Common fork/clone body: create a child whose address space is a COW copy of the
+ * caller's (pmap_fork_copy) with a copied fd table + inherited context, resuming at
+ * the caller's return point with x0 = 0.  @child_sp is the child's EL0 stack pointer:
+ * for fork() it is the caller's own SP (the copied stack); for clone() it is the
+ * caller-supplied clone stack, so musl's clone.s child path runs the thread function.
+ *
+ * @return the child's pid to the caller; the child itself sees 0.
+ */
+static int aarch64_fork_common(u_int64_t *parent_tf, u_int64_t child_sp)
 {
 	u_int64_t ttbr0;
 	u_int64_t *child_l1;
@@ -220,8 +229,8 @@ int aarch64_fork(u_int64_t *parent_tf)
 
 	child = schedNewTask();
 	child->md.md_ttbr0 = (u_int64_t)(uintptr_t)child_l1;
-	child->md.md_usp = parent_tf[TF_SLOT_SP_EL0]; /* same user SP (copied space); marks a user task */
-	child->md.md_entry = 0;                       /* unused — the trapframe drives the return */
+	child->md.md_usp = child_sp; /* fork: copied parent SP; clone: caller's clone stack */
+	child->md.md_entry = 0;      /* unused — the trapframe drives the return */
 
 	/* Inherit the parent's mmap cursor + heap break.  The child's address space is
 	 * a copy of the parent's, so its inherited shared libraries, mmap regions, and
@@ -260,7 +269,8 @@ int aarch64_fork(u_int64_t *parent_tf)
 	top = (u_int8_t *)child->kernelStack + KSTACK_SIZE;
 	tf = (u_int64_t *)(top - TRAPFRAME_SIZE);
 	memcpy(tf, parent_tf, TRAPFRAME_SIZE);
-	tf[0] = 0; /* child's fork() returns 0 */
+	tf[0] = 0;                     /* child's fork()/clone() returns 0 */
+	tf[TF_SLOT_SP_EL0] = child_sp; /* fork: unchanged (copied SP); clone: the clone stack */
 
 	ctx = (u_int64_t *)((u_int8_t *)tf - FRAME_SLOTS * 8);
 	for (unsigned i = 0; i < FRAME_SLOTS; i++)
@@ -271,6 +281,30 @@ int aarch64_fork(u_int64_t *parent_tf)
 	sched_ready(child);
 
 	return child->id;
+}
+
+/**
+ * fork(2): COW-copy the caller's address space; the child resumes at the fork
+ * return point with x0 = 0 on its (copied) stack.
+ */
+int aarch64_fork(u_int64_t *parent_tf)
+{
+	return aarch64_fork_common(parent_tf, parent_tf[TF_SLOT_SP_EL0]);
+}
+
+/**
+ * clone() with a private address space (musl posix_spawn: CLONE_VM|CLONE_VFORK,
+ * no CLONE_THREAD/CLONE_FILES).  Unlike aarch64_rfork (which shares the AS + fds
+ * for pthreads), the child gets a COW copy + a copied fd table, so its dup2/close
+ * file-actions and its execve never touch the parent.  The child runs on the
+ * caller-supplied clone stack (x1) — clone.s's child path pops the thread fn + arg
+ * from it and calls the fn, which sets up fds then execve()s.  CLONE_VFORK's parent
+ * suspension is unnecessary here (the spaces are independent; posix_spawn's parent
+ * blocks on its sync pipe anyway).
+ */
+int aarch64_clone(u_int64_t *parent_tf)
+{
+	return aarch64_fork_common(parent_tf, parent_tf[1] /* clone stack */);
 }
 
 /**

@@ -4,7 +4,10 @@
 .type   __clone,@function
 __clone:
 	xor %eax,%eax
-	mov $56,%al
+	# uBixOS is FreeBSD-ABI: Linux clone (56) collides; route __clone to the FreeBSD
+	# rfork slot (251). The kernel reads rdi=flags/rsi=stack and either shares the
+	# address space (CLONE_THREAD: pthreads) or COW-copies it (posix_spawn).
+	mov $251,%al
 	mov %rdi,%r11
 	mov %rdx,%rdi
 	mov %r8,%rdx
