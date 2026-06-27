@@ -97,6 +97,7 @@ struct fat_dir_iter {
 	char		 lfn[256];
 	u_int8_t		 lfn_seq;
 	u_int8_t		 lfn_checksum;
+	u_int8_t		 synth;			/* root-dir synthetic entries: 0='.', 1='..', 2=done */
 };
 
 /* Raw 32-byte FAT directory entry (on-disk layout) */

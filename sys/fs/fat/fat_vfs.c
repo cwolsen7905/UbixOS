@@ -230,6 +230,18 @@ int fat_readdir(kDIR_t *dir, struct kdirent *ent)
 	u_int16_t off;
 	int r;
 
+	/* Emit the FAT root's synthetic '.'/'..' before the real entries. */
+	if (it->synth < 2)
+	{
+		ent->d_ino = it->fs->root_cluster;
+		ent->d_type = KDT_DIR;
+		ent->d_name[0] = '.';
+		ent->d_name[1] = (it->synth == 1) ? '.' : '\0';
+		ent->d_name[2] = '\0';
+		it->synth++;
+		return (0);
+	}
+
 	fat_acquire(it->fs);
 	r = fat_dir_iter_next(it, name, &raw, &sec, &off);
 	fat_release(it->fs);

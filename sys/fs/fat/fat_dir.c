@@ -327,6 +327,14 @@ fat_dir_iter_open(struct fat_fs *fs, u_int32_t cluster, struct fat_dir_iter *it)
 	it->lfn[0]		= '\0';
 	it->lfn_seq		= 0;
 	it->lfn_checksum	= 0;
+	/*
+	 * The FAT root directory has no on-disk '.'/'..' entries (only
+	 * subdirectories do).  Mark the root iterator to emit them synthetically
+	 * during readdir so `ls -la /` matches POSIX; subdirs already carry their
+	 * own.  Consumed only by fat_readdir() — fat_dir_iter_next() never sees it,
+	 * so name lookups (fat_dir_find) are unaffected.
+	 */
+	it->synth = (cluster == 0 || cluster == fs->root_cluster) ? 0 : 2;
 }
 
 int
