@@ -52,4 +52,4 @@ do-build:
 	    BUILD="${BUILD}" MUSL_ARCH="${MUSL_ARCH}" \
 	    sh ${.CURDIR}/build.sh
 
-.include "${.CURDIR}/../../../mk/ports.mk"
+.include "${.CURDIR}/../../../share/mk/ports.mk"

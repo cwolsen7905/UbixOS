@@ -4,7 +4,7 @@ The build system uBixOS itself uses. Self-hosting needs it running on-device
 (the in-tree `bin/make` is a 558-line toy that can't parse the tree's BSD
 Makefiles). Pulled in as a **port** (pinned fetch + SHA + patches) per
 `docs/design/third-party-ports-plan.md` — the **first** port, and the proving
-ground for `mk/ports.mk`.
+ground for `share/mk/ports.mk`.
 
 - **Upstream:** Simon Gerraty's portable bmake, `bmake-20240212`
   (`https://www.crufty.net/ftp/pub/sjg/`).
@@ -24,7 +24,7 @@ bmake -C tools/ports/bmake TARGET=x86_64
 
 | Step | State |
 |---|---|
-| Fetch pinned tarball + verify SHA-256 | ✅ via `mk/ports.mk` |
+| Fetch pinned tarball + verify SHA-256 | ✅ via `share/mk/ports.mk` |
 | Extract → `build/ports/bmake-20240212/` (gitignored) | ✅ |
 | `sys/cdefs.h` shim (musl ships none; make.h needs it) | ✅ `shim/sys/cdefs.h` |
 | `config.h` for musl | ✅ `config.h` (configure-on-host + musl adaptation) |

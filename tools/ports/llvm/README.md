@@ -20,7 +20,7 @@ Pinned: **LLVM 18.1.8** (Apache-2.0 — permissive, BSD-compatible).
 ## Layout
 | File | Role |
 |------|------|
-| `Makefile` | port recipe (fetch+SHA via `mk/ports.mk`, then `do-build`) |
+| `Makefile` | port recipe (fetch+SHA via `share/mk/ports.mk`, then `do-build`) |
 | `ubixos.cmake` | CMake toolchain file: target = uBixOS musl cross-gcc + sysroot |
 | `build.sh` | host-tblgen → cross-build clang+lld orchestration |
 

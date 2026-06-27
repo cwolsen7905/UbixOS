@@ -59,7 +59,7 @@ version bump and the conversion pays for itself.
 ## The framework (lightweight, reusable)
 
 ```
-mk/ports.mk                 # reusable fetch -> verify -> extract -> patch macro
+share/mk/ports.mk                 # reusable fetch -> verify -> extract -> patch macro
 tools/ports/<name>/
     port.mk                 # the pin + build knobs (committed)
     patches/*.patch         # KB-scale, committed
@@ -67,7 +67,7 @@ tools/ports/<name>/
 build/ports/<name>-<ver>/   # extraction + build cache  (GITIGNORED)
 ```
 
-- **`mk/ports.mk`** takes `PORT_NAME`, `PORT_VERSION`, `PORT_URL`, `PORT_SHA256`
+- **`share/mk/ports.mk`** takes `PORT_NAME`, `PORT_VERSION`, `PORT_URL`, `PORT_SHA256`
   and a build hook. It: downloads the tarball to a cache, **verifies the SHA-256**
   (hard-fail on mismatch — no silent drift), extracts into
   `build/ports/<name>-<ver>/`, applies `tools/ports/<name>/patches/*.patch` in
@@ -134,5 +134,5 @@ and patches are committed; fetched/extracted source never is.
 ---
 
 *Design-only, 2026-06-20. No fetch/build machinery written yet — this locks the
-convention so `mk/ports.mk` + `tools/ports/llvm/` can be built to spec. Companion
+convention so `share/mk/ports.mk` + `tools/ports/llvm/` can be built to spec. Companion
 to `self-hosting-plan.md` (LLVM is the first port).*

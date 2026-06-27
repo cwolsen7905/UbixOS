@@ -33,4 +33,4 @@ do-build:
 	    JOBS="${JOBS}" PORTDIR="${.CURDIR}" \
 	    sh ${.CURDIR}/build.sh
 
-.include "${.CURDIR}/../../../mk/ports.mk"
+.include "${.CURDIR}/../../../share/mk/ports.mk"

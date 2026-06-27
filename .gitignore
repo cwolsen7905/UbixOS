@@ -26,5 +26,19 @@ contrib/netsurf/build/
 contrib/netsurf-nsgenbind/build-*/
 .buildlock
 
+# Generated IntelliSense/clang-tidy compilation database — rebuild on demand with
+#   python3 tools/gen-compile-commands.py --world
+# (goes stale as the source tree changes; not versioned).
+compile_commands.json
+
 # Local-only AI-agent IPC / coordination board — not part of the repo.
 AGENTS-COORD.md
+
+# Claude Code / agent tooling artifacts that can leak into the repo root when a
+# tool writes its data dir into the CWD instead of ~/.claude.  Not part of uBixOS.
+/chrome/
+/projects/
+/sessions/
+/backups/
+/cache/
+/history.jsonl

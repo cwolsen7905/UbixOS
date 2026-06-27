@@ -127,7 +127,7 @@ In-OS `selfhost/test_*.c`: anon + file-backed `mmap`; `fork`+`exit`→`wait4` de
 write path (the capacity work above). *Independently useful regardless of compiler.*
 
 ### Phase 1 — Port bmake (keystone) — ✅ BUILT + RUNS (2026-06-21)
-**Done:** `tools/ports/bmake/` (the first port; proved `mk/ports.mk`).  bmake
+**Done:** `tools/ports/bmake/` (the first port; proved `share/mk/ports.mk`).  bmake
 cross-builds on both arches and runs in UbixOS — verified on aarch64 over the
 serial console: `bmake -r -V MACHINE` → `aarch64`, and it parses a real makefile
 file + evaluates a variable, clean exit.  Two follow-ups it surfaced, both **Phase
@@ -144,7 +144,7 @@ Clang lands, point it at `/bin/sh`. Milestone: `bmake` runs a real tree Makefile
 
 ### Phase 2 — POSIX `/bin/sh` + coreutils — 🟡 sh DONE; recipe exec blocked on one kernel bug
 **`/bin/sh` DONE (2026-06-22):** ported **oksh** (portable OpenBSD ksh,
-public-domain) as `tools/ports/sh/` via `mk/ports.mk` — cross-builds both arches,
+public-domain) as `tools/ports/sh/` via `share/mk/ports.mk` — cross-builds both arches,
 runs in UbixOS, builtins **and external programs** work. (`bin/shell`/tcsh are not
 POSIX `sh`; oksh is OpenBSD's `/bin/sh`.) Two kernel/fs bugs surfaced + fixed
 porting it:

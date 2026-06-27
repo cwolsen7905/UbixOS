@@ -1,4 +1,4 @@
-# mk/ports.mk — reusable third-party "port" recipe.
+# share/mk/ports.mk — reusable third-party "port" recipe.
 #
 # Fetch a pinned upstream tarball, verify its SHA-256, extract it into a
 # gitignored cache, apply a committed patch series, then hand off to the port's
@@ -16,7 +16,7 @@
 #                  musl toolchain)
 #   do-install:    (optional) stage artifacts (e.g. into the image / a bindir)
 #
-# then:  .include "${.CURDIR}/../../../mk/ports.mk"
+# then:  .include "${.CURDIR}/../../../share/mk/ports.mk"
 #
 # Cache (all gitignored, under build/ports/):
 #   build/ports/distfiles/<tarball>          the verified download
