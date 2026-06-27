@@ -188,7 +188,7 @@ static uint32_t packed(const int *rgb)
 }
 
 /*
- * Launcher — spawns helper programs (e.g. /bin/netcfg) without the parent ever
+ * Launcher — spawns helper programs (e.g. /usr/sbin/netcfg) without the parent ever
  * fork()ing after its window's shared memory exists.  A helper child is forked
  * once at startup (before the window is claimed); later launches just pipe the
  * path to that helper, which does the fork()+execve().  Mirrors the taskbar.
@@ -504,7 +504,7 @@ static void apply_network()
 		for (int i = 0; i < 4; i++)
 			if (g_net_field[i][0] != '\0')
 				ubistry_set_str(g_net_fkeys[i], g_net_field[i]);
-	g_launcher.launch("/bin/netcfg");
+	g_launcher.launch("/usr/sbin/netcfg");
 }
 
 static void draw_network(ogSurface &surf, ogScalableFont &font)

@@ -51,31 +51,37 @@ static const struct reg_entry g_defaults[] = {
      * "@name" is a built-in action handled by the taskbar. */
     {"/views/startmenu/0/label", "\"Applications\""},
     {"/views/startmenu/0/items/0/label", "\"Terminal\""},
-    {"/views/startmenu/0/items/0/exec", "\"/bin/term\""},
+    {"/views/startmenu/0/items/0/exec", "\"/usr/bin/term\""},
     {"/views/startmenu/0/items/1/label", "\"NetSurf\""},
     {"/views/startmenu/0/items/1/exec", "\"/bin/nsfb\""},
 
     {"/views/startmenu/1/label", "\"Games\""},
     {"/views/startmenu/1/items/0/label", "\"vDoom\""},
-    {"/views/startmenu/1/items/0/exec", "\"/bin/vdoom\""},
+    {"/views/startmenu/1/items/0/exec", "\"/usr/bin/vdoom\""},
     {"/views/startmenu/1/items/1/label", "\"Tessera\""},
-    {"/views/startmenu/1/items/1/exec", "\"/bin/tessera\""},
+    {"/views/startmenu/1/items/1/exec", "\"/usr/bin/tessera\""},
     {"/views/startmenu/1/items/2/label", "\"Cubitaire\""},
-    {"/views/startmenu/1/items/2/exec", "\"/bin/cubitaire\""},
+    {"/views/startmenu/1/items/2/exec", "\"/usr/bin/cubitaire\""},
 
     {"/views/startmenu/2/label", "\"Utilities\""},
     {"/views/startmenu/2/items/0/label", "\"Files\""},
-    {"/views/startmenu/2/items/0/exec", "\"/bin/files\""},
+    {"/views/startmenu/2/items/0/exec", "\"/usr/bin/files\""},
     {"/views/startmenu/2/items/1/label", "\"Disk Utility\""},
-    {"/views/startmenu/2/items/1/exec", "\"/bin/diskutil\""},
+    {"/views/startmenu/2/items/1/exec", "\"/usr/bin/diskutil\""},
     {"/views/startmenu/2/items/2/label", "\"Activity Monitor\""},
-    {"/views/startmenu/2/items/2/exec", "\"/bin/activity\""},
+    {"/views/startmenu/2/items/2/exec", "\"/usr/bin/activity\""},
 
     {"/views/startmenu/3/label", "\"Settings\""},
-    {"/views/startmenu/3/exec", "\"/bin/settings\""},
+    {"/views/startmenu/3/exec", "\"/usr/bin/settings\""},
 
     {"/views/startmenu/4/label", "\"About\""},
     {"/views/startmenu/4/exec", "\"@about\""},
+
+    /* System identity.  The machine name (uname nodename / gethostname) defaults
+     * to uBix-WS001 — also the kernel default — and is the registry's source of
+     * truth; a boot step sethostname()s it from here.  The network domain joins
+     * later from network settings. */
+    {"/system/hostname", "\"uBix-WS001\""},
 
     /* Desktop background: mode = image | solid | jailbars; each mode uses its
      * own params.  Colours are packed 0xRRGGBB stored as integers.  The system

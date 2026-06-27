@@ -96,7 +96,7 @@ bmake
 # Kernel only (faster when only sys/ changed)
 bmake kernel
 
-# Userland only (lib/, libexec/, bin/)
+# Userland only (lib/, libexec/, bin/, sbin/, usr.bin/, usr.sbin/, tests/)
 bmake world
 
 # Clean everything
@@ -320,8 +320,12 @@ make install ROOT=/mnt/ubixos ROOT_FAT=/mnt/ubixos_fat
 | Path | Contents |
 |------|----------|
 | `sys/compile/kernel` | Final kernel ELF binary |
-| `build/bin/` | Userland executables |
-| `build/lib/` | Shared and static libraries |
+| `build/${ARCH}/bin/` | Essential user commands (`/bin`) |
+| `build/${ARCH}/sbin/` | System/admin tools (`/sbin`) |
+| `build/${ARCH}/usr/bin/` | Bulk user commands + GUI apps (`/usr/bin`) |
+| `build/${ARCH}/usr/sbin/` | Daemons + services (`/usr/sbin`) |
+| `build/${ARCH}/usr/tests/` | Test/dev harnesses (`/usr/tests`) |
+| `build/${ARCH}/lib/` | Shared and static libraries |
 | `build/libexec/` | Runtime dynamic linker (`ld.so`) |
 | `ubixos.img` | Bootable QEMU disk image (macOS path) |
 | `serial.log` | QEMU COM1 capture (created by `bmake run`) |

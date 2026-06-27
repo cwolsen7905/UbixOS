@@ -49,7 +49,7 @@ void	 dma_free(struct dma_buf *buf);
 static inline u_int32_t
 dma_paddr(void *vaddr)
 {
-	return ((u_int32_t)vaddr);
+	return ((u_int32_t)(uintptr_t)vaddr);
 }
 
 #endif /* _SYS_DMA_MEM_H */

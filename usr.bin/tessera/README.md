@@ -59,7 +59,7 @@ Or as part of the full world build:
 bmake world
 ```
 
-The binary is installed to `/bin/tessera` on the disk image.
+The binary is installed to `/usr/bin/tessera` on the disk image.
 
 ## Running
 

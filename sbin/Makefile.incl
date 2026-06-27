@@ -1,0 +1,9 @@
+# sbin/Makefile.incl — programs in this tree install to /sbin.
+#
+# Sets BINDIR (consumed by share/mk/ubix.musl*.prog.mk to place the binary under
+# ${OBJ_DIR}/${BINDIR}, mirrored into the image by tools/mkimage.sh) and then
+# pulls in the shared world build settings (CFLAGS/INCLUDES/LIBRARIES/STARTUP)
+# from bin/Makefile.incl — every program tree is two levels deep, so the relative
+# paths in that file resolve identically here.
+BINDIR = sbin
+.include "${SRCTOP}/bin/Makefile.incl"

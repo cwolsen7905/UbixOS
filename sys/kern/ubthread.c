@@ -56,7 +56,7 @@ int ubthread_cond_init(ubthread_cond_t *cond, const u_int32_t attr)
 		return (-1);
 	memset(ubcond, 0x0, sizeof(struct ubthread_cond));
 
-	ubcond->id = (int)cond;
+	ubcond->id = (int)(uintptr_t)cond;
 	ubcond->lock = 0;
 
 	*cond = ubcond;
@@ -70,7 +70,7 @@ int ubthread_mutex_init(ubthread_mutex_t *mutex, const u_int32_t attr)
 		return (-1);
 	memset(ubmutex, 0x0, sizeof(struct ubthread_mutex));
 
-	ubmutex->id        = (int)mutex;
+	ubmutex->id        = (int)(uintptr_t)mutex;
 	ubmutex->lock      = 0;
 	ubmutex->owner     = NULL;
 	ubmutex->pi_active = 0;
@@ -95,7 +95,7 @@ int ubthread_mutex_destroy(ubthread_mutex_t *mutex)
 
 int ubthread_create(kTask_t **thread, const u_int32_t *attr, void (*tproc)(void), void *arg, const char *name)
 {
-	*thread = (void *)execThread(tproc, 0x2000, arg, name);
+	*thread = (void *)(uintptr_t)execThread(tproc, 0x2000, arg, name);
 	return (0x0);
 }
 

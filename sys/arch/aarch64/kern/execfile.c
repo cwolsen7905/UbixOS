@@ -542,7 +542,7 @@ void aarch64_run_dynamic(const char *path)
 
 /**
  * Schedule a dynamically-linked program off the VFS as a background daemon and
- * return immediately (no wait) — e.g. start /bin/authd before running login.
+ * return immediately (no wait) — e.g. start /usr/sbin/authd before running login.
  */
 void aarch64_spawn_dynamic(const char *path)
 {

@@ -27,7 +27,7 @@ target with `TARGET=` (alias for `TARGET_ARCH=`). **The default is now aarch64**
 ```sh
 bmake                  # kernel + world (default, aarch64) → build/aarch64/
 bmake kernel           # kernel only → build/aarch64/boot/kernel
-bmake world            # userland only → build/aarch64/{bin,lib,libexec}/
+bmake world            # userland only → build/aarch64/{bin,sbin,usr/bin,usr/sbin,usr/tests,lib,libexec}/
 bmake image            # fresh bootable disk image (ubixos-arm.img via mkimage.sh)
 bmake run-aarch64      # launch QEMU virt (graphical, virtio-gpu, HVF on Apple Silicon)
 bmake run-debug-aarch64 # headless QEMU virt, serial to serial.log
@@ -127,14 +127,26 @@ Key subsystems and what they own:
 
 **Linker script** (`sys/compile/ldscript.i386`): loads kernel at physical/virtual address `0x300000` (3 MB). The first 4 MB of physical RAM is identity-mapped (PD[0], all 1024 PT entries). Physical layout: ISA/VGA/BIOS at `0x0–0xFFFFF`, page bitmap at `0x101000+` (1 MB for 256 MB RAM), kernel at `0x300000`. `vmm_memMapInit` places the bitmap at `page_align(_end)` — RAM-size-independent. Free pages begin immediately after the bitmap; the first 1 MB and kernel+bitmap pages are reserved. The kernel virtual memory layout is lower 4 MB identity-mapped, 4 MB–3 GB per-process, top 1 GB kernel-only.
 
-### Userland (`bin/`, `lib/`, `libexec/`)
+### Userland (`bin/`, `sbin/`, `usr.bin/`, `usr.sbin/`, `tests/`, `lib/`, `libexec/`)
 
-Built separately from the kernel with different flags. Libraries build first, then `libexec/`, then `bin/`. All output goes into `build/`.
+Built separately from the kernel with different flags. Libraries build first, then `libexec/`, then the program trees. All output goes into `build/${ARCH}/`.
+
+The program trees follow the **FreeBSD/macOS filesystem hierarchy** — a program's source tree decides where it installs. Each tree has a `Makefile` (its `SUBDIRS`) and a `Makefile.incl` that sets `BINDIR`; the shared `share/mk/ubix.musl*.prog.mk` then emits the binary to `${OBJ_DIR}/${BINDIR}/` and `mkimage.sh` stages it at the same path:
+
+| Source tree | `BINDIR` / install path | Holds |
+|-------------|-------------------------|-------|
+| `bin/` | `/bin` | Essential commands needed early by kernel/shell: `init`, `login`, `shell`, `tcsh`, `ls`, `cat`, `cp`, `mv`, `rm`, `mkdir`, `ln`, `echo`, `date`, `ed`, `expr`, `pwd`, `sleep` |
+| `sbin/` | `/sbin` | Disk/FS/system admin: `fdisk`, `disklabel`, `format`, `mount`, `ubpool`, `ubfs`, `ubdisk`, `ping` |
+| `usr.bin/` | `/usr/bin` | Bulk user commands + GUI apps: `grep`, `sed`, `awk`, `find`, `vi`, `make`, `nc`, …, `vdoom`, `tessera`, `cubitaire`, `files`, `diskutil`, `activity`, `taskbar`, `term`, `settings` |
+| `usr.sbin/` | `/usr/sbin` | Daemons + services: `views` (compositor), `vlogin`, `authd`, `logd`, `automountd`, `ubistry`, `aural`, `netcfg`, `dropbear` (sshd) |
+| `tests/` | `/usr/tests` | Test/dev harnesses (not shipped apps): `syscheck`, `filetest`, `pipetest`, `selfhostck`, `ttytest`, `udptest`, `fbtest`, … |
+
+To home a new program, drop its directory in the right tree and add it to that tree's `SUBDIRS`. `/bin/init` and `/bin/sh` are hardcoded (kernel/bmake), and `/lib` is pinned by `PT_INTERP`, so those don't move. **When a program that is exec'd by absolute path moves, update the path** — `etc/init.d/*` units, `tools/makereg.c` start-menu seeds, and any `"/bin/…"` literal in code (e.g. `CONSOLE_DESKTOP` in `bin/init/main.c`).
 
 - `lib/libc/` — FreeBSD-derived POSIX C library (primary libc)
 - `lib/ubix/` — OS-specific startup code (static initializers, `crt1`)
 - `lib/ubix_api/` — UbixOS-native API (`ubix_getcwd` etc.); header at `include/api/ubix.h`
-- `libexec/` — the active runtime linker is musl's (`/lib/ld-musl-i386.so.1`); libraries are at `/lib/`. (The older native `libexec/ld`, which used `sys:/lib/`, is superseded.)
+- `libexec/` — the active runtime linker is musl's (`/lib/ld-musl-${ARCH}.so.1`); libraries are at `/lib/`. (The older native `libexec/ld`, which used `sys:/lib/`, is superseded.)
 - `bin/init/` — PID 1; uses MPI mailboxes, spawns `login`
 
 ### Display stack
@@ -184,7 +196,7 @@ Both configs reference `compile_commands.json` via `"compileCommands"`. When tha
 ```sh
 python3 tools/gen-compile-commands.py --world
 ```
-This walks `sys/`, `bin/`, `lib/`, and `libexec/` and emits one entry per source file with the correct per-subsystem flags. The resulting `compile_commands.json` in the repo root gives IntelliSense perfect per-file include paths and defines. Commit it so other developers get correct IntelliSense without running any tools.
+This walks the program trees (`sys/`, `bin/`, `sbin/`, `usr.bin/`, `usr.sbin/`, `tests/`, `lib/`, `libexec/`) and emits one entry per source file with the correct per-subsystem flags. The resulting `compile_commands.json` in the repo root gives IntelliSense perfect per-file include paths and defines. **It is a generated artifact and is gitignored, not committed** — it goes stale whenever the source tree or Makefiles change, so regenerate it locally after such changes rather than versioning a snapshot.
 
 Note: `bear` (Build EAR) does not work reliably on macOS with SIP enabled because `DYLD_INSERT_LIBRARIES` is blocked for sub-processes launched by bmake. The generator script above is the reliable alternative.
 

@@ -268,7 +268,7 @@ class Launcher
 					/* Pass our inherited session environment (SHELL,
 					 * HOME, USER … set by vlogin) through to the app so
 					 * e.g. term can launch the user's shell.  Split on
-					 * spaces so callers can pass args ("/bin/settings about"). */
+					 * spaces so callers can pass args ("/usr/bin/settings about"). */
 					char *argv[8];
 					int ac = 0;
 					for (char *t = std::strtok(path, " "); t != nullptr && ac < 7;
@@ -367,7 +367,7 @@ class Menu
 	void load_fallback()
 	{
 		items_.clear();
-		items_.push_back({"Terminal", "/bin/term", "", false});
+		items_.push_back({"Terminal", "/usr/bin/term", "", false});
 		items_.push_back({"About", "@about", "", false});
 		items_.push_back({"Log Out", "@logout", "", false});
 	}
@@ -1259,7 +1259,7 @@ class Taskbar
 			if (it.exec == "@logout")
 				::exit(0); /* taskbar exit ends the session; vlogin resumes */
 			else if (it.exec == "@about")
-				launcher_.launch("/bin/settings about"); /* open Settings on About */
+				launcher_.launch("/usr/bin/settings about"); /* open Settings on About */
 			return;
 		}
 		launcher_.launch(it.exec.c_str());

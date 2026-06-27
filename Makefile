@@ -21,6 +21,14 @@ CLEANDIR=clean
 WORLD_LIB_SRC=${CURDIR}/lib
 WORLD_LIBEXEC_SRC=${CURDIR}/libexec
 WORLD_BIN_SRC=${CURDIR}/bin
+# Additional program trees (FreeBSD-style hierarchy): sbin -> /sbin,
+# usr.bin -> /usr/bin, usr.sbin -> /usr/sbin, tests -> /usr/tests.  Each program
+# tree sets BINDIR in its Makefile.incl so its binaries land under the matching
+# ${OBJ_DIR}/<dir>; mkimage stages them into the image at the same path.
+WORLD_SBIN_SRC=${CURDIR}/sbin
+WORLD_USRBIN_SRC=${CURDIR}/usr.bin
+WORLD_USRSBIN_SRC=${CURDIR}/usr.sbin
+WORLD_TESTS_SRC=${CURDIR}/tests
 WORLD_INC="-I${CURDIR}/include -I${CURDIR}/lib/objgfx40/ -I${CURDIR}/contrib/libcxxabi/include"
 # Toolchain (CC/CXX/AS/AR/LD/NM/OBJCOPY/RANLIB) is selected centrally by
 # ubix.toolchain.mk and reaches the world sub-makes via the exported TOOLCHAIN:
@@ -87,10 +95,20 @@ kernel: kernel-${_ARCH}
 
 # AArch64 bring-up kernel: assemble the entry, compile the PL011 banner, link at
 # the QEMU `virt` RAM base.  Standalone — does NOT descend into sys/Makefile.
+# Curated "this is almost always a real bug" warning classes promoted to errors
+# on first-party code (kernel + our userland).  These catch the LP64 / ABI bug
+# families uBixOS has actually been bitten by (missing prototype -> int return
+# truncates a 64-bit pointer; int<->pointer casts; fall-off-the-end returns).
+# Deliberately NARROW: we do NOT -Werror the noisy style classes, and we keep
+# -Wno-incompatible-pointer-types / int-conversion out of the set (the kernel
+# still suppresses the former).  musl itself builds with this same family.
+WERROR_BUGCLASSES = -Werror=implicit-function-declaration -Werror=implicit-int \
+	-Werror=int-to-pointer-cast -Werror=pointer-to-int-cast -Werror=return-type
+
 # Kernel compile flags shared by aarch64 .S and .c — the same -nostdinc +
 # sys/include + freestanding conventions as the i386 kernel (so generic kernel
 # objects can link in), with the aarch64 ISA flags from KERN_TARGET_CFLAGS.
-AARCH64_KCFLAGS = ${KERN_TARGET_CFLAGS} -DDEBUG_SYSCTL -O -Wall -Wno-incompatible-pointer-types \
+AARCH64_KCFLAGS = ${KERN_TARGET_CFLAGS} -DDEBUG_SYSCTL -O -Wall -Wno-incompatible-pointer-types ${WERROR_BUGCLASSES} \
 	-nostdlib ${TC_NOSTDINC} -fno-builtin -fno-exceptions -ffreestanding -fno-pie -fno-pic \
 	-fno-strict-aliasing \
 	-fno-stack-protector -mno-outline-atomics -I${CURDIR}/sys/include -I${CURDIR}/sys/arch/aarch64
@@ -295,7 +313,7 @@ kernel-aarch64:
 # link low at 1 MB.  Standalone (does NOT descend into sys/Makefile) — the same
 # minimal-first approach the aarch64 bring-up used; the generic subsystems + the
 # widened i386 drivers link in as the port grows.
-X86_64_KCFLAGS = ${KERN_TARGET_CFLAGS} -O -Wall -Wno-incompatible-pointer-types -nostdlib -nostdinc \
+X86_64_KCFLAGS = ${KERN_TARGET_CFLAGS} -O -Wall -Wno-incompatible-pointer-types ${WERROR_BUGCLASSES} -nostdlib -nostdinc \
 	-fno-builtin -fno-exceptions -ffreestanding -fno-pie -fno-pic -fno-stack-protector \
 	-fno-strict-aliasing \
 	-I${CURDIR}/sys/include -I${CURDIR}/sys/arch/x86_64
@@ -491,6 +509,7 @@ musl-libc:
 
 world:
 	@mkdir -p ${OBJ_DIR}/boot ${OBJ_DIR}/bin ${OBJ_DIR}/lib ${OBJ_DIR}/libexec \
+	           ${OBJ_DIR}/sbin ${OBJ_DIR}/usr/bin ${OBJ_DIR}/usr/sbin ${OBJ_DIR}/usr/tests \
 	           ${OBJ_DIR}/obj/bin ${OBJ_DIR}/obj/lib ${OBJ_DIR}/obj/libexec ${OBJ_DIR}/obj/sys
 	@echo
 	@echo "***************************************************************"
@@ -521,9 +540,17 @@ world:
 	  else echo "skip: native libexec/ld superseded by musl ld.so"; fi
 	@echo
 	@echo "***************************************************************"
-	@echo "Step 3: Build World Binaries"
+	@echo "Step 3: Build World Binaries (/bin)"
 	@echo "***************************************************************"
 	cd ${WORLD_BIN_SRC}; ${WMAKE} all
+	@echo
+	@echo "***************************************************************"
+	@echo "Step 3b: Build /sbin, /usr/bin, /usr/sbin, /usr/tests trees"
+	@echo "***************************************************************"
+	cd ${WORLD_SBIN_SRC};    ${WMAKE} all
+	cd ${WORLD_USRBIN_SRC};  ${WMAKE} all
+	cd ${WORLD_USRSBIN_SRC}; ${WMAKE} all
+	cd ${WORLD_TESTS_SRC};   ${WMAKE} all
 	@echo
 	@echo "***************************************************************"
 	@echo "Step 4: Build NetSurf browser (nsfb)"
@@ -799,6 +826,10 @@ clean-kernel:
 clean:
 	rm -rf ${OBJ_DIR}/obj/sys ${OBJ_DIR}/boot
 	(cd bin;${WMAKE} clean)
+	(cd sbin;${WMAKE} clean)
+	(cd usr.bin;${WMAKE} clean)
+	(cd usr.sbin;${WMAKE} clean)
+	(cd tests;${WMAKE} clean)
 	(cd lib;${WMAKE} clean)
 	(cd libexec;${WMAKE} clean)
 	(cd contrib/libcxxabi;${MAKE} clean)

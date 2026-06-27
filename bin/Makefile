@@ -1,27 +1,20 @@
 # System Makefile (C) 2002 The UbixOS Project
-
-# Add a directory name here to include it in the build and clean targets.
 #
-# aarch64 (Track B port) builds the core CLI world only — the boot triad, the
-# coreutils/system tools, and the basic net tools that link just musl + ubix_api.
-# The graphics desktop (objgfx: views/vlogin/vdoom) is ported; vdoom also links
-# libaudio (which runs silent until the virt platform gains a sound device).
-# Programs needing the standalone audio tools (aplay/mp3play) or the
-# crypto/net (bearssl/pw/http: ssltest/pwtest/httpsget/wget) library stacks are
-# desktop-era and stay i386-only until those libs are ported; clock has a
-# bespoke i386 static-link Makefile; the *test asm programs
-# (clonetest/tlstest/futextest) are i386-only.
-.if ${_ARCH} == "aarch64"
-SUBDIRS = logd authd automountd init login shell cp fdisk format disklabel ubistry ubpool ubfs ubdisk diskutil activity files ls mount uname cat echo ln basename cut date dirname env find grep head less mkdir more mv rm sleep sort sed stat tail touch tr uniq wc which expr cmp install diff printf awk syscheck make filetest pipetest selfhostck ed ttytest ping nc tcsh vi netcfg udptest fbtest views vlogin vdoom tessera cubitaire aural
-.elif ${_ARCH} == "x86_64"
-# x86_64 (Track C port) builds the same core CLI + ported-desktop subset as
-# aarch64: the boot triad, coreutils/system tools, and the graphics stack, plus the
-# network tools wget/httpsget (libhttp+libbearssl are ported and the socket stack
-# works — verified end to end with a real HTTP 200 fetch).  The i386-only bits
-# (clock/tcc bespoke static links, the *test asm programs) stay out until ported.
-SUBDIRS = logd authd automountd init login shell cp fdisk format disklabel ubistry ubpool ubfs ubdisk diskutil activity files ls mount uname cat echo ln basename cut date dirname env find grep head less mkdir more mv rm sleep sort sed stat tail touch tr uniq wc which expr cmp install diff printf awk syscheck make filetest pipetest selfhostck ed ttytest ping nc wget httpsget tcsh vi netcfg udptest fbtest views vlogin vdoom tessera cubitaire aural
+# /bin holds ONLY the essential user commands needed early by the kernel and the
+# shell (FreeBSD/macOS convention).  The rest of the world lives in sibling trees,
+# each with its own Makefile + Makefile.incl (which sets BINDIR):
+#   sbin/      -> /sbin       disk/filesystem/system admin (fdisk, mount, ubfs, …)
+#   usr.bin/   -> /usr/bin    bulk user commands + GUI apps (grep, vi, vdoom, …)
+#   usr.sbin/  -> /usr/sbin   daemons + services (views, authd, logd, sshd, …)
+#   tests/     -> /usr/tests  test/dev harnesses (not shipped apps)
+#
+# Add a directory name to SUBDIRS to include it in the build and clean targets.
+# The 64-bit arches build the same essential set; i386 (frozen on releng/2) a
+# slightly smaller one.
+.if ${_ARCH} == "aarch64" || ${_ARCH} == "x86_64"
+SUBDIRS = init login shell cp ls cat echo ln date mkdir mv rm sleep pwd expr ed tcsh
 .else
-SUBDIRS = logd authd automountd init login shell clock cp fdisk format disklabel ubistry ubpool ubfs ubdisk diskutil activity files ls mount tcc uname cat syscheck make filetest pipetest selfhostck vmtest clonetest tlstest futextest pthreadtest condtest detachtest ed ttytest views vlogin ping nc wget aplay mp3play tcsh doom vdoom tessera vi netcfg aural ssltest pwtest rndtest httpsget udptest nsfbtest hello
+SUBDIRS = init login shell cp ls cat ed tcsh
 .endif
 
 .PHONY: all clean ${SUBDIRS}

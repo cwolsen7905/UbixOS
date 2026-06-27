@@ -36,7 +36,7 @@ SIZE_MB=$(( 1 + FAT_SIZE_MB + SWAP_SIZE_MB + POOL_SIZE_MB + 4 ))
 # Image profile (docs/design/console-and-arch-convergence-plan.md Phase 4):
 #   desktop — full graphical stack (views + objGFX + vlogin + apps).
 #   base    — headless/IoT/safe-mode: CLI world only, no compositor.  The kernel
-#             branches on /bin/views being present, so a base image (no views)
+#             branches on /usr/sbin/views being present, so a base image (no views)
 #             boots straight to the text-console login.
 PROFILE="${PROFILE:-desktop}"
 # Binaries that belong only to the desktop profile (skipped for base).
@@ -115,7 +115,7 @@ fi
 # dynamic linker is installed as a real second copy (not a symlink).
 STAGE=$(mktemp -d -t ubixstage)
 mkdir -p "${STAGE}"/bin "${STAGE}"/lib "${STAGE}"/sbin \
-         "${STAGE}"/usr/bin "${STAGE}"/usr/sbin "${STAGE}"/usr/lib \
+         "${STAGE}"/usr/bin "${STAGE}"/usr/sbin "${STAGE}"/usr/lib "${STAGE}"/usr/tests \
          "${STAGE}"/etc "${STAGE}"/etc/init.d "${STAGE}"/etc/dropbear \
          "${STAGE}"/var/log \
          "${STAGE}"/home/root "${STAGE}"/home/guest \
@@ -155,13 +155,20 @@ for b in "${BUILD}"/bin/*; do
 	cp "${b}" "${STAGE}/bin/${_bn}"
 done
 
-# /usr-hierarchy: copy build/${ARCH}/{sbin,usr/bin,usr/sbin,usr/lib} verbatim.
-for _sub in sbin usr/bin usr/sbin usr/lib; do
+# /usr-hierarchy: copy build/${ARCH}/{sbin,usr/bin,usr/sbin,usr/lib,usr/tests} verbatim.
+for _sub in sbin usr/bin usr/sbin usr/lib usr/tests; do
 	[ -d "${BUILD}/${_sub}" ] || continue
 	for b in "${BUILD}/${_sub}"/*; do
 		case "${b}" in *.dbg) continue ;; esac
 		[ -f "${b}" ] || continue
-		cp "${b}" "${STAGE}/${_sub}/$(basename "${b}")"
+		_bn=$(basename "${b}")
+		# Honour the base profile: skip desktop-only binaries (views/vlogin/
+		# settings now live in usr/sbin + usr/bin, so the same filter the /bin
+		# loop applies must cover the /usr trees too).
+		if [ "${PROFILE}" != desktop ]; then
+			case "${DESKTOP_BINS}" in *" ${_bn} "*) continue ;; esac
+		fi
+		cp "${b}" "${STAGE}/${_sub}/${_bn}"
 	done
 done
 

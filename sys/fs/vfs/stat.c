@@ -520,7 +520,7 @@ int sys_statx(struct thread *td, struct sys_statx_args *args)
 			/* /dev files: detect device type from the devfs mount. */
 			if (fd->mp != NULL && fd->mp->fs != NULL && fd->mp->fs->vfsType == VFS_TYPE_DEVFS)
 			{
-				if (fd->start == (u_int32_t)(uintptr_t)-1)
+				if (fd->res == (void *)-1)
 				{
 					/* devfs root (the /dev directory itself) */
 					stx->stx_mode = 0040755; /* S_IFDIR | 0755 */

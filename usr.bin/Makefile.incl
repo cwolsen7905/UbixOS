@@ -1,0 +1,4 @@
+# usr.bin/Makefile.incl — programs in this tree install to /usr/bin.
+# See sbin/Makefile.incl for the BINDIR mechanism.
+BINDIR = usr/bin
+.include "${SRCTOP}/bin/Makefile.incl"

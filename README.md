@@ -38,7 +38,11 @@ See [BUILDING.md](BUILDING.md) for full toolchain requirements and platform-spec
 | Path | Description |
 |------|-------------|
 | `sys/` | Kernel source — all subsystems |
-| `bin/` | Userland executables |
+| `bin/` | Essential user commands → `/bin` (sh, init, ls, cp, …) |
+| `sbin/` | System/admin tools → `/sbin` (fdisk, mount, ubfs, …) |
+| `usr.bin/` | Bulk user commands + GUI apps → `/usr/bin` (grep, vi, vdoom, …) |
+| `usr.sbin/` | Daemons + services → `/usr/sbin` (views, authd, logd, sshd, …) |
+| `tests/` | Test/dev harnesses → `/usr/tests` (not shipped apps) |
 | `lib/` | Userland libraries (libc, libstdc++, graphics, etc.) |
 | `libexec/` | Runtime linker and library execution support |
 | `include/` | Userland POSIX-style headers |

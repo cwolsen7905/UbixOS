@@ -151,7 +151,7 @@ def collect_kernel() -> list:
 
 def collect_world() -> list:
     entries = []
-    world_roots = [ROOT / d for d in ("bin", "lib", "libexec")]
+    world_roots = [ROOT / d for d in ("bin", "sbin", "usr.bin", "usr.sbin", "tests", "lib", "libexec")]
     skip_dirs = {"contrib"}
     for wr in world_roots:
         if not wr.exists():
@@ -171,7 +171,7 @@ def collect_world() -> list:
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--world", action="store_true",
-                        help="also include userland (bin/, lib/, libexec/)")
+                        help="also include userland (bin/ sbin/ usr.bin/ usr.sbin/ tests/ lib/ libexec/)")
     parser.add_argument("-o", "--output", default=str(ROOT / "compile_commands.json"),
                         help="output path (default: compile_commands.json)")
     args = parser.parse_args()

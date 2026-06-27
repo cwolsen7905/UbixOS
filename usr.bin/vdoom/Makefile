@@ -1,12 +1,12 @@
 # bin/vdoom/Makefile — windowed DOOM for UbixOS views compositor
-# Shares all DOOM engine and audio sources from bin/doom/.
+# Shares all DOOM engine and audio sources from usr.bin/doom/.
 # Only the platform backend differs (doomgeneric_views.c vs doomgeneric_ubix.c).
 
 include ../../Makefile.incl
 include ../Makefile.incl
 
 DOOM_SRC  = ${SRCTOP}/contrib/doomgeneric/doomgeneric
-DOOM_DIR  = ${SRCTOP}/bin/doom
+DOOM_DIR  = ${SRCTOP}/usr.bin/doom
 
 BINARY = vdoom
 

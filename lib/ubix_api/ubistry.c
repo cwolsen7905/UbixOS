@@ -26,7 +26,7 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * ubistry.c — client wrappers for the ubistry registry (part of ubix_api).
- * Each call round-trips a request to the /bin/ubistry daemon over MPI; GET/ENUM
+ * Each call round-trips a request to the /usr/sbin/ubistry daemon over MPI; GET/ENUM
  * wait for a reply on a per-process reply mailbox, SET/DEL are fire-and-forget.
  * All calls are best-effort: if the daemon is unreachable they return an error
  * so the caller can fall back to defaults rather than hang.

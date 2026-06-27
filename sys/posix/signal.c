@@ -290,7 +290,7 @@ void signal_check(struct trapframe *frame)
 			return;
 		}
 
-		kprintf("signal_check: sig=%d handler=0x%X\n", sig, (u_int32_t)sa->sa_handler);
+		kprintf("signal_check: sig=%d handler=0x%X\n", sig, (u_int32_t)(uintptr_t)sa->sa_handler);
 
 		if ((void *)sa->sa_handler == (void *)0x0 /* SIG_DFL */ || sa->sa_handler == NULL)
 		{

@@ -1,8 +1,18 @@
 # Filesystem hierarchy plan — toward a POSIX `/usr` layout
 
-**Status:** in progress (started 2026-06-23). **Owner:** [sshd] session.
+**Status:** Phases 1–2 IMPLEMENTED (2026-06-26) — the source tree was split into
+`bin/` + `sbin/` + `usr.bin/` + `usr.sbin/` + `tests/` (FreeBSD/macOS layout), and
+all daemons/admin-tools/user-commands/GUI-apps/test-harnesses re-homed
+accordingly. Phase 3 (symlink usrmerge once the pool is the universal root)
+remains future work. **Owner:** [sshd] session (Phase 0); full split [self-hosting].
 **Decision:** classic `/usr` split with **real directories** (no symlink
-usrmerge), migrated **incrementally** (dropbear is the first mover).
+usrmerge), migrated **incrementally** (dropbear was the first mover).
+
+**Mechanism (how it works now):** a program's *source tree* decides its install
+path. Each tree (`sbin/`, `usr.bin/`, `usr.sbin/`, `tests/`) has a `Makefile.incl`
+that sets `BINDIR`; the shared `share/mk/ubix.musl*.prog.mk` emits the binary to
+`${OBJ_DIR}/${BINDIR}/` and `tools/mkimage.sh` stages it at the same path. The
+top `Makefile`'s `world` target descends all the trees (Step 3 + 3b).
 
 ## Why
 

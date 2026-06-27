@@ -446,7 +446,7 @@ indices 7+       : free for control/bulk transfers (UHCI_CTRL_BASE = 7)
 
 ## Userland
 
-Userland is built separately from the kernel. All binaries link against **musl libc** (in `contrib/musl/`). The world build produces output in `build/bin/`, `build/lib/`, `build/libexec/`.
+Userland is built separately from the kernel. All binaries link against **musl libc** (in `contrib/musl/`). The world build produces output following the FreeBSD/macOS hierarchy: `build/${ARCH}/{bin,sbin,usr/bin,usr/sbin,usr/tests,lib,libexec}/` — sourced from the program trees `bin/`, `sbin/`, `usr.bin/`, `usr.sbin/`, `tests/` (each sets `BINDIR` in its `Makefile.incl`).
 
 ### Executables (`bin/`)
 

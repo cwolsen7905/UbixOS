@@ -36,6 +36,7 @@
 #include <sys/mpi.h>
 #include <sys/wait.h>
 #include <api/ubix.h>
+#include <ubistry/ubistry.h> /* ubistry_get_str — read /system/hostname at boot */
 
 #define INITD_PATH "/etc/init.d"
 #define INITD_MAXSVCS 64
@@ -44,17 +45,17 @@
 /* Candidate system-console primaries.  init runs ONE program on the single
  * boot/system console (slot 0) — the console-first, graphical-optional model has
  * no switchable text VTs, so there is no getty-per-VT (the retired ttyd).  The
- * desktop profile stages /bin/views (the compositor); the base/headless profile
+ * desktop profile stages /usr/sbin/views (the compositor); the base/headless profile
  * does not, and falls back to the text-console login.  init picks by what the
  * image staged (console_primary()), so the SAME init runs on every arch +
  * profile — the kernel no longer hand-launches the desktop. */
-#define CONSOLE_DESKTOP "/bin/views"
+#define CONSOLE_DESKTOP "/usr/sbin/views"
 #define CONSOLE_BASE "/bin/login"
 
 static char *envp_login[6] = {
     "HOME=/",
     "PWD=/",
-    "PATH=/bin:/sbin:/usr/bin:/usr/sbin",
+    "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/tests",
     "USER=root",
     "GROUP=admin",
     NULL,
@@ -68,7 +69,7 @@ static const char *console_primary(void)
 {
 	int tries;
 
-	/* The desktop image stages /bin/views.  A single fopen can transiently miss it
+	/* The desktop image stages /usr/sbin/views.  A single fopen can transiently miss it
 	 * when the filesystem read loses the virtio-blk SMP race (the same race behind
 	 * the intermittent "failed-first-login"), which would wrongly drop a desktop
 	 * image to the text console.  Retry briefly so one flaky read doesn't cost the
@@ -237,6 +238,39 @@ static void start_console(void)
 	/* init (parent) returns to its idle/reaper loop. */
 }
 
+/*
+ * Adopt the machine name from ubistry (/system/hostname) into the kernel via
+ * ubix_set_hostname(), so uname(2)/gethostname() reflect the registry rather
+ * than only the kernel default.  The ubistry value is a quoted string, so strip
+ * the surrounding quotes.  Retries briefly since ubistry may still be loading;
+ * if it never answers, the kernel default (uBix-WS001) stands.
+ */
+static void sync_hostname(void)
+{
+	char raw[80];
+	char *s;
+	int tries, n;
+
+	for (tries = 0; tries < 20; tries++)
+	{
+		if (ubistry_get_str("/system/hostname", raw, sizeof(raw)) == 0 && raw[0] != '\0')
+		{
+			s = raw;
+			if (s[0] == '"')
+				s++;
+			n = (int)strlen(s);
+			if (n > 0 && s[n - 1] == '"')
+				s[n - 1] = '\0';
+			if (s[0] != '\0')
+			{
+				ubix_set_hostname(s);
+				return;
+			}
+		}
+		usleep(50000); /* 50 ms — let ubistry finish loading, then retry */
+	}
+}
+
 int main(int argc, char **argv, char **envp)
 {
 	mpi_message_t myMsg;
@@ -258,6 +292,10 @@ int main(int argc, char **argv, char **envp)
 	printf("Initializing UbixOS\n");
 
 	start_initd_services();
+
+	/* Adopt the machine name from ubistry now that its service is up, so
+	 * uname/gethostname reflect the registry (default uBix-WS001 otherwise). */
+	sync_hostname();
 
 	/* Launch the system-console primary (the desktop compositor) on slot 0.
 	 * The old multi-VT ttyd / etc/ttys is retired — one system console, no

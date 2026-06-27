@@ -21,13 +21,16 @@ EXTRA_LDFLAGS ?=
 EXTRA_LIBS    ?=
 EXTRA_CFLAGS  ?=
 
+# Install subdir under ${OBJ_DIR} (see ubix.musl.prog.mk); per-tree Makefile.incl overrides.
+BINDIR ?= bin
+
 MUSL_INC = ${MUSL_BASE_INC}
 
 CXX_CFLAGS = ${CROSS_M32} -std=c++20 \
              -nostdlib ${TC_NOSTDINC} -nostdinc++ -fno-builtin \
              -fno-rtti -fno-exceptions \
              ${ARCH_NOSIMD} -fPIC -MMD -MP \
-             -Wa,--noexecstack -Wall -O \
+             -Wa,--noexecstack -Wall -Wno-unused-command-line-argument -O \
              -D_LIBCPP_HAS_NO_EXCEPTIONS
 
 OBJDIR ?= ${OBJ_DIR}/obj/bin/${.CURDIR:T}
@@ -61,6 +64,7 @@ OBJDIR ?= ${OBJ_DIR}/obj/bin/${.CURDIR:T}
 _OBJS_FULL = ${OBJS:S|^|${OBJDIR}/|}
 
 $(BINARY): $(OBJS)
+	@mkdir -p ${OBJ_DIR}/${BINDIR}
 	$(CC) ${CROSS_M32} -nostdlib ${MUSL_PIE_LDFLAGS} -Wl,-m,${MUSL_LDEMULATION} \
 		-Wl,-dynamic-linker,${MUSL_LDSO} \
 		-Wl,-rpath,/lib \
@@ -78,12 +82,12 @@ $(BINARY): $(OBJS)
 		${LIBGCC} \
 		-Wl,--end-group \
 		${MUSL_LIB}/crtn.o \
-		-o ${OBJ_DIR}/bin/${BINARY}
+		-o ${OBJ_DIR}/${BINDIR}/${BINARY}
 
 all: $(BINARY)
 
 clean:
-	$(REMOVE) ${OBJDIR} ${OBJ_DIR}/bin/${BINARY}
+	$(REMOVE) ${OBJDIR} ${OBJ_DIR}/${BINDIR}/${BINARY}
 
 .for _d in ${OBJS:.o=.d}
 .sinclude "${OBJDIR}/${_d}"

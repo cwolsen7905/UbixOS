@@ -103,7 +103,7 @@ static int devfs_open(char *file, fileDescriptor_t *fd)
 
 	if (strcmp(file, "/") == 0x0)
 	{
-		fd->start = -1;
+		fd->res = (void *)-1;
 		fd->size = devfs_len;
 		spinUnlock(&devfsSpinLock);
 		return (0x1);
@@ -114,7 +114,7 @@ static int devfs_open(char *file, fileDescriptor_t *fd)
 	{
 		if (strcmp(tmpDev->devName, file) == 0x0)
 		{
-			fd->start = (u_int32_t)(uintptr_t)tmpDev;
+			fd->res = tmpDev;
 			spinUnlock(&devfsSpinLock);
 			return (0x1);
 		}
@@ -134,7 +134,7 @@ static int devfs_read(fileDescriptor_t *fd, char *data, off_t offset, long size)
 	u_int32_t sectors = 0x0;
 	u_int16_t diff = 0x0;
 	struct ubx_device *device = 0x0;
-	struct devfs_devices *tmpDev = (void *)fd->start;
+	struct devfs_devices *tmpDev = fd->res;
 
 	if (tmpDev == (struct devfs_devices *)-1)
 	{
@@ -203,7 +203,7 @@ static int devfs_write(fileDescriptor_t *fd, char *data, off_t offset, long size
 {
 	int i = 0x0, x = 0x0;
 	struct ubx_device *device = 0x0;
-	struct devfs_devices *tmpDev = (void *)fd->start;
+	struct devfs_devices *tmpDev = fd->res;
 
 	/* Pseudo-devices: silently discard all writes */
 	if (tmpDev->devType == 'p')
@@ -387,7 +387,7 @@ static int devfs_char_ioctl(struct file *fp, u_int32_t com, void *data)
 {
 	if (fp != NULL && fp->fd != NULL && fp->fd->mp != NULL && fp->fd->mp->fs->vfsType == VFS_TYPE_DEVFS)
 	{
-		struct devfs_devices *node = (struct devfs_devices *)(uintptr_t)fp->fd->start;
+		struct devfs_devices *node = (struct devfs_devices *)fp->fd->res;
 		struct ubx_device *dev = ubx_device_find(node->devMajor, node->devMinor);
 		if (dev != NULL && dev->dev_char_ioctl != NULL)
 			return (dev->dev_char_ioctl(dev, com, data));
