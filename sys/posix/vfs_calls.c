@@ -476,9 +476,43 @@ int sys_write(struct thread *td, struct sys_write_args *uap)
 	return (0x0);
 }
 
+/**
+ * access(2) — there is no per-file permission enforcement yet, so the mode bits
+ * (R_OK/W_OK/X_OK) are not checked, but EXISTENCE must be honest: shells walk
+ * $PATH with access(X_OK) and treat ENOENT as "try the next directory".
+ * Returning 0 unconditionally made every missing candidate look present, so a
+ * missing command (e.g. `pwd` with no /bin/pwd) was exec'd as a non-existent
+ * file and surfaced as EACCES ("permission denied") instead of ENOENT
+ * ("command not found").  Probe existence the same way readlink/utimensat do
+ * (fopen rejects directories, so fall back to vfs_opendir).
+ *
+ * @return 0 if @path resolves (any mode), -ENOENT if it does not.
+ */
 int sys_access(struct thread *td, struct sys_access_args *args)
 {
-	/* XXX - This is a temporary as it always returns true */
+	fileDescriptor_t *fp;
+
+	if (args->path == NULL)
+	{
+		td->td_retval[0] = -EFAULT;
+		return (EFAULT);
+	}
+
+	fp = fopen(args->path, "r");
+	if (fp != NULL)
+	{
+		fclose(fp);
+	}
+	else
+	{
+		kDIR_t *dir = vfs_opendir(args->path);
+		if (dir == NULL)
+		{
+			td->td_retval[0] = -ENOENT;
+			return (ENOENT);
+		}
+		vfs_closedir(dir);
+	}
 
 	td->td_retval[0] = 0;
 	return (0);
