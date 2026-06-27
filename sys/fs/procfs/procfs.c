@@ -488,13 +488,16 @@ procfs_open(char *file, fileDescriptor_t *fd)
 	if (*p == '/')
 		p++;
 
-	/* Root directory */
-	if (*p == '\0') {
-		fd->ino   = 0;
-		fd->start = PFILE_DIR;
-		fd->size  = 0;
-		return 1;
-	}
+	/*
+	 * Root directory.  Reject the open (return 0) the way FAT/ubixfs do for a
+	 * directory: fopen() must fail on a dir so the VFS stat path falls through
+	 * to its vfs_opendir() probe and reports S_IFDIR.  Accepting it here made
+	 * stat("/proc") look like a regular file, so `ls /proc` treated it as a
+	 * file and printed the name instead of listing it.  Directory *listing*
+	 * goes through procfs_opendir()/readdir(), not this path.
+	 */
+	if (*p == '\0')
+		return 0;
 
 	/* Split leading PID component from optional rest */
 	for (slash = p; *slash && *slash != '/'; slash++)
@@ -568,13 +571,10 @@ procfs_open(char *file, fileDescriptor_t *fd)
 	pid = (u_int32_t)procfs_atoi(pidstr);
 	t   = schedFindTask(pid);
 
-	/* /N or /N/ — PID directory open */
-	if (*rest == '\0') {
-		fd->ino   = pid;
-		fd->start = PFILE_DIR;
-		fd->size  = 0;
-		return (t != NULL) ? 1 : 0;
-	}
+	/* /N or /N/ — PID directory: reject as a file open (see root note above);
+	 * existence is validated by procfs_opendir() when it is listed. */
+	if (*rest == '\0')
+		return 0;
 
 	if (!t)
 		return 0;
@@ -619,13 +619,10 @@ procfs_open(char *file, fileDescriptor_t *fd)
 		return 1;
 	}
 
-	/* /N/fd — fd directory open */
-	if (strcmp(rest, "fd") == 0) {
-		fd->ino   = pid;
-		fd->start = PFILE_DIR;
-		fd->size  = 0;
-		return 1;
-	}
+	/* /N/fd — fd directory: reject as a file open (see root note above); it is
+	 * listed via procfs_opendir()/readdir(). */
+	if (strcmp(rest, "fd") == 0)
+		return 0;
 
 	/* /N/fd/M — individual fd entry */
 	if (strncmp(rest, "fd/", 3) == 0) {
