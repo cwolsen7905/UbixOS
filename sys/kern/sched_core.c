@@ -255,6 +255,11 @@ int sched_init()
 	taskList->priority = QOS_REALTIME;
 	taskList->base_priority = QOS_REALTIME;
 	strncpy(taskList->name, "kernel", sizeof(taskList->name) - 1);
+	/* Root of the cwd-inheritance chain: a real "/" so relative paths (".",
+	 * "..", "foo") resolve.  Without this the field is empty and every child
+	 * inherits "", which getcwd() masks as "/" but vfs_opendir(".") resolves
+	 * to "" → findMount("") fails → ENOENT. */
+	strncpy(taskList->oInfo.cwd, "/", sizeof(taskList->oInfo.cwd) - 1);
 	pid_hash_insert(taskList);
 
 	kprintf("sched0: addr=0x%X\n", taskList);
@@ -289,6 +294,11 @@ kTask_t *schedNewTask()
 
 	tmpTask->usedMath = 0x0;
 	tmpTask->state = NEW;
+
+	/* Default cwd to "/" so relative-path resolution (vfs_opendir(".") etc.)
+	 * works for tasks that aren't forked from a parent (which would otherwise
+	 * inherit the parent's cwd).  fork() overwrites this via memcpy. */
+	strncpy(tmpTask->oInfo.cwd, "/", sizeof(tmpTask->oInfo.cwd) - 1);
 
 	memcpy(tmpTask->username, "UbixOS", 6);
 
