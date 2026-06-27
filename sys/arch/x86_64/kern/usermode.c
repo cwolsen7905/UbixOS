@@ -557,6 +557,12 @@ void md_map_user_page(u64 *aspace_root, u64 va, u64 pa, int executable)
 	x86_64_map_user_page_to((u64)(uintptr_t)aspace_root, va, pa, 1);
 }
 
+/** @return non-zero if @va already has a valid mapping in @aspace_root. */
+int md_user_mapped(u64 *aspace_root, u64 va)
+{
+	return x86_64_user_extract((uintptr_t)aspace_root, va) != 0;
+}
+
 /** Sync the I-cache after writing code (x86_64's I-cache is coherent: no-op). */
 void md_sync_icache(uintptr_t addr, u64 len)
 {

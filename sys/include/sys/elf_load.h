@@ -76,6 +76,14 @@ int elf64_load_demand(const char *path, u_int64_t *aspace_root, struct vm_map *m
 void md_map_user_page(u_int64_t *aspace_root, u_int64_t va, u_int64_t pa, int executable);
 
 /**
+ * @return non-zero if user VA @va already has a valid mapping in @aspace_root.
+ * Used by the demand-fault clustered read-ahead to avoid remapping (and leaking)
+ * a page a prior cluster already materialised, since faults are not strictly
+ * sequential.
+ */
+int md_user_mapped(u_int64_t *aspace_root, u_int64_t va);
+
+/**
  * Synchronize the I-cache for [@addr, @addr+@len) after writing code there.
  * No-op on architectures with coherent instruction caches.
  */

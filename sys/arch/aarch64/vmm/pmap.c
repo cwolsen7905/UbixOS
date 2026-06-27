@@ -188,6 +188,14 @@ void md_map_user_page(u_int64_t *aspace_root, u_int64_t va, u_int64_t pa, int ex
 }
 
 /**
+ * @return non-zero if @va already has a valid mapping in @aspace_root.
+ */
+int md_user_mapped(u_int64_t *aspace_root, u_int64_t va)
+{
+	return pmap_extract(aspace_root, va) != 0;
+}
+
+/**
  * Clean D-cache + invalidate I-cache for [@addr, @addr+@len) to the PoU so
  * freshly-loaded code is fetched correctly (64-byte line, QEMU cortex-a72).
  */
