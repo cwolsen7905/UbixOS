@@ -1151,6 +1151,32 @@ struct kern_utsname
  * settings (uname domainname kept empty for now). */
 static char g_hostname[65] = "uBix-WS001";
 
+/**
+ * Set the machine hostname — native syscall (int $0x81 slot 70, ubix_set_hostname).
+ * Copies the NUL-terminated @name into g_hostname (uname nodename, which is what
+ * gethostname reads), bounded to the buffer.  A boot step syncs it from ubistry
+ * /system/hostname so the registry is the source of truth.  No permission check
+ * yet.
+ *
+ * @return 0 on success, -1 if @name is NULL.
+ */
+int sys_set_hostname(struct thread *td, struct sys_set_hostname_args *args)
+{
+	const char *name = args->name;
+	int i;
+
+	if (name == NULL)
+	{
+		td->td_retval[0] = -1;
+		return (-1);
+	}
+	for (i = 0; i < (int)sizeof(g_hostname) - 1 && name[i] != '\0'; i++)
+		g_hostname[i] = name[i];
+	g_hostname[i] = '\0';
+	td->td_retval[0] = 0;
+	return (0);
+}
+
 int sys_uname(struct thread *td, struct sys_uname_args *args)
 {
 	struct kern_utsname *uts = (struct kern_utsname *)args->buf;

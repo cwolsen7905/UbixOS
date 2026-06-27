@@ -11,6 +11,10 @@ extern "C"
 	int ubix_test(void);
 	char *ubix_getcwd(char *buf, size_t size);
 
+	/* Set the machine hostname (uname nodename / what gethostname reads).  A boot
+	 * step syncs it from ubistry /system/hostname.  Returns 0 on success. */
+	int ubix_set_hostname(const char *name);
+
 	/* TTY line discipline control */
 	int tty_setraw(int val);  /* 1 = raw mode, 0 = canonical (default) */
 	int tty_setecho(int val); /* 1 = echo on (default), 0 = echo off */

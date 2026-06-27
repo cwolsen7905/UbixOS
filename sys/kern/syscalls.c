@@ -151,6 +151,10 @@ struct syscall_entry systemCalls[] = {
      "mpiWaitMessage",
      (sys_call_t *)sys_mpiWaitMessage,
      SYSCALL_VALID}, // 69 - blocking MPI receive (sleep until a message / timeout)
+    {ARG_COUNT(sys_set_hostname_args),
+     "set_hostname",
+     (sys_call_t *)sys_set_hostname,
+     SYSCALL_VALID}, // 70 - set machine hostname (ubix_set_hostname; ubistry->kernel sync)
 };
 
 int totalCalls = sizeof(systemCalls) / sizeof(struct syscall_entry);

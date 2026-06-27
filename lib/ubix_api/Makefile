@@ -10,7 +10,7 @@ OBJDIR  = ${OBJ_DIR}/obj/ubix_api
 # set ships in the shared object.  mount()/unmount() — which DID collide with musl's
 # mount() — moved to bin/automountd (its only caller) as fsmount.c.
 OBJS    = ubixcwd.o ttyctrl.o settty.o pty.o ubistry.o ulog.o views.o \
-          pidstatus.o netcfg.o display.o ubfspool.o ubixdisk.o \
+          pidstatus.o netcfg.o hostname.o display.o ubfspool.o ubixdisk.o \
           mpi_creatembox.o mpi_postmessage.o mpi_fetchmessage.o mpi_waitmessage.o mpi_destroymbox.o \
           mpi_rpc.o \
           sys_gettimeofday.o gettime.o sysinfo.o

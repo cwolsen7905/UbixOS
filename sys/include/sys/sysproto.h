@@ -280,6 +280,14 @@ struct sys_net_configure_args
 };
 int sys_net_configure(struct thread *, struct sys_net_configure_args *);
 
+struct sys_set_hostname_args
+{
+	char name_l_[PADL_(const char *)];
+	const char *name; /* user pointer to a NUL-terminated machine name */
+	char name_r_[PADR_(const char *)];
+};
+int sys_set_hostname(struct thread *, struct sys_set_hostname_args *);
+
 struct sys_vesa_modes_args
 {
 	char buf_l_[PADL_(void *)];
