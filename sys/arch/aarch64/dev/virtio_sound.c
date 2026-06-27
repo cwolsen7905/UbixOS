@@ -42,7 +42,7 @@
 #define AUDIO_GET_MUTE 0x4106
 
 /* ---- virtio-mmio transport (shared layout with virtio_gpu.c) ----------- */
-#define VIRTIO_MMIO_BASE 0x0A000000UL
+#define VIRTIO_MMIO_BASE (PHYSMAP_BASE + 0x0A000000UL) /* device regs via TTBR1 physmap (Phase 4) */
 #define VIRTIO_MMIO_SLOT 0x200UL
 #define VIRTIO_MMIO_SLOTS 32
 

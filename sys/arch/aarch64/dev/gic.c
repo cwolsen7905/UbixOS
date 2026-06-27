@@ -14,8 +14,11 @@
 #include "bringup.h"
 #include <ubixos/sched.h> /* sched() — timer-driven preemption */
 
-#define GICD_BASE 0x08000000UL
-#define GICC_BASE 0x08010000UL
+/* Reach the GIC distributor/CPU-interface MMIO through the TTBR1 physmap so the
+ * kernel keeps access once TTBR0 is user-only (Phase 4); block 0 is DEVICE-mapped
+ * in physmap_l1 (mmu.c). */
+#define GICD_BASE (PHYSMAP_BASE + 0x08000000UL)
+#define GICC_BASE (PHYSMAP_BASE + 0x08010000UL)
 
 #define GICD(off) (*(volatile u_int32_t *)(GICD_BASE + (off)))
 #define GICC(off) (*(volatile u_int32_t *)(GICC_BASE + (off)))
@@ -43,9 +46,9 @@
  */
 void gic_init(void)
 {
-	GICD(GICD_CTLR) = 1;   /* enable distributor */
-	GICC(GICC_PMR) = 0xFF; /* allow every priority */
-	GICC(GICC_CTLR) = 1;   /* enable CPU interface */
+	GICD(GICD_CTLR) = 1;           /* enable distributor */
+	GICC(GICC_PMR) = 0xFF;         /* allow every priority */
+	GICC(GICC_CTLR) = 1;           /* enable CPU interface */
 	gic_enable_intid(RESCHED_SGI); /* receive the reschedule IPI (banked GICD_ISENABLER0) */
 }
 

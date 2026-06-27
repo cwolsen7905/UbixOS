@@ -14,7 +14,7 @@
 #include <lib/kconsole.h>
 
 /* QEMU `virt` PL011 UART0. */
-#define PL011_BASE 0x09000000UL
+#define PL011_BASE (PHYSMAP_BASE + 0x09000000UL)             /* via TTBR1 physmap (Phase 4: TTBR0 user-only) */
 #define UART_DR (*(volatile u_int32_t *)(PL011_BASE + 0x00)) /* data */
 #define UART_FR (*(volatile u_int32_t *)(PL011_BASE + 0x18)) /* flags */
 #define UART_FR_RXFE (1u << 4)                               /* RX FIFO empty */

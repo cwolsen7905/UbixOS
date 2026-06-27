@@ -64,7 +64,7 @@ void md_uptime(u_int64_t *sec, u_int64_t *nsec)
 
 /* PL031 RTC on the QEMU `virt` board: its data register (offset 0) reads the
  * current wall-clock time as seconds since the Unix epoch. */
-#define PL031_BASE 0x09010000UL
+#define PL031_BASE (PHYSMAP_BASE + 0x09010000UL) /* via TTBR1 physmap (Phase 4: TTBR0 user-only) */
 #define PL031_DR (*(volatile u_int32_t *)(PL031_BASE + 0x00))
 
 /**

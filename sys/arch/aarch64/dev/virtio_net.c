@@ -26,7 +26,7 @@
 #include <string.h>
 
 /* QEMU `virt` virtio-mmio window: 32 slots of 0x200 bytes at 0x0a000000. */
-#define VIRTIO_MMIO_BASE 0x0A000000UL
+#define VIRTIO_MMIO_BASE (PHYSMAP_BASE + 0x0A000000UL) /* device regs via TTBR1 physmap (Phase 4) */
 #define VIRTIO_MMIO_SLOT 0x200UL
 #define VIRTIO_MMIO_SLOTS 32
 
