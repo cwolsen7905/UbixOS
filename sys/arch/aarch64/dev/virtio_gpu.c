@@ -23,7 +23,9 @@
 #include <sys/types.h>
 #include <vmm/vmm.h>
 #include <vmm/paging.h>
-#include <lib/kmalloc.h> /* sysID */
+#include <lib/kmalloc.h>   /* sysID */
+#include <lib/kprintf.h>   /* kprintf */
+#include <ubixos/vitals.h> /* systemVitals->sysTicks — GPU-command stall detector */
 #include <string.h>
 
 /* QEMU `virt` virtio-mmio window: 32 slots of 0x200 bytes at 0x0a000000. */
@@ -240,12 +242,30 @@ static u_int32_t gpu_cmd(u_int32_t reqlen, u_int32_t resplen)
 	dsb();
 	g_avail->idx++;
 	dsb();
+
+	/* Stall detector: time the notify+poll round trip in scheduler ticks.  Under
+	 * HVF the QUEUE_NOTIFY MMIO write traps and QEMU services the queue
+	 * synchronously, so a healthy command completes in 0 ticks; anything that
+	 * crosses a tick boundary (~10 ms at 100 Hz) is abnormal and worth logging.
+	 * Silent on the fast path, so it can stay in for the intermittent-slow-boot
+	 * hunt without flooding serial.log. */
+	u_int32_t t0 = systemVitals ? systemVitals->sysTicks : 0;
+
 	mmio_wr(VMMIO_QUEUE_NOTIFY, 0);
 
 	while (g_used->idx == g_last_used)
 		dsb();
 	g_last_used++;
 	dsb();
+
+	{
+		u_int32_t dt = (systemVitals ? systemVitals->sysTicks : 0) - t0;
+		if (dt >= 2)
+			kprintf("virtio-gpu: SLOW cmd type=0x%X waited %u ticks (resp=0x%X)\n",
+			        ((struct virtio_gpu_ctrl_hdr *)g_cmd)->type,
+			        dt,
+			        resp->type);
+	}
 	return resp->type;
 }
 
@@ -450,6 +470,7 @@ int aarch64_virtio_gpu_init(void)
 	int slot;
 	u_int32_t x, y;
 
+	kprintf("virtio-gpu: init begin\n");
 	for (slot = 0; slot < VIRTIO_MMIO_SLOTS; slot++)
 	{
 		volatile u_int8_t *base = (volatile u_int8_t *)(VIRTIO_MMIO_BASE + (u_int64_t)slot * VIRTIO_MMIO_SLOT);
@@ -464,10 +485,13 @@ int aarch64_virtio_gpu_init(void)
 			kprintf("virtio-gpu: slot %d is legacy (v1) — unsupported\n", slot);
 			return (-1);
 		}
+		kprintf("virtio-gpu: device at slot %d, setting up queue\n", slot);
 		if (gpu_setup_queue() != 0)
 			return (-1);
+		kprintf("virtio-gpu: queue ready, setting up display\n");
 		if (gpu_setup_display() != 0)
 			return (-1);
+		kprintf("virtio-gpu: display ready\n");
 		g_ready = 1;
 
 		/* Test pattern: a simple gradient so a graphical run is visibly alive. */
