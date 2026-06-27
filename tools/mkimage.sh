@@ -178,6 +178,25 @@ fi
 # canonical copy) wins over any etc/userdb.
 [ -f tools/userdb ] && cp tools/userdb "${STAGE}/etc/userdb" || true
 
+# Skeleton dotfiles.  Kept in the source tree as share/skel/dot.<name> (the "dot"
+# prefix keeps them visible/greppable in the repo, BSD mtree convention) and
+# installed as ~/.<name> into every home directory, plus /usr/share/skel for
+# on-device account creation.  Without these a fresh login shell (tcsh) has no
+# prompt/history config and the home dirs would be empty.
+if [ -d share/skel ]; then
+	mkdir -p "${STAGE}/usr/share/skel"
+	for _sk in share/skel/dot.*; do
+		[ -f "$_sk" ] || continue
+		_base=$(basename "$_sk")        # e.g. dot.tcshrc
+		_dot=".${_base#dot.}"           # e.g. .tcshrc
+		cp "$_sk" "${STAGE}/usr/share/skel/${_base}"
+		for _hd in "${STAGE}"/home/*/; do
+			[ -d "$_hd" ] && cp "$_sk" "${_hd}${_dot}"
+		done
+	done
+	echo "mkimage: installed skel dotfiles into /home/* and /usr/share/skel"
+fi
+
 # --- desktop-profile assets (the base profile ships none of these) ----------
 if [ "${PROFILE}" = desktop ]; then
 	mkdir -p "${STAGE}"/var/fonts "${STAGE}"/var/background "${STAGE}"/var/db \
