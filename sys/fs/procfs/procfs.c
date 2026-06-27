@@ -850,12 +850,12 @@ procfs_opendir(const char *path, kDIR_t *dir)
  * vfsReadDir
  * --------------------------------------------------------------------- */
 
-/* Per-pid regular files (index matches PFILE_* - 1); "fd" is a directory. */
+/* Per-pid entries; "fd" (the last) is a directory, the rest regular files. */
 static const char *procfs_pid_files[] = {
 	"status", "cmdline", "stat", "statm", "maps", "fd"
 };
-#define PROCFS_PID_NFILES  5
-#define PROCFS_PID_FD_IDX  4  /* index of "fd" entry — it's a DIR */
+#define PROCFS_PID_NFILES  6  /* all six entries (was 5, which dropped "fd") */
+#define PROCFS_PID_FD_IDX  5  /* index of "fd" — the DIR entry (was 4 == "maps") */
 
 static int
 procfs_readdir(kDIR_t *dir, struct kdirent *ent)
