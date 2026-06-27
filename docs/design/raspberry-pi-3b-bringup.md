@@ -86,8 +86,14 @@ PL011 on the 40-pin GPIO header (USB ports are USB/data, not serial):
   `tools/fetch-rpi3-firmware.sh` + `tools/make-rpi3-sd.sh` → `build/rpi3b/
   rpi3-sd.img`, dd to microSD. Serial on header pins 8(TX)/10(RX)/6(GND), 3.3 V,
   115200. **This is the first uBixOS code to run on real hardware.**
-- **M1 — Full kernel to serial.** EL2→EL1 drop; the **BCM2837 interrupt
-  controller** (peripheral IC + per-core local IC) + the ARM generic timer (100 Hz
+- **M0.5 — EL drop + DTB + memory map. ✅ CONFIRMED ON REAL HARDWARE (2026-06-27).**
+  Standalone, extends M0: gates to core 0, drops **EL2→EL1** (verified on HW: entry
+  EL `0x2` → now EL `0x1`), parses the firmware DTB (passed in x0 @ `0x2eff7400`,
+  valid, ~35 KB) and prints `/memory` — **real Pi 3 RAM: base `0x0`, size
+  `0x3b400000` (992 MB = 1 GB − 32 MB GPU split)**. Nails M1's three unknowns (EL
+  drop, DTB/FDT parse, the RAM-at-`0x0` layout) in isolation before the full kernel.
+- **M1 — Full kernel to serial.** EL2→EL1 drop (✅ proven in M0.5); the **BCM2837
+  interrupt controller** (peripheral IC + per-core local IC) + the ARM generic timer (100 Hz
   tick); the RAM-at-`0x0` link/physmap; PL011 as the real console. The substantial
   milestone (new IRQ controller).
 - **M2 — DTB.** Parse the firmware-supplied DTB (memory size, the peripheral base
