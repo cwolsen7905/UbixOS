@@ -124,6 +124,13 @@ void proc_fork_inherit_context(kTask_t *child)
 
 	child->uid = _current->uid;
 	child->gid = _current->gid;
+
+	/* Inherit the parent's process name + cmdline (Unix "comm"): a fork/clone child
+	 * runs the parent's image until it execve()s, so it should report the parent's
+	 * name, not be anonymous.  execve overwrites these via exec_set_name_cmdline.
+	 * Without this a posix_spawn/clone child shows up nameless in /proc + traces. */
+	memcpy(child->name, _current->name, sizeof(child->name));
+	memcpy(child->cmdline, _current->cmdline, sizeof(child->cmdline));
 }
 
 /**
