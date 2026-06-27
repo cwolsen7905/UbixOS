@@ -101,7 +101,7 @@ static void def_ctls()
 	/* kern.hostname — MIB 1,10 */
 	name[0] = 1;
 	name[1] = 10;
-	char s110[16] = "devel.ubixos.com";
+	char s110[16] = "uBix-WS001"; /* default machine name (matches uname nodename + ubistry seed) */
 	sysctl_add(name, name_len, "kern.hostname", &s110, 16);
 
 	/* kern.osrelease — MIB 1,2 */

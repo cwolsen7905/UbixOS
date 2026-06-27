@@ -185,7 +185,7 @@ int access(struct thread *td, struct access_args *uap)
 
 int mprotect(struct thread *td, struct mprotect_args *uap)
 {
-	u_int32_t base = (u_int32_t)uap->addr & ~0xFFFU;
+	u_int32_t base = (u_int32_t)(uintptr_t)uap->addr & ~0xFFFU;
 	u_int32_t end = base + round_page(uap->len);
 	u_int16_t flags = PAGE_PRESENT | PAGE_USER;
 
@@ -1144,6 +1144,13 @@ struct kern_utsname
 	char domainname[65];
 };
 
+/* The machine's hostname — uname(2)'s nodename, which is what musl's
+ * gethostname() reads.  Defaults to uBix-WS001 (matching the ubistry seed
+ * /system/hostname); a later boot step will sethostname() it from ubistry so the
+ * registry is the source of truth.  The network domain joins later from network
+ * settings (uname domainname kept empty for now). */
+static char g_hostname[65] = "uBix-WS001";
+
 int sys_uname(struct thread *td, struct sys_uname_args *args)
 {
 	struct kern_utsname *uts = (struct kern_utsname *)args->buf;
@@ -1156,7 +1163,7 @@ int sys_uname(struct thread *td, struct sys_uname_args *args)
 
 	memset(uts, 0, sizeof(*uts));
 	strncpy(uts->sysname, "UBIX", sizeof(uts->sysname) - 1);
-	strncpy(uts->nodename, "ubixos", sizeof(uts->nodename) - 1);
+	strncpy(uts->nodename, g_hostname, sizeof(uts->nodename) - 1);
 	strncpy(uts->release, UBIXOS_VERSION_RELEASE, sizeof(uts->release) - 1);
 	strncpy(uts->version, UBIXOS_VERSION_STRING, sizeof(uts->version) - 1);
 #if defined(__aarch64__)
