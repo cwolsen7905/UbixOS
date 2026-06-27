@@ -31,6 +31,7 @@
 #include <lib/libkern.h>
 #include <string.h>
 #include <ubixos/kpanic.h>
+#include <ubixos/vitals.h> /* systemVitals->sysTicks for the per-line timestamp */
 
 /*
  * The pure formatting engine (kvprintf / sprintf / snprintf / ksprintn / imax)
@@ -292,6 +293,18 @@ u_quad_t a, b;
 int printOff = 0x0;
 int ogprintOff = 0x1; /* retained for ABI; ogPrintf is retired */
 
+/*
+ * Per-line timestamp prefix: every kprintf line is prefixed with the raw
+ * scheduler tick count "[ticks] " so a serial.log diff shows WHERE time goes
+ * (a ~6000-tick gap at 100 Hz aarch64 == ~60 s — boot stalls jump right out).
+ * Raw ticks keep this arch-neutral (no SCHED_HZ in this MI file); divide by the
+ * arch tick rate for seconds.  Beginning-of-line state is tracked so a line
+ * built from several kprintf() calls is stamped once, at its start.  Set
+ * g_kprintf_timestamps = 0 to disable at runtime.
+ */
+int g_kprintf_timestamps = 0x1;
+static int g_kprintf_at_bol = 0x1;
+
 /**
  * Kernel formatted print.
  *
@@ -313,7 +326,22 @@ int kprintf(const char *fmt, ...)
 	buf[retval < (int)(sizeof(buf) - 1) ? retval : (int)(sizeof(buf) - 1)] = '\0';
 	va_end(ap);
 
+	/* Stamp the start of each logical line with the tick count.  systemVitals is
+	 * NULL until vitals0 init, so guard the deref (early lines stamp as [0]). */
+	if (g_kprintf_timestamps && g_kprintf_at_bol && buf[0] != '\0')
+	{
+		char ts[24];
+		u_int32_t ticks = systemVitals ? systemVitals->sysTicks : 0;
+		snprintf(ts, sizeof(ts), "[%u] ", ticks);
+		kconsole_emit(ts);
+	}
+
 	kconsole_emit(buf);
+
+	/* Track beginning-of-line for the next call: BOL again iff this output ended
+	 * with a newline (an empty line counts as still-at-BOL). */
+	if (buf[0] != '\0')
+		g_kprintf_at_bol = (buf[strlen(buf) - 1] == '\n');
 
 	return (retval);
 }
