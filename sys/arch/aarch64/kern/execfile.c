@@ -19,7 +19,7 @@
 #include <lib/kmalloc.h>
 #include <sys/elf_load.h>
 #include <vmm/vm_map.h> /* vm_map_t, vm_map_free, elf64_load_demand's target tree */
-#include <sys/elf64.h> /* Elf64_Ehdr — peek the type for the load base */
+#include <sys/elf64.h>  /* Elf64_Ehdr — peek the type for the load base */
 #include <fs/vfs/file.h>
 #include <string.h>
 
@@ -32,7 +32,7 @@
 #define AT_PAGESZ 6     /* auxv: aarch64 musl reads PAGE_SIZE from here (else malloc fails) */
 
 #define EXEC_MAX (256 * 1024 * 1024) /* cap on an ELF image we'll load (self-hosted clang ~100 MB) */
-#define INITIAL_KSTACK_SIZE 65536  /* 64 KB kernelStack (matches schedNewTask kmalloc + KSTACK_SIZE) */
+#define INITIAL_KSTACK_SIZE 65536    /* 64 KB kernelStack (matches schedNewTask kmalloc + KSTACK_SIZE) */
 
 /* SysV auxiliary-vector types (Linux/musl ABI — musl's __libc_start_main reads
  * AT_PHDR/PHENT/PHNUM to find the program headers, AT_BASE for the linker's own
@@ -381,16 +381,17 @@ static int build_user_stack(u_int64_t *l1,
 	stack_base = vmm_find_free_pages_contig(DYN_STACK_PAGES, sysID);
 	if (stack_base == 0)
 		return (-1);
-	memset((void *)stack_base, 0, (size_t)DYN_STACK_PAGES * PAGE_SIZE);
+	/* The kernel zeroes + fills the stack through the physmap (stack_base is a raw
+	 * physical run); pmap_map_user_page maps the PHYSICAL frames to the user VA. */
+	memset((void *)(uintptr_t)AARCH64_VIRT_OF(stack_base), 0, (size_t)DYN_STACK_PAGES * PAGE_SIZE);
 	for (i = 0; i < DYN_STACK_PAGES; i++)
-		pmap_map_user_page(l1,
-		                   DYN_STACK_VA + (u_int64_t)i * PAGE_SIZE,
-		                   (u_int64_t)(stack_base + (uintptr_t)i * PAGE_SIZE),
-		                   0);
+		pmap_map_user_page(
+		    l1, DYN_STACK_VA + (u_int64_t)i * PAGE_SIZE, (u_int64_t)(stack_base + (uintptr_t)i * PAGE_SIZE), 0);
 
-	/* build_dyn_stack writes top-down from the topmost page.  Reserve the lower
-	 * half for runtime growth; the argv/env/auxv vector may use the top half. */
-	*out_usp = build_dyn_stack(stack_base + (uintptr_t)(DYN_STACK_PAGES - 1) * PAGE_SIZE,
+	/* build_dyn_stack writes top-down from the topmost page (kernel access via the
+	 * physmap).  Reserve the lower half for runtime growth; the argv/env/auxv
+	 * vector may use the top half. */
+	*out_usp = build_dyn_stack(AARCH64_VIRT_OF(stack_base + (uintptr_t)(DYN_STACK_PAGES - 1) * PAGE_SIZE),
 	                           DYN_STACK_TOP - PAGE_SIZE,
 	                           argv,
 	                           argc,

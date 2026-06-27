@@ -32,7 +32,10 @@ static int map_one_anon_page(u_int64_t *aspace_root, uintptr_t va)
 
 	if (frame == 0)
 		return -1;
-	memset((void *)frame, 0, PAGE_SIZE); /* anonymous pages read as zero */
+	/* Zero through the MI phys->virt window (aarch64 physmap / x86_64 P2V) — the
+	 * kernel no longer has a low identity once TTBR0 is user-only.  The mapping
+	 * still takes the PHYSICAL frame. */
+	memset(md_phys_to_virt(frame), 0, PAGE_SIZE); /* anonymous pages read as zero */
 	md_map_user_page(aspace_root, (u_int64_t)va, (u_int64_t)frame, 0 /* data, not executable */);
 	return 0;
 }
