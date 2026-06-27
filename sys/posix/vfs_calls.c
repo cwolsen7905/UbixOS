@@ -371,8 +371,15 @@ int sys_pread(struct thread *td, struct sys_pread_args *args)
 		return (-1);
 	}
 
-	if (args->fd > 3)
+	if (fd->fd != NULL)
 	{
+		/* Regular file: positional read at args->offset, leaving the shared
+		 * fd->offset undisturbed.  Dispatch on the fd TYPE (a real fileDescriptor_t),
+		 * NOT the fd NUMBER — a freshly opened file legitimately lands on fd 3 when
+		 * stdin/stdout/stderr (0/1/2) are the only lower fds, and the old "fd > 3"
+		 * test routed that file read to the console tty, which blocks forever (the
+		 * on-device clang/cc1 hang: pread(fd=3) of the source file went to the
+		 * console instead of the FS).  This mirrors sys_read's fd->fd dispatch. */
 		offset = fd->fd->offset;
 		fd->fd->offset = args->offset;
 		td->td_retval[0] = fread(args->buf, args->nbyte, 1, fd->fd);
@@ -380,8 +387,8 @@ int sys_pread(struct thread *td, struct sys_pread_args *args)
 	}
 	else if (g_console_ops != NULL && g_console_ops->read != NULL)
 	{
-		/* Console placeholder fds (<=3): tty read via the fileops (path B); the
-		 * pread offset is meaningless for a terminal, as before. */
+		/* Console placeholder fds (no backing file): tty read via the fileops
+		 * (path B); the pread offset is meaningless for a terminal, as before. */
 		return (g_console_ops->read(fd, td, (void *)args->buf, args->nbyte));
 	}
 	else
@@ -846,7 +853,8 @@ int kern_openat(struct thread *thr, int afd, char *path, int flags, int mode)
 			if (*p == '\0')
 			{
 				int slot = pty_slot_for_pts(n);
-				tty_term *t = (slot >= 0 && g_tty_find) ? (tty_term *)g_tty_find((u_int16_t)slot) : NULL;
+				tty_term *t =
+				    (slot >= 0 && g_tty_find) ? (tty_term *)g_tty_find((u_int16_t)slot) : NULL;
 				if (t == NULL)
 				{
 					fdestroy(thr, nfp, fd);
