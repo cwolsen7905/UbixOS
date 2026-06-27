@@ -244,15 +244,15 @@ static int virtio_blk_read(struct ubx_device *dev, u_int32_t lba, u_int32_t coun
 		*g_status = 0xFF;
 
 		/* Three-descriptor chain: header (R) -> data (W, n sectors) -> status (W). */
-		g_desc[0].addr = (u_int64_t)(uintptr_t)g_hdr;
+		g_desc[0].addr = AARCH64_PHYS_OF((uintptr_t)g_hdr);
 		g_desc[0].len = sizeof(struct virtio_blk_req);
 		g_desc[0].flags = VIRTQ_DESC_F_NEXT;
 		g_desc[0].next = 1;
-		g_desc[1].addr = (u_int64_t)(uintptr_t)g_batch;
+		g_desc[1].addr = AARCH64_PHYS_OF((uintptr_t)g_batch);
 		g_desc[1].len = n * 512;
 		g_desc[1].flags = VIRTQ_DESC_F_NEXT | VIRTQ_DESC_F_WRITE;
 		g_desc[1].next = 2;
-		g_desc[2].addr = (u_int64_t)(uintptr_t)g_status;
+		g_desc[2].addr = AARCH64_PHYS_OF((uintptr_t)g_status);
 		g_desc[2].len = 1;
 		g_desc[2].flags = VIRTQ_DESC_F_WRITE;
 		g_desc[2].next = 0;
@@ -304,15 +304,15 @@ static int virtio_blk_write(struct ubx_device *dev, u_int32_t lba, u_int32_t cou
 		*g_status = 0xFF;
 
 		/* Three-descriptor chain: header (R) -> data (R) -> status (W). */
-		g_desc[0].addr = (u_int64_t)(uintptr_t)g_hdr;
+		g_desc[0].addr = AARCH64_PHYS_OF((uintptr_t)g_hdr);
 		g_desc[0].len = sizeof(struct virtio_blk_req);
 		g_desc[0].flags = VIRTQ_DESC_F_NEXT;
 		g_desc[0].next = 1;
-		g_desc[1].addr = (u_int64_t)(uintptr_t)g_data;
+		g_desc[1].addr = AARCH64_PHYS_OF((uintptr_t)g_data);
 		g_desc[1].len = 512;
 		g_desc[1].flags = VIRTQ_DESC_F_NEXT;
 		g_desc[1].next = 2;
-		g_desc[2].addr = (u_int64_t)(uintptr_t)g_status;
+		g_desc[2].addr = AARCH64_PHYS_OF((uintptr_t)g_status);
 		g_desc[2].len = 1;
 		g_desc[2].flags = VIRTQ_DESC_F_WRITE;
 		g_desc[2].next = 0;
@@ -378,27 +378,30 @@ static int virtio_blk_setup_queue(void)
 	iopage = vmm_find_free_page(sysID);
 	if (qpage == 0 || iopage == 0)
 		return (-1);
-	memset((void *)qpage, 0, PAGE_SIZE);
-	memset((void *)iopage, 0, PAGE_SIZE);
+	/* The driver ACCESSES the DMA pages through the physmap (Convention B); the
+	 * DEVICE is handed the PHYSICAL qpage/iopage — in the queue registers below and
+	 * in every descriptor .addr field (AARCH64_PHYS_OF of the access pointer). */
+	memset((void *)(uintptr_t)AARCH64_VIRT_OF(qpage), 0, PAGE_SIZE);
+	memset((void *)(uintptr_t)AARCH64_VIRT_OF(iopage), 0, PAGE_SIZE);
 
-	g_desc = (struct virtq_desc *)(qpage + 0);
-	g_avail = (struct virtq_avail *)(qpage + 256);
-	g_used = (struct virtq_used *)(qpage + 512);
-	g_hdr = (struct virtio_blk_req *)(iopage + 0);
-	g_data = (u_int8_t *)(iopage + 64);
-	g_status = (volatile u_int8_t *)(iopage + 64 + 512);
+	g_desc = (struct virtq_desc *)(uintptr_t)AARCH64_VIRT_OF(qpage + 0);
+	g_avail = (struct virtq_avail *)(uintptr_t)AARCH64_VIRT_OF(qpage + 256);
+	g_used = (struct virtq_used *)(uintptr_t)AARCH64_VIRT_OF(qpage + 512);
+	g_hdr = (struct virtio_blk_req *)(uintptr_t)AARCH64_VIRT_OF(iopage + 0);
+	g_data = (u_int8_t *)(uintptr_t)AARCH64_VIRT_OF(iopage + 64);
+	g_status = (volatile u_int8_t *)(uintptr_t)AARCH64_VIRT_OF(iopage + 64 + 512);
 	/* Contiguous 64 KB DMA bounce for batched multi-sector reads. */
-	g_batch = (u_int8_t *)(uintptr_t)vmm_find_free_pages_contig(BLK_BATCH_PAGES, sysID);
-	if (g_batch == 0)
+	g_batch = (u_int8_t *)(uintptr_t)AARCH64_VIRT_OF(vmm_find_free_pages_contig(BLK_BATCH_PAGES, sysID));
+	if (AARCH64_PHYS_OF((uintptr_t)g_batch) == 0)
 		return (-1);
 	g_last_used = 0;
 
-	mmio_wr(VMMIO_QUEUE_DESC_LOW, (u_int32_t)(uintptr_t)g_desc);
-	mmio_wr(VMMIO_QUEUE_DESC_HIGH, (u_int32_t)((u_int64_t)(uintptr_t)g_desc >> 32));
-	mmio_wr(VMMIO_QUEUE_DRIVER_LOW, (u_int32_t)(uintptr_t)g_avail);
-	mmio_wr(VMMIO_QUEUE_DRIVER_HIGH, (u_int32_t)((u_int64_t)(uintptr_t)g_avail >> 32));
-	mmio_wr(VMMIO_QUEUE_DEVICE_LOW, (u_int32_t)(uintptr_t)g_used);
-	mmio_wr(VMMIO_QUEUE_DEVICE_HIGH, (u_int32_t)((u_int64_t)(uintptr_t)g_used >> 32));
+	mmio_wr(VMMIO_QUEUE_DESC_LOW, (u_int32_t)qpage);
+	mmio_wr(VMMIO_QUEUE_DESC_HIGH, (u_int32_t)((u_int64_t)qpage >> 32));
+	mmio_wr(VMMIO_QUEUE_DRIVER_LOW, (u_int32_t)(qpage + 256));
+	mmio_wr(VMMIO_QUEUE_DRIVER_HIGH, (u_int32_t)((u_int64_t)(qpage + 256) >> 32));
+	mmio_wr(VMMIO_QUEUE_DEVICE_LOW, (u_int32_t)(qpage + 512));
+	mmio_wr(VMMIO_QUEUE_DEVICE_HIGH, (u_int32_t)((u_int64_t)(qpage + 512) >> 32));
 	dsb();
 	mmio_wr(VMMIO_QUEUE_READY, 1);
 
