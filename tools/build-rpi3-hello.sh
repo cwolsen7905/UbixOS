@@ -17,8 +17,9 @@ mkdir -p "$OUT"
 CFLAGS="-ffreestanding -nostdlib -mgeneral-regs-only -fno-pic -fno-stack-protector -Wall -Wextra"
 
 "${CROSS}gcc" $CFLAGS -c "$SRC/start.S" -o "$OUT/start.o"
+"${CROSS}gcc" $CFLAGS -c "$SRC/vectors.S" -o "$OUT/vectors.o"
 "${CROSS}gcc" $CFLAGS -O2 -c "$SRC/hello.c" -o "$OUT/hello.o"
-"${CROSS}ld" -T "$SRC/m0.ld" "$OUT/start.o" "$OUT/hello.o" -o "$OUT/rpi3b-m0.elf"
+"${CROSS}ld" -T "$SRC/m0.ld" "$OUT/start.o" "$OUT/vectors.o" "$OUT/hello.o" -o "$OUT/rpi3b-m0.elf"
 "${CROSS}objcopy" -O binary "$OUT/rpi3b-m0.elf" "$OUT/kernel8.img"
 
 echo "built $OUT/kernel8.img ($(wc -c < "$OUT/kernel8.img") bytes)"

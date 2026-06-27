@@ -92,10 +92,21 @@ PL011 on the 40-pin GPIO header (USB ports are USB/data, not serial):
   valid, ~35 KB) and prints `/memory` — **real Pi 3 RAM: base `0x0`, size
   `0x3b400000` (992 MB = 1 GB − 32 MB GPU split)**. Nails M1's three unknowns (EL
   drop, DTB/FDT parse, the RAM-at-`0x0` layout) in isolation before the full kernel.
-- **M1 — Full kernel to serial.** EL2→EL1 drop (✅ proven in M0.5); the **BCM2837
-  interrupt controller** (peripheral IC + per-core local IC) + the ARM generic timer (100 Hz
-  tick); the RAM-at-`0x0` link/physmap; PL011 as the real console. The substantial
-  milestone (new IRQ controller).
+- **M0.75 — Timer interrupt via the BCM controller. ✅ CONFIRMED ON REAL HARDWARE
+  (2026-06-27).** Standalone, extends M0.5: an EL1 vector table (`vectors.S`,
+  VBAR_EL1, 2 KB-aligned), the **BCM2837 "ARM local" interrupt controller**
+  (`0x40000000`) routing the EL1 physical-timer IRQ (CNTPNSIRQ) to core 0, and the
+  architected timer re-arming in the handler → ticks roll on hardware. `start.S`
+  also sets `CNTHCTL_EL2` so EL1 can use the physical timer. Retires M1's
+  highest-risk unknown — the interrupt controller (`gic.c` does NOT transfer) — and
+  it's the engine the scheduler runs on.
+- **M1 — Full kernel to serial.** EL2→EL1 drop, the BCM interrupt controller, and
+  the architected timer are all ✅ **proven standalone** (M0.5/M0.75). The remaining
+  work is **integrating the real kernel**: the RAM-at-`0x0` link/physmap (build on
+  the in-progress higher-half migration — parameterize the physmap base) + a Pi
+  board target (port the proven M0.75 device code: PL011 console, BCM IRQ
+  controller, timer) + PL011 as the kernel console. **Gated on the higher-half
+  work landing.**
 - **M2 — DTB.** Parse the firmware-supplied DTB (memory size, the peripheral base
   — so the same kernel can target Pi 3 vs QEMU vs H618 by DTB).
 - **M3 — SMP.** Start cores 1–3 via the **spin-table** release addresses; per-core

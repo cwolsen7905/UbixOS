@@ -23,6 +23,10 @@ _start:
 	b.ne	at_el1			/* already EL1? skip the drop */
 
 	/* --- drop EL2 -> EL1 --- */
+	mrs	x2, cnthctl_el2
+	orr	x2, x2, #3		/* EL1PCEN | EL1PCTEN: let EL1 use the phys timer/counter */
+	msr	cnthctl_el2, x2
+	msr	cntvoff_el2, xzr	/* zero the virtual offset */
 	movz	x2, #0x8000, lsl #16	/* HCR_EL2.RW (bit 31) = 1: EL1 is AArch64 */
 	msr	hcr_el2, x2
 	ldr	x2, =0x30d00800		/* SCTLR_EL1: RES1 bits, MMU/caches off */

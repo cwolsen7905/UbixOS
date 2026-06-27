@@ -1,14 +1,14 @@
 /*-
  * Copyright (c) 2002-2026 The UbixOS Project.  All rights reserved.
  *
- * Raspberry Pi 3 Model B v1.2 (BCM2837) - M0.5: self-init PL011, drop to EL1
- * (in start.S), parse the firmware DTB's /memory, and print the real memory map
- * + current EL over serial.  Confirms on real hardware - in isolation, before
- * the full kernel - that the EL2->EL1 drop works, the firmware passes a valid
- * DTB, and our minimal FDT reader parses the Pi's actual device tree.
+ * Raspberry Pi 3 Model B v1.2 (BCM2837) - M0.75: self-init PL011, drop to EL1
+ * (start.S), parse the firmware DTB's /memory, then take real timer interrupts
+ * through the BCM2837 "ARM local" interrupt controller - proving, on hardware in
+ * isolation, the one piece that does NOT transfer from the QEMU/GIC port: the Pi
+ * interrupt controller + the architected timer.  Builds toward the full-kernel M1.
  *
- * PL011 @ 0x3F201000 (peri base 0x3F000000); GPIO @ 0x3F200000.  We init the
- * PL011 ourselves (the Pi firmware doesn't reliably leave it configured).
+ * PL011 @ 0x3F201000, GPIO @ 0x3F200000 (peri base 0x3F000000); the per-core
+ * local block (timer IRQ routing, IPIs) is at 0x40000000.
  */
 
 #define PL011_BASE 0x3F201000UL
@@ -28,7 +28,15 @@
 
 #define MMIO(a) (*(volatile unsigned int *)(unsigned long)(a))
 
-/* --- PL011 console (self-initialized; see M0 history in raspberry-pi-3b-bringup.md) --- */
+/* BCM2836/2837 per-core "ARM local" block - routes the architected-timer IRQs. */
+#define LOCAL_BASE          0x40000000UL
+#define CORE0_TIMER_IRQCNTL 0x40 /* Core 0 timers interrupt control */
+#define CORE0_IRQ_SOURCE    0x60 /* Core 0 IRQ source               */
+#define LMMIO(off) (*(volatile unsigned int *)(LOCAL_BASE + (off)))
+
+static volatile unsigned long g_ticks; /* timer interrupts taken */
+
+/* --- PL011 console (self-initialized; the Pi firmware doesn't leave it set up) --- */
 
 static void short_delay(int n)
 {
@@ -84,12 +92,6 @@ static void put_hex(unsigned long v)
 	}
 }
 
-static void delay(volatile unsigned long n)
-{
-	while (n-- != 0)
-		__asm__ volatile("nop");
-}
-
 /** @return the current Exception Level (1, 2, ...). */
 static unsigned long current_el(void)
 {
@@ -139,7 +141,7 @@ static int fdt_memory(const unsigned char *dtb, unsigned long *base, unsigned lo
 {
 	if (be32(dtb) != 0xd00dfeedu)
 		return 0;
-	const unsigned char *p = dtb + be32(dtb + 8);  /* off_dt_struct  */
+	const unsigned char *p = dtb + be32(dtb + 8);            /* off_dt_struct  */
 	const char *strs = (const char *)(dtb + be32(dtb + 12)); /* off_dt_strings */
 	unsigned int addr_cells = 2, size_cells = 2;
 	int depth = 0, in_mem = 0, mem_depth = -1;
@@ -192,42 +194,87 @@ static int fdt_memory(const unsigned char *dtb, unsigned long *base, unsigned lo
 	return 0;
 }
 
+/* --- architected timer routed through the BCM local interrupt controller --- */
+
+/** @return the architected timer frequency (Hz) from CNTFRQ_EL0. */
+static unsigned long timer_freq(void)
+{
+	unsigned long f;
+	__asm__ volatile("mrs %0, cntfrq_el0" : "=r"(f));
+	return f;
+}
+
 /**
- * M0.5 entry: report the entry EL, the current EL (proving the EL2->EL1 drop),
- * and the firmware DTB's /memory map.  Loops with a delay for easy probing.
+ * Install the vector table, arm the EL1 physical timer for a ~1 s interval, route
+ * its non-secure IRQ (CNTPNSIRQ) to core 0 via the BCM local controller, and
+ * unmask IRQs.
+ */
+static void timer_init(void)
+{
+	extern char vectors[];
+
+	__asm__ volatile("msr vbar_el1, %0" ::"r"(vectors));
+	LMMIO(CORE0_TIMER_IRQCNTL) = (1u << 1); /* CNTPNSIRQ -> core 0 IRQ */
+	__asm__ volatile("msr cntp_tval_el0, %0" ::"r"(timer_freq()));
+	__asm__ volatile("msr cntp_ctl_el0, %0" ::"r"(1UL)); /* enable, unmasked */
+	__asm__ volatile("msr daifclr, #2");                 /* unmask IRQ at the CPU */
+}
+
+/** Timer IRQ handler: confirm the source, re-arm, count, print a tick. */
+void irq_handler(void)
+{
+	if ((LMMIO(CORE0_IRQ_SOURCE) & (1u << 1)) != 0) {
+		__asm__ volatile("msr cntp_tval_el0, %0" ::"r"(timer_freq()));
+		g_ticks++;
+		uart_puts("  tick ");
+		put_hex(g_ticks);
+		uart_puts("\n");
+	}
+}
+
+/** Any unexpected exception: report and halt (see vectors.S). */
+void bad_exception(void)
+{
+	uart_puts("  !! unexpected exception\n");
+}
+
+/**
+ * M0.75 entry: print the EL + DTB /memory once, then start the timer and idle in
+ * WFI - each BCM-delivered timer IRQ prints a tick, proving the new interrupt
+ * controller + the architected timer on real hardware.
  */
 void m0_main(unsigned long dtb, unsigned long entry_el)
 {
-	uart_init();
-	for (;;) {
-		const unsigned char *d = (const unsigned char *)dtb;
-		unsigned long base = 0, size = 0;
+	const unsigned char *d = (const unsigned char *)dtb;
+	unsigned long base = 0, size = 0;
 
-		uart_puts("\nuBixOS RPi3 M0.5\n");
-		uart_puts("  entry EL: ");
-		put_hex(entry_el);
-		uart_puts("  now EL: ");
-		put_hex(current_el());
-		uart_puts("\n  DTB @ ");
-		put_hex(dtb);
-		if (be32(d) == 0xd00dfeedu) {
-			uart_puts(" valid, size ");
-			put_hex(be32(d + 4));
-			uart_puts("\n");
-			if (fdt_memory(d, &base, &size)) {
-				uart_puts("  /memory base ");
-				put_hex(base);
-				uart_puts(" size ");
-				put_hex(size);
-				uart_puts("\n");
-			} else {
-				uart_puts("  /memory not found\n");
-			}
-		} else {
-			uart_puts(" BAD magic ");
-			put_hex(be32(d));
+	uart_init();
+	uart_puts("\nuBixOS RPi3 M0.75\n");
+	uart_puts("  entry EL: ");
+	put_hex(entry_el);
+	uart_puts("  now EL: ");
+	put_hex(current_el());
+	uart_puts("\n  DTB @ ");
+	put_hex(dtb);
+	if (be32(d) == 0xd00dfeedu) {
+		uart_puts(" valid, size ");
+		put_hex(be32(d + 4));
+		uart_puts("\n");
+		if (fdt_memory(d, &base, &size)) {
+			uart_puts("  /memory base ");
+			put_hex(base);
+			uart_puts(" size ");
+			put_hex(size);
 			uart_puts("\n");
 		}
-		delay(50000000UL);
+	} else {
+		uart_puts(" BAD magic\n");
 	}
+	uart_puts("  timer freq ");
+	put_hex(timer_freq());
+	uart_puts(" - starting ticks:\n");
+
+	timer_init();
+	for (;;)
+		__asm__ volatile("wfi");
 }
