@@ -127,9 +127,17 @@ static u_int8_t *g_data;             /* 512-byte data bounce buffer (DMA) */
  * old per-sector loop did a cooperative sched_yield per 512 bytes — ~2000 of them
  * for a 1 MB file — which dominated boot.  64 KB (128 sectors) of contiguous DMA
  * memory lets a big read complete in count/128 round-trips. */
-#define BLK_BATCH_SECS 128
+#define BLK_BATCH_SECS 1024 /* 512 KB per request — fewer requests for big reads */
 #define BLK_BATCH_PAGES ((BLK_BATCH_SECS * 512) / PAGE_SIZE)
 static u_int8_t *g_batch;
+
+/* Bounded spin before falling back to a cooperative yield: the device finishes a
+ * DMA in microseconds (the backing image is host-page-cached under HVF), so a
+ * sched_yield on every request just hands the CPU to other cooperative tasks
+ * mid-read and adds a scheduler round-trip of latency to each batch.  Spin
+ * re-checking the used ring first; only a genuinely slow completion reaches the
+ * yield.  ~2M iterations ≈ a few ms cap before yielding. */
+#define BLK_SPIN_CAP 2000000
 static volatile u_int8_t *g_status;  /* 1-byte status (DMA) */
 static u_int16_t g_last_used;        /* last consumed used-ring index */
 static int g_ready;                  /* non-zero once attached */
@@ -188,6 +196,28 @@ static void *virtio_blk_device_find(int major, int minor)
 }
 
 /**
+ * Wait for the in-flight request to complete, then consume it.  Spins re-checking
+ * the used ring (the device completes in microseconds) and only yields if a
+ * completion is genuinely slow — see BLK_SPIN_CAP.  The dsb's "memory" clobber
+ * forces the used-ring re-read each spin.
+ */
+static void blk_wait_used(void)
+{
+	u_int32_t spin = 0;
+
+	while (g_used->idx == g_last_used)
+	{
+		dsb();
+		if (++spin < BLK_SPIN_CAP)
+			continue; /* fast path: keep spinning for the device */
+		spin = 0;
+		sched_yield(); /* genuinely slow — yield cooperatively (no-op before sched is up) */
+	}
+	g_last_used++;
+	dsb();
+}
+
+/**
  * Read @count sectors starting at @lba into @buf via virtio-blk, up to
  * BLK_BATCH_SECS sectors per request (one notify + one poll per batch, not per
  * sector — the per-sector cooperative sched_yield dominated boot).  Matches
@@ -233,15 +263,7 @@ static int virtio_blk_read(struct ubx_device *dev, u_int32_t lba, u_int32_t coun
 		dsb();
 		mmio_wr(VMMIO_QUEUE_NOTIFY, 0);
 
-		while (g_used->idx == g_last_used)
-		{
-			dsb();
-			sched_yield(); /* cooperative wait — don't hard-spin the core through disk
-			                * I/O (was a full freeze per read/write on this non-
-			                * preemptible kernel).  No-ops before the scheduler is up. */
-		}
-		g_last_used++;
-		dsb();
+		blk_wait_used();
 
 		if (*g_status != VIRTIO_BLK_S_OK)
 		{
@@ -301,15 +323,7 @@ static int virtio_blk_write(struct ubx_device *dev, u_int32_t lba, u_int32_t cou
 		dsb();
 		mmio_wr(VMMIO_QUEUE_NOTIFY, 0);
 
-		while (g_used->idx == g_last_used)
-		{
-			dsb();
-			sched_yield(); /* cooperative wait — don't hard-spin the core through disk
-			                * I/O (was a full freeze per read/write on this non-
-			                * preemptible kernel).  No-ops before the scheduler is up. */
-		}
-		g_last_used++;
-		dsb();
+		blk_wait_used();
 
 		if (*g_status != VIRTIO_BLK_S_OK)
 		{
