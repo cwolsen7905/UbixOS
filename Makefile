@@ -205,11 +205,15 @@ UBIXFS_KERN_INCS = -I${CURDIR}/sys/fs/ubixfs/compat -I${CURDIR}/lib/ubixfs_core 
 
 kernel-aarch64:
 	@mkdir -p ${OBJ_DIR}/boot ${OBJ_DIR}/obj/sys
-	@for f in `find ${CURDIR}/sys/arch/aarch64 -name '*.S'`; do \
+	@# Exclude board/ — per-board bare-metal targets (e.g. opizero2w) carry their
+	@# own start.S + linker script (m0.ld, _image_size) and must NOT be swept into
+	@# the QEMU virt kernel, where their start.o collides with kern/start.o on the
+	@# flat obj/sys/ basename and the wrong one wins by find(1) order.
+	@for f in `find ${CURDIR}/sys/arch/aarch64 -name '*.S' -not -path '*/board/*'`; do \
 	    o=${OBJ_DIR}/obj/sys/`basename $$f .S`.o; \
 	    sh ${CURDIR}/tools/kbuild-cc.sh "${KERN_CC} [asm] " $$o $$f ${KERN_CC} ${KERN_CCFLAGS} ${AARCH64_KCFLAGS} || exit 1; \
 	done
-	@for f in `find ${CURDIR}/sys/arch/aarch64 -name '*.c'`; do \
+	@for f in `find ${CURDIR}/sys/arch/aarch64 -name '*.c' -not -path '*/board/*'`; do \
 	    o=${OBJ_DIR}/obj/sys/`basename $$f .c`.o; \
 	    sh ${CURDIR}/tools/kbuild-cc.sh "${KERN_CC} [c]   " $$o $$f ${KERN_CC} ${KERN_CCFLAGS} ${AARCH64_KCFLAGS} -std=c99 || exit 1; \
 	done
