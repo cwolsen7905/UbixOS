@@ -17,8 +17,8 @@
 /* Reach the GIC distributor/CPU-interface MMIO through the TTBR1 physmap so the
  * kernel keeps access once TTBR0 is user-only (Phase 4); block 0 is DEVICE-mapped
  * in physmap_l1 (mmu.c). */
-#define GICD_BASE (PHYSMAP_BASE + 0x08000000UL)
-#define GICC_BASE (PHYSMAP_BASE + 0x08010000UL)
+#define GICD_BASE (PHYSMAP_BASE + g_board->gicd_base)
+#define GICC_BASE (PHYSMAP_BASE + g_board->gicc_base)
 
 #define GICD(off) (*(volatile u_int32_t *)(GICD_BASE + (off)))
 #define GICC(off) (*(volatile u_int32_t *)(GICC_BASE + (off)))

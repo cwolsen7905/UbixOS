@@ -13,8 +13,9 @@
 #include "bringup.h"
 #include <lib/kconsole.h>
 
-/* QEMU `virt` PL011 UART0. */
-#define PL011_BASE (PHYSMAP_BASE + 0x09000000UL)             /* via TTBR1 physmap (Phase 4: TTBR0 user-only) */
+/* PL011 UART0, base from the active board (M1: g_board->uart_base; QEMU 0x09000000,
+ * Pi 0x3F201000), reached through the TTBR1 physmap (Phase 4: TTBR0 user-only). */
+#define PL011_BASE (PHYSMAP_BASE + g_board->uart_base)
 #define UART_DR (*(volatile u_int32_t *)(PL011_BASE + 0x00)) /* data */
 #define UART_FR (*(volatile u_int32_t *)(PL011_BASE + 0x18)) /* flags */
 #define UART_FR_RXFE (1u << 4)                               /* RX FIFO empty */

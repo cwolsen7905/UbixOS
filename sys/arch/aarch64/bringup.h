@@ -23,6 +23,21 @@
 #define AARCH64_PHYS_OF(va) ((uintptr_t)(va) - PHYSMAP_BASE)
 #define AARCH64_VIRT_OF(pa) ((uintptr_t)(pa) + PHYSMAP_BASE)
 
+/* M1 board abstraction (docs/design/raspberry-pi-3b-bringup.md): the kernel was
+ * QEMU-`virt`-hardcoded; a struct aarch64_board carries the per-board MMIO bases so
+ * one kernel can target QEMU virt, the Raspberry Pi 3 (BCM2837), and the Allwinner
+ * H618.  g_board defaults to QEMU (dev/board_qemu.c) and is reselected from the DTB
+ * /compatible string as the port matures.  Bases are PHYSICAL — drivers add
+ * PHYSMAP_BASE to reach them through the TTBR1 physmap. */
+struct aarch64_board {
+	const char *name;    /* human/debug name                                          */
+	u_int64_t ram_base;  /* physical RAM base (QEMU/H618 0x40000000, Pi 0x0)          */
+	u_int64_t uart_base; /* PL011 MMIO physical base                                  */
+	u_int64_t gicd_base; /* GIC distributor (0 = no GIC, e.g. the Pi's BCM controller) */
+	u_int64_t gicc_base; /* GIC CPU interface                                         */
+};
+extern struct aarch64_board *g_board;
+
 /* uart.c — PL011 console plumbing + the PL011 kconsole serial sink.  kprintf
  * itself is the shared arch-neutral entry point in sys/lib/kprintf.c. */
 void uart_putc(char c);
