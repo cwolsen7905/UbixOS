@@ -59,7 +59,7 @@
 #define FONT_PATH "/var/fonts/DejaVuSansMono.ttf"
 #define FONT_SIZE 14
 #define VIEWS_MBOX "views"
-#define TASKBAR_PATH "/bin/taskbar"
+#define TASKBAR_PATH "/usr/bin/taskbar"
 #define MAX_FIELD 31 /* max username / password length */
 
 extern "C" int pidStatus(int pid);
@@ -387,6 +387,11 @@ static void run_session(const struct auth_response &resp, const std::string &use
 		::setpgid(0, 0);
 		::setuid(resp.uid);
 		::setgid(resp.gid);
+		/* Start the GUI session in the user's home directory, mirroring
+		 * /bin/login's text-console behaviour.  Everything the taskbar
+		 * launches (terminal → tcsh, apps) inherits this cwd, so the shell
+		 * opens in $HOME instead of "/". */
+		::chdir(resp.home[0] ? resp.home : "/");
 		::execve(TASKBAR_PATH, (char *const *)taskbar_argv, (char *const *)taskbar_envp);
 		::_exit(1);
 	}
