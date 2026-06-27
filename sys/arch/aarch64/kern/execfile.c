@@ -45,7 +45,7 @@
 #define AT_ENTRY 9
 #define AT_RANDOM 25
 
-#define MAXARG 48 /* cap on argv/envp entries marshalled into a new image */
+#define MAXARG 256 /* cap on argv/envp entries marshalled into a new image (clang -cc1 passes ~100) */
 
 /* Dynamic-linker image cache.  Every dynamic exec loads the same interpreter
  * (/lib/ld-musl-aarch64.so.1, ~1 MB); re-reading it off the FS for each service
