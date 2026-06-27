@@ -441,7 +441,11 @@ int vmm_mem_map_init(void)
 		uintptr_t ephys = (e >= PHYSMAP_BASE) ? AARCH64_PHYS_OF(e) : e;
 		bitmap_phys = (ephys + PAGE_SIZE - 1) & ~((uintptr_t)PAGE_SIZE - 1);
 	}
-	vmm_mem_bitmap_init(bitmap_phys, num);
+	/* Pass the bitmap's *physmap VA* (Convention B), mirroring x86_64's
+	 * P2V(bitmap_phys): the MI allocator then reaches vmmMemoryMap through the
+	 * TTBR1 physmap, so it stays mapped once TTBR0 is user-only (Phase 4).  The
+	 * local bitmap_phys stays physical for the page-index math below. */
+	vmm_mem_bitmap_init(AARCH64_VIRT_OF(bitmap_phys), num);
 
 	bitmap_size = num * sizeof(vmm_page_info_t);
 	bitmap_end_page = (u_int32_t)((bitmap_phys + bitmap_size + PAGE_SIZE - 1) / PAGE_SIZE);
