@@ -147,7 +147,7 @@ static inline void dsb(void)
  */
 static void rx_post(int bufidx)
 {
-	g_rx.desc[bufidx].addr = (u_int64_t)(uintptr_t)g_rx_buf[bufidx];
+	g_rx.desc[bufidx].addr = AARCH64_PHYS_OF((uintptr_t)g_rx_buf[bufidx]);
 	g_rx.desc[bufidx].len = NET_BUF;
 	g_rx.desc[bufidx].flags = VIRTQ_DESC_F_WRITE; /* device writes the packet */
 	g_rx.desc[bufidx].next = 0;
@@ -183,21 +183,23 @@ static int setup_vq(struct vq *q, u_int32_t qidx, u_int16_t qsize)
 	qpage = vmm_find_free_page(sysID);
 	if (qpage == 0)
 		return (-1);
-	memset((void *)qpage, 0, PAGE_SIZE);
+	/* Access the vring through the physmap (Convention B); the device gets the
+	 * PHYSICAL qpage in the queue registers below + descriptor .addr fields. */
+	memset((void *)(uintptr_t)AARCH64_VIRT_OF(qpage), 0, PAGE_SIZE);
 
-	q->desc = (struct virtq_desc *)(qpage + 0x000);
-	q->avail = (struct virtq_avail *)(qpage + 0x100);
-	q->used = (struct virtq_used *)(qpage + 0x300);
+	q->desc = (struct virtq_desc *)(uintptr_t)AARCH64_VIRT_OF(qpage + 0x000);
+	q->avail = (struct virtq_avail *)(uintptr_t)AARCH64_VIRT_OF(qpage + 0x100);
+	q->used = (struct virtq_used *)(uintptr_t)AARCH64_VIRT_OF(qpage + 0x300);
 	q->last_used = 0;
 	q->qsize = qsize;
 	q->notify_idx = qidx;
 
-	mmio_wr(VMMIO_QUEUE_DESC_LOW, (u_int32_t)(uintptr_t)q->desc);
-	mmio_wr(VMMIO_QUEUE_DESC_HIGH, (u_int32_t)((u_int64_t)(uintptr_t)q->desc >> 32));
-	mmio_wr(VMMIO_QUEUE_DRIVER_LOW, (u_int32_t)(uintptr_t)q->avail);
-	mmio_wr(VMMIO_QUEUE_DRIVER_HIGH, (u_int32_t)((u_int64_t)(uintptr_t)q->avail >> 32));
-	mmio_wr(VMMIO_QUEUE_DEVICE_LOW, (u_int32_t)(uintptr_t)q->used);
-	mmio_wr(VMMIO_QUEUE_DEVICE_HIGH, (u_int32_t)((u_int64_t)(uintptr_t)q->used >> 32));
+	mmio_wr(VMMIO_QUEUE_DESC_LOW, (u_int32_t)qpage);
+	mmio_wr(VMMIO_QUEUE_DESC_HIGH, (u_int32_t)((u_int64_t)qpage >> 32));
+	mmio_wr(VMMIO_QUEUE_DRIVER_LOW, (u_int32_t)(qpage + 0x100));
+	mmio_wr(VMMIO_QUEUE_DRIVER_HIGH, (u_int32_t)((u_int64_t)(qpage + 0x100) >> 32));
+	mmio_wr(VMMIO_QUEUE_DEVICE_LOW, (u_int32_t)(qpage + 0x300));
+	mmio_wr(VMMIO_QUEUE_DEVICE_HIGH, (u_int32_t)((u_int64_t)(qpage + 0x300) >> 32));
 	dsb();
 	mmio_wr(VMMIO_QUEUE_READY, 1);
 	return (0);
@@ -221,7 +223,7 @@ int virtio_net_send(const void *frame, u_int32_t len)
 	memcpy(g_tx_buf + VIRTIO_NET_HDR_LEN, frame, len);
 
 	head = g_tx.avail->idx % g_tx.qsize;
-	g_tx.desc[head].addr = (u_int64_t)(uintptr_t)g_tx_buf;
+	g_tx.desc[head].addr = AARCH64_PHYS_OF((uintptr_t)g_tx_buf);
 	g_tx.desc[head].len = VIRTIO_NET_HDR_LEN + len;
 	g_tx.desc[head].flags = 0; /* device reads */
 	g_tx.desc[head].next = 0;
@@ -325,15 +327,18 @@ static int virtio_net_setup(void)
 			bufpage = vmm_find_free_page(sysID);
 			if (bufpage == 0)
 				return (-1);
-			memset((void *)bufpage, 0, PAGE_SIZE);
+			memset((void *)(uintptr_t)AARCH64_VIRT_OF(bufpage), 0, PAGE_SIZE);
 		}
-		g_rx_buf[i] = (u_int8_t *)(uintptr_t)(bufpage + (uintptr_t)(i % (PAGE_SIZE / NET_BUF)) * NET_BUF);
+		/* Access via the physmap (Convention B); rx_post's descriptor .addr takes
+		 * AARCH64_PHYS_OF of this so the device DMAs by physical. */
+		g_rx_buf[i] =
+		    (u_int8_t *)(uintptr_t)AARCH64_VIRT_OF(bufpage + (uintptr_t)(i % (PAGE_SIZE / NET_BUF)) * NET_BUF);
 	}
 	txpage = vmm_find_free_page(sysID);
 	if (txpage == 0)
 		return (-1);
-	memset((void *)txpage, 0, PAGE_SIZE);
-	g_tx_buf = (u_int8_t *)txpage;
+	memset((void *)(uintptr_t)AARCH64_VIRT_OF(txpage), 0, PAGE_SIZE);
+	g_tx_buf = (u_int8_t *)(uintptr_t)AARCH64_VIRT_OF(txpage);
 
 	for (i = 0; i < RX_QSIZE; i++)
 		rx_post(i);
