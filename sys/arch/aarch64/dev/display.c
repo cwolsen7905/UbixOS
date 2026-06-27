@@ -71,7 +71,13 @@ int sys_mapfb(struct thread *td, struct sys_mapfb_args *args)
 
 	if (virtio_gpu_fb == 0 || virtio_gpu_width == 0 || virtio_gpu_height == 0)
 	{
-		kprintf("sys_mapfb: virtio-gpu not initialised\n");
+		/* The compositor retries sys_mapfb every tick until the GPU is ready, so
+		 * on a headless run (no virtio-gpu device) this fires forever.  Log the
+		 * first failure and then every 256th, so serial.log shows the condition
+		 * without being buried under thousands of identical lines. */
+		static u_int32_t g_mapfb_fail_count;
+		if ((g_mapfb_fail_count++ & 0xFF) == 0)
+			kprintf("sys_mapfb: virtio-gpu not initialised (x%u)\n", g_mapfb_fail_count);
 		td->td_retval[0] = -1;
 		return (-1);
 	}
