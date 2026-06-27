@@ -209,17 +209,22 @@ static u_int64_t sc_mmap(u_int64_t addr, u_int64_t len, u_int64_t prot, u_int64_
 					{
 						pmap_map_user_page_shared(l1, va_pg, (u_int64_t)hit, ex);
 						if (ex)
-							md_sync_icache(hit, PAGE_SIZE);
+							md_sync_icache(AARCH64_VIRT_OF(hit), PAGE_SIZE);
 						free_page(priv);
 						continue;
 					}
 				}
 
-				/* Miss: read the file into the reserved private frame.  Positional
+				/* Miss: read the file into the reserved private frame.  The kernel
+				 * reaches the frame through the TTBR1 physmap (AARCH64_VIRT_OF) — the
+				 * raw physical `priv` is only valid for pmap/cache bookkeeping, not as a
+				 * kernel pointer now that TTBR0 carries user mappings only.  Positional
 				 * (vfs_pread_locked) — NOT "fd->offset = foff; fread()" — so two CPUs
 				 * faulting pages of the same mmap'd file (e.g. a shared library) can't
 				 * clobber the shared fd->offset around the read (SMP "not loadable"). */
-				if (vfs_pread_locked(fp->fd, (void *)priv, foff, chunk) == 0 && !cacheable)
+				if (vfs_pread_locked(fp->fd, (void *)(uintptr_t)AARCH64_VIRT_OF(priv), foff, chunk) ==
+				        0 &&
+				    !cacheable)
 					break; /* EOF on a private mapping: leave the rest zero (bss tail) */
 
 				/* Cacheable and the frame fits a 32-bit cache key: publish it shared. */
@@ -230,7 +235,7 @@ static u_int64_t sc_mmap(u_int64_t addr, u_int64_t len, u_int64_t prot, u_int64_
 					{
 						pmap_map_user_page_shared(l1, va_pg, (u_int64_t)priv, ex);
 						if (ex)
-							md_sync_icache(priv, PAGE_SIZE);
+							md_sync_icache(AARCH64_VIRT_OF(priv), PAGE_SIZE);
 						continue;
 					}
 					if (winner != 0)
@@ -239,7 +244,7 @@ static u_int64_t sc_mmap(u_int64_t addr, u_int64_t len, u_int64_t prot, u_int64_
 						 * for us by vm_filecache_insert), return our frame. */
 						pmap_map_user_page_shared(l1, va_pg, (u_int64_t)winner, ex);
 						if (ex)
-							md_sync_icache((uintptr_t)winner, PAGE_SIZE);
+							md_sync_icache(AARCH64_VIRT_OF(winner), PAGE_SIZE);
 						free_page(priv);
 						continue;
 					}
@@ -250,7 +255,7 @@ static u_int64_t sc_mmap(u_int64_t addr, u_int64_t len, u_int64_t prot, u_int64_
 				if (ex)
 				{
 					pmap_map_user_page(l1, va_pg, (u_int64_t)priv, 1);
-					md_sync_icache(priv, PAGE_SIZE);
+					md_sync_icache(AARCH64_VIRT_OF(priv), PAGE_SIZE);
 				}
 			}
 			return (u_int64_t)va;
@@ -267,7 +272,7 @@ static u_int64_t sc_mmap(u_int64_t addr, u_int64_t len, u_int64_t prot, u_int64_
 			if (phys == 0)
 				continue;
 			pmap_map_user_page(l1, va + done, phys, 1 /* executable */);
-			md_sync_icache((uintptr_t)phys, PAGE_SIZE);
+			md_sync_icache((uintptr_t)AARCH64_VIRT_OF(phys), PAGE_SIZE);
 		}
 	}
 
@@ -416,9 +421,9 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args)
 			 * f->fd != 0 case, buffered stdio (musl flushes via writev) writing a
 			 * regular file fell through to the bring-up UART path — so file writes
 			 * vanished to the serial console (e.g. logd's /var/log/messages). */
-			int is_fileop = (f != 0 && (f->fd_type == FD_TYPE_TTYV || f->fd_type == FD_TYPE_SOCKET ||
-			                            f->fd_type == FD_TYPE_PIPE || f->fd_type == FD_TYPE_PTMASTER ||
-			                            f->fd != 0));
+			int is_fileop =
+			    (f != 0 && (f->fd_type == FD_TYPE_TTYV || f->fd_type == FD_TYPE_SOCKET ||
+			                f->fd_type == FD_TYPE_PIPE || f->fd_type == FD_TYPE_PTMASTER || f->fd != 0));
 			u_int64_t total = 0;
 			for (int i = 0; i < (int)args[2]; i++)
 			{

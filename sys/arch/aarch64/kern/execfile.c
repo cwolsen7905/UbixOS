@@ -657,12 +657,12 @@ int aarch64_exec_replace(const char *path, char *const *uargv, char *const *uenv
 	 * leaves the old image intact.  A static ET_EXEC is demand-paged — only the
 	 * touched pages ever load — while a dynamic image (PT_INTERP / PIE) falls back to
 	 * the eager loader, which reads the whole file. */
-	/* Demand paging is gated OFF until the higher-half migration frees TTBR0 for
-	 * static binaries (docs/design/aarch64-higher-half-plan.md) — until then no
-	 * static binary can run anyway, so skip the demand pre-check (an extra open +
-	 * header read per exec) and use the eager loader for every image. */
-	dr = 1; /* force eager; flip back to elf64_load_demand(path,l1,&newmap,&info) post-higher-half */
-	(void)info;
+	/* Higher-half complete (docs/design/aarch64-higher-half-plan.md): TTBR0 is
+	 * user-only, so a static ET_EXEC linked low (clang) no longer collides with the
+	 * kernel.  Try the demand loader first — it returns 0 for a static image it laid
+	 * out as demand-faulted VMAs (only touched pages load), 1 for a dynamic/PIE
+	 * image the caller must eager-load, or <0 on a hard error. */
+	dr = elf64_load_demand(path, l1, &newmap, &info);
 	if (dr == 0)
 	{
 		if (build_user_stack(l1, kargv, argc, kenvp, envc, &info, 0, &usp) != 0)

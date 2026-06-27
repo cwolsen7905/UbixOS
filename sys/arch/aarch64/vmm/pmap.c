@@ -224,27 +224,26 @@ static u_int64_t *pmap_active_l1(void)
 /**
  * Create a fresh per-process address space (TTBR0 root).
  *
- * The new L1 starts as a copy of the kernel's identity L1, so kernel code, the
- * page bitmap and the peripherals stay mapped while this address space is
- * active (no kernel-in-TTBR1 relocation yet).  Per-process user mappings are
- * then added with pmap_map_user_page() in VA blocks the kernel does not use.
+ * Phase 4 (higher-half): the kernel now executes entirely in TTBR1 and reaches
+ * all physical memory via the physmap, so a user TTBR0 no longer needs the
+ * kernel-identity copy.  The new L1 starts EMPTY — all of TTBR0 (the full low
+ * VA range, including 0x200000) belongs to the process.  This is what lets a
+ * static ET_EXEC linked low (clang) load without colliding with the kernel.
  *
- * @return the new L1 table (identity-mapped, == its physical address).
+ * @return the new L1 table (a physmap VA usable as a kernel pointer).
  */
 u_int64_t *pmap_create_user_space(void)
 {
 	u_int64_t *l1 = (u_int64_t *)(uintptr_t)AARCH64_VIRT_OF(vmm_find_free_page(sysID));
 
-	/* Copy the KERNEL identity L1 (not whatever is active) so this never shares
-	 * another process's user sub-tables — critical for fork correctness. */
-	memcpy(l1, aarch64_kernel_l1(), PAGE_SIZE); /* 512 entries × 8 = one page */
+	/* Empty TTBR0 — the kernel lives in TTBR1, so no kernel-identity copy. */
+	memset(l1, 0, PAGE_SIZE); /* 512 entries × 8 = one page */
 	return l1;
 }
 
-/* User VA region for processes (block 4 = 4 GB and up): below this are the
- * kernel identity blocks (0-1) and bring-up demo scratch — not per-process data,
- * so fork shares them via the kernel-L1 copy rather than duplicating them. */
-#define USER_L1_MIN 4
+/* User VA region for processes: with an empty TTBR0 the entire low VA range is
+ * per-process, so fork/teardown walk every L1 entry from 0. */
+#define USER_L1_MIN 0
 
 /**
  * Deep-copy the user mappings of @parent into a fresh child address space:
@@ -256,7 +255,7 @@ u_int64_t *pmap_create_user_space(void)
  */
 u_int64_t *pmap_fork_copy(u_int64_t *parent)
 {
-	u_int64_t *child = pmap_create_user_space(); /* kernel identity */
+	u_int64_t *child = pmap_create_user_space(); /* empty TTBR0 */
 	u_int64_t i1, i2, i3;
 
 	for (i1 = USER_L1_MIN; i1 < 512; i1++)
@@ -389,10 +388,9 @@ int pmap_cow_fault(u_int64_t *l1, u_int64_t va, pidType pid)
 
 /**
  * Free the user mappings of @l1 and the tables that describe them, returning the
- * physical frames to the allocator.  Only the per-process user region (L1 index
- * >= USER_L1_MIN) is touched — the kernel identity entries (0..3), which point
- * at shared kernel tables, are left alone — and the @l1 top-level page itself is
- * freed last.  free_page() is COW/MMIO-safe: it bounds-checks frames above RAM
+ * physical frames to the allocator.  The whole TTBR0 range (L1 index >=
+ * USER_L1_MIN, now 0) is per-process — the kernel lives in TTBR1 — and the @l1
+ * top-level page itself is freed last.  free_page() is COW/MMIO-safe: it bounds-checks frames above RAM
  * (the GPU scanout etc. are no-ops) and decrements the COW counter for shared
  * frames rather than freeing them.
  *

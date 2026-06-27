@@ -210,8 +210,11 @@ int aarch64_fork(u_int64_t *parent_tf)
 	u_int8_t *top;
 	u_int64_t *tf, *ctx;
 
+	/* TTBR0_EL1 holds the PHYSICAL root; pmap_fork_copy walks the parent L1 as a
+	 * kernel pointer, so reach it through the physmap (Convention B) — the raw
+	 * physical alias is no longer mapped now that TTBR0 carries user pages only. */
 	__asm__ volatile("mrs %0, ttbr0_el1" : "=r"(ttbr0));
-	child_l1 = pmap_fork_copy((u_int64_t *)(uintptr_t)(ttbr0 & 0x0000FFFFFFFFF000UL));
+	child_l1 = pmap_fork_copy((u_int64_t *)(uintptr_t)AARCH64_VIRT_OF(ttbr0 & 0x0000FFFFFFFFF000UL));
 	if (child_l1 == 0)
 		return -1;
 

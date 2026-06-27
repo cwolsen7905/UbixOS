@@ -185,7 +185,7 @@ int elf64_load_demand(const char *path, u_int64_t *aspace_root, struct vm_map *m
 			vfs_pread_locked(hfd, kframe, (off_t)boff, nbytes);
 			md_map_user_page(aspace_root, file_pages_end, (u_int64_t)frame, (prot & VM_PROT_EXEC) != 0);
 			if (prot & VM_PROT_EXEC)
-				md_sync_icache((uintptr_t)frame, PAGE_SIZE);
+				md_sync_icache((uintptr_t)kframe, PAGE_SIZE);
 		}
 
 		/* (c) BSS pages past the boundary page → demand-zero anonymous VMA. */
