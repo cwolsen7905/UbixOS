@@ -29,12 +29,15 @@
  * H618.  g_board defaults to QEMU (dev/board_qemu.c) and is reselected from the DTB
  * /compatible string as the port matures.  Bases are PHYSICAL — drivers add
  * PHYSMAP_BASE to reach them through the TTBR1 physmap. */
-struct aarch64_board {
-	const char *name;    /* human/debug name                                          */
-	u_int64_t ram_base;  /* physical RAM base (QEMU/H618 0x40000000, Pi 0x0)          */
-	u_int64_t uart_base; /* PL011 MMIO physical base                                  */
-	u_int64_t gicd_base; /* GIC distributor (0 = no GIC, e.g. the Pi's BCM controller) */
-	u_int64_t gicc_base; /* GIC CPU interface                                         */
+struct aarch64_intc; /* interrupt-controller ops (defined below) */
+struct aarch64_board
+{
+	const char *name;                /* human/debug name                                          */
+	u_int64_t ram_base;              /* physical RAM base (QEMU/H618 0x40000000, Pi 0x0)          */
+	u_int64_t uart_base;             /* PL011 MMIO physical base                                  */
+	u_int64_t gicd_base;             /* GIC distributor (0 = no GIC, e.g. the Pi's BCM controller) */
+	u_int64_t gicc_base;             /* GIC CPU interface                                         */
+	const struct aarch64_intc *intc; /* interrupt-controller implementation           */
 };
 extern struct aarch64_board *g_board;
 
@@ -54,12 +57,25 @@ int aarch64_console_setup_fds(struct thread *td);
 void aarch64_vbar_init(void);
 extern char vectors_el1[]; /* vector table base (vectors.S) */
 
-/* gic.c — GICv2 interrupt controller. */
-void gic_init(void);
-void gic_secondary_init(void); /* AP: bring up this CPU's GICC (smp-plan M2) */
-void gic_enable_intid(unsigned intid);
-void aarch64_gic_send_resched(unsigned cpu); /* SMP: poke one CPU's reschedule IPI */
-int aarch64_irq_dispatch(void);              /* EL1 IRQ vector; returns non-zero on a timer tick */
+/* Interrupt-controller abstraction (M1): the board selects an implementation
+ * (GICv2 on QEMU virt, the BCM2837 "ARM local" controller on the Pi).  The kernel
+ * calls the board-neutral aarch64_intc_* shims (dev/intc.c), which delegate to
+ * g_board->intc. */
+struct aarch64_intc
+{
+	void (*init)(void);                 /* BSP: bring up the controller + enable the IPI       */
+	void (*secondary_init)(void);       /* AP: per-CPU bring-up                                */
+	void (*timer_enable)(void);         /* enable the per-CPU timer IRQ                        */
+	void (*send_resched)(unsigned cpu); /* poke one CPU's reschedule IPI                       */
+	int (*dispatch)(void);              /* EL1 IRQ vector: ack/route/eoi; non-zero on a tick   */
+};
+extern const struct aarch64_intc g_gicv2_intc; /* gic.c — GICv2 (QEMU virt) */
+
+void aarch64_intc_init(void);                 /* BSP interrupt-controller bring-up */
+void aarch64_intc_secondary_init(void);       /* AP: bring up this CPU (smp-plan M2) */
+void aarch64_intc_timer_enable(void);         /* enable the running CPU's timer IRQ */
+void aarch64_intc_send_resched(unsigned cpu); /* SMP: poke one CPU's reschedule IPI */
+int aarch64_irq_dispatch(void);               /* EL1 IRQ vector; returns non-zero on a timer tick */
 
 /* timer.c — ARM generic timer (EL1 physical, PPI 30). */
 void timer_init(void);

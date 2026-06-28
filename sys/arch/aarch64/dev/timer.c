@@ -18,8 +18,6 @@
 #include <ubixos/sched.h>  /* sched_account_tick (Phase 3.5) */
 #include <aarch64/pcpu.h>  /* curcpu() — per-CPU tick (smp-plan M2) */
 
-#define TIMER_INTID 27 /* EL1 virtual timer PPI */
-
 static u_int64_t g_interval; /* counts per tick */
 static unsigned g_ticks;
 
@@ -93,8 +91,8 @@ static void write_ctl(u_int64_t v)
 }
 
 /**
- * Program the EL1 virtual timer for a 100 Hz periodic tick and enable its GIC
- * interrupt.  Call after gic_init() and before unmasking IRQs.
+ * Program the EL1 virtual timer for a 100 Hz periodic tick and enable its
+ * interrupt.  Call after aarch64_intc_init() and before unmasking IRQs.
  */
 void timer_init(void)
 {
@@ -105,7 +103,7 @@ void timer_init(void)
 	if (curcpu()->cpuid == 0)
 		kprintf("timer: cntfrq=%lu Hz, tick interval=%lu counts (100 Hz)\n", freq, g_interval);
 
-	gic_enable_intid(TIMER_INTID);
+	aarch64_intc_timer_enable();
 	write_tval(g_interval);
 	write_ctl(1); /* ENABLE=1, IMASK=0 */
 }

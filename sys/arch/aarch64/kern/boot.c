@@ -326,7 +326,7 @@ void kmain_aarch64(u_int64_t dtb_phys)
 				}
 			}
 
-			gic_init();
+			aarch64_intc_init();
 			timer_init();
 			__asm__ volatile("msr daifclr, #2");
 			kprintf("IRQs enabled; timer-driven preemption active.\n");
@@ -383,7 +383,7 @@ void kmain_aarch64(u_int64_t dtb_phys)
 		         install_bin("/bin/hello", _binary_hello_elf_start, _binary_hello_elf_end) == 0;
 		if (ok)
 		{
-			gic_init();
+			aarch64_intc_init();
 			timer_init();
 			__asm__ volatile("msr daifclr, #2"); /* unmask IRQ — timer drives preemption */
 			kprintf("IRQs enabled; timer-driven preemption active.\n");

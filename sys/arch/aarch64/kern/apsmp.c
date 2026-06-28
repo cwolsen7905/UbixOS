@@ -121,7 +121,7 @@ void c_ap_boot_arm(u_int32_t id)
 	 * idles in wfi (woken by each tick).  M3 replaces the wfi loop with the
 	 * per-CPU scheduler.
 	 */
-	gic_secondary_init();
+	aarch64_intc_secondary_init();
 	timer_init();
 	__asm__ __volatile__("msr daifclr, #2"); /* unmask IRQ (keep FIQ/SError masked) */
 
@@ -214,7 +214,7 @@ void arch_smp_reschedule(void)
 	{
 		if (c == self)
 			continue;
-		aarch64_gic_send_resched(c);
+		aarch64_intc_send_resched(c);
 	}
 }
 
@@ -229,7 +229,7 @@ void arch_smp_reschedule_cpu(unsigned cpu)
 {
 	if (!g_arm_ap_go || cpu >= smp_cpu_count() || cpu == curcpu()->cpuid)
 		return;
-	aarch64_gic_send_resched(cpu);
+	aarch64_intc_send_resched(cpu);
 }
 
 /**
