@@ -30,6 +30,7 @@
 #include <ubixos/syscalls.h>    /* systemCalls[] / systemCalls_posix[] tables */
 #include <sys/elf_load.h>       /* md_sync_icache (file-backed/exec mmap) */
 #include <fs/vfs/file.h>        /* fread (file-backed mmap) */
+#include <ubixos/spinlock.h>    /* g_shmap_lock (MAP_SHARED write-back registry) */
 
 /* Generic table-driven dispatch engine (sys/kern/syscall_dispatch.c). */
 register_t ksyscall_dispatch(
@@ -93,6 +94,28 @@ register_t ksyscall_dispatch(
 #define NATIVE_GETCWD 41    /* ubix_getcwd(buf, size) */
 #define NATIVE_KLOG_READ 47 /* klog_read(buf, max, start_seq) — read args directly (see below) */
 
+/*
+ * Shared writable file mappings pending write-back.  uBixOS mmap is
+ * eager-private: a file's pages are read into PRIVATE frames and never flushed
+ * to the backing file, so a MAP_SHARED writer — notably ld.lld's
+ * FileOutputBuffer, which mmaps the output file, fills it, then munmaps to
+ * commit — used to produce a 0-byte file.  Each MAP_SHARED + PROT_WRITE file
+ * mapping is recorded here at mmap time so munmap can write its dirty pages back
+ * through the VFS.  Bounded; on overflow the mapping is simply not tracked
+ * (degrades to the old no-flush behaviour).
+ */
+struct aarch64_shmap
+{
+	pidType pid;
+	uintptr_t va;
+	size_t len;
+	off_t foff;
+	char path[512];
+	int active;
+};
+static struct aarch64_shmap g_shmaps[32];
+static struct spinLock g_shmap_lock = SPIN_LOCK_INITIALIZER;
+
 /**
  * Terminate the current task (shared by exit / exit_group): a scheduled user
  * task is reaped + rescheduled; a bring-up enter_el0 demo longjmps back.
@@ -138,6 +161,94 @@ static struct file *aarch64_lookup_fd(int fd)
 	if (_current == 0 || fd < 0 || fd >= O_FILES)
 		return (0);
 	return (struct file *)_current->td.o_files[fd];
+}
+
+/**
+ * Record a MAP_SHARED writable file mapping so munmap can flush it back to @path.
+ * Silently drops the mapping (no write-back) if the table is full.
+ */
+static void shmap_register(pidType pid, uintptr_t va, size_t len, off_t foff, const char *path)
+{
+	int i;
+
+	spinLock(&g_shmap_lock);
+	for (i = 0; i < (int)(sizeof(g_shmaps) / sizeof(g_shmaps[0])); i++)
+	{
+		if (!g_shmaps[i].active)
+		{
+			g_shmaps[i].pid = pid;
+			g_shmaps[i].va = va;
+			g_shmaps[i].len = len;
+			g_shmaps[i].foff = foff;
+			strncpy(g_shmaps[i].path, path, sizeof(g_shmaps[i].path) - 1);
+			g_shmaps[i].path[sizeof(g_shmaps[i].path) - 1] = '\0';
+			g_shmaps[i].active = 1;
+			break;
+		}
+	}
+	spinUnlock(&g_shmap_lock);
+}
+
+/**
+ * Write a shared mapping's pages back to its backing file: reopen the file r+w
+ * and copy each mapped page (reached through the TTBR1 physmap) out via the VFS.
+ * Runs without g_shmap_lock held — fopen/fwrite take vfs_io_lock.
+ */
+static void shmap_writeback(const struct aarch64_shmap *m)
+{
+	fileDescriptor_t *fd;
+	u_int64_t *l1;
+	size_t done;
+
+	if (_current == 0 || _current->md.md_ttbr0 == 0)
+		return;
+	fd = fopen(m->path, "r+");
+	if (fd == 0)
+		return;
+	l1 = (u_int64_t *)(uintptr_t)_current->md.md_ttbr0;
+	fd->offset = m->foff;
+	for (done = 0; done < m->len; done += PAGE_SIZE)
+	{
+		uintptr_t phys = (uintptr_t)pmap_extract(l1, m->va + done) & ~0xFFFUL;
+		size_t chunk = (m->len - done < PAGE_SIZE) ? (m->len - done) : PAGE_SIZE;
+
+		if (phys == 0)
+		{
+			fd->offset += chunk; /* unmapped hole — leave the file's bytes as-is */
+			continue;
+		}
+		fwrite((void *)(uintptr_t)AARCH64_VIRT_OF(phys), (int)chunk, 1, fd);
+	}
+	fclose(fd);
+}
+
+/**
+ * munmap hook: flush + release every shared mapping for @pid that starts at @va.
+ * Copies the entry out under the lock, then writes it back lock-free.
+ */
+static void shmap_unmap(pidType pid, uintptr_t va)
+{
+	for (;;)
+	{
+		struct aarch64_shmap m;
+		int i, found = 0;
+
+		spinLock(&g_shmap_lock);
+		for (i = 0; i < (int)(sizeof(g_shmaps) / sizeof(g_shmaps[0])); i++)
+		{
+			if (g_shmaps[i].active && g_shmaps[i].pid == pid && g_shmaps[i].va == va)
+			{
+				m = g_shmaps[i];
+				g_shmaps[i].active = 0;
+				found = 1;
+				break;
+			}
+		}
+		spinUnlock(&g_shmap_lock);
+		if (!found)
+			break;
+		shmap_writeback(&m);
+	}
 }
 
 /**
@@ -259,6 +370,18 @@ static u_int64_t sc_mmap(u_int64_t addr, u_int64_t len, u_int64_t prot, u_int64_
 					md_sync_icache(AARCH64_VIRT_OF(priv), PAGE_SIZE);
 				}
 			}
+
+			/* MAP_SHARED (0x01) + PROT_WRITE: the writer expects its stores to
+			 * reach the file (ld.lld's mmap'd output).  Pages are private RW frames
+			 * above; record the mapping so munmap flushes them back.  MAP_PRIVATE,
+			 * read-only, and anonymous mappings are deliberately NOT tracked. */
+			if ((flags & 0x01) && (prot & 0x2) && fp->fd->fileName[0] != '\0')
+				shmap_register(_current->id,
+				               (uintptr_t)va,
+				               (size_t)len,
+				               (off_t)(off * PAGE_SIZE),
+				               fp->fd->fileName);
+
 			return (u_int64_t)va;
 		}
 	}
@@ -542,8 +665,11 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args)
 			/* fcntl(92) pre-case pruned (Phase 3) — falls through to the table. */
 
 		case SYS_MUNMAP:
-			/* No-op: the anonymous-mmap region is a bump allocator with no reclaim
-			 * yet, so unmapping just leaks (harmless for short-lived programs). */
+			/* Flush any MAP_SHARED writable file mapping that starts here back to
+			 * its file (ld.lld's mmap'd-output commit path).  The anonymous-mmap
+			 * region is still a bump allocator with no reclaim, so frames are not
+			 * freed — unmapping an anon range remains a harmless leak. */
+			shmap_unmap(_current->id, (uintptr_t)args[0]);
 			return 0;
 
 		case SYS_NANOSLEEP:
