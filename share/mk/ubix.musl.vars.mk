@@ -20,9 +20,12 @@ MUSL_OBJ   ?= ${OBJ_DIR}/obj/musl
 # -lc resolves against /lib/libc.so.
 .if defined(UBIX_NATIVE)
 MUSL_LIB   ?= /lib
-# ld.lld's parallel ThreadPool deadlocks/crashes on-device until the kernel's
-# pthread/futex support is complete, so force single-threaded linking in-OS.
-# (Empty on the host, where lld threads work fine.)  See on-device-build-plan.md.
+# Force single-threaded linking in-OS.  The rfork thread path is now correct
+# (multi-threaded ld.lld links cleanly — see the rfork TLS/cursor/vm_map/clrex
+# fixes), so this is NOT a correctness workaround: uBixOS runs on a single CPU
+# on-device, where ld.lld's thread pool only adds context-switch overhead with no
+# parallelism to gain.  Drop this once SMP user-thread scheduling lands.  (Empty
+# on the host, where lld threads run on real cores.)  See on-device-build-plan.md.
 MUSL_NATIVE_LDFLAGS ?= -Wl,--threads=1
 .else
 MUSL_LIB   ?= ${MUSL_OBJ}/lib
