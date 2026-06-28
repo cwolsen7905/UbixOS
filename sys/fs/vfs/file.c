@@ -843,10 +843,23 @@ fileDescriptor_t *fopen(const char *file, const char *flags)
 		return (NULL);
 	}
 
-	/* Resolve path: '.' expands to CWD; everything else is taken as-is. */
+	/* Resolve the path against the current working directory: a bare "." is the
+	 * cwd, and any other relative path (not starting with '/') is taken relative
+	 * to the cwd; absolute paths pass through unchanged.  This mirrors
+	 * vfs_opendir/sysMkDir/sys_rename/unlink, which already prepend the cwd —
+	 * fopen was the lone VFS entry point that took a relative path verbatim, so a
+	 * bare name (e.g. "Makefile") resolved against the mount root instead of the
+	 * cwd.  That broke every on-device tool that opens a file by relative name
+	 * (ls Makefile, bmake reading ./Makefile, cc foo.c) once the process had
+	 * chdir'd out of "/".  cwd is kept with a trailing '/', and at cwd "/" this is
+	 * a no-op ("/" + "foo" == "/foo"), so only chdir'd processes change behaviour. */
 	if (file[0] == '.' && file[1] == '\0')
 	{
 		strncpy(fileName, _current->oInfo.cwd, sizeof(fileName) - 1);
+	}
+	else if (file[0] != '/' && _current != 0x0 && _current->oInfo.cwd[0] != '\0')
+	{
+		snprintf(fileName, sizeof(fileName), "%s%s", _current->oInfo.cwd, file);
 	}
 	else
 	{
