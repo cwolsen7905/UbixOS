@@ -175,7 +175,11 @@ static u_int64_t sc_write(u_int64_t fd, u_int64_t buf, u_int64_t len)
 
 	(void)fd;
 	for (u_int64_t i = 0; i < len; i++)
+	{
+		if (p[i] == '\n')
+			uart_putc('\r'); /* serial terminals need CR+LF, not a bare LF */
 		uart_putc(p[i]);
+	}
 	return len;
 }
 
