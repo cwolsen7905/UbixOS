@@ -25,7 +25,11 @@ __clone:
 	call *%r9
 	mov %eax,%edi
 	xor %eax,%eax
-	mov $60,%al
+	# uBixOS is FreeBSD-ABI: Linux SYS_exit (60) is not exit here, so the original
+	# `mov $60,%al` made an exiting thread mis-syscall and run off this stub into
+	# garbage.  uBixOS exit (1) routes to endTask, which reaps just this thread and
+	# leaves the shared address space mapped for its siblings (tgid-gated).
+	mov $1,%al
 	syscall
 	hlt
 1:	ret

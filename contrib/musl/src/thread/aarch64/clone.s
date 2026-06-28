@@ -30,5 +30,11 @@ __clone:
 1:	mov x29, 0
 	ldp x1,x0,[sp],#16
 	blr x1
-	mov x8,#93 // SYS_exit
+	// uBixOS is FreeBSD-ABI: Linux SYS_exit (#93) is select() here, so the original
+	// `mov x8,#93` made an exiting thread call select() instead of terminating — it
+	// returned and ran off the end of this stub into garbage (wild-PC SIGSEGV on
+	// every pthread that returns from its start routine, e.g. ld.lld's pool workers).
+	// uBixOS exit (#1) routes to endTask, which reaps just this thread and leaves the
+	// shared address space mapped for its still-running siblings (tgid-gated).
+	mov x8,#1 // SYS_exit (FreeBSD/uBixOS number; #93 = Linux exit = select here)
 	svc #0
