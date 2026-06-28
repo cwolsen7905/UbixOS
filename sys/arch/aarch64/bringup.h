@@ -206,6 +206,8 @@ int aarch64_virtio_blk_pool_minor(void); /* minor of the MBR pool partition (0x9
 /* bcm_sdhci.c — BCM2837 EMMC SD-card driver (Raspberry Pi 3, M4 storage). */
 int aarch64_sd_card_init(void);                                       /* bring up the microSD on the EMMC */
 int aarch64_sd_readblock(u_int32_t lba, u_int8_t *buf, u_int32_t num); /* read num 512-byte blocks */
+struct ubx_device *aarch64_sd_init(void); /* bring up + register the microSD as sd0 (block device) */
+int aarch64_sd_pool_minor(void);          /* minor of the UbixFS pool partition (0x9C), or -1 */
 
 /* virtio_net.c — virtio-mmio network device (polling; lwIP bridge calls these). */
 int aarch64_virtio_net_init(void);                                    /* scan + bring up; 0 on success */

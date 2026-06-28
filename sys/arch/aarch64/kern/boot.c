@@ -212,7 +212,11 @@ void kmain_aarch64(u_int64_t dtb_phys)
 	 * disk-backed dynamic world; the embedded ramfs path below is the fallback
 	 * when no disk is attached. */
 	{
+#ifdef BOARD_RPI3
+		struct ubx_device *blk = aarch64_sd_init(); /* Pi: the microSD on the EMMC */
+#else
 		struct ubx_device *blk = aarch64_virtio_blk_init();
+#endif
 		int root_is_pool = 0;
 		int pool_minor;
 
@@ -225,11 +229,21 @@ void kmain_aarch64(u_int64_t dtb_phys)
 		 * vdev — the same path proven on i386.  On a bad/absent pool the mount
 		 * unwinds cleanly (initfs fails -> mountpoint freed), so we fall back to the
 		 * FAT partition, then to ramfs below. */
+#ifdef BOARD_RPI3
+		pool_minor = (blk != 0) ? aarch64_sd_pool_minor() : -1;
+#else
 		pool_minor = (blk != 0) ? aarch64_virtio_blk_pool_minor() : -1;
+#endif
 		if (pool_minor > 0)
 		{
 			ubfs_vfs_set_raw(1);
+#ifdef BOARD_RPI3
+			/* Pi M4 v1: mount the pool READ-ONLY — the SD driver has no write path
+			 * yet (CMD24/25 is a follow-up), and a RW CoW mount may write metadata. */
+			if (vfs_mount(1, pool_minor, 0, VFS_TYPE_UBIXFS, "/", "ro") == 0)
+#else
 			if (vfs_mount(1, pool_minor, 0, VFS_TYPE_UBIXFS, "/", "rw") == 0)
+#endif
 			{
 				fileDescriptor_t *probe = fopen("/lib/libc.so", "r");
 				if (probe != 0)

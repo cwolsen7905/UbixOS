@@ -17,6 +17,10 @@
 #ifdef BOARD_RPI3
 
 #include "bringup.h"
+#include <sys/bus.h>       /* struct ubx_device + ubx_blk_ops */
+#include <sys/descrip.h>   /* g_device_find (vfs_mount resolves the block device) */
+#include <dev/partition.h> /* MBR partition parsing (sd0sN) */
+#include <string.h>        /* memset / strncpy */
 
 /* MMIO bases via the TTBR1 physmap. */
 #define EMMC_BASE (PHYSMAP_BASE + 0x3F300000UL)
@@ -426,6 +430,104 @@ int aarch64_sd_readblock(u_int32_t lba, u_int8_t *buffer, u_int32_t num)
 	if (num > 1 && (g_sd_scr[0] & SCR_SUPP_SET_BLKCNT) == 0 && g_sd_ccs != 0)
 		sd_cmd(CMD_STOP_TRANS, 0);
 	return ((int)(num * 512u));
+}
+
+/* --- block-device registration (mirrors virtio_blk.c so the buffer cache + the
+ *     MBR partition layer + the UbixFS mount path use the SD with no SD knowledge) --- */
+
+static struct ubx_device sd_blk_dev;                      /* whole-disk device (sd0) */
+static struct ubx_blk_ops sd_blk_ops;                     /* its block ops */
+static struct ubp_partition sd_parts[MBR_MAX_PARTITIONS]; /* MBR partitions (sd0sN) */
+static int sd_npart;
+static int sd_ready;
+
+/**
+ * ubx_blk_ops::read — read @count 512-byte sectors at @lba into @buf.
+ * @return 0 on success, -1 on error.
+ */
+static int sd_blk_read(struct ubx_device *dev, u_int32_t lba, u_int32_t count, void *buf)
+{
+	(void)dev;
+	if (!sd_ready)
+		return (-1);
+	return (aarch64_sd_readblock(lba, (u_int8_t *)buf, count) == (int)(count * 512u) ? 0 : -1);
+}
+
+/**
+ * ubx_blk_ops::write — M4 v1 is read-only; SD writes (CMD24/25) are a follow-up.
+ */
+static int sd_blk_write(struct ubx_device *dev, u_int32_t lba, u_int32_t count, void *buf)
+{
+	(void)dev;
+	(void)lba;
+	(void)count;
+	(void)buf;
+	return (-1);
+}
+
+/**
+ * g_device_find hook: resolve (major, minor) — minor 0 = the whole disk, minor N =
+ * MBR partition N (sd0sN), so the pool root (type 0x9C) resolves by its minor.
+ */
+static void *sd_device_find(int major, int minor)
+{
+	int i;
+
+	(void)major;
+	if (!sd_ready)
+		return (NULL);
+	if (minor > 0)
+	{
+		for (i = 0; i < sd_npart; i++)
+			if (sd_parts[i].minor == minor)
+				return (&sd_parts[i].dev);
+		return (NULL);
+	}
+	return (&sd_blk_dev);
+}
+
+/**
+ * Bring up the microSD on the EMMC and register it as the block device sd0 (whole
+ * disk + its MBR partitions), so vfs_mount can mount the UbixFS pool from it.
+ *
+ * @return the registered block device, or NULL on failure.
+ */
+struct ubx_device *aarch64_sd_init(void)
+{
+	if (aarch64_sd_card_init() != SD_OK)
+	{
+		kprintf("sd: card init failed\n");
+		return (NULL);
+	}
+
+	sd_blk_ops.read = sd_blk_read;
+	sd_blk_ops.write = sd_blk_write;
+	memset(&sd_blk_dev, 0, sizeof(sd_blk_dev));
+	sd_blk_dev.dev_blk_ops = &sd_blk_ops;
+	strncpy(sd_blk_dev.dev_nameunit, "sd0", sizeof(sd_blk_dev.dev_nameunit) - 1);
+	sd_ready = 1;
+	g_device_find = sd_device_find;
+	kprintf("sd: microSD on the EMMC ready (sd0)\n");
+
+	sd_npart = mbr_parse_partitions(&sd_blk_dev, sd_parts, MBR_MAX_PARTITIONS);
+	if (sd_npart < 0)
+		sd_npart = 0;
+	if (sd_npart == 0)
+		kprintf("sd: no MBR partitions (bare disk)\n");
+	return (&sd_blk_dev);
+}
+
+/**
+ * @return the device minor of the UbixFS pool partition (MBR type 0x9C), or -1.
+ */
+int aarch64_sd_pool_minor(void)
+{
+	int i;
+
+	for (i = 0; i < sd_npart; i++)
+		if (sd_parts[i].type == MBR_TYPE_UBPOOL)
+			return (sd_parts[i].minor);
+	return (-1);
 }
 
 #endif /* BOARD_RPI3 */
