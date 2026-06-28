@@ -16,6 +16,13 @@
  * resumed later — required for fork (ret_from_fork) and preemption, not just the
  * immediate syscall return. */
 	.macro KERNEL_ENTRY
+	/* Clear the local exclusive monitor on every exception entry.  ARMv8 does not
+	 * architecturally clear it on a trap, so a thread preempted (timer IRQ) between
+	 * its LDAXR and STXR can leave the monitor armed; a sibling thread's LDAXR on
+	 * the same address then lets the first thread's resumed STXR falsely succeed,
+	 * breaking LL/SC atomicity (musl's malloc lock → racy heap corruption between
+	 * rfork threads).  CLREX forces a preempted STXR to fail and retry the CAS. */
+	clrex
 	sub	sp, sp, #288
 	stp	x0, x1, [sp, #0]
 	stp	x2, x3, [sp, #16]

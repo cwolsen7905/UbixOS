@@ -116,6 +116,34 @@ struct aarch64_shmap
 static struct aarch64_shmap g_shmaps[32];
 static struct spinLock g_shmap_lock = SPIN_LOCK_INITIALIZER;
 
+/*
+ * The mmap bump cursor + program break describe the ADDRESS SPACE, not the task.
+ * rfork(RFMEM) threads share one TTBR0, so a PER-TASK cursor makes every thread
+ * start allocating at MMAP_BASE again and map on top of the regions its siblings
+ * are already using — silent heap/stack corruption (the on-device ld.lld worker
+ * remapped the main thread's malloc arena, so mallocng's alloc_slot spun on a
+ * trashed meta pointer).  The thread-group LEADER (id == tgid) holds the canonical
+ * cursors; every thread allocates through the leader under this lock.  A normal
+ * single-threaded process is its own leader, so this is a no-op there.
+ */
+static struct spinLock g_as_region_lock = SPIN_LOCK_INITIALIZER;
+
+/**
+ * Return the task that owns this address space's shared mmap/brk cursors — the
+ * thread-group leader (id == tgid), or @_current itself when it is the leader (or
+ * the leader has already exited).
+ */
+static kTask_t *aarch64_as_owner(void)
+{
+	if (_current->tgid != 0 && _current->tgid != (u_int32_t)_current->id)
+	{
+		kTask_t *leader = schedFindTask(_current->tgid);
+		if (leader != 0)
+			return (leader);
+	}
+	return (_current);
+}
+
 /**
  * Terminate the current task (shared by exit / exit_group): a scheduled user
  * task is reaped + rescheduled; a bring-up enter_el0 demo longjmps back.
@@ -271,18 +299,25 @@ static u_int64_t sc_mmap(u_int64_t addr, u_int64_t len, u_int64_t prot, u_int64_
 	u_int64_t *l1;
 	uintptr_t next, va;
 
+	kTask_t *as_owner;
+
 	if (_current == 0 || _current->md.md_ttbr0 == 0)
 		return (u_int64_t)-1;
-	if (_current->md.md_mmap_next == 0)
-		_current->md.md_mmap_next = MMAP_BASE;
 
 	l1 = (u_int64_t *)(uintptr_t)_current->md.md_ttbr0;
-	next = (uintptr_t)_current->md.md_mmap_next;
 
-	/* MAP_FIXED is FreeBSD flag 0x10: the caller (e.g. mallocng's guard page,
-	 * or the loader placing a segment) requires the mapping to land at addr. */
+	/* Allocate from the address space's SHARED cursor (the thread-group leader's),
+	 * not this task's — otherwise rfork siblings overlap each other's mappings.
+	 * MAP_FIXED is FreeBSD flag 0x10: the caller (mallocng guard page, loader
+	 * segment) requires the mapping to land at addr. */
+	as_owner = aarch64_as_owner();
+	spinLock(&g_as_region_lock);
+	if (as_owner->md.md_mmap_next == 0)
+		as_owner->md.md_mmap_next = MMAP_BASE;
+	next = (uintptr_t)as_owner->md.md_mmap_next;
 	va = vmm_uregion_mmap_anon(l1, &next, (size_t)len, (flags & 0x10) && addr != 0, (uintptr_t)addr);
-	_current->md.md_mmap_next = (u_int64_t)next;
+	as_owner->md.md_mmap_next = (u_int64_t)next;
+	spinUnlock(&g_as_region_lock);
 	if (va == 0)
 		return (u_int64_t)-1;
 
@@ -414,14 +449,23 @@ static u_int64_t sc_mmap(u_int64_t addr, u_int64_t len, u_int64_t prot, u_int64_
 static u_int64_t sc_brk(u_int64_t newbrk)
 {
 	u_int64_t *l1;
+	kTask_t *as_owner;
+	u_int64_t r;
 
 	if (_current == 0 || _current->md.md_ttbr0 == 0)
 		return BRK_BASE;
-	if (_current->md.md_brk == 0)
-		_current->md.md_brk = BRK_BASE;
 
 	l1 = (u_int64_t *)(uintptr_t)_current->md.md_ttbr0;
-	return (u_int64_t)vmm_uregion_brk(l1, (uintptr_t *)&_current->md.md_brk, (uintptr_t)newbrk);
+
+	/* The program break is per-ADDRESS-SPACE: share the thread-group leader's so
+	 * rfork siblings don't each grow a private brk over the others' heap. */
+	as_owner = aarch64_as_owner();
+	spinLock(&g_as_region_lock);
+	if (as_owner->md.md_brk == 0)
+		as_owner->md.md_brk = BRK_BASE;
+	r = (u_int64_t)vmm_uregion_brk(l1, (uintptr_t *)&as_owner->md.md_brk, (uintptr_t)newbrk);
+	spinUnlock(&g_as_region_lock);
+	return (r);
 }
 
 /*

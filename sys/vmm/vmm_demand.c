@@ -52,12 +52,26 @@ int vmm_demand_fault(u_int64_t *aspace_root, uintptr_t far)
 {
 	vm_map_entry_t *vma;
 	u_int64_t pg = (u_int64_t)far & ~((u_int64_t)PAGE_SIZE - 1);
+	kTask_t *owner;
 	int exec;
 
 	if (_current == NULL)
 		return (-1);
 
-	vma = vm_map_lookup(&_current->vm_map, (uintptr_t)pg);
+	/* The VMA tree describes the ADDRESS SPACE, but it is stored per-task.  rfork
+	 * threads share one address space (TTBR0) yet each got its own (empty) vm_map,
+	 * so a worker faulting a demand-paged page its leader exec'd would find no VMA
+	 * and take a fatal SIGSEGV.  Resolve faults against the thread-group leader's
+	 * vm_map (id == tgid); a normal process is its own leader. */
+	owner = _current;
+	if (_current->tgid != 0 && _current->tgid != (u_int32_t)_current->id)
+	{
+		kTask_t *leader = schedFindTask(_current->tgid);
+		if (leader != NULL)
+			owner = leader;
+	}
+
+	vma = vm_map_lookup(&owner->vm_map, (uintptr_t)pg);
 	if (vma == NULL)
 		return (-1); /* not a managed region — a genuine fault */
 
