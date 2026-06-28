@@ -34,6 +34,16 @@ FD_DEVICE = /dev/md0
 # unlikely case where .PARSEDIR is unavailable.
 .if !defined(SRCTOP)
 SRCTOP := ${.PARSEDIR:tA}
+# If .PARSEDIR:tA didn't land on the tree root, walk UP from the invocation dir
+# to the directory that actually contains share/mk.  On-device there is no .git
+# and :tA/realpath mis-resolves (it lands on the including subdir, e.g.
+# /usr/src/bin), so a direct subdir build looked for share/mk under the subdir.
+# The walk uses only shell builtins (test + ${d%/*}), so it works in-OS with oksh
+# (no dirname dependency).
+.if empty(SRCTOP) || !exists(${SRCTOP}/share/mk)
+SRCTOP != d="${.CURDIR}"; while [ -n "$$d" ] && [ "$$d" != "/" ] && [ ! -d "$$d/share/mk" ]; do d="$${d%/*}"; done; echo "$$d"
+.endif
+# Last-resort fallbacks: git toplevel, then the invocation dir.
 .if empty(SRCTOP)
 SRCTOP != cd "${.CURDIR}" && git rev-parse --show-toplevel 2>/dev/null | tr -d '\n'
 .endif
