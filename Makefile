@@ -627,6 +627,19 @@ stage-src-aarch64:
 stage-src-x86_64:
 	@sh tools/stage-src.sh ${DISK_IMAGE_X86_64} x86_64
 
+# Fast incremental refresh of an EXISTING image (vs. a full 'image' pool rebuild):
+# rebuild kernel + world (incremental — the -MMD/-MP dep tracking only recompiles
+# what changed) then copy ONLY the changed world binaries/libraries into the image's
+# UbixFS pool IN PLACE via tools/update-image.sh.  /usr/src is left untouched, and
+# the kernel is loaded by QEMU via -kernel ${OBJ_DIR}/boot directly, so 'bmake run-*'
+# already picks up the rebuilt kernel.  Use this for the edit/build/test loop;
+# 'bmake image' is only needed once (to create the image) or for a clean release.
+update: update-${_ARCH}
+update-aarch64: world kernel
+	@PROFILE=${PROFILE} ARCH=aarch64 sh tools/update-image.sh ${DISK_IMAGE_ARM} ${OBJ_DIR}
+update-x86_64: world kernel
+	@PROFILE=${PROFILE} ARCH=x86_64 sh tools/update-image.sh ${DISK_IMAGE_X86_64} ${OBJ_DIR}
+
 # x86_64 disk image: the SAME raw FAT32 + musl-ld.so layout as aarch64 (mkimage.sh
 # is arch-parameterised via ARCH=), mounted at "/" via virtio-blk-pci.  Run after
 # `bmake world TARGET=x86_64`; boot with run-x86_64.
