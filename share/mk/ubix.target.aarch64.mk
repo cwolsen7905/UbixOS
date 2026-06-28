@@ -18,6 +18,12 @@
 .if !defined(_UBIX_TARGET_MK)
 _UBIX_TARGET_MK = 1
 
+.if defined(UBIX_NATIVE)
+# Native on-device build (in-OS aarch64): the running CPU IS aarch64, so there is
+# no cross prefix and no host gcc to probe — keep platform.mk's native values
+# (CROSS_PREFIX empty, LIBGCC=/lib/libgcc.a).  Without this, the host-cross
+# assignments below would re-point at aarch64-elf-gcc and exec it (exit 127).
+.else
 # Cross toolchain.  Hard assignment (not ?=) so it wins over the x86 default
 # platform.mk already set.  macOS: `brew install aarch64-elf-gcc
 # aarch64-elf-binutils`.  Override CROSS_PREFIX on the command line for a
@@ -28,6 +34,7 @@ CROSS_M32    =
 # Recompute libgcc for the aarch64 compiler (platform.mk computed it for the
 # x86 prefix, which is wrong here).
 LIBGCC != ${CROSS_PREFIX}gcc -print-libgcc-file-name 2>/dev/null
+.endif
 
 # ARMv8-A.  -mgeneral-regs-only: the kernel must not touch the FP/NEON (SIMD)
 # register file (it would require enabling/saving FPSIMD state in the trap path

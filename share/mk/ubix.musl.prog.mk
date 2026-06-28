@@ -51,13 +51,14 @@ $(BINARY): $(OBJS)
 		-Wl,-dynamic-linker,${MUSL_LDSO} \
 		-Wl,-rpath,/lib \
 		-Wl,-z,noexecstack \
+		${MUSL_NATIVE_LDFLAGS} \
 		${EXTRA_LDFLAGS} \
 		${MUSL_CRT1} \
 		${MUSL_LIB}/crti.o \
 		${_OBJS_FULL} \
 		${EXTRA_LIBS} \
 		-Wl,--start-group \
-		-L${OBJ_DIR}/lib -lc \
+		-L${OBJ_DIR}/lib -L${MUSL_LIB} -lc \
 		${MUSL_LIBGCC_COMPAT} \
 		${LIBGCC} \
 		-Wl,--end-group \

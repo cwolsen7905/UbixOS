@@ -37,6 +37,19 @@ CROSS_PREFIX ?=
 CROSS_M32    ?=
 GNU_MAKE     ?= make
 .  endif
+.elif ${UNAME_S} == "UBIX"
+# Native on-device build (uname -s == "UBIX" only in-OS): no cross prefix, and
+# libgcc is the copy mkimage stages at /lib — never exec a host compiler here
+# (there is no gcc on the device; the unconditional LIBGCC != below would fail
+# with exit 127, which is exactly what broke `bmake` in /usr/src).  Defining
+# LIBGCC makes the !defined guard below skip the compiler probe.  UBIX_NATIVE is
+# the single "we are building in-OS" flag the other .mk files gate on (so they
+# don't re-assign a host cross toolchain or build-tree paths).
+UBIX_NATIVE  = 1
+CROSS_PREFIX ?=
+CROSS_M32    ?=
+GNU_MAKE     ?= make
+LIBGCC       ?= /lib/libgcc.a
 .else
 # FreeBSD and other BSDs: assumes native i386 host toolchain.
 # On FreeBSD x86_64 you would need to set CROSS_M32=-m32 manually.
@@ -74,6 +87,6 @@ MUSL_LDEMULATION ?= elf_i386
 ARCH_NOSIMD      ?= -mno-sse -mno-sse2 -mno-mmx -mno-3dnow
 .endif
 
-.export CROSS_PREFIX CROSS_M32 LIBGCC GNU_MAKE MUSL_ARCH MUSL_LDEMULATION ARCH_NOSIMD
+.export CROSS_PREFIX CROSS_M32 LIBGCC GNU_MAKE MUSL_ARCH MUSL_LDEMULATION ARCH_NOSIMD UBIX_NATIVE
 
 .endif # _UBIX_PLATFORM_MK

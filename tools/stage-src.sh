@@ -65,8 +65,20 @@ for p in "${SRCTOP}"/*; do
 	fi
 done
 
-# /usr/obj/<arch> — empty, writable build output dir (OBJ_DIR target on-device).
+# /usr/obj/<arch> — writable build output dir (OBJ_DIR target on-device).
 "${UBFS}" mkdir "${POOL}" /usr/obj/${ARCH} >/dev/null 2>&1
+# Pre-seed the GENERATED musl headers (bits/alltypes.h, bits/syscall.h, …) at the
+# path the world build's -I expects (${OBJ_DIR}/obj/musl/obj/include).  These are
+# produced by musl's configure/build on the host and are NOT under /usr/src, so an
+# on-device compile would fail "bits/alltypes.h file not found" without them.
+_GEN="${SRCTOP}/build/${ARCH}/obj/musl/obj/include"
+if [ -d "${_GEN}" ]; then
+	"${UBFS}" mkdir "${POOL}" /usr/obj/${ARCH}/obj >/dev/null 2>&1
+	"${UBFS}" mkdir "${POOL}" /usr/obj/${ARCH}/obj/musl >/dev/null 2>&1
+	"${UBFS}" mkdir "${POOL}" /usr/obj/${ARCH}/obj/musl/obj >/dev/null 2>&1
+	"${UBFS}" cpr "${_GEN}" "${POOL}:/usr/obj/${ARCH}/obj/musl/obj/include" >/dev/null 2>&1 ||
+		echo "stage-src: warn: failed to stage generated musl headers"
+fi
 
 # /usr/share/mk — installed make macros (FreeBSD convention; UBIX_MK can point here).
 "${UBFS}" cpr "${SRCTOP}/share/mk" "${POOL}:/usr/share/mk" >/dev/null 2>&1 ||

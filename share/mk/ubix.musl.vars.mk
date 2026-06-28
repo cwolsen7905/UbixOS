@@ -14,7 +14,20 @@ _UBIX_MUSL_VARS_MK = 1
 
 MUSL_SRC   ?= ${SRCTOP}/contrib/musl
 MUSL_OBJ   ?= ${OBJ_DIR}/obj/musl
+# On-device the compiled musl crt objects + libc live in /lib (mkimage stages
+# them there), not in the host build tree's ${OBJ_DIR}/obj/musl/lib.  MUSL_CRT1/
+# crti.o/crtn.o derive from MUSL_LIB, and ubix.musl.prog.mk adds -L${MUSL_LIB} so
+# -lc resolves against /lib/libc.so.
+.if defined(UBIX_NATIVE)
+MUSL_LIB   ?= /lib
+# ld.lld's parallel ThreadPool deadlocks/crashes on-device until the kernel's
+# pthread/futex support is complete, so force single-threaded linking in-OS.
+# (Empty on the host, where lld threads work fine.)  See on-device-build-plan.md.
+MUSL_NATIVE_LDFLAGS ?= -Wl,--threads=1
+.else
 MUSL_LIB   ?= ${MUSL_OBJ}/lib
+MUSL_NATIVE_LDFLAGS ?=
+.endif
 LIBCXX_SRC ?= ${SRCTOP}/contrib/libcxx
 
 # Architecture (passed down from the top-level Makefile via WMAKE).  Default to
