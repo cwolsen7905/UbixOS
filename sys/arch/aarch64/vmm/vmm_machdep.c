@@ -109,7 +109,8 @@ static u_int64_t fdt_memory_size(uintptr_t base)
 	const u_int8_t *strings, *p, *end;
 	u_int32_t totalsize, off_struct, size_struct, off_strings;
 	u_int64_t size = 0;
-	int in_memory = 0;
+	u_int32_t addr_cells = 2, size_cells = 2; /* root #address/#size-cells (QEMU 2/2, Pi 1/1) */
+	int in_memory = 0, depth = 0;
 
 	if (be32(h->magic) != FDT_MAGIC)
 		return 0;
@@ -142,6 +143,7 @@ static u_int64_t fdt_memory_size(uintptr_t base)
 			while (p < end && *p != '\0')
 				p++;
 			p = (const u_int8_t *)(((uintptr_t)p + 4) & ~(uintptr_t)3);
+			depth++;
 		}
 		else if (token == FDT_PROP)
 		{
@@ -150,15 +152,28 @@ static u_int64_t fdt_memory_size(uintptr_t base)
 			const char *pname = (const char *)(strings + nameoff);
 			const u_int8_t *val = p + 8;
 
-			/* /memory reg = <base(2 cells) size(2 cells)>: capture both.  This
-			 * assumes the root #address-cells = #size-cells = 2 (true for QEMU
-			 * virt); the Pi DTB's cell sizes are verified when the Pi kernel
-			 * parses its own tree (M1 step 5). */
-			if (in_memory && len >= 16 && pname[0] == 'r' && pname[1] == 'e' && pname[2] == 'g' &&
-			    pname[3] == '\0')
+			/* Root (depth 1) #address-cells / #size-cells govern the /memory reg
+			 * layout — QEMU virt uses 2/2, the Raspberry Pi 1/1.  Honor them so the
+			 * RAM base/size parse correctly on both. */
+			if (depth == 1 && len >= 4 && pname[0] == '#')
 			{
-				u_int64_t base = ((u_int64_t)fdt_cell(val) << 32) | fdt_cell(val + 4);
-				size = ((u_int64_t)fdt_cell(val + 8) << 32) | fdt_cell(val + 12);
+				if (pname[1] == 'a') /* #address-cells */
+					addr_cells = fdt_cell(val);
+				else if (pname[1] == 's') /* #size-cells */
+					size_cells = fdt_cell(val);
+			}
+			/* /memory reg = <base (addr_cells) size (size_cells)>: capture both. */
+			if (in_memory && addr_cells >= 1 && addr_cells <= 2 && size_cells >= 1 && size_cells <= 2 &&
+			    len >= (addr_cells + size_cells) * 4 && pname[0] == 'r' && pname[1] == 'e' &&
+			    pname[2] == 'g' && pname[3] == '\0')
+			{
+				u_int64_t base = 0;
+				u_int32_t i;
+				for (i = 0; i < addr_cells; i++)
+					base = (base << 32) | fdt_cell(val + i * 4);
+				size = 0;
+				for (i = 0; i < size_cells; i++)
+					size = (size << 32) | fdt_cell(val + (addr_cells + i) * 4);
 				g_ram_base = base; /* DTB-driven RAM base (QEMU/H618 0x40000000, Pi 0x0) */
 			}
 			p = (const u_int8_t *)(((uintptr_t)val + len + 3) & ~(uintptr_t)3);
@@ -166,6 +181,7 @@ static u_int64_t fdt_memory_size(uintptr_t base)
 		else if (token == FDT_END_NODE)
 		{
 			in_memory = 0;
+			depth--;
 		}
 		else if (token == FDT_END)
 		{
@@ -195,7 +211,10 @@ void aarch64_probe_memory(u_int64_t dtb_phys)
 	u_int64_t size = 0;
 
 	/* 1. Trust the firmware pointer if it points at a valid tree. */
-	if (dtb_phys != 0 && fdt_memory_size((uintptr_t)dtb_phys) != 0)
+	/* Read the DTB through the TTBR1 physmap (PHYSMAP_BASE + phys): the kernel runs
+	 * high-half, so a raw physical pointer is not the reliable kernel mapping (it
+	 * read as garbage on the Pi, where the firmware parks the DTB low in block 0). */
+	if (dtb_phys != 0 && fdt_memory_size(AARCH64_VIRT_OF(dtb_phys)) != 0)
 		found = (uintptr_t)dtb_phys;
 
 	/* 2. Otherwise scan low RAM (page-aligned) for the FDT magic.  256 MB is well
@@ -206,7 +225,8 @@ void aarch64_probe_memory(u_int64_t dtb_phys)
 		uintptr_t a;
 		for (a = AARCH64_RAM_BASE; a < AARCH64_RAM_BASE + AARCH64_RAM_SIZE_DEFAULT; a += PAGE_SIZE)
 		{
-			if (be32(((const struct fdt_header *)a)->magic) == FDT_MAGIC && fdt_memory_size(a) != 0)
+			if (be32(((const struct fdt_header *)AARCH64_VIRT_OF(a))->magic) == FDT_MAGIC &&
+			    fdt_memory_size(AARCH64_VIRT_OF(a)) != 0)
 			{
 				found = a;
 				break;
@@ -217,7 +237,7 @@ void aarch64_probe_memory(u_int64_t dtb_phys)
 	g_dtb_base = found; /* cache for aarch64_enum_cpus() (0 if nothing found) */
 
 	if (found != 0)
-		size = fdt_memory_size(found);
+		size = fdt_memory_size(AARCH64_VIRT_OF(found));
 
 	if (size == 0)
 	{
