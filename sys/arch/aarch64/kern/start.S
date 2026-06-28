@@ -23,6 +23,28 @@
 _start:
 	mov	x19, x0			/* DTB physical address — preserved across the C call */
 
+	/* If the firmware entered at EL2 (e.g. the Raspberry Pi), drop to EL1 — the
+	 * kernel runs at EL1.  QEMU virt enters at EL1, so this is skipped there and
+	 * the boot is unchanged.  Mirrors the HW-confirmed M0.5 drop. */
+	mrs	x0, CurrentEL
+	lsr	x0, x0, #2
+	cmp	x0, #2
+	b.ne	.Lat_el1
+	mrs	x0, cnthctl_el2
+	orr	x0, x0, #3		/* EL1PCEN | EL1PCTEN: EL1 may use the phys timer/counter */
+	msr	cnthctl_el2, x0
+	msr	cntvoff_el2, xzr	/* zero the virtual-timer offset */
+	movz	x0, #0x8000, lsl #16	/* HCR_EL2.RW = 1: EL1 is AArch64 */
+	msr	hcr_el2, x0
+	ldr	x0, =0x30d00800		/* SCTLR_EL1: RES1 bits, MMU/caches off */
+	msr	sctlr_el1, x0
+	mov	x0, #0x3c5		/* SPSR_EL2: EL1h + DAIF masked */
+	msr	spsr_el2, x0
+	adr	x0, .Lat_el1
+	msr	elr_el2, x0
+	eret
+.Lat_el1:
+
 	/* Mask all interrupts until we have handlers. */
 	msr	daifset, #0xf
 
