@@ -103,18 +103,26 @@ profile that skips the host-only steps.
   - `bmake -C /usr/src/bin echo _ARCH=aarch64 OBJ_DIR=/usr/obj/aarch64` → the SUBDIRS
     dispatcher's `(cd echo; ${MAKE})` descent works; `${MAKE}` resolves to /bin/bmake
     (mkimage stages it there) and builds echo. So the descent + sub-make path are sound.
-  Remaining for a full `bmake world`:
-  1. The top **Makefile** `world` target must skip host-only steps when native
-     (NetSurf, makereg, musl rebuild) and set `MAKE=/bin/bmake`.  BLOCKED: the top
-     Makefile currently carries another session's uncommitted work — do the
-     clean-commit dance or wait until it's clean.
-  2. The tree DISPATCHERS (bin/Makefile, sbin/…, usr.bin/…) use `${_ARCH}` at parse
-     time without including Makefile.incl, so a DIRECT `bmake -C <tree>` needs
-     `_ARCH=aarch64` passed.  Top-down `bmake world` exports `_ARCH`/`SRCTOP`/toolchain
-     to children, so the normal flow is fine; only direct dispatcher invocation needs
-     the var.  (Optional nicety: default `_ARCH ?= aarch64` in the dispatchers.)
+  - **DISPATCHER _ARCH default — DONE (commit d8d5806bb).** bin/Makefile,
+    usr.bin/Makefile, tests/Makefile read `${_ARCH}` at parse time without including
+    Makefile.incl, so a DIRECT `bmake -C <tree>` on-device died "Malformed
+    conditional".  Added `_ARCH ?= aarch64` (overridden by the command-line `_ARCH=`
+    the top-down/cross world passes, so host builds are byte-identical).  Now
+    `bmake -C /usr/src/bin OBJ_DIR=/usr/obj/aarch64` (no _ARCH=) descends + builds a
+    runnable program on-device.  **So building a whole TREE on-device works.**
+  Remaining for a full top-level `bmake world` on-device (the orchestration):
+  1. Gate the host-only `world` steps when native (`UBIX_NATIVE`): Step 0 musl
+     rebuild (musl is prebuilt + staged in /lib), Step 4 NetSurf (host bison/libpng/
+     nsgenbind).  Set `MAKE=/bin/bmake`.  Additive + low-risk.
+  2. **The real wall: libcxx + the C++ apps.**  Step 1a/1b builds libcxxabi/libcxx,
+     and usr.bin has C++ apps (vdoom, tessera, cubitaire, taskbar, term, settings,
+     files, activity, diskutil) that need it.  A native `world` must either build
+     libcxx on-device (a large C++ build) or skip the C++ apps (a native usr.bin
+     SUBDIRS subset).  This is the substantive remaining work.
   3. A full world build is slow on-device (per-invocation clang/ld.lld demand-paging),
-     so verify in chunks (a tree at a time) rather than one long run.
+     so verify a tree at a time, not one long run.
+  STATUS: per-TREE on-device builds work (dispatcher fix).  Full `bmake world` is the
+  libcxx/host-step orchestration above — a larger follow-on.
 
 - **Phase 4 — kernel on-device.** clang compiles the kernel today; link via
   `ld.lld` (have it) + `llvm-objcopy` for the embeds; replace the `${CROSS_PREFIX}gcc`
