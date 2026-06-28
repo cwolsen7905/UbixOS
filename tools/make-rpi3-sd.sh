@@ -37,12 +37,23 @@ fi
 # kernel from elsewhere, e.g. the M0.75 standalone — a self-copy errors under set -e)
 [ "$KIMG" = "$BOOT/kernel8.img" ] || cp "$KIMG" "$BOOT/kernel8.img"
 
-# Sparse image: count=0 seek=N extends to N MiB without writing data.
 rm -f "$IMG"
-dd if=/dev/zero of="$IMG" bs=1m count=0 seek=${SIZE_MB} 2>/dev/null
-
-# MBR: one bootable FAT32-LBA (0x0C) partition starting at LBA 2048 (1 MiB).
-python3 - "$IMG" ${SIZE_MB} <<'PY'
+POOL_IMG=ubixos-arm.img
+if [ -f "$POOL_IMG" ]; then
+	# FULL image: reuse the QEMU pool image's UbixFS pool (the world) + its MBR
+	# layout (FAT boot + swap + pool, type 0x9C), swapping the FAT contents for the
+	# Pi firmware + kernel8.img.  The kernel then mounts the pool = the full system.
+	# (cp clones sparsely on APFS; only the FAT diverges.)
+	echo "make-rpi3-sd: FULL image — reusing $POOL_IMG's UbixFS pool (the world)"
+	cp "$POOL_IMG" "$IMG"
+	mformat -i "${IMG}@@1M" -F ::         # clear the FAT (drop the QEMU kernel)
+	mcopy -o -i "${IMG}@@1M" "$BOOT"/* :: # Pi firmware + kernel8.img + config + DTB
+else
+	# Boot-only FAT image (no pool — M0/M1 ramfs).  Run 'bmake image TARGET=aarch64'
+	# first if you want the full pool image.  Sparse: count=0 seek=N extends to N MiB.
+	echo "make-rpi3-sd: boot-only FAT image (no $POOL_IMG → ramfs root only)"
+	dd if=/dev/zero of="$IMG" bs=1m count=0 seek=${SIZE_MB} 2>/dev/null
+	python3 - "$IMG" ${SIZE_MB} <<'PY'
 import sys, struct
 img, size_mb = sys.argv[1], int(sys.argv[2])
 SEC = 512
@@ -60,13 +71,12 @@ with open(img, 'r+b') as f:
     f.seek(510); f.write(b'\x55\xaa')
 print(f"  MBR: FAT32 (0x0C) LBA {start}..{start+count-1} ({count*SEC//1024//1024} MB)")
 PY
-
-# Format the FAT32 partition (at the 1 MiB offset) + copy every boot file to root.
-mformat -i "${IMG}@@1M" -F ::
-mcopy -o -i "${IMG}@@1M" "$BOOT"/* ::
+	mformat -i "${IMG}@@1M" -F ::
+	mcopy -o -i "${IMG}@@1M" "$BOOT"/* ::
+fi
 
 echo "built $IMG"
-mdir -i "${IMG}@@1M" ::
+mdir -i "${IMG}@@1M" :: | grep -iE "kernel8|start elf|config|bcm2710|bootcode" || true
 
 if [ -z "$DEV" ]; then
 	cat <<EOF
