@@ -8,6 +8,9 @@
 # The common set builds on both 64-bit arches; the asm/thread/crypto exercisers
 # below build only on i386 (frozen on releng/2) — they were never wired into the
 # 64-bit world, so they stay i386-gated here to preserve that.
+# Default _ARCH for a DIRECT in-tree build (no Makefile.incl here); a top-down/
+# cross build's exported _ARCH wins via ?=.  See bin/Makefile for the rationale.
+_ARCH ?= aarch64
 SUBDIRS = syscheck filetest pipetest selfhostck ttytest udptest fbtest
 .if ${_ARCH} == "i386"
 SUBDIRS += clonetest tlstest futextest pthreadtest condtest detachtest vmtest \

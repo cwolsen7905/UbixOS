@@ -8,6 +8,11 @@
 # Common set builds on both 64-bit arches; wget/httpsget are gated to x86_64
 # (mirrors the historical bin/Makefile split — the bearssl/pw/http net stack was
 # only wired into the x86_64 world).
+# Default _ARCH for a DIRECT in-tree build (bmake -C /usr/src/usr.bin on-device):
+# this dispatcher reads ${_ARCH} below without including Makefile.incl, so without
+# a default the conditionals would be "Malformed".  A top-down/cross build's
+# exported _ARCH still wins via ?=.  aarch64 default selects the common 64-bit set.
+_ARCH ?= aarch64
 SUBDIRS = taskbar term settings uname basename cut dirname env find grep head \
           less more sort sed stat tail touch tr uniq wc which cmp install diff \
           printf awk make vi nc diskutil activity files vdoom tessera cubitaire

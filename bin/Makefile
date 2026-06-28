@@ -11,6 +11,12 @@
 # Add a directory name to SUBDIRS to include it in the build and clean targets.
 # The 64-bit arches build the same essential set; i386 (frozen on releng/2) a
 # slightly smaller one.
+# This dispatcher reads ${_ARCH} at parse time but does not include Makefile.incl,
+# so a top-down build (bmake world) inherits _ARCH from the environment while a
+# DIRECT in-tree build (bmake -C /usr/src/bin on-device) would see it empty and
+# fail "Malformed conditional".  Default to a 64-bit arch (aarch64 and x86_64 pick
+# the same SUBDIRS; i386 is frozen) — an exported value still wins via ?=.
+_ARCH ?= aarch64
 .if ${_ARCH} == "aarch64" || ${_ARCH} == "x86_64"
 SUBDIRS = init login shell cp ls cat echo ln date mkdir mv rm sleep pwd expr ed tcsh
 .else
