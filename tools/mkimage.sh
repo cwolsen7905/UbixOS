@@ -146,7 +146,7 @@ done
 # crtn.o) and libgcc (-lgcc / --as-needed -lgcc_s).  libc.so is already staged
 # above.  Without these, ld.lld errors "cannot open Scrt1.o" / "unable to find
 # library -lgcc".  See docs/design/self-hosting-plan.md and the on-device link
-# recipe (ld.lld currently needs --threads=1 + --no-mmap-output-file too).
+# recipe (ld.lld currently still needs --threads=1, pending kernel pthread/futex).
 _musllib="${BUILD}/obj/musl/lib"
 for _o in Scrt1.o crti.o crtn.o; do
 	if [ -f "${_musllib}/${_o}" ]; then
@@ -162,6 +162,37 @@ if [ -n "${_libgcc}" ] && [ -f "${_libgcc}" ]; then
 else
 	echo "mkimage: warning: libgcc.a not found via ${ARCH}-elf-gcc — on-device linking will fail" >&2
 fi
+
+# On-device system headers so clang can compile real sources (#include <...>).
+# (1) /usr/include = the musl header set assembled exactly as the world build's
+#     -I path does: the main headers + a bits/ dir overlaid from arch/generic,
+#     then arch/${ARCH} (arch wins), then the generated bits (alltypes.h/syscall.h).
+# (2) /usr/lib/clang/18/include = clang's builtin resource headers (stddef.h,
+#     stdarg.h, stdint.h, …).  The /usr-hierarchy copy loop below only stages the
+#     TOP-LEVEL files of usr/lib, so the nested clang resource dir must be copied
+#     explicitly here (this is why on-device clang reported it "nonexistent").
+mkdir -p "${STAGE}/usr/include/bits"
+cp -R contrib/musl/include/. "${STAGE}/usr/include/" 2>/dev/null || true
+cp -R contrib/musl/arch/generic/bits/. "${STAGE}/usr/include/bits/" 2>/dev/null || true
+cp -R "contrib/musl/arch/${ARCH}/bits/." "${STAGE}/usr/include/bits/" 2>/dev/null || true
+cp -R "${BUILD}/obj/musl/obj/include/bits/." "${STAGE}/usr/include/bits/" 2>/dev/null || true
+if [ -d "${BUILD}/usr/lib/clang/18/include" ]; then
+	mkdir -p "${STAGE}/usr/lib/clang/18/include"
+	cp -R "${BUILD}/usr/lib/clang/18/include/." "${STAGE}/usr/lib/clang/18/include/"
+fi
+
+# bmake's own system makefiles (sys.mk + bsd.*.mk) so on-device bmake has system
+# rules — uBixOS's share/mk carries only custom ubix.*.mk, so without these bmake
+# dies "no system rules (sys.mk)".  Present only once the bmake port is built
+# (bmake -C tools/ports/bmake build); skipped otherwise.  The /bin copy loop below
+# stages the bmake + sh (oksh) binaries themselves from ${BUILD}/bin when built.
+for _bmk in build/ports/bmake-*/mk; do
+	if [ -d "${_bmk}" ]; then
+		mkdir -p "${STAGE}/usr/share/mk"
+		cp -R "${_bmk}/." "${STAGE}/usr/share/mk/"
+		break
+	fi
+done
 # Desktop-only shared libraries: objGFX (compositor + every GUI app) and the
 # NetSurf stack.  The base profile ships none of them.
 if [ "${PROFILE}" = desktop ]; then
