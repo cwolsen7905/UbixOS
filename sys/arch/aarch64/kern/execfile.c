@@ -79,7 +79,11 @@ static u_int64_t *build_user_image(const void *image, u_int64_t *out_entry, u_in
 		return (NULL);
 
 	stack_frame = vmm_find_free_page(sysID);
-	sp = (u_int64_t *)(stack_frame + PAGE_SIZE) - INITIAL_FRAME;
+	/* Fill the initial stack through the TTBR1 physmap, not the raw physical page:
+	 * the kernel runs high-half, so a raw phys pointer faults (it only happened to
+	 * work on QEMU, whose RAM is at 0x40000000+).  The page is still mapped into the
+	 * user VA by its physical address below.  (The dynamic path already does this.) */
+	sp = (u_int64_t *)(AARCH64_VIRT_OF(stack_frame) + PAGE_SIZE) - INITIAL_FRAME;
 	for (i = 0; i < INITIAL_FRAME; i++)
 		sp[i] = 0;
 	sp[3] = AT_PAGESZ;
