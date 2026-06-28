@@ -38,6 +38,7 @@ struct aarch64_board
 	u_int64_t gicd_base;             /* GIC distributor (0 = no GIC, e.g. the Pi's BCM controller) */
 	u_int64_t gicc_base;             /* GIC CPU interface                                         */
 	const struct aarch64_intc *intc; /* interrupt-controller implementation           */
+	void (*console_init)(void);      /* optional early UART setup (Pi GPIO+baud); NULL = firmware-ready */
 };
 extern struct aarch64_board *g_board;
 
@@ -70,6 +71,7 @@ struct aarch64_intc
 	int (*dispatch)(void);              /* EL1 IRQ vector: ack/route/eoi; non-zero on a tick   */
 };
 extern const struct aarch64_intc g_gicv2_intc; /* gic.c — GICv2 (QEMU virt) */
+extern const struct aarch64_intc g_bcm_intc;   /* bcm_intc.c — BCM2837 (Raspberry Pi 3) */
 
 void aarch64_intc_init(void);                 /* BSP interrupt-controller bring-up */
 void aarch64_intc_secondary_init(void);       /* AP: bring up this CPU (smp-plan M2) */

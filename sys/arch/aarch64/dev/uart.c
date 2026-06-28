@@ -89,5 +89,9 @@ static struct kconsole g_pl011_console = {pl011_putc, "pl011", KC_SERIAL, 0};
  */
 void kconsole_arch_init(void)
 {
+	/* Board-specific early UART setup (the Pi muxes GPIO14/15 + sets the PL011
+	 * baud; QEMU leaves this NULL — the firmware presets the port). */
+	if (g_board->console_init != 0)
+		g_board->console_init();
 	kconsole_register(&g_pl011_console);
 }

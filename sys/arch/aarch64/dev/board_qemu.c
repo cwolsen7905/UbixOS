@@ -11,6 +11,8 @@
 
 #include "bringup.h"
 
+#ifndef BOARD_RPI3 /* QEMU is the default board; the Pi build (board_rpi3.c) owns g_board */
+
 static struct aarch64_board g_board_qemu_virt = {
     .name = "qemu-virt",
     .ram_base = 0x40000000UL,
@@ -23,3 +25,5 @@ static struct aarch64_board g_board_qemu_virt = {
 /* The active board.  Statically the QEMU default so the very first kprintf works
  * before any DTB-driven reselection. */
 struct aarch64_board *g_board = &g_board_qemu_virt;
+
+#endif /* !BOARD_RPI3 */
