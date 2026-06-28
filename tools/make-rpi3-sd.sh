@@ -18,13 +18,24 @@ IMG=build/rpi3b/rpi3-sd.img
 SIZE_MB=64
 DEV="$1"
 
-[ -f "$BOOT/start.elf" ]        || { echo "missing $BOOT/start.elf - run tools/fetch-rpi3-firmware.sh first"; exit 1; }
-[ -f build/rpi3b/kernel8.img ]  || { echo "missing build/rpi3b/kernel8.img - run tools/build-rpi3-hello.sh first"; exit 1; }
-command -v mformat >/dev/null   || { echo "mtools not found - brew install mtools"; exit 1; }
+[ -f "$BOOT/start.elf" ] || { echo "missing $BOOT/start.elf - run tools/fetch-rpi3-firmware.sh first"; exit 1; }
+command -v mformat >/dev/null || { echo "mtools not found - brew install mtools"; exit 1; }
 
-# Always stage the freshest kernel build into the boot dir so a rebuild is picked
-# up without re-fetching the firmware.
-cp build/rpi3b/kernel8.img "$BOOT/kernel8.img"
+# Prefer the full OS kernel (build-rpi3-kernel.sh -> build/rpi3b/boot/kernel8.img);
+# fall back to the M0.75 standalone (build-rpi3-hello.sh -> build/rpi3b/kernel8.img).
+if [ -f build/rpi3b/boot/kernel8.img ]; then
+	KIMG=build/rpi3b/boot/kernel8.img
+	echo "make-rpi3-sd: using the full OS kernel (build/rpi3b/boot/kernel8.img)"
+elif [ -f build/rpi3b/kernel8.img ]; then
+	KIMG=build/rpi3b/kernel8.img
+	echo "make-rpi3-sd: using the M0.75 standalone (build/rpi3b/kernel8.img)"
+else
+	echo "no kernel8.img - run tools/build-rpi3-kernel.sh (full) or tools/build-rpi3-hello.sh (M0.75)"
+	exit 1
+fi
+# (the full-kernel build already writes into $BOOT; only copy when staging a
+# kernel from elsewhere, e.g. the M0.75 standalone — a self-copy errors under set -e)
+[ "$KIMG" = "$BOOT/kernel8.img" ] || cp "$KIMG" "$BOOT/kernel8.img"
 
 # Sparse image: count=0 seek=N extends to N MiB without writing data.
 rm -f "$IMG"
