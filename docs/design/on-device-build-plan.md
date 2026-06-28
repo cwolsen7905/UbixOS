@@ -83,12 +83,19 @@ profile that skips the host-only steps.
 - **Phase 1 — single program (DONE).** clang + link recipe on-device → running
   binary. Ships in the image.
 
-- **Phase 2 — one world subdir on-device (smallest real step).** Goal:
-  `cd /usr/src/bin/cat && bmake OBJ_DIR=/usr/obj/aarch64` builds `cat`. Needs:
-  the platform.mk native branch (#1), the musl.vars native branch (#2), staged
-  `llvm-ar`/`llvm-objcopy`/`llvm-ranlib`/`llvm-nm` (#3). This proves the
-  `ubix.musl.prog.mk` rule end-to-end on-device. Low risk — additive native
-  branches; host builds unchanged (guarded by `UNAME_S == "UBIX"`).
+- **Phase 2 — one world subdir on-device — DONE (commit 5fff626ce).**
+  `bmake -C /usr/src/bin/cat SRCTOP=/usr/src OBJ_DIR=/usr/obj/aarch64` compiles +
+  links a valid 42 KB aarch64 PIE that runs on-device (`cat` prints). The real
+  blocker chain that had to be cleared (all `UBIX_NATIVE`-gated, host byte-identical):
+  (a) `platform.mk` `LIBGCC != gcc` → native LIBGCC=/lib/libgcc.a + UBIX_NATIVE;
+  (b) `target.aarch64.mk` re-set CROSS_PREFIX=aarch64-elf- + a 2nd `LIBGCC != gcc`
+      → skipped when native; (c) generated musl headers (`bits/alltypes.h`) not on
+  device → stage-src pre-seeds `/usr/obj/${ARCH}/obj/musl/obj/include`;
+  (d) link `-L/lib` for libc/crt (prog.mk `-L${MUSL_LIB}`); (e) ld.lld ThreadPool
+  crash → `-Wl,--threads=1` (MUSL_NATIVE_LDFLAGS). **Still open:** `SRCTOP`
+  auto-detect for *direct* subdir builds (top-level `bmake` exports it; direct
+  needs `SRCTOP=/usr/src`) — fix = walk `.CURDIR` up to the dir containing
+  `share/mk` when `.git`/`.PARSEDIR:tA` don't yield the root on-device.
 
 - **Phase 3 — `bmake world` on-device.** Descend the program trees with the
   host-only steps gated off (NetSurf, makereg). Slow (demand-paging) but
