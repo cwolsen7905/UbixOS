@@ -47,6 +47,11 @@ extern char _end[]; /* end of the kernel image (ldscript.aarch64), page-aligned 
  * before vmm_mem_map_init() stages the bitmap. */
 static u_int64_t g_ram_top = AARCH64_RAM_BASE + AARCH64_RAM_SIZE_DEFAULT;
 
+/* Physical RAM base, DTB-driven (the /memory reg base): 0x40000000 on QEMU virt +
+ * the Allwinner H618, 0x0 on the Raspberry Pi.  Defaults to AARCH64_RAM_BASE until
+ * aarch64_probe_memory() reads the DTB. */
+static u_int64_t g_ram_base = AARCH64_RAM_BASE;
+
 /* Physical base of the located device tree, cached by aarch64_probe_memory() so
  * aarch64_enum_cpus() can re-walk the same tree for /cpus.  0 = not found. */
 static uintptr_t g_dtb_base = 0;
@@ -145,13 +150,16 @@ static u_int64_t fdt_memory_size(uintptr_t base)
 			const char *pname = (const char *)(strings + nameoff);
 			const u_int8_t *val = p + 8;
 
-			/* /memory reg = <base(2 cells) size(2 cells)>: take the size. */
+			/* /memory reg = <base(2 cells) size(2 cells)>: capture both.  This
+			 * assumes the root #address-cells = #size-cells = 2 (true for QEMU
+			 * virt); the Pi DTB's cell sizes are verified when the Pi kernel
+			 * parses its own tree (M1 step 5). */
 			if (in_memory && len >= 16 && pname[0] == 'r' && pname[1] == 'e' && pname[2] == 'g' &&
 			    pname[3] == '\0')
 			{
 				u_int64_t base = ((u_int64_t)fdt_cell(val) << 32) | fdt_cell(val + 4);
 				size = ((u_int64_t)fdt_cell(val + 8) << 32) | fdt_cell(val + 12);
-				(void)base; /* QEMU virt base is always AARCH64_RAM_BASE */
+				g_ram_base = base; /* DTB-driven RAM base (QEMU/H618 0x40000000, Pi 0x0) */
 			}
 			p = (const u_int8_t *)(((uintptr_t)val + len + 3) & ~(uintptr_t)3);
 		}
@@ -222,11 +230,11 @@ void aarch64_probe_memory(u_int64_t dtb_phys)
 	if (size > AARCH64_RAM_SIZE_MAX)
 		size = AARCH64_RAM_SIZE_MAX;
 
-	g_ram_top = AARCH64_RAM_BASE + size;
+	g_ram_top = g_ram_base + size;
 	kprintf("vmm(aarch64): DTB at 0x%lX, /memory size=%lu MB (RAM 0x%lX..0x%lX)\n",
 	        (u_int64_t)found,
 	        (u_int64_t)(size / (1024ULL * 1024)),
-	        (u_int64_t)AARCH64_RAM_BASE,
+	        g_ram_base,
 	        g_ram_top);
 }
 
@@ -456,7 +464,7 @@ int vmm_mem_map_init(void)
 	vmm_mem_mark_available(bitmap_end_page, num);
 
 	kprintf("vmm(aarch64): RAM 0x%lX..0x%lX, bitmap phys=0x%lX end_page=%u pages=%u free=%u\n",
-	        (u_int64_t)AARCH64_RAM_BASE,
+	        g_ram_base,
 	        g_ram_top,
 	        (u_int64_t)bitmap_phys,
 	        bitmap_end_page,
