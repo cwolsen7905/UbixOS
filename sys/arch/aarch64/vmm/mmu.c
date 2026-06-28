@@ -24,6 +24,18 @@ static u_int64_t l1_table[512] __attribute__((aligned(4096)));
 /* TTBR1 physmap L1: the same 1 GB identity blocks, reached at PHYSMAP_BASE. */
 static u_int64_t physmap_l1[512] __attribute__((aligned(4096)));
 
+#ifdef BOARD_RPI3
+/* Raspberry Pi 3: physical RAM (0..0x3F000000) and the peripheral window
+ * (0x3F000000..0x40000000) share the first 1 GB, so block 0 is split into 2 MB
+ * blocks via a shared level-2 table — RAM Normal cacheable (the kernel runs here
+ * and needs working atomics), peripherals Device.  Both translation roots' entry 0
+ * point at this one L2 (the block-0 identity mapping is the same for each). */
+#define MMU_2MB (2UL << 20)
+#define DESC_TABLE 0x3UL             /* [1:0] = 11: table descriptor */
+#define RPI_PERIPH_BASE 0x3F000000UL /* BCM2837 peripheral window base */
+static u_int64_t l2_block0[512] __attribute__((aligned(4096)));
+#endif
+
 /**
  * The kernel's identity L1 root.  New address spaces (pmap_create_user_space,
  * fork) copy this so they all map the kernel + identity-mapped RAM, regardless
@@ -108,6 +120,28 @@ static void mmu_program_regs(void)
  */
 void aarch64_mmu_init(void)
 {
+#ifdef BOARD_RPI3
+	/* Block 0: 2 MB granularity — RAM Normal up to the peripheral window, Device
+	 * above.  (uintptr_t)l2_block0 resolves to its low PA here (adrp-relative, MMU
+	 * off), which is what the table descriptor needs. */
+	for (unsigned j = 0; j < 512; j++)
+	{
+		u_int64_t pa = (u_int64_t)j * MMU_2MB;
+		u_int64_t attr =
+		    (pa < RPI_PERIPH_BASE) ? (DESC_ATTR(ATTR_NORMAL_IDX) | DESC_SH_INNER) : DESC_ATTR(ATTR_DEVICE_IDX);
+		l2_block0[j] = pa | attr | DESC_AF | DESC_BLOCK;
+	}
+	l1_table[0] = (u_int64_t)(uintptr_t)l2_block0 | DESC_TABLE;
+	physmap_l1[0] = (u_int64_t)(uintptr_t)l2_block0 | DESC_TABLE;
+	/* Blocks 1+ : Device 1 GB (the BCM "ARM local" block @0x40000000 + unused;
+	 * the Pi has no RAM above 1 GB). */
+	for (unsigned i = 1; i < 512; i++)
+	{
+		u_int64_t blk = ((u_int64_t)i * MMU_1GB) | DESC_ATTR(ATTR_DEVICE_IDX) | DESC_AF | DESC_BLOCK;
+		l1_table[i] = blk;
+		physmap_l1[i] = blk;
+	}
+#else
 	for (unsigned i = 0; i < 512; i++)
 	{
 		u_int64_t pa = (u_int64_t)i * MMU_1GB;
@@ -121,6 +155,7 @@ void aarch64_mmu_init(void)
 		l1_table[i] = pa | attr | DESC_AF | DESC_BLOCK;
 		physmap_l1[i] = pa | attr | DESC_AF | DESC_BLOCK; /* same blocks, reached at PHYSMAP_BASE */
 	}
+#endif
 
 	mmu_program_regs();
 }
