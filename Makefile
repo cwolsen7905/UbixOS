@@ -113,6 +113,14 @@ AARCH64_KCFLAGS = ${KERN_TARGET_CFLAGS} -DDEBUG_SYSCTL -O -Wall -Wno-incompatibl
 	-fno-strict-aliasing \
 	-fno-stack-protector -mno-outline-atomics -I${CURDIR}/sys/include -I${CURDIR}/sys/arch/aarch64
 
+# Board build hooks (M1): the Pi kernel build (tools/build-rpi3-kernel.sh) passes
+# AARCH64_KCFLAGS_EXTRA=-DBOARD_RPI3 (compile) + AARCH64_LD_EXTRA="--defsym
+# KERNEL_PHYS=0x80000" (link) on the command line.  Empty by default, so the QEMU
+# virt build is unchanged.
+AARCH64_KCFLAGS_EXTRA ?=
+AARCH64_LD_EXTRA ?=
+AARCH64_KCFLAGS += ${AARCH64_KCFLAGS_EXTRA}
+
 # Arch-neutral kernel sources now linked into the aarch64 kernel.  Grows as more
 # of the generic kernel is ported; the scheduler core is the first to link.
 AARCH64_GENERIC_SRCS = \
@@ -306,7 +314,7 @@ kernel-aarch64:
 	 else head -c 16 /dev/zero > ${OBJ_DIR}/worldcat; fi
 	@cd ${OBJ_DIR} && ${OBJCOPY} -I binary -O elf64-littleaarch64 -B aarch64 \
 	    worldcat ${OBJ_DIR}/obj/sys/worldcat_embed.o || exit 1
-	${LD} -T ${CURDIR}/sys/compile/ldscript.aarch64 -o ${OBJ_DIR}/boot/kernel ${OBJ_DIR}/obj/sys/*.o
+	${LD} ${AARCH64_LD_EXTRA} -T ${CURDIR}/sys/compile/ldscript.aarch64 -o ${OBJ_DIR}/boot/kernel ${OBJ_DIR}/obj/sys/*.o
 	@echo "aarch64 bring-up kernel linked: ${OBJ_DIR}/boot/kernel"
 
 # x86-64 bring-up kernel: assemble the long-mode entry, compile the COM1 banner,

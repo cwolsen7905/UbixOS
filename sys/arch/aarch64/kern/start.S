@@ -17,7 +17,12 @@
  * high flip, so for now this is a plain low boot.
  */
 
-	.section .text.boot, "ax"
+	/* Dedicated entry section, placed FIRST in .text.boot by the linker script so
+	 * _start is at byte 0 of the image.  The Pi's flat kernel8.img is entered at
+	 * its first byte (0x80000); without this, apentry.o's .text.boot (it sorts
+	 * before start.o) would land first and the firmware would run the AP trampoline
+	 * instead of _start.  QEMU uses the ELF entry, so it is unaffected either way. */
+	.section .text.boot.entry, "ax"
 	.global _start
 	.type _start, %function
 _start:

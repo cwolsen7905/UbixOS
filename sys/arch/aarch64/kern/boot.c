@@ -160,7 +160,13 @@ void kmain_aarch64(u_int64_t dtb_phys)
 	 * bumps a heartbeat the BSP observes here.  IRQs stay masked on the AP — the
 	 * per-CPU scheduler is M3.
 	 */
+#ifndef BOARD_RPI3
 	aarch64_smp_start_aps();
+#else
+	/* Pi M1: BSP only.  Secondary cores need the spin-table release + the BCM
+	 * mailbox IPI/per-core timer routing, which are a later Pi milestone. */
+	kprintf("smp: BSP only on the Pi (secondary cores are a later milestone)\n");
+#endif
 	vmm_mem_map_init();
 	vitals_init();
 	aarch64_rtc_init(); /* boot wall-clock epoch from the PL031 RTC (else clock = 1970) */

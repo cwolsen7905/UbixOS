@@ -29,8 +29,10 @@ SECTIONS
 	. = KERNEL_PHYS;
 
 	/* Low boot stub: VMA == LMA == KERNEL_PHYS.  Runs with the MMU off, then
-	 * enables it and branches to the high half (.text below). */
-	.text.boot : { *(.text.boot) }
+	 * enables it and branches to the high half (.text below).  The entry section
+	 * (.text.boot.entry, kern/start.S) is placed FIRST so _start is at byte 0 of the
+	 * image — required by the Pi's flat kernel8.img (entered at its first byte). */
+	.text.boot : { KEEP(*(.text.boot.entry)) *(.text.boot) }
 
 	/* Everything else executes at the high VMA and loads right after the stub
 	 * (LMA = VMA - VIRT_OFFSET). */
