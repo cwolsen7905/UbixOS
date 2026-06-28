@@ -19,7 +19,10 @@ OUTPUT_ARCH(aarch64)
 ENTRY(_start)
 
 VIRT_OFFSET = 0xFFFFFF8000000000;
-KERNEL_PHYS = 0x40200000;
+/* Physical load address (LMA).  QEMU virt = 0x40200000 (RAM @0x40000000 + the 2 MB
+ * boot-shim window).  The Raspberry Pi build overrides this to 0x80000 (where the
+ * VideoCore firmware loads kernel8.img) via `--defsym KERNEL_PHYS=0x80000`. */
+KERNEL_PHYS = DEFINED(KERNEL_PHYS) ? KERNEL_PHYS : 0x40200000;
 
 SECTIONS
 {
