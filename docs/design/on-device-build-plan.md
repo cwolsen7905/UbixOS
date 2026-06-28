@@ -97,10 +97,24 @@ profile that skips the host-only steps.
   needs `SRCTOP=/usr/src`) — fix = walk `.CURDIR` up to the dir containing
   `share/mk` when `.git`/`.PARSEDIR:tA` don't yield the root on-device.
 
-- **Phase 3 — `bmake world` on-device.** Descend the program trees with the
-  host-only steps gated off (NetSurf, makereg). Slow (demand-paging) but
-  mechanical once Phase 2 holds. Needs a `world` target that skips host-only
-  subdirs when native, and `MAKE=/bin/bmake`.
+- **Phase 3 — `bmake world` on-device — mechanisms PROVEN; orchestration target pending.**
+  Verified on-device (commits aa2dc5742 SRCTOP walk-up + the Phase-2 retarget):
+  - `bmake -C /usr/src/bin/cat OBJ_DIR=/usr/obj/aarch64` (no SRCTOP=) → builds + runs.
+  - `bmake -C /usr/src/bin echo _ARCH=aarch64 OBJ_DIR=/usr/obj/aarch64` → the SUBDIRS
+    dispatcher's `(cd echo; ${MAKE})` descent works; `${MAKE}` resolves to /bin/bmake
+    (mkimage stages it there) and builds echo. So the descent + sub-make path are sound.
+  Remaining for a full `bmake world`:
+  1. The top **Makefile** `world` target must skip host-only steps when native
+     (NetSurf, makereg, musl rebuild) and set `MAKE=/bin/bmake`.  BLOCKED: the top
+     Makefile currently carries another session's uncommitted work — do the
+     clean-commit dance or wait until it's clean.
+  2. The tree DISPATCHERS (bin/Makefile, sbin/…, usr.bin/…) use `${_ARCH}` at parse
+     time without including Makefile.incl, so a DIRECT `bmake -C <tree>` needs
+     `_ARCH=aarch64` passed.  Top-down `bmake world` exports `_ARCH`/`SRCTOP`/toolchain
+     to children, so the normal flow is fine; only direct dispatcher invocation needs
+     the var.  (Optional nicety: default `_ARCH ?= aarch64` in the dispatchers.)
+  3. A full world build is slow on-device (per-invocation clang/ld.lld demand-paging),
+     so verify in chunks (a tree at a time) rather than one long run.
 
 - **Phase 4 — kernel on-device.** clang compiles the kernel today; link via
   `ld.lld` (have it) + `llvm-objcopy` for the embeds; replace the `${CROSS_PREFIX}gcc`
