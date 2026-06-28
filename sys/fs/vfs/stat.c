@@ -55,15 +55,24 @@ static u_int32_t stat_exec_fixup(u_int32_t mode)
 
 /*
  * Finalize a regular file's mode for stat, given the descriptor it was opened
- * on.  procfs entries are synthetic, read-only text (meminfo, stat, …) and are
- * never executable — reporting them as 0444 keeps `ls -F` from tagging them with
- * a '*'.  Every other backing FS cannot record exec bits, so a regular file is
- * marked executable (stat_exec_fixup) — binaries must stay runnable via execve.
+ * on.  The exec-fixup (force 0111 on every regular file) is a workaround for
+ * filesystems that store NO mode bits — FAT — so their binaries stay runnable
+ * and access(X_OK) succeeds.  The UbixFS pool DOES store real modes, so applying
+ * the fixup there wrongly reported every data file as executable (0644 -> 0755,
+ * so `ls` tagged Makefile/*.c with a '*').  Per backing FS:
+ *   - procfs : synthetic read-only text -> 0444 (and never '*'-tagged).
+ *   - UbixFS : real on-disk modes -> report verbatim (no fixup).
+ *   - FAT / other modeless FSes -> exec-fixup so binaries remain runnable.
  */
 static u_int32_t stat_mode_for_fd(const fileDescriptor_t *fd, u_int32_t mode)
 {
-	if (fd != NULL && fd->mp != NULL && fd->mp->fs != NULL && fd->mp->fs->vfsType == VFS_TYPE_PROCFS)
-		return (0100000u | 0444u); /* S_IFREG | r--r--r-- */
+	if (fd != NULL && fd->mp != NULL && fd->mp->fs != NULL)
+	{
+		if (fd->mp->fs->vfsType == VFS_TYPE_PROCFS)
+			return (0100000u | 0444u); /* S_IFREG | r--r--r-- */
+		if (fd->mp->fs->vfsType == VFS_TYPE_UBIXFS)
+			return (mode); /* real on-disk mode bits — do not clobber */
+	}
 	return (stat_exec_fixup(mode));
 }
 
@@ -478,8 +487,8 @@ int sys_statx(struct thread *td, struct sys_statx_args *args)
 		/* FAT driver sets di_mode = S_IFREG|0755 in open_fat(); use it directly. */
 		stx->stx_mode = fd->inode.u.ufs2_i.di_mode;
 		if ((stx->stx_mode & 0170000) == 0)
-			stx->stx_mode |= 0100755; /* fallback for FSes that don't set di_mode */
-		stx->stx_mode = stat_exec_fixup(stx->stx_mode);
+			stx->stx_mode |= 0100755;                    /* fallback for FSes that don't set di_mode */
+		stx->stx_mode = stat_mode_for_fd(fd, stx->stx_mode); /* FS-aware: no exec-fixup on UbixFS */
 		stx->stx_ino = fd->ino;
 		stx->stx_size = fd->size;
 		stx->stx_blocks = (fd->size + 511) / 512;
