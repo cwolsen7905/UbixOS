@@ -104,11 +104,13 @@
 #define SD_ERROR (-1)
 #define SD_TIMEOUT (-2)
 
-static u_int32_t g_sd_rca;    /* relative card address (from CMD3) */
-static u_int32_t g_sd_scr[2]; /* SD config register words         */
-static u_int32_t g_sd_ccs;    /* SCR_SUPP_CCS if a high-capacity (SDHC) card */
-static u_int32_t g_sd_hv;     /* host controller spec version */
-static int g_sd_err;          /* last error */
+static u_int32_t g_sd_rca;                 /* relative card address (from CMD3) */
+static u_int32_t g_sd_scr[2];              /* SD config register words         */
+static u_int32_t g_sd_ccs;                 /* SCR_SUPP_CCS if a high-capacity (SDHC) card */
+static u_int32_t g_sd_hv;                  /* host controller spec version */
+static int g_sd_err;                       /* last error */
+static u_int32_t g_sd_last_int;            /* last INTERRUPT value seen by sd_int (debug) */
+static u_int32_t g_sd_base_clk = 41666666; /* EMMC base clock (Hz); set from the mailbox */
 
 /** Busy-wait @us microseconds off the always-running virtual counter. */
 static void sd_wait_us(u_int32_t us)
@@ -143,6 +145,7 @@ static int sd_int(u_int32_t mask)
 	while ((EMMC(EMMC_INTERRUPT) & m) == 0 && cnt-- > 0)
 		sd_wait_us(1);
 	r = EMMC(EMMC_INTERRUPT);
+	g_sd_last_int = r;
 	if (cnt <= 0 || (r & (INT_CMD_TIMEOUT | INT_DATA_TIMEOUT)) != 0)
 	{
 		EMMC(EMMC_INTERRUPT) = r;
@@ -169,12 +172,12 @@ static u_int32_t sd_cmd(u_int32_t code, u_int32_t arg)
 	g_sd_err = SD_OK;
 	if ((code & CMD_NEED_APP) != 0)
 	{
-		r = sd_cmd(CMD_APP_CMD | (g_sd_rca != 0 ? CMD_RSPNS_48 : 0), g_sd_rca);
-		if (g_sd_rca != 0 && r == 0)
-		{
-			g_sd_err = SD_ERROR;
-			return (0);
-		}
+		/* CMD55 (APP_CMD) always returns R1 (48-bit) — read it so the card enters
+		 * the APP-CMD state before the ACMD.  The first ACMD41 runs with rca=0, so
+		 * the response type must NOT be gated on rca (the bug that failed ACMD41). */
+		(void)sd_cmd(CMD_APP_CMD | CMD_RSPNS_48, g_sd_rca);
+		if (g_sd_err != SD_OK)
+			return (0); /* CMD55 failed → the app command can't proceed */
 		code &= ~CMD_NEED_APP;
 	}
 	if (sd_status(SR_CMD_INHIBIT) != SD_OK)
@@ -197,13 +200,68 @@ static u_int32_t sd_cmd(u_int32_t code, u_int32_t arg)
 	return (EMMC(EMMC_RESP0));
 }
 
+/* --- VideoCore property mailbox: read the real EMMC base clock.  The firmware
+ *     leaves the EMMC clock at whatever it configured for the WiFi SDIO, not the
+ *     41.66 MHz the divider assumed, so divisor=1 (for 25 MHz) produced a garbled
+ *     clock and CMD7 timed out.  Channel 8, the 16-byte-aligned message buffer is
+ *     handed to the GPU at its uncached bus alias (phys | 0xC0000000) and the cache
+ *     is cleaned/invalidated around the call for coherency. --- */
+#define MBOX_BASE (PHYSMAP_BASE + 0x3F00B880UL)
+#define MBOX_STATUS (*(volatile u_int32_t *)(MBOX_BASE + 0x18))
+#define MBOX_READ (*(volatile u_int32_t *)(MBOX_BASE + 0x00))
+#define MBOX_WRITE (*(volatile u_int32_t *)(MBOX_BASE + 0x20))
+#define MBOX_FULL 0x80000000u
+#define MBOX_EMPTY 0x40000000u
+#define MBOX_CH_PROP 8u
+#define GPU_BUS_ALIAS 0xC0000000u
+
+static volatile u_int32_t g_mbox[36] __attribute__((aligned(16)));
+
+/** Property-mailbox GET_CLOCK_RATE for @clock_id (1 = EMMC).  @return Hz, or 0. */
+static u_int32_t mbox_clock_rate(u_int32_t clock_id)
+{
+	u_int32_t msg;
+	uintptr_t a;
+
+	g_mbox[0] = 8 * 4;      /* total message size */
+	g_mbox[1] = 0;          /* request */
+	g_mbox[2] = 0x00030002; /* GET_CLOCK_RATE tag */
+	g_mbox[3] = 8;          /* value buffer size */
+	g_mbox[4] = 4;          /* request length (clock id) */
+	g_mbox[5] = clock_id;   /* (in) clock id */
+	g_mbox[6] = 0;          /* (out) rate */
+	g_mbox[7] = 0;          /* end tag */
+
+	for (a = (uintptr_t)g_mbox; a < (uintptr_t)g_mbox + sizeof(g_mbox); a += 64)
+		__asm__ volatile("dc cvac, %0" ::"r"(a) : "memory");
+	__asm__ volatile("dsb sy" ::: "memory");
+
+	msg = (((u_int32_t)AARCH64_PHYS_OF((uintptr_t)g_mbox) | GPU_BUS_ALIAS) & ~0xFu) | MBOX_CH_PROP;
+	while ((MBOX_STATUS & MBOX_FULL) != 0)
+		;
+	MBOX_WRITE = msg;
+	for (;;)
+	{
+		while ((MBOX_STATUS & MBOX_EMPTY) != 0)
+			;
+		if ((MBOX_READ & 0xFu) == MBOX_CH_PROP)
+			break;
+	}
+	__asm__ volatile("dsb sy" ::: "memory");
+	for (a = (uintptr_t)g_mbox; a < (uintptr_t)g_mbox + sizeof(g_mbox); a += 64)
+		__asm__ volatile("dc ivac, %0" ::"r"(a) : "memory");
+	__asm__ volatile("dsb sy" ::: "memory");
+
+	return (g_mbox[1] == 0x80000000u ? g_mbox[6] : 0);
+}
+
 /**
- * Program the SDHCI clock divider for @freq Hz (base clock ~41.66 MHz) and wait
- * for the clock to stabilize.
+ * Program the SDHCI clock divider for @freq Hz (against the real EMMC base clock,
+ * g_sd_base_clk) and wait for the clock to stabilize.
  */
 static int sd_clk(u_int32_t freq)
 {
-	u_int32_t d, c = 41666666u / freq, s = 32, x;
+	u_int32_t d, c = g_sd_base_clk / freq, s = 32, x;
 	int cnt = 100000;
 
 	while ((EMMC(EMMC_STATUS) & (SR_CMD_INHIBIT | SR_DAT_INHIBIT)) != 0 && cnt-- > 0)
@@ -297,6 +355,10 @@ int aarch64_sd_card_init(void)
 
 	sd_gpio_init();
 	g_sd_hv = (EMMC(EMMC_SLOTISR_VER) & HOST_SPEC_NUM) >> HOST_SPEC_NUM_SHIFT;
+	g_sd_base_clk = mbox_clock_rate(1); /* clock id 1 = EMMC */
+	if (g_sd_base_clk < 1000000u || g_sd_base_clk > 500000000u)
+		g_sd_base_clk = 41666666u; /* fall back to the common default */
+	kprintf("sd: EMMC SLOTISR_VER=0x%X hv=%u base=%u Hz\n", EMMC(EMMC_SLOTISR_VER), g_sd_hv, g_sd_base_clk);
 
 	/* Reset the host controller. */
 	EMMC(EMMC_CONTROL0) = 0;
@@ -305,22 +367,35 @@ int aarch64_sd_card_init(void)
 	while ((EMMC(EMMC_CONTROL1) & C1_SRST_HC) != 0 && cnt-- > 0)
 		sd_wait_us(10000);
 	if (cnt <= 0)
+	{
+		kprintf("sd: HC reset timeout\n");
 		return (SD_ERROR);
+	}
 
 	EMMC(EMMC_CONTROL1) |= C1_CLK_INTLEN | C1_TOUNIT_MAX;
 	sd_wait_us(10);
 	if (sd_clk(400000) != SD_OK)
+	{
+		kprintf("sd: clk(400kHz) failed\n");
 		return (SD_ERROR);
+	}
 	EMMC(EMMC_INT_EN) = 0xFFFFFFFF;
 	EMMC(EMMC_INT_MASK) = 0xFFFFFFFF;
 	g_sd_scr[0] = g_sd_scr[1] = g_sd_rca = g_sd_ccs = 0;
 
 	sd_cmd(CMD_GO_IDLE, 0);
 	if (g_sd_err != SD_OK)
+	{
+		kprintf("sd: CMD0 (GO_IDLE) failed\n");
 		return (SD_ERROR);
-	sd_cmd(CMD_SEND_IF_COND, 0x000001AA);
+	}
+	resp = sd_cmd(CMD_SEND_IF_COND, 0x000001AA);
 	if (g_sd_err != SD_OK)
+	{
+		kprintf("sd: CMD8 (SEND_IF_COND) failed\n");
 		return (SD_ERROR);
+	}
+	kprintf("sd: CMD0/CMD8 ok (CMD8 resp=0x%X); ACMD41...\n", resp);
 
 	cnt = 6;
 	resp = 0;
@@ -329,44 +404,73 @@ int aarch64_sd_card_init(void)
 		sd_wait_us(400);
 		resp = sd_cmd(CMD_SEND_OP_COND, ACMD41_ARG_HC);
 		if (g_sd_err != SD_OK)
+		{
+			kprintf("sd: ACMD41 command error\n");
 			return (SD_ERROR);
+		}
 	}
+	kprintf("sd: ACMD41 resp=0x%X\n", resp);
 	if ((resp & ACMD41_CMD_COMPLETE) == 0 || (resp & ACMD41_VOLTAGE) == 0)
+	{
+		kprintf("sd: ACMD41 no complete/voltage\n");
 		return (SD_ERROR);
+	}
 	if ((resp & ACMD41_CMD_CCS) != 0)
 		g_sd_ccs = SCR_SUPP_CCS;
 
 	sd_cmd(CMD_ALL_SEND_CID, 0);
+	if (g_sd_err != SD_OK)
+	{
+		kprintf("sd: CMD2 (ALL_SEND_CID) failed\n");
+		return (SD_ERROR);
+	}
 	g_sd_rca = sd_cmd(CMD_SEND_REL_ADDR, 0) & CMD_RCA_MASK;
 	if (g_sd_err != SD_OK)
+	{
+		kprintf("sd: CMD3 (SEND_REL_ADDR) failed\n");
 		return (SD_ERROR);
+	}
+	kprintf("sd: CMD2/CMD3 ok, RCA=0x%X\n", g_sd_rca);
 
 	if (sd_clk(25000000) != SD_OK)
+	{
+		kprintf("sd: clk(25MHz) failed\n");
 		return (SD_ERROR);
+	}
 	sd_cmd(CMD_CARD_SELECT, g_sd_rca);
 	if (g_sd_err != SD_OK)
-		return (SD_ERROR);
-
-	/* Read the SCR (one 8-byte block). */
-	if (sd_status(SR_DAT_INHIBIT) != SD_OK)
-		return (SD_ERROR);
-	EMMC(EMMC_BLKSIZECNT) = (1u << 16) | 8u;
-	sd_cmd(CMD_SEND_SCR, 0);
-	if (g_sd_err != SD_OK)
-		return (SD_ERROR);
-	if (sd_int(INT_READ_RDY) != SD_OK)
-		return (SD_ERROR);
-	cnt = 100000;
-	r = 0;
-	while (r < 2 && cnt-- > 0)
 	{
-		if ((EMMC(EMMC_STATUS) & SR_READ_AVAILABLE) != 0)
-			g_sd_scr[r++] = EMMC(EMMC_DATA);
-		else
-			sd_wait_us(1);
-	}
-	if (r != 2)
+		kprintf("sd: CMD7 (CARD_SELECT) failed (int=0x%X status=0x%X)\n", g_sd_last_int, EMMC(EMMC_STATUS));
 		return (SD_ERROR);
+	}
+	kprintf("sd: CMD7 ok, reading SCR...\n");
+
+	/* Read the SCR (one 8-byte block).  Non-fatal: the SCR only adds 4-bit-bus and
+	 * SET_BLKCNT support; CCS (high-capacity) is already known from ACMD41, so a
+	 * failed SCR read just leaves the card in 1-bit mode (slower but functional). */
+	if (sd_status(SR_DAT_INHIBIT) == SD_OK)
+	{
+		EMMC(EMMC_BLKSIZECNT) = (1u << 16) | 8u;
+		sd_cmd(CMD_SEND_SCR, 0);
+		if (g_sd_err == SD_OK && sd_int(INT_READ_RDY) == SD_OK)
+		{
+			cnt = 100000;
+			r = 0;
+			while (r < 2 && cnt-- > 0)
+			{
+				if ((EMMC(EMMC_STATUS) & SR_READ_AVAILABLE) != 0)
+					g_sd_scr[r++] = EMMC(EMMC_DATA);
+				else
+					sd_wait_us(1);
+			}
+			if (r != 2)
+				kprintf("sd: SCR read incomplete (%d words) — using 1-bit mode\n", r);
+		}
+		else
+		{
+			kprintf("sd: SCR command failed — using 1-bit mode\n");
+		}
+	}
 
 	if ((g_sd_scr[0] & SCR_SD_BUS_WIDTH_4) != 0)
 	{
@@ -376,6 +480,7 @@ int aarch64_sd_card_init(void)
 	}
 	g_sd_scr[0] &= ~SCR_SUPP_CCS;
 	g_sd_scr[0] |= g_sd_ccs;
+	kprintf("sd: card ready (rca=0x%X ccs=%u scr0=0x%X)\n", g_sd_rca, g_sd_ccs, g_sd_scr[0]);
 	return (SD_OK);
 }
 
