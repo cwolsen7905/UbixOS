@@ -323,7 +323,12 @@ int aarch64_clone(u_int64_t *parent_tf)
 int aarch64_rfork(u_int64_t *parent_tf)
 {
 	u_int64_t child_stack = parent_tf[1];
-	u_int64_t tls = parent_tf[2];
+	/* musl's clone.s loads the syscall args as x0=flags, x1=stack, x2=ptid,
+	 * x3=tls, x4=ctid (see contrib/musl/src/thread/aarch64/clone.s).  The new
+	 * thread's TLS base is x3, NOT x2 — reading x2 (ptid = &thread->tid) set
+	 * TPIDR_EL0 a few bytes off the real TLS, so the thread ran on a shifted TCB
+	 * and crashed in pthread_exit reading a garbage cleanup-handler chain. */
+	u_int64_t tls = parent_tf[3];
 	kTask_t *child;
 	u_int8_t *top;
 	u_int64_t *tf, *ctx;

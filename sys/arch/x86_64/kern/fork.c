@@ -225,7 +225,12 @@ long x86_64_clone(struct x86_64_trapframe *parent_tf)
 long x86_64_rfork(struct x86_64_trapframe *parent_tf)
 {
 	u64 child_stack = parent_tf->rsi;
-	u64 tls = parent_tf->rdx;
+	/* musl's clone.s maps the rfork syscall args to rdi=flags, rsi=stack, rdx=ptid,
+	 * r8=tls, r10=ctid (see contrib/musl/src/thread/x86_64/clone.s).  The thread's
+	 * TLS base is r8, NOT rdx (= ptid = &thread->tid) — reading rdx set FSBASE a few
+	 * bytes off the real TLS, so the thread ran on a shifted TCB and crashed in
+	 * pthread_exit on a garbage cleanup chain (mirrors the aarch64 fix). */
+	u64 tls = parent_tf->r8;
 	kTask_t *child;
 	u8 *top;
 	struct x86_64_trapframe *ctf;
