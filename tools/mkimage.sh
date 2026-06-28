@@ -139,6 +139,29 @@ ln -s libc.so "${STAGE}/lib/ld-musl-${ARCH}.so.1"
 for _l in libubix_api libpw libbearssl; do
 	[ -f "${BUILD}/lib/${_l}.so" ] && cp "${BUILD}/lib/${_l}.so" "${STAGE}/lib/${_l}.so" || true
 done
+
+# Stage-0 link-time runtime so the on-device clang/ld.lld can LINK, not just
+# compile.  The world link recipe (share/mk/ubix.musl.prog.mk) and clang's driver
+# resolve these from /lib: the musl PIE startup/teardown objects (Scrt1.o, crti.o,
+# crtn.o) and libgcc (-lgcc / --as-needed -lgcc_s).  libc.so is already staged
+# above.  Without these, ld.lld errors "cannot open Scrt1.o" / "unable to find
+# library -lgcc".  See docs/design/self-hosting-plan.md and the on-device link
+# recipe (ld.lld currently needs --threads=1 + --no-mmap-output-file too).
+_musllib="${BUILD}/obj/musl/lib"
+for _o in Scrt1.o crti.o crtn.o; do
+	if [ -f "${_musllib}/${_o}" ]; then
+		cp "${_musllib}/${_o}" "${STAGE}/lib/${_o}"
+	else
+		echo "mkimage: warning: ${_musllib}/${_o} missing — on-device linking will fail" >&2
+	fi
+done
+_libgcc=$(${ARCH}-elf-gcc -print-libgcc-file-name 2>/dev/null || true)
+if [ -n "${_libgcc}" ] && [ -f "${_libgcc}" ]; then
+	cp "${_libgcc}" "${STAGE}/lib/libgcc.a"
+	cp "${_libgcc}" "${STAGE}/lib/libgcc_s.a" # satisfy ld's --as-needed -lgcc_s lookup
+else
+	echo "mkimage: warning: libgcc.a not found via ${ARCH}-elf-gcc — on-device linking will fail" >&2
+fi
 # Desktop-only shared libraries: objGFX (compositor + every GUI app) and the
 # NetSurf stack.  The base profile ships none of them.
 if [ "${PROFILE}" = desktop ]; then
