@@ -124,10 +124,34 @@ profile that skips the host-only steps.
   STATUS: per-TREE on-device builds work (dispatcher fix).  Full `bmake world` is the
   libcxx/host-step orchestration above — a larger follow-on.
 
-- **Phase 4 — kernel on-device.** clang compiles the kernel today; link via
-  `ld.lld` (have it) + `llvm-objcopy` for the embeds; replace the `${CROSS_PREFIX}gcc`
-  embedded-demo builds with clang. Hardest + least urgent (you rarely rebuild the
-  kernel on the device); defer.
+- **Phase 4 — kernel on-device — MECHANISMS DONE (commit 434f6b3b4).** `bmake kernel`
+  now runs on-device with the in-OS toolchain. Three de-host-ifications, all
+  `UBIX_NATIVE`/host-byte-identical:
+  1. **Source sweep portability** — `find sys/arch/aarch64 -name '*.S' -not -path
+     '*/board/*'` → `find ... | grep -v '/board/'`. busybox find gates BOTH `!` and
+     `-not` on `FEATURE_FIND_NOT` (and `-not` also needs `ENABLE_DESKTOP`), so neither
+     negation predicate is portable; the grep form needs only `-name`. (This was the
+     on-device `find: unrecognized: -not`.)
+  2. **`KERN_USER_CC`** (`ubix.toolchain.mk`) — the embedded user demos (hello.elf, the
+     boot triad, the linker test) used `${CROSS_PREFIX}gcc`; on-device that is bare
+     `gcc` (absent). New var: `aarch64-elf-gcc` on the host, in-OS `clang` when
+     `UBIX_NATIVE`. The `kernel-aarch64` embed rules use it.
+  3. **Stage `llvm-objcopy` + `llvm-nm`** (`tools/ports/llvm/build.sh`) — the embed
+     step objcopy's blobs into the kernel; only clang/ld.lld/llvm-ar/llvm-ranlib were
+     shipping. mkimage copies `build/${ARCH}/usr` verbatim, so they reach the device.
+
+  Validated piecewise on the HVF harness (a full ~120-file build is slow — each clang
+  demand-pages the 100 MB binary fresh): grep sweep + clang compile loop (exit 0),
+  clang embed (CCDONE0), `llvm-objcopy` embed (OCDONE0), `ld.lld` link.
+
+  **Remaining for a self-built kernel that BOOTS:** on-device the musl-linked embeds
+  (init/login/sh, worldcat, the dynamic linker test) stub out — their gate
+  `[ -f ${OBJ_DIR}/lib/libc.a ]` is false because there is no `libc.a`/crt at
+  `/usr/obj/${ARCH}/lib` on-device (the shipped libc lives in `/lib`). So a self-built
+  kernel links with 16-byte stub embeds; it can still boot from disk, but the embedded
+  bring-up triad is inert. Making the embeds real on-device = stage `libc.a` + crt at
+  the OBJ path (or point the embed link at `/lib`). Producing `boot/kernel` on-device
+  is the milestone; booting the self-built kernel is the follow-on.
 
 ## Concrete first change (Phase 2 enabler)
 
