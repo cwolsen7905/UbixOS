@@ -137,7 +137,7 @@ static int g_ready;
  */
 static void fbcon_present(void)
 {
-	virtio_gpu_flush();
+	aarch64_fb_present();
 }
 
 /**

@@ -231,7 +231,15 @@ extern u_int32_t virtio_gpu_pitch;
 int aarch64_virtio_input_init(void); /* scan + bring up all input devices; count */
 
 /* fbcon.c — kernel framebuffer text console (KC_PRIMARY kconsole sink). */
-void aarch64_fbcon_init(void); /* register the on-screen console over virtio-gpu */
+void aarch64_fbcon_init(void); /* register the on-screen console over the framebuffer */
+
+/* display.c — present the framebuffer (virtio-gpu transfer+flush on QEMU; a dcache
+ * clean of the scanout on the Pi, whose framebuffer is continuously scanned out). */
+void aarch64_fb_present(void);
+
+/* bcm_mbox.c / bcm_fb.c — Raspberry Pi VideoCore mailbox + framebuffer (M6). */
+int aarch64_mbox_prop(volatile u_int32_t *msg); /* property-mailbox call (channel 8) */
+int aarch64_bcm_fb_init(void);                  /* allocate the VideoCore framebuffer */
 
 /* sys/fs/ubixfs/ubixfs_selftest.c — UbixFS core in-kernel self-test (plan K1). */
 void ubixfs_selftest(void); /* drive the lite-ZFS core over a RAM vdev; logs PASS/FAIL */

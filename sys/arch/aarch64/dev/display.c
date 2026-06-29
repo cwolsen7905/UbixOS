@@ -113,14 +113,35 @@ int sys_mapfb(struct thread *td, struct sys_mapfb_args *args)
 }
 
 /**
- * sys_fbpresent (native 54) — present the framebuffer to the host display via a
- * virtio-gpu TRANSFER_TO_HOST_2D + RESOURCE_FLUSH.  Called by the compositor
- * once per composited frame.
+ * Present the current framebuffer.  On QEMU this is the virtio-gpu
+ * TRANSFER_TO_HOST_2D + RESOURCE_FLUSH; on the Raspberry Pi the VideoCore scans the
+ * buffer out of RAM continuously, so presenting is just cleaning the CPU's writes
+ * out of the dcache into the scanned-out RAM.
+ */
+void aarch64_fb_present(void)
+{
+#ifdef BOARD_RPI3
+	uintptr_t a, base = (uintptr_t)virtio_gpu_fb;
+	uintptr_t end = base + (uintptr_t)virtio_gpu_pitch * virtio_gpu_height;
+
+	if (virtio_gpu_fb == 0)
+		return;
+	for (a = base; a < end; a += 64)
+		__asm__ volatile("dc cvac, %0" ::"r"(a) : "memory");
+	__asm__ volatile("dsb sy" ::: "memory");
+#else
+	virtio_gpu_flush();
+#endif
+}
+
+/**
+ * sys_fbpresent (native 54) — present the framebuffer to the display.  Called by
+ * the compositor once per composited frame.
  */
 int sys_fbpresent(struct thread *td, struct sys_fbpresent_args *args)
 {
 	(void)args;
-	virtio_gpu_flush();
+	aarch64_fb_present();
 	td->td_retval[0] = 0;
 	return (0);
 }

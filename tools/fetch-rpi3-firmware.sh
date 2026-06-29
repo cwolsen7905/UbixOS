@@ -24,6 +24,7 @@ arm_64bit=1
 enable_uart=1
 init_uart_clock=48000000   # fix UARTCLK so M0's IBRD/FBRD (26/3) = 115200
 dtoverlay=disable-bt       # route PL011 to GPIO14/15 (header pins 8/10)
+hdmi_force_hotplug=1       # drive HDMI even if the monitor isn't detected at boot (M6 fb)
 kernel=kernel8.img
 EOF
 

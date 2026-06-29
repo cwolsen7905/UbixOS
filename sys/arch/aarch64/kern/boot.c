@@ -356,12 +356,18 @@ void kmain_aarch64(u_int64_t dtb_phys)
 			aarch64_virtio_net_init();
 			aarch64_net_init();
 
-			/* Bring up the virtio-gpu scanout framebuffer + input devices
-			 * (for views/objGFX). */
+			/* Bring up the scanout framebuffer + input devices (for views/objGFX).
+			 * The Pi uses the VideoCore mailbox framebuffer (M6); QEMU uses
+			 * virtio-gpu + virtio-input/sound. */
+#ifdef BOARD_RPI3
+			aarch64_bcm_fb_init();
+			aarch64_fbcon_init(); /* on-screen kernel console (boot log/panic) */
+#else
 			aarch64_virtio_gpu_init();
 			aarch64_fbcon_init(); /* on-screen kernel console (boot log/panic) */
 			aarch64_virtio_input_init();
 			aarch64_virtio_sound_init(); /* /dev/audio (virtio-sound PCM playback) */
+#endif
 
 			/* Hand off to the SAME userland bootstrap as i386: exec /bin/init
 			 * (PID 1), which starts the services from /etc/init.d (automountd,

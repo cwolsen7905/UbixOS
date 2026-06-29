@@ -200,29 +200,15 @@ static u_int32_t sd_cmd(u_int32_t code, u_int32_t arg)
 	return (EMMC(EMMC_RESP0));
 }
 
-/* --- VideoCore property mailbox: read the real EMMC base clock.  The firmware
- *     leaves the EMMC clock at whatever it configured for the WiFi SDIO, not the
- *     41.66 MHz the divider assumed, so divisor=1 (for 25 MHz) produced a garbled
- *     clock and CMD7 timed out.  Channel 8, the 16-byte-aligned message buffer is
- *     handed to the GPU at its uncached bus alias (phys | 0xC0000000) and the cache
- *     is cleaned/invalidated around the call for coherency. --- */
-#define MBOX_BASE (PHYSMAP_BASE + 0x3F00B880UL)
-#define MBOX_STATUS (*(volatile u_int32_t *)(MBOX_BASE + 0x18))
-#define MBOX_READ (*(volatile u_int32_t *)(MBOX_BASE + 0x00))
-#define MBOX_WRITE (*(volatile u_int32_t *)(MBOX_BASE + 0x20))
-#define MBOX_FULL 0x80000000u
-#define MBOX_EMPTY 0x40000000u
-#define MBOX_CH_PROP 8u
-#define GPU_BUS_ALIAS 0xC0000000u
-
+/* VideoCore property mailbox (shared transport in bcm_mbox.c): read the real EMMC
+ * base clock.  The firmware leaves the EMMC clock at whatever it configured for the
+ * WiFi SDIO, not the 41.66 MHz the divider assumed, so divisor=1 (for 25 MHz)
+ * produced a garbled clock and CMD7 timed out. */
 static volatile u_int32_t g_mbox[36] __attribute__((aligned(16)));
 
 /** Property-mailbox GET_CLOCK_RATE for @clock_id (1 = EMMC).  @return Hz, or 0. */
 static u_int32_t mbox_clock_rate(u_int32_t clock_id)
 {
-	u_int32_t msg;
-	uintptr_t a;
-
 	g_mbox[0] = 8 * 4;      /* total message size */
 	g_mbox[1] = 0;          /* request */
 	g_mbox[2] = 0x00030002; /* GET_CLOCK_RATE tag */
@@ -232,27 +218,9 @@ static u_int32_t mbox_clock_rate(u_int32_t clock_id)
 	g_mbox[6] = 0;          /* (out) rate */
 	g_mbox[7] = 0;          /* end tag */
 
-	for (a = (uintptr_t)g_mbox; a < (uintptr_t)g_mbox + sizeof(g_mbox); a += 64)
-		__asm__ volatile("dc cvac, %0" ::"r"(a) : "memory");
-	__asm__ volatile("dsb sy" ::: "memory");
-
-	msg = (((u_int32_t)AARCH64_PHYS_OF((uintptr_t)g_mbox) | GPU_BUS_ALIAS) & ~0xFu) | MBOX_CH_PROP;
-	while ((MBOX_STATUS & MBOX_FULL) != 0)
-		;
-	MBOX_WRITE = msg;
-	for (;;)
-	{
-		while ((MBOX_STATUS & MBOX_EMPTY) != 0)
-			;
-		if ((MBOX_READ & 0xFu) == MBOX_CH_PROP)
-			break;
-	}
-	__asm__ volatile("dsb sy" ::: "memory");
-	for (a = (uintptr_t)g_mbox; a < (uintptr_t)g_mbox + sizeof(g_mbox); a += 64)
-		__asm__ volatile("dc ivac, %0" ::"r"(a) : "memory");
-	__asm__ volatile("dsb sy" ::: "memory");
-
-	return (g_mbox[1] == 0x80000000u ? g_mbox[6] : 0);
+	if (aarch64_mbox_prop(g_mbox) != 0)
+		return (0);
+	return (g_mbox[6]);
 }
 
 /**
