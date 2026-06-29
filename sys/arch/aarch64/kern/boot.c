@@ -362,6 +362,7 @@ void kmain_aarch64(u_int64_t dtb_phys)
 #ifdef BOARD_RPI3
 			aarch64_bcm_fb_init();
 			aarch64_fbcon_init(); /* on-screen kernel console (boot log/panic) */
+			aarch64_usb_init();   /* DWC2 USB host: core up + root-port detect (M7.0) */
 #else
 			aarch64_virtio_gpu_init();
 			aarch64_fbcon_init(); /* on-screen kernel console (boot log/panic) */
