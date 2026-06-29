@@ -235,11 +235,11 @@ kernel-aarch64:
 	@# own start.S + linker script (m0.ld, _image_size) and must NOT be swept into
 	@# the QEMU virt kernel, where their start.o collides with kern/start.o on the
 	@# flat obj/sys/ basename and the wrong one wins by find(1) order.
-	@for f in `find ${CURDIR}/sys/arch/aarch64 -name '*.S' -not -path '*/board/*'`; do \
+	@for f in `find ${CURDIR}/sys/arch/aarch64 -name '*.S' | grep -v '/board/'`; do \
 	    o=${OBJ_DIR}/obj/sys/`basename $$f .S`.o; \
 	    sh ${CURDIR}/tools/kbuild-cc.sh "${KERN_CC} [asm] " $$o $$f ${KERN_CC} ${KERN_CCFLAGS} ${AARCH64_KCFLAGS} || exit 1; \
 	done
-	@for f in `find ${CURDIR}/sys/arch/aarch64 -name '*.c' -not -path '*/board/*'`; do \
+	@for f in `find ${CURDIR}/sys/arch/aarch64 -name '*.c' | grep -v '/board/'`; do \
 	    o=${OBJ_DIR}/obj/sys/`basename $$f .c`.o; \
 	    sh ${CURDIR}/tools/kbuild-cc.sh "${KERN_CC} [c]   " $$o $$f ${KERN_CC} ${KERN_CCFLAGS} ${AARCH64_KCFLAGS} -std=c99 || exit 1; \
 	done
@@ -251,15 +251,15 @@ kernel-aarch64:
 	    o=${OBJ_DIR}/obj/sys/`basename $$f .c`.o; \
 	    sh ${CURDIR}/tools/kbuild-cc.sh "${KERN_CC} [ubfs]" $$o ${CURDIR}/$$f ${KERN_CC} ${KERN_CCFLAGS} ${AARCH64_KCFLAGS} ${UBIXFS_KERN_INCS} -std=c99 || exit 1; \
 	done
-	@echo "${CROSS_PREFIX}gcc [user] tools/aarch64-user/hello.c -> hello.elf (embedded)"
-	@${CROSS_PREFIX}gcc -march=armv8-a -mgeneral-regs-only -static -nostdlib -nostartfiles \
+	@echo "${KERN_USER_CC} [user] tools/aarch64-user/hello.c -> hello.elf (embedded)"
+	@${KERN_USER_CC} -march=armv8-a -mgeneral-regs-only -static -nostdlib -nostartfiles \
 	    -ffreestanding -fno-pic -fno-pie -O2 -Wl,-Ttext=0x100000000 -e _start \
 	    ${CURDIR}/tools/aarch64-user/hello.c -o ${OBJ_DIR}/hello.elf || exit 1
 	@cd ${OBJ_DIR} && ${OBJCOPY} -I binary -O elf64-littleaarch64 -B aarch64 \
 	    hello.elf ${OBJ_DIR}/obj/sys/hello_embed.o || exit 1
 	@echo "embedding the musl-linked demo (built only if musl libc exists)"
 	@if [ -f ${OBJ_DIR}/lib/libc.a ]; then \
-	    ${CROSS_PREFIX}gcc -static -no-pie -fno-pie -ffreestanding -fno-stack-protector -O2 \
+	    ${KERN_USER_CC} -static -no-pie -fno-pie -ffreestanding -fno-stack-protector -O2 \
 	        -nostdinc -isystem ${CURDIR}/contrib/musl/include -isystem ${CURDIR}/contrib/musl/arch/aarch64 \
 	        -isystem ${CURDIR}/contrib/musl/arch/generic -isystem ${OBJ_DIR}/obj/musl/obj/include \
 	        -nostdlib -Wl,-Ttext-segment=0x100000000 \
@@ -275,7 +275,7 @@ kernel-aarch64:
 	@echo "embedding the static boot triad init/login/sh + spin + mpitest + authd_min (built only if musl libc exists)"
 	@for prog in init login sh spin mpitest pipetest faulttest dirtest authd_min; do \
 	    if [ -f ${OBJ_DIR}/lib/libc.a ]; then \
-	        ${CROSS_PREFIX}gcc -static -no-pie -fno-pie -ffreestanding -fno-stack-protector -O2 \
+	        ${KERN_USER_CC} -static -no-pie -fno-pie -ffreestanding -fno-stack-protector -O2 \
 	            -nostdinc -isystem ${CURDIR}/contrib/musl/include -isystem ${CURDIR}/contrib/musl/arch/aarch64 \
 	            -isystem ${CURDIR}/contrib/musl/arch/generic -isystem ${OBJ_DIR}/obj/musl/obj/include \
 	            -nostdlib -Wl,-Ttext-segment=0x100000000 \
@@ -286,13 +286,13 @@ kernel-aarch64:
 	    else \
 	        head -c 16 /dev/zero > ${OBJ_DIR}/$$prog.elf; \
 	    fi; \
-	    echo "${CROSS_PREFIX}objcopy [embed] $$prog.elf"; \
+	    echo "${OBJCOPY} [embed] $$prog.elf"; \
 	    ( cd ${OBJ_DIR} && ${OBJCOPY} -I binary -O elf64-littleaarch64 -B aarch64 \
 	        $$prog.elf ${OBJ_DIR}/obj/sys/$${prog}_embed.o ) || exit 1; \
 	done
 	@echo "embedding a dynamic (PIE) hello + libc.so (the musl dynamic linker) for the linker test"
 	@if [ -f ${OBJ_DIR}/lib/libc.so ]; then \
-	    ${CROSS_PREFIX}gcc -fPIC -O2 -ffreestanding -fno-stack-protector \
+	    ${KERN_USER_CC} -fPIC -O2 -ffreestanding -fno-stack-protector \
 	        -nostdinc -isystem ${CURDIR}/contrib/musl/include -isystem ${CURDIR}/contrib/musl/arch/aarch64 \
 	        -isystem ${CURDIR}/contrib/musl/arch/generic -isystem ${OBJ_DIR}/obj/musl/obj/include \
 	        -nostdlib -pie -Wl,-dynamic-linker,/lib/ld-musl-aarch64.so.1 \

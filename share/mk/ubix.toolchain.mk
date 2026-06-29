@@ -85,6 +85,16 @@ RANLIB   = ${_LLVMBIN}llvm-ranlib
 # kernel links with ${LD} directly, not via the clang driver).
 KERN_CC      = ${_CLANG}
 KERN_CCFLAGS = ${_TGT} ${_UNDEF}
+# Compiler for the embedded user demos (kernel-aarch64 objcopy'd blobs:
+# hello.elf, the boot triad, the linker test).  On the host these freestanding/
+# static aarch64 binaries build with the cross GNU compiler (aarch64-elf-gcc);
+# on-device there is no gcc, so use the in-OS clang (its default target already
+# IS aarch64-linux-musl, and ${_TGT}/${_UNDEF} are inert there).
+.if defined(UBIX_NATIVE)
+KERN_USER_CC = ${_CLANG} ${_TGT} ${_UNDEF}
+.else
+KERN_USER_CC = ${CROSS_PREFIX}gcc
+.endif
 # clang's -nostdinc would also drop its resource headers (stdbool.h, stddef.h);
 # -nostdlibinc keeps them while still excluding the host's system headers.
 TC_NOSTDINC ?= -nostdlibinc
@@ -108,6 +118,7 @@ OBJCOPY  = ${CROSS_PREFIX}objcopy
 RANLIB   = ${CROSS_PREFIX}ranlib
 KERN_CC      = ${CROSS_PREFIX}gcc
 KERN_CCFLAGS =
+KERN_USER_CC = ${CROSS_PREFIX}gcc
 TC_NOSTDINC ?= -nostdinc
 TC_STDFLAG  ?=
 .endif

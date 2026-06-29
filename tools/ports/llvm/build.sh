@@ -94,6 +94,11 @@ mkdir -p "${STAGEBIN}" "${STAGEINC}"
 "${LLVM18}/llvm-strip" --strip-all "${CROSSBLD}/bin/lld"      -o "${STAGEBIN}/ld.lld"
 "${LLVM18}/llvm-strip" --strip-all "${CROSSBLD}/bin/llvm-ar"  -o "${STAGEBIN}/llvm-ar"
 cp "${STAGEBIN}/llvm-ar" "${STAGEBIN}/llvm-ranlib"
+# llvm-objcopy + llvm-nm: needed by the on-device kernel build (kernel-aarch64
+# objcopy's the embedded user demos into the image, and archive/symbol steps use
+# nm).  Unlike clang/lld these are independent binaries (no argv[0] dispatch).
+"${LLVM18}/llvm-strip" --strip-all "${CROSSBLD}/bin/llvm-objcopy" -o "${STAGEBIN}/llvm-objcopy"
+"${LLVM18}/llvm-strip" --strip-all "${CROSSBLD}/bin/llvm-nm"      -o "${STAGEBIN}/llvm-nm"
 cp -R "${CROSSBLD}/lib/clang/18/include/." "${STAGEINC}/"
-echo "==> Stage-0 done — staged clang/ld.lld/llvm-ar/llvm-ranlib + resource headers."
+echo "==> Stage-0 done — staged clang/ld.lld/llvm-ar/llvm-ranlib/llvm-objcopy/llvm-nm + resource headers."
 echo "    Rebuild the image (bmake image) to put the toolchain on-device."
