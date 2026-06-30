@@ -240,7 +240,8 @@ void aarch64_fb_present(void);
 /* bcm_mbox.c / bcm_fb.c — Raspberry Pi VideoCore mailbox + framebuffer (M6). */
 int aarch64_mbox_prop(volatile u_int32_t *msg); /* property-mailbox call (channel 8) */
 int aarch64_bcm_fb_init(void);                  /* allocate the VideoCore framebuffer */
-int aarch64_usb_init(void);                     /* bcm_usb.c — DWC2 host: core up + port detect (M7.0) */
+int aarch64_usb_init(void);      /* bcm_usb.c — DWC2 host: core up + port detect (M7.0) */
+int aarch64_usb_enumerate(void); /* M7.1 — enumerate the root-port device (control transfers) */
 
 /* sys/fs/ubixfs/ubixfs_selftest.c — UbixFS core in-kernel self-test (plan K1). */
 void ubixfs_selftest(void); /* drive the lite-ZFS core over a RAM vdev; logs PASS/FAIL */
