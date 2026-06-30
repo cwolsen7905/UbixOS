@@ -78,6 +78,7 @@ _USB_FLAGS!= test -f ${USB_IMAGE} && \
         mount-image unmount-image \
         install-kernel install-world install \
         run-aarch64 run-debug-aarch64 run-claude \
+        run-selfbuilt run-selfbuilt-aarch64 run-selfbuilt-debug-aarch64 \
         kernel-to-image clean-kernel clean
 
 # `all` is arch-aware: every MMU-class arch builds the full system (kernel + world
@@ -234,21 +235,28 @@ kernel-aarch64:
 	@# Exclude board/ — per-board bare-metal targets (e.g. opizero2w) carry their
 	@# own start.S + linker script (m0.ld, _image_size) and must NOT be swept into
 	@# the QEMU virt kernel, where their start.o collides with kern/start.o on the
-	@# flat obj/sys/ basename and the wrong one wins by find(1) order.
-	@for f in `find ${CURDIR}/sys/arch/aarch64 -name '*.S' | grep -v '/board/'`; do \
-	    o=${OBJ_DIR}/obj/sys/`basename $$f .S`.o; \
+	@# flat obj/sys/ basename and the wrong one wins by find(1) order.  Skipped with a
+	@# shell `case`, not a find predicate: on-device busybox find gates `-not`/`!` on
+	@# FEATURE_FIND_NOT (often off).  Object names use ${f##*/}/${b%.o} expansion, not
+	@# `basename` — on-device busybox `basename PATH SUFFIX` returns empty for a
+	@# multi-component PATH (collapsing every object onto `.o`); expansion is also
+	@# fork-free, so the on-device build avoids a basename+grep spawn per source file.
+	@for f in `find ${CURDIR}/sys/arch/aarch64 -name '*.S'`; do \
+	    case "$$f" in */board/*) continue;; esac; \
+	    b=$${f##*/}; o=${OBJ_DIR}/obj/sys/$${b%.S}.o; \
 	    sh ${CURDIR}/tools/kbuild-cc.sh "${KERN_CC} [asm] " $$o $$f ${KERN_CC} ${KERN_CCFLAGS} ${AARCH64_KCFLAGS} || exit 1; \
 	done
-	@for f in `find ${CURDIR}/sys/arch/aarch64 -name '*.c' | grep -v '/board/'`; do \
-	    o=${OBJ_DIR}/obj/sys/`basename $$f .c`.o; \
+	@for f in `find ${CURDIR}/sys/arch/aarch64 -name '*.c'`; do \
+	    case "$$f" in */board/*) continue;; esac; \
+	    b=$${f##*/}; o=${OBJ_DIR}/obj/sys/$${b%.c}.o; \
 	    sh ${CURDIR}/tools/kbuild-cc.sh "${KERN_CC} [c]   " $$o $$f ${KERN_CC} ${KERN_CCFLAGS} ${AARCH64_KCFLAGS} -std=c99 || exit 1; \
 	done
 	@for f in ${AARCH64_GENERIC_SRCS}; do \
-	    o=${OBJ_DIR}/obj/sys/`basename $$f .c`.o; \
+	    b=$${f##*/}; o=${OBJ_DIR}/obj/sys/$${b%.c}.o; \
 	    sh ${CURDIR}/tools/kbuild-cc.sh "${KERN_CC} [gen] " $$o ${CURDIR}/$$f ${KERN_CC} ${KERN_CCFLAGS} ${AARCH64_KCFLAGS} -std=c99 || exit 1; \
 	done
 	@for f in ${UBIXFS_KERN_SRCS}; do \
-	    o=${OBJ_DIR}/obj/sys/`basename $$f .c`.o; \
+	    b=$${f##*/}; o=${OBJ_DIR}/obj/sys/$${b%.c}.o; \
 	    sh ${CURDIR}/tools/kbuild-cc.sh "${KERN_CC} [ubfs]" $$o ${CURDIR}/$$f ${KERN_CC} ${KERN_CCFLAGS} ${AARCH64_KCFLAGS} ${UBIXFS_KERN_INCS} -std=c99 || exit 1; \
 	done
 	@echo "${KERN_USER_CC} [user] tools/aarch64-user/hello.c -> hello.elf (embedded)"
@@ -424,19 +432,19 @@ X86_64_GENERIC_SRCS = \
 kernel-x86_64:
 	@mkdir -p ${OBJ_DIR}/boot ${OBJ_DIR}/obj/sys
 	@for f in `find ${CURDIR}/sys/arch/x86_64 -name '*.S'`; do \
-	    o=${OBJ_DIR}/obj/sys/`basename $$f .S`.o; \
+	    b=$${f##*/}; o=${OBJ_DIR}/obj/sys/$${b%.S}.o; \
 	    sh ${CURDIR}/tools/kbuild-cc.sh "${CROSS_PREFIX}gcc [asm] " $$o $$f ${CROSS_PREFIX}gcc ${X86_64_KCFLAGS} || exit 1; \
 	done
 	@for f in `find ${CURDIR}/sys/arch/x86_64 -name '*.c'`; do \
-	    o=${OBJ_DIR}/obj/sys/`basename $$f .c`.o; \
+	    b=$${f##*/}; o=${OBJ_DIR}/obj/sys/$${b%.c}.o; \
 	    sh ${CURDIR}/tools/kbuild-cc.sh "${CROSS_PREFIX}gcc [c]   " $$o $$f ${CROSS_PREFIX}gcc ${X86_64_KCFLAGS} -std=c99 || exit 1; \
 	done
 	@for f in ${X86_64_GENERIC_SRCS}; do \
-	    o=${OBJ_DIR}/obj/sys/`basename $$f .c`.o; \
+	    b=$${f##*/}; o=${OBJ_DIR}/obj/sys/$${b%.c}.o; \
 	    sh ${CURDIR}/tools/kbuild-cc.sh "${CROSS_PREFIX}gcc [gen] " $$o ${CURDIR}/$$f ${CROSS_PREFIX}gcc ${X86_64_KCFLAGS} -std=c99 || exit 1; \
 	done
 	@for f in ${UBIXFS_KERN_SRCS}; do \
-	    o=${OBJ_DIR}/obj/sys/`basename $$f .c`.o; \
+	    b=$${f##*/}; o=${OBJ_DIR}/obj/sys/$${b%.c}.o; \
 	    sh ${CURDIR}/tools/kbuild-cc.sh "${CROSS_PREFIX}gcc [ubfs]" $$o ${CURDIR}/$$f ${CROSS_PREFIX}gcc ${X86_64_KCFLAGS} ${UBIXFS_KERN_INCS} -std=c99 || exit 1; \
 	done
 	${CROSS_PREFIX}ld -T ${CURDIR}/sys/compile/ldscript.x86_64 -o ${OBJ_DIR}/boot/kernel ${OBJ_DIR}/obj/sys/*.o
@@ -811,6 +819,40 @@ run-tcg-aarch64:
 	  -device virtio-keyboard-device -device virtio-mouse-device \
 	  ${_ARM_SOUND} \
 	  -serial file:serial.log
+
+# ── Self-hosting proof: boot the kernel uBixOS built ON-DEVICE ──────────────────
+# `bmake kernel OBJ_DIR=/usr/obj/${_ARCH}` run inside uBixOS writes its ELF into the
+# image's UbixFS pool at /usr/obj/${_ARCH}/boot/kernel — it never touches the host.
+# These targets extract that ELF back out (tools/extract-kernel.sh) and -kernel it,
+# so QEMU boots the self-built kernel against the same disk.  The embeds are the
+# diskless fallback only, so a self-built kernel boots /bin/init off the disk exactly
+# like the host-built one.  (True no- -kernel self-boot needs an on-image bootloader
+# — a separate track.)
+SELFBUILT_KERNEL?=${OBJ_DIR}/boot/kernel.selfbuilt
+run-selfbuilt: run-selfbuilt-${_ARCH}
+
+run-selfbuilt-aarch64:
+	@ARCH=aarch64 sh tools/extract-kernel.sh ${DISK_IMAGE_ARM} ${SELFBUILT_KERNEL}
+	sudo qemu-system-aarch64 -machine virt,gic-version=2 -accel hvf -cpu host -m 512 -smp ${SMP} \
+	  -kernel ${SELFBUILT_KERNEL} \
+	  -global virtio-mmio.force-legacy=false \
+	  ${_ARM_DISK_FLAGS} \
+	  -device virtio-net-device,netdev=net0 -netdev vmnet-bridged,id=net0,ifname=${BRIDGE_IF} \
+	  -device virtio-gpu-device \
+	  -device virtio-keyboard-device -device virtio-mouse-device \
+	  -audiodev coreaudio,id=snd0 -device virtio-sound-device,audiodev=snd0 \
+	  -serial file:serial.log
+
+# Headless variant: extract + boot the self-built kernel with serial on stdout (NAT
+# networking, no sudo) — for verifying it reaches login.  Ctrl-A X quits.
+run-selfbuilt-debug-aarch64:
+	@ARCH=aarch64 sh tools/extract-kernel.sh ${DISK_IMAGE_ARM} ${SELFBUILT_KERNEL}
+	qemu-system-aarch64 -machine virt,gic-version=2 -accel hvf -cpu host -m 512 -smp ${SMP} \
+	  -kernel ${SELFBUILT_KERNEL} \
+	  -global virtio-mmio.force-legacy=false \
+	  ${_ARM_DISK_FLAGS} \
+	  -device virtio-net-device,netdev=net0 -netdev user,id=net0 \
+	  -nographic
 
 # Agent (Claude) run: the graphical desktop opens in a window for the human, AND
 # the serial console is exposed on a unix socket so the coding agent can type
