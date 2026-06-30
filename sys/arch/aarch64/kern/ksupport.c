@@ -214,6 +214,29 @@ void endTask(pidType pid)
 					sys_close(&_current->td, &ca);
 				}
 			}
+
+			/* Release the user address space.  The bring-up teardown used to be a
+			 * no-op, so every exited process leaked its entire working set: a long run
+			 * of short-lived processes (an on-device kernel build forks ~120 clang
+			 * invocations, each ~60 MB) exhausted RAM and OOM-panicked the kernel.
+			 *
+			 * Free the demand-fault VMA tree (+ its backing file fds) like execve does,
+			 * then the pages + page tables.  pmap_free_user_space must run with this L1
+			 * no longer the active TTBR0, so switch to the kernel L1 first — the task is
+			 * exiting and will not re-enter EL0, and the next dispatch installs the
+			 * successor's TTBR0.  Same last-thread-of-group guard as the fd close above:
+			 * an rfork(RFMEM) sibling still sharing the AS must keep it mapped. */
+			{
+				u_int64_t *l1 = (u_int64_t *)(uintptr_t)_current->md.md_ttbr0;
+
+				if (l1 != 0 && l1 != aarch64_kernel_l1())
+				{
+					vm_map_free(&_current->vm_map);
+					pmap_switch(aarch64_kernel_l1());
+					pmap_free_user_space(l1);
+					_current->md.md_ttbr0 = 0; /* freed — never reuse or double-free */
+				}
+			}
 		}
 
 		/* Free the task's MPI mailboxes so their names/pids do not leak — a leaked
