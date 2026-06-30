@@ -213,6 +213,70 @@ AARCH64_GENERIC_SRCS = \
 	sys/net/netif/ethernet.c \
 	sys/net/net/sys_arch.c
 
+# Per-arch (sys/arch/aarch64) kernel sources, listed EXPLICITLY rather than swept
+# with `find` in the recipe.  Why explicit: the on-device build runs the recipe
+# under the in-OS shell, where `for f in \`find …\`` (command substitution of an
+# external program) comes back empty — so a find-based sweep silently dropped the
+# entire arch tree and produced a broken kernel.  An explicit list is also the
+# single source of truth for BOTH the host and on-device builds, so the two stay
+# byte-identical and a missing entry fails fast on the host.  board/ is excluded
+# (per-board bare-metal start.S/linker scripts collide on the flat obj/sys basename).
+# NOTE: a NEW file under sys/arch/aarch64 (outside board/) MUST be added here.
+AARCH64_ARCH_ASM_SRCS = \
+	sys/arch/aarch64/kern/apentry.S \
+	sys/arch/aarch64/kern/context.S \
+	sys/arch/aarch64/kern/el0.S \
+	sys/arch/aarch64/kern/start.S \
+	sys/arch/aarch64/kern/vectors.S
+
+AARCH64_ARCH_C_SRCS = \
+	sys/arch/aarch64/bringup/ctxdemo.c \
+	sys/arch/aarch64/bringup/elfdemo.c \
+	sys/arch/aarch64/bringup/forkdemo.c \
+	sys/arch/aarch64/bringup/muslelfdemo.c \
+	sys/arch/aarch64/bringup/preemptdemo.c \
+	sys/arch/aarch64/bringup/procdemo.c \
+	sys/arch/aarch64/bringup/procfsdemo.c \
+	sys/arch/aarch64/bringup/ramfsdemo.c \
+	sys/arch/aarch64/bringup/scheddemo.c \
+	sys/arch/aarch64/bringup/syscalldemo.c \
+	sys/arch/aarch64/bringup/userelfdemo.c \
+	sys/arch/aarch64/bringup/vmmdemo.c \
+	sys/arch/aarch64/dev/bcm_fb.c \
+	sys/arch/aarch64/dev/bcm_intc.c \
+	sys/arch/aarch64/dev/bcm_mbox.c \
+	sys/arch/aarch64/dev/bcm_sdhci.c \
+	sys/arch/aarch64/dev/bcm_usb.c \
+	sys/arch/aarch64/dev/board_qemu.c \
+	sys/arch/aarch64/dev/board_rpi3.c \
+	sys/arch/aarch64/dev/console.c \
+	sys/arch/aarch64/dev/display.c \
+	sys/arch/aarch64/dev/fbcon.c \
+	sys/arch/aarch64/dev/gic.c \
+	sys/arch/aarch64/dev/input.c \
+	sys/arch/aarch64/dev/intc.c \
+	sys/arch/aarch64/dev/timer.c \
+	sys/arch/aarch64/dev/uart.c \
+	sys/arch/aarch64/dev/virtio_blk.c \
+	sys/arch/aarch64/dev/virtio_gpu.c \
+	sys/arch/aarch64/dev/virtio_input.c \
+	sys/arch/aarch64/dev/virtio_net.c \
+	sys/arch/aarch64/dev/virtio_sound.c \
+	sys/arch/aarch64/kern/apsmp.c \
+	sys/arch/aarch64/kern/boot.c \
+	sys/arch/aarch64/kern/exceptions.c \
+	sys/arch/aarch64/kern/execfile.c \
+	sys/arch/aarch64/kern/ksupport.c \
+	sys/arch/aarch64/kern/proc.c \
+	sys/arch/aarch64/kern/syscall.c \
+	sys/arch/aarch64/kern/syscall_md.c \
+	sys/arch/aarch64/lib/string.c \
+	sys/arch/aarch64/net/virtio_netif.c \
+	sys/arch/aarch64/vmm/mmu.c \
+	sys/arch/aarch64/vmm/pmap.c \
+	sys/arch/aarch64/vmm/resident.c \
+	sys/arch/aarch64/vmm/vmm_machdep.c
+
 # UbixFS pooled-CoW filesystem: the portable lite-ZFS core (lib/ubixfs_core,
 # unmodified) + the kernel glue.  Compiled with extra include paths so the
 # hosted-style core resolves <stdint.h>/<stdlib.h> from the freestanding compat
@@ -232,24 +296,18 @@ UBIXFS_KERN_INCS = -I${CURDIR}/sys/fs/ubixfs/compat -I${CURDIR}/lib/ubixfs_core 
 
 kernel-aarch64:
 	@mkdir -p ${OBJ_DIR}/boot ${OBJ_DIR}/obj/sys
-	@# Exclude board/ — per-board bare-metal targets (e.g. opizero2w) carry their
-	@# own start.S + linker script (m0.ld, _image_size) and must NOT be swept into
-	@# the QEMU virt kernel, where their start.o collides with kern/start.o on the
-	@# flat obj/sys/ basename and the wrong one wins by find(1) order.  Skipped with a
-	@# shell `case`, not a find predicate: on-device busybox find gates `-not`/`!` on
-	@# FEATURE_FIND_NOT (often off).  Object names use ${f##*/}/${b%.o} expansion, not
-	@# `basename` — on-device busybox `basename PATH SUFFIX` returns empty for a
-	@# multi-component PATH (collapsing every object onto `.o`); expansion is also
-	@# fork-free, so the on-device build avoids a basename+grep spawn per source file.
-	@for f in `find ${CURDIR}/sys/arch/aarch64 -name '*.S'`; do \
-	    case "$$f" in */board/*) continue;; esac; \
+	@# Arch sources come from the explicit AARCH64_ARCH_{ASM,C}_SRCS lists (above), not
+	@# a recipe-time `find`: the on-device shell's command substitution returns empty,
+	@# so a find-based sweep silently dropped the whole arch tree.  Object names use
+	@# ${f##*/}/${b%.o} expansion, not `basename` — on-device busybox `basename PATH
+	@# SUFFIX` returns empty for a multi-component PATH (collapsing every object onto `.o`).
+	@for f in ${AARCH64_ARCH_ASM_SRCS}; do \
 	    b=$${f##*/}; o=${OBJ_DIR}/obj/sys/$${b%.S}.o; \
-	    sh ${CURDIR}/tools/kbuild-cc.sh "${KERN_CC} [asm] " $$o $$f ${KERN_CC} ${KERN_CCFLAGS} ${AARCH64_KCFLAGS} || exit 1; \
+	    sh ${CURDIR}/tools/kbuild-cc.sh "${KERN_CC} [asm] " $$o ${CURDIR}/$$f ${KERN_CC} ${KERN_CCFLAGS} ${AARCH64_KCFLAGS} || exit 1; \
 	done
-	@for f in `find ${CURDIR}/sys/arch/aarch64 -name '*.c'`; do \
-	    case "$$f" in */board/*) continue;; esac; \
+	@for f in ${AARCH64_ARCH_C_SRCS}; do \
 	    b=$${f##*/}; o=${OBJ_DIR}/obj/sys/$${b%.c}.o; \
-	    sh ${CURDIR}/tools/kbuild-cc.sh "${KERN_CC} [c]   " $$o $$f ${KERN_CC} ${KERN_CCFLAGS} ${AARCH64_KCFLAGS} -std=c99 || exit 1; \
+	    sh ${CURDIR}/tools/kbuild-cc.sh "${KERN_CC} [c]   " $$o ${CURDIR}/$$f ${KERN_CC} ${KERN_CCFLAGS} ${AARCH64_KCFLAGS} -std=c99 || exit 1; \
 	done
 	@for f in ${AARCH64_GENERIC_SRCS}; do \
 	    b=$${f##*/}; o=${OBJ_DIR}/obj/sys/$${b%.c}.o; \
