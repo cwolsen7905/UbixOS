@@ -25,6 +25,7 @@
 #include <x86_64/vmm_layout.h> /* DYN_MAIN_BASE/DYN_INTERP_BASE/DYN_STACK_* */
 #include <ubixos/exec.h>       /* exec_set_name_cmdline (MI, shared with i386/aarch64) */
 #include <ubixos/signal.h>     /* signal_exec_reset — reset caught handlers on exec */
+#include <sys/errno.h>         /* ENOENT / ENOEXEC — proper execve failure codes */
 #include <string.h>
 
 #define AT_NULL 0
@@ -398,6 +399,22 @@ int sys_execve(struct thread *td, struct sys_execve_args *uap)
 	 * pointers there, and the old space is unmapped the instant we reload CR3. */
 	strncpy(namebuf, (const char *)uap->fname, sizeof(namebuf) - 1);
 	namebuf[sizeof(namebuf) - 1] = '\0';
+
+	/* Missing executable -> -ENOENT, not a blanket -1/0.  The MI dispatch returns
+	 * td_retval[0] (which it pre-zeroes), so a bare `return -1` here would surface as
+	 * 0 (success); and -1 would decode in musl as EPERM ("Operation not permitted")
+	 * rather than "No such file or directory".  Probe before copying argv/env so a
+	 * bad path fails fast without leaking them.  Mirrors aarch64_exec_replace. */
+	{
+		fileDescriptor_t *probe = fopen(namebuf, "r");
+		if (probe == NULL)
+		{
+			_current->td.td_retval[0] = -ENOENT;
+			return (-ENOENT);
+		}
+		fclose(probe);
+	}
+
 	argc = copy_user_strvec(uap->argv, kargv, MAXARG);
 	envc = copy_user_strvec(uap->envp, kenvp, MAXARG);
 	if (argc == 0)
@@ -421,7 +438,13 @@ int sys_execve(struct thread *td, struct sys_execve_args *uap)
 		kfree(kenvp[i]);
 
 	if (pml4 == 0)
-		return -1;
+	{
+		/* File existed (probed above) but did not build into an image — not a
+		 * loadable ELF.  -ENOEXEC, and set td_retval[0] since the MI dispatch
+		 * returns that (a bare `return -1` would surface as the pre-zeroed 0). */
+		_current->td.td_retval[0] = -ENOEXEC;
+		return (-ENOEXEC);
+	}
 
 	/* Replace the current task's image and enter it.  switch_to re-arms rsp0 from
 	 * kernelStack, so update md_* and load the new CR3 ourselves, then IRETQ. */
