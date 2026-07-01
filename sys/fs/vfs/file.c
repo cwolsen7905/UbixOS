@@ -196,11 +196,24 @@ int sys_mkdir(struct thread *td, struct sys_mkdir_args *args)
 
 int sys_rmdir(struct thread *td, struct sys_rmdir_args *args)
 {
+	kDIR_t *dir;
+
 	if (args->path == 0x0)
 	{
-		td->td_retval[0] = -1;
-		return (-1);
+		td->td_retval[0] = -EFAULT;
+		return (EFAULT);
 	}
+	/* sysRmDir() is void and can't report failure, so removing a missing dir used
+	 * to report success.  Probe first: a missing path must return -ENOENT (not a
+	 * blanket -1, which musl decodes as EPERM).  vfs_opendir also fails for a
+	 * non-directory, which is close enough for the common "no such dir" case. */
+	dir = vfs_opendir(args->path);
+	if (dir == 0x0)
+	{
+		td->td_retval[0] = -ENOENT;
+		return (ENOENT);
+	}
+	vfs_closedir(dir);
 	sysRmDir(args->path);
 	td->td_retval[0] = 0;
 	return (0);
@@ -442,8 +455,8 @@ int sys_fchdir(struct thread *td, struct sys_fchdir_args *args)
 
 	if (fdd == 0x0 || fdd->fd == 0x0)
 	{
-		td->td_retval[0] = -1;
-		return (-1);
+		td->td_retval[0] = -EBADF; /* bad fd, not a blanket -1 (musl decodes -1 as EPERM) */
+		return (-EBADF);
 	}
 
 	fd = fdd->fd;

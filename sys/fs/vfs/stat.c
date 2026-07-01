@@ -120,7 +120,7 @@ int _sys_stat(char *path, struct stat *sb, int flags)
 		kDIR_t *dir = vfs_opendir(path);
 		if (dir == 0x0)
 		{
-			error = -1;
+			error = -ENOENT; /* not a blanket -1 (musl decodes -1 as EPERM) */
 		}
 		else
 		{
@@ -230,7 +230,7 @@ int sys_fstatat(struct thread *td, struct sys_fstatat_args *args)
 		getfd(td, &fdd, args->fd);
 		if (fdd == 0 || fdd->fd == 0x0)
 		{
-			error = -1;
+			error = -EBADF;
 		}
 		else
 		{
@@ -240,7 +240,10 @@ int sys_fstatat(struct thread *td, struct sys_fstatat_args *args)
 
 	if (fd == 0x0)
 	{
-		error = -1;
+		/* Path case: fopen failed -> missing (-ENOENT).  fd case already set
+		 * -EBADF above.  Either way, not a blanket -1 (musl decodes -1 as EPERM). */
+		if (error == 0)
+			error = -ENOENT;
 	}
 	else
 	{
@@ -438,7 +441,7 @@ int sys_statx(struct thread *td, struct sys_statx_args *args)
 
 	if (stx == 0x0)
 	{
-		td->td_retval[0] = EFAULT;
+		td->td_retval[0] = -EFAULT; /* negative: musl reads +errno as a success value */
 		return (EFAULT);
 	}
 
@@ -453,7 +456,7 @@ int sys_statx(struct thread *td, struct sys_statx_args *args)
 		getfd(td, &fdd, args->dirfd);
 		if (fdd == 0x0)
 		{
-			td->td_retval[0] = EBADF;
+			td->td_retval[0] = -EBADF; /* negative: musl reads +errno as a success value */
 			return (EBADF);
 		}
 
