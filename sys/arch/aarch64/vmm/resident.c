@@ -23,12 +23,12 @@
 
 #define PTE_VALID (1UL << 0)
 #define PTE_TYPE_MASK (3UL)
-#define PTE_TABLE (3UL)                  /* L1/L2 descriptor → next-level table   */
-#define PTE_AP_EL0 (1UL << 6)            /* AP[1]: page is accessible at EL0 (user) */
+#define PTE_TABLE (3UL)       /* L1/L2 descriptor → next-level table   */
+#define PTE_AP_EL0 (1UL << 6) /* AP[1]: page is accessible at EL0 (user) */
 #define PTE_ADDR_MASK 0x0000FFFFFFFFF000UL
-#define PT_ENTRIES 512                   /* 4 KB granule: 512 descriptors/table   */
-#define L2_BLOCK_PAGES 512UL             /* a 2 MB L2 block = 512 × 4 KB pages     */
-#define L1_BLOCK_PAGES (512UL * 512UL)   /* a 1 GB L1 block = 512² × 4 KB pages    */
+#define PT_ENTRIES 512                 /* 4 KB granule: 512 descriptors/table   */
+#define L2_BLOCK_PAGES 512UL           /* a 2 MB L2 block = 512 × 4 KB pages     */
+#define L1_BLOCK_PAGES (512UL * 512UL) /* a 1 GB L1 block = 512² × 4 KB pages    */
 
 /**
  * Count physical pages mapped EL0-accessible (user) in @t's address space.
@@ -41,6 +41,26 @@
  */
 u_int32_t md_resident_pages(kTask_t *t)
 {
+	/*
+	 * DISABLED (2026-06-30) pending the higher-half physmap page-table layout.
+	 * The L1->L3 walk below assumed md_ttbr0 and each descriptor's next-level
+	 * pointer are *physical* addresses directly usable as kernel pointers.  The
+	 * higher-half migration changed that representation, so the walk dereferenced
+	 * a bogus address and took a data abort *inside* procfs_build_statm's read —
+	 * which holds vfs_io_lock.  Killing the faulting task mid-syscall left the
+	 * lock held, deadlocking every other VFS user → the whole desktop froze when
+	 * the activity monitor read /proc/<pid>/statm.
+	 *
+	 * Return 0 for now: procfs_build_statm falls back to the text+data size
+	 * estimate (approximate RSS, but no fault, no freeze).  [higher-half] owns the
+	 * correct fix — walk via the physmap the way pmap.c does, once the md_ttbr0 /
+	 * PTE address representation under the split is confirmed.  Original walk kept
+	 * verbatim below for that work.
+	 */
+	(void)t;
+	return 0;
+
+#if 0 /* re-enable + convert to the physmap once [higher-half] confirms the layout */
 	u_int64_t ttbr0 = t->md.md_ttbr0;
 	u_int64_t *l1;
 	u_int32_t count = 0;
@@ -89,4 +109,5 @@ u_int32_t md_resident_pages(kTask_t *t)
 		}
 	}
 	return count;
+#endif
 }
