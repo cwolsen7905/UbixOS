@@ -53,9 +53,16 @@
 #define GAHBCFG_HBSTLEN_INCR (1u << 1)
 
 /* GUSBCFG bits. */
-#define GUSBCFG_PHYSEL (1u << 6)   /* 1 = full-speed serial PHY */
-#define GUSBCFG_FHMOD (1u << 29)   /* force host mode */
-#define GUSBCFG_FDMOD (1u << 30)   /* force device mode */
+#define GUSBCFG_PHYSEL (1u << 6)      /* 1 = full-speed serial PHY */
+#define GUSBCFG_TRDT_SHIFT 10        /* USB turnaround time [13:10] */
+#define GUSBCFG_TRDT_MASK (0xFu << 10)
+#define GUSBCFG_FHMOD (1u << 29)     /* force host mode */
+#define GUSBCFG_FDMOD (1u << 30)     /* force device mode */
+
+/* HCFG (host configuration) bits. */
+#define HCFG_FSLSPCLKSEL_MASK (3u << 0)
+#define HCFG_FSLSPCLKSEL_48MHZ (1u << 0) /* PHY clock select: 48 MHz (HS/internal PHY) */
+#define HCFG_FSLSSUPP (1u << 2)          /* FS/LS-only support (0 for a high-speed port) */
 
 /* GRSTCTL bits. */
 #define GRSTCTL_CSRST (1u << 0)    /* core soft reset */
@@ -166,9 +173,16 @@ int aarch64_usb_init(void)
 	}
 	usb_wait_us(10000);
 
-	/* Force host mode; the controller needs ~25 ms to settle into it. */
-	USB(GUSBCFG) = (USB(GUSBCFG) & ~GUSBCFG_FDMOD) | GUSBCFG_FHMOD;
+	/* Force host mode + set the PHY turnaround time (TRDT=5 for the internal HS
+	 * UTMI+ PHY, per FreeBSD dwc_otg); the controller needs ~25 ms to settle. */
+	USB(GUSBCFG) = (USB(GUSBCFG) & ~(GUSBCFG_FDMOD | GUSBCFG_TRDT_MASK)) | GUSBCFG_FHMOD |
+	               (5u << GUSBCFG_TRDT_SHIFT);
 	usb_wait_us(50000);
+
+	/* Host clock select: FSLSPCLKSEL=1 (48 MHz) for the internal HS PHY, FSLSSUPP=0.
+	 * REQUIRED — without a valid host clock the speed negotiation is flaky (FS one
+	 * boot, HS the next) and transfers are unreliable.  (FreeBSD dwc_otg.) */
+	USB(HCFG) = (USB(HCFG) & ~(HCFG_FSLSSUPP | HCFG_FSLSPCLKSEL_MASK)) | HCFG_FSLSPCLKSEL_48MHZ;
 
 	/* Internal DMA + INCR bursts; re-enable the global interrupt line. */
 	USB(GAHBCFG) = GAHBCFG_DMAEN | GAHBCFG_HBSTLEN_INCR | GAHBCFG_GINT;
