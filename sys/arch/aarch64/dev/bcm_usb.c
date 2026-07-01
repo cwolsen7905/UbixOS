@@ -184,8 +184,10 @@ int aarch64_usb_init(void)
 	 * boot, HS the next) and transfers are unreliable.  (FreeBSD dwc_otg.) */
 	USB(HCFG) = (USB(HCFG) & ~(HCFG_FSLSSUPP | HCFG_FSLSPCLKSEL_MASK)) | HCFG_FSLSPCLKSEL_48MHZ;
 
-	/* Internal DMA + INCR bursts; re-enable the global interrupt line. */
-	USB(GAHBCFG) = GAHBCFG_DMAEN | GAHBCFG_HBSTLEN_INCR | GAHBCFG_GINT;
+	/* Slave/PIO mode (no DMA) — data moves through the FIFOs by CPU; just enable the
+	 * global interrupt line.  (FreeBSD dwc_otg uses slave mode on the Pi; the internal
+	 * DMA path could not reliably complete SET_ADDRESS.) */
+	USB(GAHBCFG) = GAHBCFG_GINT;
 
 	/* Program the FIFO sizes (REQUIRED — defaults are too small for 64-byte packets,
 	 * so larger IN transfers silently no-op).  RX, then non-periodic TX after it,
@@ -270,28 +272,8 @@ int aarch64_usb_init(void)
 static u_int8_t g_setup[8] __attribute__((aligned(64)));
 static u_int8_t g_data[256] __attribute__((aligned(64)));
 
-/** Clean a buffer out of the dcache so the controller's DMA sees our writes. */
-static void dc_clean(void *p, u_int32_t len)
-{
-	uintptr_t a, e = (uintptr_t)p + len;
-	/* Leading barrier: ensure the CPU's stores to the buffer are complete before we
-	 * clean the line to RAM — without it the clean can flush stale data and the new
-	 * stores never reach the controller's DMA (the stale-SETUP bug). */
-	__asm__ volatile("dsb sy" ::: "memory");
-	for (a = (uintptr_t)p & ~63UL; a < e; a += 64)
-		__asm__ volatile("dc cvac, %0" ::"r"(a) : "memory");
-	__asm__ volatile("dsb sy" ::: "memory");
-}
-
-/** Invalidate a buffer so we read the controller's DMA result, not stale cache. */
-static void dc_inval(void *p, u_int32_t len)
-{
-	uintptr_t a, e = (uintptr_t)p + len;
-	__asm__ volatile("dsb sy" ::: "memory");
-	for (a = (uintptr_t)p & ~63UL; a < e; a += 64)
-		__asm__ volatile("dc ivac, %0" ::"r"(a) : "memory");
-	__asm__ volatile("dsb sy" ::: "memory");
-}
+/* (Slave/PIO mode moves data through the FIFOs by CPU load/store — no DMA, so no
+ * cache maintenance of the data buffers is needed.) */
 
 /**
  * Cleanly halt/disable host channel 0 before (re)programming it.  The DWC2 leaves a
@@ -314,9 +296,25 @@ static void usb_chan0_halt(void)
 	HCINT(0) = 0xFFFFFFFF;
 }
 
+/* Slave/PIO-mode FIFO access (no DMA — FreeBSD dwc_otg's proven path on the Pi).
+ * TX pushes packet words into the channel's DFIFO window; RX pops a status word
+ * from GRXSTSP then reads the payload from the (channel-0) DFIFO window. */
+#define GRXSTSP 0x020   /* RX status pop (reading it consumes the entry) */
+#define GNPTXSTS 0x02C  /* non-periodic TX FIFO/queue status */
+#define DFIFO(ch) (0x1000 + (ch) * 0x1000)
+#define GINTSTS_RXFLVL (1u << 4)   /* RX FIFO non-empty */
+#define GINTSTS_NPTXFE (1u << 5)   /* non-periodic TX FIFO empty */
+#define GRXSTS_PKTSTS(x) (((x) >> 17) & 0xF)
+#define GRXSTS_BCNT(x) (((x) >> 4) & 0x7FF)
+#define GRXSTS_IN_DATA 2u  /* host: IN data packet received */
+#define GRXSTS_IN_COMP 3u  /* host: IN transfer complete */
+#define GRXSTS_HALTED 7u   /* host: channel halted */
+
 /**
- * Run one transfer on host channel 0 (polled, DMA).  @return 0 on XFRC, -1 on
- * timeout/error; retries on NAK.
+ * Run one control transfer on host channel 0 in SLAVE/PIO mode.  OUT/SETUP data is
+ * pushed word-by-word into the channel TX FIFO; IN data is drained from the RX FIFO
+ * via GRXSTSP.  Completion is HCINT.XFRC.  @return 0 on success, -1 on error;
+ * retries NAK/transaction errors.
  */
 static int usb_chan0(u_int32_t devaddr, int dir_in, u_int32_t mps, u_int32_t pid, void *buf, u_int32_t len)
 {
@@ -325,60 +323,67 @@ static int usb_chan0(u_int32_t devaddr, int dir_in, u_int32_t mps, u_int32_t pid
 
 	if (pktcnt == 0)
 		pktcnt = 1;
-	if (len != 0)
-	{
-		if (dir_in)
-			dc_inval(buf, len);
-		else
-			dc_clean(buf, len);
-	}
 
 	for (tries = 0; tries < 10; tries++)
 	{
 		u_int32_t s = 0;
-
-		/* DWC2 requires an IN transfer's XferSize to be a multiple of the max packet
-		 * size (rounded up); programming the exact length truncates the transfer.  A
-		 * zero-length IN (a no-data control's status stage) must still use XferSize=mps
-		 * so the core actually issues the IN token — XferSize=0 completes spuriously
-		 * (XFRC without a wire transaction), so the device never commits (SET_ADDRESS
-		 * no-op).  The device's ZLP/short packet terminates it. */
+		u_int32_t received = 0;
+		/* IN XferSize is rounded up to whole packets; OUT is the exact byte count. */
 		u_int32_t xfer = dir_in ? (pktcnt * mps) : len;
 
 		usb_chan0_halt(); /* clean slate: disable the channel + clear interrupts */
-		/* Start order per FreeBSD dwc_otg: HCTSIZ, then HCSPLT (0 = no split — the
-		 * root device is a high-speed hub, so direct, not split, transactions), then
-		 * HCCHAR with CHENA.  HCSPLT must be written explicitly; a stale split bit
-		 * makes every transaction fail. */
 		HCTSIZ(0) = (xfer & 0x7FFFF) | (pktcnt << 19) | (pid << 29);
-		HCSPLT(0) = 0;
-		HCDMA(0) = (u_int32_t)AARCH64_PHYS_OF((uintptr_t)buf);
+		HCSPLT(0) = 0; /* no split — the root device is a high-speed hub */
 		HCCHAR(0) = (mps & 0x7FF) | (0u << 11) /* ep0 */ | (dir_in ? HCCHAR_EPDIR_IN : 0) |
 		            (g_root_lowspeed ? HCCHAR_LSDEV : 0) | (EPTYP_CONTROL << 18) | HCCHAR_MCNT1 |
 		            ((devaddr & 0x7F) << 22) | HCCHAR_CHENA;
 
-		/* Wait for the channel to halt (XFRC on success, or an error/NAK). */
+		/* OUT/SETUP: push the packet into the channel-0 TX FIFO (word by word). */
+		if (!dir_in && len != 0)
+		{
+			u_int32_t words = (len + 3) / 4;
+			u_int32_t w;
+			for (i = 0; i < 100000 && (USB(GINTSTS) & GINTSTS_NPTXFE) == 0; i++)
+				usb_wait_us(1);
+			for (w = 0; w < words; w++)
+				USB(DFIFO(0)) = ((const u_int32_t *)buf)[w];
+		}
+
+		/* Poll: drain RX-FIFO IN packets first (must pop GRXSTSP or the FIFO wedges),
+		 * then watch HCINT for completion/error. */
 		for (i = 0; i < 500000; i++)
 		{
+			if (dir_in && (USB(GINTSTS) & GINTSTS_RXFLVL) != 0)
+			{
+				u_int32_t rx = USB(GRXSTSP);
+				u_int32_t bcnt = GRXSTS_BCNT(rx);
+				if (GRXSTS_PKTSTS(rx) == GRXSTS_IN_DATA && bcnt != 0)
+				{
+					u_int32_t words = (bcnt + 3) / 4, w, k;
+					for (w = 0; w < words; w++)
+					{
+						u_int32_t v = USB(DFIFO(0)); /* must read all words to drain */
+						u_int32_t off = received + w * 4;
+						for (k = 0; k < 4 && (off + k) < len; k++)
+							((u_int8_t *)buf)[off + k] = (u_int8_t)(v >> (8 * k));
+					}
+					received += bcnt;
+				}
+				continue; /* re-check for more RX before looking at HCINT */
+			}
 			s = HCINT(0);
 			if (s & (HCINT_XFRC | HCINT_STALL | HCINT_NAK | HCINT_CHH | HCINT_ERRMASK))
 				break;
 			usb_wait_us(1);
 		}
 		if (s & HCINT_XFRC)
-		{
-			if (dir_in && len)
-				dc_inval(buf, len);
 			return (0);
-		}
 		if (s & HCINT_STALL)
 		{
 			kprintf("usb: ep0 STALL\n");
 			return (-1); /* protocol stall — fatal, not retryable */
 		}
-		/* NAK, transaction error (XACTERR — transient, esp. right after
-		 * SET_ADDRESS), babble, toggle error, or a bare halt: re-issue. */
-		usb_wait_us(2000);
+		usb_wait_us(2000); /* NAK / XACTERR / halt — re-issue */
 	}
 	kprintf("usb: ep0 xfer failed addr=%u dir=%s len=%u pid=%u hcint=0x%X\n",
 	        devaddr,
