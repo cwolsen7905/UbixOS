@@ -577,9 +577,43 @@ static void usb_hub_walk(u_int32_t hubaddr, u_int32_t mps)
 #define SMSC_UR_WRITE_REG 0xA0
 #define SMSC_UR_READ_REG 0xA1
 #define SMSC_ID_REV 0x000
+#define SMSC_INTR_STATUS 0x008
+#define SMSC_TX_CFG 0x010
+#define SMSC_HW_CFG 0x014
+#define SMSC_PM_CTRL 0x020
+#define SMSC_LED_GPIO_CFG 0x024
+#define SMSC_AFC_CFG 0x02C
+#define SMSC_BURST_CAP 0x038
+#define SMSC_BULK_IN_DLY 0x06C
 #define SMSC_MAC_CSR 0x100
 #define SMSC_MAC_ADDRH 0x104
 #define SMSC_MAC_ADDRL 0x108
+#define SMSC_MII_ADDR 0x114
+#define SMSC_MII_DATA 0x118
+#define SMSC_FLOW 0x11C
+#define SMSC_VLAN1 0x120
+
+#define SMSC_HW_CFG_LRST (1u << 3)
+#define SMSC_HW_CFG_BIR (1u << 12)
+#define SMSC_PM_CTRL_PHY_RST (1u << 4)
+#define SMSC_MAC_CSR_TXEN (1u << 3)
+#define SMSC_MAC_CSR_RXEN (1u << 2)
+#define SMSC_TX_CFG_ON (1u << 2)
+#define SMSC_MII_BUSY (1u << 0)
+#define SMSC_MII_WRITE (1u << 1)
+#define SMSC_AFC_CFG_DEFAULT 0x00F830A1u
+#define SMSC_PHY_ADDR 1u    /* the LAN9514 internal PHY is at MII address 1 */
+#define MII_BMCR 0x00       /* PHY control  */
+#define MII_BMSR 0x01       /* PHY status   */
+#define MII_ANAR 0x04       /* autoneg advertise */
+#define BMCR_RESET 0x8000
+#define BMCR_ANENABLE 0x1000
+#define BMCR_ANRESTART 0x0200
+#define BMSR_LINK 0x0004
+
+/* The device MAC (resolved by usb_pick_mac; also the NIC identity for the lwIP
+ * bridge).  The Pi has no EEPROM, so it comes from the VideoCore mailbox. */
+u_int8_t smsc_mac[6];
 
 /** Read a 32-bit SMSC register @off (vendor control-IN).  @return 0 on success. */
 static int smsc_read_reg(u_int32_t off, u_int32_t *val)
@@ -601,9 +635,117 @@ static int smsc_write_reg(u_int32_t off, u_int32_t val)
 	return (usb_control(g_smsc_addr, g_smsc_mps0, 0x40, SMSC_UR_WRITE_REG, 0, (u_int16_t)off, 4, g_data));
 }
 
-/* The Pi's MAC lives in the VideoCore firmware (no EEPROM on the LAN9514), so read
- * it from the property mailbox — GET_BOARD_MAC_ADDRESS returns 6 bytes. */
-u_int8_t smsc_mac[6];
+/** Wait for the SMSC MII bus to be idle.  @return 0 on success. */
+static int smsc_mii_wait(void)
+{
+	u_int32_t v;
+	int i;
+
+	for (i = 0; i < 10000; i++)
+	{
+		if (smsc_read_reg(SMSC_MII_ADDR, &v) == 0 && (v & SMSC_MII_BUSY) == 0)
+			return (0);
+		usb_wait_us(10);
+	}
+	return (-1);
+}
+
+/** Read PHY register @reg (of the internal PHY).  @return 0 on success. */
+static int smsc_mii_read(u_int32_t reg, u_int16_t *val)
+{
+	u_int32_t v;
+
+	if (smsc_mii_wait() != 0)
+		return (-1);
+	smsc_write_reg(SMSC_MII_ADDR, ((SMSC_PHY_ADDR & 0x1F) << 11) | ((reg & 0x1F) << 6) | SMSC_MII_BUSY);
+	if (smsc_mii_wait() != 0)
+		return (-1);
+	if (smsc_read_reg(SMSC_MII_DATA, &v) != 0)
+		return (-1);
+	*val = (u_int16_t)v;
+	return (0);
+}
+
+/** Write @val to PHY register @reg.  @return 0 on success. */
+static int smsc_mii_write(u_int32_t reg, u_int16_t val)
+{
+	if (smsc_mii_wait() != 0)
+		return (-1);
+	smsc_write_reg(SMSC_MII_DATA, val);
+	smsc_write_reg(SMSC_MII_ADDR,
+	               ((SMSC_PHY_ADDR & 0x1F) << 11) | ((reg & 0x1F) << 6) | SMSC_MII_WRITE | SMSC_MII_BUSY);
+	return (smsc_mii_wait());
+}
+
+/** Reset the PHY and start autonegotiation. */
+static void smsc_phy_init(void)
+{
+	u_int16_t bmcr;
+	int i;
+
+	smsc_mii_write(MII_BMCR, BMCR_RESET);
+	for (i = 0; i < 1000; i++) /* wait for the reset bit to self-clear */
+	{
+		if (smsc_mii_read(MII_BMCR, &bmcr) == 0 && (bmcr & BMCR_RESET) == 0)
+			break;
+		usb_wait_us(1000);
+	}
+	smsc_mii_write(MII_ANAR, 0x01E1);                        /* advertise 10/100 half+full, 802.3 */
+	smsc_mii_write(MII_BMCR, BMCR_ANENABLE | BMCR_ANRESTART); /* enable + restart autoneg */
+}
+
+/**
+ * Initialize the LAN9514 MAC + PHY: LRST/PHY reset, program our MAC, FIFO/flow
+ * config, bring up the PHY, enable TX + RX.  Uses smsc_mac (already resolved).
+ *
+ * @return 0 on success.
+ */
+static int smsc_chip_init(void)
+{
+	u_int32_t v;
+	int i;
+
+	/* Lite reset the chip, then reset the PHY. */
+	smsc_write_reg(SMSC_HW_CFG, SMSC_HW_CFG_LRST);
+	for (i = 0; i < 1000; i++)
+	{
+		if (smsc_read_reg(SMSC_HW_CFG, &v) == 0 && (v & SMSC_HW_CFG_LRST) == 0)
+			break;
+		usb_wait_us(1000);
+	}
+	smsc_write_reg(SMSC_PM_CTRL, SMSC_PM_CTRL_PHY_RST);
+	for (i = 0; i < 1000; i++)
+	{
+		if (smsc_read_reg(SMSC_PM_CTRL, &v) == 0 && (v & SMSC_PM_CTRL_PHY_RST) == 0)
+			break;
+		usb_wait_us(1000);
+	}
+
+	/* Program our MAC into the chip. */
+	smsc_write_reg(SMSC_MAC_ADDRL,
+	               (u_int32_t)smsc_mac[0] | ((u_int32_t)smsc_mac[1] << 8) | ((u_int32_t)smsc_mac[2] << 16) |
+	                   ((u_int32_t)smsc_mac[3] << 24));
+	smsc_write_reg(SMSC_MAC_ADDRH, (u_int32_t)smsc_mac[4] | ((u_int32_t)smsc_mac[5] << 8));
+
+	/* No RX batching (read one frame per bulk transfer); bulk-in delay + BIR. */
+	smsc_write_reg(SMSC_BURST_CAP, 0);
+	smsc_write_reg(SMSC_BULK_IN_DLY, 0x00002000);
+	if (smsc_read_reg(SMSC_HW_CFG, &v) == 0)
+		smsc_write_reg(SMSC_HW_CFG, v | SMSC_HW_CFG_BIR);
+	smsc_write_reg(SMSC_INTR_STATUS, 0xFFFFFFFF);
+	smsc_write_reg(SMSC_FLOW, 0);
+	smsc_write_reg(SMSC_AFC_CFG, SMSC_AFC_CFG_DEFAULT);
+	smsc_write_reg(SMSC_VLAN1, 0x8100); /* ETHERTYPE_VLAN */
+
+	smsc_phy_init();
+
+	/* Enable TX + RX. */
+	if (smsc_read_reg(SMSC_MAC_CSR, &v) == 0)
+		smsc_write_reg(SMSC_MAC_CSR, v | SMSC_MAC_CSR_TXEN | SMSC_MAC_CSR_RXEN);
+	smsc_write_reg(SMSC_TX_CFG, SMSC_TX_CFG_ON);
+	g_tog_in = g_tog_out = 0; /* DATA0 */
+	return (0);
+}
 
 /** A MAC is usable if it is unicast (bit0 of octet0 clear), not all-zero, not all-FF. */
 static int mac_is_valid(const u_int8_t m[6])
@@ -780,8 +922,26 @@ int aarch64_usb_smsc_probe(void)
 		        smsc_mac[5]);
 	}
 
-	(void)usb_bulk;              /* used by the TX/RX path in the next step */
-	(void)smsc_find_endpoints(); /* locate the bulk IN/OUT endpoints */
+	(void)usb_bulk; /* used by the TX/RX path in the next step */
+	if (smsc_find_endpoints() != 0)
+	{
+		kprintf("smsc: bulk endpoints not found\n");
+		return (-1);
+	}
+	smsc_chip_init();
+
+	/* Give autoneg a moment, then report PHY link state. */
+	{
+		u_int16_t bmsr = 0;
+		int i;
+		for (i = 0; i < 30; i++)
+		{
+			if (smsc_mii_read(MII_BMSR, &bmsr) == 0 && (bmsr & BMSR_LINK))
+				break;
+			usb_wait_us(100000);
+		}
+		kprintf("smsc: chip init done, PHY link %s (bmsr=0x%X)\n", (bmsr & BMSR_LINK) ? "UP" : "down", bmsr);
+	}
 	return (0);
 }
 
