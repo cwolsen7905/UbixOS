@@ -89,6 +89,10 @@ static volatile u_int32_t g_usb_mbox[36] __attribute__((aligned(16)));
 static int g_root_lowspeed;      /* root device negotiated low-speed (set in usb_init) */
 static u_int32_t g_smsc_addr;    /* USB address of the SMSC LAN9514 Ethernet (0 = not found) */
 static u_int32_t g_smsc_mps0;    /* its ep0 max packet size */
+static u_int32_t g_smsc_ep_in;   /* bulk IN (RX) endpoint number */
+static u_int32_t g_smsc_ep_out;  /* bulk OUT (TX) endpoint number */
+static u_int32_t g_smsc_bulk_mps = 512; /* bulk endpoint max packet size (HS = 512) */
+static u_int32_t g_tog_in, g_tog_out;   /* per-endpoint data toggles (0=DATA0, 2=DATA1) */
 
 /* M7.1 forward declarations (definitions follow aarch64_usb_init). */
 static int usb_control_data(u_int32_t devaddr, u_int32_t mps, int in, void *data, u_int32_t len);
@@ -269,6 +273,7 @@ int aarch64_usb_init(void)
 
 /* USB endpoint types. */
 #define EPTYP_CONTROL 0u
+#define EPTYP_BULK 2u
 
 /* DMA bounce buffers (the controller DMAs to/from physical addresses). */
 static u_int8_t g_setup[8] __attribute__((aligned(64)));
@@ -318,7 +323,14 @@ static void usb_chan0_halt(void)
  * via GRXSTSP.  Completion is HCINT.XFRC.  @return 0 on success, -1 on error;
  * retries NAK/transaction errors.
  */
-static int usb_chan0(u_int32_t devaddr, int dir_in, u_int32_t mps, u_int32_t pid, void *buf, u_int32_t len)
+static int usb_chan0(u_int32_t devaddr,
+                     u_int32_t ep,
+                     u_int32_t eptype,
+                     int dir_in,
+                     u_int32_t mps,
+                     u_int32_t pid,
+                     void *buf,
+                     u_int32_t len)
 {
 	u_int32_t pktcnt = (len + mps - 1) / mps;
 	int tries, i;
@@ -336,8 +348,8 @@ static int usb_chan0(u_int32_t devaddr, int dir_in, u_int32_t mps, u_int32_t pid
 		usb_chan0_halt(); /* clean slate: disable the channel + clear interrupts */
 		HCTSIZ(0) = (xfer & 0x7FFFF) | (pktcnt << 19) | (pid << 29);
 		HCSPLT(0) = 0; /* no split — the root device is a high-speed hub */
-		HCCHAR(0) = (mps & 0x7FF) | (0u << 11) /* ep0 */ | (dir_in ? HCCHAR_EPDIR_IN : 0) |
-		            (g_root_lowspeed ? HCCHAR_LSDEV : 0) | (EPTYP_CONTROL << 18) | HCCHAR_MCNT1 |
+		HCCHAR(0) = (mps & 0x7FF) | ((ep & 0xF) << 11) | (dir_in ? HCCHAR_EPDIR_IN : 0) |
+		            (g_root_lowspeed ? HCCHAR_LSDEV : 0) | (eptype << 18) | HCCHAR_MCNT1 |
 		            ((devaddr & 0x7F) << 22) | HCCHAR_CHENA;
 
 		/* OUT/SETUP: push the packet into the channel-0 TX FIFO (word by word). */
@@ -420,7 +432,7 @@ static int usb_control(u_int32_t devaddr,
 	g_setup[6] = (u_int8_t)wLength;
 	g_setup[7] = (u_int8_t)(wLength >> 8);
 
-	if (usb_chan0(devaddr, 0, mps, PID_SETUP, g_setup, 8) != 0)
+	if (usb_chan0(devaddr, 0, EPTYP_CONTROL, 0, mps, PID_SETUP, g_setup, 8) != 0)
 	{
 		if (g_usb_dbg)
 			kprintf("usb:   SETUP stage failed\n");
@@ -434,7 +446,7 @@ static int usb_control(u_int32_t devaddr,
 			return (-1);
 	}
 	/* STATUS stage: opposite direction, zero-length, DATA1. */
-	if (usb_chan0(devaddr, wLength && in ? 0 : 1, mps, PID_DATA1, g_data, 0) != 0)
+	if (usb_chan0(devaddr, 0, EPTYP_CONTROL, wLength && in ? 0 : 1, mps, PID_DATA1, g_data, 0) != 0)
 	{
 		if (g_usb_dbg)
 			kprintf("usb:   STATUS stage failed\n");
@@ -448,9 +460,25 @@ static int usb_control(u_int32_t devaddr,
 /** Control DATA stage (DATA1, may span packets). */
 static int usb_control_data(u_int32_t devaddr, u_int32_t mps, int in, void *data, u_int32_t len)
 {
-	if (usb_chan0(devaddr, in, mps, PID_DATA1, data, len) != 0)
+	if (usb_chan0(devaddr, 0, EPTYP_CONTROL, in, mps, PID_DATA1, data, len) != 0)
 		return (-1);
 	return (0);
+}
+
+/**
+ * One bulk transfer on @ep of @devaddr, tracking the endpoint's running data toggle
+ * (bulk endpoints keep a persistent DATA0/DATA1 toggle, unlike control).  The next
+ * toggle is read back from HCTSIZ.DPID after the transfer.
+ *
+ * @return 0 on success, -1 on error.
+ */
+static int usb_bulk(u_int32_t devaddr, u_int32_t ep, int dir_in, u_int32_t mps, void *buf, u_int32_t len)
+{
+	u_int32_t *tog = dir_in ? &g_tog_in : &g_tog_out;
+	int r = usb_chan0(devaddr, ep, EPTYP_BULK, dir_in, mps, *tog, buf, len);
+	if (r == 0)
+		*tog = (HCTSIZ(0) >> 29) & 0x3; /* carry the toggle to the next transfer */
+	return (r);
 }
 
 /**
@@ -647,6 +675,49 @@ static void usb_pick_mac(void)
 }
 
 /**
+ * Read the SMSC device's config descriptor and locate its bulk IN (RX) and bulk OUT
+ * (TX) endpoint numbers into g_smsc_ep_in/out.  @return 0 if both were found.
+ */
+static int smsc_find_endpoints(void)
+{
+	u_int32_t tot, i;
+
+	/* Config descriptor: read the 9-byte header for wTotalLength, then the whole. */
+	if (usb_control(g_smsc_addr, g_smsc_mps0, 0x80, 6, (2 << 8), 0, 9, g_data) != 0)
+		return (-1);
+	tot = (u_int32_t)(g_data[2] | (g_data[3] << 8));
+	if (tot > sizeof(g_data))
+		tot = sizeof(g_data);
+	if (usb_control(g_smsc_addr, g_smsc_mps0, 0x80, 6, (2 << 8), 0, tot, g_data) != 0)
+		return (-1);
+
+	for (i = 0; i + 2 <= tot;)
+	{
+		u_int8_t blen = g_data[i], btype = g_data[i + 1];
+
+		if (blen == 0)
+			break;
+		if (btype == 5 /* ENDPOINT */ && i + 6 <= tot)
+		{
+			u_int8_t eaddr = g_data[i + 2], attr = g_data[i + 3];
+			u_int16_t emps = (u_int16_t)(g_data[i + 4] | (g_data[i + 5] << 8));
+			if ((attr & 0x3) == 0x2) /* bulk */
+			{
+				if (eaddr & 0x80)
+					g_smsc_ep_in = eaddr & 0xF;
+				else
+					g_smsc_ep_out = eaddr & 0xF;
+				if (emps != 0)
+					g_smsc_bulk_mps = emps & 0x7FF;
+			}
+		}
+		i += blen;
+	}
+	kprintf("smsc: bulk endpoints IN=%u OUT=%u mps=%u\n", g_smsc_ep_in, g_smsc_ep_out, g_smsc_bulk_mps);
+	return ((g_smsc_ep_in != 0 && g_smsc_ep_out != 0) ? 0 : -1);
+}
+
+/**
  * M7.4 (step 1+): SET_CONFIGURATION on the SMSC LAN9514, read the chip ID/revision,
  * and obtain the MAC (from the chip registers if programmed, else the VideoCore
  * mailbox).  Bulk data path (endpoints, TX/RX framing, lwIP bridge) is next.
@@ -708,6 +779,9 @@ int aarch64_usb_smsc_probe(void)
 		        smsc_mac[4],
 		        smsc_mac[5]);
 	}
+
+	(void)usb_bulk;              /* used by the TX/RX path in the next step */
+	(void)smsc_find_endpoints(); /* locate the bulk IN/OUT endpoints */
 	return (0);
 }
 
