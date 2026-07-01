@@ -11,7 +11,8 @@
 
 #include "../x86_64.h"
 #include <vmm/vmm.h>
-#include <lib/kmalloc.h> /* sysID */
+#include <vmm/vm_filecache.h> /* vm_filecache_reclaim_one — clean-file-page eviction */
+#include <lib/kmalloc.h>      /* sysID */
 #include <string.h>
 
 extern char _end[]; /* end of the kernel image (ldscript) */
@@ -66,8 +67,10 @@ void *vmm_get_free_malloc_page(u_int16_t count)
 	return P2V(base);
 }
 
-/** Page-eviction hook — no swap device yet, so eviction always fails. */
+/** Page-eviction hook (allocator OOM path): reclaim one clean cached file page
+ * from the file-cache inactive LRU — needs no swap device (re-read from disk if
+ * faulted again).  See the aarch64 twin + vm_filecache_reclaim_one(). */
 int swap_evict_page(void)
 {
-	return 0;
+	return ((int)vm_filecache_reclaim_one());
 }

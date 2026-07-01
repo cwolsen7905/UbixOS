@@ -45,23 +45,75 @@
 
 struct vm_filecache_entry
 {
-	void *mp;                             /* mount-point identity token */
-	u_int32_t fileid;                     /* per-file id (start cluster/block) */
-	off_t offset;                         /* page-aligned byte offset into file */
-	u_int32_t phys;                       /* physical page address (page-aligned) */
-	u_int32_t refcnt;                     /* live mappings of this page */
-	struct vm_filecache_entry *key_next;  /* by-key bucket chain */
-	struct vm_filecache_entry *phys_next; /* by-phys bucket chain */
+	void *mp;                              /* mount-point identity token */
+	u_int32_t fileid;                      /* per-file id (start cluster/block) */
+	off_t offset;                          /* page-aligned byte offset into file */
+	u_int32_t phys;                        /* physical page address (page-aligned) */
+	u_int32_t refcnt;                      /* live mappings of this page (0 = inactive/cached) */
+	struct vm_filecache_entry *key_next;   /* by-key bucket chain */
+	struct vm_filecache_entry *phys_next;  /* by-phys bucket chain */
+	struct vm_filecache_entry *inact_prev; /* inactive-LRU links (valid iff refcnt == 0) */
+	struct vm_filecache_entry *inact_next;
 };
 
 static struct vm_filecache_entry *g_key_buckets[VM_FILECACHE_BUCKETS];
 static struct vm_filecache_entry *g_phys_buckets[VM_FILECACHE_BUCKETS];
 static struct spinLock g_filecache_lock = SPIN_LOCK_INITIALIZER;
-static u_int32_t g_filecache_count = 0; /* live entries (== shared pages) */
+static u_int32_t g_filecache_count = 0; /* total cached pages (active + inactive) */
+
+/* Inactive LRU: entries whose refcnt dropped to 0 stay cached here (page kept,
+ * still hashed) instead of being freed, so the next mapper of the same file page
+ * — e.g. the next exec of clang, or any program re-opening libc.so — hits RAM
+ * instead of re-reading the disk.  vm_filecache_reclaim_one() frees the LRU end
+ * under memory pressure (see swap_evict_page): a clean file page needs no swap,
+ * it is simply dropped and re-faulted from disk if touched again. */
+static struct vm_filecache_entry *g_inact_head = NULL; /* LRU end — reclaimed first */
+static struct vm_filecache_entry *g_inact_tail = NULL; /* MRU end — pushed here */
+static u_int32_t g_inact_count = 0;
 
 u_int32_t vm_filecache_page_count(void)
 {
 	return (g_filecache_count);
+}
+
+/** Append @e at the MRU (tail) of the inactive LRU.  Caller holds the lock. */
+static void inact_push(struct vm_filecache_entry *e)
+{
+	e->inact_next = NULL;
+	e->inact_prev = g_inact_tail;
+	if (g_inact_tail != NULL)
+	{
+		g_inact_tail->inact_next = e;
+	}
+	else
+	{
+		g_inact_head = e;
+	}
+	g_inact_tail = e;
+	g_inact_count++;
+}
+
+/** Unlink @e from the inactive LRU (it is being revived or reclaimed).  Caller holds the lock. */
+static void inact_remove(struct vm_filecache_entry *e)
+{
+	if (e->inact_prev != NULL)
+	{
+		e->inact_prev->inact_next = e->inact_next;
+	}
+	else
+	{
+		g_inact_head = e->inact_next;
+	}
+	if (e->inact_next != NULL)
+	{
+		e->inact_next->inact_prev = e->inact_prev;
+	}
+	else
+	{
+		g_inact_tail = e->inact_prev;
+	}
+	e->inact_prev = e->inact_next = NULL;
+	g_inact_count--;
 }
 
 /** Hash a (mp, fileid, offset) key into a bucket index. */
@@ -114,6 +166,10 @@ u_int32_t vm_filecache_lookup_ref(void *mp, u_int32_t fileid, off_t offset)
 	e = find_key(mp, fileid, offset);
 	if (e != NULL)
 	{
+		if (e->refcnt == 0) /* cache hit on an inactive page — revive it */
+		{
+			inact_remove(e);
+		}
 		e->refcnt++;
 		phys = e->phys;
 	}
@@ -128,13 +184,20 @@ int vm_filecache_insert(void *mp, u_int32_t fileid, off_t offset, u_int32_t phys
 
 	spinLock(&g_filecache_lock);
 
-	/* Lost a race — another mapper inserted this key first.  Adopt it. */
+	/* Lost a race — another mapper inserted this key first, OR it is still cached
+	 * as an inactive page.  Adopt/revive it. */
 	e = find_key(mp, fileid, offset);
 	if (e != NULL)
 	{
+		if (e->refcnt == 0)
+		{
+			inact_remove(e);
+		}
 		e->refcnt++;
 		if (phys_out != NULL)
+		{
 			*phys_out = e->phys;
+		}
 		spinUnlock(&g_filecache_lock);
 		return (-1);
 	}
@@ -175,15 +238,20 @@ int vm_filecache_ref_phys(u_int32_t phys)
 	e = find_phys(phys);
 	found = (e != NULL);
 	if (e != NULL)
+	{
+		if (e->refcnt == 0) /* reviving a cached inactive page */
+		{
+			inact_remove(e);
+		}
 		e->refcnt++;
+	}
 	spinUnlock(&g_filecache_lock);
 	return (found);
 }
 
 int vm_filecache_unref_phys(u_int32_t phys)
 {
-	struct vm_filecache_entry *e, **pp;
-	u_int32_t free_phys = 0;
+	struct vm_filecache_entry *e;
 	int found = 0;
 
 	spinLock(&g_filecache_lock);
@@ -192,36 +260,74 @@ int vm_filecache_unref_phys(u_int32_t phys)
 	if (e != NULL)
 	{
 		found = 1;
-		if (--e->refcnt == 0)
+		if (e->refcnt > 0)
 		{
-			/* Unlink from both hash chains. */
-			for (pp = &g_phys_buckets[phys_hash(phys)]; *pp != NULL; pp = &(*pp)->phys_next)
+			e->refcnt--;
+			if (e->refcnt == 0)
 			{
-				if (*pp == e)
-				{
-					*pp = e->phys_next;
-					break;
-				}
+				/* Last mapping gone — but keep the page cached on the inactive LRU
+				 * (still hashed) instead of freeing it, so the next mapper of this
+				 * file page hits RAM.  It is reclaimed under memory pressure by
+				 * vm_filecache_reclaim_one(); no swap needed (clean file page). */
+				inact_push(e);
 			}
-			for (pp = &g_key_buckets[key_hash(e->mp, e->fileid, e->offset)]; *pp != NULL;
-			     pp = &(*pp)->key_next)
-			{
-				if (*pp == e)
-				{
-					*pp = e->key_next;
-					break;
-				}
-			}
-			free_phys = e->phys;
-			kfree(e);
-			g_filecache_count--;
 		}
 	}
 
 	spinUnlock(&g_filecache_lock);
 
-	if (free_phys != 0)
-		free_page(free_phys);
-
 	return (found);
+}
+
+/**
+ * Reclaim one clean cached file page under memory pressure — the LRU end of the
+ * inactive list.  A clean file page is simply dropped (unhashed + freed); if it
+ * is faulted again it is re-read from disk.  This is the 64-bit "eviction" path
+ * (swap_evict_page): no swap device is required for read-only file pages.
+ *
+ * @return 1 if a page was freed (caller should retry the allocation), 0 if the
+ *         inactive list was empty (nothing reclaimable — genuine OOM).
+ */
+u_int32_t vm_filecache_reclaim_one(void)
+{
+	struct vm_filecache_entry *e, **pp;
+	u_int32_t free_phys = 0;
+
+	spinLock(&g_filecache_lock);
+
+	e = g_inact_head; /* LRU end */
+	if (e != NULL)
+	{
+		inact_remove(e);
+		/* Unlink from both hash chains. */
+		for (pp = &g_phys_buckets[phys_hash(e->phys)]; *pp != NULL; pp = &(*pp)->phys_next)
+		{
+			if (*pp == e)
+			{
+				*pp = e->phys_next;
+				break;
+			}
+		}
+		for (pp = &g_key_buckets[key_hash(e->mp, e->fileid, e->offset)]; *pp != NULL; pp = &(*pp)->key_next)
+		{
+			if (*pp == e)
+			{
+				*pp = e->key_next;
+				break;
+			}
+		}
+		free_phys = e->phys;
+		kfree(e);
+		g_filecache_count--;
+	}
+
+	spinUnlock(&g_filecache_lock);
+
+	/* free_page outside the cache lock (it takes the VMM allocator lock). */
+	if (free_phys != 0)
+	{
+		free_page(free_phys);
+	}
+
+	return (free_phys != 0 ? 1 : 0);
 }

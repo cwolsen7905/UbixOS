@@ -23,6 +23,7 @@
 
 #include "bringup.h"
 #include <vmm/vmm.h>
+#include <vmm/vm_filecache.h> /* vm_filecache_reclaim_one — clean-file-page eviction */
 #include <vmm/paging.h>
 #include <lib/kmalloc.h>     /* sysID */
 #include <string.h>          /* memset */
@@ -522,11 +523,16 @@ void *vmm_get_free_malloc_page(u_int16_t count)
 }
 
 /**
- * Page-eviction hook — no swap device on aarch64 yet, so eviction always fails.
+ * Page-eviction hook (called by the allocator when out of free pages, before it
+ * OOM-panics).  No anonymous-swap device on aarch64 yet, but clean cached file
+ * pages need none — reclaim one from the file-page cache's inactive LRU (it is
+ * re-read from disk if faulted again).  This keeps a long run of short-lived
+ * processes (e.g. an on-device build exec'ing clang ~146 times) from OOM-ing:
+ * each clang's file pages become reclaimable cache the moment it exits.
  *
- * @return 0 (no page evicted).
+ * @return 1 if a page was reclaimed (allocator retries), 0 if nothing reclaimable.
  */
 int swap_evict_page(void)
 {
-	return 0;
+	return ((int)vm_filecache_reclaim_one());
 }

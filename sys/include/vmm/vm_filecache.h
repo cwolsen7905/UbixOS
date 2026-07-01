@@ -90,7 +90,16 @@ int vm_filecache_ref_phys(u_int32_t phys);
  */
 int vm_filecache_unref_phys(u_int32_t phys);
 
-/** Number of live cache entries (== shared physical pages held). For /proc/meminfo. */
+/** Number of cached pages held (active + inactive). For /proc/meminfo. */
 u_int32_t vm_filecache_page_count(void);
+
+/**
+ * Reclaim one clean cached (inactive, refcnt==0) file page under memory pressure:
+ * drop it from the cache and free its physical page (re-read from disk if faulted
+ * again).  Needs no swap device.  Called from the allocator's eviction hook.
+ *
+ * @return 1 if a page was freed (retry the allocation), 0 if nothing was reclaimable.
+ */
+u_int32_t vm_filecache_reclaim_one(void);
 
 #endif /* _VMM_VM_FILECACHE_H_ */
