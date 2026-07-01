@@ -173,15 +173,15 @@ PL011 on the 40-pin GPIO header (USB ports are USB/data, not serial):
   (no firmware blob).
 
   Phases (each flashed + serial-checked):
-  - **M7 STATUS (2026-06-30): M7.0 ✅ HW-confirmed; M7.1 WIP, BLOCKED.** Control-transfer
-    *reads* work (full LAN9514 descriptor read on HW); device *addressing* (SET_ADDRESS)
-    is unreliable. Four DWC2 gotchas solved (dc_clean leading dsb; FIFO sizing;
-    IN XferSize multiple-of-mps; zero-length-IN XferSize=mps for the token). The
-    remaining failure needs the controller's real state machine (microframe
-    scheduling, NAK/retry/halt accounting, IRQ-driven completion). **DECISION: pause
-    the hand-rolled driver; resume by porting a proven DWC2 driver (USPi/Circle or
-    Chadderz CSUD) and adapting it to uBixOS's input + lwIP layers.** ~17 HW flash
-    cycles; not worth grinding further by hand.
+  - **M7 STATUS (2026-06-30): M7.0 + M7.1 ✅ HW-CONFIRMED — the LAN9514 hub
+    enumerates.** The fix: the host transfer engine runs in **slave/PIO mode**, not
+    internal DMA (FreeBSD dwc_otg's proven path on the Pi) — the Pi's DMA could not
+    reliably complete SET_ADDRESS. Plus the FreeBSD-referenced init: HCFG
+    FSLSPCLKSEL=1 (host clock), GUSBCFG TRDT=5, FIFO sizing, HCSPLT=0, channel
+    halt-before-reuse. PIO is slower than DMA (CPU copies + busy-polls) but correct;
+    IRQ-driven PIO (sleep-on-IRQ, don't peg a core) is the throughput follow-up, and
+    revisiting DMA is the endgame if 100 Mbit line-rate matters. **NEXT: M7.2 hub
+    walk → M7.4 LAN9514 Ethernet (`if_smsc`, BSD-2) + M7.3 HID.**
   - **M7.0 — Core up.** Power the controller (mailbox SET_POWER_STATE id 3), core
     soft-reset (GRSTCTL), set GUSBCFG/GAHBCFG (DMA + host mode), enable the host
     port (HPRT power + reset), detect a connected device + report its speed.
