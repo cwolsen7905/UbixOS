@@ -18,6 +18,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cctype>
+#include <ctime>
 
 #include <unistd.h>
 #include <sched.h>
@@ -64,11 +65,17 @@
 #define FONT_SIZE 15
 #define TITLE_FONT_PATH "/var/fonts/DejaVuSans-Bold.ttf"
 #define TITLE_SIZE 26
+#define CLOCK_SIZE 46 /* big lock-screen time */
 #define VIEWS_MBOX "views"
 #define TASKBAR_PATH "/usr/bin/taskbar"
 #define MAX_FIELD 31 /* max username / password length */
 
 extern "C" int pidStatus(int pid);
+extern "C" int gettime(); /* seconds since epoch (libubix_api) */
+/* musl gates these POSIX prototypes behind a feature macro the -nostdinc world
+ * build does not set; the symbols are in libc, so declare them directly. */
+extern "C" int setenv(const char *name, const char *value, int overwrite);
+extern "C" void tzset(void);
 
 /* ------------------------------------------------------------------ */
 /* LoginUI — draws the login panel onto an ogSurface                   */
@@ -77,10 +84,12 @@ extern "C" int pidStatus(int pid);
 class LoginUI
 {
 	ogSurface &surf_;
-	ogScalableFont font_;     /* body: labels, fields, hint (sans) */
-	ogScalableFont title_;    /* the "uBixOS" wordmark (larger, bold) */
-	bool have_title_ = false; /* title_ loaded (else fall back to font_) */
-	int sw_, sh_;             /* screen width / height */
+	ogScalableFont font_;      /* body: fields, hint, date (sans) */
+	ogScalableFont title_;     /* the "uBixOS" wordmark (larger, bold) */
+	ogScalableFont clockfont_; /* big lock-screen time */
+	bool have_title_ = false;  /* title_ loaded (else fall back to font_) */
+	bool have_clock_ = false;  /* clockfont_ loaded */
+	int sw_, sh_;              /* screen width / height */
 
 	std::vector<uint32_t> bg_; /* wallpaper stretched to the screen (32bpp) */
 	bool have_bg_ = false;
@@ -91,8 +100,7 @@ class LoginUI
 	int field_h_;                         /* field-box height */
 	int avatar_cx_, avatar_y_, avatar_d_; /* round monogram avatar */
 	int title_y_, sub_y_, div_y_;
-	int user_label_y_, user_field_y_;
-	int pass_label_y_, pass_field_y_;
+	int user_field_y_, pass_field_y_; /* inline-placeholder fields (no label row) */
 	int msg_y_;
 
       public:
@@ -102,6 +110,8 @@ class LoginUI
 	{
 		loaded = font_.Load(FONT_PATH, FONT_SIZE);
 		have_title_ = title_.Load(TITLE_FONT_PATH, TITLE_SIZE);
+		have_clock_ = clockfont_.Load(FONT_PATH, CLOCK_SIZE);
+		load_timezone();
 		layout();
 		load_background();
 	}
@@ -163,13 +173,63 @@ class LoginUI
 		}
 	}
 
+	/* Load /system/timezone once (default US Eastern w/ DST) so localtime() is
+	 * local, matching the taskbar clock. */
+	void load_timezone()
+	{
+		char tz[64];
+		if (ubistry_get_str("/system/timezone", tz, sizeof(tz)) != 0)
+			std::strncpy(tz, "EST5EDT,M3.2.0,M11.1.0", sizeof(tz) - 1);
+		tz[sizeof(tz) - 1] = '\0';
+		setenv("TZ", tz, 1);
+		tzset();
+	}
+
+	/* AA text composited straight over the wallpaper (transparent background — no
+	 * dark "box" halo), with a soft dark drop shadow so it stays legible over a
+	 * bright photo.  Used for the clock, which sits on the bare desktop. */
+	void draw_text_over_bg(ogScalableFont &f, int x, int y, const char *s, uint32_t fg)
+	{
+		f.SetBGColor(0, 0, 0, 0); /* transparent → blend over the actual pixels */
+		f.SetFGColor(0, 0, 0, 255);
+		f.PutString(surf_, x + 1, y + 2, s); /* drop shadow */
+		f.PutString(surf_, x + 2, y + 2, s);
+		f.SetFGColor((fg >> 16) & 0xFF, (fg >> 8) & 0xFF, fg & 0xFF, 255);
+		f.PutString(surf_, x, y, s); /* the text itself */
+	}
+
+	/* macOS/Win11-style clock: a big time over a smaller date, in the bottom-right
+	 * corner, right-aligned.  Composited over the wallpaper (no box) with a drop
+	 * shadow.  Redrawn each idle tick. */
+	void draw_clock()
+	{
+		time_t t = (time_t)gettime();
+		struct tm *lt = localtime(&t);
+		if (lt == nullptr)
+			return;
+		char tstr[16], dstr[64];
+		std::strftime(tstr, sizeof(tstr), "%H:%M", lt);
+		std::strftime(dstr, sizeof(dstr), "%A, %B %d", lt);
+
+		ogScalableFont &tf = have_clock_ ? clockfont_ : (have_title_ ? title_ : font_);
+		int th = (int)tf.GetHeight();
+		int dh = (int)font_.GetHeight();
+		int tw = (int)tf.TextWidth(tstr);
+		int dw = (int)font_.TextWidth(dstr);
+
+		const int margin = 34;
+		const int gap = 4;
+		int by = sh_ - margin - (th + gap + dh); /* top of the time line */
+		draw_text_over_bg(tf, sw_ - margin - tw, by, tstr, TEXT_COLOR);
+		draw_text_over_bg(font_, sw_ - margin - dw, by + th + gap, dstr, TEXT_COLOR);
+	}
+
 	void layout()
 	{
 		int fh = (int)font_.GetHeight();
 		int title_fh = have_title_ ? (int)title_.GetHeight() : fh;
 
 		const int pad = 28;       /* card inner padding (fixed px, not glyph-derived) */
-		const int label_gap = 6;  /* label baseline → its field box */
 		const int block_gap = 16; /* one field block → the next */
 		field_h_ = fh + 16;       /* roomier input box */
 
@@ -187,15 +247,11 @@ class LoginUI
 		int title_o = y;
 		y += title_fh + 10;
 		int sub_o = y;
-		y += fh + 10;
+		y += fh + 14;
 		int div_o = y;
-		y += 16;
-		int ul_o = y;
-		y += fh + label_gap;
+		y += 18;
 		int uf_o = y;
 		y += field_h_ + block_gap;
-		int pl_o = y;
-		y += fh + label_gap;
 		int pf_o = y;
 		y += field_h_ + block_gap;
 		int msg_o = y;
@@ -217,17 +273,16 @@ class LoginUI
 		title_y_ = py_ + title_o;
 		sub_y_ = py_ + sub_o;
 		div_y_ = py_ + div_o;
-		user_label_y_ = py_ + ul_o;
 		user_field_y_ = py_ + uf_o;
-		pass_label_y_ = py_ + pl_o;
 		pass_field_y_ = py_ + pf_o;
 		msg_y_ = py_ + msg_o;
 	}
 
 	void draw(const std::string &user, const std::string &pass, bool in_pass, const std::string &err, bool caret_on)
 	{
-		/* Background (desktop wallpaper, or solid fallback) */
+		/* Background (desktop wallpaper, or solid fallback) + the lock-screen clock. */
 		draw_background();
+		draw_clock();
 
 		/* Soft drop shadow, then the rounded card and its hairline border —
 		 * all shared objGFX primitives (ogDropShadow / ogFillRoundRect /
@@ -262,10 +317,10 @@ class LoginUI
 		put_centered_f(font_, sub_y_, "Sign in", LABEL_COLOR, CARD_COLOR);
 		surf_.ogHLine(fbx_, fbx_ + fbw_, div_y_, DIVIDER_COLOR);
 
-		/* Fields */
-		draw_field("Username", user, !in_pass, user_label_y_, user_field_y_, caret_on);
+		/* Fields (inline placeholders — no stacked labels) */
+		draw_field("Username", user, !in_pass, user_field_y_, caret_on);
 		std::string masked(pass.size(), '*');
-		draw_field("Password", masked, in_pass, pass_label_y_, pass_field_y_, caret_on);
+		draw_field("Password", masked, in_pass, pass_field_y_, caret_on);
 
 		/* Error / hint */
 		if (!err.empty())
@@ -283,14 +338,13 @@ class LoginUI
       private:
 	/* Draw one labelled text field: muted label, an inset box (lit when focused
 	 * with an accent underline + caret), and the value text centred in the box. */
-	void draw_field(
-	    const char *label, const std::string &text, bool focused, int label_y, int field_y, bool caret_on)
+	/* One rounded input field with an inline placeholder: the muted @placeholder
+	 * shows inside the empty box (no stacked label), replaced by @value once the
+	 * user types.  Focused fields get an accent ring + blinking caret. */
+	void draw_field(const char *placeholder, const std::string &value, bool focused, int field_y, bool caret_on)
 	{
 		int fh = (int)font_.GetHeight();
 		const int r = 8; /* field corner radius — echoes the rounded card */
-
-		set_text(LABEL_COLOR, CARD_COLOR);
-		font_.PutString(surf_, fbx_, label_y, label);
 
 		uint32_t fill = focused ? FIELD_FOCUS : FIELD_BG;
 		surf_.ogFillRoundRect(fbx_, field_y, fbx_ + fbw_, field_y + field_h_, r, fill);
@@ -301,13 +355,22 @@ class LoginUI
 
 		int tx = fbx_ + 14;
 		int ty = field_y + (field_h_ - fh) / 2;
-		set_text(TEXT_COLOR, fill);
-		font_.PutString(surf_, tx, ty, text.c_str());
+		if (value.empty())
+		{
+			set_text(HINT_COLOR, fill); /* grey placeholder */
+			font_.PutString(surf_, tx, ty, placeholder);
+		}
+		else
+		{
+			set_text(TEXT_COLOR, fill);
+			font_.PutString(surf_, tx, ty, value.c_str());
+		}
 
 		if (focused && caret_on)
 		{
-			/* Proportional font: the caret sits after the measured text width. */
-			int cx = tx + (int)font_.TextWidth(text.c_str());
+			/* Proportional font: caret after the measured value width (at the
+			 * field start when empty, so it sits over the placeholder). */
+			int cx = tx + (value.empty() ? 0 : (int)font_.TextWidth(value.c_str()));
 			surf_.ogFillRect(cx + 1, ty + 2, cx + 2, ty + fh - 2, ACCENT_COLOR);
 		}
 	}
