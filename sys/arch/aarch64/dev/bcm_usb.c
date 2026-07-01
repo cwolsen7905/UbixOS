@@ -452,9 +452,96 @@ static int usb_control_data(u_int32_t devaddr, u_int32_t mps, int in, void *data
 }
 
 /**
+ * M7.2: enumerate the device currently at address 0 (just after a hub port reset),
+ * assign it @newaddr, and report VID/PID/class.  @return the class, or -1.
+ */
+static int usb_enum_at0(u_int32_t newaddr)
+{
+	u_int32_t mps0 = 8;
+	u_int16_t vid, pid;
+	u_int8_t cls;
+
+	if (usb_control(0, mps0, 0x80, 6, (1 << 8) | 0, 0, 8, g_data) != 0)
+		return (-1);
+	mps0 = g_data[7];
+	if (mps0 == 0)
+		mps0 = 8;
+	if (usb_control(0, mps0, 0x00, 5, newaddr, 0, 0, 0) != 0)
+		return (-1);
+	usb_wait_us(20000);
+	if (usb_control(newaddr, mps0, 0x80, 6, (1 << 8) | 0, 0, 18, g_data) != 0)
+		return (-1);
+	vid = (u_int16_t)(g_data[8] | (g_data[9] << 8));
+	pid = (u_int16_t)(g_data[10] | (g_data[11] << 8));
+	cls = g_data[4];
+	kprintf("usb:   downstream addr %u: VID=0x%X PID=0x%X class=%u%s\n",
+	        newaddr,
+	        vid,
+	        pid,
+	        cls,
+	        (vid == 0x0424) ? " (SMSC LAN9514 Ethernet)" : "");
+	return (cls);
+}
+
+/**
+ * M7.2: walk the hub at @hubaddr (mps @mps) — SET_CONFIGURATION, read the hub
+ * descriptor for the port count, power every port, then reset + enumerate each
+ * connected downstream device.  The LAN9514's internal Ethernet is a high-speed
+ * downstream device (no split transactions needed); external LS/FS devices need
+ * split transactions (a later milestone) and will fail to enumerate here for now.
+ */
+static void usb_hub_walk(u_int32_t hubaddr, u_int32_t mps)
+{
+	u_int32_t nports, p, next = 2;
+
+	if (usb_control(hubaddr, mps, 0x00, 9, 1, 0, 0, 0) != 0) /* SET_CONFIGURATION(1) */
+	{
+		kprintf("usb: hub SET_CONFIGURATION failed\n");
+		return;
+	}
+	/* Class GET_DESCRIPTOR, type 0x29 (hub); bNbrPorts is byte 2. */
+	if (usb_control(hubaddr, mps, 0xA0, 6, (0x29 << 8), 0, 8, g_data) != 0)
+	{
+		kprintf("usb: hub descriptor read failed\n");
+		return;
+	}
+	nports = g_data[2];
+	kprintf("usb: hub has %u ports; powering + walking\n", nports);
+
+	for (p = 1; p <= nports; p++) /* SET_FEATURE PORT_POWER (8) on each port */
+		(void)usb_control(hubaddr, mps, 0x23, 3, 8, p, 0, 0);
+	usb_wait_us(100000); /* power-good settle */
+
+	for (p = 1; p <= nports; p++)
+	{
+		u_int16_t st;
+
+		if (usb_control(hubaddr, mps, 0xA3, 0, 0, p, 4, g_data) != 0) /* GET port status */
+			continue;
+		st = (u_int16_t)(g_data[0] | (g_data[1] << 8));
+		if ((st & 0x1) == 0)
+			continue; /* nothing connected */
+
+		(void)usb_control(hubaddr, mps, 0x23, 3, 4, p, 0, 0); /* SET_FEATURE PORT_RESET (4) */
+		usb_wait_us(60000);
+		(void)usb_control(hubaddr, mps, 0x23, 1, 0x14, p, 0, 0); /* CLEAR_FEATURE C_PORT_RESET (20) */
+		usb_wait_us(20000);
+
+		if (usb_control(hubaddr, mps, 0xA3, 0, 0, p, 4, g_data) == 0)
+		{
+			st = (u_int16_t)(g_data[0] | (g_data[1] << 8));
+			g_root_lowspeed = (st & (1u << 9)) ? 1 : 0; /* bit9 = low-speed */
+		}
+		if (usb_enum_at0(next) >= 0)
+			next++;
+	}
+}
+
+/**
  * M7.1: enumerate the device on the root port — GET_DESCRIPTOR(device, 8) to learn
  * ep0's max packet size, SET_ADDRESS(1), then the full 18-byte device descriptor;
  * report vendor/product/class.  (On the Pi 3 this is the LAN9514 internal hub.)
+ * M7.2: if it is a hub, walk it to reach the downstream devices (the Ethernet).
  */
 int aarch64_usb_enumerate(void)
 {
@@ -495,6 +582,11 @@ int aarch64_usb_enumerate(void)
 	        cls,
 	        mps0,
 	        cls == 9 ? " (hub)" : "");
+
+	/* M7.2: if the root device is a hub (the LAN9514), walk it to reach the
+	 * downstream devices — including the internal SMSC Ethernet function. */
+	if (cls == 9)
+		usb_hub_walk(1, mps0);
 	return (0);
 }
 
