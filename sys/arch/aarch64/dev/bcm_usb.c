@@ -223,6 +223,7 @@ int aarch64_usb_init(void)
 /* Host channel n registers (0x500 + n*0x20). */
 #define HC_BASE(n) (0x500 + (n) * 0x20)
 #define HCCHAR(n) USB(HC_BASE(n) + 0x00)
+#define HCSPLT(n) USB(HC_BASE(n) + 0x04) /* split-transaction control (0 = no split) */
 #define HCINT(n) USB(HC_BASE(n) + 0x08)
 #define HCTSIZ(n) USB(HC_BASE(n) + 0x10)
 #define HCDMA(n) USB(HC_BASE(n) + 0x14)
@@ -331,7 +332,12 @@ static int usb_chan0(u_int32_t devaddr, int dir_in, u_int32_t mps, u_int32_t pid
 		u_int32_t xfer = dir_in ? (pktcnt * mps) : len;
 
 		usb_chan0_halt(); /* clean slate: disable the channel + clear interrupts */
+		/* Start order per FreeBSD dwc_otg: HCTSIZ, then HCSPLT (0 = no split — the
+		 * root device is a high-speed hub, so direct, not split, transactions), then
+		 * HCCHAR with CHENA.  HCSPLT must be written explicitly; a stale split bit
+		 * makes every transaction fail. */
 		HCTSIZ(0) = (xfer & 0x7FFFF) | (pktcnt << 19) | (pid << 29);
+		HCSPLT(0) = 0;
 		HCDMA(0) = (u_int32_t)AARCH64_PHYS_OF((uintptr_t)buf);
 		HCCHAR(0) = (mps & 0x7FF) | (0u << 11) /* ep0 */ | (dir_in ? HCCHAR_EPDIR_IN : 0) |
 		            (g_root_lowspeed ? HCCHAR_LSDEV : 0) | (EPTYP_CONTROL << 18) | HCCHAR_MCNT1 |
