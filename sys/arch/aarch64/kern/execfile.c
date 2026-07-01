@@ -232,6 +232,7 @@ static char *read_elf_file(const char *path, int *out_size)
 	sz = (int)fd->size;
 	if (sz <= 0 || sz > EXEC_MAX)
 	{
+		kprintf("read_elf_file(%s): bad size %d\n", path, sz);
 		fclose(fd);
 		return (NULL);
 	}
@@ -239,6 +240,7 @@ static char *read_elf_file(const char *path, int *out_size)
 	buf = (char *)kmalloc((u_int32_t)sz);
 	if (buf == NULL)
 	{
+		kprintf("read_elf_file(%s): kmalloc(%d) failed\n", path, sz);
 		fclose(fd);
 		return (NULL);
 	}
@@ -246,6 +248,7 @@ static char *read_elf_file(const char *path, int *out_size)
 	fclose(fd);
 	if (n != sz)
 	{
+		kprintf("read_elf_file(%s): short read %d of %d\n", path, n, sz);
 		kfree(buf);
 		return (NULL);
 	}
@@ -626,7 +629,9 @@ static int copy_user_strvec(char *const *uvec, char **kvec, int max)
  * task, switches TTBR0, then aarch64_exec_to_el0()s into the new entry — which
  * does not return.  The old address space's user pages leak for now.
  *
- * @return -1 on any failure to load (on success it does not return).
+ * @return a negative errno on failure (on success it does not return): -ENOENT if
+ *         @path does not exist, -ENOEXEC if it exists but is not a loadable image,
+ *         -1 for an internal failure (e.g. arg region overflow).
  */
 int aarch64_exec_replace(const char *path, char *const *uargv, char *const *uenvp)
 {
@@ -653,6 +658,15 @@ int aarch64_exec_replace(const char *path, char *const *uargv, char *const *uenv
 	 * with i386 sys_exec.  Done here while kargv[] is still live (it is freed
 	 * below once the loader has copied it onto the new user stack). */
 	exec_set_name_cmdline(_current, namebuf, kargv, argc);
+
+	/* Distinguish a missing executable (-ENOENT) from an existing-but-unloadable
+	 * one (-ENOEXEC).  execve used to return a blanket -1 for every failure, which
+	 * musl decodes as errno 1 (EPERM, "Operation not permitted") — so running a
+	 * command that does not exist reported "Operation not permitted" instead of
+	 * "No such file or directory".  Probe existence before building the new address
+	 * space (also avoids the pmap/loader work when the path is simply wrong). */
+	if (!aarch64_file_exists(namebuf))
+		return (-ENOENT);
 
 	l1 = pmap_create_user_space();
 
@@ -692,7 +706,7 @@ int aarch64_exec_replace(const char *path, char *const *uargv, char *const *uenv
 		{
 			kfree(buf);
 			kprintf("execve: %s failed to load\n", path);
-			return (-1);
+			return (-ENOEXEC);
 		}
 		kfree(buf);
 	}
@@ -700,7 +714,7 @@ int aarch64_exec_replace(const char *path, char *const *uargv, char *const *uenv
 	{
 		vm_map_free(&newmap);
 		kprintf("execve: %s not loadable\n", path);
-		return (-1);
+		return (-ENOEXEC);
 	}
 	/* The argv/envp strings are now copied onto the new user stack; free the
 	 * kernel temporaries (but not namebuf, which is on our stack). */
