@@ -56,8 +56,13 @@
 /* Constants                                                            */
 /* ------------------------------------------------------------------ */
 
-#define FONT_PATH "/var/fonts/DejaVuSansMono.ttf"
-#define FONT_SIZE 14
+/* Clean sans UI face (was DejaVuSansMono — monospace read as "terminal/old").
+ * A larger bold face gives the "uBixOS" title real typographic hierarchy, the
+ * way macOS/Win11 sign-in screens do. */
+#define FONT_PATH "/var/fonts/DejaVuSans.ttf"
+#define FONT_SIZE 15
+#define TITLE_FONT_PATH "/var/fonts/DejaVuSans-Bold.ttf"
+#define TITLE_SIZE 26
 #define VIEWS_MBOX "views"
 #define TASKBAR_PATH "/usr/bin/taskbar"
 #define MAX_FIELD 31 /* max username / password length */
@@ -71,8 +76,10 @@ extern "C" int pidStatus(int pid);
 class LoginUI
 {
 	ogSurface &surf_;
-	ogScalableFont font_;
-	int sw_, sh_; /* screen width / height */
+	ogScalableFont font_;     /* body: labels, fields, hint (sans) */
+	ogScalableFont title_;    /* the "uBixOS" wordmark (larger, bold) */
+	bool have_title_ = false; /* title_ loaded (else fall back to font_) */
+	int sw_, sh_;             /* screen width / height */
 
 	std::vector<uint32_t> bg_; /* wallpaper stretched to the screen (32bpp) */
 	bool have_bg_ = false;
@@ -92,6 +99,7 @@ class LoginUI
 	explicit LoginUI(ogSurface &s, int sw, int sh) : surf_(s), sw_(sw), sh_(sh)
 	{
 		loaded = font_.Load(FONT_PATH, FONT_SIZE);
+		have_title_ = title_.Load(TITLE_FONT_PATH, TITLE_SIZE);
 		layout();
 		load_background();
 	}
@@ -155,25 +163,27 @@ class LoginUI
 
 	void layout()
 	{
-		int fw = (int)font_.GetWidth();
 		int fh = (int)font_.GetHeight();
+		int title_fh = have_title_ ? (int)title_.GetHeight() : fh;
 
-		const int pad = fh;               /* card inner padding */
-		const int label_gap = 4;          /* label baseline → its field box */
-		const int block_gap = fh / 2 + 4; /* one field block → the next */
-		field_h_ = fh + 12;               /* inset field box height */
+		const int pad = 28;       /* card inner padding (fixed px, not glyph-derived) */
+		const int label_gap = 6;  /* label baseline → its field box */
+		const int block_gap = 16; /* one field block → the next */
+		field_h_ = fh + 16;       /* roomier input box */
 
-		pw_ = 44 * fw;
+		/* Fixed pixel width — a proportional font has no single glyph width, and a
+		 * ~360 px card matches the macOS/Win11 sign-in proportion. */
+		pw_ = 360;
 
 		/* Stack the contents top-to-bottom, accumulating the card height; then
 		 * centre the card and convert the running offsets to absolute y. */
 		int y = pad;
 		int title_o = y;
-		y += fh + 8;
+		y += title_fh + 12;
 		int sub_o = y;
-		y += fh + 6;
+		y += fh + 10;
 		int div_o = y;
-		y += 10;
+		y += 16;
 		int ul_o = y;
 		y += fh + label_gap;
 		int uf_o = y;
@@ -208,8 +218,6 @@ class LoginUI
 
 	void draw(const std::string &user, const std::string &pass, bool in_pass, const std::string &err)
 	{
-		int fw = (int)font_.GetWidth();
-
 		/* Background (desktop wallpaper, or solid fallback) */
 		draw_background();
 
@@ -221,15 +229,15 @@ class LoginUI
 		surf_.ogFillRoundRect(px_, py_, px_ + pw_, py_ + ph_, radius, CARD_COLOR);
 		surf_.ogRoundRect(px_, py_, px_ + pw_, py_ + ph_, radius, CARD_BORDER);
 
-		/* Header: stylised product name + sign-in subtitle, both centred. */
-		put_centered(title_y_, "uBixOS", TEXT_COLOR, CARD_COLOR);
-		put_centered(sub_y_, "Sign in", LABEL_COLOR, CARD_COLOR);
+		/* Header: bold product wordmark + sign-in subtitle, both centred. */
+		put_centered_f(have_title_ ? title_ : font_, title_y_, "uBixOS", TEXT_COLOR, CARD_COLOR);
+		put_centered_f(font_, sub_y_, "Sign in", LABEL_COLOR, CARD_COLOR);
 		surf_.ogHLine(fbx_, fbx_ + fbw_, div_y_, DIVIDER_COLOR);
 
 		/* Fields */
-		draw_field("Username", user, !in_pass, user_label_y_, user_field_y_, fw);
+		draw_field("Username", user, !in_pass, user_label_y_, user_field_y_);
 		std::string masked(pass.size(), '*');
-		draw_field("Password", masked, in_pass, pass_label_y_, pass_field_y_, fw);
+		draw_field("Password", masked, in_pass, pass_label_y_, pass_field_y_);
 
 		/* Error / hint */
 		if (!err.empty())
@@ -247,37 +255,42 @@ class LoginUI
       private:
 	/* Draw one labelled text field: muted label, an inset box (lit when focused
 	 * with an accent underline + caret), and the value text centred in the box. */
-	void draw_field(const char *label, const std::string &text, bool focused, int label_y, int field_y, int fw)
+	void draw_field(const char *label, const std::string &text, bool focused, int label_y, int field_y)
 	{
 		int fh = (int)font_.GetHeight();
+		const int r = 8; /* field corner radius — echoes the rounded card */
 
 		set_text(LABEL_COLOR, CARD_COLOR);
 		font_.PutString(surf_, fbx_, label_y, label);
 
 		uint32_t fill = focused ? FIELD_FOCUS : FIELD_BG;
-		surf_.ogFillRect(fbx_, field_y, fbx_ + fbw_, field_y + field_h_, fill);
-		if (focused)
-			surf_.ogFillRect(fbx_, field_y + field_h_ - 2, fbx_ + fbw_, field_y + field_h_, ACCENT_COLOR);
-		else
-			surf_.ogHLine(fbx_, fbx_ + fbw_, field_y + field_h_, CARD_BORDER);
+		surf_.ogFillRoundRect(fbx_, field_y, fbx_ + fbw_, field_y + field_h_, r, fill);
+		/* Focused: an accent ring around the whole field; idle: a hairline in the
+		 * card-border colour (a rounded box, not a bottom bar — cleaner + modern). */
+		surf_.ogRoundRect(
+		    fbx_, field_y, fbx_ + fbw_, field_y + field_h_, r, focused ? ACCENT_COLOR : CARD_BORDER);
 
-		int tx = fbx_ + 10;
+		int tx = fbx_ + 14;
 		int ty = field_y + (field_h_ - fh) / 2;
 		set_text(TEXT_COLOR, fill);
 		font_.PutString(surf_, tx, ty, text.c_str());
 
 		if (focused)
 		{
-			int cx = tx + (int)text.size() * fw;
+			/* Proportional font: the caret sits after the measured text width. */
+			int cx = tx + (int)font_.TextWidth(text.c_str());
 			surf_.ogFillRect(cx + 1, ty + 2, cx + 2, ty + fh - 2, ACCENT_COLOR);
 		}
 	}
 
-	void put_centered(int y, const char *s, uint32_t fg, uint32_t bg)
+	/* Centre a string on the card using the given font's measured pixel width
+	 * (proportional-safe — no fixed glyph-width assumption). */
+	void put_centered_f(ogScalableFont &f, int y, const char *s, uint32_t fg, uint32_t bg)
 	{
-		int tw = (int)std::strlen(s) * (int)font_.GetWidth();
-		set_text(fg, bg);
-		font_.PutString(surf_, px_ + (pw_ - tw) / 2, y, s);
+		int tw = (int)f.TextWidth(s);
+		f.SetFGColor((fg >> 16) & 0xFF, (fg >> 8) & 0xFF, fg & 0xFF, 255);
+		f.SetBGColor((bg >> 16) & 0xFF, (bg >> 8) & 0xFF, bg & 0xFF, 255);
+		f.PutString(surf_, px_ + (pw_ - tw) / 2, y, s);
 	}
 
 	void set_text(uint32_t fg, uint32_t bg)
