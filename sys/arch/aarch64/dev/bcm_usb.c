@@ -86,7 +86,9 @@
 #define HPRT_WC (HPRT_PCDET | HPRT_PENA | HPRT_PENCHNG)
 
 static volatile u_int32_t g_usb_mbox[36] __attribute__((aligned(16)));
-static int g_root_lowspeed; /* root device negotiated low-speed (set in usb_init) */
+static int g_root_lowspeed;      /* root device negotiated low-speed (set in usb_init) */
+static u_int32_t g_smsc_addr;    /* USB address of the SMSC LAN9514 Ethernet (0 = not found) */
+static u_int32_t g_smsc_mps0;    /* its ep0 max packet size */
 
 /* M7.1 forward declarations (definitions follow aarch64_usb_init). */
 static int usb_control_data(u_int32_t devaddr, u_int32_t mps, int in, void *data, u_int32_t len);
@@ -480,6 +482,11 @@ static int usb_enum_at0(u_int32_t newaddr)
 	        pid,
 	        cls,
 	        (vid == 0x0424) ? " (SMSC LAN9514 Ethernet)" : "");
+	if (vid == 0x0424 && pid == 0xEC00) /* the LAN9514 Ethernet function */
+	{
+		g_smsc_addr = newaddr;
+		g_smsc_mps0 = mps0;
+	}
 	return (cls);
 }
 
@@ -537,6 +544,70 @@ static void usb_hub_walk(u_int32_t hubaddr, u_int32_t mps)
 	}
 }
 
+/* --- M7.4: SMSC LAN9514 Ethernet (registers via vendor control requests) --- */
+
+#define SMSC_UR_WRITE_REG 0xA0
+#define SMSC_UR_READ_REG 0xA1
+#define SMSC_ID_REV 0x000
+#define SMSC_MAC_CSR 0x100
+#define SMSC_MAC_ADDRH 0x104
+#define SMSC_MAC_ADDRL 0x108
+
+/** Read a 32-bit SMSC register @off (vendor control-IN).  @return 0 on success. */
+static int smsc_read_reg(u_int32_t off, u_int32_t *val)
+{
+	if (usb_control(g_smsc_addr, g_smsc_mps0, 0xC0, SMSC_UR_READ_REG, 0, (u_int16_t)off, 4, g_data) != 0)
+		return (-1);
+	*val = (u_int32_t)g_data[0] | ((u_int32_t)g_data[1] << 8) | ((u_int32_t)g_data[2] << 16) |
+	       ((u_int32_t)g_data[3] << 24);
+	return (0);
+}
+
+/** Write a 32-bit SMSC register @off (vendor control-OUT).  @return 0 on success. */
+static int smsc_write_reg(u_int32_t off, u_int32_t val)
+{
+	g_data[0] = (u_int8_t)val;
+	g_data[1] = (u_int8_t)(val >> 8);
+	g_data[2] = (u_int8_t)(val >> 16);
+	g_data[3] = (u_int8_t)(val >> 24);
+	return (usb_control(g_smsc_addr, g_smsc_mps0, 0x40, SMSC_UR_WRITE_REG, 0, (u_int16_t)off, 4, g_data));
+}
+
+/**
+ * M7.4 (first step): prove register access to the SMSC LAN9514 — read the chip
+ * ID/revision and the MAC address over vendor control requests.  Bulk data path
+ * (config/endpoints, TX/RX framing, lwIP bridge) is the next step.
+ *
+ * @return 0 on success, -1 if the device isn't present or ID read fails.
+ */
+int aarch64_usb_smsc_probe(void)
+{
+	u_int32_t id, macl = 0, mach = 0;
+
+	if (g_smsc_addr == 0)
+	{
+		kprintf("smsc: no LAN9514 Ethernet device enumerated\n");
+		return (-1);
+	}
+	(void)smsc_write_reg; /* used by the init sequence in the next step */
+	if (smsc_read_reg(SMSC_ID_REV, &id) != 0)
+	{
+		kprintf("smsc: ID_REV read failed\n");
+		return (-1);
+	}
+	(void)smsc_read_reg(SMSC_MAC_ADDRL, &macl);
+	(void)smsc_read_reg(SMSC_MAC_ADDRH, &mach);
+	kprintf("smsc: LAN9514 ID_REV=0x%X, MAC %X:%X:%X:%X:%X:%X\n",
+	        id,
+	        macl & 0xFF,
+	        (macl >> 8) & 0xFF,
+	        (macl >> 16) & 0xFF,
+	        (macl >> 24) & 0xFF,
+	        mach & 0xFF,
+	        (mach >> 8) & 0xFF);
+	return (0);
+}
+
 /**
  * M7.1: enumerate the device on the root port — GET_DESCRIPTOR(device, 8) to learn
  * ep0's max packet size, SET_ADDRESS(1), then the full 18-byte device descriptor;
@@ -587,6 +658,10 @@ int aarch64_usb_enumerate(void)
 	 * downstream devices — including the internal SMSC Ethernet function. */
 	if (cls == 9)
 		usb_hub_walk(1, mps0);
+
+	/* M7.4: probe the SMSC Ethernet's registers if we reached it. */
+	if (g_smsc_addr != 0)
+		aarch64_usb_smsc_probe();
 	return (0);
 }
 
