@@ -326,7 +326,7 @@ static int usb_chan0(u_int32_t devaddr, int dir_in, u_int32_t mps, u_int32_t pid
 	if (pktcnt == 0)
 		pktcnt = 1;
 
-	for (tries = 0; tries < 10; tries++)
+	for (tries = 0; tries < 4; tries++) /* capped: a control xfer completes fast or not at all */
 	{
 		u_int32_t s = 0;
 		u_int32_t received = 0;
@@ -352,8 +352,8 @@ static int usb_chan0(u_int32_t devaddr, int dir_in, u_int32_t mps, u_int32_t pid
 		}
 
 		/* Poll: drain RX-FIFO IN packets first (must pop GRXSTSP or the FIFO wedges),
-		 * then watch HCINT for completion/error. */
-		for (i = 0; i < 500000; i++)
+		 * then watch HCINT for completion/error.  ~150 ms cap per attempt. */
+		for (i = 0; i < 150000; i++)
 		{
 			if (dir_in && (USB(GINTSTS) & GINTSTS_RXFLVL) != 0)
 			{
@@ -573,10 +573,83 @@ static int smsc_write_reg(u_int32_t off, u_int32_t val)
 	return (usb_control(g_smsc_addr, g_smsc_mps0, 0x40, SMSC_UR_WRITE_REG, 0, (u_int16_t)off, 4, g_data));
 }
 
+/* The Pi's MAC lives in the VideoCore firmware (no EEPROM on the LAN9514), so read
+ * it from the property mailbox — GET_BOARD_MAC_ADDRESS returns 6 bytes. */
+u_int8_t smsc_mac[6];
+
+/** A MAC is usable if it is unicast (bit0 of octet0 clear), not all-zero, not all-FF. */
+static int mac_is_valid(const u_int8_t m[6])
+{
+	int i, all0 = 1, allf = 1;
+
+	for (i = 0; i < 6; i++)
+	{
+		if (m[i] != 0x00)
+			all0 = 0;
+		if (m[i] != 0xFF)
+			allf = 0;
+	}
+	return (!all0 && !allf && (m[0] & 0x01) == 0);
+}
+
+/** Read a mailbox property tag returning up to 2 words into g_usb_mbox[5],[6]. */
+static int usb_mbox_get2(u_int32_t tag)
+{
+	g_usb_mbox[0] = 8 * 4;
+	g_usb_mbox[1] = 0;
+	g_usb_mbox[2] = tag;
+	g_usb_mbox[3] = 8;
+	g_usb_mbox[4] = 0;
+	g_usb_mbox[5] = 0;
+	g_usb_mbox[6] = 0;
+	g_usb_mbox[7] = 0;
+	return (aarch64_mbox_prop(g_usb_mbox));
+}
+
 /**
- * M7.4 (first step): prove register access to the SMSC LAN9514 — read the chip
- * ID/revision and the MAC address over vendor control requests.  Bulk data path
- * (config/endpoints, TX/RX framing, lwIP bridge) is the next step.
+ * Pick a valid MAC into smsc_mac: prefer the board's real MAC (VideoCore mailbox);
+ * else synthesize a stable locally-administered MAC (0x02-prefixed, unicast) derived
+ * from the board serial; else a fixed fallback.  uBixOS always ends up with a
+ * usable MAC even when the firmware / chip has none.
+ */
+static void usb_pick_mac(void)
+{
+	/* 1) the board's assigned MAC (GET_BOARD_MAC_ADDRESS). */
+	if (usb_mbox_get2(0x00010003) == 0)
+	{
+		smsc_mac[0] = (u_int8_t)g_usb_mbox[5];
+		smsc_mac[1] = (u_int8_t)(g_usb_mbox[5] >> 8);
+		smsc_mac[2] = (u_int8_t)(g_usb_mbox[5] >> 16);
+		smsc_mac[3] = (u_int8_t)(g_usb_mbox[5] >> 24);
+		smsc_mac[4] = (u_int8_t)g_usb_mbox[6];
+		smsc_mac[5] = (u_int8_t)(g_usb_mbox[6] >> 8);
+		if (mac_is_valid(smsc_mac))
+			return;
+	}
+	/* 2) a stable locally-administered MAC (02:...) from the board serial. */
+	if (usb_mbox_get2(0x00010004) == 0 && (g_usb_mbox[5] | g_usb_mbox[6]) != 0)
+	{
+		smsc_mac[0] = 0x02; /* locally administered, unicast */
+		smsc_mac[1] = (u_int8_t)(g_usb_mbox[6]);
+		smsc_mac[2] = (u_int8_t)(g_usb_mbox[5] >> 24);
+		smsc_mac[3] = (u_int8_t)(g_usb_mbox[5] >> 16);
+		smsc_mac[4] = (u_int8_t)(g_usb_mbox[5] >> 8);
+		smsc_mac[5] = (u_int8_t)(g_usb_mbox[5]);
+		return;
+	}
+	/* 3) fixed fallback. */
+	smsc_mac[0] = 0x02;
+	smsc_mac[1] = 0x55;
+	smsc_mac[2] = 0x42;
+	smsc_mac[3] = 0x00;
+	smsc_mac[4] = 0x00;
+	smsc_mac[5] = 0x01;
+}
+
+/**
+ * M7.4 (step 1+): SET_CONFIGURATION on the SMSC LAN9514, read the chip ID/revision,
+ * and obtain the MAC (from the chip registers if programmed, else the VideoCore
+ * mailbox).  Bulk data path (endpoints, TX/RX framing, lwIP bridge) is next.
  *
  * @return 0 on success, -1 if the device isn't present or ID read fails.
  */
@@ -590,21 +663,51 @@ int aarch64_usb_smsc_probe(void)
 		return (-1);
 	}
 	(void)smsc_write_reg; /* used by the init sequence in the next step */
+
+	/* Configure the device before register access (it is enumerated but not yet
+	 * configured — vendor register reads can STALL until SET_CONFIGURATION). */
+	if (usb_control(g_smsc_addr, g_smsc_mps0, 0x00, 9, 1, 0, 0, 0) != 0)
+		kprintf("smsc: SET_CONFIGURATION failed\n");
+	usb_wait_us(5000);
+
 	if (smsc_read_reg(SMSC_ID_REV, &id) != 0)
 	{
 		kprintf("smsc: ID_REV read failed\n");
 		return (-1);
 	}
+	kprintf("smsc: LAN9514 ID_REV=0x%X\n", id);
+
 	(void)smsc_read_reg(SMSC_MAC_ADDRL, &macl);
 	(void)smsc_read_reg(SMSC_MAC_ADDRH, &mach);
-	kprintf("smsc: LAN9514 ID_REV=0x%X, MAC %X:%X:%X:%X:%X:%X\n",
-	        id,
-	        macl & 0xFF,
-	        (macl >> 8) & 0xFF,
-	        (macl >> 16) & 0xFF,
-	        (macl >> 24) & 0xFF,
-	        mach & 0xFF,
-	        (mach >> 8) & 0xFF);
+	/* A programmed MAC is neither all-zero (never set) nor all-ones (erased flash /
+	 * no EEPROM — the Pi case).  Otherwise fall back to the VideoCore mailbox. */
+	if (macl != 0 && macl != 0xFFFFFFFF)
+	{
+		smsc_mac[0] = (u_int8_t)macl;
+		smsc_mac[1] = (u_int8_t)(macl >> 8);
+		smsc_mac[2] = (u_int8_t)(macl >> 16);
+		smsc_mac[3] = (u_int8_t)(macl >> 24);
+		smsc_mac[4] = (u_int8_t)mach;
+		smsc_mac[5] = (u_int8_t)(mach >> 8);
+		kprintf("smsc: MAC (chip regs) %X:%X:%X:%X:%X:%X\n",
+		        smsc_mac[0],
+		        smsc_mac[1],
+		        smsc_mac[2],
+		        smsc_mac[3],
+		        smsc_mac[4],
+		        smsc_mac[5]);
+	}
+	else
+	{
+		usb_pick_mac(); /* mailbox → serial-derived LA MAC → fixed; always valid */
+		kprintf("smsc: MAC %X:%X:%X:%X:%X:%X\n",
+		        smsc_mac[0],
+		        smsc_mac[1],
+		        smsc_mac[2],
+		        smsc_mac[3],
+		        smsc_mac[4],
+		        smsc_mac[5]);
+	}
 	return (0);
 }
 
