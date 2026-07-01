@@ -17,6 +17,7 @@
 #include <cstring>
 #include <cstdio>
 #include <cstdlib>
+#include <cctype>
 
 #include <unistd.h>
 #include <sched.h>
@@ -85,9 +86,10 @@ class LoginUI
 	bool have_bg_ = false;
 
 	/* card + field geometry (computed in layout()) */
-	int px_, py_, pw_, ph_; /* card rect */
-	int fbx_, fbw_;         /* field-box x and width (shared by both fields) */
-	int field_h_;           /* field-box height */
+	int px_, py_, pw_, ph_;               /* card rect */
+	int fbx_, fbw_;                       /* field-box x and width (shared by both fields) */
+	int field_h_;                         /* field-box height */
+	int avatar_cx_, avatar_y_, avatar_d_; /* round monogram avatar */
 	int title_y_, sub_y_, div_y_;
 	int user_label_y_, user_field_y_;
 	int pass_label_y_, pass_field_y_;
@@ -175,11 +177,15 @@ class LoginUI
 		 * ~360 px card matches the macOS/Win11 sign-in proportion. */
 		pw_ = 360;
 
+		avatar_d_ = 60; /* round monogram avatar diameter */
+
 		/* Stack the contents top-to-bottom, accumulating the card height; then
 		 * centre the card and convert the running offsets to absolute y. */
 		int y = pad;
+		int avatar_o = y;
+		y += avatar_d_ + 14;
 		int title_o = y;
-		y += title_fh + 12;
+		y += title_fh + 10;
 		int sub_o = y;
 		y += fh + 10;
 		int div_o = y;
@@ -206,6 +212,8 @@ class LoginUI
 		fbx_ = px_ + pad;
 		fbw_ = pw_ - 2 * pad;
 
+		avatar_cx_ = px_ + pw_ / 2;
+		avatar_y_ = py_ + avatar_o;
 		title_y_ = py_ + title_o;
 		sub_y_ = py_ + sub_o;
 		div_y_ = py_ + div_o;
@@ -216,7 +224,7 @@ class LoginUI
 		msg_y_ = py_ + msg_o;
 	}
 
-	void draw(const std::string &user, const std::string &pass, bool in_pass, const std::string &err)
+	void draw(const std::string &user, const std::string &pass, bool in_pass, const std::string &err, bool caret_on)
 	{
 		/* Background (desktop wallpaper, or solid fallback) */
 		draw_background();
@@ -229,15 +237,35 @@ class LoginUI
 		surf_.ogFillRoundRect(px_, py_, px_ + pw_, py_ + ph_, radius, CARD_COLOR);
 		surf_.ogRoundRect(px_, py_, px_ + pw_, py_ + ph_, radius, CARD_BORDER);
 
+		/* Round monogram avatar — a rounded-rect with a full-corner radius (a smooth
+		 * AA "squircle", avoiding the aliased ogFillCircle), tinted with the accent
+		 * and carrying the typed username's initial (macOS/Win11 sign-in cue). */
+		{
+			int ax = avatar_cx_ - avatar_d_ / 2;
+			surf_.ogFillRoundRect(
+			    ax, avatar_y_, ax + avatar_d_, avatar_y_ + avatar_d_, avatar_d_ / 2, ACCENT_COLOR);
+			if (!user.empty())
+			{
+				ogScalableFont &mf = have_title_ ? title_ : font_;
+				char mono[2] = {(char)std::toupper((unsigned char)user[0]), 0};
+				int mw = (int)mf.TextWidth(mono);
+				int mh = (int)mf.GetHeight();
+				mf.SetFGColor(0xFF, 0xFF, 0xFF, 255);
+				mf.SetBGColor(
+				    (ACCENT_COLOR >> 16) & 0xFF, (ACCENT_COLOR >> 8) & 0xFF, ACCENT_COLOR & 0xFF, 255);
+				mf.PutString(surf_, avatar_cx_ - mw / 2, avatar_y_ + (avatar_d_ - mh) / 2, mono);
+			}
+		}
+
 		/* Header: bold product wordmark + sign-in subtitle, both centred. */
 		put_centered_f(have_title_ ? title_ : font_, title_y_, "uBixOS", TEXT_COLOR, CARD_COLOR);
 		put_centered_f(font_, sub_y_, "Sign in", LABEL_COLOR, CARD_COLOR);
 		surf_.ogHLine(fbx_, fbx_ + fbw_, div_y_, DIVIDER_COLOR);
 
 		/* Fields */
-		draw_field("Username", user, !in_pass, user_label_y_, user_field_y_);
+		draw_field("Username", user, !in_pass, user_label_y_, user_field_y_, caret_on);
 		std::string masked(pass.size(), '*');
-		draw_field("Password", masked, in_pass, pass_label_y_, pass_field_y_);
+		draw_field("Password", masked, in_pass, pass_label_y_, pass_field_y_, caret_on);
 
 		/* Error / hint */
 		if (!err.empty())
@@ -255,7 +283,8 @@ class LoginUI
       private:
 	/* Draw one labelled text field: muted label, an inset box (lit when focused
 	 * with an accent underline + caret), and the value text centred in the box. */
-	void draw_field(const char *label, const std::string &text, bool focused, int label_y, int field_y)
+	void draw_field(
+	    const char *label, const std::string &text, bool focused, int label_y, int field_y, bool caret_on)
 	{
 		int fh = (int)font_.GetHeight();
 		const int r = 8; /* field corner radius — echoes the rounded card */
@@ -275,7 +304,7 @@ class LoginUI
 		set_text(TEXT_COLOR, fill);
 		font_.PutString(surf_, tx, ty, text.c_str());
 
-		if (focused)
+		if (focused && caret_on)
 		{
 			/* Proportional font: the caret sits after the measured text width. */
 			int cx = tx + (int)font_.TextWidth(text.c_str());
@@ -599,16 +628,21 @@ int main(int argc, char **argv)
 		};
 
 		reset();
-		ui.draw(username, password, in_pass, errmsg);
+		unsigned blink = 1; /* caret visibility, toggled on each idle tick */
+		ui.draw(username, password, in_pass, errmsg, blink != 0);
 		flip();
 
 		/* ---- Inner login loop ------------------------------------- */
 		for (;;)
 		{
 			mpi_message_t ev;
-			if (!mbox.try_fetch(ev))
+			/* Block up to ~250 ms for input; on timeout, blink the caret (and,
+			 * later, tick a clock) rather than busy-spinning on yield(). */
+			if (!mbox.wait(ev, 25))
 			{
-				ubix::yield();
+				blink ^= 1u;
+				ui.draw(username, password, in_pass, errmsg, blink != 0);
+				flip();
 				continue;
 			}
 
@@ -638,7 +672,7 @@ int main(int argc, char **argv)
 				}
 				else
 				{
-					ui.draw(username, password, in_pass, "Authenticating...");
+					ui.draw(username, password, in_pass, "Authenticating...", false);
 					flip();
 
 					session_resp = do_auth(auth_mbox, username, password);
@@ -669,7 +703,8 @@ int main(int argc, char **argv)
 					field += (char)kc;
 			}
 
-			ui.draw(username, password, in_pass, errmsg);
+			blink = 1; /* show the caret immediately after a keystroke */
+			ui.draw(username, password, in_pass, errmsg, blink != 0);
 			flip();
 		}
 
