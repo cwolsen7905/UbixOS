@@ -100,25 +100,104 @@ PL011 on the 40-pin GPIO header (USB ports are USB/data, not serial):
   also sets `CNTHCTL_EL2` so EL1 can use the physical timer. Retires M1's
   highest-risk unknown — the interrupt controller (`gic.c` does NOT transfer) — and
   it's the engine the scheduler runs on.
-- **M1 — Full kernel to serial.** EL2→EL1 drop, the BCM interrupt controller, and
-  the architected timer are all ✅ **proven standalone** (M0.5/M0.75). The remaining
-  work is **integrating the real kernel**: the RAM-at-`0x0` link/physmap (build on
-  the in-progress higher-half migration — parameterize the physmap base) + a Pi
-  board target (port the proven M0.75 device code: PL011 console, BCM IRQ
-  controller, timer) + PL011 as the kernel console. **Gated on the higher-half
-  work landing.**
+- **M1 — Full kernel to a login shell. ✅ CONFIRMED ON REAL HARDWARE (2026-06-27)
+  — uBixOS's first boot to userland on real ARM silicon.** The full kernel boots a
+  Raspberry Pi 3 Model B v1.2 over serial through a compile-time board abstraction
+  (`BOARD_RPI3`) to the embedded `init` → `login` → shell (`root`/`user` → `#`).
+  Implemented as steps 1–5 (all committed): board struct + device bases (`g_board`),
+  interrupt-controller ops vtable (`struct aarch64_intc`), DTB-driven RAM base,
+  2 MB Pi physmap (RAM Normal + peripherals Device), EL2→EL1 drop, `board_rpi3` +
+  `bcm_intc` (routes CNTVIRQ), the Pi kernel build (`tools/build-rpi3-kernel.sh`
+  → flat `kernel8.img` @ `0x80000`). **Two higher-half bugs fixed via the Pi:** the
+  DTB must be read through the physmap (`AARCH64_VIRT_OF`) not a raw phys pointer,
+  and the static-exec initial stack (`build_user_image`) likewise. On HW: MPI +
+  pipe self-tests PASS, fault containment works (SIGSEGV kills just the faulter),
+  948 MB RAM, 4-core spin-table topology read from the DTB. **BSP-only, ramfs root
+  (no disk yet).** Build/flash: `bmake world TARGET=aarch64` →
+  `tools/build-rpi3-kernel.sh` → `tools/make-rpi3-sd.sh` → dd `build/rpi3b/
+  rpi3-sd.img`.
+  - *Known follow-ups (non-blocking):* the dynamic-linker self-test shows `bad
+    magic` (the Pi build's dynamic embeds — `hello_dyn`/`ld-musl`/`cat` — are stubs;
+    the world-copy in `build-rpi3-kernel.sh` misses them); `smp: released 3 APs` is
+    cosmetic (the APs aren't actually started on the Pi — gate
+    `aarch64_smp_release_aps` for `BOARD_RPI3`); the boot banner still says "QEMU
+    virt".
 - **M2 — DTB.** Parse the firmware-supplied DTB (memory size, the peripheral base
   — so the same kernel can target Pi 3 vs QEMU vs H618 by DTB).
 - **M3 — SMP.** Start cores 1–3 via the **spin-table** release addresses; per-core
   timers + IPIs via the local controller; the verified scheduler.
-- **M4 — Root storage.** *Shortcut first:* embedded initramfs to a shell fast.
-  *Then* the **sdhci/EMMC** driver (`0x3F300000`) — **IRQ-driven** (real SD reads
-  take ms; sleep-on-IRQ, don't poll — see the disk-I/O note).
+- **M4 — Root storage. ✅ CONFIRMED ON REAL HARDWARE (2026-06-27) — the full OS
+  boots off the SD card.** The EMMC SD driver (`dev/bcm_sdhci.c`) inits a 4-bit SDHC
+  card, the MBR is parsed (`sd0sN`), and the UbixFS pool (type 0x9C) mounts
+  read-only as `/`, from which the full dynamic world boots (real `init` +
+  automountd/logd/ubistry/authd/netcfg + a login prompt). **The two HW gotchas:**
+  CMD55 must always read its R1 (was gated on rca → the first ACMD41 failed), and
+  the **EMMC base clock is 200 MHz** (read via the VideoCore property mailbox, not
+  the 41.66 MHz the divider assumed → CMD7 ran ~5× overspeed and timed out). SCR
+  read made non-fatal. Build/flash: `bmake world TARGET=aarch64` →
+  `tools/build-rpi3-kernel.sh` → `tools/make-rpi3-sd.sh` (reuses `ubixos-arm.img`'s
+  pool) → dd. *Follow-ups:* SD writes (CMD24/25 → RW pool), IRQ-driven completion,
+  the Pi device naming for automountd (`/dev/ad0s1` → `sd0`), dropbear "not
+  loadable". (Original M4 plan below.)
+- **M4 (original plan) — Root storage.** The ramfs shortcut shipped with M1; now the
+  real SD card. **Use the Arasan/EMMC SDHCI @ `0x3F300000`** (the bare-metal
+  standard: bztsrc/J.Cronin references) with **GPIO48–53 → ALT3** to route the
+  microSD to it (the Pi-3 default routes the card to the Broadcom SDHOST + the EMMC
+  to the WiFi SDIO; re-muxing puts the card on the standard SDHCI). Driver:
+  `dev/bcm_sdhci.c` (#ifdef BOARD_RPI3) — init (CMD0/8/ACMD41/2/3/7, 400 kHz→25 MHz
+  clock, SCR read, SDHC/CCS), `sd_readblock` (CMD17/18). Register it as a
+  `ubx_device` (mirror `virtio_blk.c`) → the MBR partition layer → mount the UbixFS
+  pool (type 0x9C). Also extend `make-rpi3-sd.sh` to add the pool partition (the
+  world) after the FAT boot partition — the x86_64 layout. **v1 polls** (boot-time
+  reads); IRQ-driven (sleep-on-IRQ) is the follow-up so runtime reads don't block
+  the scheduler.
 - **M5 — Userland over serial.** `init` → shell on the serial console = a usable
   headless uBixOS on real hardware.
-- **M6 — Display.** GPU **mailbox** (`0x3F00B880`) property interface to allocate a
-  framebuffer, then `views`. (The Pi's GPU owns the display; the ARM asks for an FB
-  over the mailbox — different from virtio-gpu but well-documented.)
+- **M6 — Display. ✅ CONFIRMED ON REAL HARDWARE (2026-06-28) — graphical desktop at
+  1080p.** The VideoCore property mailbox (`bcm_mbox.c`, channel 8) allocates a
+  1920×1080 32-bpp linear framebuffer (`bcm_fb.c`); fbcon draws to HDMI and `views`
+  composites the desktop. Key fix: the mailbox FB message **must include the
+  set-virtual-offset tag (0x48009)** — omitting it returned a degenerate
+  640×480/pitch=0 that faulted views. Present = `aarch64_fb_present()` (a dcache
+  clean of the continuously-scanned-out RAM, vs virtio's transfer+flush). config.txt
+  gets `hdmi_force_hotplug=1`. **DISPLAY-ONLY: non-interactive until USB HID (no
+  keyboard/mouse on the Pi without the USB host stack).**
+
+- **M7 — USB host (the linchpin for interactivity + networking).** The Synopsys
+  **DWC2** (dwc_otg) controller @ `0x3F980000` is the Pi 3's only external I/O bus.
+  It gates BOTH: **HID** (USB keyboard/mouse → drive the M6 desktop) and **Ethernet**
+  (the onboard NIC is a USB **LAN9514** hub+NIC). The single biggest remaining piece —
+  DWC2 is undocumented (custom, non-EHCI host interface), so this is a large,
+  multi-phase driver, built incrementally. References: Chadderz **CSUD** (the compact
+  teaching driver), **USPi**/Circle, U-Boot/Linux dwc2; `smsc95xx` for the LAN9514
+  (no firmware blob).
+
+  Phases (each flashed + serial-checked):
+  - **M7 STATUS (2026-06-30): M7.0 ✅ HW-confirmed; M7.1 WIP, BLOCKED.** Control-transfer
+    *reads* work (full LAN9514 descriptor read on HW); device *addressing* (SET_ADDRESS)
+    is unreliable. Four DWC2 gotchas solved (dc_clean leading dsb; FIFO sizing;
+    IN XferSize multiple-of-mps; zero-length-IN XferSize=mps for the token). The
+    remaining failure needs the controller's real state machine (microframe
+    scheduling, NAK/retry/halt accounting, IRQ-driven completion). **DECISION: pause
+    the hand-rolled driver; resume by porting a proven DWC2 driver (USPi/Circle or
+    Chadderz CSUD) and adapting it to uBixOS's input + lwIP layers.** ~17 HW flash
+    cycles; not worth grinding further by hand.
+  - **M7.0 — Core up.** Power the controller (mailbox SET_POWER_STATE id 3), core
+    soft-reset (GRSTCTL), set GUSBCFG/GAHBCFG (DMA + host mode), enable the host
+    port (HPRT power + reset), detect a connected device + report its speed.
+  - **M7.1 — Control transfers.** One host channel doing SETUP/DATA/STATUS →
+    GET_DESCRIPTOR + SET_ADDRESS + SET_CONFIGURATION = enumerate the device on the
+    root port. (On the Pi 3 the root device is the **LAN9514's internal hub**.)
+  - **M7.2 — Hub.** Walk the LAN9514 hub: power its ports, enumerate what's attached
+    (keyboard/mouse downstream).
+  - **M7.3 — HID.** Boot-protocol keyboard + mouse via an interrupt-IN channel →
+    feed the existing input path (the desktop's `virtio_input` analogue) → the M6
+    desktop becomes **interactive**.
+  - **M7.4 — Ethernet.** `smsc95xx` (LAN9514) bulk-IN/OUT → the lwIP netif bridge →
+    networking. (Bulk-only; no firmware blob.)
+  - DMA: all transfers use the controller's internal DMA; buffers are physical
+    addresses (the physmap gives the kernel VA), with cache maintenance like the SD
+    driver. Polled first; an IRQ path (USB IRQ via the BCM controller) is a follow-up.
 
 ## Test workflow (needed before M0)
 
@@ -133,6 +212,27 @@ raspi3-tutorial, s-matyukevich raspberry-pi-os), the **simplest boot** (firmware
 loads a flat binary — no U-Boot, no Image header), and it **reuses our PL011
 driver**. The cost (custom BCM interrupt controller, spin-table SMP) is well-trodden
 ground with abundant reference code. The OPi/H618 remains the secondary target.
+
+## Build layout: ARCH + BOARD (decided 2026-06-30)
+
+The Pi 3 is **not a separate arch** — it is aarch64 (same LP64 ABI, byte-identical
+musl world). A board differs *only* in the kernel (link address + which device
+drivers `#ifdef BOARD_*` compile in). So the model is **ARCH + BOARD**:
+
+- **World = per-arch, shared** — built once under `build/${ARCH}/`, used by every
+  board (no copy → no race with concurrent world rebuilds).
+- **Kernel + image = per-board** — `build/${ARCH}/boards/${BOARD}/` (e.g.
+  `build/aarch64/boards/rpi3/kernel8.img`).
+- Invocation: `bmake kernel TARGET=aarch64 BOARD=rpi3` (BOARD defaults to
+  `qemu-virt`).  Mirrors FreeBSD `MACHINE=arm64` + per-board kernel configs and the
+  in-kernel `struct aarch64_board` abstraction.
+
+**Status: IMPLEMENTED (2026-06-30).** `tools/build-rpi3-kernel.sh` builds into
+`build/aarch64/boards/rpi3/`, reusing the shared world in place via symlinks
+(`lib`/`bin`/`obj/musl` → the arch build) — no copy, no race.  `bmake kernel-rpi3`
+and `bmake image-rpi3` are the entry points; the top `Makefile` change was two thin
+additive targets only (the `kernel-aarch64` recipe is untouched — it just takes
+`OBJ_DIR=` on the command line).  The old flat `build/rpi3b/` is retired.
 
 ## M1 implementation plan (board abstraction)
 

@@ -79,6 +79,7 @@ _USB_FLAGS!= test -f ${USB_IMAGE} && \
         install-kernel install-world install \
         run-aarch64 run-debug-aarch64 run-claude \
         run-selfbuilt run-selfbuilt-aarch64 run-selfbuilt-debug-aarch64 \
+        kernel-rpi3 image-rpi3 \
         kernel-to-image clean-kernel clean
 
 # `all` is arch-aware: every MMU-class arch builds the full system (kernel + world
@@ -382,6 +383,21 @@ kernel-aarch64:
 	    worldcat ${OBJ_DIR}/obj/sys/worldcat_embed.o || exit 1
 	${LD} ${AARCH64_LD_EXTRA} -T ${CURDIR}/sys/compile/ldscript.aarch64 -o ${OBJ_DIR}/boot/kernel ${OBJ_DIR}/obj/sys/*.o
 	@echo "aarch64 bring-up kernel linked: ${OBJ_DIR}/boot/kernel"
+
+# ── Raspberry Pi 3 board (ARCH + BOARD) ──────────────────────────────────────
+# The Pi is aarch64 with a byte-identical world; only the KERNEL differs (BOARD_RPI3
+# + linked at 0x80000).  These thin targets drive tools/build-rpi3-kernel.sh, which
+# builds the board kernel into build/aarch64/boards/rpi3/ reusing the shared world
+# in place (symlinks, no copy).  Prereq: `bmake world TARGET=aarch64`.  See
+# docs/design/raspberry-pi-3b-bringup.md (## Build layout: ARCH + BOARD).
+kernel-rpi3:
+	@sh ${CURDIR}/tools/build-rpi3-kernel.sh
+
+# Fetch the (un-vendored) Pi firmware, then assemble a dd-able microSD image that
+# reuses ubixos-arm.img's UbixFS pool -> build/aarch64/boards/rpi3/rpi3-sd.img.
+image-rpi3: kernel-rpi3
+	@sh ${CURDIR}/tools/fetch-rpi3-firmware.sh
+	@sh ${CURDIR}/tools/make-rpi3-sd.sh
 
 # x86-64 bring-up kernel: assemble the long-mode entry, compile the COM1 banner,
 # link low at 1 MB.  Standalone (does NOT descend into sys/Makefile) — the same

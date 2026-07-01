@@ -13,19 +13,21 @@
 #   sh tools/make-rpi3-sd.sh /dev/rdiskN     # ALSO write it straight to that device (DANGEROUS)
 set -e
 
-BOOT=build/rpi3b/boot
-IMG=build/rpi3b/rpi3-sd.img
+# ARCH + BOARD layout: the Pi board lives under the aarch64 arch build.
+BOARD_DIR=build/aarch64/boards/rpi3
+BOOT=$BOARD_DIR/boot
+IMG=$BOARD_DIR/rpi3-sd.img
 SIZE_MB=64
 DEV="$1"
 
 [ -f "$BOOT/start.elf" ] || { echo "missing $BOOT/start.elf - run tools/fetch-rpi3-firmware.sh first"; exit 1; }
 command -v mformat >/dev/null || { echo "mtools not found - brew install mtools"; exit 1; }
 
-# Prefer the full OS kernel (build-rpi3-kernel.sh -> build/rpi3b/boot/kernel8.img);
+# Prefer the full OS kernel (build-rpi3-kernel.sh -> $BOARD_DIR/boot/kernel8.img);
 # fall back to the M0.75 standalone (build-rpi3-hello.sh -> build/rpi3b/kernel8.img).
-if [ -f build/rpi3b/boot/kernel8.img ]; then
-	KIMG=build/rpi3b/boot/kernel8.img
-	echo "make-rpi3-sd: using the full OS kernel (build/rpi3b/boot/kernel8.img)"
+if [ -f "$BOARD_DIR/boot/kernel8.img" ]; then
+	KIMG=$BOARD_DIR/boot/kernel8.img
+	echo "make-rpi3-sd: using the full OS kernel ($KIMG)"
 elif [ -f build/rpi3b/kernel8.img ]; then
 	KIMG=build/rpi3b/kernel8.img
 	echo "make-rpi3-sd: using the M0.75 standalone (build/rpi3b/kernel8.img)"

@@ -9,7 +9,7 @@
 # Then copy the contents of build/rpi3b/boot/ onto the SD's FAT32 partition.
 set -e
 
-BOOT=build/rpi3b/boot
+BOOT=build/aarch64/boards/rpi3/boot # ARCH + BOARD layout (see raspberry-pi-3b-bringup.md)
 RAW=https://github.com/raspberrypi/firmware/raw/master/boot
 mkdir -p "$BOOT"
 
@@ -28,11 +28,10 @@ hdmi_force_hotplug=1       # drive HDMI even if the monitor isn't detected at bo
 kernel=kernel8.img
 EOF
 
-if [ -f build/rpi3b/kernel8.img ]; then
-	cp build/rpi3b/kernel8.img "$BOOT/kernel8.img"
-else
-	echo "NOTE: build/rpi3b/kernel8.img not found - run tools/build-rpi3-hello.sh first."
-fi
+# The kernel8.img is produced by the kernel build (tools/build-rpi3-kernel.sh, or
+# the M0.75 standalone tools/build-rpi3-hello.sh) directly into $BOOT — this script
+# only fetches the (proprietary, un-vendored) firmware + writes config.txt.
+[ -f "$BOOT/kernel8.img" ] || echo "NOTE: no kernel8.img in $BOOT yet - run tools/build-rpi3-kernel.sh."
 
-echo "SD boot/ assembled at $BOOT - copy its contents to the SD FAT32 partition:"
+echo "firmware fetched into $BOOT (kernel8.img comes from the kernel build):"
 ls -la "$BOOT"

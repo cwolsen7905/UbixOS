@@ -42,6 +42,26 @@ bmake run-x86_64 TARGET=x86_64    # launch QEMU (std-VGA desktop, TCG on Apple S
 bmake clean            # clean all build artifacts
 ```
 
+#### Board builds (ARCH + BOARD)
+
+A specific **board** (e.g. the Raspberry Pi 3) is *not* a separate arch — it is
+aarch64 with a byte-identical world. Only the **kernel** differs (board `#ifdef`s +
+a board link address). So boards nest under the arch: the world is built once
+per-arch and **shared**, and only the board kernel + image are board-specific.
+
+```sh
+bmake world TARGET=aarch64   # the shared aarch64 world (build/aarch64/, board-independent)
+bmake kernel-rpi3            # the Pi 3 kernel  → build/aarch64/boards/rpi3/boot/kernel8.img
+bmake image-rpi3             # fetch Pi firmware + build a dd-able microSD image
+                             #   → build/aarch64/boards/rpi3/rpi3-sd.img
+```
+
+The board build reuses the shared world **in place** via symlinks (no copy → no
+race with a concurrent world rebuild); only the kernel objects (compiled
+`-DBOARD_RPI3`) and the flat `kernel8.img` (linked at `0x80000`) are board-specific.
+Flash the image with `dd` (see `docs/design/raspberry-pi-3b-bringup.md`). New boards
+follow the same pattern under `build/${ARCH}/boards/${BOARD}/`.
+
 ### Disk image workflow
 
 ```sh

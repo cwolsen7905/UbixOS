@@ -29,7 +29,16 @@ bmake image     # Build bootable disk image (ubixos.img)
 bmake run       # Launch in QEMU
 ```
 
-See [BUILDING.md](BUILDING.md) for full toolchain requirements and platform-specific setup.
+**Real hardware (Raspberry Pi 3):** a board is aarch64 with the same world — only
+the kernel differs — so boards nest under the arch (ARCH + BOARD):
+
+```sh
+bmake world TARGET=aarch64   # the shared aarch64 world
+bmake image-rpi3             # Pi 3 kernel + microSD image → build/aarch64/boards/rpi3/rpi3-sd.img
+```
+
+See [BUILDING.md](BUILDING.md) for full toolchain requirements and platform-specific
+setup, and `docs/design/raspberry-pi-3b-bringup.md` for the Pi 3 port + flashing.
 
 ---
 
