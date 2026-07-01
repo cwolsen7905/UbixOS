@@ -415,12 +415,15 @@ int sys_chdir(struct thread *td, struct sys_chdir_args *args)
 		newcwd[len + 1] = '\0';
 	}
 
-	/* Validate the path exists as a directory */
+	/* Validate the path exists as a directory.  vfs_opendir fails for both a
+	 * missing path and a non-directory; report -ENOENT (the common case) rather
+	 * than a blanket -1, which musl decodes as EPERM ("Operation not permitted")
+	 * instead of "No such file or directory". */
 	dir = vfs_opendir(newcwd);
 	if (dir == 0x0)
 	{
-		td->td_retval[0] = -1;
-		return (-1);
+		td->td_retval[0] = -ENOENT;
+		return (-ENOENT);
 	}
 	vfs_closedir(dir);
 
