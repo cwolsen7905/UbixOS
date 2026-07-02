@@ -40,6 +40,7 @@
 #include <objgfx/objgfx.h>
 #include <objgfx/ogScalableFont.h>
 #include <objgfx/ogPixelFmt.h>
+#include <objgfx/ogImage.h> /* PNG/BMP app icons from /usr/share/icons */
 #include <ubistry/ubistry.h>
 #include <audio/aural_proto.h>
 
@@ -50,16 +51,26 @@ extern char **environ; /* inherited session env, forwarded to launched apps */
 
 /* Taskbar geometry */
 #define TB_H 32
-#define BTN_W 104   /* start button: hamburger icon + "uBixOS" */
-#define CLOCK_W 160 /* fits "MM/DD  HH:MM:SS" */
+#define BTN_W 104     /* start button: hamburger icon + "uBixOS" */
+#define CLOCK_W 86    /* two stacked lines: time over date (right-aligned) */
+#define CLOCK_SIZE 11 /* small clock font so both lines fit the 32px bar */
 #define WIN_BTN_W 96
 #define TRAY_W 34 /* system-tray area (volume) left of the clock */
 
 /* Start-menu geometry (a Menu sizes its height to its item count). */
 #define MENU_W 180
 #define MENU_ITEM_H 28
-#define MENU_MAX_ITEMS 16
-#define MENU_FOOTER_H 32 /* user + power row at the bottom of the start menu */
+#define MENU_MAX_ITEMS 24
+#define MENU_FOOTER_H 44 /* user + power row at the bottom of the start menu */
+
+/* Windows 11-style pinned grid (start menu in grid mode). */
+#define GRID_COLS 4       /* tiles per row                              */
+#define GRID_TILE_W 116   /* per-tile cell width (icon + label)         */
+#define GRID_TILE_H 92    /* per-tile cell height                       */
+#define GRID_ICON 46      /* icon tile (rounded square) size            */
+#define GRID_PAD 22       /* panel inner padding                        */
+#define GRID_SEARCH_H 40  /* search pill row height                     */
+#define GRID_SECTION_H 30 /* "Pinned" section-label row                 */
 
 /* Mixer flyout geometry: a titled card with one vertical slider per column
  * (master + each live app).  Tuned for a calm, modern pop-over: a thin rounded
@@ -180,8 +191,9 @@ static void load_timezone(void)
 	g_tz_loaded = true;
 }
 
-/* Format "MM/DD  HH:MM:SS" (local time, DST-aware) into buf (needs >= 16 bytes). */
-static void get_datetime_str(char *buf)
+/* Fill @time_s ("HH:MM") and @date_s ("MM/DD/YYYY"), local time, DST-aware, for
+ * the Windows 11-style stacked taskbar clock.  Buffers need >= 8 and >= 12 bytes. */
+static void get_clock_strs(char *time_s, char *date_s)
 {
 	if (!g_tz_loaded)
 		load_timezone();
@@ -189,11 +201,12 @@ static void get_datetime_str(char *buf)
 	struct tm *lt = localtime(&t);
 	if (lt == nullptr)
 	{
-		buf[0] = '\0';
+		time_s[0] = '\0';
+		date_s[0] = '\0';
 		return;
 	}
-	snprintf(
-	    buf, 16, "%02d/%02d  %02d:%02d:%02d", lt->tm_mon + 1, lt->tm_mday, lt->tm_hour, lt->tm_min, lt->tm_sec);
+	snprintf(time_s, 8, "%02d:%02d", lt->tm_hour, lt->tm_min);
+	snprintf(date_s, 12, "%02d/%02d/%04d", lt->tm_mon + 1, lt->tm_mday, lt->tm_year + 1900);
 }
 
 /* ------------------------------------------------------------------ */
@@ -313,13 +326,75 @@ class Menu
 	uint32_t win_id_ = 0;
 	bool open_ = false;
 	bool footer_ = false; /* show the user + power row (start menu only) */
+	bool grid_ = false;   /* Windows 11-style pinned tile grid (start menu) */
 	int x_ = 0, y_ = 0, w_ = 0, h_ = 0;
 	int hover_item_ = -1; /* item under the cursor (highlight) */
 	int active_row_ = -1; /* row whose submenu is open (stays highlighted) */
 	std::vector<MenuItem> items_;
 
+	/* Cached decoded app icons (grid mode): /usr/share/icons/<exec-basename>.png,
+	 * loaded once per menu-open so redraws just blit.  Fixed array (not a vector)
+	 * to avoid ogSurface copies on reallocation.  has_icon_[i] gates use of icon_[i];
+	 * apps without a PNG fall back to the hand-drawn glyph. */
+	ogSurface icon_[MENU_MAX_ITEMS];
+	bool has_icon_[MENU_MAX_ITEMS] = {false};
+
+	/* ── Windows 11 pinned-grid geometry (shared by draw_grid + sizing) ─────── */
+	static int grid_cols()
+	{
+		return GRID_COLS;
+	}
+	int grid_rows() const
+	{
+		return ((int)items_.size() + GRID_COLS - 1) / GRID_COLS;
+	}
+	static int grid_gy0() /* y of the first tile row */
+	{
+		return GRID_PAD + GRID_SEARCH_H + 10 + GRID_SECTION_H;
+	}
+	static int grid_panel_w()
+	{
+		return GRID_PAD * 2 + GRID_COLS * GRID_TILE_W;
+	}
+	int grid_panel_h() const
+	{
+		return grid_gy0() + grid_rows() * GRID_TILE_H + 10 + MENU_FOOTER_H;
+	}
+
+	/* A colourful per-app tile fill (Win11 icons are varied colours), chosen from
+	 * a fixed palette by hashing the label — stable per app, lively as a set. */
+	static uint32_t tile_color(const std::string &label)
+	{
+		static const uint32_t pal[] = {0x000078D4u,
+		                               0x0000B294u,
+		                               0x006CBF4Bu,
+		                               0x00B36AE2u,
+		                               0x00F2A33Cu,
+		                               0x00E5595Cu,
+		                               0x0039C2C9u,
+		                               0x00E06CA8u};
+		uint32_t h = 2166136261u;
+		for (char c : label)
+			h = (h ^ (uint8_t)c) * 16777619u;
+		return pal[h % (sizeof(pal) / sizeof(pal[0]))];
+	}
+
+	/* First letter of the label, uppercased — the placeholder tile monogram. */
+	static char app_initial(const std::string &label)
+	{
+		for (char c : label)
+			if (c > ' ')
+				return (char)((c >= 'a' && c <= 'z') ? c - 32 : c);
+		return '?';
+	}
+
 	void draw(ogScalableFont &font)
 	{
+		if (grid_)
+		{
+			draw_grid(font);
+			return;
+		}
 		/* Flat panel: items render straight on the panel fill (no per-item raised
 		 * boxes) for a modern pop-over look.  A 1px accent strip down the left
 		 * edge gives the menu a bit of identity.  The hovered item — and the row
@@ -344,24 +419,229 @@ class Menu
 			draw_footer(font);
 	}
 
-	/* Bottom row: the logged-in user on the left, a power button on the right. */
+	/* Bottom row: the logged-in user on the left, a power button on the right.
+	 * In grid mode the row sits at the panel bottom and gains a monogram avatar. */
 	void draw_footer(ogScalableFont &font)
 	{
-		int ftop = (int)items_.size() * MENU_ITEM_H;
+		int ftop = grid_ ? (h_ - MENU_FOOTER_H) : (int)items_.size() * MENU_ITEM_H;
 		int fcy = ftop + MENU_FOOTER_H / 2;
+		int lx = grid_ ? GRID_PAD : 14;
 
 		surf_.ogFillRect(8, ftop, w_ - 9, ftop, FLY_ITEM_C); /* separator */
 
 		const char *user = getenv("USER");
+		const char *uname = (user && user[0]) ? user : "user";
+
+		if (grid_)
+		{
+			/* Round monogram avatar (matches the login), then the name beside it. */
+			int av = 26, ax = lx, ay = fcy - av / 2;
+			uint32_t ac = tile_color(uname);
+			surf_.ogFillRoundRect(ax, ay, ax + av, ay + av, av / 2, ac);
+			char mono[2] = {app_initial(uname), 0};
+			int mw = (int)font.TextWidth(mono);
+			font_fg(font, COL_WHITE);
+			font_bg(font, ac);
+			font.PutString(surf_, ax + (av - mw) / 2, ay + (av - FONT_SIZE) / 2, mono);
+			lx = ax + av + 10;
+		}
 		font_fg(font, 0x00C8C8D2u);
 		font_bg(font, FLY_BG_C);
-		font.PutString(surf_, 14, fcy - FONT_SIZE / 2, (user && user[0]) ? user : "user");
+		font.PutString(surf_, lx, fcy - FONT_SIZE / 2, uname);
 
 		/* Power glyph: a ring with a vertical line breaking its top. */
 		int pcx = w_ - 18, pcy = fcy;
 		surf_.ogCircle(pcx, pcy, 7, 0x00FF6E6Eu);
 		surf_.ogFillRect(pcx - 1, pcy - 10, pcx + 1, pcy - 4, FLY_BG_C);
 		surf_.ogVLine(pcx, pcy - 9, pcy - 1, 0x00FF6E6Eu);
+	}
+
+	/* Fit a label to a pixel width by dropping trailing chars (no ellipsis: the
+	 * Latin-1 font has no '…').  Returns a copy that renders within @maxw. */
+	std::string fit_label(ogScalableFont &font, const std::string &s, int maxw)
+	{
+		if ((int)font.TextWidth(s.c_str()) <= maxw)
+			return s;
+		std::string t = s;
+		while (t.size() > 1 && (int)font.TextWidth((t + ".").c_str()) > maxw)
+			t.pop_back();
+		return t + ".";
+	}
+
+	/* Draw one app's icon: a colour-coded rounded tile + a simple hand-drawn glyph
+	 * keyed off the exec path (terminal, browser, folder, gear, chart, card, …),
+	 * falling back to a monogram letter for apps we don't have a glyph for.  Glyphs
+	 * are intentionally minimal/geometric — clean at 46px, no bitmap assets. */
+	void draw_app_icon(int ix, int iy, int sz, const MenuItem &it, ogSurface *icon, ogScalableFont &font)
+	{
+		/* A real per-app icon (PNG from /usr/share/icons) wins: nearest-neighbour
+		 * scale it into the tile.  (ogScaleBuf is a stub, so scale by hand.) */
+		if (icon != nullptr)
+		{
+			int iw = (int)icon->ogGetMaxX() + 1, ih = (int)icon->ogGetMaxY() + 1;
+			if (iw > 0 && ih > 0)
+			{
+				for (int dy = 0; dy < sz; dy++)
+					for (int dx = 0; dx < sz; dx++)
+					{
+						uInt8 r, g, b;
+						icon->ogUnpack(icon->ogGetPixel(dx * iw / sz, dy * ih / sz), r, g, b);
+						surf_.ogSetPixel(ix + dx, iy + dy, r, g, b, 255);
+					}
+				return;
+			}
+		}
+
+		int cx = ix + sz / 2, cy = iy + sz / 2;
+		const std::string &e = it.exec;
+		auto has = [&](const char *k) { return e.find(k) != std::string::npos; };
+		const uint32_t W = COL_WHITE;
+
+		uint32_t tile;
+		if (has("term"))
+			tile = 0x001C2430u; /* near-black terminal */
+		else if (has("nsfb") || has("Net"))
+			tile = 0x000078D4u; /* browser blue */
+		else if (has("doom"))
+			tile = 0x00A11E1Eu; /* doom red */
+		else if (has("tessera"))
+			tile = 0x008A4FD6u; /* purple */
+		else if (has("cubitaire"))
+			tile = 0x001E8E4Bu; /* felt green */
+		else if (has("files"))
+			tile = 0x00E0A63Cu; /* folder amber */
+		else if (has("diskutil"))
+			tile = 0x006B7280u; /* disk gray */
+		else if (has("activity"))
+			tile = 0x00159E8Cu; /* teal */
+		else if (has("settings"))
+			tile = 0x00566072u; /* slate */
+		else if (has("about"))
+			tile = 0x000078D4u; /* info blue */
+		else
+			tile = tile_color(it.label);
+
+		surf_.ogFillRoundRect(ix, iy, ix + sz, iy + sz, 12, tile);
+
+		if (has("term"))
+		{ /* prompt chevron + cursor underscore */
+			surf_.ogLine(cx - 7, cy - 7, cx + 1, cy, W);
+			surf_.ogLine(cx + 1, cy, cx - 7, cy + 7, W);
+			surf_.ogFillRect(cx + 3, cy + 6, cx + 11, cy + 8, W);
+		}
+		else if (has("nsfb") || has("Net"))
+		{ /* globe: circle + equator + meridian */
+			surf_.ogCircle(cx, cy, 13, W);
+			surf_.ogHLine(cx - 13, cx + 13, cy, W);
+			surf_.ogVLine(cx, cy - 13, cy + 13, W);
+		}
+		else if (has("doom"))
+		{ /* crosshair */
+			surf_.ogCircle(cx, cy, 11, W);
+			surf_.ogHLine(cx - 15, cx + 15, cy, W);
+			surf_.ogVLine(cx, cy - 15, cy + 15, W);
+		}
+		else if (has("tessera"))
+		{ /* 2x2 mosaic */
+			for (int a = 0; a < 2; a++)
+				for (int b = 0; b < 2; b++)
+				{
+					int qx = cx - 12 + a * 13, qy = cy - 12 + b * 13;
+					surf_.ogFillRoundRect(qx, qy, qx + 10, qy + 10, 2, W);
+				}
+		}
+		else if (has("cubitaire"))
+		{ /* playing card + red diamond pip */
+			surf_.ogFillRoundRect(cx - 9, cy - 12, cx + 9, cy + 12, 3, W);
+			surf_.ogFillTriangle(cx, cy - 6, cx - 5, cy, cx + 5, cy, 0x00C41E24u);
+			surf_.ogFillTriangle(cx - 5, cy, cx + 5, cy, cx, cy + 6, 0x00C41E24u);
+		}
+		else if (has("files"))
+		{ /* folder: tab + body */
+			surf_.ogFillRect(cx - 13, cy - 9, cx - 2, cy - 5, W);
+			surf_.ogFillRoundRect(cx - 13, cy - 7, cx + 13, cy + 11, 3, W);
+		}
+		else if (has("diskutil"))
+		{ /* disk platter */
+			surf_.ogCircle(cx, cy, 13, W);
+			surf_.ogFillCircle(cx, cy, 3, W);
+		}
+		else if (has("activity"))
+		{ /* bar chart */
+			surf_.ogFillRect(cx - 12, cy + 2, cx - 6, cy + 12, W);
+			surf_.ogFillRect(cx - 3, cy - 6, cx + 3, cy + 12, W);
+			surf_.ogFillRect(cx + 6, cy - 2, cx + 12, cy + 12, W);
+		}
+		else if (has("settings"))
+		{ /* gear: white donut + 4 teeth */
+			surf_.ogFillCircle(cx, cy, 12, W);
+			surf_.ogFillCircle(cx, cy, 5, tile);
+			surf_.ogFillRect(cx - 2, cy - 16, cx + 2, cy - 10, W);
+			surf_.ogFillRect(cx - 2, cy + 10, cx + 2, cy + 16, W);
+			surf_.ogFillRect(cx - 16, cy - 2, cx - 10, cy + 2, W);
+			surf_.ogFillRect(cx + 10, cy - 2, cx + 16, cy + 2, W);
+		}
+		else if (has("about"))
+		{ /* info "i" */
+			surf_.ogFillCircle(cx, cy - 8, 2, W);
+			surf_.ogFillRect(cx - 1, cy - 3, cx + 2, cy + 11, W);
+		}
+		else
+		{ /* fallback: monogram letter */
+			char mono[2] = {app_initial(it.label), 0};
+			int mw = (int)font.TextWidth(mono);
+			font_fg(font, W);
+			font_bg(font, tile);
+			font.PutString(surf_, ix + (sz - mw) / 2, iy + (sz - FONT_SIZE) / 2, mono);
+		}
+	}
+
+	/* Windows 11-style pinned grid: search pill, "Pinned" label, a grid of
+	 * colourful icon tiles with labels, and the user/power footer. */
+	void draw_grid(ogScalableFont &font)
+	{
+		surf_.ogFillRect(0, 0, w_ - 1, h_ - 1, FLY_BG_C);
+
+		/* Search pill (visual): rounded field, magnifier, muted placeholder. */
+		int sx = GRID_PAD, sy = GRID_PAD, sw = w_ - 2 * GRID_PAD;
+		surf_.ogFillRoundRect(sx, sy, sx + sw, sy + GRID_SEARCH_H, GRID_SEARCH_H / 2, FLY_ITEM_C);
+		int mgx = sx + 20, mgy = sy + GRID_SEARCH_H / 2;
+		surf_.ogCircle(mgx, mgy, 6, 0x00A6AEBBu);
+		surf_.ogLine(mgx + 4, mgy + 4, mgx + 10, mgy + 10, 0x00A6AEBBu);
+		font_fg(font, 0x008A93A3u);
+		font_bg(font, FLY_ITEM_C);
+		font.PutString(surf_, sx + 36, sy + (GRID_SEARCH_H - FONT_SIZE) / 2, "Search");
+
+		/* Section label. */
+		int secy = sy + GRID_SEARCH_H + 10;
+		font_fg(font, 0x008A93A3u);
+		font_bg(font, FLY_BG_C);
+		font.PutString(surf_, GRID_PAD, secy, "Pinned");
+
+		/* Tile grid. */
+		int gy0 = grid_gy0();
+		for (int i = 0; i < (int)items_.size(); i++)
+		{
+			int col = i % GRID_COLS, row = i / GRID_COLS;
+			int cx = GRID_PAD + col * GRID_TILE_W;
+			int cy = gy0 + row * GRID_TILE_H;
+			bool hl = (i == hover_item_);
+			uint32_t cellbg = hl ? FLY_ITEM_C : FLY_BG_C;
+			if (hl)
+				surf_.ogFillRoundRect(
+				    cx + 4, cy + 2, cx + GRID_TILE_W - 4, cy + GRID_TILE_H - 4, 8, FLY_ITEM_C);
+
+			int ix = cx + (GRID_TILE_W - GRID_ICON) / 2, iy = cy + 8;
+			draw_app_icon(ix, iy, GRID_ICON, items_[i], has_icon_[i] ? &icon_[i] : nullptr, font);
+
+			std::string lbl = fit_label(font, items_[i].label, GRID_TILE_W - 10);
+			int lw = (int)font.TextWidth(lbl.c_str());
+			font_fg(font, COL_WHITE);
+			font_bg(font, cellbg);
+			font.PutString(surf_, cx + (GRID_TILE_W - lw) / 2, iy + GRID_ICON + 7, lbl.c_str());
+		}
+
+		draw_footer(font);
 	}
 
 	void load_fallback()
@@ -402,10 +682,24 @@ class Menu
 		return (i >= 0 && i < (int)items_.size()) ? &items_[i] : nullptr;
 	}
 
-	int hit_item(int y) const
+	/* Map a pointer position to an item index.  Grid mode uses both axes (tiles);
+	 * list mode uses y only (rows). */
+	int hit_item(int x, int y) const
 	{
 		if (!open_)
 			return -1;
+		if (grid_)
+		{
+			int gy0 = grid_gy0();
+			if (y < gy0 || x < GRID_PAD || x >= GRID_PAD + GRID_COLS * GRID_TILE_W)
+				return -1;
+			int col = (x - GRID_PAD) / GRID_TILE_W;
+			int row = (y - gy0) / GRID_TILE_H;
+			if (col < 0 || col >= GRID_COLS || row < 0)
+				return -1;
+			int i = row * GRID_COLS + col;
+			return (i >= 0 && i < (int)items_.size()) ? i : -1;
+		}
 		int i = y / MENU_ITEM_H;
 		return (i >= 0 && i < (int)items_.size()) ? i : -1;
 	}
@@ -441,9 +735,12 @@ class Menu
 		send_flip_msg(win_id_);
 	}
 
-	/* Total height including the footer when enabled. */
+	/* Total panel size.  Grid mode is fixed-width with a computed height; list
+	 * mode stacks items (+ footer). */
 	int height() const
 	{
+		if (grid_)
+			return grid_panel_h();
 		return (int)items_.size() * MENU_ITEM_H + (footer_ ? MENU_FOOTER_H : 0);
 	}
 
@@ -452,12 +749,45 @@ class Menu
 	{
 		if (!open_ || !footer_)
 			return false;
-		int ftop = (int)items_.size() * MENU_ITEM_H;
+		int ftop = grid_ ? (h_ - MENU_FOOTER_H) : (int)items_.size() * MENU_ITEM_H;
 		return (y >= ftop && y < ftop + MENU_FOOTER_H && x >= w_ - 32);
+	}
+
+	void set_grid(bool g)
+	{
+		grid_ = g;
 	}
 
 	/* Populate from a registry container; fall back to a built-in menu if the
 	 * registry is unavailable or empty so the desktop is never broken. */
+	/* Append each leaf (exec) entry under a registry container to items_ — used to
+	 * flatten categories into the grid. */
+	void add_leaves(const std::string &container)
+	{
+		char names[UB_NAMES_MAX];
+		if (ubistry_enum(container.c_str(), names, sizeof(names)) <= 0)
+			return;
+		std::string ns(names);
+		size_t start = 0;
+		while (start < ns.size() && (int)items_.size() < MENU_MAX_ITEMS)
+		{
+			size_t nl = ns.find('\n', start);
+			std::string child = ns.substr(start, nl == std::string::npos ? std::string::npos : nl - start);
+			start = (nl == std::string::npos) ? ns.size() : nl + 1;
+			if (child.empty())
+				continue;
+			std::string cpath = container + "/" + child;
+			char buf[128];
+			MenuItem it;
+			it.path = cpath;
+			it.label = (ubistry_get_str((cpath + "/label").c_str(), buf, sizeof(buf)) == 0) ? buf : child;
+			if (ubistry_get_str((cpath + "/exec").c_str(), buf, sizeof(buf)) == 0)
+				it.exec = buf;
+			if (!it.exec.empty())
+				items_.push_back(it);
+		}
+	}
+
 	void load(const char *regpath)
 	{
 		char names[UB_NAMES_MAX];
@@ -480,24 +810,59 @@ class Menu
 			if (child.empty())
 				continue;
 
-			MenuItem it;
-			it.path = std::string(regpath) + "/" + child;
-
+			std::string cpath = std::string(regpath) + "/" + child;
 			char buf[128];
-			if (ubistry_get_str((it.path + "/label").c_str(), buf, sizeof(buf)) == 0)
-				it.label = buf;
-			else
-				it.label = child;
+			std::string label =
+			    (ubistry_get_str((cpath + "/label").c_str(), buf, sizeof(buf)) == 0) ? buf : child;
 
 			char scratch[UB_NAMES_MAX];
-			it.submenu = (ubistry_enum((it.path + "/items").c_str(), scratch, sizeof(scratch)) >= 0);
-			if (!it.submenu && ubistry_get_str((it.path + "/exec").c_str(), buf, sizeof(buf)) == 0)
-				it.exec = buf;
+			bool is_sub = (ubistry_enum((cpath + "/items").c_str(), scratch, sizeof(scratch)) >= 0);
 
+			/* Grid mode is a flat pinned list — pull leaves out of categories and
+			 * never keep a submenu entry. */
+			if (grid_ && is_sub)
+			{
+				add_leaves(cpath + "/items");
+				continue;
+			}
+
+			MenuItem it;
+			it.path = cpath;
+			it.label = label;
+			it.submenu = (!grid_) && is_sub;
+			if (!it.submenu && ubistry_get_str((cpath + "/exec").c_str(), buf, sizeof(buf)) == 0)
+				it.exec = buf;
+			if (grid_ && it.exec.empty()) /* skip a categoryless/exec-less entry in the grid */
+				continue;
 			items_.push_back(it);
 		}
 		if (items_.empty())
 			load_fallback();
+		if (grid_)
+			load_icons();
+	}
+
+	/* Decode each grid app's /usr/share/icons/<exec-basename>.png once, so redraws
+	 * only blit.  Absent PNGs leave has_icon_[i] false → the hand-drawn glyph shows.
+	 * (The self-contained ELF-embedded alternative is docs/design/app-icon-embedding-plan.md.) */
+	void load_icons()
+	{
+		ogImage img;
+		for (int i = 0; i < (int)items_.size() && i < MENU_MAX_ITEMS; i++)
+		{
+			has_icon_[i] = false;
+			std::string exe = items_[i].exec;
+			if (exe.empty() || exe[0] == '@')
+				continue;
+			size_t sp = exe.find(' '); /* strip any arguments */
+			if (sp != std::string::npos)
+				exe = exe.substr(0, sp);
+			size_t sl = exe.rfind('/');
+			std::string base = (sl == std::string::npos) ? exe : exe.substr(sl + 1);
+			std::string path = "/usr/share/icons/" + base + ".png";
+			if (img.Load(path.c_str(), icon_[i]))
+				has_icon_[i] = true;
+		}
 	}
 
 	void show(int x, int y, ubix::Mailbox &mbox, ogScalableFont &font)
@@ -505,7 +870,7 @@ class Menu
 		if (open_ || items_.empty())
 			return;
 
-		w_ = MENU_W;
+		w_ = grid_ ? grid_panel_w() : MENU_W;
 		h_ = height();
 		x_ = x < 0 ? 0 : x;
 		y_ = y < 0 ? 0 : y;
@@ -931,6 +1296,8 @@ class Taskbar
 {
 	ogSurface surf_;
 	ogScalableFont font_;
+	ogScalableFont clockfont_;    /* small face for the stacked time/date */
+	bool have_clockfont_ = false; /* clockfont_ loaded (else fall back to font_) */
 	uint32_t win_id_ = 0;
 	uint32_t sw_ = 0;
 	uint32_t sh_ = 0;
@@ -1028,12 +1395,22 @@ class Taskbar
 		/* System tray: volume glyph. */
 		draw_volume_glyph(tray_x + TRAY_W / 2, TB_H / 2);
 
-		/* Clock — boxless date + time, right-aligned text on the bar. */
-		char tstr[20];
-		get_datetime_str(tstr);
-		font_fg(font_, COL_WHITE);
-		font_bg(font_, TB_BG);
-		font_.PutString(surf_, clock_x + 8, 12, tstr);
+		/* Clock — Windows 11 style: time stacked over the date, right-aligned,
+		 * both lines centred vertically in the bar. */
+		char tstr[8], dstr[12];
+		get_clock_strs(tstr, dstr);
+		ogScalableFont &cf = have_clockfont_ ? clockfont_ : font_;
+		int cfh = (int)cf.GetHeight();
+		int right = (int)sw - 12; /* right margin */
+		int gap = 2;
+		int ttop = (TB_H - (2 * cfh + gap)) / 2;
+		font_fg(cf, COL_WHITE);
+		font_bg(cf, TB_BG);
+		int tw = (int)cf.TextWidth(tstr);
+		cf.PutString(surf_, right - tw, ttop, tstr);
+		font_fg(cf, 0x00C8C8D2u); /* date slightly muted */
+		int dw = (int)cf.TextWidth(dstr);
+		cf.PutString(surf_, right - dw, ttop + cfh + gap, dstr);
 	}
 
 	/* Tray hit-test: true if mx is over the volume glyph. */
@@ -1134,6 +1511,7 @@ class Taskbar
 			std::printf("taskbar: font load failed\n");
 			return false;
 		}
+		have_clockfont_ = clockfont_.Load(font_path, CLOCK_SIZE);
 
 		std::printf("taskbar: window %u at 0x%X, %dx%d+%d+%d\n",
 		            win_id_,
@@ -1312,12 +1690,12 @@ class Taskbar
 		}
 		else if (me->window_id == start_menu_.win_id() && start_menu_.is_open())
 		{
-			if (start_menu_.set_hover(exited ? -1 : start_menu_.hit_item(me->y)))
+			if (start_menu_.set_hover(exited ? -1 : start_menu_.hit_item(me->x, me->y)))
 				start_menu_.redraw(font_);
 		}
 		else if (me->window_id == submenu_.win_id() && submenu_.is_open())
 		{
-			if (submenu_.set_hover(exited ? -1 : submenu_.hit_item(me->y)))
+			if (submenu_.set_hover(exited ? -1 : submenu_.hit_item(me->x, me->y)))
 				submenu_.redraw(font_);
 		}
 	}
@@ -1342,7 +1720,7 @@ class Taskbar
 		{
 			if (click)
 			{
-				const MenuItem *it = submenu_.item(submenu_.hit_item(me->y));
+				const MenuItem *it = submenu_.item(submenu_.hit_item(me->x, me->y));
 				MenuItem sel = it ? *it : MenuItem();
 				close_menus();
 				if (it)
@@ -1361,7 +1739,7 @@ class Taskbar
 					close_menus();
 					::exit(0); /* log out — vlogin resumes the session */
 				}
-				int row = start_menu_.hit_item(me->y);
+				int row = start_menu_.hit_item(me->x, me->y);
 				const MenuItem *it = start_menu_.item(row);
 				if (it && it->submenu)
 				{
@@ -1421,9 +1799,11 @@ class Taskbar
 			}
 			else
 			{
+				start_menu_.set_grid(true); /* Windows 11-style pinned tile grid */
 				start_menu_.load("/views/startmenu");
 				start_menu_.set_footer(true); /* user + power row */
-				start_menu_.show(2, (int)sh_ - TB_H - start_menu_.height(), mbox, font_);
+				/* Anchored bottom-left, a small gap above the taskbar and off the edge. */
+				start_menu_.show(8, (int)sh_ - TB_H - start_menu_.height() - 8, mbox, font_);
 			}
 		}
 		else
