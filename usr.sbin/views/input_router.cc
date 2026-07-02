@@ -29,6 +29,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <sys/time.h>
+#include <sys/kbd.h>
 #include <ubix/mailbox.hh>
 #include <ubix/sched.hh>
 #include "input_router.hh"
@@ -310,8 +311,68 @@ void InputRouter::handle_mouse(mouse_event_t &ev)
 	prev_buttons_ = ev.buttons;
 }
 
+/* Raise, un-minimize, and focus the switch target (same effect as a taskbar
+ * click).  Mirrors the click-to-focus path in handle_mouse(). */
+void InputRouter::commit_switch(uint32_t id)
+{
+	Window *w = reg_.find(id);
+	if (w == nullptr)
+		return;
+	w->minimized = false;
+	reg_.z_raise(w);
+	focus_fn_(close_ctx_, w);
+	comp_.invalidate_all();
+}
+
 void InputRouter::handle_kbd(kbd_event_t &ev)
 {
+	/* --- Alt-Tab task switcher (intercepted before window delivery) --- */
+	if (ev.keycode == KEY_LSHIFT)
+		shift_held_ = ev.pressed != 0;
+
+	if (ev.keycode == KEY_LALT)
+	{
+		bool was = alt_held_;
+		alt_held_ = ev.pressed != 0;
+		/* Releasing Alt while the switcher is up commits to the highlighted
+		 * window and swallows this key-up. */
+		if (was && !alt_held_ && switcher_active_)
+		{
+			uint32_t id = comp_.switcher_selected();
+			comp_.switcher_end();
+			switcher_active_ = false;
+			commit_switch(id);
+			return;
+		}
+		/* Otherwise fall through and deliver Alt normally. */
+	}
+
+	if (switcher_active_)
+	{
+		/* While switching, Tab advances, Shift changes direction, Esc cancels;
+		 * every other key is swallowed so nothing leaks to the windows. */
+		if (ev.pressed && ev.keycode == '\t')
+			comp_.switcher_move(shift_held_ ? -1 : 1);
+		else if (ev.pressed && ev.keycode == KEY_ESC)
+		{
+			comp_.switcher_end();
+			switcher_active_ = false;
+		}
+		return;
+	}
+
+	/* Alt+Tab with the switcher not yet up: open it and select the next window. */
+	if (alt_held_ && ev.pressed && ev.keycode == '\t')
+	{
+		if (comp_.switcher_begin() > 0)
+		{
+			switcher_active_ = true;
+			comp_.switcher_move(shift_held_ ? -1 : 1);
+		}
+		return;
+	}
+
+	/* --- Default: deliver the key to the focused window --- */
 	Window *f = reg_.focused();
 	if (!f || f->mbox.empty())
 		return;

@@ -98,6 +98,18 @@ class Compositor
 	void draw_window_preview();
 	bool preview_hit(int x, int y, int w, int h) const;
 
+	/* Alt-Tab task switcher: a centred overlay of live window thumbnails.  The
+	 * id list is captured (MRU order) when the switch begins; sw_sel_ is the
+	 * highlighted tile.  Driven by the InputRouter's Alt/Tab handling. */
+	bool switcher_ = false;
+	std::vector<uint32_t> sw_ids_;
+	int sw_sel_ = 0;
+	void draw_switcher();
+
+	/* Nearest-neighbour downscale of a window's live shared buffer into the
+	 * framebuffer rect (dx,dy,dw,dh).  Shared by the hover preview and switcher. */
+	void blit_scaled(const Window *w, int dx, int dy, int dw, int dh);
+
 	void desktop_fill_rect(int x, int y, int w, int h);
 	void draw_desktop();
 	void load_wallpaper(const char *path);
@@ -138,6 +150,19 @@ class Compositor
 	 * of window @window_id, centred on screen-x @anchor_x just above the taskbar.
 	 * Called in response to the taskbar's DISPLAY_PREVIEW hover signal. */
 	void set_window_preview(bool active, uint32_t window_id, int anchor_x);
+
+	/* Alt-Tab switcher control (called from the InputRouter).  begin() captures
+	 * the current decorated windows in MRU order and shows the overlay, returning
+	 * the count; move() advances the highlight (+1 next, -1 previous, wrapping);
+	 * selected() is the highlighted window id (0 if none); end() hides it. */
+	int switcher_begin();
+	void switcher_move(int dir);
+	uint32_t switcher_selected() const;
+	void switcher_end();
+	bool switcher_active() const
+	{
+		return switcher_;
+	}
 
 	/* Deferred rendering: accumulate damage, render once per tick. */
 	void invalidate(int x, int y, int w, int h);

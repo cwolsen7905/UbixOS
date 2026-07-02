@@ -377,15 +377,125 @@ void Compositor::draw_window_preview()
 	fb_.text(pv_px_ + PV_PAD, pv_py_ + 3, t.c_str(), FB_WHITE, panel);
 
 	/* Scaled content. */
-	int tx = pv_px_ + PV_PAD, ty = pv_py_ + PV_TITLE;
+	blit_scaled(w, pv_px_ + PV_PAD, pv_py_ + PV_TITLE, pv_tw_, pv_th_);
+}
+
+/* Nearest-neighbour downscale of a window's live shared buffer into (dx,dy,dw,dh). */
+void Compositor::blit_scaled(const Window *w, int dx, int dy, int dw, int dh)
+{
+	if (w == nullptr || w->buf == nullptr || w->w <= 0 || w->h <= 0 || dw <= 0 || dh <= 0)
+		return;
 	const uint32_t *buf = (const uint32_t *)w->buf;
 	int stride = (int)(w->pitch / WIN_BPP);
-	for (int dy = 0; dy < pv_th_; dy++)
+	for (int yy = 0; yy < dh; yy++)
 	{
-		int sy = dy * w->h / pv_th_;
-		const uint32_t *srow = buf + (size_t)sy * stride;
-		for (int dx = 0; dx < pv_tw_; dx++)
-			fb_.pixel(tx + dx, ty + dy, srow[dx * w->w / pv_tw_]);
+		const uint32_t *srow = buf + (size_t)(yy * w->h / dh) * stride;
+		for (int xx = 0; xx < dw; xx++)
+			fb_.pixel(dx + xx, dy + yy, srow[xx * w->w / dw]);
+	}
+}
+
+int Compositor::switcher_begin()
+{
+	sw_ids_.clear();
+	/* MRU order: z-stack back is topmost/most-recent, so iterate in reverse.
+	 * Include minimized decorated windows (still in the z-stack) so Alt-Tab can
+	 * restore them; skip closing windows and undecorated surfaces (taskbar, etc). */
+	for (auto it = reg_.z_stack().rbegin(); it != reg_.z_stack().rend(); ++it)
+	{
+		Window *w = *it;
+		if (w->decor_h > 0 && !w->closing)
+			sw_ids_.push_back(w->id);
+	}
+	sw_sel_ = 0;
+	switcher_ = true;
+	invalidate_all();
+	return (int)sw_ids_.size();
+}
+
+void Compositor::switcher_move(int dir)
+{
+	int n = (int)sw_ids_.size();
+	if (n <= 0)
+		return;
+	sw_sel_ = ((sw_sel_ + dir) % n + n) % n;
+	invalidate_all();
+}
+
+uint32_t Compositor::switcher_selected() const
+{
+	if (sw_sel_ < 0 || sw_sel_ >= (int)sw_ids_.size())
+		return 0;
+	return sw_ids_[sw_sel_];
+}
+
+void Compositor::switcher_end()
+{
+	switcher_ = false;
+	sw_ids_.clear();
+	invalidate_all();
+}
+
+/* Centred overlay: a flat panel holding a row of live window thumbnails, the
+ * highlighted one framed in the accent colour with its title brightened. */
+void Compositor::draw_switcher()
+{
+	int n = (int)sw_ids_.size();
+	if (!switcher_ || n <= 0)
+		return;
+
+	const int gap = 16, pad = 20, labelh = FB_FONT_H + 4;
+	int tile_w = 180, tile_h = 120;
+	int maxpw = (int)fb_.width - 80;
+	if (n * tile_w + (n - 1) * gap + 2 * pad > maxpw)
+	{
+		tile_w = (maxpw - 2 * pad - (n - 1) * gap) / n;
+		if (tile_w < 60)
+			tile_w = 60;
+		tile_h = tile_w * 2 / 3;
+	}
+	int cw = n * tile_w + (n - 1) * gap;
+	int panel_w = cw + 2 * pad, panel_h = tile_h + labelh + 2 * pad;
+	int px = ((int)fb_.width - panel_w) / 2, py = ((int)fb_.height - panel_h) / 2;
+
+	uint32_t panel = FB_RGB(0x1E, 0x20, 0x28), border = FB_RGB(0x3C, 0x40, 0x4A);
+	fb_.rect(px, py, panel_w, panel_h, panel);
+	fb_.rect(px, py, panel_w, 1, border);
+	fb_.rect(px, py + panel_h - 1, panel_w, 1, border);
+	fb_.rect(px, py, 1, panel_h, border);
+	fb_.rect(px + panel_w - 1, py, 1, panel_h, border);
+
+	int tx = px + pad, ty = py + pad;
+	for (int i = 0; i < n; i++)
+	{
+		Window *w = reg_.find(sw_ids_[i]);
+		int cx = tx + i * (tile_w + gap);
+		bool sel = (i == sw_sel_);
+		uint32_t tilebg = sel ? FB_RGB(0x2E, 0x34, 0x42) : panel;
+
+		fb_.rect(cx - 4, ty - 4, tile_w + 8, tile_h + labelh + 4, tilebg);
+		if (w != nullptr)
+			blit_scaled(w, cx, ty, tile_w, tile_h);
+		else
+			fb_.rect(cx, ty, tile_w, tile_h, FB_RGB(0x30, 0x30, 0x38));
+
+		if (sel)
+		{
+			uint32_t ac = g_theme_decor_bg;
+			fb_.rect(cx - 4, ty - 4, tile_w + 8, 2, ac);
+			fb_.rect(cx - 4, ty + tile_h + labelh - 2, tile_w + 8, 2, ac);
+			fb_.rect(cx - 4, ty - 4, 2, tile_h + labelh + 4, ac);
+			fb_.rect(cx + tile_w + 2, ty - 4, 2, tile_h + labelh + 4, ac);
+		}
+
+		if (w != nullptr)
+		{
+			int maxc = tile_w / FB_FONT_W;
+			std::string t = w->title;
+			if (maxc > 0 && (int)t.size() > maxc)
+				t.resize((size_t)maxc);
+			fb_.text(cx, ty + tile_h + 2, t.c_str(), sel ? FB_WHITE : FB_RGB(0xB0, 0xB4, 0xC0), tilebg);
+		}
 	}
 }
 
@@ -612,6 +722,7 @@ void Compositor::composite_all()
 		fb_.rect(rp_x_ + rp_w_ - 1, rp_y_, 1, rp_h_, c);
 	}
 	draw_window_preview();
+	draw_switcher();
 	cursor_save(cur_x_, cur_y_);
 	cursor_draw(cur_x_, cur_y_);
 	cur_drawn_ = true;

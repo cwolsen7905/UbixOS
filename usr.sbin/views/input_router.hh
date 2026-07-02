@@ -62,6 +62,13 @@ class InputRouter
 	 * Tracked by id, not pointer, so a destroyed window can't dangle. */
 	uint32_t last_hover_id_ = 0;
 
+	/* Alt-Tab task switcher: modifier state + whether the overlay is up.  Alt+Tab
+	 * opens/advances it; releasing Alt commits, Esc cancels. */
+	bool alt_held_ = false;
+	bool shift_held_ = false;
+	bool switcher_active_ = false;
+	void commit_switch(uint32_t id);
+
 	/* on_close_ is called when the user clicks the close button.
 	 * WindowManager sets this to its own close_window method via a
 	 * captureless lambda + context pointer, avoiding a circular dep. */
