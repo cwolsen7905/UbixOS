@@ -17,6 +17,7 @@
 #ifdef BOARD_RPI3
 
 #include "bringup.h"
+#include <string.h> /* memcpy (TX/RX framing) */
 
 #define USB_BASE (PHYSMAP_BASE + 0x3F980000UL)
 #define USB(off) (*(volatile u_int32_t *)(USB_BASE + (off)))
@@ -93,10 +94,13 @@ static u_int32_t g_smsc_ep_in;   /* bulk IN (RX) endpoint number */
 static u_int32_t g_smsc_ep_out;  /* bulk OUT (TX) endpoint number */
 static u_int32_t g_smsc_bulk_mps = 512; /* bulk endpoint max packet size (HS = 512) */
 static u_int32_t g_tog_in, g_tog_out;   /* per-endpoint data toggles (0=DATA0, 2=DATA1) */
+static u_int32_t g_rx_bytes;            /* bytes received by the last IN transfer */
+int smsc_ready;                         /* NIC up (for the lwIP bridge) */
 
 /* M7.1 forward declarations (definitions follow aarch64_usb_init). */
 static int usb_control_data(u_int32_t devaddr, u_int32_t mps, int in, void *data, u_int32_t len);
-static int g_usb_dbg; /* when set, usb_control logs each stage's result */
+static int g_usb_dbg;   /* when set, usb_control logs each stage's result */
+static int g_usb_quiet; /* when set, suppress per-transfer failure logs (RX polling) */
 
 /** Busy-wait @us microseconds off the virtual counter. */
 static void usb_wait_us(u_int32_t us)
@@ -342,6 +346,7 @@ static int usb_chan0(u_int32_t devaddr,
 	{
 		u_int32_t s = 0;
 		u_int32_t received = 0;
+		int done = 0; /* transfer completed (HCINT.XFRC or GRXSTSP IN-complete/halted) */
 		/* IN XferSize is rounded up to whole packets; OUT is the exact byte count. */
 		u_int32_t xfer = dir_in ? (pktcnt * mps) : len;
 
@@ -370,8 +375,8 @@ static int usb_chan0(u_int32_t devaddr,
 			if (dir_in && (USB(GINTSTS) & GINTSTS_RXFLVL) != 0)
 			{
 				u_int32_t rx = USB(GRXSTSP);
-				u_int32_t bcnt = GRXSTS_BCNT(rx);
-				if (GRXSTS_PKTSTS(rx) == GRXSTS_IN_DATA && bcnt != 0)
+				u_int32_t pktsts = GRXSTS_PKTSTS(rx), bcnt = GRXSTS_BCNT(rx);
+				if (pktsts == GRXSTS_IN_DATA && bcnt != 0)
 				{
 					u_int32_t words = (bcnt + 3) / 4, w, k;
 					for (w = 0; w < words; w++)
@@ -383,28 +388,39 @@ static int usb_chan0(u_int32_t devaddr,
 					}
 					received += bcnt;
 				}
+				else if (pktsts == GRXSTS_IN_COMP || pktsts == GRXSTS_HALTED)
+				{
+					done = 1; /* the channel finished this transfer (slave-mode signal) */
+				}
 				continue; /* re-check for more RX before looking at HCINT */
 			}
 			s = HCINT(0);
 			if (s & (HCINT_XFRC | HCINT_STALL | HCINT_NAK | HCINT_CHH | HCINT_ERRMASK))
 				break;
+			if (done)
+				break;
 			usb_wait_us(1);
 		}
-		if (s & HCINT_XFRC)
-			return (0);
 		if (s & HCINT_STALL)
 		{
-			kprintf("usb: ep0 STALL\n");
+			if (!g_usb_quiet)
+				kprintf("usb: ep0 STALL\n");
 			return (-1); /* protocol stall — fatal, not retryable */
+		}
+		if ((s & HCINT_XFRC) || done)
+		{
+			g_rx_bytes = received; /* IN byte count (0 for OUT / empty poll) */
+			return (0);
 		}
 		usb_wait_us(2000); /* NAK / XACTERR / halt — re-issue */
 	}
-	kprintf("usb: ep0 xfer failed addr=%u dir=%s len=%u pid=%u hcint=0x%X\n",
-	        devaddr,
-	        dir_in ? "IN" : "OUT",
-	        len,
-	        pid,
-	        HCINT(0));
+	if (!g_usb_quiet)
+		kprintf("usb: ep0 xfer failed addr=%u dir=%s len=%u pid=%u hcint=0x%X\n",
+		        devaddr,
+		        dir_in ? "IN" : "OUT",
+		        len,
+		        pid,
+		        HCINT(0));
 	return (-1);
 }
 
@@ -733,6 +749,8 @@ static int smsc_chip_init(void)
 	if (smsc_read_reg(SMSC_HW_CFG, &v) == 0)
 		smsc_write_reg(SMSC_HW_CFG, v | SMSC_HW_CFG_BIR);
 	smsc_write_reg(SMSC_INTR_STATUS, 0xFFFFFFFF);
+	/* Drive the jack LEDs (speed / link+activity / full-duplex). */
+	smsc_write_reg(SMSC_LED_GPIO_CFG, (1u << 24) | (1u << 20) | (1u << 16));
 	smsc_write_reg(SMSC_FLOW, 0);
 	smsc_write_reg(SMSC_AFC_CFG, SMSC_AFC_CFG_DEFAULT);
 	smsc_write_reg(SMSC_VLAN1, 0x8100); /* ETHERTYPE_VLAN */
@@ -859,6 +877,61 @@ static int smsc_find_endpoints(void)
 	return ((g_smsc_ep_in != 0 && g_smsc_ep_out != 0) ? 0 : -1);
 }
 
+/* TX/RX bounce buffers (frame + the 4/8-byte SMSC headers), 4-byte aligned for the
+ * FIFO word I/O. */
+static u_int8_t g_txbuf[2048] __attribute__((aligned(4)));
+static u_int8_t g_rxbuf[2048] __attribute__((aligned(4)));
+
+/**
+ * Transmit one Ethernet frame: prepend the two SMSC TX command words (single
+ * segment) and bulk-OUT the whole thing.  Matches the lwIP bridge's send() hook.
+ *
+ * @return 0 on success, -1 on error.
+ */
+int smsc_send(const void *frame, u_int32_t len)
+{
+	u_int32_t *h = (u_int32_t *)(void *)g_txbuf;
+
+	if (g_smsc_addr == 0 || len == 0 || len > sizeof(g_txbuf) - 8)
+		return (-1);
+	h[0] = (len & 0x7FF) | (1u << 13) | (1u << 12); /* TX_CMD_A: size | FIRST | LAST */
+	h[1] = (len & 0x7FF);                           /* TX_CMD_B: packet length */
+	memcpy(g_txbuf + 8, frame, len);
+	return (usb_bulk(g_smsc_addr, g_smsc_ep_out, 0, g_smsc_bulk_mps, g_txbuf, len + 8));
+}
+
+/**
+ * Poll for one received frame: bulk-IN, parse the 32-bit RX status word for the
+ * length, strip the status header + the 4-byte FCS, and hand the frame to @deliver.
+ *
+ * @return 1 if a frame was delivered, 0 if none / error.
+ */
+int smsc_poll_rx(void (*deliver)(const u_int8_t *, u_int32_t))
+{
+	u_int32_t rxhdr, framelen;
+	int r;
+
+	if (g_smsc_addr == 0)
+		return (0);
+	g_usb_quiet = 1; /* an idle poll (NAK/no-data) is normal — don't log it */
+	r = usb_bulk(g_smsc_addr, g_smsc_ep_in, 1, g_smsc_bulk_mps, g_rxbuf, sizeof(g_rxbuf));
+	g_usb_quiet = 0;
+	if (r != 0)
+		return (0); /* NAK / error → no packet */
+	if (g_rx_bytes < 4 + 4)
+		return (0); /* empty (BIR ZLP) or runt */
+
+	rxhdr = (u_int32_t)g_rxbuf[0] | ((u_int32_t)g_rxbuf[1] << 8) | ((u_int32_t)g_rxbuf[2] << 16) |
+	        ((u_int32_t)g_rxbuf[3] << 24);
+	if (rxhdr & (1u << 15)) /* RX error */
+		return (0);
+	framelen = (rxhdr >> 16) & 0x3FFF; /* includes the 4-byte FCS */
+	if (framelen < 4 + 14 || framelen + 4 > g_rx_bytes)
+		return (0);
+	deliver(g_rxbuf + 4, framelen - 4); /* strip status header + FCS */
+	return (1);
+}
+
 /**
  * M7.4 (step 1+): SET_CONFIGURATION on the SMSC LAN9514, read the chip ID/revision,
  * and obtain the MAC (from the chip registers if programmed, else the VideoCore
@@ -942,6 +1015,7 @@ int aarch64_usb_smsc_probe(void)
 		}
 		kprintf("smsc: chip init done, PHY link %s (bmsr=0x%X)\n", (bmsr & BMSR_LINK) ? "UP" : "down", bmsr);
 	}
+	smsc_ready = 1; /* the NIC is up — the lwIP bridge may start */
 	return (0);
 }
 

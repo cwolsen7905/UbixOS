@@ -243,6 +243,12 @@ int aarch64_bcm_fb_init(void);                  /* allocate the VideoCore frameb
 int aarch64_usb_init(void);      /* bcm_usb.c — DWC2 host: core up + port detect (M7.0) */
 int aarch64_usb_enumerate(void); /* M7.1 — enumerate the root-port device (control transfers) */
 
+/* bcm_usb.c — SMSC LAN9514 USB Ethernet (M7.4); the lwIP bridge NIC interface. */
+extern u_int8_t smsc_mac[6];
+extern int smsc_ready;
+int smsc_send(const void *frame, u_int32_t len);
+int smsc_poll_rx(void (*deliver)(const u_int8_t *, u_int32_t));
+
 /* sys/fs/ubixfs/ubixfs_selftest.c — UbixFS core in-kernel self-test (plan K1). */
 void ubixfs_selftest(void); /* drive the lite-ZFS core over a RAM vdev; logs PASS/FAIL */
 

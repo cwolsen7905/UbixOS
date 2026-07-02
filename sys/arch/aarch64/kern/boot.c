@@ -351,19 +351,18 @@ void kmain_aarch64(u_int64_t dtb_phys)
 			__asm__ volatile("msr daifclr, #2");
 			kprintf("IRQs enabled; timer-driven preemption active.\n");
 
-			/* Bring up the virtio-net NIC (polling) + the lwIP stack: tcpip
-			 * thread, the virtio netif, an RX poll thread, and DHCP. */
-			aarch64_virtio_net_init();
-			aarch64_net_init();
-
-			/* Bring up the scanout framebuffer + input devices (for views/objGFX).
-			 * The Pi uses the VideoCore mailbox framebuffer (M6); QEMU uses
-			 * virtio-gpu + virtio-input/sound. */
+			/* Bring up the scanout framebuffer + input devices (for views/objGFX)
+			 * and the NIC + lwIP.  The Pi uses the VideoCore mailbox framebuffer (M6)
+			 * and the USB SMSC Ethernet (M7); QEMU uses virtio-gpu/input/sound + net.
+			 * On the Pi, net_init runs AFTER usb_init (which brings up the SMSC). */
 #ifdef BOARD_RPI3
 			aarch64_bcm_fb_init();
 			aarch64_fbcon_init(); /* on-screen kernel console (boot log/panic) */
-			aarch64_usb_init();   /* DWC2 USB host: core up + root-port detect (M7.0) */
+			aarch64_usb_init();   /* DWC2 USB host + hub walk + SMSC Ethernet (M7) */
+			aarch64_net_init();   /* lwIP over the SMSC NIC (if it came up) */
 #else
+			aarch64_virtio_net_init();
+			aarch64_net_init();
 			aarch64_virtio_gpu_init();
 			aarch64_fbcon_init(); /* on-screen kernel console (boot log/panic) */
 			aarch64_virtio_input_init();

@@ -7,8 +7,8 @@
  * The i386 net_init (sys/net/net/init.c) is hard-wired to the e1000/ne2k PCI
  * drivers, so aarch64 has its own here: it brings lwIP up over the polling
  * virtio-net driver (sys/arch/aarch64/dev/virtio_net.c).  TX flattens an lwIP
- * pbuf chain and hands it to virtio_net_send(); an RX kernel thread polls the
- * receive used-ring via virtio_net_poll_rx() and feeds each frame to lwIP.
+ * pbuf chain and hands it to NET_SEND(); an RX kernel thread polls the
+ * receive used-ring via NET_POLL_RX() and feeds each frame to lwIP.
  */
 
 #include "bringup.h"
@@ -32,6 +32,20 @@
 #define IFNAME0 'v'
 #define IFNAME1 'n'
 
+/* NIC backend: the SMSC LAN9514 USB Ethernet on the Raspberry Pi, virtio-net on
+ * QEMU.  Both expose the same send/poll_rx/mac/ready interface. */
+#ifdef BOARD_RPI3
+#define NET_MAC smsc_mac
+#define NET_READY smsc_ready
+#define NET_SEND smsc_send
+#define NET_POLL_RX smsc_poll_rx
+#else
+#define NET_MAC virtio_net_mac
+#define NET_READY virtio_net_ready
+#define NET_SEND virtio_net_send
+#define NET_POLL_RX virtio_net_poll_rx
+#endif
+
 static struct netif g_vnet_netif;
 
 /**
@@ -40,7 +54,7 @@ static struct netif g_vnet_netif;
 static void low_level_init(struct netif *netif)
 {
 	netif->hwaddr_len = ETHARP_HWADDR_LEN;
-	memcpy(netif->hwaddr, virtio_net_mac, 6);
+	memcpy(netif->hwaddr, NET_MAC, 6);
 	netif->mtu = 1500;
 	netif->flags = NETIF_FLAG_BROADCAST | NETIF_FLAG_ETHARP | NETIF_FLAG_LINK_UP;
 }
@@ -66,7 +80,7 @@ static err_t low_level_output(struct netif *netif, struct pbuf *p)
 		total += q->len;
 	}
 
-	if (virtio_net_send(tx_scratch, total) != 0)
+	if (NET_SEND(tx_scratch, total) != 0)
 	{
 		LINK_STATS_INC(link.drop);
 		return ERR_IF;
@@ -76,7 +90,7 @@ static err_t low_level_output(struct netif *netif, struct pbuf *p)
 }
 
 /**
- * RX delivery callback (invoked by virtio_net_poll_rx for each received frame):
+ * RX delivery callback (invoked by NET_POLL_RX for each received frame):
  * wrap the frame in a pbuf and push it into lwIP via netif->input (tcpip_input,
  * which is thread-safe — it posts to the tcpip mailbox).
  */
@@ -138,7 +152,7 @@ static void vnet_rx_thread(void *arg)
 	(void)arg;
 	for (;;)
 	{
-		if (virtio_net_poll_rx(vnet_deliver) == 0)
+		if (NET_POLL_RX(vnet_deliver) == 0)
 			sched_wait_event_timeout(&g_vnet_rx_chan, vnet_rx_never, NULL, 1);
 	}
 }
@@ -208,7 +222,7 @@ int aarch64_net_init(void)
 		g_socket_select = lwip_select;
 	}
 
-	if (!virtio_net_ready)
+	if (!NET_READY)
 	{
 		klog(KLOG_WARNING, "net: no virtio-net device, skipping network init");
 		return (0);
