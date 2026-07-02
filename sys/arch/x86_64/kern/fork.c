@@ -16,6 +16,7 @@
 #include <ubixos/sched.h>
 #include <sys/thread.h>
 #include <vmm/vmm.h>     /* vmm_find_free_page, PAGE_SIZE */
+#include <vmm/vm_map.h>  /* vm_map_copy — inherit the demand-fault VMA tree */
 #include <lib/kmalloc.h> /* sysID */
 #include <string.h>
 
@@ -169,6 +170,15 @@ static long x86_64_fork_common(struct x86_64_trapframe *parent_tf, u64 child_sp)
 	fork_copy_fdtable(child, &_current->td);
 	proc_fork_inherit_context(child);
 	proc_fork_signal_init(child, &_current->td);
+
+	/* Inherit the demand-fault VMA tree so the child can fault in pages of its
+	 * (demand-loaded) image that the parent never touched — with its own re-opened
+	 * backing fds (vm_map_copy dups them).  Already-present pages were COW-shared by
+	 * x86_64_fork_copy above; the VMAs cover the not-yet-faulted rest.  Without this a
+	 * forked child that runs any un-faulted code before execve SIGSEGVs.  (rfork
+	 * threads share the leader's tree via the tgid lookup in vmm_demand_fault, so
+	 * only the private-AS fork/clone path copies it.) */
+	vm_map_copy(&child->vm_map, &_current->vm_map);
 
 	/* Child kernel stack: a copy of the parent trapframe at the top (rax = 0), and
 	 * below it a ctx frame whose return address is ret_from_fork. */

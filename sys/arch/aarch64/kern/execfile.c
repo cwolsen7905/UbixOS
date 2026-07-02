@@ -413,6 +413,59 @@ static int build_user_stack(u_int64_t *l1,
 }
 
 /**
+ * Load the dynamic linker named @interp into @l1 at DYN_INTERP_BASE, reusing the
+ * cached interpreter image (g_interp_buf) when it is the same linker as last time
+ * and otherwise reading + caching it.  Shared by the eager (load_dynamic) and
+ * demand (aarch64_exec_replace) exec paths.
+ *
+ * @param out_entry  set to the dynamic linker's entry VA.
+ * @return 0 on success, -1 on failure.
+ */
+static int load_interp_image(const char *interp, u_int64_t *l1, u_int64_t *out_entry)
+{
+	elf64_load_info_t ii;
+	char *ibuf;
+	int isz;
+	int cached;
+
+	/* Reuse the cached interpreter image if this is the same linker; otherwise read
+	 * it and keep it for next time (see g_interp_buf). */
+	cached = (g_interp_buf != NULL && strcmp(interp, g_interp_path) == 0);
+	if (cached)
+	{
+		ibuf = g_interp_buf;
+		isz = g_interp_sz;
+	}
+	else
+	{
+		ibuf = read_elf_file(interp, &isz);
+		if (ibuf == NULL)
+		{
+			kprintf("dyn: cannot load interp %s\n", interp);
+			return (-1);
+		}
+	}
+	if (elf64_load_at(ibuf, l1, DYN_INTERP_BASE, &ii) != 0)
+	{
+		if (!cached)
+			kfree(ibuf);
+		return (-1);
+	}
+	if (!cached)
+	{
+		/* Install into the cache (don't free); drop a previous, different one. */
+		if (g_interp_buf != NULL)
+			kfree(g_interp_buf);
+		g_interp_buf = ibuf;
+		g_interp_sz = isz;
+		strncpy(g_interp_path, interp, sizeof(g_interp_path) - 1);
+		g_interp_path[sizeof(g_interp_path) - 1] = '\0';
+	}
+	*out_entry = ii.entry; /* enter the dynamic linker, not the main exe */
+	return (0);
+}
+
+/**
  * Load a (PIE) dynamically-linked program @image into @l1: map the main exe at
  * DYN_MAIN_BASE, read + map its PT_INTERP dynamic linker at DYN_INTERP_BASE,
  * build the SysV/auxv stack, and report the start PC (the linker's entry) + SP.
@@ -441,46 +494,10 @@ static int load_dynamic(const void *image,
 	if (mi.interp_off != 0)
 	{
 		const char *interp = (const char *)image + mi.interp_off;
-		elf64_load_info_t ii;
-		char *ibuf;
-		int isz;
-		int cached;
 
-		/* Reuse the cached interpreter image if this is the same linker; otherwise
-		 * read it and keep it for next time (see g_interp_buf). */
-		cached = (g_interp_buf != NULL && strcmp(interp, g_interp_path) == 0);
-		if (cached)
-		{
-			ibuf = g_interp_buf;
-			isz = g_interp_sz;
-		}
-		else
-		{
-			ibuf = read_elf_file(interp, &isz);
-			if (ibuf == NULL)
-			{
-				kprintf("dyn: cannot load interp %s\n", interp);
-				return (-1);
-			}
-		}
 		interp_base = DYN_INTERP_BASE;
-		if (elf64_load_at(ibuf, l1, interp_base, &ii) != 0)
-		{
-			if (!cached)
-				kfree(ibuf);
+		if (load_interp_image(interp, l1, &start_entry) != 0)
 			return (-1);
-		}
-		if (!cached)
-		{
-			/* Install into the cache (don't free); drop a previous, different one. */
-			if (g_interp_buf != NULL)
-				kfree(g_interp_buf);
-			g_interp_buf = ibuf;
-			g_interp_sz = isz;
-			strncpy(g_interp_path, interp, sizeof(g_interp_path) - 1);
-			g_interp_path[sizeof(g_interp_path) - 1] = '\0';
-		}
-		start_entry = ii.entry; /* enter the dynamic linker, not the main exe */
 	}
 
 	if (build_user_stack(l1, argv, argc, envp, envc, &mi, interp_base, out_usp) != 0)
@@ -670,26 +687,71 @@ int aarch64_exec_replace(const char *path, char *const *uargv, char *const *uenv
 
 	l1 = pmap_create_user_space();
 
+	/* Peek the ELF type to choose the demand-load base: a PIE/ET_DYN image loads at
+	 * DYN_MAIN_BASE, a static ET_EXEC at its linked address (base 0).  (The base must
+	 * be decided before elf64_load_demand, which applies it to every segment.) */
+	u_int64_t main_base = 0;
+	{
+		fileDescriptor_t *pf = fopen(path, "r");
+		Elf64_Ehdr peek;
+
+		if (pf != NULL)
+		{
+			if (vfs_pread_locked(pf, &peek, 0, sizeof(peek)) == sizeof(peek) && peek.e_type == ET_DYN)
+			{
+				main_base = DYN_MAIN_BASE;
+			}
+			fclose(pf);
+		}
+	}
+
 	/* Build the new image into l1 + a private VMA tree (newmap); _current->vm_map is
 	 * swapped to it only at the point of no return below, so any load failure here
-	 * leaves the old image intact.  A static ET_EXEC is demand-paged — only the
-	 * touched pages ever load — while a dynamic image (PT_INTERP / PIE) falls back to
-	 * the eager loader, which reads the whole file. */
-	/* Higher-half complete (docs/design/aarch64-higher-half-plan.md): TTBR0 is
-	 * user-only, so a static ET_EXEC linked low (clang) no longer collides with the
-	 * kernel.  Try the demand loader first — it returns 0 for a static image it laid
-	 * out as demand-faulted VMAs (only touched pages load), 1 for a dynamic/PIE
-	 * image the caller must eager-load, or <0 on a hard error. */
-	dr = elf64_load_demand(path, l1, &newmap, &info);
+	 * leaves the old image intact.  BOTH a static ET_EXEC and a dynamic/PIE image are
+	 * DEMAND-paged now — only touched pages load, and read-only text/rodata is shared
+	 * + cached across execs through the file-page cache (so a re-exec of clang faults
+	 * its text in with no disk I/O).  For a dynamic image the main exe faults in on
+	 * demand while its (small, g_interp_buf-cached) dynamic linker is loaded eagerly.
+	 * elf64_load_demand returns 0 on success, 1 only if the segment layout can't be a
+	 * demand VMA (two segments in one page) — then fall back to the eager loader — or
+	 * <0 on a hard error. */
+	dr = elf64_load_demand(path, l1, main_base, &newmap, &info);
 	if (dr == 0)
 	{
-		if (build_user_stack(l1, kargv, argc, kenvp, envc, &info, 0, &usp) != 0)
+		u_int64_t interp_base = 0;
+
+		entry = info.entry;
+		if (info.interp_off != 0)
+		{
+			char interp[256];
+			fileDescriptor_t *mf = fopen(path, "r");
+			size_t ilen = (info.interp_sz < sizeof(interp)) ? (size_t)info.interp_sz : sizeof(interp) - 1;
+
+			if (mf == NULL || vfs_pread_locked(mf, interp, (off_t)info.interp_off, ilen) != ilen)
+			{
+				if (mf != NULL)
+					fclose(mf);
+				vm_map_free(&newmap);
+				kprintf("execve: %s cannot read PT_INTERP\n", path);
+				return (-ENOEXEC);
+			}
+			interp[ilen] = '\0';
+			fclose(mf);
+
+			interp_base = DYN_INTERP_BASE;
+			if (load_interp_image(interp, l1, &entry) != 0)
+			{
+				vm_map_free(&newmap);
+				kprintf("execve: %s failed to load\n", path);
+				return (-ENOEXEC);
+			}
+		}
+		if (build_user_stack(l1, kargv, argc, kenvp, envc, &info, interp_base, &usp) != 0)
 		{
 			vm_map_free(&newmap);
 			kprintf("execve: %s stack setup failed\n", path);
 			return (-1);
 		}
-		entry = info.entry;
 	}
 	else if (dr == 1)
 	{

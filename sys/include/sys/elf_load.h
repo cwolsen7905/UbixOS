@@ -54,18 +54,28 @@ typedef struct elf64_load_info
 int elf64_load_at(const void *image, u_int64_t *aspace_root, u_int64_t load_base, elf64_load_info_t *info);
 
 /**
- * Set up a static ET_EXEC's PT_LOAD segments for DEMAND PAGING into @aspace_root,
- * recording file-backed + demand-zero VMAs in @map instead of eagerly copying
- * pages.  Reads only the ELF headers (not the whole file); the segment pages
- * fault in lazily through vmm_demand_fault().  Each file-backed VMA owns its own
- * fopen(@path); one eager page is written per segment at the file/BSS boundary.
+ * Set up an ELF64 image's PT_LOAD segments for DEMAND PAGING into @aspace_root at
+ * @load_base (added to each p_vaddr; pass 0 for an ET_EXEC at its linked address,
+ * a chosen base for an ET_DYN / PIE), recording file-backed + demand-zero VMAs in
+ * @map instead of eagerly copying pages.  Reads only the ELF headers (not the whole
+ * file); the segment pages fault in lazily through vmm_demand_fault(), whose
+ * read-only file pages are shared + cached across processes via the file-page
+ * cache.  Each file-backed VMA owns its own fopen(@path); one eager page is written
+ * per segment at the file/BSS boundary.
  *
- * @param info  out: entry/phdr/phnum/phentsize (same fields as elf64_load_at).
- * @return 0 if set up for demand paging; 1 if the image is dynamic (ET_DYN or
- *         has PT_INTERP) and the caller should fall back to the eager loader;
- *         -1 on an invalid image or a setup failure.
+ * Handles both a static ET_EXEC and a dynamic ET_DYN / PIE (whose PT_INTERP is
+ * reported via info->interp_off/interp_sz so the caller can load the dynamic
+ * linker) — the main image faults in on demand either way.
+ *
+ * @param load_base  VA offset applied to every segment (0 for ET_EXEC).
+ * @param info  out: entry/phdr/phnum/phentsize + PT_INTERP location + is_dyn.
+ * @return 0 if set up for demand paging; 1 if the segment layout cannot be
+ *         represented as demand VMAs (two segments packed into one page) and the
+ *         caller should fall back to the eager loader; -1 on an invalid image or a
+ *         setup failure.
  */
-int elf64_load_demand(const char *path, u_int64_t *aspace_root, struct vm_map *map, elf64_load_info_t *info);
+int elf64_load_demand(
+    const char *path, u_int64_t *aspace_root, u_int64_t load_base, struct vm_map *map, elf64_load_info_t *info);
 
 /* ---- machine-dependent hooks (implemented per 64-bit arch) ---- */
 
@@ -74,6 +84,16 @@ int elf64_load_demand(const char *path, u_int64_t *aspace_root, struct vm_map *m
  * @param executable non-zero for code (EL0/ring-3 executable), zero for data.
  */
 void md_map_user_page(u_int64_t *aspace_root, u_int64_t va, u_int64_t pa, int executable);
+
+/**
+ * Map one 4 KB user page @va -> @pa into @aspace_root READ-ONLY and SHARED: the
+ * frame is owned by the file-page cache (vm_filecache) and mapped into every
+ * process that faults the same read-only file page, so a binary's text/rodata is
+ * one physical copy system-wide.  A write takes a COW fault that gives the writer
+ * a private copy and drops a cache reference.
+ * @param executable non-zero for code (EL0/ring-3 executable), zero for data.
+ */
+void md_map_user_page_shared(u_int64_t *aspace_root, u_int64_t va, u_int64_t pa, int executable);
 
 /**
  * @return non-zero if user VA @va already has a valid mapping in @aspace_root.

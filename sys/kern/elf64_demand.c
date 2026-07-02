@@ -11,9 +11,12 @@
  * vmm_demand_fault() as the program touches them — so a 100 MB binary starts
  * instantly and only the touched pages ever come off disk.
  *
- * Static ET_EXEC only; a dynamic image (ET_DYN / PT_INTERP) returns 1 so the
- * caller falls back to the eager loader (dynamic executables are small).  MI:
- * hardware is reached only through the md_* hooks, the MI VMA tree, and the VFS.
+ * Handles a static ET_EXEC (@load_base 0) and a dynamic ET_DYN / PIE (@load_base
+ * = the chosen load VA); a PT_INTERP is reported through info->interp_off/interp_sz
+ * so the caller loads the dynamic linker.  The only image it cannot represent as
+ * demand VMAs is one that packs two segments into a single page — that returns 1
+ * so the caller falls back to the eager loader.  MI: hardware is reached only
+ * through the md_* hooks, the MI VMA tree, and the VFS.
  */
 
 #include <sys/types.h>
@@ -48,7 +51,8 @@ static u_int32_t prot_of(u_int32_t pflags)
 	return (prot);
 }
 
-int elf64_load_demand(const char *path, u_int64_t *aspace_root, struct vm_map *map, elf64_load_info_t *info)
+int elf64_load_demand(
+    const char *path, u_int64_t *aspace_root, u_int64_t load_base, struct vm_map *map, elf64_load_info_t *info)
 {
 	fileDescriptor_t *hfd;
 	Elf64_Ehdr eh;
@@ -65,20 +69,25 @@ int elf64_load_demand(const char *path, u_int64_t *aspace_root, struct vm_map *m
 		return (-1);
 	}
 
-	/* Native ELF64? */
+	/* Native ELF64 executable or shared object? */
 	if (eh.e_ident[EI_MAG0] != ELFMAG0 || eh.e_ident[EI_MAG1] != ELFMAG1 || eh.e_ident[EI_MAG2] != ELFMAG2 ||
-	    eh.e_ident[EI_MAG3] != ELFMAG3 || eh.e_ident[EI_CLASS] != ELFCLASS64 || eh.e_machine != ELF_TARG_MACH)
+	    eh.e_ident[EI_MAG3] != ELFMAG3 || eh.e_ident[EI_CLASS] != ELFCLASS64 || eh.e_machine != ELF_TARG_MACH ||
+	    (eh.e_type != ET_EXEC && eh.e_type != ET_DYN))
 	{
 		fclose(hfd);
 		return (-1);
 	}
-	if (eh.e_type != ET_EXEC)
-	{
-		fclose(hfd);
-		return (1); /* PIE / ET_DYN — caller uses the eager dynamic path */
-	}
 
-	/* A PT_INTERP makes this dynamic — hand back to the eager loader. */
+	info->entry = load_base + eh.e_entry;
+	info->phdr_va = 0;
+	info->phnum = eh.e_phnum;
+	info->phentsize = eh.e_phentsize;
+	info->interp_off = 0;
+	info->interp_sz = 0;
+	info->is_dyn = (eh.e_type == ET_DYN);
+
+	/* Record the PT_INTERP location (the dynamic-linker path string in the file) so
+	 * the caller can load the interpreter; the main image still demand-faults. */
 	for (i = 0; i < eh.e_phnum; i++)
 	{
 		if (vfs_pread_locked(hfd, &ph, (off_t)(eh.e_phoff + (u_int64_t)i * eh.e_phentsize), sizeof(ph)) !=
@@ -89,18 +98,11 @@ int elf64_load_demand(const char *path, u_int64_t *aspace_root, struct vm_map *m
 		}
 		if (ph.p_type == PT_INTERP)
 		{
-			fclose(hfd);
-			return (1);
+			info->interp_off = ph.p_offset;
+			info->interp_sz = ph.p_filesz;
+			break;
 		}
 	}
-
-	info->entry = eh.e_entry;
-	info->phdr_va = 0;
-	info->phnum = eh.e_phnum;
-	info->phentsize = eh.e_phentsize;
-	info->interp_off = 0;
-	info->interp_sz = 0;
-	info->is_dyn = 0;
 
 	/* Tracks the page-aligned end of the previous PT_LOAD: if a segment's first page
 	 * overlaps the previous segment's last page (two segments packed into one page)
@@ -123,7 +125,7 @@ int elf64_load_demand(const char *path, u_int64_t *aspace_root, struct vm_map *m
 		if (ph.p_type != PT_LOAD || ph.p_memsz == 0)
 			continue;
 
-		seg_vaddr = ph.p_vaddr; /* ET_EXEC: link address (load base 0) */
+		seg_vaddr = load_base + ph.p_vaddr; /* ET_EXEC: link address (base 0); ET_DYN: base + p_vaddr */
 		prot = prot_of(ph.p_flags);
 
 		/* AT_PHDR = in-memory VA of the program headers (in the segment covering e_phoff). */

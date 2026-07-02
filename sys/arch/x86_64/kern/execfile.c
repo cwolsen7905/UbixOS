@@ -20,6 +20,7 @@
 #include <sys/elf64.h>
 #include <sys/elf_load.h>
 #include <vmm/vmm.h>           /* vmm_find_free_page, PAGE_SIZE */
+#include <vmm/vm_map.h>        /* vm_map_t, vm_map_free — demand-fault VMA tree */
 #include <lib/kmalloc.h>       /* sysID */
 #include <fs/vfs/file.h>       /* fopen/fread/fclose */
 #include <x86_64/vmm_layout.h> /* DYN_MAIN_BASE/DYN_INTERP_BASE/DYN_STACK_* */
@@ -183,6 +184,108 @@ static u64 build_dyn_stack(u8 *frame,
 #undef UVA
 }
 
+/* Dynamic-linker image cache.  Every dynamic exec loads the same interpreter
+ * (/lib/ld-musl-x86_64.so.1); read it once and reuse the read-only image across
+ * execs (elf64_load_at copies its segments per load).  Holds the most recently
+ * loaded interp.  Mirrors aarch64's kern/execfile.c. */
+static char *g_interp_buf = NULL;
+static int g_interp_sz = 0;
+static char g_interp_path[256] = {0};
+
+/**
+ * Load the dynamic linker named @interp into @pml4 at DYN_INTERP_BASE, reusing the
+ * cached interpreter image (g_interp_buf) when it is the same linker as last time
+ * and otherwise reading + caching it.  Shared by the eager (load_dynamic) and
+ * demand (sys_execve) exec paths.
+ *
+ * @param out_entry  set to the dynamic linker's entry VA.
+ * @return 0 on success, -1 on failure.
+ */
+static int load_interp_image(const char *interp, u64 pml4, u64 *out_entry)
+{
+	u_int64_t *aspace = (u_int64_t *)(uintptr_t)pml4;
+	elf64_load_info_t ii;
+	char *ibuf;
+	int isz;
+	int cached;
+
+	cached = (g_interp_buf != NULL && strcmp(interp, g_interp_path) == 0);
+	if (cached)
+	{
+		ibuf = g_interp_buf;
+		isz = g_interp_sz;
+	}
+	else
+	{
+		ibuf = read_elf_file(interp, &isz);
+		if (ibuf == 0)
+		{
+			kprintf("dyn: cannot load interp %s\n", interp);
+			return -1;
+		}
+	}
+	if (elf64_load_at(ibuf, aspace, DYN_INTERP_BASE, &ii) != 0)
+	{
+		if (!cached)
+			kfree(ibuf);
+		return -1;
+	}
+	if (!cached)
+	{
+		/* Install into the cache (don't free); drop a previous, different one. */
+		if (g_interp_buf != 0)
+			kfree(g_interp_buf);
+		g_interp_buf = ibuf;
+		g_interp_sz = isz;
+		strncpy(g_interp_path, interp, sizeof(g_interp_path) - 1);
+		g_interp_path[sizeof(g_interp_path) - 1] = '\0';
+	}
+	*out_entry = ii.entry; /* enter the dynamic linker, not the main exe */
+	return 0;
+}
+
+/**
+ * Allocate + map the user stack as one contiguous run of frames and lay down the
+ * SysV argv/env/auxv vector (via build_dyn_stack).  Shared by the eager
+ * (load_dynamic) and demand (sys_execve) exec paths.
+ *
+ * @return 0 on success, -1 on allocation failure.
+ */
+static int build_user_stack(
+    u64 pml4, char **argv, int argc, char **envp, int envc, elf64_load_info_t *mi, u64 interp_base, u64 *out_usp)
+{
+	uintptr_t stack_base, top_kv;
+	int i;
+
+	/* Contiguous frames keep both the kernel P2V view and the user VA linear, so the
+	 * top-down vector may span multiple pages.  256 KB (DYN_STACK_PAGES) is readily
+	 * available at the early-boot execs; a contiguous-alloc failure fails the exec
+	 * cleanly rather than corrupting. */
+	stack_base = vmm_find_free_pages_contig(DYN_STACK_PAGES, sysID);
+	if (stack_base == 0)
+		return -1;
+	memset((void *)P2V(stack_base), 0, (size_t)DYN_STACK_PAGES * PAGE_SIZE);
+	for (i = 0; i < DYN_STACK_PAGES; i++)
+		x86_64_map_user_page_to(
+		    pml4, DYN_STACK_VA + (u64)i * PAGE_SIZE, (u64)(stack_base + (uintptr_t)i * PAGE_SIZE), 1);
+
+	/* build_dyn_stack writes top-down from the topmost page; reserve the lower half
+	 * for runtime growth, the top half (128 KB) for the argv/env/auxv vector. */
+	top_kv = (uintptr_t)P2V(stack_base + (uintptr_t)(DYN_STACK_PAGES - 1) * PAGE_SIZE);
+	*out_usp = build_dyn_stack((u8 *)top_kv,
+	                           DYN_STACK_TOP - PAGE_SIZE,
+	                           argv,
+	                           argc,
+	                           envp,
+	                           envc,
+	                           mi,
+	                           interp_base,
+	                           (u64)(DYN_STACK_PAGES / 2) * PAGE_SIZE);
+	if (*out_usp == 0)
+		return -1;
+	return 0;
+}
+
 /**
  * Load a (PIE) dynamically-linked program @image into @pml4: map the main exe at
  * DYN_MAIN_BASE, read + map its PT_INTERP dynamic linker at DYN_INTERP_BASE,
@@ -207,63 +310,14 @@ static int load_dynamic(
 	if (mi.interp_off != 0)
 	{
 		const char *interp = (const char *)image + mi.interp_off;
-		elf64_load_info_t ii;
-		char *ibuf;
-		int isz;
 
-		kprintf("dyn: interp = %s\n", interp);
-		ibuf = read_elf_file(interp, &isz);
-		if (ibuf == 0)
-		{
-			kprintf("dyn: cannot load interp %s\n", interp);
-			return -1;
-		}
 		interp_base = DYN_INTERP_BASE;
-		if (elf64_load_at(ibuf, aspace, interp_base, &ii) != 0)
-		{
-			kfree(ibuf);
-			return -1;
-		}
-		kfree(ibuf);
-		start_entry = ii.entry; /* enter the dynamic linker, not the main exe */
-	}
-
-	/* Allocate the whole stack as one *contiguous* run of frames.  The argv/env/auxv
-	 * vector is laid down from the top descending, and contiguous frames keep both
-	 * the kernel P2V view and the user VA linear — so the vector can span as many
-	 * pages as it needs (the pointer math in build_dyn_stack stays valid across page
-	 * boundaries) instead of being capped at a single page.  256 KB (DYN_STACK_PAGES)
-	 * is readily available at the early-boot execs; a contiguous-alloc failure fails
-	 * the exec cleanly rather than corrupting. */
-	{
-		uintptr_t stack_base;
-		uintptr_t top_kv;
-		int i;
-
-		stack_base = vmm_find_free_pages_contig(DYN_STACK_PAGES, sysID);
-		if (stack_base == 0)
-			return -1;
-		memset((void *)P2V(stack_base), 0, (size_t)DYN_STACK_PAGES * PAGE_SIZE);
-		for (i = 0; i < DYN_STACK_PAGES; i++)
-			x86_64_map_user_page_to(
-			    pml4, DYN_STACK_VA + (u64)i * PAGE_SIZE, (u64)(stack_base + (uintptr_t)i * PAGE_SIZE), 1);
-
-		/* build_dyn_stack writes top-down from the topmost page.  Reserve the lower
-		 * half of the stack for runtime growth; the argv/env/auxv vector may use the
-		 * top half (128 KB) — far beyond any real argv + environment. */
-		top_kv = (uintptr_t)P2V(stack_base + (uintptr_t)(DYN_STACK_PAGES - 1) * PAGE_SIZE);
-		*out_usp = build_dyn_stack((u8 *)top_kv,
-		                           DYN_STACK_TOP - PAGE_SIZE,
-		                           argv,
-		                           argc,
-		                           envp,
-		                           envc,
-		                           &mi,
-		                           interp_base,
-		                           (u64)(DYN_STACK_PAGES / 2) * PAGE_SIZE);
-		if (*out_usp == 0)
+		if (load_interp_image(interp, pml4, &start_entry) != 0)
 			return -1;
 	}
+
+	if (build_user_stack(pml4, argv, argc, envp, envc, &mi, interp_base, out_usp) != 0)
+		return -1;
 
 	*out_entry = start_entry;
 	return 0;
@@ -388,10 +442,12 @@ static u64 build_dynamic_from_path(const char *path, u64 *out_entry, u64 *out_us
  */
 int sys_execve(struct thread *td, struct sys_execve_args *uap)
 {
-	u64 pml4, entry, usp;
+	u64 pml4, entry = 0, usp = 0, main_base = 0;
 	char *kargv[MAXARG], *kenvp[MAXARG];
 	char namebuf[256];
-	int argc, envc, i;
+	int argc, envc, i, dr;
+	elf64_load_info_t info;
+	vm_map_t newmap = VM_MAP_INIT;
 
 	(void)td;
 
@@ -427,7 +483,92 @@ int sys_execve(struct thread *td, struct sys_execve_args *uap)
 	 * i386 / aarch64.  Done while kargv[] is still live (freed below). */
 	exec_set_name_cmdline(_current, namebuf, kargv, argc);
 
-	pml4 = build_dynamic_argv((const char *)uap->fname, kargv, argc, kenvp, envc, &entry, &usp);
+	pml4 = x86_64_create_user_space();
+	if (pml4 == 0)
+	{
+		for (i = 0; i < argc; i++)
+			if (kargv[i] != namebuf)
+				kfree(kargv[i]);
+		for (i = 0; i < envc; i++)
+			kfree(kenvp[i]);
+		_current->td.td_retval[0] = -ENOEXEC;
+		return (-ENOEXEC);
+	}
+
+	/* Peek the ELF type to choose the demand-load base: a PIE/ET_DYN image loads at
+	 * DYN_MAIN_BASE, a static ET_EXEC at its linked address (base 0).  The base must
+	 * be decided before elf64_load_demand, which applies it to every segment. */
+	{
+		fileDescriptor_t *pf = fopen(namebuf, "r");
+		Elf64_Ehdr peek;
+
+		if (pf != 0)
+		{
+			if (vfs_pread_locked(pf, &peek, 0, sizeof(peek)) == sizeof(peek) && peek.e_type == ET_DYN)
+			{
+				main_base = DYN_MAIN_BASE;
+			}
+			fclose(pf);
+		}
+	}
+
+	/* Build the new image into pml4 + a private VMA tree (newmap); it is swapped into
+	 * _current->vm_map only at the point of no return below.  BOTH a static ET_EXEC and
+	 * a dynamic/PIE image are DEMAND-paged — only touched pages load, and read-only
+	 * text/rodata is shared + cached across execs through the file-page cache.  For a
+	 * dynamic image the main exe faults in on demand while its (small, g_interp_buf-
+	 * cached) dynamic linker is loaded eagerly.  elf64_load_demand returns 0 on
+	 * success, 1 only if the segment layout can't be a demand VMA (two segments in one
+	 * page — then fall back to the eager loader), or <0 on a hard error. */
+	dr = elf64_load_demand(namebuf, (u_int64_t *)(uintptr_t)pml4, main_base, &newmap, &info);
+	if (dr == 0)
+	{
+		u64 interp_base = 0;
+
+		entry = info.entry;
+		if (info.interp_off != 0)
+		{
+			char interp[256];
+			fileDescriptor_t *mf = fopen(namebuf, "r");
+			size_t ilen = (info.interp_sz < sizeof(interp)) ? (size_t)info.interp_sz : sizeof(interp) - 1;
+
+			if (mf == 0 || vfs_pread_locked(mf, interp, (off_t)info.interp_off, ilen) != ilen)
+			{
+				if (mf != 0)
+					fclose(mf);
+				vm_map_free(&newmap);
+				dr = -1;
+			}
+			else
+			{
+				interp[ilen] = '\0';
+				fclose(mf);
+				interp_base = DYN_INTERP_BASE;
+				if (load_interp_image(interp, pml4, &entry) != 0)
+				{
+					vm_map_free(&newmap);
+					dr = -1;
+				}
+			}
+		}
+		if (dr == 0 && build_user_stack(pml4, kargv, argc, kenvp, envc, &info, interp_base, &usp) != 0)
+		{
+			vm_map_free(&newmap);
+			dr = -1;
+		}
+	}
+	else if (dr == 1)
+	{
+		/* Packed-segment image the demand loader can't represent — eager fallback. */
+		char *buf;
+		int sz;
+
+		buf = read_elf_file(namebuf, &sz);
+		if (buf == 0 || load_dynamic(buf, pml4, kargv, argc, kenvp, envc, &entry, &usp) != 0)
+			dr = -1;
+		if (buf != 0)
+			kfree(buf);
+	}
 
 	/* The argv/envp strings are now copied onto the new user stack; free the kernel
 	 * temporaries (but not namebuf, which is on our stack). */
@@ -437,11 +578,12 @@ int sys_execve(struct thread *td, struct sys_execve_args *uap)
 	for (i = 0; i < envc; i++)
 		kfree(kenvp[i]);
 
-	if (pml4 == 0)
+	if (dr != 0)
 	{
 		/* File existed (probed above) but did not build into an image — not a
 		 * loadable ELF.  -ENOEXEC, and set td_retval[0] since the MI dispatch
 		 * returns that (a bare `return -1` would surface as the pre-zeroed 0). */
+		x86_64_free_user_space(pml4);
 		_current->td.td_retval[0] = -ENOEXEC;
 		return (-ENOEXEC);
 	}
@@ -460,6 +602,14 @@ int sys_execve(struct thread *td, struct sys_execve_args *uap)
 	 * enters via iret_to_user, bypassing switch_to's per-task FS.base restore). */
 	_current->md.md_fsbase = 0;
 	__asm__ __volatile__("wrmsr" : : "c"(0xC0000100u), "a"(0u), "d"(0u));
+
+	/* Install the new image's demand-fault VMA tree (backing the lazy PT_LOAD pages),
+	 * releasing the old image's VMAs + their backing file fds.  Empty for an
+	 * eager-loaded (dr==1) image.  Done before the CR3 switch — vm_map_free only
+	 * touches kernel memory + the VFS, not the user address space. */
+	vm_map_free(&_current->vm_map);
+	_current->vm_map = newmap;
+
 	__asm__ __volatile__("mov %0, %%cr3" : : "r"(pml4) : "memory");
 
 	/* Reclaim the replaced image now that we run on the new CR3 — the old space's

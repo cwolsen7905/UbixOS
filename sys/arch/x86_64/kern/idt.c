@@ -16,6 +16,7 @@
 #include <sys/trap.h>           /* struct trapframe */
 #include <machine/signal.h>     /* X86_64_SIGTRAMP_RETADDR, struct ubx_sigcontext */
 #include <sys/sysproto_posix.h> /* struct sys_sigreturn_args, sys_sigreturn */
+#include <vmm/vm_map.h>         /* vmm_demand_fault — lazy PT_LOAD / mmap page faulting */
 
 #define KERNEL_CS 0x08    /* 64-bit code selector (start.S GDT) */
 #define IDT_GATE_INT 0x8E /* present, DPL0, 64-bit interrupt gate */
@@ -198,6 +199,22 @@ void x86_64_exception(struct x86_64_trapframe *tf)
 		__asm__ __volatile__("mov %%cr2, %0" : "=r"(fault_va));
 		if (x86_64_cow_fault(_current->md.md_cr3, fault_va, (int)_current->id) == 0)
 			return; /* resolved — retry the faulting store */
+	}
+
+	/* Demand paging: a NOT-PRESENT fault (#PF error bit P=0) on a VMA-tracked page —
+	 * a demand-loaded ELF segment or a file-backed/anon mmap.  vmm_demand_fault
+	 * materialises the page (read-only file pages shared + cached via vm_filecache,
+	 * writable/anon private) and returns 0 to retry.  Works from ring 3 (a user
+	 * access) and ring 0 (a syscall touching an un-faulted user page, e.g. the argv
+	 * copy).  -1 means no VMA covers it → fall through to the real fault path. */
+	if (tf->vector == 14 && (tf->error & 0x1) == 0 && _current != 0 && _current->md.md_cr3 != 0)
+	{
+		u64 fault_va;
+		__asm__ __volatile__("mov %%cr2, %0" : "=r"(fault_va));
+		if (vmm_demand_fault((u64 *)(uintptr_t)_current->md.md_cr3, (uintptr_t)fault_va) == 0)
+		{
+			return; /* resolved — retry the faulting access */
+		}
 	}
 
 	__asm__ __volatile__("mov %%cr2, %0" : "=r"(cr2));

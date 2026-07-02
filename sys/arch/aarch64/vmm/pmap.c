@@ -188,6 +188,17 @@ void md_map_user_page(u_int64_t *aspace_root, u_int64_t va, u_int64_t pa, int ex
 }
 
 /**
+ * Map a shared, cached, read-only user page for the demand pager (elf_load.h hook):
+ * a file-page-cache frame mapped RO into every process that faults the same file
+ * page.  A write takes a COW fault (pmap_cow_fault) that hands the writer a private
+ * copy.
+ */
+void md_map_user_page_shared(u_int64_t *aspace_root, u_int64_t va, u_int64_t pa, int executable)
+{
+	pmap_map_user_page_shared(aspace_root, va, pa, executable);
+}
+
+/**
  * @return non-zero if @va already has a valid mapping in @aspace_root.
  */
 int md_user_mapped(u_int64_t *aspace_root, u_int64_t va)

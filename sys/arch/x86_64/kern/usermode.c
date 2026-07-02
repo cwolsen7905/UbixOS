@@ -557,6 +557,18 @@ void md_map_user_page(u64 *aspace_root, u64 va, u64 pa, int executable)
 	x86_64_map_user_page_to((u64)(uintptr_t)aspace_root, va, pa, 1);
 }
 
+/**
+ * Map a shared, cached, read-only user page for the demand pager (elf_load.h hook):
+ * a file-page-cache frame mapped RO + PTE_SHARED into every process that faults the
+ * same file page.  A write faults into x86_64_cow_fault, which gives the writer a
+ * private copy.  @executable is unused (x86_64 has no W^X yet — every page is
+ * executable). */
+void md_map_user_page_shared(u64 *aspace_root, u64 va, u64 pa, int executable)
+{
+	(void)executable;
+	x86_64_map_user_page_shared((u64)(uintptr_t)aspace_root, va, pa);
+}
+
 /** @return non-zero if @va already has a valid mapping in @aspace_root. */
 int md_user_mapped(u64 *aspace_root, u64 va)
 {

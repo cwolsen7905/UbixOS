@@ -35,6 +35,7 @@
 #include <ubixos/vitals.h>
 #include <vmm/vmm.h>
 #include <vmm/paging.h>
+#include <vmm/vm_map.h>
 #include <lib/kprintf.h>
 #include <isa/8259.h>
 #include <mpi/mpi.h>
@@ -94,6 +95,14 @@ void endTask(pidType pid)
 	 */
 	if (sched_tgid_others_alive(_current->tgid, _current->id) == 0)
 	{
+		/* Free the demand-fault VMA tree (+ its backing file fds) before reclaiming
+		 * the pages.  A demand-loaded image (execve) leaves file-backed VMAs holding
+		 * an fopen of the binary; without this every exec'd-then-exited process leaks
+		 * those fds (fatal over a build that forks hundreds of clang invocations).
+		 * Same last-thread-of-group guard as the AS free below — an rfork(RFMEM)
+		 * sibling still sharing the address space keeps the leader's VMAs alive. */
+		vm_map_free(&_current->vm_map);
+
 		_current->reap_free_as = 1;
 		vmm_clean_virtual_space(0x400000U);
 	}
