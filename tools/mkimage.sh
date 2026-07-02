@@ -263,6 +263,19 @@ if [ -d share/skel ]; then
 	echo "mkimage: installed skel dotfiles into /home/* and /usr/share/skel"
 fi
 
+# App icons.  The taskbar's Start grid loads /usr/share/icons/<exec-basename>.png
+# per app (via objGFX ogImage), falling back to a hand-drawn glyph when absent —
+# so the dir may be empty for now.  Stage any PNGs kept in the source tree at
+# share/icons/.  (A self-contained ELF-embedded alternative is designed in
+# docs/design/app-icon-embedding-plan.md.)
+mkdir -p "${STAGE}/usr/share/icons"
+if [ -d share/icons ]; then
+	for _ic in share/icons/*.png; do
+		[ -f "$_ic" ] && cp "$_ic" "${STAGE}/usr/share/icons/"
+	done
+	echo "mkimage: installed app icons into /usr/share/icons"
+fi
+
 # --- desktop-profile assets (the base profile ships none of these) ----------
 if [ "${PROFILE}" = desktop ]; then
 	mkdir -p "${STAGE}"/var/fonts "${STAGE}"/var/background "${STAGE}"/var/db \
