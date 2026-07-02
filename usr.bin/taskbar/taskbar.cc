@@ -51,11 +51,12 @@ extern char **environ; /* inherited session env, forwarded to launched apps */
 
 /* Taskbar geometry */
 #define TB_H 32
-#define BTN_W 104     /* start button: hamburger icon + "uBixOS" */
-#define CLOCK_W 86    /* two stacked lines: time over date (right-aligned) */
-#define CLOCK_SIZE 11 /* small clock font so both lines fit the 32px bar */
-#define WIN_BTN_W 96
-#define TRAY_W 34 /* system-tray area (volume) left of the clock */
+#define BTN_W 104       /* start button: hamburger icon + "uBixOS" */
+#define CLOCK_W 86      /* two stacked lines: time over date (right-aligned) */
+#define CLOCK_SIZE 11   /* small clock font so both lines fit the 32px bar */
+#define WIN_BTN_W 40    /* icon-only window button (no title text) */
+#define WIN_BTN_ICON 22 /* glyph tile size inside a window button */
+#define TRAY_W 34       /* system-tray area (volume) left of the clock */
 
 /* Start-menu geometry (a Menu sizes its height to its item count). */
 #define MENU_W 180
@@ -156,6 +157,157 @@ static void font_fg(ogScalableFont &f, uint32_t c)
 static void font_bg(ogScalableFont &f, uint32_t c)
 {
 	f.SetBGColor((c >> 16) & 0xFF, (c >> 8) & 0xFF, c & 0xFF, 255);
+}
+
+/* A colourful per-app tile fill (Win11 icons are varied colours), chosen from a
+ * fixed palette by hashing the label — stable per app, lively as a set. */
+static uint32_t tile_color(const std::string &label)
+{
+	static const uint32_t pal[] = {
+	    0x000078D4u, 0x0000B294u, 0x006CBF4Bu, 0x00B36AE2u, 0x00F2A33Cu, 0x00E5595Cu, 0x0039C2C9u, 0x00E06CA8u};
+	uint32_t h = 2166136261u;
+	for (char c : label)
+		h = (h ^ (uint8_t)c) * 16777619u;
+	return pal[h % (sizeof(pal) / sizeof(pal[0]))];
+}
+
+/* First letter of the label, uppercased — the placeholder tile monogram. */
+static char app_initial(const std::string &label)
+{
+	for (char c : label)
+		if (c > ' ')
+			return (char)((c >= 'a' && c <= 'z') ? c - 32 : c);
+	return '?';
+}
+
+/**
+ * Draw one app's icon into @surf: a colour-coded rounded tile + a simple
+ * hand-drawn glyph keyed off @matchkey (case-insensitive substring match on the
+ * exec path or window title — terminal, browser, folder, gear, chart, card, …),
+ * falling back to a monogram letter from @label for apps we have no glyph for.
+ *
+ * All glyph geometry is expressed relative to a 46px reference tile and scaled to
+ * @sz, so the same drawing serves the 46px Start-menu grid and the ~22px taskbar
+ * window buttons.  Glyphs are intentionally minimal/geometric — no bitmap assets.
+ *
+ * @param matchkey  Match string (exec path or title); matched case-insensitively.
+ * @param label     Monogram source when no glyph matches.
+ */
+static void draw_app_glyph(ogSurface &surf,
+                           int ix,
+                           int iy,
+                           int sz,
+                           const std::string &matchkey,
+                           const std::string &label,
+                           ogScalableFont &font)
+{
+	int cx = ix + sz / 2, cy = iy + sz / 2;
+	auto S = [sz](int n) { return n * sz / 46; }; /* scale 46px reference → sz */
+	const uint32_t W = COL_WHITE;
+
+	std::string e = matchkey;
+	for (char &c : e)
+		if (c >= 'A' && c <= 'Z')
+			c += 32;
+	auto has = [&](const char *k) { return e.find(k) != std::string::npos; };
+
+	uint32_t tile;
+	if (has("term"))
+		tile = 0x001C2430u; /* near-black terminal */
+	else if (has("nsfb") || has("net"))
+		tile = 0x000078D4u; /* browser blue */
+	else if (has("doom"))
+		tile = 0x00A11E1Eu; /* doom red */
+	else if (has("tessera"))
+		tile = 0x008A4FD6u; /* purple */
+	else if (has("cubitaire"))
+		tile = 0x001E8E4Bu; /* felt green */
+	else if (has("files"))
+		tile = 0x00E0A63Cu; /* folder amber */
+	else if (has("disk"))
+		tile = 0x006B7280u; /* disk gray */
+	else if (has("activity"))
+		tile = 0x00159E8Cu; /* teal */
+	else if (has("settings"))
+		tile = 0x00566072u; /* slate */
+	else if (has("about"))
+		tile = 0x000078D4u; /* info blue */
+	else
+		tile = tile_color(label);
+
+	surf.ogFillRoundRect(ix, iy, ix + sz, iy + sz, S(12), tile);
+
+	if (has("term"))
+	{ /* prompt chevron + cursor underscore */
+		surf.ogLine(cx - S(7), cy - S(7), cx + S(1), cy, W);
+		surf.ogLine(cx + S(1), cy, cx - S(7), cy + S(7), W);
+		surf.ogFillRect(cx + S(3), cy + S(6), cx + S(11), cy + S(8), W);
+	}
+	else if (has("nsfb") || has("net"))
+	{ /* globe: circle + equator + meridian */
+		surf.ogCircle(cx, cy, S(13), W);
+		surf.ogHLine(cx - S(13), cx + S(13), cy, W);
+		surf.ogVLine(cx, cy - S(13), cy + S(13), W);
+	}
+	else if (has("doom"))
+	{ /* crosshair */
+		surf.ogCircle(cx, cy, S(11), W);
+		surf.ogHLine(cx - S(15), cx + S(15), cy, W);
+		surf.ogVLine(cx, cy - S(15), cy + S(15), W);
+	}
+	else if (has("tessera"))
+	{ /* 2x2 mosaic */
+		for (int a = 0; a < 2; a++)
+			for (int b = 0; b < 2; b++)
+			{
+				int qx = cx - S(12) + a * S(13), qy = cy - S(12) + b * S(13);
+				surf.ogFillRoundRect(qx, qy, qx + S(10), qy + S(10), S(2), W);
+			}
+	}
+	else if (has("cubitaire"))
+	{ /* playing card + red diamond pip */
+		surf.ogFillRoundRect(cx - S(9), cy - S(12), cx + S(9), cy + S(12), S(3), W);
+		surf.ogFillTriangle(cx, cy - S(6), cx - S(5), cy, cx + S(5), cy, 0x00C41E24u);
+		surf.ogFillTriangle(cx - S(5), cy, cx + S(5), cy, cx, cy + S(6), 0x00C41E24u);
+	}
+	else if (has("files"))
+	{ /* folder: tab + body */
+		surf.ogFillRect(cx - S(13), cy - S(9), cx - S(2), cy - S(5), W);
+		surf.ogFillRoundRect(cx - S(13), cy - S(7), cx + S(13), cy + S(11), S(3), W);
+	}
+	else if (has("disk"))
+	{ /* disk platter */
+		surf.ogCircle(cx, cy, S(13), W);
+		surf.ogFillCircle(cx, cy, S(3), W);
+	}
+	else if (has("activity"))
+	{ /* bar chart */
+		surf.ogFillRect(cx - S(12), cy + S(2), cx - S(6), cy + S(12), W);
+		surf.ogFillRect(cx - S(3), cy - S(6), cx + S(3), cy + S(12), W);
+		surf.ogFillRect(cx + S(6), cy - S(2), cx + S(12), cy + S(12), W);
+	}
+	else if (has("settings"))
+	{ /* gear: white donut + 4 teeth */
+		surf.ogFillCircle(cx, cy, S(12), W);
+		surf.ogFillCircle(cx, cy, S(5), tile);
+		surf.ogFillRect(cx - S(2), cy - S(16), cx + S(2), cy - S(10), W);
+		surf.ogFillRect(cx - S(2), cy + S(10), cx + S(2), cy + S(16), W);
+		surf.ogFillRect(cx - S(16), cy - S(2), cx - S(10), cy + S(2), W);
+		surf.ogFillRect(cx + S(10), cy - S(2), cx + S(16), cy + S(2), W);
+	}
+	else if (has("about"))
+	{ /* info "i" */
+		surf.ogFillCircle(cx, cy - S(8), S(2), W);
+		surf.ogFillRect(cx - S(1), cy - S(3), cx + S(2), cy + S(11), W);
+	}
+	else
+	{ /* fallback: monogram letter */
+		char mono[2] = {app_initial(label), 0};
+		int mw = (int)font.TextWidth(mono);
+		font_fg(font, W);
+		font_bg(font, tile);
+		font.PutString(surf, ix + (sz - mw) / 2, iy + (sz - FONT_SIZE) / 2, mono);
+	}
 }
 
 /* ------------------------------------------------------------------ */
@@ -361,33 +513,6 @@ class Menu
 		return grid_gy0() + grid_rows() * GRID_TILE_H + 10 + MENU_FOOTER_H;
 	}
 
-	/* A colourful per-app tile fill (Win11 icons are varied colours), chosen from
-	 * a fixed palette by hashing the label — stable per app, lively as a set. */
-	static uint32_t tile_color(const std::string &label)
-	{
-		static const uint32_t pal[] = {0x000078D4u,
-		                               0x0000B294u,
-		                               0x006CBF4Bu,
-		                               0x00B36AE2u,
-		                               0x00F2A33Cu,
-		                               0x00E5595Cu,
-		                               0x0039C2C9u,
-		                               0x00E06CA8u};
-		uint32_t h = 2166136261u;
-		for (char c : label)
-			h = (h ^ (uint8_t)c) * 16777619u;
-		return pal[h % (sizeof(pal) / sizeof(pal[0]))];
-	}
-
-	/* First letter of the label, uppercased — the placeholder tile monogram. */
-	static char app_initial(const std::string &label)
-	{
-		for (char c : label)
-			if (c > ' ')
-				return (char)((c >= 'a' && c <= 'z') ? c - 32 : c);
-		return '?';
-	}
-
 	void draw(ogScalableFont &font)
 	{
 		if (grid_)
@@ -468,10 +593,8 @@ class Menu
 		return t + ".";
 	}
 
-	/* Draw one app's icon: a colour-coded rounded tile + a simple hand-drawn glyph
-	 * keyed off the exec path (terminal, browser, folder, gear, chart, card, …),
-	 * falling back to a monogram letter for apps we don't have a glyph for.  Glyphs
-	 * are intentionally minimal/geometric — clean at 46px, no bitmap assets. */
+	/* Draw one grid app's icon: a real per-app PNG (from /usr/share/icons) if we
+	 * have one, else the shared hand-drawn glyph (see draw_app_glyph). */
 	void draw_app_icon(int ix, int iy, int sz, const MenuItem &it, ogSurface *icon, ogScalableFont &font)
 	{
 		/* A real per-app icon (PNG from /usr/share/icons) wins: nearest-neighbour
@@ -492,108 +615,7 @@ class Menu
 			}
 		}
 
-		int cx = ix + sz / 2, cy = iy + sz / 2;
-		const std::string &e = it.exec;
-		auto has = [&](const char *k) { return e.find(k) != std::string::npos; };
-		const uint32_t W = COL_WHITE;
-
-		uint32_t tile;
-		if (has("term"))
-			tile = 0x001C2430u; /* near-black terminal */
-		else if (has("nsfb") || has("Net"))
-			tile = 0x000078D4u; /* browser blue */
-		else if (has("doom"))
-			tile = 0x00A11E1Eu; /* doom red */
-		else if (has("tessera"))
-			tile = 0x008A4FD6u; /* purple */
-		else if (has("cubitaire"))
-			tile = 0x001E8E4Bu; /* felt green */
-		else if (has("files"))
-			tile = 0x00E0A63Cu; /* folder amber */
-		else if (has("diskutil"))
-			tile = 0x006B7280u; /* disk gray */
-		else if (has("activity"))
-			tile = 0x00159E8Cu; /* teal */
-		else if (has("settings"))
-			tile = 0x00566072u; /* slate */
-		else if (has("about"))
-			tile = 0x000078D4u; /* info blue */
-		else
-			tile = tile_color(it.label);
-
-		surf_.ogFillRoundRect(ix, iy, ix + sz, iy + sz, 12, tile);
-
-		if (has("term"))
-		{ /* prompt chevron + cursor underscore */
-			surf_.ogLine(cx - 7, cy - 7, cx + 1, cy, W);
-			surf_.ogLine(cx + 1, cy, cx - 7, cy + 7, W);
-			surf_.ogFillRect(cx + 3, cy + 6, cx + 11, cy + 8, W);
-		}
-		else if (has("nsfb") || has("Net"))
-		{ /* globe: circle + equator + meridian */
-			surf_.ogCircle(cx, cy, 13, W);
-			surf_.ogHLine(cx - 13, cx + 13, cy, W);
-			surf_.ogVLine(cx, cy - 13, cy + 13, W);
-		}
-		else if (has("doom"))
-		{ /* crosshair */
-			surf_.ogCircle(cx, cy, 11, W);
-			surf_.ogHLine(cx - 15, cx + 15, cy, W);
-			surf_.ogVLine(cx, cy - 15, cy + 15, W);
-		}
-		else if (has("tessera"))
-		{ /* 2x2 mosaic */
-			for (int a = 0; a < 2; a++)
-				for (int b = 0; b < 2; b++)
-				{
-					int qx = cx - 12 + a * 13, qy = cy - 12 + b * 13;
-					surf_.ogFillRoundRect(qx, qy, qx + 10, qy + 10, 2, W);
-				}
-		}
-		else if (has("cubitaire"))
-		{ /* playing card + red diamond pip */
-			surf_.ogFillRoundRect(cx - 9, cy - 12, cx + 9, cy + 12, 3, W);
-			surf_.ogFillTriangle(cx, cy - 6, cx - 5, cy, cx + 5, cy, 0x00C41E24u);
-			surf_.ogFillTriangle(cx - 5, cy, cx + 5, cy, cx, cy + 6, 0x00C41E24u);
-		}
-		else if (has("files"))
-		{ /* folder: tab + body */
-			surf_.ogFillRect(cx - 13, cy - 9, cx - 2, cy - 5, W);
-			surf_.ogFillRoundRect(cx - 13, cy - 7, cx + 13, cy + 11, 3, W);
-		}
-		else if (has("diskutil"))
-		{ /* disk platter */
-			surf_.ogCircle(cx, cy, 13, W);
-			surf_.ogFillCircle(cx, cy, 3, W);
-		}
-		else if (has("activity"))
-		{ /* bar chart */
-			surf_.ogFillRect(cx - 12, cy + 2, cx - 6, cy + 12, W);
-			surf_.ogFillRect(cx - 3, cy - 6, cx + 3, cy + 12, W);
-			surf_.ogFillRect(cx + 6, cy - 2, cx + 12, cy + 12, W);
-		}
-		else if (has("settings"))
-		{ /* gear: white donut + 4 teeth */
-			surf_.ogFillCircle(cx, cy, 12, W);
-			surf_.ogFillCircle(cx, cy, 5, tile);
-			surf_.ogFillRect(cx - 2, cy - 16, cx + 2, cy - 10, W);
-			surf_.ogFillRect(cx - 2, cy + 10, cx + 2, cy + 16, W);
-			surf_.ogFillRect(cx - 16, cy - 2, cx - 10, cy + 2, W);
-			surf_.ogFillRect(cx + 10, cy - 2, cx + 16, cy + 2, W);
-		}
-		else if (has("about"))
-		{ /* info "i" */
-			surf_.ogFillCircle(cx, cy - 8, 2, W);
-			surf_.ogFillRect(cx - 1, cy - 3, cx + 2, cy + 11, W);
-		}
-		else
-		{ /* fallback: monogram letter */
-			char mono[2] = {app_initial(it.label), 0};
-			int mw = (int)font.TextWidth(mono);
-			font_fg(font, W);
-			font_bg(font, tile);
-			font.PutString(surf_, ix + (sz - mw) / 2, iy + (sz - FONT_SIZE) / 2, mono);
-		}
+		draw_app_glyph(surf_, ix, iy, sz, it.exec, it.label, font);
 	}
 
 	/* Windows 11-style pinned grid: search pill, "Pinned" label, a grid of
@@ -1381,13 +1403,10 @@ class Taskbar
 			if (active || hover)
 				surf_.ogFillRect(
 				    wx, TB_H - 3, wx + WIN_BTN_W - 1, TB_H - 1, active ? COL_WHITE : TB_BTN_P);
-			font_fg(font_, (active || hover) ? COL_WHITE : 0x00C8C8D2u);
-			font_bg(font_, fill);
-			/* Truncate the title to the button so long names don't spill past the
-			 * highlighted tab (8px left pad + a small right margin). */
-			char label[40];
-			fit_label(font_, label, sizeof(label), tw.title.c_str(), WIN_BTN_W - 14);
-			font_.PutString(surf_, wx + 8, 12, label);
+			/* Icon-only tab: the app's glyph tile, keyed off the window title
+			 * (case-insensitive), centred in the button — matching the Start grid. */
+			int gx = wx + (WIN_BTN_W - WIN_BTN_ICON) / 2, gy = (TB_H - WIN_BTN_ICON) / 2 + 1;
+			draw_app_glyph(surf_, gx, gy, WIN_BTN_ICON, tw.title, tw.title, font_);
 			wx += WIN_BTN_W + 2;
 			i++;
 		}
