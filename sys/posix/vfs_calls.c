@@ -900,7 +900,22 @@ int kern_openat(struct thread *thr, int afd, char *path, int flags, int mode)
 	}
 	else if (oflags & O_WRONLY)
 	{
-		nfp->fd = fopen(path, "w");
+		if (oflags & O_TRUNC)
+		{
+			nfp->fd = fopen(path, "w"); /* write, truncate (and create) */
+		}
+		else
+		{
+			/* Write in place — O_WRONLY without O_TRUNC must NOT truncate an
+			 * existing file.  (llvm-objcopy/ld.lld reopen their output O_WRONLY to
+			 * fchmod it after writing; mapping that to fopen "w" truncated the just-
+			 * written file back to 0 bytes.)  Open for update; create if absent. */
+			nfp->fd = fopen(path, "r+b");
+			if (nfp->fd == NULL && (oflags & O_CREAT))
+			{
+				nfp->fd = fopen(path, "w"); /* create a new empty file */
+			}
+		}
 	}
 	else if (oflags & O_RDWR)
 	{
