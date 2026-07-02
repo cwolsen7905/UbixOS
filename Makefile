@@ -295,6 +295,26 @@ UBIXFS_KERN_SRCS = \
 	sys/fs/ubixfs/ubixfs_selftest.c
 UBIXFS_KERN_INCS = -I${CURDIR}/sys/fs/ubixfs/compat -I${CURDIR}/lib/ubixfs_core -I${CURDIR}/include
 
+# Embedded-blob objects (objcopy'd into obj/sys by the recipe below) — the fixed
+# set the boot path expects.  Kept in sync with the objcopy steps in kernel-aarch64.
+AARCH64_EMBED_OBJS = hello_embed.o hello_musl_embed.o \
+	init_embed.o login_embed.o sh_embed.o spin_embed.o mpitest_embed.o \
+	pipetest_embed.o faulttest_embed.o dirtest_embed.o authd_min_embed.o \
+	hello_dyn_embed.o ldmusl_embed.o worldcat_embed.o
+
+# Explicit final-link object list.  The kbuild for-loops name each object
+# ${OBJ_DIR}/obj/sys/<basename>.o (${f:T:R}.o); enumerate them at parse time rather
+# than link with an on-device `obj/sys/*.o` shell glob — the in-OS shell (oksh) glob
+# breaks on a large directory (obj/sys holds 300+ entries: a .o AND a .d per source),
+# expanding to a partial set and dropping objects from the link.  bmake expands this
+# identically on host and device, so the self-hosted kernel links the same objects.
+AARCH64_KERNEL_OBJS = \
+	${AARCH64_ARCH_ASM_SRCS:T:R:@_o@${OBJ_DIR}/obj/sys/${_o}.o@} \
+	${AARCH64_ARCH_C_SRCS:T:R:@_o@${OBJ_DIR}/obj/sys/${_o}.o@} \
+	${AARCH64_GENERIC_SRCS:T:R:@_o@${OBJ_DIR}/obj/sys/${_o}.o@} \
+	${UBIXFS_KERN_SRCS:T:R:@_o@${OBJ_DIR}/obj/sys/${_o}.o@} \
+	${AARCH64_EMBED_OBJS:@_o@${OBJ_DIR}/obj/sys/${_o}@}
+
 kernel-aarch64:
 	@mkdir -p ${OBJ_DIR}/boot ${OBJ_DIR}/obj/sys
 	@# Arch sources come from the explicit AARCH64_ARCH_{ASM,C}_SRCS lists (above), not
@@ -381,7 +401,7 @@ kernel-aarch64:
 	 else head -c 16 /dev/zero > ${OBJ_DIR}/worldcat; fi
 	@cd ${OBJ_DIR} && ${OBJCOPY} -I binary -O elf64-littleaarch64 -B aarch64 \
 	    worldcat ${OBJ_DIR}/obj/sys/worldcat_embed.o || exit 1
-	${LD} ${AARCH64_LD_EXTRA} -T ${CURDIR}/sys/compile/ldscript.aarch64 -o ${OBJ_DIR}/boot/kernel ${OBJ_DIR}/obj/sys/*.o
+	${LD} ${AARCH64_LD_EXTRA} -T ${CURDIR}/sys/compile/ldscript.aarch64 -o ${OBJ_DIR}/boot/kernel ${AARCH64_KERNEL_OBJS}
 	@echo "aarch64 bring-up kernel linked: ${OBJ_DIR}/boot/kernel"
 
 # ── Raspberry Pi 3 board (ARCH + BOARD) ──────────────────────────────────────
