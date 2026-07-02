@@ -57,6 +57,7 @@
 #define DISPLAY_RESIZE 18          /* display → client: screen geometry changed, re-claim */
 #define DISPLAY_WINRESIZE 19       /* display → client: window resized; re-attach new buffer */
 #define DISPLAY_FOCUS 20           /* display → taskbar: focused window changed */
+#define DISPLAY_PREVIEW 21         /* taskbar → display: show/hide a hover thumbnail */
 
 /* display → client */
 #define DISPLAY_ACK 4     /* region granted; carries window_id + shm token */
@@ -268,6 +269,20 @@ struct display_notify
 struct display_focus
 {
 	uint32_t window_id;
+};
+
+/*
+ * DISPLAY_PREVIEW payload (taskbar → display).
+ * The taskbar sends this when the cursor hovers a window button, asking the
+ * compositor to draw a live scaled thumbnail of that window floating just above
+ * the button.  MPI carries only the signal (id + anchor); the compositor owns
+ * the pixels and does the scaling.  window_id == 0 hides any current preview.
+ * anchor_x is the screen-x the thumbnail is centred on (the button's centre).
+ */
+struct display_preview
+{
+	uint32_t window_id;
+	int32_t anchor_x;
 };
 
 #endif /* _DISPLAY_PROTO_H */

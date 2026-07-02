@@ -290,6 +290,105 @@ void Compositor::set_resize_preview(bool active, int x, int y, int w, int h)
 	invalidate_all();
 }
 
+/* Preview panel geometry constants (Windows-11 hover thumbnail). */
+#define PV_MAXW 208              /* max thumbnail content width  */
+#define PV_MAXH 132              /* max thumbnail content height */
+#define PV_PAD 6                 /* panel inner padding around the content */
+#define PV_TITLE (FB_FONT_H + 6) /* title strip height above the content */
+#define PV_RESERVE 40            /* clearance above the bottom taskbar */
+
+void Compositor::set_window_preview(bool active, uint32_t window_id, int anchor_x)
+{
+	/* Repaint the area the old preview occupied before changing state. */
+	bool was = win_preview_;
+	win_preview_ = false;
+	if (was)
+		invalidate(pv_px_, pv_py_, pv_pw_, pv_ph_);
+
+	if (!active)
+		return;
+
+	Window *w = reg_.find(window_id);
+	if (w == nullptr || w->buf == nullptr || w->w <= 0 || w->h <= 0)
+		return;
+
+	/* Fit the window's aspect ratio into the PV_MAXW x PV_MAXH content box. */
+	int tw = PV_MAXW;
+	int th = (int)((int64_t)tw * w->h / w->w);
+	if (th > PV_MAXH)
+	{
+		th = PV_MAXH;
+		tw = (int)((int64_t)th * w->w / w->h);
+	}
+	if (tw < 1)
+		tw = 1;
+	if (th < 1)
+		th = 1;
+
+	pv_tw_ = tw;
+	pv_th_ = th;
+	pv_pw_ = tw + 2 * PV_PAD;
+	pv_ph_ = th + 2 * PV_PAD + PV_TITLE;
+
+	pv_px_ = anchor_x - pv_pw_ / 2;
+	if (pv_px_ < 4)
+		pv_px_ = 4;
+	if (pv_px_ + pv_pw_ > (int)fb_.width - 4)
+		pv_px_ = (int)fb_.width - 4 - pv_pw_;
+	pv_py_ = (int)fb_.height - PV_RESERVE - pv_ph_;
+	if (pv_py_ < 4)
+		pv_py_ = 4;
+
+	pv_id_ = window_id;
+	win_preview_ = true;
+	invalidate(pv_px_, pv_py_, pv_pw_, pv_ph_);
+}
+
+bool Compositor::preview_hit(int x, int y, int w, int h) const
+{
+	return win_preview_ && x < pv_px_ + pv_pw_ && x + w > pv_px_ && y < pv_py_ + pv_ph_ && y + h > pv_py_;
+}
+
+/* Draw the floating live thumbnail: a flat panel + border, the window title, and
+ * a nearest-neighbour downscale of the window's shared buffer.  Composited last
+ * (over everything), so it must be redrawn whenever its area is repainted. */
+void Compositor::draw_window_preview()
+{
+	if (!win_preview_)
+		return;
+	Window *w = reg_.find(pv_id_);
+	if (w == nullptr || w->buf == nullptr || w->w <= 0 || w->h <= 0)
+		return;
+
+	uint32_t panel = FB_RGB(0x22, 0x24, 0x2C);
+	uint32_t border = FB_RGB(0x3C, 0x40, 0x4A);
+
+	fb_.rect(pv_px_, pv_py_, pv_pw_, pv_ph_, panel);
+	fb_.rect(pv_px_, pv_py_, pv_pw_, 1, border);
+	fb_.rect(pv_px_, pv_py_ + pv_ph_ - 1, pv_pw_, 1, border);
+	fb_.rect(pv_px_, pv_py_, 1, pv_ph_, border);
+	fb_.rect(pv_px_ + pv_pw_ - 1, pv_py_, 1, pv_ph_, border);
+
+	/* Title — truncated by character count to the content width. */
+	int maxc = (pv_pw_ - 2 * PV_PAD) / FB_FONT_W;
+	std::string t = w->title;
+	if (maxc > 0 && (int)t.size() > maxc)
+		t.resize((size_t)maxc);
+	fb_.text(pv_px_ + PV_PAD, pv_py_ + 3, t.c_str(), FB_WHITE, panel);
+
+	/* Scaled content. */
+	int tx = pv_px_ + PV_PAD, ty = pv_py_ + PV_TITLE;
+	const uint32_t *buf = (const uint32_t *)w->buf;
+	int stride = (int)(w->pitch / WIN_BPP);
+	for (int dy = 0; dy < pv_th_; dy++)
+	{
+		int sy = dy * w->h / pv_th_;
+		const uint32_t *srow = buf + (size_t)sy * stride;
+		for (int dx = 0; dx < pv_tw_; dx++)
+			fb_.pixel(tx + dx, ty + dy, srow[dx * w->w / pv_tw_]);
+	}
+}
+
 void Compositor::reopen_fb()
 {
 	if (fb_.reopen() != 0)
@@ -512,6 +611,7 @@ void Compositor::composite_all()
 		fb_.rect(rp_x_, rp_y_, 1, rp_h_, c);
 		fb_.rect(rp_x_ + rp_w_ - 1, rp_y_, 1, rp_h_, c);
 	}
+	draw_window_preview();
 	cursor_save(cur_x_, cur_y_);
 	cursor_draw(cur_x_, cur_y_);
 	cur_drawn_ = true;
@@ -522,6 +622,8 @@ void Compositor::partial_composite(int sx, int sy, int sw, int sh)
 	if (!rect_covered(sx, sy, sw, sh))
 		desktop_fill_rect(sx, sy, sw, sh);
 	reblit_rect(sx, sy, sw, sh);
+	if (preview_hit(sx, sy, sw, sh))
+		draw_window_preview();
 	if (cur_x_ < sx + sw && cur_x_ + CUR_W > sx && cur_y_ < sy + sh && cur_y_ + CUR_H > sy)
 	{
 		cursor_save(cur_x_, cur_y_);
@@ -619,6 +721,10 @@ void Compositor::cursor_move(int dx, int dy)
 	if (!rect_covered(old_x, old_y, CUR_W, CUR_H))
 		desktop_fill_rect(old_x, old_y, CUR_W, CUR_H);
 	reblit_rect(old_x, old_y, CUR_W, CUR_H);
+	/* If the cursor was sitting over the hover preview, the reblit just erased
+	 * that slice of it — redraw the panel so it survives cursor motion. */
+	if (preview_hit(old_x, old_y, CUR_W, CUR_H))
+		draw_window_preview();
 
 	cursor_save(cur_x_, cur_y_);
 	cursor_draw(cur_x_, cur_y_);

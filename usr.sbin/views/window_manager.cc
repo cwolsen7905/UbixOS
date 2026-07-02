@@ -471,6 +471,12 @@ void WindowManager::handle_settitle(struct display_settitle *st)
 	comp_.invalidate_all();
 }
 
+void WindowManager::handle_preview(struct display_preview *pv)
+{
+	comp_.set_window_preview(pv->window_id != 0, pv->window_id, (int)pv->anchor_x);
+	comp_.flush();
+}
+
 void WindowManager::handle_refresh_desktop()
 {
 	comp_.set_desktop_from_registry();
@@ -552,6 +558,7 @@ void WindowManager::dispatch(uint32_t id, void *data)
 	    {DISPLAY_RELEASE, [](WindowManager &wm, void *d) { wm.handle_release((struct display_release *)d); }},
 	    {DISPLAY_RAISE, [](WindowManager &wm, void *d) { wm.handle_raise((struct display_raise *)d); }},
 	    {DISPLAY_SETTITLE, [](WindowManager &wm, void *d) { wm.handle_settitle((struct display_settitle *)d); }},
+	    {DISPLAY_PREVIEW, [](WindowManager &wm, void *d) { wm.handle_preview((struct display_preview *)d); }},
 	    {DISPLAY_REFRESH_DESKTOP,
 	     [](WindowManager &wm, void *d)
 	     {

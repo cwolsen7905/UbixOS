@@ -44,6 +44,8 @@ leak lives in `docs/design/session-plan.md` (post-rfork follow-up).
 | Taskbar | Hamburger start icon + "uBixOS" brand, date+time clock, start-menu footer (logged-in user + power/logout button) | `681dc37f6` |
 | Hover | Hover highlighting on start button, window tabs, menu items, and sticky-parent (parent row stays lit while its submenu is open). Needed an additive `input_router` change: forward motion to the topmost `wants_motion` window under the cursor + a negative-coord "exit" event (tracked by id) | `823183605` |
 | System tray | Volume speaker glyph (red+slashed when muted, level ticks) left of the clock, mirrored from ubistry `/aural/volume`+`/aural/mute`, click opens Settings | `823183605` |
+| Taskbar | Icon-only window buttons: app glyph tile (shared scalable `draw_app_glyph`, keyed off the title) replaces the truncated name | current |
+| Hover preview | Windows-11 live thumbnail: taskbar hover → `DISPLAY_PREVIEW` (id + anchor-x) → compositor floats a scaled window buffer above the button. MPI carries only the signal; the compositor owns the pixels + scaling. Redrawn under cursor motion; hidden on unhover/click | current |
 | Stability | **Logout→relogin reboot fixed** — `vmm_share_region` physical-page use-after-free (see below) | `0e695e4d3` |
 | Stability | objGFX glyph-blit hardened against corrupted cache entries (defensive) | `e44ee148c` |
 | Diagnostics | Kernel segfault report names the VMA/backing file holding `eip` (offline `addr2line`) | `d5c645d7e` |

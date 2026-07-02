@@ -88,6 +88,16 @@ class Compositor
 	bool resize_preview_ = false;
 	int rp_x_ = 0, rp_y_ = 0, rp_w_ = 0, rp_h_ = 0;
 
+	/* Live window thumbnail shown while the cursor hovers a taskbar button
+	 * (Windows-11 style).  The panel geometry is computed once when the preview
+	 * is set so damage/redraw tests are cheap; pv_tw_/pv_th_ are the scaled
+	 * content dimensions inside the panel. */
+	bool win_preview_ = false;
+	uint32_t pv_id_ = 0;
+	int pv_px_ = 0, pv_py_ = 0, pv_pw_ = 0, pv_ph_ = 0, pv_tw_ = 0, pv_th_ = 0;
+	void draw_window_preview();
+	bool preview_hit(int x, int y, int w, int h) const;
+
 	void desktop_fill_rect(int x, int y, int w, int h);
 	void draw_desktop();
 	void load_wallpaper(const char *path);
@@ -123,6 +133,11 @@ class Compositor
 
 	/* Show/update or hide the resize rubber-band outline (full-window coords). */
 	void set_resize_preview(bool active, int x, int y, int w, int h);
+
+	/* Show/update (active=true) or hide (active=false) a floating live thumbnail
+	 * of window @window_id, centred on screen-x @anchor_x just above the taskbar.
+	 * Called in response to the taskbar's DISPLAY_PREVIEW hover signal. */
+	void set_window_preview(bool active, uint32_t window_id, int anchor_x);
 
 	/* Deferred rendering: accumulate damage, render once per tick. */
 	void invalidate(int x, int y, int w, int h);

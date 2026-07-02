@@ -1463,6 +1463,35 @@ class Taskbar
 		ubix::post_message("views", DISPLAY_RAISE, msg);
 	}
 
+	/* Screen-x centre of window button @idx, or -1 if it isn't laid out (matches
+	 * winbtn_hit's layout exactly). */
+	int winbtn_center_x(int idx) const
+	{
+		int wx = 2 + BTN_W + 4;
+		int tray_x = (int)sw_ - CLOCK_W - 2 - TRAY_W;
+		for (int i = 0; i < (int)tracked_.size(); i++)
+		{
+			if (wx + WIN_BTN_W > tray_x - 4)
+				break;
+			if (i == idx)
+				return wx + WIN_BTN_W / 2;
+			wx += WIN_BTN_W + 2;
+		}
+		return -1;
+	}
+
+	/* Ask the compositor to show (id != 0) or hide (id == 0) a hover thumbnail of
+	 * the given window, centred on @anchor_x.  The compositor owns the pixels. */
+	void send_preview(uint32_t id, int anchor_x)
+	{
+		mpi_message_t msg = {};
+		struct display_preview *dp = (struct display_preview *)msg.data;
+		msg.header = DISPLAY_PREVIEW;
+		dp->window_id = id;
+		dp->anchor_x = anchor_x;
+		ubix::post_message("views", DISPLAY_PREVIEW, msg);
+	}
+
       public:
 	bool init(ubix::Mailbox &mbox, const char *font_path)
 	{
@@ -1700,6 +1729,13 @@ class Taskbar
 			bool hv = !exited && vol_hit(me->x);
 			if (hs != hover_start_ || ht != hover_tab_ || hv != hover_vol_)
 			{
+				if (ht != hover_tab_)
+				{
+					if (ht >= 0)
+						send_preview(tracked_[ht].id, winbtn_center_x(ht));
+					else
+						send_preview(0, 0);
+				}
 				hover_start_ = hs;
 				hover_tab_ = ht;
 				hover_vol_ = hv;
@@ -1790,6 +1826,8 @@ class Taskbar
 		if (wi >= 0)
 		{
 			close_menus();
+			send_preview(0, 0); /* dismiss the hover thumbnail on activation */
+			hover_tab_ = -1;
 			raise_window(tracked_[wi].id);
 			return;
 		}
