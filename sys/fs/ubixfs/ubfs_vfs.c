@@ -35,9 +35,6 @@
 /* The dataset every fresh pool carries (created by the host `ubfs mkpool`). */
 #define ROOT_DS "root"
 
-/* Max directory entries materialised per opendir (K2 caps; grown if needed). */
-#define UBFS_DIR_MAX 256
-
 /* Backing-image path for the next mount (set via ubfs_vfs_set_backing). */
 static char g_backing[256] = "/pool.img";
 
@@ -70,20 +67,23 @@ struct ubfs_file
 	uint64_t obj;
 };
 
-/* One materialised directory entry. */
-struct ubfs_collected
-{
-	char name[256];
-	uint64_t obj;
-	u_int8_t type;
-};
-
-/* Per-opendir state, stored in kDIR_t::dirHandle. */
+/* Per-opendir streaming cursor, stored in kDIR_t::dirHandle.
+ *
+ * readdir STREAMS the on-disk directory one slot per call instead of
+ * materialising every entry into a fixed array up front.  The old fixed
+ * ents[UBFS_DIR_MAX=256] silently truncated any directory with more than 256
+ * entries — a self-hosted build's obj dir holds 300+ (.o + .d per source), so
+ * `ls`/glob saw a partial listing and the kernel link dropped objects.  The
+ * on-disk layout is [uint64_t count][ubfs_dirent_t x count] (ubfs_dir.h); we
+ * walk it with a raw-slot cursor, so any directory size works with O(1) memory. */
 struct ubfs_dir
 {
-	int count;
-	int idx;
-	struct ubfs_collected ents[UBFS_DIR_MAX];
+	struct ubfs_mount *m;
+	uint64_t dirobj; /* the directory object being read */
+	uint64_t parent; /* parent object, for ".." */
+	uint64_t count;  /* high-water slot count (object header at offset 0) */
+	uint64_t slot;   /* next raw slot to examine (0..count) */
+	int dots;        /* 0 = emit ".", 1 = emit "..", 2 = emit on-disk entries */
 };
 
 /* The most-recently mounted instance, for the argument-less vfsSync hook. */
@@ -553,23 +553,8 @@ static int ubfs_vfs_close(void *res)
 	return (0);
 }
 
-/* readdir collector: materialise entries into the ubfs_dir array. */
-static int collect_cb(void *arg, const char *name, uint64_t obj, u_int8_t type)
-{
-	struct ubfs_dir *d = (struct ubfs_dir *)arg;
-
-	if (d->count >= UBFS_DIR_MAX)
-		return (0);
-	strncpy(d->ents[d->count].name, name, sizeof(d->ents[0].name) - 1);
-	d->ents[d->count].name[sizeof(d->ents[0].name) - 1] = '\0';
-	d->ents[d->count].obj = obj;
-	d->ents[d->count].type = type;
-	d->count++;
-	return (0);
-}
-
 /**
- * vfsOpenDir: resolve @path to a directory and materialise its entries.
+ * vfsOpenDir: resolve @path to a directory and set up a streaming read cursor.
  *
  * @return 1 on success, 0 if @path is not a directory in the pool.
  */
@@ -578,7 +563,7 @@ static int ubfs_vfs_opendir(const char *path, kDIR_t *dir)
 	struct ubfs_mount *m;
 	struct ubfs_dir *d;
 	ubfs_inode_t in;
-	uint64_t obj;
+	uint64_t obj, count = 0;
 
 	if (dir == 0 || dir->mp == 0 || dir->mp->fsInfo == 0)
 		return (0);
@@ -589,25 +574,33 @@ static int ubfs_vfs_opendir(const char *path, kDIR_t *dir)
 	if (ubfs_fs_getattr(&m->fs, obj, &in) < 0 || (in.mode & UBFS_S_IFMT) != UBFS_S_IFDIR)
 		return (0);
 
+	/* The directory object's first 8 bytes are its high-water slot count (a fresh
+	 * or empty directory reads back 0 — the object is zero-filled).  Read it with
+	 * ubfs_dmu_read, exactly as the core ubfs_dir_* helpers do, so the streamed view
+	 * matches lookup's. */
+	if (ubfs_dmu_read(m->fs.os, obj, 0, &count, sizeof(count)) < 0)
+		count = 0;
+
 	d = (struct ubfs_dir *)kmalloc(sizeof(*d));
 	if (d == 0)
 		return (0);
-	d->count = 0;
-	d->idx = 0;
-
-	/* Synthesize "." and ".." up front.  UbixFS (ZFS-style) stores no dot entries
-	 * on disk, but POSIX readdir() and tools (`ls -a`, find) expect them; "." is
-	 * the directory itself and ".." is its parent (in.parent, self for the root). */
-	collect_cb(d, ".", obj, UBFS_DT_DIR);
-	collect_cb(d, "..", (in.parent != 0) ? in.parent : obj, UBFS_DT_DIR);
-	ubfs_fs_readdir(&m->fs, obj, collect_cb, d);
+	d->m = m;
+	d->dirobj = obj;
+	/* UbixFS (ZFS-style) stores no dot entries on disk, but POSIX readdir() and
+	 * tools expect them; "." is the directory, ".." its parent (self for the root). */
+	d->parent = (in.parent != 0) ? in.parent : obj;
+	d->count = count;
+	d->slot = 0;
+	d->dots = 0;
 
 	dir->dirHandle = d;
 	return (1);
 }
 
 /**
- * vfsReadDir: hand back the next materialised entry.
+ * vfsReadDir: hand back the next entry, streamed one on-disk slot per call.
+ * Emits "." then ".." first, then walks the raw dirent slots, skipping freed
+ * ones (obj == 0).  No fixed cap — any directory size works.
  *
  * @return 0 on a returned entry, -1 at end of directory.
  */
@@ -618,15 +611,44 @@ static int ubfs_vfs_readdir(kDIR_t *dir, struct kdirent *ent)
 	if (dir == 0 || dir->dirHandle == 0)
 		return (-1);
 	d = (struct ubfs_dir *)dir->dirHandle;
-	if (d->idx >= d->count)
-		return (-1);
 
-	ent->d_ino = (u_int32_t)d->ents[d->idx].obj;
-	ent->d_type = (d->ents[d->idx].type == UBFS_DT_DIR) ? KDT_DIR : KDT_REG;
-	strncpy(ent->d_name, d->ents[d->idx].name, sizeof(ent->d_name) - 1);
-	ent->d_name[sizeof(ent->d_name) - 1] = '\0';
-	d->idx++;
-	return (0);
+	if (d->dots == 0)
+	{
+		d->dots = 1;
+		ent->d_ino = (u_int32_t)d->dirobj;
+		ent->d_type = KDT_DIR;
+		strncpy(ent->d_name, ".", sizeof(ent->d_name) - 1);
+		ent->d_name[sizeof(ent->d_name) - 1] = '\0';
+		return (0);
+	}
+	if (d->dots == 1)
+	{
+		d->dots = 2;
+		ent->d_ino = (u_int32_t)d->parent;
+		ent->d_type = KDT_DIR;
+		strncpy(ent->d_name, "..", sizeof(ent->d_name) - 1);
+		ent->d_name[sizeof(ent->d_name) - 1] = '\0';
+		return (0);
+	}
+
+	while (d->slot < d->count)
+	{
+		ubfs_dirent_t de;
+		uint64_t off = sizeof(uint64_t) + d->slot * UBFS_DIRENT_SIZE;
+
+		d->slot++;
+		memset(&de, 0, sizeof(de));
+		if (ubfs_dmu_read(d->m->fs.os, d->dirobj, off, &de, sizeof(de)) < 0)
+			return (-1);
+		if (de.obj == 0)
+			continue; /* freed slot */
+		ent->d_ino = (u_int32_t)de.obj;
+		ent->d_type = (de.type == UBFS_DT_DIR) ? KDT_DIR : KDT_REG;
+		strncpy(ent->d_name, de.name, sizeof(ent->d_name) - 1);
+		ent->d_name[sizeof(ent->d_name) - 1] = '\0';
+		return (0);
+	}
+	return (-1);
 }
 
 /**
