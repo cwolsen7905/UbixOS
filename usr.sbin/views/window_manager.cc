@@ -337,6 +337,8 @@ void WindowManager::handle_claim(struct display_claim_req *creq)
 	w->mbox = creq->reply;
 	w->sender_pid = creq->sender_pid;
 	w->wants_motion = creq->wants_motion != 0;
+	w->opacity = creq->opacity != 0 ? creq->opacity : 255; /* 0 = unset → opaque */
+	w->blur_radius = creq->blur_radius;
 	/* Resize constraints: default to fixed at the granted size. */
 	w->min_w = creq->min_w > 0 ? creq->min_w : ww;
 	w->min_h = creq->min_h > 0 ? creq->min_h : wh;

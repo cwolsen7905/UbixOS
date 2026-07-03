@@ -55,12 +55,14 @@ class Window
 	uint32_t pitch;
 	void *buf; /* page-aligned region shared with client */
 	int decor_h;
-	bool closing = false;                           /* close button clicked; awaiting DISPLAY_RELEASE */
-	bool minimized = false;                         /* hidden to the taskbar; restored via DISPLAY_RAISE */
-	bool maximized = false;                         /* filling the screen; restore returns to saved_* */
-	bool wants_motion = false;                      /* client opted into pointer-motion events (DISPLAY_CLAIM) */
-	int sender_pid = 0;                             /* client PID — needed to re-share the buffer on resize */
-	int min_w = 0, min_h = 0, max_w = 0, max_h = 0; /* resize constraints (0 = fixed) */
+	bool closing = false;      /* close button clicked; awaiting DISPLAY_RELEASE */
+	bool minimized = false;    /* hidden to the taskbar; restored via DISPLAY_RAISE */
+	bool maximized = false;    /* filling the screen; restore returns to saved_* */
+	bool wants_motion = false; /* client opted into pointer-motion events (DISPLAY_CLAIM) */
+	uint8_t opacity = 255;     /* 255 = opaque; <255 alpha-blends over what's behind it */
+	uint8_t blur_radius = 0;   /* >0 = acrylic: blur the backdrop before blending (needs opacity<255) */
+	int sender_pid = 0;        /* client PID — needed to re-share the buffer on resize */
+	int min_w = 0, min_h = 0, max_w = 0, max_h = 0;         /* resize constraints (0 = fixed) */
 	int saved_x = 0, saved_y = 0, saved_w = 0, saved_h = 0; /* geometry before maximize/snap */
 	std::string title;
 	std::string mbox;
@@ -172,7 +174,38 @@ class Window
 
 	void blit_to(ICanvas &canvas) const
 	{
-		canvas.blit(x, y + decor_h, w, h, (const uint32_t *)buf, (int)(pitch / WIN_BPP));
+		if (opacity >= 255)
+		{
+			canvas.blit(x, y + decor_h, w, h, (const uint32_t *)buf, (int)(pitch / WIN_BPP));
+			return;
+		}
+		blend_rect(canvas, x, y + decor_h, x + w, y + decor_h + h);
+	}
+
+	/* Alpha-blend the window's content over whatever is already in @canvas, over
+	 * the clip rectangle [bx0,by0)-(bx1,by1) (framebuffer coords, intersected with
+	 * the content area).  Used for translucent windows (opacity < 255); the caller
+	 * must have drawn the background + lower windows into @canvas first. */
+	void blend_rect(ICanvas &canvas, int bx0, int by0, int bx1, int by1) const
+	{
+		int cy = y + decor_h;
+		if (bx0 < x)
+			bx0 = x;
+		if (by0 < cy)
+			by0 = cy;
+		if (bx1 > x + w)
+			bx1 = x + w;
+		if (by1 > cy + h)
+			by1 = cy + h;
+		int stride = (int)(pitch / WIN_BPP);
+		const uint32_t *src = (const uint32_t *)buf;
+		for (int py = by0; py < by1; py++)
+		{
+			const uint32_t *srow = src + (size_t)(py - cy) * stride;
+			for (int px = bx0; px < bx1; px++)
+				canvas.pixel(
+				    px, py, ogSurface::ogBlendColor(canvas.read(px, py), srow[px - x], opacity));
+		}
 	}
 
 	/* Draw the resize grip (three diagonal dots) at the bottom-right corner. */

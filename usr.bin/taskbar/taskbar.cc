@@ -57,6 +57,8 @@ extern char **environ; /* inherited session env, forwarded to launched apps */
 #define WIN_BTN_W 40    /* icon-only window button (no title text) */
 #define WIN_BTN_ICON 22 /* glyph tile size inside a window button */
 #define TRAY_W 34       /* system-tray area (volume) left of the clock */
+#define TB_OPACITY 214  /* strip translucency (0..255, 255=opaque); compositor blends */
+#define TB_BLUR 10      /* backdrop blur radius (px) — acrylic frost behind the strip */
 
 /* Start-menu geometry (a Menu sizes its height to its item count). */
 #define MENU_W 180
@@ -1527,7 +1529,9 @@ class Taskbar
 		creq->h = TB_H;
 		creq->sender_pid = ubix::pid();
 		creq->no_decor = 1;
-		creq->wants_motion = 1; /* receive hover motion for highlighting */
+		creq->wants_motion = 1;     /* receive hover motion for highlighting */
+		creq->opacity = TB_OPACITY; /* translucent strip (compositor blends it) */
+		creq->blur_radius = TB_BLUR;
 		std::strncpy(creq->title, "taskbar", sizeof(creq->title) - 1);
 		creq->title[sizeof(creq->title) - 1] = '\0';
 		std::strncpy(creq->reply, "taskbar", sizeof(creq->reply) - 1);
@@ -1616,7 +1620,9 @@ class Taskbar
 		creq->h = TB_H;
 		creq->sender_pid = ubix::pid();
 		creq->no_decor = 1;
-		creq->wants_motion = 1; /* receive hover motion for highlighting */
+		creq->wants_motion = 1;     /* receive hover motion for highlighting */
+		creq->opacity = TB_OPACITY; /* translucent strip (compositor blends it) */
+		creq->blur_radius = TB_BLUR;
 		std::strncpy(creq->title, "taskbar", sizeof(creq->title) - 1);
 		creq->title[sizeof(creq->title) - 1] = '\0';
 		std::strncpy(creq->reply, "taskbar", sizeof(creq->reply) - 1);

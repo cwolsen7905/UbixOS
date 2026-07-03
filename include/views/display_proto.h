@@ -95,6 +95,15 @@ struct display_claim_req
 	 * tracking (e.g. the NetSurf framebuffer frontend).  Trailing field so
 	 * existing claim layouts are unchanged. */
 	uint8_t wants_motion;
+	/* Window opacity for compositing, 1..255 (255 = opaque).  0 means "unset" and
+	 * is treated as opaque, so a zero-initialised claim stays fully opaque.  The
+	 * compositor alpha-blends the whole window over what's behind it — used for a
+	 * translucent taskbar / pop-overs.  Trailing field: existing layouts unchanged. */
+	uint8_t opacity;
+	/* Backdrop blur radius in pixels for a translucent window (0 = none).  When
+	 * >0 and opacity<255, the compositor box-blurs what's behind the window before
+	 * blending its tint — an acrylic/frosted-glass panel.  Trailing field. */
+	uint8_t blur_radius;
 };
 
 /*

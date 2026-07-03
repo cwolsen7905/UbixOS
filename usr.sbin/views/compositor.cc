@@ -395,6 +395,118 @@ void Compositor::blit_scaled(const Window *w, int dx, int dy, int dw, int dh)
 	}
 }
 
+/* One separable box-blur pass along rows (horizontal); (dx,dy) index a running
+ * sum of the 2r+1-wide window with edge clamping.  Integer-only (no SSE/float). */
+static void box_blur_h(const uint32_t *src, uint32_t *dst, int w, int h, int r)
+{
+	int win = 2 * r + 1;
+	for (int j = 0; j < h; j++)
+	{
+		const uint32_t *s = src + (size_t)j * w;
+		uint32_t *d = dst + (size_t)j * w;
+		int rs = 0, gs = 0, bs = 0;
+		for (int k = -r; k <= r; k++)
+		{
+			int idx = k < 0 ? 0 : (k >= w ? w - 1 : k);
+			rs += (s[idx] >> 16) & 0xFF;
+			gs += (s[idx] >> 8) & 0xFF;
+			bs += s[idx] & 0xFF;
+		}
+		for (int i = 0; i < w; i++)
+		{
+			d[i] = (uint32_t)((rs / win) << 16 | (gs / win) << 8 | (bs / win));
+			int add = i + r + 1;
+			add = add >= w ? w - 1 : add;
+			int sub = i - r;
+			sub = sub < 0 ? 0 : sub;
+			rs += (int)((s[add] >> 16) & 0xFF) - (int)((s[sub] >> 16) & 0xFF);
+			gs += (int)((s[add] >> 8) & 0xFF) - (int)((s[sub] >> 8) & 0xFF);
+			bs += (int)(s[add] & 0xFF) - (int)(s[sub] & 0xFF);
+		}
+	}
+}
+
+/* Separable box-blur pass along columns (vertical); mirror of box_blur_h. */
+static void box_blur_v(const uint32_t *src, uint32_t *dst, int w, int h, int r)
+{
+	int win = 2 * r + 1;
+	for (int i = 0; i < w; i++)
+	{
+		int rs = 0, gs = 0, bs = 0;
+		for (int k = -r; k <= r; k++)
+		{
+			int idx = k < 0 ? 0 : (k >= h ? h - 1 : k);
+			const uint32_t p = src[(size_t)idx * w + i];
+			rs += (p >> 16) & 0xFF;
+			gs += (p >> 8) & 0xFF;
+			bs += p & 0xFF;
+		}
+		for (int j = 0; j < h; j++)
+		{
+			dst[(size_t)j * w + i] = (uint32_t)((rs / win) << 16 | (gs / win) << 8 | (bs / win));
+			int add = j + r + 1;
+			add = add >= h ? h - 1 : add;
+			int sub = j - r;
+			sub = sub < 0 ? 0 : sub;
+			const uint32_t pa = src[(size_t)add * w + i], ps = src[(size_t)sub * w + i];
+			rs += (int)((pa >> 16) & 0xFF) - (int)((ps >> 16) & 0xFF);
+			gs += (int)((pa >> 8) & 0xFF) - (int)((ps >> 8) & 0xFF);
+			bs += (int)(pa & 0xFF) - (int)(ps & 0xFF);
+		}
+	}
+}
+
+void Compositor::blur_region(int x, int y, int w, int h, int radius)
+{
+	if (x < 0)
+	{
+		w += x;
+		x = 0;
+	}
+	if (y < 0)
+	{
+		h += y;
+		y = 0;
+	}
+	if (x + w > (int)fb_.width)
+		w = (int)fb_.width - x;
+	if (y + h > (int)fb_.height)
+		h = (int)fb_.height - y;
+	if (w <= 0 || h <= 0 || radius <= 0)
+		return;
+
+	size_t n = (size_t)w * h;
+	blur_a_.assign(n, 0);
+	blur_b_.assign(n, 0);
+	for (int j = 0; j < h; j++)
+		for (int i = 0; i < w; i++)
+			blur_a_[(size_t)j * w + i] = fb_.read(x + i, y + j);
+
+	/* Two passes for a smoother, more gaussian-like falloff than a single box. */
+	for (int pass = 0; pass < 2; pass++)
+	{
+		box_blur_h(blur_a_.data(), blur_b_.data(), w, h, radius);
+		box_blur_v(blur_b_.data(), blur_a_.data(), w, h, radius);
+	}
+
+	for (int j = 0; j < h; j++)
+		for (int i = 0; i < w; i++)
+			fb_.pixel(x + i, y + j, blur_a_[(size_t)j * w + i]);
+}
+
+bool Compositor::over_blur_window(int x, int y, int w, int h) const
+{
+	for (auto *win : reg_.z_stack())
+	{
+		if (win->minimized || win->opacity >= 255 || win->blur_radius == 0)
+			continue;
+		int cy = win->y + win->decor_h;
+		if (x < win->x + win->w && x + w > win->x && y < cy + win->h && y + h > win->y)
+			return true;
+	}
+	return false;
+}
+
 int Compositor::switcher_begin()
 {
 	sw_ids_.clear();
@@ -524,6 +636,10 @@ bool Compositor::rect_covered(int rx, int ry, int rw, int rh)
 	{
 		if (w->minimized)
 			continue;
+		/* A translucent window does not hide what's behind it, so it must not
+		 * suppress the desktop refill — the blend needs a fresh background. */
+		if (w->opacity < 255)
+			continue;
 		int cy = w->y + w->decor_h;
 		if (w->x <= rx && w->y <= ry && w->x + w->w >= rx + rw && cy + w->h >= ry + rh)
 			return true;
@@ -541,21 +657,34 @@ void Compositor::reblit_rect(int rx, int ry, int rw, int rh)
 
 		draw_window_shadow(w, rx, ry, rw, rh);
 
+		/* Translucent+blur: blur the freshly-drawn backdrop over the window's full
+		 * content region before the tint blends (flush() promoted the damage to the
+		 * window bounds, so the whole backdrop is present — no seams, no accumulation). */
+		if (w->opacity < 255 && w->blur_radius > 0)
+			blur_region(w->x, cy, w->w, w->h, w->blur_radius);
+
 		int x1 = (rx > w->x) ? rx : w->x;
 		int y1 = (ry > cy) ? ry : cy;
 		int x2 = (rx + rw < w->x + w->w) ? rx + rw : w->x + w->w;
 		int y2 = (ry + rh < cy + w->h) ? ry + rh : cy + w->h;
 		if (x2 > x1 && y2 > y1)
 		{
-			int bx = x1 - w->x;
-			int by = y1 - cy;
-			fb_.blit(x1,
-			         y1,
-			         x2 - x1,
-			         y2 - y1,
-			         (const uint32_t *)((const uint8_t *)w->buf + (uint32_t)by * w->pitch +
-			                            (uint32_t)bx * WIN_BPP),
-			         (int)(w->pitch / WIN_BPP));
+			if (w->opacity < 255)
+			{
+				w->blend_rect(fb_, x1, y1, x2, y2);
+			}
+			else
+			{
+				int bx = x1 - w->x;
+				int by = y1 - cy;
+				fb_.blit(x1,
+				         y1,
+				         x2 - x1,
+				         y2 - y1,
+				         (const uint32_t *)((const uint8_t *)w->buf + (uint32_t)by * w->pitch +
+				                            (uint32_t)bx * WIN_BPP),
+				         (int)(w->pitch / WIN_BPP));
+			}
 		}
 
 		if (w->decor_h > 0 && rx < w->x + w->w && rx + rw > w->x && ry < w->y + w->decor_h && ry + rh > w->y)
@@ -707,6 +836,8 @@ void Compositor::composite_all()
 		if (w->minimized)
 			continue;
 		draw_window_shadow(w, 0, 0, (int)fb_.width, (int)fb_.height);
+		if (w->opacity < 255 && w->blur_radius > 0)
+			blur_region(w->x, w->y + w->decor_h, w->w, w->h, w->blur_radius);
 		w->blit_to(fb_);
 		if (w->decor_h > 0)
 			w->draw_decor(fb_, w == reg_.focused());
@@ -798,6 +929,38 @@ bool Compositor::flush()
 	if (w <= 0 || h <= 0)
 		return false;
 
+	/* Grow the damage to the full bounds of any translucent+blur window it touches,
+	 * so the backdrop blur runs over a single freshly-composited region (no seams
+	 * across partial-repaint boundaries, no blur-of-blur accumulation). */
+	for (auto *win : reg_.z_stack())
+	{
+		if (win->minimized || win->opacity >= 255 || win->blur_radius == 0)
+			continue;
+		int fwx = win->x, fwy = win->y, fww = win->w, fwh = win->decor_h + win->h;
+		if (fwx >= x + w || fwx + fww <= x || fwy >= y + h || fwy + fwh <= y)
+			continue; /* no intersection */
+		int x2 = (x + w > fwx + fww) ? x + w : fwx + fww;
+		int y2 = (y + h > fwy + fwh) ? y + h : fwy + fwh;
+		x = (x < fwx) ? x : fwx;
+		y = (y < fwy) ? y : fwy;
+		w = x2 - x;
+		h = y2 - y;
+	}
+	if (x < 0)
+	{
+		w += x;
+		x = 0;
+	}
+	if (y < 0)
+	{
+		h += y;
+		y = 0;
+	}
+	if (x + w > (int)fb_.width)
+		w = (int)fb_.width - x;
+	if (y + h > (int)fb_.height)
+		h = (int)fb_.height - y;
+
 	if (x == 0 && y == 0 && w >= (int)fb_.width && h >= (int)fb_.height)
 	{
 		composite_all();
@@ -829,13 +992,21 @@ void Compositor::cursor_move(int dx, int dy)
 	if (cur_y_ >= (int)fb_.height - CUR_H)
 		cur_y_ = (int)fb_.height - CUR_H;
 
-	if (!rect_covered(old_x, old_y, CUR_W, CUR_H))
-		desktop_fill_rect(old_x, old_y, CUR_W, CUR_H);
-	reblit_rect(old_x, old_y, CUR_W, CUR_H);
-	/* If the cursor was sitting over the hover preview, the reblit just erased
-	 * that slice of it — redraw the panel so it survives cursor motion. */
-	if (preview_hit(old_x, old_y, CUR_W, CUR_H))
-		draw_window_preview();
+	/* Over a translucent+blur panel, the local desktop-fill + reblit would repaint
+	 * a cursor-sized patch of unblurred backdrop (the blur is a region-wide op),
+	 * leaving a smear.  cursor_erase() above already restored the correct blended
+	 * pixels there, so skip the local reblit; a real content change comes through
+	 * flush(), which repaints (and blurs) the whole panel and re-saves the cursor. */
+	if (!over_blur_window(old_x, old_y, CUR_W, CUR_H))
+	{
+		if (!rect_covered(old_x, old_y, CUR_W, CUR_H))
+			desktop_fill_rect(old_x, old_y, CUR_W, CUR_H);
+		reblit_rect(old_x, old_y, CUR_W, CUR_H);
+		/* If the cursor was sitting over the hover preview, the reblit just erased
+		 * that slice of it — redraw the panel so it survives cursor motion. */
+		if (preview_hit(old_x, old_y, CUR_W, CUR_H))
+			draw_window_preview();
+	}
 
 	cursor_save(cur_x_, cur_y_);
 	cursor_draw(cur_x_, cur_y_);

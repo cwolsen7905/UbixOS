@@ -110,6 +110,14 @@ class Compositor
 	 * framebuffer rect (dx,dy,dw,dh).  Shared by the hover preview and switcher. */
 	void blit_scaled(const Window *w, int dx, int dy, int dw, int dh);
 
+	/* Box-blur an fb region in place (separable, 2 passes) — the backdrop under a
+	 * translucent window before its tint is blended over, giving an acrylic frost.
+	 * blur_a_/blur_b_ are reused scratch buffers to avoid per-frame allocation. */
+	std::vector<uint32_t> blur_a_, blur_b_;
+	void blur_region(int x, int y, int w, int h, int radius);
+	/* True if [x,y,w,h] intersects any visible translucent+blur window. */
+	bool over_blur_window(int x, int y, int w, int h) const;
+
 	void desktop_fill_rect(int x, int y, int w, int h);
 	void draw_desktop();
 	void load_wallpaper(const char *path);
