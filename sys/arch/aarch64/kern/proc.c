@@ -24,6 +24,7 @@
 #include <sys/pipe.h>
 #include <lib/kmalloc.h>
 #include <string.h>
+#include <vmm/vm_map.h> /* vm_map_copy — inherit the demand-fault VMA tree on fork */
 
 #define FRAME_SLOTS 12     /* x19-x28, x29(fp), x30(lr) — must match context.S */
 #define LR_SLOT 11         /* x30 (lr) is the 12th slot */
@@ -258,6 +259,17 @@ static int aarch64_fork_common(u_int64_t *parent_tf, u_int64_t child_sp)
 
 	/* Inherit the open-file table (stdin/stdout/stderr + everything else). */
 	fork_copy_fdtable(child, &_current->td);
+
+	/* Inherit the demand-fault VMA tree so the child can fault in pages of its
+	 * (demand-loaded) image that the parent never touched — with its own re-opened
+	 * backing fds (vm_map_copy dups them).  Already-present pages were COW-shared by
+	 * pmap_fork_copy above; the VMAs cover the not-yet-faulted rest.  Without this a
+	 * forked-without-exec child (an oksh subshell / command substitution / pipeline)
+	 * that runs any un-faulted code — e.g. its exit path (j_exit) — finds no VMA and
+	 * takes a fatal SIGSEGV.  Mirrors x86_64 sys_fork.  (rfork(RFMEM) threads instead
+	 * SHARE the leader's tree via the tgid lookup in vmm_demand_fault, so only this
+	 * private-AS fork/clone path copies it.) */
+	vm_map_copy(&child->vm_map, &_current->vm_map);
 
 	/* Inherit the parent's EL0 TLS thread pointer: the child's address space is a
 	 * copy, so the parent's TCB lives at the same VA.  The child resumes at the
