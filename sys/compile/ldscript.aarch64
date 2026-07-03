@@ -30,8 +30,10 @@ SECTIONS
 
 	/* Low boot stub: VMA == LMA == KERNEL_PHYS.  Runs with the MMU off, then
 	 * enables it and branches to the high half (.text below).  The entry section
-	 * (.text.boot.entry, kern/start.S) is placed FIRST so _start is at byte 0 of the
-	 * image — required by the Pi's flat kernel8.img (entered at its first byte). */
+	 * (.text.boot.entry, kern/start.S) is placed FIRST so the arm64 Image header
+	 * (_head, whose code0 branches to _start) is at byte 0 of the image — required
+	 * by the Pi's flat kernel8.img (entered at its first byte) and by a bootloader
+	 * that recognises the Image format (U-Boot booti / GRUB linux). */
 	.text.boot : { KEEP(*(.text.boot.entry)) *(.text.boot) }
 
 	/* Everything else executes at the high VMA and loads right after the stub
@@ -66,6 +68,11 @@ SECTIONS
 	 * (vmm_mem_map_init) is staged here.  Matches i386's extern _end[]. */
 	. = ALIGN(0x1000);
 	_end = .;
+
+	/* arm64 Image header's image_size field: the LMA footprint (incl. BSS) from
+	 * KERNEL_PHYS to _end.  Absolute constant, so `.quad _kernel_image_size` in
+	 * start.S embeds the value.  (_end is a high VMA; its LMA is _end - VIRT_OFFSET.) */
+	_kernel_image_size = _end - VIRT_OFFSET - KERNEL_PHYS;
 
 	/DISCARD/ : { *(.comment) *(.note*) *(.eh_frame*) }
 }

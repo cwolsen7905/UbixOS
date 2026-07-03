@@ -3,7 +3,7 @@
 # FreeBSD/macOS convention: disk + filesystem + low-level system administration
 # utilities live here (fdisk, disklabel, mount, the ubixfs pool tools, …).  Add a
 # directory name to SUBDIRS to include it in the build and clean targets.
-SUBDIRS = fdisk disklabel format mount ubpool ubfs ubdisk ping
+SUBDIRS = fdisk disklabel format mount ubpool ubfs ubdisk ping reboot
 .PHONY: all clean ${SUBDIRS}
 
 .for _dir in ${SUBDIRS}

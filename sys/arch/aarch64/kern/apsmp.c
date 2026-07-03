@@ -97,6 +97,39 @@ static int64_t psci_call(u_int64_t fn, u_int64_t a0, u_int64_t a1, u_int64_t a2)
 	return (int64_t)x0;
 }
 
+#define PSCI_SYSTEM_RESET 0x84000009u /* PSCI SYSTEM_RESET (SMC32/HVC32 function id) */
+
+/**
+ * Reset the machine via PSCI SYSTEM_RESET.  On QEMU `virt` this restarts the
+ * machine, so the firmware/bootloader runs again — U-Boot re-loads the kernel
+ * from the FAT boot partition and boots it (the reboot half of the self-rebuild
+ * loop: build a new kernel, install it to /boot, reset).
+ *
+ * The PSCI *conduit* depends on the boot environment: QEMU's built-in PSCI (the
+ * direct `-kernel` boot) answers HVC, while a firmware/secure-monitor — U-Boot
+ * as `-bios`, or real hardware with EL3 — answers SMC.  Try HVC first, then SMC;
+ * SYSTEM_RESET does not return on success, so reaching the SMC (or the WFI spin)
+ * means the prior conduit was not the active one.
+ */
+void aarch64_system_reset(void)
+{
+	register u_int64_t x0 __asm__("x0") = PSCI_SYSTEM_RESET;
+	register u_int64_t x1 __asm__("x1") = 0;
+	register u_int64_t x2 __asm__("x2") = 0;
+	register u_int64_t x3 __asm__("x3") = 0;
+
+	__asm__ __volatile__("hvc #0" : "+r"(x0), "+r"(x1), "+r"(x2), "+r"(x3) : : "memory");
+
+	x0 = PSCI_SYSTEM_RESET;
+	x1 = 0;
+	x2 = 0;
+	x3 = 0;
+	__asm__ __volatile__("smc #0" : "+r"(x0), "+r"(x1), "+r"(x2), "+r"(x3) : : "memory");
+
+	for (;;)
+		__asm__ volatile("wfi");
+}
+
 /**
  * C entry for an application processor (reached from apentry.S with the MMU off).
  * Enable the MMU on the shared kernel page tables, install this CPU's vectors +

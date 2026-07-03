@@ -97,11 +97,17 @@ POOL_LBA=$(cat "${IMG}.poollba"); rm -f "${IMG}.poollba"
 # Format the FAT32 partition (partition 1 begins at LBA 2048 = 1 MB).
 mformat -i "${IMG}@@1M" -F ::
 
-# ── FAT is boot-only ─────────────────────────────────────────────────────────
-# Carry just the kernel for the GRUB-style boot path.  aarch64/x86_64 here load
-# the kernel via QEMU -kernel, so this is parity/future-GRUB; the FAT holds
-# nothing else (the world lives entirely in the UbixFS pool below).
-if [ -f "${BUILD}/boot/kernel" ]; then
+# ── FAT is the boot partition ────────────────────────────────────────────────
+# Carries the kernel a bootloader loads from the filesystem.  On aarch64 this is
+# the FLAT Image (boot/kernel.img — arm64 Image header at byte 0) that U-Boot's
+# `booti` loads on QEMU virt, matching how the Pi firmware loads kernel8.img; the
+# QEMU `-kernel` dev fast-path still uses the ELF directly.  On x86_64 the ELF is
+# carried for the GRUB/multiboot path.  The world lives in the UbixFS pool below.
+if [ "${ARCH}" = "aarch64" ] && [ -f "${BUILD}/boot/kernel.img" ]; then
+	mmd -i "${IMG}@@1M" ::/boot ::/boot/kernel 2>/dev/null || true
+	mcopy -o -i "${IMG}@@1M" "${BUILD}/boot/kernel.img" ::/boot/kernel/kernel
+	echo "mkimage: FAT carries the flat arm64 Image at /boot/kernel/kernel (U-Boot booti)"
+elif [ -f "${BUILD}/boot/kernel" ]; then
 	mmd -i "${IMG}@@1M" ::/boot ::/boot/kernel 2>/dev/null || true
 	mcopy -o -i "${IMG}@@1M" "${BUILD}/boot/kernel" ::/boot/kernel/kernel
 	echo "mkimage: FAT (boot-only) carries /boot/kernel/kernel"

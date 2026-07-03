@@ -282,6 +282,14 @@ void kmain_aarch64(u_int64_t dtb_phys)
 			if (vfs_mount(0, 0, 0, VFS_TYPE_DEVFS, "/dev", "rw") == 0)
 				kprintf("dev: devfs mounted at /dev\n");
 
+			/* Mount the FAT boot partition (vtblk0s1) at /boot so the kernel image
+			 * lives on a bootloader-readable filesystem.  This is what lets the OS
+			 * install a freshly self-built kernel (cp .../boot/kernel /boot/...) that
+			 * a bootloader loads from FAT on the next reboot.  Only when the pool is
+			 * the real root; when FAT is the fallback root it is already at /. */
+			if (root_is_pool && vfs_mount(1, 1, 0, VFS_TYPE_FAT, "/boot", "rw") == 0)
+				kprintf("boot: FAT boot partition mounted at /boot\n");
+
 			/* UbixFS loopback pool (plan K2/K3): if a pool image is staged on the
 			 * FAT root, mount it read-write at /pool (a file-backed loopback pool —
 			 * ubixfs over /pool.img over FAT).  Skipped when the pool itself is the

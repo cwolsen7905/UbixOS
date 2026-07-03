@@ -54,6 +54,7 @@ register_t ksyscall_dispatch(
 #define SYS_CLOCK_GETTIME 232 /* FreeBSD ABI */
 #define SYS_STATX 383         /* Linux slot; musl uses it for stat/fstat */
 #define SYS_FCNTL 92          /* FreeBSD ABI */
+#define SYS_REBOOT 55         /* FreeBSD ABI — reboot(2) */
 #define SYS_MUNMAP 73         /* FreeBSD ABI */
 #define SYS_NANOSLEEP 240     /* FreeBSD ABI */
 #define SYS_UNAME 164         /* FreeBSD ABI */
@@ -552,6 +553,13 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args)
 
 	switch (number)
 	{
+		case SYS_REBOOT:
+			/* reboot(2): reset the machine via PSCI SYSTEM_RESET.  On QEMU virt this
+			 * re-runs the bootloader (U-Boot re-loads the kernel from /boot on FAT) —
+			 * the reboot step of the self-rebuild loop.  Does not return. */
+			aarch64_system_reset();
+			return 0; /* unreachable */
+
 		case SYS_WRITE:
 		{
 			/* A pty slave (FD_TYPE_TTYV), socket, or pipe fd must dispatch through

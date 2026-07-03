@@ -23,6 +23,35 @@
 	 * before start.o) would land first and the firmware would run the AP trampoline
 	 * instead of _start.  QEMU uses the ELF entry, so it is unaffected either way. */
 	.section .text.boot.entry, "ax"
+
+	/* arm64 Linux Image header (Documentation/arm64/booting.rst) — placed at byte 0
+	 * of the image so a real bootloader (U-Boot `booti`, GRUB `linux`) recognises the
+	 * kernel and loads it from a filesystem, instead of QEMU's `-kernel` injecting it.
+	 * code0 is a branch to the real entry, so this is transparent to those loaders:
+	 *   - QEMU `-kernel` (ELF) jumps straight to _start via the ELF entry;
+	 *   - U-Boot `booti` enters at byte 0 (_head) and runs `b _start`.
+	 * x0 (DTB) is untouched by the branch.
+	 *
+	 * EXCLUDED on the Pi (BOARD_RPI3): the VideoCore firmware *parses* the Image magic
+	 * + flags and relocates the kernel to a 2 MB-aligned base — but our kernel is
+	 * linked at a fixed 0x80000 and is NOT relocatable, so the header makes the Pi
+	 * load it at the wrong address and hang before serial.  The Pi wants a raw flat
+	 * binary with _start at byte 0 (0x80000), which is what omitting _head produces. */
+#ifndef BOARD_RPI3
+	.global _head
+_head:
+	b	_start			/* code0: branch to _start (preserves x0 = DTB) */
+	.long	0			/* code1 */
+	.quad	0			/* text_offset (flags bit 3 set => loader keeps the load addr) */
+	.quad	_kernel_image_size	/* image_size: LMA footprint incl. BSS (linker-computed) */
+	.quad	0xA			/* flags: LE, 4 KB pages, 2 MB-anywhere placement */
+	.quad	0			/* res2 */
+	.quad	0			/* res3 */
+	.quad	0			/* res4 */
+	.long	0x644d5241		/* magic "ARM\x64" (offset 0x38) */
+	.long	0			/* res5 (offset 0x3C; 0 = no PE/EFI header) */
+#endif
+
 	.global _start
 	.type _start, %function
 _start:

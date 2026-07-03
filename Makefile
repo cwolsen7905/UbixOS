@@ -77,7 +77,7 @@ _USB_FLAGS!= test -f ${USB_IMAGE} && \
 .PHONY: all kernel kernel-aarch64 kernel-x86_64 run-x86_64 run-debug-x86_64 musl-libc world makeuser image image-aarch64 image-arm usb-image \
         mount-image unmount-image \
         install-kernel install-world install \
-        run-aarch64 run-debug-aarch64 run-claude \
+        run-aarch64 run-debug-aarch64 run-uboot-aarch64 run-uboot-debug-aarch64 run-claude \
         run-selfbuilt run-selfbuilt-aarch64 run-selfbuilt-debug-aarch64 \
         kernel-rpi3 image-rpi3 \
         kernel-to-image clean-kernel clean
@@ -403,6 +403,12 @@ kernel-aarch64:
 	    worldcat ${OBJ_DIR}/obj/sys/worldcat_embed.o || exit 1
 	${LD} ${AARCH64_LD_EXTRA} -T ${CURDIR}/sys/compile/ldscript.aarch64 -o ${OBJ_DIR}/boot/kernel ${AARCH64_KERNEL_OBJS}
 	@echo "aarch64 bring-up kernel linked: ${OBJ_DIR}/boot/kernel"
+	@# Flat binary with the arm64 Image header at byte 0 (start.S _head): what a real
+	@# bootloader loads from a filesystem — U-Boot `booti` on QEMU virt, and the Pi's
+	@# VideoCore firmware (kernel8.img).  QEMU `-kernel` uses the ELF above; this is the
+	@# on-disk /boot image staged by mkimage + installed by the self-rebuild loop.
+	@${OBJCOPY} -O binary ${OBJ_DIR}/boot/kernel ${OBJ_DIR}/boot/kernel.img
+	@echo "aarch64 flat Image (U-Boot booti / Pi kernel8): ${OBJ_DIR}/boot/kernel.img"
 
 # ── Raspberry Pi 3 board (ARCH + BOARD) ──────────────────────────────────────
 # The Pi is aarch64 with a byte-identical world; only the KERNEL differs (BOARD_RPI3
@@ -885,6 +891,42 @@ run-aarch64:
 run-debug-aarch64:
 	qemu-system-aarch64 -machine virt,gic-version=2 -accel hvf -cpu host -m 512 -smp ${SMP} \
 	  -kernel ${OBJ_DIR}/boot/kernel \
+	  -global virtio-mmio.force-legacy=false \
+	  ${_ARM_DISK_FLAGS} \
+	  -device virtio-net-device,netdev=net0 -netdev user,id=net0 \
+	  -nographic
+
+# ── Real boot chain: U-Boot loads the kernel from the FAT boot partition ──────
+# Boots through firmware (U-Boot as -bios) -> bootloader reads /boot/kernel/kernel
+# off the FAT partition -> booti -> uBixOS mounts the UbixFS pool as / — instead
+# of QEMU's -kernel injection.  This is the self-hosting install path: the OS can
+# rebuild its kernel, copy the flat Image to /boot, and reboot into it.
+# Prereqs:  bmake -C tools/ports/u-boot        (build u-boot.bin, once)
+#           bmake image TARGET=aarch64          (stages the flat Image on FAT)
+# run-uboot-aarch64 is the GRAPHICAL U-Boot boot — the run-aarch64 device set
+# (virtio-gpu framebuffer + keyboard/mouse + sound, bridged net) but loaded through
+# U-Boot from the FAT boot partition instead of QEMU -kernel.  The kernel drives the
+# virtio-gpu itself after boot, so the desktop comes up exactly as with -kernel.
+# run-uboot-debug-aarch64 is the headless (serial, user-net, no sudo) analogue for
+# automation.  Both need: bmake -C tools/ports/u-boot  and  bmake image TARGET=aarch64
+# (the desktop needs a desktop-profile image with `views` staged).
+UBOOT_BIN ?= ${CURDIR}/build/ports/u-boot/u-boot.bin
+run-uboot-aarch64:
+	@[ -f ${UBOOT_BIN} ] || { echo "missing ${UBOOT_BIN} — run: bmake -C tools/ports/u-boot"; exit 1; }
+	sudo qemu-system-aarch64 -machine virt,gic-version=2,highmem=off -accel hvf -cpu host -m 512 -smp ${SMP} \
+	  -bios ${UBOOT_BIN} \
+	  -global virtio-mmio.force-legacy=false \
+	  ${_ARM_DISK_FLAGS} \
+	  -device virtio-net-device,netdev=net0 -netdev vmnet-bridged,id=net0,ifname=${BRIDGE_IF} \
+	  -device virtio-gpu-device \
+	  -device virtio-keyboard-device -device virtio-mouse-device \
+	  -audiodev coreaudio,id=snd0 -device virtio-sound-device,audiodev=snd0 \
+	  -serial file:serial.log
+
+run-uboot-debug-aarch64:
+	@[ -f ${UBOOT_BIN} ] || { echo "missing ${UBOOT_BIN} — run: bmake -C tools/ports/u-boot"; exit 1; }
+	qemu-system-aarch64 -machine virt,gic-version=2,highmem=off -accel hvf -cpu host -m 2048 -smp ${SMP} \
+	  -bios ${UBOOT_BIN} \
 	  -global virtio-mmio.force-legacy=false \
 	  ${_ARM_DISK_FLAGS} \
 	  -device virtio-net-device,netdev=net0 -netdev user,id=net0 \
