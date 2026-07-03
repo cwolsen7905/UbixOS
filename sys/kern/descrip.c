@@ -93,6 +93,7 @@ int (*g_fs_rename)(void *fs, const char *src, const char *dst) = 0x0;
 int (*g_fs_truncate)(void *file, u_int32_t length) = 0x0;
 void (*g_tty_print)(const char *buf, void *term) = 0x0;
 int (*g_tty_getchar)(void) = 0x0;
+void (*g_serial_putc)(char c) = 0x0;
 
 int fcntl(struct thread *td, struct sys_fcntl_args *uap)
 {

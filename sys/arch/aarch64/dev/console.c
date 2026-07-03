@@ -10,7 +10,12 @@
  */
 #include "bringup.h"
 #include <sys/descrip.h>
-#include <ubixos/sched.h> /* sched_yield */
+#include <ubixos/sched.h>  /* sched_yield, kTask_t */
+#include <ubixos/tty.h>    /* tty_term, tty_find, tty_inject, TTY_TYPE_SERIAL */
+#include <ubixos/errno.h>  /* EINTR */
+
+/* A signal is pending + not masked → a blocking read should return EINTR. */
+#define SIG_PENDING_UNBLOCKED(td) ((td)->sig_pending & ~(td)->sigmask.__bits[0])
 
 /**
  * Write @nbyte bytes to the console (PL011).  '\n' is mapped to CRLF.
@@ -31,15 +36,28 @@ static int console_fo_write(struct file *fp, struct thread *td, const void *buf,
 	return (0);
 }
 
+/** g_serial_putc hook: emit one char to the UART (the tty line-discipline echo). */
+static void console_serial_putc(char c)
+{
+	uart_putc(c);
+}
+
 /**
- * Cooked line read: block (yielding) until a full line arrives, echoing input
- * and honouring Enter (CR/LF) + backspace.  Returns up to @nbyte bytes incl. the
- * terminating '\n'.
+ * Read from the serial controlling terminal through the tty line discipline: drain
+ * the UART into tty_inject() (which handles echo, canonical line editing, and — the
+ * whole point — VINTR/VSUSP → SIGINT/SIGTSTP to the foreground pgrp), then return
+ * cooked bytes from the terminal's stdin buffer.  This gives the serial console the
+ * same job-control semantics as the GUI pty.  Falls back to a raw line read before
+ * the controlling tty is established (very early boot).
+ *
+ * @return 0 with td_retval = bytes read; EINTR if a signal interrupts the wait.
  */
 static int console_fo_read(struct file *fp, struct thread *td, void *buf, size_t nbyte)
 {
 	char *out = (char *)buf;
-	size_t n = 0;
+	tty_term *term;
+	kTask_t *task = (kTask_t *)((char *)td - __builtin_offsetof(kTask_t, td));
+	int x = 0;
 
 	(void)fp;
 	if (nbyte == 0)
@@ -47,41 +65,72 @@ static int console_fo_read(struct file *fp, struct thread *td, void *buf, size_t
 		td->td_retval[0] = 0;
 		return (0);
 	}
+	term = task->ct_tty; /* the serial controlling terminal (com1); NOT views' term */
 
-	for (;;)
+	if (term == NULL) /* no controlling tty yet — raw cooked line (early boot) */
 	{
-		int c = uart_getc();
-		if (c < 0)
+		for (;;)
 		{
-			sched_yield();
-			continue;
-		}
-		if (c == '\r')
-			c = '\n';
-		if (c == 0x7f || c == 0x08) /* DEL / Backspace */
-		{
-			if (n > 0)
+			int c = uart_getc();
+			if (c < 0)
 			{
-				n--;
+				sched_yield();
+				continue;
+			}
+			if (c == '\r')
+				c = '\n';
+			if ((c == 0x7f || c == 0x08) && x > 0)
+			{
+				x--;
 				uart_putc('\b');
 				uart_putc(' ');
 				uart_putc('\b');
+				continue;
 			}
-			continue;
+			uart_putc((char)(c == '\n' ? '\r' : c));
+			if (c == '\n')
+				uart_putc('\n');
+			out[x++] = (char)c;
+			if (c == '\n' || x >= (int)nbyte)
+				break;
 		}
-		if (c == '\n')
-		{
-			uart_putc('\r');
-			uart_putc('\n');
-			out[n++] = '\n';
-			break;
-		}
-		uart_putc((char)c); /* echo */
-		out[n++] = (char)c;
-		if (n >= nbyte)
-			break;
+		td->td_retval[0] = x;
+		return (0);
 	}
-	td->td_retval[0] = (int)n;
+
+	while (x < (int)nbyte)
+	{
+		int raw;
+		while ((raw = uart_getc()) >= 0)
+			tty_inject(term, (char)raw); /* line discipline: echo, canonical, signals */
+
+		if (term->stdinSize > 0)
+		{
+			int i;
+			char c = term->stdin[0];
+			term->stdinSize--;
+			for (i = 0; i < term->stdinSize; i++)
+				term->stdin[i] = term->stdin[i + 1];
+			out[x++] = c;
+			if (c == '\n')
+				break;
+		}
+		else if (term->t_eof)
+		{
+			term->t_eof = 0;
+			break;
+		}
+		else
+		{
+			if (SIG_PENDING_UNBLOCKED(td))
+			{
+				td->td_retval[0] = -EINTR;
+				return (EINTR);
+			}
+			sched_yield();
+		}
+	}
+	td->td_retval[0] = x;
 	return (0);
 }
 
@@ -129,6 +178,7 @@ void aarch64_console_init(void)
 	g_tty_print = console_print;
 	g_tty_getchar = console_getchar_hook;
 	g_console_stdin_ready = console_stdin_ready;
+	g_serial_putc = console_serial_putc; /* serial-echo arm of the tty line discipline */
 }
 
 /**
@@ -140,7 +190,20 @@ void aarch64_console_init(void)
  */
 int aarch64_console_setup_fds(struct thread *td)
 {
+	kTask_t *task = (kTask_t *)((char *)td - __builtin_offsetof(kTask_t, td));
 	int i;
+
+	/* Make the com1 serial tty this task's *controlling terminal* (ct_tty, the POSIX
+	 * mechanism — leave `term` for a views GUI terminal) so the tty ioctls
+	 * (TIOCGETA/TIOCSPGRP/TIOCSCTTY) succeed and tcsh runs job control.  slot 4 = com1
+	 * (a fixed serial terminal, distinct from the views ptys at slots 5+).  The line
+	 * discipline lives in tty.c; console_fo_read feeds it the UART. */
+	if (task->ct_tty == NULL)
+	{
+		task->ct_tty = tty_find(4);
+		if (task->ct_tty != NULL)
+			task->ct_tty->t_type = TTY_TYPE_SERIAL;
+	}
 
 	for (i = 0; i < 3; i++)
 	{

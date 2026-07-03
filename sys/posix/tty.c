@@ -125,7 +125,10 @@ static inline void irq_restore(u_int64_t daif)
  * per-site #ifdefs. */
 static inline void rs232_putc(char c)
 {
-	(void)c;
+	/* On a UART console (aarch64), the serial-echo arm of the line discipline emits
+	 * through the arch console hook; on a graphical-only build it stays a no-op. */
+	if (g_serial_putc != NULL)
+		g_serial_putc(c);
 }
 static inline void backSpace(void)
 {

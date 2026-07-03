@@ -156,6 +156,10 @@ extern int (*g_fs_rename)(void *fs, const char *src, const char *dst);
 extern int (*g_fs_truncate)(void *file, u_int32_t length);
 extern void (*g_tty_print)(const char *buf, void *term);
 extern int (*g_tty_getchar)(void);
+/* g_serial_putc: single-char output to the serial console, used by the tty line
+ * discipline's SERIAL echo arm (rs232_putc) on arches whose console is a UART, not
+ * VGA.  Installed by the arch console layer (aarch64 console.c); NULL elsewhere. */
+extern void (*g_serial_putc)(char c);
 
 #ifdef _BALLS
 struct stat {
