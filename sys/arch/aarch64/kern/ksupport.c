@@ -189,14 +189,26 @@ void endTask(pidType pid)
 	(void)pid;
 	if (_current != 0)
 	{
-		/* Close the task's open PIPE fds so a parent blocked reading this task's pipe
-		 * write-end sees EOF when the writer exits (the bmake Cmd_Exec case: fork +
-		 * read child output — without this it hangs forever).  ONLY pipes: the full
-		 * reaper is unported on aarch64 and never closed fds, so driving the tty/pty/
-		 * socket fileops close() from here on every exit is both unnecessary and unsafe
-		 * — closing a job-control child's inherited pty fd corrupted the still-shared
-		 * device and panicked the kernel (tcsh `ls` repeated).  Leave non-pipe fds to
-		 * the (pre-existing) no-op teardown.
+		/* Close the task's open PIPE and SOCKET fds on exit.
+		 *
+		 * PIPES: a parent blocked reading this task's pipe write-end sees EOF when
+		 * the writer exits (the bmake Cmd_Exec case: fork + read child output —
+		 * without this it hangs forever).
+		 *
+		 * SOCKETS: a process that exits (or is killed — e.g. a ^C'd ping) with an
+		 * open socket must release its lwIP netconn, or the RAW/TCP/UDP PCB, its
+		 * queued netbufs, and the TCPIP_MSG_INPKT buffers behind them leak.  Over a
+		 * session of launching+killing net apps the pools bleed to empty and ALL
+		 * inbound packets are dropped — the "network dies after using it a while"
+		 * bug (RAW_PCB used==total, netbuf/TCPIP_MSG_INPKT err climbing while
+		 * link.recv still increments).  socket_fo_close is refcount-safe
+		 * (g_socket_refcount): it only tears down the lwIP socket on the LAST
+		 * alias, so a fork-shared socket the other process still holds survives.
+		 *
+		 * NOT tty/pty: those are shared devices WITHOUT this refcount, and closing
+		 * a job-control child's inherited pty fd corrupted the shared device and
+		 * panicked the kernel (tcsh `ls` repeated).  Leave them to the no-op
+		 * teardown.
 		 *
 		 * Threads (rfork(RFMEM)) SHALLOW-share one fd table across a tgid, so only the
 		 * LAST thread of the group may close them — an earlier thread exiting must
@@ -207,7 +219,7 @@ void endTask(pidType pid)
 			{
 				struct file *f = (struct file *)_current->td.o_files[fd];
 
-				if (f != 0 && f->fd_type == FD_TYPE_PIPE)
+				if (f != 0 && (f->fd_type == FD_TYPE_PIPE || f->fd_type == FD_TYPE_SOCKET))
 				{
 					struct sys_close_args ca;
 					ca.fd = fd;
