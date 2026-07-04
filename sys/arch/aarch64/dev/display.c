@@ -120,7 +120,7 @@ int sys_mapfb(struct thread *td, struct sys_mapfb_args *args)
  */
 void aarch64_fb_present(void)
 {
-#ifdef BOARD_RPI3
+#ifdef BOARD_BCM
 	uintptr_t a, base = (uintptr_t)virtio_gpu_fb;
 	uintptr_t end = base + (uintptr_t)virtio_gpu_pitch * virtio_gpu_height;
 
@@ -213,6 +213,18 @@ int sys_shareregion(struct thread *td, struct sys_shareregion_args *args)
 	u_int64_t n, i, dst_va;
 
 	if (dst == 0 || args->vaddr == 0 || args->size == 0)
+	{
+		td->td_retval[0] = -1;
+		return (-1);
+	}
+
+	/* The destination may have exited between requesting the window and this
+	 * share (its kTask_t lingers as a zombie, but the exit path freed its user
+	 * address space and zeroed md_ttbr0).  Mapping into a NULL root would be a
+	 * kernel NULL dereference in pmap_map_page — which killed the compositor
+	 * whenever a client (e.g. vlogin) died at the wrong moment.  Fail the share
+	 * instead; the compositor already handles a -1 as "destination is gone". */
+	if (dst->md.md_ttbr0 == 0)
 	{
 		td->td_retval[0] = -1;
 		return (-1);

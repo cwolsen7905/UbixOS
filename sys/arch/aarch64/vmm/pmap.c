@@ -81,12 +81,21 @@ static u_int64_t *table_next(u_int64_t *table, u_int64_t idx)
  *
  * @param attrs  lower/upper attribute bits (e.g. PMAP_KERNEL_DATA); PTE_AF and
  *               the L3 page type are added here.
- * @return 0 on success.
+ * @return 0 on success, -1 if @l1 is NULL (torn-down address space).
  */
 int pmap_map_page(u_int64_t *l1, u_int64_t va, u_int64_t pa, u_int64_t attrs)
 {
-	u_int64_t *l2 = table_next(l1, L1_IDX(va));
-	u_int64_t *l3 = table_next(l2, L2_IDX(va));
+	u_int64_t *l2, *l3;
+
+	/* A NULL root means the target address space is gone (an exited task's
+	 * md_ttbr0 is zeroed at teardown).  Walking it would be a kernel NULL
+	 * dereference; fail the mapping instead — the caller treats it as
+	 * "target vanished". */
+	if (l1 == 0)
+		return (-1);
+
+	l2 = table_next(l1, L1_IDX(va));
+	l3 = table_next(l2, L2_IDX(va));
 
 	l3[L3_IDX(va)] = (pa & PTE_ADDR_MASK) | attrs | PTE_AF | PTE_PAGE;
 
