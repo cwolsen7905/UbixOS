@@ -1648,11 +1648,17 @@ static unsigned vgetopt32(char **argv, const char *applet_opts, va_list ap)
 	int nopts = 0;
 	const char *p = applet_opts;
 
-	/* busybox optstring modifiers we just need to skip:
-	 *   leading '^' / '!' / '+' / '-' — assorted hints we don't implement
-	 *   embedded '\0' — modifier section ("-H-h:..." etc.) starts here */
-	while (*p == '^' || *p == '!' || *p == '+' || *p == '-')
+	/* busybox optstring modifiers:
+	 *   leading '^' — the spec carries a section after the embedded '\0'
+	 *   (complement rules etc.); other leading hints ('!' '+' '-') skipped.
+	 *   The modifier section is only safe to read when '^' was present —
+	 *   without it the string ends at its own NUL. */
+	int has_modifiers = 0;
+	while (*p == '^' || *p == '!' || *p == '+' || *p == '-') {
+		if (*p == '^')
+			has_modifiers = 1;
 		p++;
+	}
 
 	while (*p && nopts < 16) {
 		opts[nopts].letter    = *p++;
@@ -1670,6 +1676,34 @@ static unsigned vgetopt32(char **argv, const char *applet_opts, va_list ap)
 	for (int i = 0; i < nopts; i++) {
 		if (opts[i].takes_arg)
 			opts[i].target = va_arg(ap, void *);
+	}
+
+	/* Complement rules from the modifier section (past the embedded '\0'):
+	 * "x-y" means seeing option 'x' CLEARS option 'y'.  busybox uses
+	 * "f-i:i-f" for rm/cp/mv so the LAST of -f/-i wins — without this a
+	 * shell alias `rm='rm -i'` made `rm -f` prompt anyway (the -f could
+	 * never override the alias's -i).  Rules are ':'-separated; anything
+	 * not of the "x-y..." shape is ignored. */
+	unsigned clears[16] = { 0 };
+	if (has_modifiers && *p == '\0') {
+		const char *m = p + 1;
+		while (*m) {
+			int owner = -1;
+			for (int i = 0; i < nopts; i++)
+				if (opts[i].letter == *m) { owner = i; break; }
+			m++;
+			while (*m == '-' && m[1]) {
+				m++;
+				for (int i = 0; i < nopts; i++)
+					if (opts[i].letter == *m && owner >= 0)
+						clears[owner] |= (1u << i);
+				m++;
+			}
+			while (*m && *m != ':')
+				m++; /* skip any rule syntax we don't implement */
+			if (*m == ':')
+				m++;
+		}
 	}
 
 	unsigned mask = 0;
@@ -1694,6 +1728,7 @@ static unsigned vgetopt32(char **argv, const char *applet_opts, va_list ap)
 				bb_show_usage();
 			}
 			mask |= (1u << found);
+			mask &= ~clears[found]; /* "x-y" complement: this option clears y */
 
 			if (opts[found].takes_arg) {
 				char *val;
