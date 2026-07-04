@@ -915,10 +915,29 @@ class Menu
 		creq->reply[sizeof(creq->reply) - 1] = '\0';
 		ubix::post_message("views", DISPLAY_CLAIM, claim);
 
+		/* The claim ACK shares the taskbar's one mailbox with input traffic, so
+		 * motion/flip events queued while views services the claim can arrive
+		 * first.  Reading only the next message treated a queued mouse event as
+		 * a denial — abandoning the window views HAD created: it leaked, stayed
+		 * black (never drawn), and stacked one translucent panel per Start
+		 * click, grinding the compositor down.  Fetch until the ACK arrives
+		 * (bounded); a hover event discarded during menu-open is harmless. */
 		mpi_message_t reply;
-		while (!mbox.try_fetch(reply))
+		bool acked = false;
+		for (int i = 0; i < 200000; i++)
+		{
+			if (mbox.try_fetch(reply))
+			{
+				if (reply.header == DISPLAY_ACK)
+				{
+					acked = true;
+					break;
+				}
+				continue; /* queued input event — discard during the claim */
+			}
 			ubix::yield();
-		if (reply.header != DISPLAY_ACK)
+		}
+		if (!acked)
 			return;
 
 		struct display_ack *da = (struct display_ack *)reply.data;
@@ -1245,10 +1264,25 @@ class MixerFlyout
 		creq->reply[sizeof(creq->reply) - 1] = '\0';
 		ubix::post_message("views", DISPLAY_CLAIM, claim);
 
+		/* Same shared-mailbox hazard as Menu::show — fetch until the claim ACK
+		 * arrives (bounded) instead of misreading a queued input event as a
+		 * denial and leaking the created window. */
 		mpi_message_t reply;
-		while (!mbox.try_fetch(reply))
+		bool acked = false;
+		for (int i = 0; i < 200000; i++)
+		{
+			if (mbox.try_fetch(reply))
+			{
+				if (reply.header == DISPLAY_ACK)
+				{
+					acked = true;
+					break;
+				}
+				continue; /* queued input event — discard during the claim */
+			}
 			ubix::yield();
-		if (reply.header != DISPLAY_ACK)
+		}
+		if (!acked)
 			return;
 
 		struct display_ack *da = (struct display_ack *)reply.data;
