@@ -8,9 +8,11 @@
  *
  * v1 simplifications (flagged for later phases):
  *   - single vdev; one (front) label — back-label redundancy is a hardening pass.
- *   - allocation is a fixed on-disk bitmap (space-maps-in-the-CoW-tree later);
- *     the bitmap is flushed in-place on commit, so it is NOT yet atomic with the
- *     uberblock flip — a Phase-3 (DMU/CoW) decision, harmless until objects exist.
+ *   - allocation is a fixed on-disk bitmap (space-maps-in-the-CoW-tree later),
+ *     flushed in-place on commit.  Frees are DEFERRED one txg (released only
+ *     after the uberblock flip lands), which makes the in-place flush crash-safe:
+ *     a torn commit can at worst leak blocks, never hand out a block a still-
+ *     adoptable root references.
  */
 #ifndef _UBIXFS_SPA_H
 #define _UBIXFS_SPA_H
@@ -82,7 +84,10 @@ uint64_t ubfs_alloc_block(ubfs_pool_t *p);
 uint64_t ubfs_alloc_run(ubfs_pool_t *p, uint64_t n);
 
 /** Free one block.  THE single free chokepoint (snapshot hook #3): a future
- *  snapshot-aware version changes only this function. */
+ *  snapshot-aware version changes only this function.  The free is DEFERRED —
+ *  the block becomes reallocatable only after the next ubfs_pool_commit()
+ *  lands its uberblock, so an in-flight txg can never overwrite blocks the
+ *  previous committed root still references. */
 void ubfs_free_block(ubfs_pool_t *p, uint64_t blk);
 
 /** Free a run of `n` contiguous blocks starting at `blk` (via the chokepoint). */

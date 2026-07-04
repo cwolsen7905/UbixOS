@@ -29,6 +29,20 @@ struct ubfs_pool
 	uint64_t first_data; /* first allocatable block */
 	uint64_t alloc_hint;
 	uint64_t used_blocks;
+
+	/* Deferred frees (CoW crash-safety).  Blocks freed during a txg are queued
+	 * here with their bitmap bits still SET, and only actually released after
+	 * the txg's uberblock is durably written (ubfs_pool_commit).  Freeing —
+	 * and therefore reusing — them immediately would let this txg overwrite
+	 * blocks the PREVIOUS committed root still references, so a crash before
+	 * the new uberblock landed would roll back to a tree whose blocks had been
+	 * overwritten (the "CoW in name only" corruption).  One txg of deferral is
+	 * sufficient: commits are sequential and synchronous, so at most the newest
+	 * uberblock can be torn, and blocks freed in txg N are referenced only by
+	 * trees ≤ N-1 — any adoptable rollback target (≥ N) never uses them. */
+	uint64_t *defer;    /* block numbers freed this txg, pending release */
+	uint64_t defer_n;   /* pending count */
+	uint64_t defer_cap; /* allocated capacity of defer[] */
 };
 
 /* ── uberblock ring geometry ────────────────────────────────────────────────*/
@@ -283,6 +297,7 @@ void ubfs_pool_close(ubfs_pool_t *p)
 {
 	if (!p)
 		return;
+	free(p->defer); /* uncommitted defers stay marked used on disk — a safe leak */
 	free(p->bitmap);
 	free(p);
 }
@@ -299,11 +314,43 @@ int ubfs_pool_set_incompat(ubfs_pool_t *p, uint64_t bits)
 	return p->io.write(p->io.ctx, 0, cfgblk); /* rewrite the vdev config (block 0) */
 }
 
+/**
+ * Release the txg's deferred frees: clear their bitmap bits so the blocks become
+ * allocatable again.  Runs only AFTER write_uberblock succeeded, so reuse can no
+ * longer damage any adoptable root (see the defer field comment).  The cleared
+ * bits reach the on-disk bitmap at the NEXT commit's flush; a crash before that
+ * leaks the blocks (marked used, referenced by no live root) — safe, bounded.
+ */
+static void apply_deferred_frees(ubfs_pool_t *p)
+{
+	uint64_t i;
+
+	for (i = 0; i < p->defer_n; i++)
+	{
+		uint64_t blk = p->defer[i];
+
+		if (!bitmap_get(p, blk))
+			continue; /* duplicate free queued within the txg */
+		bitmap_put(p, blk, 0);
+		p->used_blocks--;
+		if (blk < p->alloc_hint)
+			p->alloc_hint = blk;
+	}
+	p->defer_n = 0;
+}
+
 int ubfs_pool_commit(ubfs_pool_t *p, const ubfs_blkptr_t *rootbp)
 {
-	if (bitmap_flush(p) < 0) /* v1: in-place (atomicity vs UB flip is a Phase-3 item) */
+	/* Bitmap first, then the uberblock flip (the atomic commit point).  With
+	 * deferred frees the in-place bitmap flush is crash-safe: any bit it clears
+	 * belongs to a block no adoptable root references, and any bit it sets is at
+	 * worst a leak if the flip below never lands. */
+	if (bitmap_flush(p) < 0)
 		return -1;
-	return write_uberblock(p, p->txg + 1, rootbp);
+	if (write_uberblock(p, p->txg + 1, rootbp) < 0)
+		return -1;
+	apply_deferred_frees(p);
+	return 0;
 }
 
 uint64_t ubfs_pool_txg(const ubfs_pool_t *p)
@@ -383,18 +430,35 @@ uint64_t ubfs_alloc_run(ubfs_pool_t *p, uint64_t n)
 
 void ubfs_free_block(ubfs_pool_t *p, uint64_t blk)
 {
-	/* The single free chokepoint (snapshot hook #3).  v1 frees immediately; a
-	 * snapshot-aware version changes only this function (free unless a snapshot
-	 * still references the block, by blkptr birth_txg). */
+	/* The single free chokepoint (snapshot hook #3; a snapshot-aware version
+	 * changes only this function — free unless a snapshot still references the
+	 * block, by blkptr birth_txg).
+	 *
+	 * DEFERRED: the block is queued on p->defer with its bitmap bit still set,
+	 * and released only after the txg's uberblock commits (see the struct field
+	 * comment).  Freeing it here — the old code also moved alloc_hint BACK to
+	 * the freed block — made the very next allocation reuse it, so every CoW
+	 * update overwrote the previous committed root's copy in place; a crash
+	 * before the new uberblock landed then rolled back to a damaged tree. */
 	if (blk < p->first_data || blk >= p->config.asize)
 		return; /* never free label/bitmap or out-of-range */
-	if (bitmap_get(p, blk))
+	if (!bitmap_get(p, blk))
+		return; /* not allocated (double free) */
+
+	if (p->defer_n == p->defer_cap)
 	{
-		bitmap_put(p, blk, 0);
-		p->used_blocks--;
-		if (blk < p->alloc_hint)
-			p->alloc_hint = blk;
+		uint64_t ncap = p->defer_cap ? p->defer_cap * 2 : 64;
+		uint64_t *nd = (uint64_t *)malloc(ncap * sizeof(*nd));
+
+		if (!nd)
+			return; /* OOM: leak this block for the txg — safe, bounded */
+		if (p->defer_n)
+			memcpy(nd, p->defer, p->defer_n * sizeof(*nd));
+		free(p->defer);
+		p->defer = nd;
+		p->defer_cap = ncap;
 	}
+	p->defer[p->defer_n++] = blk;
 }
 
 void ubfs_free_run(ubfs_pool_t *p, uint64_t blk, uint64_t n)
