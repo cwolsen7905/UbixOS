@@ -548,7 +548,13 @@ int main(int argc, char **argv)
 
 	std::printf("vlogin: waiting for views compositor\n");
 
-	/* Poll until the compositor is ready (its mailbox exists) */
+	/* Query the compositor for the screen dimensions.  Retryable: at cold
+	 * session start views may still be loading (demand-paged binary, fonts,
+	 * wallpaper), and the bounded yield-poll below can expire long before it
+	 * is ready to answer — the claim loop re-runs this before each retry so a
+	 * later attempt claims with the real geometry, not the 800x600 fallback. */
+	int scr_w = 800, scr_h = 600;
+	auto query_screen = [&]() -> bool
 	{
 		mpi_message_t qmsg = {};
 		struct display_query *dq = (struct display_query *)qmsg.data;
@@ -556,13 +562,8 @@ int main(int argc, char **argv)
 		::strncpy(dq->reply, my_mbox.c_str(), sizeof(dq->reply) - 1);
 		while (mpi_postMessage(VIEWS_MBOX, DISPLAY_QUERY, &qmsg) != 0)
 			ubix::yield();
-	}
 
-	/* Wait for the DISPLAY_INFO response to get screen dimensions */
-	int scr_w = 800, scr_h = 600;
-	{
 		mpi_message_t reply;
-		int got = 0;
 		for (int i = 0; i < 5000; i++)
 		{
 			if (mbox.try_fetch(reply) && reply.header == DISPLAY_INFO)
@@ -572,11 +573,14 @@ int main(int argc, char **argv)
 					scr_w = (int)di->screen_w;
 				if (di->screen_h > 0)
 					scr_h = (int)di->screen_h;
-				got = 1;
-				break;
+				return true;
 			}
 			ubix::yield();
 		}
+		return false;
+	};
+	{
+		bool got = query_screen();
 		std::printf("vlogin: screen %dx%d%s\n", scr_w, scr_h, got ? "" : " (timeout, using defaults)");
 	}
 
@@ -600,9 +604,25 @@ int main(int argc, char **argv)
 		::strncpy(cr->reply, my_mbox.c_str(), sizeof(cr->reply) - 1);
 		ubix::post_message(VIEWS_MBOX, DISPLAY_CLAIM, msg);
 
+		/* Bounded ack wait — an unbounded fetch loop hung vlogin forever if the
+		 * claim was dropped (compositor busy/restarting).  A miss is a deny; the
+		 * retry loop below re-queries and re-claims. */
 		mpi_message_t reply;
-		while (!mbox.try_fetch(reply))
+		bool got_reply = false;
+		for (int i = 0; i < 20000; i++)
+		{
+			if (mbox.try_fetch(reply))
+			{
+				got_reply = true;
+				break;
+			}
 			ubix::yield();
+		}
+		if (!got_reply)
+		{
+			std::printf("vlogin: DISPLAY_CLAIM unanswered\n");
+			return false;
+		}
 
 		if (reply.header != DISPLAY_ACK)
 		{
@@ -642,10 +662,23 @@ int main(int argc, char **argv)
 	/* ---- Outer session loop: claim → login → session → release → repeat */
 	for (;;)
 	{
-		if (!claim_window())
+		/* Claim with retry.  At session start vlogin can race the compositor:
+		 * the query times out (stale 800x600 defaults) and the claim is denied
+		 * or unanswered.  Exiting here killed the login screen for the whole
+		 * boot (background drawn, no dialog); instead pause, re-query the real
+		 * geometry, and re-claim — views finishes starting within a few
+		 * hundred ms.  ~60 tries ≈ 15 s ceiling before giving up for real. */
+		int tries = 0;
+		while (!claim_window())
 		{
-			std::printf("vlogin: failed to claim window\n");
-			return 1;
+			if (++tries >= 60)
+			{
+				std::printf("vlogin: failed to claim window after %d tries\n", tries);
+				return 1;
+			}
+			mpi_message_t drain;
+			mbox.wait(drain, 25); /* ~250 ms pause; also drains stray replies */
+			query_screen();
 		}
 
 		ogSurface surf;
