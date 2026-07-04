@@ -156,7 +156,15 @@ static void do_exit(u_int64_t code)
 	{
 		_current->exit_code = (u_int32_t)(code & 0xff); /* saved for wait4 (W_EXITED) */
 		endTask(_current->id);
-		sched_yield();
+		/* LOOP the yield: under SMP a single sched_yield() can BAIL without
+		 * switching (sched()'s spinTryLock loses to the other CPU), and
+		 * returning here would ERET the dead task back to EL0 — it resumes in
+		 * musl's _Exit retry loop with its address space already torn down
+		 * (TTBR0 = the kernel identity L1), fetching physical holes: the
+		 * "unhandled exception ec=0x20" storm and the undefined-instruction
+		 * crashes at _Exit that froze SMP builds.  Retry until a switch takes. */
+		for (;;)
+			sched_yield();
 	}
 	else
 	{

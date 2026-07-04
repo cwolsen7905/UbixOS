@@ -842,7 +842,14 @@ static kTask_t *find_and_reap_child(int want_pid, int *have_child)
 		if (want_pid != -1 && (int)t->id != want_pid)
 			continue;
 		*have_child = 1;
-		if (t->state == DEAD || t->state == ZOMBIE)
+		/* Never collect a child still marked on-CPU: endTask sets ZOMBIE before
+		 * the child's final switch, so on SMP this parent can observe ZOMBIE
+		 * while the other core is still saving the child's context ON the very
+		 * kernel stack this collection frees — garbage execution, corrupted
+		 * page tables, the SMP build freeze.  on_cpu clears (release) once the
+		 * child has truly left its stack; report "not exited yet" until then
+		 * (the wait4 loop re-checks). */
+		if ((t->state == DEAD || t->state == ZOMBIE) && __atomic_load_n(&t->on_cpu, __ATOMIC_ACQUIRE) == 0)
 		{
 			if (t->prev != NULL)
 				t->prev->next = t->next;

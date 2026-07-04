@@ -321,8 +321,11 @@ void signal_check(struct trapframe *frame)
 				        _current->name);
 				_current->exit_signal = (u_int8_t)(sig & 0x7f); /* wait4 W_SIGNALED */
 				endTask(_current->id);
-				sched_yield();
-				/* not reached */
+				/* Loop: a single sched_yield() can bail under SMP lock
+				 * contention and return — resuming the dead task on torn-down
+				 * page tables (see aarch64 do_exit).  Retry until it switches. */
+				for (;;)
+					sched_yield();
 			}
 			return;
 		}
@@ -875,8 +878,10 @@ void signal_ast_check(void)
 				        _current->id,
 				        _current->name);
 				endTask(_current->id);
-				sched_yield();
-				/* not reached */
+				/* Loop: see the SIG_DFL terminate above — a bailed yield must
+				 * never resume the dead task. */
+				for (;;)
+					sched_yield();
 			}
 			/* SIG_DFL ignore (e.g. SIGCHLD) */
 			td->sig_pending &= ~(1u << (sig - 1));

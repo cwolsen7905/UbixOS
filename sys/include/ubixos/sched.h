@@ -117,6 +117,13 @@ extern "C"
 		u_int8_t base_priority;       /* QoS floor — boosts never go below this */
 		u_int8_t boost_quanta;        /* ticks remaining on temporary I/O priority boost */
 		u_int8_t on_rq;               /* 1 if currently in a run queue */
+		volatile u_int8_t on_cpu;     /* 1 from dispatch until the context save of the switch
+		                               * AWAY from this task completes (cleared with release
+		                               * semantics in sched_resume_unlock).  While set, no other
+		                               * CPU may run, migrate, or free this task: dispatching a
+		                               * half-saved context loads torn registers (the SMP build
+		                               * freeze), and reaping frees the kernel stack the final
+		                               * switch is still standing on. */
 		u_int32_t rq_cpu;             /* which CPU's run queue (g_rq index) it is on (v2) */
 		u_int32_t last_migrate_tick;  /* sysTicks of this task's last cross-core migration (v2 load
 		                               * balancer cooldown) — 0 = never migrated.  Damps ping-pong:

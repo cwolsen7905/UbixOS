@@ -688,8 +688,17 @@ static kTask_t *wait_find_child(int want_pid, int options, int *wstatus)
 		 * wait_find_child before that tick fires, the child is still
 		 * ZOMBIE.  Collecting it here is correct — the parent is the one
 		 * doing the reaping, not sched().
+		 *
+		 * BUT never collect a child still marked on-CPU: endTask sets
+		 * ZOMBIE *before* the child's final switch, so on SMP the parent
+		 * can get here while the other core is still saving the child's
+		 * context ON the kernel stack this collection frees — garbage
+		 * execution, corrupted page tables, the SMP build freeze.  on_cpu
+		 * clears (release) microseconds later, once the child has truly
+		 * left its stack; report "not exited yet" until then (the wait4
+		 * loop re-checks).
 		 */
-		if (t->state == DEAD || t->state == ZOMBIE)
+		if ((t->state == DEAD || t->state == ZOMBIE) && __atomic_load_n(&t->on_cpu, __ATOMIC_ACQUIRE) == 0)
 		{
 			if (wstatus)
 				*wstatus = t->exit_signal ? (t->exit_signal & 0x7f) /* W_SIGNALED */

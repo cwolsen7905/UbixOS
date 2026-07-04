@@ -70,6 +70,9 @@ struct runqueue
 	int online;                        /* v2: 1 once a CPU schedules from this queue (APs set it) */
 	int running_idle;                  /* v2: 1 if this CPU ran its idle thread last tick (balance hint) */
 	struct spinLock rq_lock;           /* v2: per-CPU run-queue lock (unused when flag 0) */
+	kTask_t *switching_from;           /* task whose context THIS CPU is saving in switch_to;
+	                                    * consumed by sched_resume_unlock immediately after the
+	                                    * switch to clear its on_cpu (same-CPU handoff only). */
 };
 extern struct runqueue g_rq[SCHED_MAX_CPUS];
 
@@ -92,7 +95,14 @@ extern struct runqueue g_rq[SCHED_MAX_CPUS];
 /* Don't load-balance until the system is past boot: migrating a latency-critical
  * system task (the compositor) mid-startup-handshake wedges the desktop.  By this
  * many ticks the desktop is fully up and only steady-state CPU-bound work remains. */
-#define SCHED_BALANCE_WARMUP 2000
+#define SCHED_BALANCE_WARMUP                                                                                           \
+	0x7FFFFFFF /* DISABLED: the current migrate-one-task policy                                                    \
+	            * ping-pongs a lone busy task between cores (each move = full TLB flush + cold caches +            \
+	            * a fork/fault storm through the pmap lock), and it can also migrate a CPU's idle-band             \
+	            * task, leaving that queue empty — a dying task then spins in its exit-yield loop with           \
+	            * EL1 IRQs masked (a lost core).  Re-enable only with a smarter policy: never migrate              \
+	            * the idle band, never migrate when the donor has a single busy task, and respect                  \
+	            * on_cpu.  Placement still spreads load at first-enqueue via sched_select_cpu(). */
 
 /* Per-task migration cooldown (scheduler ticks): a task the balancer just moved to
  * another core is pinned there for at least this long before it can be migrated again.

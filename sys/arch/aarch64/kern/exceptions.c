@@ -176,15 +176,15 @@ void aarch64_exception(u_int64_t kind, void *frame)
 		 * process.  Covers a data access (DABT) and an instruction fetch into a
 		 * not-yet-faulted code page (IABT — how a demand-paged text segment first
 		 * runs).  FSC 0b0001LL (0x04-0x07) is a translation fault at levels 0-3. */
-		if ((ec == ESR_EC_DABT_LOW || ec == ESR_EC_IABT_LOW) && _current != 0 &&
-		    _current->md.md_ttbr0 != 0)
+		if ((ec == ESR_EC_DABT_LOW || ec == ESR_EC_IABT_LOW) && _current != 0 && _current->md.md_ttbr0 != 0)
 		{
 			u_int64_t fsc = esr & 0x3FUL; /* DFSC / IFSC */
 
 			if (fsc >= 0x04 && fsc <= 0x07)
 			{
 				u_int64_t far = READ_SYSREG(far_el1);
-				if (vmm_demand_fault((u_int64_t *)(uintptr_t)_current->md.md_ttbr0, (uintptr_t)far) == 0)
+				if (vmm_demand_fault((u_int64_t *)(uintptr_t)_current->md.md_ttbr0, (uintptr_t)far) ==
+				    0)
 					return; /* ERET and retry on the freshly-mapped page */
 			}
 		}
@@ -289,8 +289,11 @@ void aarch64_exception(u_int64_t kind, void *frame)
 			        _current->id,
 			        _current->name);
 			endTask(_current->id);
-			sched_yield();
-			/* not reached — sched_yield switches to another task */
+			/* Loop: one sched_yield() can bail under SMP lock contention and
+			 * return — ERETing the dead task back to EL0 on torn-down tables
+			 * (see do_exit).  Retry until the switch takes. */
+			for (;;)
+				sched_yield();
 		}
 	}
 

@@ -395,6 +395,13 @@ void rq_enqueue_locked(kTask_t *t)
 	if (t == NULL || t->on_rq)
 		return;
 
+	/* Chokepoint: a ZOMBIE/DEAD task must never re-enter a run queue — its
+	 * address space and (soon) kernel stack are gone, so dispatching it
+	 * executes a corpse through freed page tables.  Every legitimate waker
+	 * checks state first; this backstops the ones that get it wrong. */
+	if (t->state == ZOMBIE || t->state == DEAD)
+		return;
+
 	/* Choose the home run queue and record it so a remote dequeue (a waker on
 	 * another CPU) finds the right queue.  First enqueue picks the least-loaded
 	 * online CPU; thereafter the task keeps that home (cache affinity).  With
@@ -578,7 +585,15 @@ void sched_balance_locked(void)
 		{
 			do
 			{
-				if ((u_int32_t)(now - it->last_migrate_tick) >= SCHED_MIGRATE_COOLDOWN)
+				/* Never migrate a task whose context save is still in flight on
+				 * the donor CPU (READY in the queue, but switch_to has not yet
+				 * finished storing its registers).  Handing it to the recipient
+				 * would dispatch a HALF-SAVED context — torn SP/LR, garbage
+				 * execution, freed page tables walked by live CPUs: the SMP
+				 * on-device-build freeze.  on_cpu clears (release) only after
+				 * the save completes; pair with an acquire load here. */
+				if (__atomic_load_n(&it->on_cpu, __ATOMIC_ACQUIRE) == 0 &&
+				    (u_int32_t)(now - it->last_migrate_tick) >= SCHED_MIGRATE_COOLDOWN)
 				{
 					t = it;
 					break;
@@ -1022,8 +1037,15 @@ void sched_io_wakeup(kTask_t *t)
 		t->boost_quanta = 2;
 		rq_enqueue_locked(t);
 	}
-	else if (t->state != RUNNING && t->state != DEAD)
+	else if (t->state != RUNNING && t->state != DEAD && t->state != ZOMBIE)
 	{
+		/* != ZOMBIE is load-bearing: an I/O completion (disk/tty/pipe) can land
+		 * just AFTER its initiator exited.  Reviving the zombie here re-enqueued
+		 * the corpse as READY and the dispatcher resumed it at its last EL0 PC
+		 * (musl's _Exit loop) with the address space already freed — on SMP the
+		 * reaper loses that race constantly under build load, and the corpse
+		 * executes through garbage page tables (the ec=0x20 storm / undefined-
+		 * instruction crashes in clang's _Exit). */
 		if (boosted > t->priority)
 			t->priority = boosted;
 		t->boost_quanta = 2;

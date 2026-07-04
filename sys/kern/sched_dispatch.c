@@ -96,6 +96,21 @@ static inline u_int8_t quantum_for_priority(u_int8_t pri)
  */
 void sched_resume_unlock(void)
 {
+	/* The context save of the task this CPU just switched away from is now
+	 * complete (switch_to finished before any resume site runs).  Publish that
+	 * by clearing its on_cpu with RELEASE ordering — only now may another CPU
+	 * dispatch, migrate, or reap it.  Same-CPU handoff: the dispatcher stashed
+	 * the outgoing task in this CPU's runqueue slot just before switch_to. */
+	{
+		struct runqueue *rq = this_rq();
+		kTask_t *prev = rq->switching_from;
+
+		if (prev != NULL)
+		{
+			rq->switching_from = NULL;
+			__atomic_store_n(&prev->on_cpu, 0, __ATOMIC_RELEASE);
+		}
+	}
 #if !CONFIG_SCHED_PERCPU
 	spinUnlock(&schedulerSpinLock);
 #endif
@@ -184,6 +199,13 @@ static void sched_common(int preheld)
 	}
 	/* preheld: the caller already holds schedulerSpinLock with IRQs disabled. */
 
+	/* Whatever is executing on this CPU is by definition on-CPU.  Boot tasks and
+	 * AP idles were never dispatched through this function, so their on_cpu was
+	 * never set; mark it here (self-healing) so the balancer/reaper guards below
+	 * protect them too from their very first switch. */
+	if (_current != NULL && !_current->on_cpu)
+		_current->on_cpu = 1;
+
 	/* --- Phase 3.4: starvation aging — scan every ~50 ms --- */
 	{
 		static u_int32_t aging_last = 0;
@@ -233,6 +255,16 @@ static void sched_common(int preheld)
 	t = taskList;
 	while (t != 0x0)
 	{
+		/* A task still marked on-CPU is mid-switch on another core: its kernel
+		 * stack is live until the context save completes.  Transitioning it to
+		 * DEAD here would let wait_find_child (or the DEAD branch below) free
+		 * that stack out from under the switch.  Skip it — its on_cpu clears
+		 * microseconds from now and the next tick reaps it. */
+		if (t->on_cpu && t != _current)
+		{
+			t = t->next;
+			continue;
+		}
 		if (t->state == ZOMBIE)
 		{
 			/*
@@ -388,10 +420,24 @@ static void sched_common(int preheld)
 		next = rq->bucket[pri];
 		/* Dequeue (removes next and rotates head to next->rq_next). */
 		rq_dequeue_locked(next);
+
+		/* Defence in depth: never load a context whose save is still in flight
+		 * on another CPU (a migrated task caught mid-switch).  Put it back and
+		 * sit this tick out — its on_cpu clears within microseconds. */
+		if (next != _current && __atomic_load_n(&next->on_cpu, __ATOMIC_ACQUIRE))
+		{
+			next->state = READY;
+			rq_enqueue_locked(next);
+			spinUnlock(&schedulerSpinLock);
+			if (!preheld)
+				restore_flags(flags);
+			return;
+		}
 	}
 
-	prev = _current;   /* outgoing task — saved by switch_to */
-	set_current(next); /* per-CPU store: g_pcpu[cpu].current = next (%gs:8) */
+	prev = _current;      /* outgoing task — saved by switch_to */
+	set_current(next);    /* per-CPU store: g_pcpu[cpu].current = next (%gs:8) */
+	_current->on_cpu = 1; /* under the lock: visible before this task can be seen running */
 	_current->last_run_tick = systemVitals->sysTicks;
 
 	/* Give the newly dispatched task a fresh time slice if it has none left. */
@@ -422,17 +468,24 @@ static void sched_common(int preheld)
 	 * sole task at the top priority.  In that case there was no switch, so we still
 	 * hold the lock WE took above — release it here too.
 	 */
+	/* Stash the outgoing task so the resume site (sched_resume_unlock, the first
+	 * thing every resumed context runs on THIS cpu) can clear its on_cpu once the
+	 * save is complete.  Written under the lock; consumed same-CPU only. */
+	if (prev != _current)
+		rq->switching_from = prev;
+
 #if CONFIG_SCHED_PERCPU
 	/*
 	 * Per-CPU run queues: release schedulerSpinLock BEFORE the switch instead of
 	 * holding it across (the flag-0 path below).  Safe because the outgoing task was
 	 * re-enqueued on (or, when sleeping, left homed to) THIS CPU's queue, and only
 	 * this CPU dispatches from it — no other CPU can run the task while switch_to is
-	 * still saving its context.  Two CPUs may now switch_to concurrently, but only
+	 * still saving its context (cross-queue movers — the balancer, the pick above —
+	 * additionally honour on_cpu).  Two CPUs may now switch_to concurrently, but only
 	 * ever on distinct tasks (distinct kernel stacks), which is safe.  This drops the
 	 * long across-switch hold that caused lock-holder preemption (the SMP slowdown).
-	 * IRQs are already off (cli above); sched_resume_unlock() is a no-op under the
-	 * flag, so the post-switch / trampoline resume sites need no change.
+	 * IRQs are already off (cli above); the resume sites clear the outgoing task's
+	 * on_cpu via sched_resume_unlock.
 	 */
 	spinUnlock(&schedulerSpinLock);
 	if (prev != _current)
