@@ -20,7 +20,19 @@
 #include <vmm/paging.h>       /* PAGE_SIZE */
 #include <vmm/vm_filecache.h> /* shared file-page cache (PTE_SHARED pages) */
 #include <lib/kmalloc.h>      /* sysID */
+#include <ubixos/spinlock.h>  /* g_pmap_lock — SMP-serialise page-table mutation */
 #include <string.h>           /* memset, memcpy */
+
+/* Serialises all user page-table MUTATION (table_next allocation, PTE stores,
+ * COW resolution, fork copy, teardown) across CPUs.  Without it two CPUs
+ * faulting concurrently in one address space (a multithreaded process, or a
+ * fork racing a fault) both see an empty L1/L2 slot in table_next, both
+ * allocate a next-level table, and the second link silently discards the
+ * first — every mapping just installed in the lost table vanishes, dropped
+ * writes read back stale from disk, and text pages decay into garbage
+ * (undefined-instruction crashes mid-build at SMP).  Plain 64-bit PTE loads
+ * stay lock-free (single aligned reads are atomic on aarch64). */
+static struct spinLock g_pmap_lock = SPIN_LOCK_INITIALIZER;
 
 /* 39-bit VA, 4 KB granule: level index extractors. */
 #define L1_IDX(va) (((va) >> 30) & 0x1FFUL)
@@ -83,7 +95,12 @@ static u_int64_t *table_next(u_int64_t *table, u_int64_t idx)
  *               the L3 page type are added here.
  * @return 0 on success, -1 if @l1 is NULL (torn-down address space).
  */
-int pmap_map_page(u_int64_t *l1, u_int64_t va, u_int64_t pa, u_int64_t attrs)
+/**
+ * pmap_map_page body with g_pmap_lock already held — used by callers that
+ * batch many mappings under one acquisition (pmap_fork_copy) to avoid
+ * self-deadlock on the non-recursive spinlock.
+ */
+static int pmap_map_page_locked(u_int64_t *l1, u_int64_t va, u_int64_t pa, u_int64_t attrs)
 {
 	u_int64_t *l2, *l3;
 
@@ -101,6 +118,16 @@ int pmap_map_page(u_int64_t *l1, u_int64_t va, u_int64_t pa, u_int64_t attrs)
 
 	__asm__ volatile("dsb ishst; tlbi vaae1is, %0; dsb ish; isb" : : "r"(va >> 12) : "memory");
 	return 0;
+}
+
+int pmap_map_page(u_int64_t *l1, u_int64_t va, u_int64_t pa, u_int64_t attrs)
+{
+	int r;
+
+	spinLock(&g_pmap_lock);
+	r = pmap_map_page_locked(l1, va, pa, attrs);
+	spinUnlock(&g_pmap_lock);
+	return (r);
 }
 
 /**
@@ -286,6 +313,11 @@ u_int64_t *pmap_fork_copy(u_int64_t *parent)
 	u_int64_t *child = pmap_create_user_space(); /* empty TTBR0 */
 	u_int64_t i1, i2, i3;
 
+	/* One acquisition for the whole copy: the parent's PTEs are COW-marked in
+	 * place here, and a sibling thread demand-faulting on the other CPU must
+	 * not interleave table allocation with this walk. */
+	spinLock(&g_pmap_lock);
+
 	for (i1 = USER_L1_MIN; i1 < 512; i1++)
 	{
 		if ((parent[i1] & PTE_VALID) == 0 || (parent[i1] & PTE_TYPE_MASK) != PTE_TABLE)
@@ -312,10 +344,11 @@ u_int64_t *pmap_fork_copy(u_int64_t *parent)
 				 * alone misses them; the PTE_WIRED tag catches them. */
 				if ((src >> 12) >= (uintptr_t)count_memory() || (l3[i3] & PTE_WIRED))
 				{
-					pmap_map_page(child,
-					              va,
-					              (u_int64_t)src,
-					              (l3[i3] & ~PTE_ADDR_MASK) & ~(u_int64_t)(PTE_AF | PTE_PAGE));
+					pmap_map_page_locked(child,
+					                     va,
+					                     (u_int64_t)src,
+					                     (l3[i3] & ~PTE_ADDR_MASK) &
+					                         ~(u_int64_t)(PTE_AF | PTE_PAGE));
 					continue;
 				}
 
@@ -324,10 +357,11 @@ u_int64_t *pmap_fork_copy(u_int64_t *parent)
 				 * process copies out via pmap_cow_fault's PTE_SHARED path. */
 				if (l3[i3] & PTE_SHARED)
 				{
-					pmap_map_page(child,
-					              va,
-					              (u_int64_t)src,
-					              (l3[i3] & ~PTE_ADDR_MASK) & ~(u_int64_t)(PTE_AF | PTE_PAGE));
+					pmap_map_page_locked(child,
+					                     va,
+					                     (u_int64_t)src,
+					                     (l3[i3] & ~PTE_ADDR_MASK) &
+					                         ~(u_int64_t)(PTE_AF | PTE_PAGE));
 					vm_filecache_ref_phys((u_int32_t)src);
 					continue;
 				}
@@ -346,14 +380,16 @@ u_int64_t *pmap_fork_copy(u_int64_t *parent)
 					                 : "r"(va >> 12)
 					                 : "memory");
 				}
-				pmap_map_page(child,
-				              va,
-				              (u_int64_t)src,
-				              (l3[i3] & ~PTE_ADDR_MASK) & ~(u_int64_t)(PTE_AF | PTE_PAGE));
+				pmap_map_page_locked(child,
+				                     va,
+				                     (u_int64_t)src,
+				                     (l3[i3] & ~PTE_ADDR_MASK) & ~(u_int64_t)(PTE_AF | PTE_PAGE));
 				adjust_cow_counter(src, already ? 1 : 2);
 			}
 		}
 	}
+
+	spinUnlock(&g_pmap_lock);
 	return child;
 }
 
@@ -374,27 +410,67 @@ u_int64_t *pmap_fork_copy(u_int64_t *parent)
  */
 int pmap_cow_fault(u_int64_t *l1, u_int64_t va, pidType pid)
 {
-	u_int64_t e = l1[L1_IDX(va)];
+	u_int64_t e;
 	u_int64_t *l2, *l3;
 	u_int64_t pte, attrs;
 	uintptr_t old, neu;
 
-	if (l1 == 0 || (e & PTE_VALID) == 0 || (e & PTE_TYPE_MASK) != PTE_TABLE)
+	if (l1 == 0)
 		return -1;
-	l2 = (u_int64_t *)(uintptr_t)AARCH64_VIRT_OF(e & PTE_ADDR_MASK);
-	e = l2[L2_IDX(va)];
-	if ((e & PTE_VALID) == 0 || (e & PTE_TYPE_MASK) != PTE_TABLE)
-		return -1;
-	l3 = (u_int64_t *)(uintptr_t)AARCH64_VIRT_OF(e & PTE_ADDR_MASK);
-	pte = l3[L3_IDX(va)];
 
-	if ((pte & PTE_VALID) == 0 || (pte & (PTE_COW | PTE_SHARED)) == 0)
-		return -1; /* not shared → a real write to a read-only page */
-
-	old = (uintptr_t)(pte & PTE_ADDR_MASK);
+	/* Allocate the private copy's frame BEFORE taking g_pmap_lock: at true OOM
+	 * vmm_find_free_page never returns for a user pid (it kills the task and
+	 * switches away) — dying while holding the pmap lock would wedge every
+	 * fault on every CPU.  A frame allocated for a fault that turns out stale
+	 * or invalid is simply freed on those exits. */
 	neu = vmm_find_free_page(pid);
 	if (neu == 0)
 		return -1; /* out of memory → caller terminates the task */
+
+	/* Serialise against concurrent mutation: two threads of one process COW-
+	 * faulting the same page on two CPUs must resolve it exactly once (the
+	 * second sees the already-private PTE below and simply retries). */
+	spinLock(&g_pmap_lock);
+
+	e = l1[L1_IDX(va)];
+	if ((e & PTE_VALID) == 0 || (e & PTE_TYPE_MASK) != PTE_TABLE)
+	{
+		spinUnlock(&g_pmap_lock);
+		free_page(neu);
+		return -1;
+	}
+	l2 = (u_int64_t *)(uintptr_t)AARCH64_VIRT_OF(e & PTE_ADDR_MASK);
+	e = l2[L2_IDX(va)];
+	if ((e & PTE_VALID) == 0 || (e & PTE_TYPE_MASK) != PTE_TABLE)
+	{
+		spinUnlock(&g_pmap_lock);
+		free_page(neu);
+		return -1;
+	}
+	l3 = (u_int64_t *)(uintptr_t)AARCH64_VIRT_OF(e & PTE_ADDR_MASK);
+	pte = l3[L3_IDX(va)];
+
+	if ((pte & PTE_VALID) == 0)
+	{
+		spinUnlock(&g_pmap_lock);
+		free_page(neu);
+		return -1;
+	}
+	if ((pte & (PTE_COW | PTE_SHARED)) == 0)
+	{
+		/* Not shared.  Either a genuine write to read-only text (the caller
+		 * delivers SIGSEGV) — or the OTHER thread of this process resolved
+		 * this very COW fault while we waited on the lock, leaving the PTE
+		 * private and writable: then this fault is stale, so report success
+		 * and let the write retry on the now-private page. */
+		int resolved = (pte & PTE_AP_RO) == 0;
+
+		spinUnlock(&g_pmap_lock);
+		free_page(neu);
+		return resolved ? 0 : -1;
+	}
+
+	old = (uintptr_t)(pte & PTE_ADDR_MASK);
 
 	memcpy((void *)(uintptr_t)AARCH64_VIRT_OF(neu), (const void *)(uintptr_t)AARCH64_VIRT_OF(old), PAGE_SIZE);
 
@@ -411,6 +487,8 @@ int pmap_cow_fault(u_int64_t *l1, u_int64_t va, pidType pid)
 		vm_filecache_unref_phys((u_int32_t)old);
 	else
 		adjust_cow_counter(old, -1);
+
+	spinUnlock(&g_pmap_lock);
 	return 0;
 }
 
@@ -433,6 +511,11 @@ void pmap_free_user_space(u_int64_t *l1)
 
 	if (l1 == 0 || l1 == aarch64_kernel_l1())
 		return;
+
+	/* Serialise against concurrent mappers: a fault-in racing this teardown
+	 * (a sibling thread, or a stale share) must not extend tables that are
+	 * being freed. */
+	spinLock(&g_pmap_lock);
 
 	for (i1 = USER_L1_MIN; i1 < 512; i1++)
 	{
@@ -472,6 +555,8 @@ void pmap_free_user_space(u_int64_t *l1)
 		free_page(AARCH64_PHYS_OF((uintptr_t)l2)); /* the L2 table */
 	}
 	free_page(AARCH64_PHYS_OF((uintptr_t)l1)); /* the top-level L1 copy */
+
+	spinUnlock(&g_pmap_lock);
 }
 
 /**
