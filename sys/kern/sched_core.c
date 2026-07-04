@@ -1142,17 +1142,34 @@ int sched_wait_event_timeout(void *chan, int (*cond)(void *arg), void *arg, u_in
 	cli();
 	for (;;)
 	{
+		/* Check the condition UNDER schedulerSpinLock — the same lock
+		 * sched_wakeup_chan() takes — and go to sleep without dropping it.
+		 * This is the crux of SMP correctness: a waker does "set condition;
+		 * sched_wakeup_chan(chan)", and the condition is set BEFORE the waker
+		 * acquires this lock to scan.  Checking cond() outside the lock (the
+		 * old code) left a window where the waker set the condition and scanned
+		 * for sleepers AFTER our check returned false but BEFORE we marked
+		 * ourselves WAIT — finding nobody, so the wakeup was lost and we slept
+		 * forever with work pending (tcpip_thread/vnetRx wedged, the network
+		 * dying under load).  cli() only masks the local CPU, so it never
+		 * closed this cross-CPU race.  Now: if the waker set the condition
+		 * before our locked check, we see it and don't sleep; if after, it must
+		 * wait for this lock and then finds us marked WAIT.  Either way, no lost
+		 * wakeup.  cond() must be a cheap non-blocking predicate (it runs under
+		 * the scheduler lock). */
+		spinLock(&schedulerSpinLock);
 		if (cond(arg))
 		{
+			spinUnlock(&schedulerSpinLock);
 			timed_out = 0;
 			break;
 		}
 		if (ticks != 0 && (int32_t)(systemVitals->sysTicks - deadline) >= 0)
 		{
+			spinUnlock(&schedulerSpinLock);
 			timed_out = 1;
 			break;
 		}
-		spinLock(&schedulerSpinLock);
 		rq_dequeue_locked(_current);
 		_current->wait_chan = chan;
 		/* Arm a one-shot timeout that re-enqueues us at the deadline.  IRQs are
