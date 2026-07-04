@@ -1969,6 +1969,23 @@ int main(int argc, char **argv)
 			if (reply.header == DISPLAY_KEY)
 				continue;
 
+			if (reply.header == DISPLAY_ACK)
+			{
+				/* A window grant no claim is waiting for: a menu/mixer claim
+				 * timed out (compositor busy under load) and its ACK arrived
+				 * late.  Nobody owns the window — release it, or it lingers as
+				 * a black never-drawn panel the compositor blurs every frame
+				 * (the "start button draws a black square" regression under
+				 * SMP load). */
+				struct display_ack *da = (struct display_ack *)reply.data;
+				mpi_message_t rel = {};
+				struct display_release *dr = (struct display_release *)rel.data;
+				rel.header = DISPLAY_RELEASE;
+				dr->window_id = da->window_id;
+				ubix::post_message("views", DISPLAY_RELEASE, rel);
+				continue;
+			}
+
 			if (reply.header == DISPLAY_THEME)
 			{
 				if (apply_theme())
