@@ -969,8 +969,12 @@ fileDescriptor_t *fopen(const char *file, const char *flags)
 		/* Set Its Status To Open */
 		tmpFd->status = fdOpen;
 
-		/* Initial File Offset Is Zero */
-		tmpFd->offset = 0;
+		/* Initial file offset: append mode ("a") starts at EOF so writes
+		 * extend the file; everything else starts at zero.  vfsOpenFile
+		 * filled fd->size above.  Only FAT honoured fileAppend internally —
+		 * on UbixFS an append-opened fd wrote at offset 0, so every `>>`
+		 * redirect overwrote the file head instead of appending. */
+		tmpFd->offset = (tmpFd->mode & fileAppend) ? (off_t)tmpFd->size : 0;
 		tmpFd->prev = 0x0;
 
 		/* we do not want to be in a spinlock longer than we need to, so

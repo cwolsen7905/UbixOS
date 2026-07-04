@@ -894,9 +894,17 @@ int kern_openat(struct thread *thr, int afd, char *path, int flags, int mode)
 		return (0);
 	}
 
-	if ((oflags & O_WRONLY) && (oflags & O_APPEND))
+	if ((oflags & (O_WRONLY | O_RDWR)) && (oflags & O_APPEND))
 	{
-		nfp->fd = fopen(path, "a");
+		/* Append: open positioned at EOF (fopen "a" handles that).  Must also
+		 * create a missing file — a shell `>> newfile` passes O_CREAT|O_APPEND
+		 * and expects the file to appear.  O_RDWR|O_APPEND ("a+") previously
+		 * fell into the plain O_RDWR branch and lost append positioning. */
+		nfp->fd = fopen(path, (oflags & O_RDWR) ? "a+" : "a");
+		if (nfp->fd == NULL && (oflags & O_CREAT))
+		{
+			nfp->fd = fopen(path, (oflags & O_RDWR) ? "w+b" : "w");
+		}
 	}
 	else if (oflags & O_WRONLY)
 	{
