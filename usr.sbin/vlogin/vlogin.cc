@@ -605,28 +605,31 @@ int main(int argc, char **argv)
 		ubix::post_message(VIEWS_MBOX, DISPLAY_CLAIM, msg);
 
 		/* Bounded ack wait — an unbounded fetch loop hung vlogin forever if the
-		 * claim was dropped (compositor busy/restarting).  A miss is a deny; the
-		 * retry loop below re-queries and re-claims. */
+		 * claim was dropped (compositor busy/restarting).  The mailbox also
+		 * carries strays (a DISPLAY_INFO from a timed-out query arriving late),
+		 * so fetch UNTIL the ACK rather than judging the first message — a
+		 * stray misread as a denial abandoned the window views had actually
+		 * created, leaving a black never-drawn box on the login screen.  A
+		 * timeout is treated as a deny; the retry loop re-queries + re-claims
+		 * (and releases any late-arriving ACK's window when draining). */
 		mpi_message_t reply;
-		bool got_reply = false;
+		bool acked = false;
 		for (int i = 0; i < 20000; i++)
 		{
 			if (mbox.try_fetch(reply))
 			{
-				got_reply = true;
-				break;
+				if (reply.header == DISPLAY_ACK)
+				{
+					acked = true;
+					break;
+				}
+				continue; /* stray (late DISPLAY_INFO etc.) — discard */
 			}
 			ubix::yield();
 		}
-		if (!got_reply)
+		if (!acked)
 		{
 			std::printf("vlogin: DISPLAY_CLAIM unanswered\n");
-			return false;
-		}
-
-		if (reply.header != DISPLAY_ACK)
-		{
-			std::printf("vlogin: DISPLAY_CLAIM denied (hdr=%u)\n", reply.header);
 			return false;
 		}
 
@@ -677,7 +680,18 @@ int main(int argc, char **argv)
 				return 1;
 			}
 			mpi_message_t drain;
-			mbox.wait(drain, 25); /* ~250 ms pause; also drains stray replies */
+			if (mbox.wait(drain, 25) && drain.header == DISPLAY_ACK)
+			{
+				/* A previous claim's ACK arrived after we gave up on it: views
+				 * created that window and nobody owns it.  Release it, or it
+				 * lingers as a black never-drawn box behind the login UI. */
+				struct display_ack *da = (struct display_ack *)drain.data;
+				mpi_message_t rel = {};
+				struct display_release *dr = (struct display_release *)rel.data;
+				rel.header = DISPLAY_RELEASE;
+				dr->window_id = da->window_id;
+				ubix::post_message(VIEWS_MBOX, DISPLAY_RELEASE, rel);
+			}
 			query_screen();
 		}
 
