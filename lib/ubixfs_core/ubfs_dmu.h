@@ -19,9 +19,11 @@
 typedef struct ubfs_dmu_os
 {
 	ubfs_pool_t *pool;
-	ubfs_dnode_t metadnode;   /* describes the dnode-array object */
-	uint64_t     type;        /* enum ubfs_ostype */
-	uint64_t     next_object; /* bump allocator for object numbers */
+	ubfs_dnode_t metadnode; /* describes the dnode-array object */
+	uint64_t type;          /* enum ubfs_ostype */
+	uint64_t next_object;   /* bump allocator for object numbers */
+	uint64_t free_obj_hint; /* lowest object slot that may be free (in-memory) */
+	ubfs_blkptr_t rootbp;   /* current on-disk objset-header block (freed on next sync) */
 } ubfs_dmu_os_t;
 
 /* ── object set ─────────────────────────────────────────────────────────────*/
@@ -46,6 +48,11 @@ uint64_t ubfs_dmu_object_alloc(ubfs_dmu_os_t *os, uint8_t otype, uint8_t bonusty
 /** Read / write an object's dnode (the bonus buffer travels with it). */
 int ubfs_dmu_dnode_get(ubfs_dmu_os_t *os, uint64_t obj, ubfs_dnode_t *dn);
 int ubfs_dmu_dnode_put(ubfs_dmu_os_t *os, uint64_t obj, const ubfs_dnode_t *dn);
+
+/** Free an object: release its entire data + indirect block tree (through the
+ *  SPA's deferred-free chokepoint) and mark its dnode unused.  Idempotent.
+ *  @return 0 on success, negative on error. */
+int ubfs_dmu_object_free(ubfs_dmu_os_t *os, uint64_t obj);
 
 /* ── object data (byte-granular; partial blocks are read-modify-write) ───────*/
 int ubfs_dmu_write(ubfs_dmu_os_t *os, uint64_t obj, uint64_t off, const void *buf, uint64_t len);

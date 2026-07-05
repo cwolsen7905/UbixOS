@@ -29,6 +29,7 @@ struct ubfs_pool
 	uint64_t first_data; /* first allocatable block */
 	uint64_t alloc_hint;
 	uint64_t used_blocks;
+	int bitmap_dirty; /* in-memory bitmap has applied frees not yet flushed */
 
 	/* Deferred frees (CoW crash-safety).  Blocks freed during a txg are queued
 	 * here with their bitmap bits still SET, and only actually released after
@@ -121,6 +122,7 @@ static int bitmap_flush(ubfs_pool_t *p)
 	for (i = 0; i < p->bitmap_blocks; i++)
 		if (p->io.write(p->io.ctx, p->bitmap_start + i, p->bitmap + i * UBFS_BLOCK_SIZE) < 0)
 			return -1;
+	p->bitmap_dirty = 0;
 	return 0;
 }
 
@@ -297,7 +299,20 @@ void ubfs_pool_close(ubfs_pool_t *p)
 {
 	if (!p)
 		return;
-	free(p->defer); /* uncommitted defers stay marked used on disk — a safe leak */
+	/* Settle the last committed txg's deferred frees.  apply_deferred_frees()
+	 * clears freed bits only in the in-memory bitmap; those clears normally reach
+	 * disk on the NEXT commit's bitmap_flush.  On a clean close there is no next
+	 * commit, so without this the last txg's freed blocks stay marked used on disk
+	 * and leak — over many open/commit/close cycles (every host-tool invocation,
+	 * every unmount) the pool bleeds space.  Flush them out under a fresh
+	 * uberblock carrying the UNCHANGED root: a no-op-tree commit that is crash-safe
+	 * for the same reason a normal one is — a torn uberblock rolls back to a root
+	 * that references the current tree, never the freed blocks.  (defer_n is 0
+	 * here: any queued-but-unapplied frees were never committed and correctly stay
+	 * marked used — the "safe leak" of an uncommitted txg.) */
+	if (p->bitmap && p->bitmap_dirty && bitmap_flush(p) == 0)
+		write_uberblock(p, p->txg + 1, &p->ub.rootbp);
+	free(p->defer);
 	free(p->bitmap);
 	free(p);
 }
@@ -333,6 +348,7 @@ static void apply_deferred_frees(ubfs_pool_t *p)
 			continue; /* duplicate free queued within the txg */
 		bitmap_put(p, blk, 0);
 		p->used_blocks--;
+		p->bitmap_dirty = 1; /* on-disk bitmap now stale until the next flush */
 		if (blk < p->alloc_hint)
 			p->alloc_hint = blk;
 	}

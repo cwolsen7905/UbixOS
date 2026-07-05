@@ -33,26 +33,31 @@ static int fdev_write(void *ctx, uint64_t blk, const void *buf)
 
 static int fails;
 #define CHECK(cond, msg)                                                                                               \
-	do {                                                                                                           \
-		if (cond) {                                                                                            \
-			printf("  ok   : %s\n", msg);                                                                   \
-		} else {                                                                                               \
-			printf("  FAIL : %s\n", msg);                                                                   \
+	do                                                                                                             \
+	{                                                                                                              \
+		if (cond)                                                                                              \
+		{                                                                                                      \
+			printf("  ok   : %s\n", msg);                                                                  \
+		}                                                                                                      \
+		else                                                                                                   \
+		{                                                                                                      \
+			printf("  FAIL : %s\n", msg);                                                                  \
 			fails++;                                                                                       \
 		}                                                                                                      \
 	} while (0)
 
 int main(void)
 {
-	const char     *path = "/tmp/ubfs_pool.img";
-	const uint64_t  nblocks = 16384; /* 64 MB image */
-	struct fdev     d;
-	ubfs_vdev_io_t   io;
-	ubfs_pool_t    *p;
-	uint64_t        b1, b2, b3, free_after_alloc;
+	const char *path = "/tmp/ubfs_pool.img";
+	const uint64_t nblocks = 16384; /* 64 MB image */
+	struct fdev d;
+	ubfs_vdev_io_t io;
+	ubfs_pool_t *p;
+	uint64_t b1, b2, b3, free_after_alloc;
 
 	d.fd = open(path, O_RDWR | O_CREAT | O_TRUNC, 0644);
-	if (d.fd < 0 || ftruncate(d.fd, (off_t)nblocks * UBFS_BLOCK_SIZE) < 0) {
+	if (d.fd < 0 || ftruncate(d.fd, (off_t)nblocks * UBFS_BLOCK_SIZE) < 0)
+	{
 		perror("image");
 		return 2;
 	}
@@ -80,27 +85,35 @@ int main(void)
 	CHECK(ubfs_pool_commit(p, NULL) == 0, "commit -> txg 4 (persist allocations)");
 	ubfs_pool_close(p);
 
-	printf("== reopen: lands on last committed txg + persisted allocations ==\n");
+	printf("== reopen: lands on last committed txg + persisted alloc/free ==\n");
 	CHECK(ubfs_pool_open(&io, &p) == 0, "reopen pool");
-	CHECK(ubfs_pool_txg(p) == 4, "reopened at txg 4");
-	CHECK(ubfs_pool_free_blocks(p) == free_after_alloc, "free-block count persisted");
-	/* b2 was freed, so it should be the next allocation (hint walks back to it). */
+	/* A clean close settles the last txg's deferred frees under a fresh no-op-tree
+	 * uberblock (so they become durable instead of leaking), which advances the
+	 * txg by one past the last explicit commit (txg 4 -> settle txg 5). */
+	CHECK(ubfs_pool_txg(p) == 5, "reopened at the post-settle txg 5");
+	/* b2's deferred free is now durable and reclaimed — the old behavior leaked
+	 * the last txg's frees, so b2 wrongly still counted as used after reopen. */
+	CHECK(ubfs_pool_free_blocks(p) == free_after_alloc + 1, "freed block reclaimed on reopen");
+	/* b2 is free, so it should be the next allocation (hint walks back to it). */
 	CHECK(ubfs_alloc_block(p) == b2, "freed block is reused");
+	CHECK(ubfs_pool_commit(p, NULL) == 0, "commit the reuse");
+	uint64_t newest = ubfs_pool_txg(p);
 	ubfs_pool_close(p);
 
 	printf("== corrupt the NEWEST uberblock, confirm fallback to previous txg ==\n");
-	/* Newest committed txg here is 4 -> ring slot 4 -> byte BLOCK_SIZE + 4*1024. */
 	{
-		uint64_t byte = (uint64_t)UBFS_BLOCK_SIZE + 4ull * UBFS_UBERBLOCK_SIZE;
-		char     garbage[UBFS_UBERBLOCK_SIZE];
+		uint64_t slot = newest % UBFS_NUBERBLOCKS;
+		uint64_t byte = (uint64_t)UBFS_BLOCK_SIZE + slot * UBFS_UBERBLOCK_SIZE;
+		char garbage[UBFS_UBERBLOCK_SIZE];
 		memset(garbage, 0xA5, sizeof(garbage));
-		if (pwrite(d.fd, garbage, sizeof(garbage), (off_t)byte) != sizeof(garbage)) {
+		if (pwrite(d.fd, garbage, sizeof(garbage), (off_t)byte) != sizeof(garbage))
+		{
 			perror("corrupt");
 			return 2;
 		}
 	}
 	CHECK(ubfs_pool_open(&io, &p) == 0, "reopen after corruption");
-	CHECK(ubfs_pool_txg(p) == 3, "fell back to txg 3 (previous valid uberblock)");
+	CHECK(ubfs_pool_txg(p) == newest - 1, "fell back to the previous valid uberblock");
 	ubfs_pool_close(p);
 
 	close(d.fd);

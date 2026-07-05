@@ -273,7 +273,8 @@ void ubfs_dmu_objset_create(ubfs_pool_t *pool, uint64_t ostype, ubfs_dmu_os_t *o
 	memset(os, 0, sizeof(*os));
 	os->pool = pool;
 	os->type = ostype;
-	os->next_object = 1; /* object 0 is reserved */
+	os->next_object = 1;   /* object 0 is reserved */
+	os->free_obj_hint = 1; /* scan for reusable slots from object 1 (skip reserved 0) */
 	init_dnode(&os->metadnode, UBFS_OT_DNODE, UBFS_BT_NONE);
 }
 
@@ -290,6 +291,8 @@ int ubfs_dmu_objset_open(ubfs_pool_t *pool, const ubfs_blkptr_t *bp, ubfs_dmu_os
 	os->metadnode = od.metadnode;
 	os->type = od.type;
 	os->next_object = od.next_object;
+	os->free_obj_hint = 1; /* holes are unknown after open — scan lazily from object 1 */
+	os->rootbp = *bp;      /* remember the header block so the next sync can free it */
 	return 0;
 }
 
@@ -297,6 +300,7 @@ int ubfs_dmu_objset_sync(ubfs_dmu_os_t *os, ubfs_blkptr_t *bp_out)
 {
 	uint8_t block[BS];
 	ubfs_objset_t od;
+	ubfs_blkptr_t newbp;
 
 	memset(&od, 0, sizeof(od));
 	od.metadnode = os->metadnode;
@@ -304,7 +308,16 @@ int ubfs_dmu_objset_sync(ubfs_dmu_os_t *os, ubfs_blkptr_t *bp_out)
 	od.next_object = os->next_object;
 	memset(block, 0, BS);
 	memcpy(block, &od, sizeof(od));
-	return blk_write_cow(os->pool, block, UBFS_OT_OBJSET, 0, bp_out);
+	if (blk_write_cow(os->pool, block, UBFS_OT_OBJSET, 0, &newbp) < 0)
+		return -1;
+	/* Free the PREVIOUS on-disk header block; without this every commit (which
+	 * re-serialises each objset into a fresh block) orphaned one block per objset
+	 * — a per-transaction leak that, in the kernel, bled two blocks on every file
+	 * op.  Deferred + hole-safe (a never-yet-synced objset has a zero rootbp). */
+	bp_free(os->pool, &os->rootbp);
+	os->rootbp = newbp;
+	*bp_out = newbp;
+	return 0;
 }
 
 /* dnode N lives at byte N*512 within the metadnode's data (always 4 KiB blocks). */
@@ -334,13 +347,83 @@ int ubfs_dmu_dnode_put(ubfs_dmu_os_t *os, uint64_t obj, const ubfs_dnode_t *dn)
 
 uint64_t ubfs_dmu_object_alloc(ubfs_dmu_os_t *os, uint8_t otype, uint8_t bonustype)
 {
-	uint64_t obj = os->next_object++;
+	uint64_t obj = 0;
 	ubfs_dnode_t dn;
+
+	/* Reuse a freed dnode slot (type NONE) before bumping, so create+delete churn
+	 * does not grow the metadnode without bound.  free_obj_hint tracks the lowest
+	 * slot that might be free; it only ever advances during a scan and drops back
+	 * when a lower slot is freed, so the total scan work across a session is
+	 * O(next_object) (amortised O(1) per alloc — the append path never scans). */
+	while (os->free_obj_hint < os->next_object)
+	{
+		ubfs_dnode_t probe;
+		uint64_t cand = os->free_obj_hint++;
+
+		if (ubfs_dmu_dnode_get(os, cand, &probe) < 0)
+			break; /* unreadable — fall back to the bump allocator */
+		if (probe.type == UBFS_OT_NONE)
+		{
+			obj = cand;
+			break;
+		}
+	}
+	if (obj == 0)
+	{
+		obj = os->next_object++;
+		os->free_obj_hint = os->next_object; /* nothing below next_object is free */
+	}
 
 	init_dnode(&dn, otype, bonustype);
 	if (ubfs_dmu_dnode_put(os, obj, &dn) < 0)
 		return 0;
 	return obj;
+}
+
+/* Recursively free every block under *bp: an indirect subtree of `height`
+ * levels, or a data leaf when height == 0.  Frees the children first, then the
+ * block *bp itself, all through the SPA's deferred-free chokepoint. */
+static int tree_free(ubfs_pool_t *pool, ubfs_blkptr_t *bp, int height)
+{
+	if (bp_is_hole(bp))
+		return 0;
+	if (height > 0)
+	{
+		uint8_t ind[BS];
+		ubfs_blkptr_t *slots;
+
+		if (blk_read_verify(pool, bp, ind) < 0)
+			return -1;
+		slots = (ubfs_blkptr_t *)ind;
+		for (int i = 0; i < FANOUT; i++)
+			tree_free(pool, &slots[i], height - 1);
+	}
+	bp_free(pool, bp);
+	return 0;
+}
+
+int ubfs_dmu_object_free(ubfs_dmu_os_t *os, uint64_t obj)
+{
+	ubfs_dnode_t dn;
+	ubfs_dnode_t empty;
+
+	if (ubfs_dmu_dnode_get(os, obj, &dn) < 0)
+		return -1;
+	if (dn.type == UBFS_OT_NONE)
+		return 0; /* already free — idempotent */
+	if (tree_free(os->pool, &dn.blkptr[0], dn.nlevels - 1) < 0)
+		return -1;
+	/* Mark the dnode unused so a stale blkptr can never be followed into
+	 * now-freed (and later reallocated) blocks.  The dnode SLOT itself is not
+	 * reclaimed — object numbers are bump-allocated and never reused — but that
+	 * is 512 bytes; the object's data blocks (the real space) are freed above. */
+	memset(&empty, 0, sizeof(empty));
+	empty.type = UBFS_OT_NONE;
+	if (ubfs_dmu_dnode_put(os, obj, &empty) < 0)
+		return -1;
+	if (obj < os->free_obj_hint)
+		os->free_obj_hint = obj; /* let the next alloc reclaim this slot */
+	return 0;
 }
 
 /* ── byte-granular object I/O (records are read-modify-write) ────────────────*/

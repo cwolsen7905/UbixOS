@@ -5,5 +5,6 @@ dmu_test
 dsl_test
 fs_test
 recordsize_test
+leak_test
 *.o
 *.dSYM/

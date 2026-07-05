@@ -296,7 +296,10 @@ int ubfs_fs_unlink(ubfs_fs_t *fs, const char *path)
 		if (ubfs_dir_count(fs->os, obj, &n) < 0 || n != 0)
 			return -4; /* directory not empty */
 	}
-	/* v1: drop the directory entry; object reclamation (free dnode + data) is a
-	 * follow-up (needs a dmu_object_free). nlink bookkeeping kept for later. */
-	return ubfs_dir_remove(fs->os, pobj, leaf);
+	/* Drop the directory entry, then reclaim the object's dnode + data blocks.
+	 * Hard links are not yet supported, so a removed entry is the last reference;
+	 * when they land, gate the free on nlink reaching 0. */
+	if (ubfs_dir_remove(fs->os, pobj, leaf) < 0)
+		return -5;
+	return ubfs_dmu_object_free(fs->os, obj);
 }
