@@ -47,6 +47,11 @@ static struct spinLock g_vmm_spin_lock = SPIN_LOCK_INITIALIZER;
  * Freed pages below the cursor are still found via the wrap-around scan. */
 static u_int32_t g_vmm_free_hint = 0;
 
+/* High-water mark for the orphan-page audit log: the per-dead-pid breakdown is
+ * printed only when the orphan count reaches a NEW maximum, so a steady count
+ * (or repeated /proc/meminfo polls) cannot flood the serial console. */
+static u_int32_t g_orphan_log_hwm = 0;
+
 u_int32_t numPages = 0;
 
 /* Physical address where the page bitmap is staged (set in vmm_mem_map_init,
@@ -434,11 +439,18 @@ void vmm_free_process_pages(pidType pid)
  * (surfaced via /proc/meminfo "OrphanPages") and is normally a small constant; a
  * value that climbs each logout/login cycle indicates a process-teardown leak.
  *
- * Stays silent while healthy: a per-dead-PID breakdown is logged to the serial
- * console only when orphans actually exist, so reading /proc/meminfo on a clean
- * system produces no noise.
+ * Pages with cowCounter > 0 are skipped: a copy-on-write or shared frame carries
+ * the PID of its ORIGINAL allocator, so once that process exits while a forked
+ * child still maps the frame it would otherwise be miscounted as orphaned — the
+ * frame is still live (the COW counter tracks its remaining mappers) and is freed
+ * when the last one exits.  Without this a fork-heavy workload (a build) inflates
+ * the count with tens of thousands of false positives.
  *
- * @return number of in-use pages owned by dead PIDs.
+ * The per-dead-PID breakdown is logged to the serial console only when the count
+ * sets a new high-water mark, so a steady count under repeated /proc/meminfo polls
+ * cannot flood the console.
+ *
+ * @return number of in-use, unreferenced pages owned by dead PIDs.
  */
 u_int32_t vmm_audit_orphan_pages(void)
 {
@@ -461,6 +473,8 @@ u_int32_t vmm_audit_orphan_pages(void)
 			continue;
 		if (owner <= 1 || owner == vmmID) /* kernel/init/free — not a leak */
 			continue;
+		if (vmmMemoryMap[i].cowCounter > 0) /* still referenced by a live COW/shared mapper */
+			continue;
 		if (schedFindTask(owner) != NULL) /* owner still alive */
 			continue;
 
@@ -480,8 +494,12 @@ u_int32_t vmm_audit_orphan_pages(void)
 			dead_overflow++;
 	}
 
-	if (orphan_total > 0)
+	/* Log the breakdown only when the count sets a NEW high — reading /proc/meminfo
+	 * (this function's only caller) is polled by the taskbar, and printing on every
+	 * poll flooded the serial console. */
+	if (orphan_total > g_orphan_log_hwm)
 	{
+		g_orphan_log_hwm = orphan_total;
 		kprintf("vmm_audit: %u orphan pages (%u kB) owned by %u dead pid(s)\n",
 		        orphan_total,
 		        orphan_total * 4,
