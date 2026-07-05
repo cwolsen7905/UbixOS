@@ -353,6 +353,15 @@ if ( cd tools/ubixfs && bmake ubfs ) >/dev/null 2>&1 && [ -x tools/ubixfs/ubfs ]
 	# /tmp (or $TMPDIR), and tools that ignore $TMPDIR default to /tmp.
 	"${UBFS}" mkdir "${IMG}@${POOL_OFF}" /tmp >/dev/null 2>&1 || true
 	"${UBFS}" mkdir "${IMG}@${POOL_OFF}" /var/tmp >/dev/null 2>&1 || true
+	# Backing directories for the kernel/automountd mount points.  A mount is a VFS
+	# overlay resolved by longest-prefix match, so it correctly shadows an empty
+	# backing dir when accessed (ls /dev shows devfs, not the empty dir) — but `ls /`
+	# reads the pool's on-disk entries, so without these real dirs the mount points
+	# do not appear in the root listing at all.  Create them (the Unix model: a
+	# mount point is always a real directory) so /boot, /dev, /proc, /mnt, /ram show.
+	for _mp in boot dev proc mnt ram; do
+		"${UBFS}" mkdir "${IMG}@${POOL_OFF}" "/${_mp}" >/dev/null 2>&1 || true
+	done
 	_mib=$(du -m "${STAGE}" 2>/dev/null | tail -1 | cut -f1)
 	echo "mkimage: installed pool root (~${_mib} MiB) -> UbixFS pool / (LBA ${POOL_LBA})"
 	echo "mkimage: done — pool /bin contents:"
