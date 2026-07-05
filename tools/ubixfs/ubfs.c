@@ -443,6 +443,17 @@ static int copy_link(struct mount *m, const char *hostlink, const char *fspath)
 	return ubfs_fs_symlink(&m->fs, fspath, target, 0, 0, &obj) < 0 ? -1 : 0;
 }
 
+/* Files copied since the last intermediate commit (see copy_tree).  cpr copies a
+ * whole tree in ONE mount/sync cycle for speed, but the CoW allocator DEFERS freed
+ * blocks until a commit (crash-safety: a freed block can't be reused until the txg
+ * that orphaned it is durable).  Every file-create rewrites its directory, freeing
+ * the old version — so without an intermediate commit the deferred-free list grows
+ * with every file and the allocator starves partway through a large tree (a fresh
+ * 512 MB pool couldn't absorb 143 MB of contrib).  Commit every COMMIT_EVERY files
+ * to drain the deferred frees; the final mount_sync in cmd_cpr still runs. */
+static unsigned g_cpr_pending = 0;
+#define CPR_COMMIT_EVERY 256
+
 /* Recursively copy a host directory tree into the pool (regular files, dirs, and
  * symlinks; other node types are skipped).  Reuses the open mount in @m. */
 static int copy_tree(struct mount *m, const char *hostdir, const char *fsdir)
@@ -482,6 +493,12 @@ static int copy_tree(struct mount *m, const char *hostdir, const char *fsdir)
 			{
 				fprintf(stderr, "cpr: %s failed\n", fpath);
 				r = -1;
+			}
+			else if (++g_cpr_pending >= CPR_COMMIT_EVERY)
+			{
+				if (mount_sync(m) < 0) /* drain the deferred-free list; keep going */
+					fprintf(stderr, "cpr: intermediate sync failed\n");
+				g_cpr_pending = 0;
 			}
 		}
 		else if (S_ISLNK(st.st_mode))
