@@ -8,6 +8,10 @@
 # the FAT partition to the kernel's fixed link address 0x40200000 and booti's it,
 # passing QEMU's control DTB ($fdtcontroladdr) the kernel needs to size RAM.
 #
+# The kernel lives at the FAT ROOT (/kernel/kernel), not /boot/kernel/kernel: the
+# OS mounts this FAT partition at /boot, so an internal boot/ dir would double up
+# to /boot/boot/kernel/kernel on-device.  Flat FAT root => on-device /boot/kernel/kernel.
+#
 # Output: build/ports/u-boot/u-boot.bin  (referenced by the run-uboot targets).
 #
 # One-time host deps (macOS): brew install make dtc openssl@3   (+ aarch64-elf-gcc).
@@ -21,7 +25,7 @@ SRCTOP=$(cd "$(dirname "$0")/../../.." && pwd)
 OUT="${SRCTOP}/build/ports/u-boot"
 SRC="${OUT}/u-boot-${VER}"
 # NOTE: single-quoted so $fdtcontroladdr stays literal — U-Boot expands it at boot.
-BOOTCMD='fatload virtio 0:1 0x40200000 /boot/kernel/kernel; booti 0x40200000 - $fdtcontroladdr'
+BOOTCMD='fatload virtio 0:1 0x40200000 /kernel/kernel; booti 0x40200000 - $fdtcontroladdr'
 
 # GNU make >= 3.82 (macOS /usr/bin/make is 3.81 — too old for U-Boot's Makefile).
 GM=$(command -v gmake 2>/dev/null || true)

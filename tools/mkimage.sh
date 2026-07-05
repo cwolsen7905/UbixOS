@@ -104,9 +104,13 @@ mformat -i "${IMG}@@1M" -F ::
 # QEMU `-kernel` dev fast-path still uses the ELF directly.  On x86_64 the ELF is
 # carried for the GRUB/multiboot path.  The world lives in the UbixFS pool below.
 if [ "${ARCH}" = "aarch64" ] && [ -f "${BUILD}/boot/kernel.img" ]; then
-	mmd -i "${IMG}@@1M" ::/boot ::/boot/kernel 2>/dev/null || true
-	mcopy -o -i "${IMG}@@1M" "${BUILD}/boot/kernel.img" ::/boot/kernel/kernel
-	echo "mkimage: FAT carries the flat arm64 Image at /boot/kernel/kernel (U-Boot booti)"
+	# Stage the flat Image at the FAT ROOT (/kernel/kernel), not /boot/kernel/kernel:
+	# the OS mounts this FAT partition at /boot, so an internal boot/ dir would
+	# double up to /boot/boot/kernel/kernel on-device.  Flat root => /boot/kernel/kernel.
+	# (U-Boot's bootcmd fatloads /kernel/kernel to match — see tools/ports/u-boot.)
+	mmd -i "${IMG}@@1M" ::/kernel 2>/dev/null || true
+	mcopy -o -i "${IMG}@@1M" "${BUILD}/boot/kernel.img" ::/kernel/kernel
+	echo "mkimage: FAT carries the flat arm64 Image at /kernel/kernel (U-Boot booti; /boot/kernel/kernel on-device)"
 elif [ -f "${BUILD}/boot/kernel" ]; then
 	mmd -i "${IMG}@@1M" ::/boot ::/boot/kernel 2>/dev/null || true
 	mcopy -o -i "${IMG}@@1M" "${BUILD}/boot/kernel" ::/boot/kernel/kernel
