@@ -37,6 +37,7 @@
 #define F_DUPFD         0               /* duplicate file descriptor */
 #define F_GETFD         1               /* get file descriptor flags */
 #define F_SETFD         2               /* set file descriptor flags */
+#define F_DUPFD_CLOEXEC 1030            /* like F_DUPFD, with close-on-exec set (Linux/musl value) */
 #define F_GETFL         3               /* get file status flags */
 #define F_SETFL         4               /* set file status flags */
 #define F_GETOWN        5               /* get SIGIO/SIGURG proc/pgrp */

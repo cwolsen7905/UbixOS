@@ -108,20 +108,30 @@ int fcntl(struct thread *td, struct sys_fcntl_args *uap)
 	switch (uap->cmd)
 	{
 		case F_DUPFD:
+		case F_DUPFD_CLOEXEC:
 		{
+			/* Duplicate onto the lowest free fd >= arg.  F_DUPFD_CLOEXEC additionally
+			 * requests close-on-exec on the new fd; the fd-flag store (F_SETFD) is a
+			 * no-op in this bring-up kernel, so that bit is not yet honored across
+			 * execve — but the dup and, critically, its return value (the new fd) are
+			 * what the toolchain/shell require.  The old code fell through to default
+			 * for F_DUPFD_CLOEXEC and returned 0, so callers saw the dup "land" on fd
+			 * 0 (stdin) and malfunctioned — breaking the on-device build. */
 			int start = (uap->arg < 5) ? 5 : uap->arg;
+			int newfd = -1;
 			for (i = start; i < O_FILES; i++)
 			{
 				if (td->o_files[i] == 0x0)
 				{
 					if (duplicate_descriptor(td, uap->fd, i) != 0)
 						return (-EMFILE);
-					td->td_retval[0] = i;
+					newfd = i;
 					break;
 				}
 			}
-			if (td->td_retval[0] == 0)
+			if (newfd < 0)
 				return (-EMFILE);
+			td->td_retval[0] = newfd;
 			break;
 		}
 		case F_GETFL:
@@ -721,9 +731,9 @@ int sys_select(struct thread *td, struct sys_select_args *args)
 	int kern_to_lwip_w[MAX_FILES]; /* kernel fd → lwIP socket for write set */
 	int tty_rd_fds[MAX_FILES];     /* read fds that are pseudo-terminals (FD_TYPE_TTYV) */
 	int n_tty_rd;
-	int ptm_rd_fds[MAX_FILES];     /* read fds that are posix_openpt masters (FD_TYPE_PTMASTER) */
+	int ptm_rd_fds[MAX_FILES]; /* read fds that are posix_openpt masters (FD_TYPE_PTMASTER) */
 	int n_ptm_rd;
-	int pty_wr_fds[MAX_FILES];     /* write fds that are pty master/slave (always writable) */
+	int pty_wr_fds[MAX_FILES]; /* write fds that are pty master/slave (always writable) */
 	int n_pty_wr;
 	int max_lwip;
 	int has_stdin_rd;
