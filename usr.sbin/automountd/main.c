@@ -54,6 +54,7 @@ int mount(const char *type, const char *path, int flags, void *data);
 int unmount(const char *path, int flags);
 #include <mpi/storage.h>
 #include <sched.h>
+#include <api/ubix_disk.h> /* ubix_disk_query — enumerate disks + partitions (syscall 68) */
 
 #define FSTAB_PATH "/etc/fstab"
 #define FSTAB_MAX 32
@@ -230,6 +231,77 @@ static void handle_storage_event(mpi_message_t *msg)
 	}
 }
 
+/* ── boot-time discovery (Phase 7) ───────────────────────────────────────── */
+
+/**
+ * Discover the block partitions already attached at boot and mount the recognized
+ * ones by type — with no hardcoded, arch-specific device name (unlike an fstab
+ * line such as the old "/dev/ad0s1 /boot fat rw", which is meaningless on a
+ * virtio-blk aarch64 box where the device is /dev/vtblk0s1).
+ *
+ * Enumerates via ubix_disk_query (native syscall 68), which reads each disk's MBR
+ * and reports the partition type + current mount status.  A FAT partition mounts
+ * at /boot (the boot volume); any additional FAT data volume at /mnt/<name>.
+ * Skipped: whole disks, partitions already mounted (the root pool, and /boot when
+ * the kernel pre-mounted it), and swap/pool/unknown types.  UbixFS pools are left
+ * alone here — the root is already mounted, and a second pool needs the
+ * raw-vs-loopback choice the kernel makes, which the userland mount() path cannot
+ * express.
+ */
+static void discover_and_mount(void)
+{
+	struct ubix_disk_info d[UBIX_DISK_MAX];
+	char mnt[96], dev[80];
+	int n, i, boot_taken = 0;
+
+	n = ubix_disk_query(d, UBIX_DISK_MAX);
+	if (n <= 0)
+		return; /* arch without enumeration, or no disks — nothing to discover */
+
+	/* If the kernel already mounted a partition at /boot, that slot is taken. */
+	for (i = 0; i < n; i++)
+		if (strcmp(d[i].mountpoint, "/boot") == 0)
+			boot_taken = 1;
+
+	for (i = 0; i < n; i++)
+	{
+		struct ubix_disk_info *e = &d[i];
+
+		if (e->kind != UBIX_DK_PART)
+			continue; /* whole disks are not mountable */
+		if ((e->flags & UBIX_DF_MOUNTED) || e->mountpoint[0] != '\0')
+			continue; /* already mounted (root, or a kernel-mounted /boot) */
+		if (e->mbr_type != UBIX_PT_FAT32)
+			continue; /* only FAT is auto-mounted here (swap/pool/unknown skipped) */
+
+		if (!boot_taken)
+		{
+			strncpy(mnt, "/boot", sizeof(mnt) - 1);
+			mnt[sizeof(mnt) - 1] = '\0';
+			boot_taken = 1;
+		}
+		else
+		{
+			mkdir(MNT_BASE, 0755);
+			snprintf(mnt, sizeof(mnt), "%s/%s", MNT_BASE, e->name);
+		}
+
+		/* devfs resolves the device path (bare name or /dev/<name>) to a
+		 * (major, minor); the FAT driver mounts that partition. */
+		snprintf(dev, sizeof(dev), "/dev/%s", e->name);
+		mkdir(mnt, 0755);
+		if (mount("fat", mnt, 0, (void *)dev) == 0)
+		{
+			printf("automountd: discovered %s (FAT) -> %s\n", e->name, mnt);
+			mount_table_add(dev, mnt);
+		}
+		else
+		{
+			fprintf(stderr, "automountd: discovered %s (FAT) mount at %s failed\n", e->name, mnt);
+		}
+	}
+}
+
 /* ── main ────────────────────────────────────────────────────────────────── */
 
 int main(void)
@@ -255,6 +327,10 @@ int main(void)
 			continue;
 		mount_entry(&entries[i]);
 	}
+
+	/* Phase 7: discover + mount partitions already attached at boot (the FAT boot
+	 * volume, any FAT data disk) by enumerating the MBR — no fstab device names. */
+	discover_and_mount();
 
 	printf("automountd: static mounts done, waiting for device events\n");
 	fflush(stdout);

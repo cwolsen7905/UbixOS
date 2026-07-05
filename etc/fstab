@@ -3,7 +3,7 @@
 # device       mountpoint   fstype    options
 none           /dev         devfs     defaults
 none           /proc        procfs    defaults
-# The FAT boot partition (kernel + GRUB) mounted into the running tree.  Must
-# come after /dev so the kernel can resolve /dev/ad0s1 -> (major, minor).  Only
-# acted on where automountd runs (i386); harmless elsewhere.
-/dev/ad0s1     /boot        fat       rw
+# The FAT boot partition is discovered + mounted at /boot automatically by
+# automountd (it enumerates the MBR via ubix_disk_query — no hardcoded, per-arch
+# device name), so there is no static line for it here.  (The kernel also
+# pre-mounts /boot early for the self-rebuild loop; automountd skips it if so.)
