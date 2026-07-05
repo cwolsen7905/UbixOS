@@ -15,15 +15,22 @@
 
 #include "ubfs_spa.h"
 
+/* In-memory recycle list of freed object numbers, so create/delete churn reuses
+ * dnode slots instead of growing the metadnode without bound.  O(1) push/pop (no
+ * scanning); in-memory only (a fresh mount starts empty and resumes bumping —
+ * freed slots from a prior mount are simply not reclaimed, a bounded loss). */
+#define UBFS_OBJ_FREELIST 256
+
 /* In-memory object-set handle (distinct from the on-disk ubfs_objset_t). */
 typedef struct ubfs_dmu_os
 {
 	ubfs_pool_t *pool;
-	ubfs_dnode_t metadnode; /* describes the dnode-array object */
-	uint64_t type;          /* enum ubfs_ostype */
-	uint64_t next_object;   /* bump allocator for object numbers */
-	uint64_t free_obj_hint; /* lowest object slot that may be free (in-memory) */
-	ubfs_blkptr_t rootbp;   /* current on-disk objset-header block (freed on next sync) */
+	ubfs_dnode_t metadnode;                /* describes the dnode-array object */
+	uint64_t type;                         /* enum ubfs_ostype */
+	uint64_t next_object;                  /* bump allocator for object numbers */
+	ubfs_blkptr_t rootbp;                  /* current on-disk objset-header block (freed on next sync) */
+	uint64_t free_objs[UBFS_OBJ_FREELIST]; /* recycle list of freed object numbers */
+	uint32_t free_obj_n;                   /* entries in free_objs[] */
 } ubfs_dmu_os_t;
 
 /* ── object set ─────────────────────────────────────────────────────────────*/

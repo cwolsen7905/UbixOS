@@ -273,8 +273,7 @@ void ubfs_dmu_objset_create(ubfs_pool_t *pool, uint64_t ostype, ubfs_dmu_os_t *o
 	memset(os, 0, sizeof(*os));
 	os->pool = pool;
 	os->type = ostype;
-	os->next_object = 1;   /* object 0 is reserved */
-	os->free_obj_hint = 1; /* scan for reusable slots from object 1 (skip reserved 0) */
+	os->next_object = 1; /* object 0 is reserved */
 	init_dnode(&os->metadnode, UBFS_OT_DNODE, UBFS_BT_NONE);
 }
 
@@ -291,8 +290,7 @@ int ubfs_dmu_objset_open(ubfs_pool_t *pool, const ubfs_blkptr_t *bp, ubfs_dmu_os
 	os->metadnode = od.metadnode;
 	os->type = od.type;
 	os->next_object = od.next_object;
-	os->free_obj_hint = 1; /* holes are unknown after open — scan lazily from object 1 */
-	os->rootbp = *bp;      /* remember the header block so the next sync can free it */
+	os->rootbp = *bp; /* remember the header block so the next sync can free it */
 	return 0;
 }
 
@@ -347,32 +345,16 @@ int ubfs_dmu_dnode_put(ubfs_dmu_os_t *os, uint64_t obj, const ubfs_dnode_t *dn)
 
 uint64_t ubfs_dmu_object_alloc(ubfs_dmu_os_t *os, uint8_t otype, uint8_t bonustype)
 {
-	uint64_t obj = 0;
+	uint64_t obj;
 	ubfs_dnode_t dn;
 
-	/* Reuse a freed dnode slot (type NONE) before bumping, so create+delete churn
-	 * does not grow the metadnode without bound.  free_obj_hint tracks the lowest
-	 * slot that might be free; it only ever advances during a scan and drops back
-	 * when a lower slot is freed, so the total scan work across a session is
-	 * O(next_object) (amortised O(1) per alloc — the append path never scans). */
-	while (os->free_obj_hint < os->next_object)
-	{
-		ubfs_dnode_t probe;
-		uint64_t cand = os->free_obj_hint++;
-
-		if (ubfs_dmu_dnode_get(os, cand, &probe) < 0)
-			break; /* unreadable — fall back to the bump allocator */
-		if (probe.type == UBFS_OT_NONE)
-		{
-			obj = cand;
-			break;
-		}
-	}
-	if (obj == 0)
-	{
+	/* Recycle a freed slot if the list has one, else bump.  Both O(1) — no scan of
+	 * the metadnode (an earlier hint-scan design walked every existing object on the
+	 * first alloc after mount, which on a large root fs stalled for minutes). */
+	if (os->free_obj_n > 0)
+		obj = os->free_objs[--os->free_obj_n];
+	else
 		obj = os->next_object++;
-		os->free_obj_hint = os->next_object; /* nothing below next_object is free */
-	}
 
 	init_dnode(&dn, otype, bonustype);
 	if (ubfs_dmu_dnode_put(os, obj, &dn) < 0)
@@ -421,8 +403,8 @@ int ubfs_dmu_object_free(ubfs_dmu_os_t *os, uint64_t obj)
 	empty.type = UBFS_OT_NONE;
 	if (ubfs_dmu_dnode_put(os, obj, &empty) < 0)
 		return -1;
-	if (obj < os->free_obj_hint)
-		os->free_obj_hint = obj; /* let the next alloc reclaim this slot */
+	if (os->free_obj_n < UBFS_OBJ_FREELIST)
+		os->free_objs[os->free_obj_n++] = obj; /* recycle it on the next alloc */
 	return 0;
 }
 
