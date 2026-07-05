@@ -1,6 +1,7 @@
 #include <sys/types.h>
 #include <string.h>
 #include <ubixos/sched.h>
+#include <ubixos/signal.h> /* signal_fatal_pending — interruptible socket waits */
 #include <ubixos/ubthread.h>
 #include <ubixos/kpanic.h>
 #include <lib/kprintf.h>
@@ -337,7 +338,21 @@ u_int32_t sys_arch_mbox_fetch(struct sys_mbox **mb, void **msg, u_int32_t timeou
       }
     }
     else {
-      sys_arch_sem_wait(&mbox->full, 0);
+      /* Interruptible infinite wait: poll with a bound so a user process
+       * blocked in recv/accept with a pending fatal signal (Ctrl-C on a hung
+       * ping, or kill) can abort and unwind to userspace, where the signal is
+       * delivered — instead of wedging in the kernel forever.  Normal recv is
+       * unaffected: the sem is signalled the instant a message arrives, so this
+       * returns immediately then (the bound only caps the no-data case).
+       * tcpip_thread and other kernel threads never carry pending user signals,
+       * so signal_fatal_pending is always false for them and they never break
+       * out early. */
+      for (;;) {
+        if (sys_arch_sem_wait(&mbox->full, 500) != SYS_ARCH_TIMEOUT)
+          break;
+        if (_current != NULL && signal_fatal_pending(&_current->td))
+          return SYS_ARCH_TIMEOUT;
+      }
     }
 
     sys_arch_sem_wait(&mbox->lock, 0);

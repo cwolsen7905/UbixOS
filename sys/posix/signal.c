@@ -80,6 +80,24 @@
 int g_debug_signals = 0x0;
 
 /**
+ * Does @td have a pending, unblocked signal whose default action terminates the
+ * process (SIGINT/SIGKILL/SIGTERM/…)?  Used by in-kernel blocking waits (e.g. a
+ * socket recv) to decide whether to abort and unwind to userspace, where the
+ * signal is actually delivered — otherwise a process blocked in the kernel with
+ * a dead peer (a hung ping) can never be Ctrl-C'd or killed.  SIGKILL/SIGSTOP
+ * are always effective (they ignore the mask).
+ *
+ * @return non-zero if such a signal is pending.
+ */
+int signal_fatal_pending(struct thread *td)
+{
+	u_int32_t always = (1u << (SIGKILL - 1)) | (1u << (SIGSTOP - 1));
+	u_int32_t deliverable = td->sig_pending & (~td->sigmask.__bits[0] | always);
+
+	return (deliverable & SIGTERM_MASK) != 0;
+}
+
+/**
  * signal_post - enqueue a kernel signal for a task
  * @pid: target task ID
  * @sig: signal number to deliver (1-31)

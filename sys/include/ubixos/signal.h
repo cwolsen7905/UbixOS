@@ -165,6 +165,11 @@ void signal_check(struct trapframe *frame);
 void signal_deliver_frame(int sig, struct sigaction *sa, struct trapframe *frame, struct thread *td);
 void signal_exec_reset(struct thread *td); /* execve: reset caught handlers to SIG_DFL (POSIX) */
 
+/* Non-zero if @td has a pending, unblocked default-terminate signal — an
+ * in-kernel blocking wait consults this to abort and let the process die
+ * (so a hung socket recv is Ctrl-C / kill-able instead of wedging forever). */
+int signal_fatal_pending(struct thread *td);
+
 /*
  * Deliver pending signals when returning from a timer interrupt to ring-3.
  * Called from timerInt assembly after sched() when interrupted CS had RPL=3.
