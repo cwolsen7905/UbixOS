@@ -79,7 +79,7 @@ _USB_FLAGS!= test -f ${USB_IMAGE} && \
         install-kernel install-world install \
         run-aarch64 run-debug-aarch64 run-uboot-aarch64 run-uboot-debug-aarch64 run-claude \
         run-selfbuilt run-selfbuilt-aarch64 run-selfbuilt-debug-aarch64 \
-        kernel-rpi3 image-rpi3 \
+        kernel-rpi3 image-rpi3 kernel-rpi4 image-rpi4 \
         kernel-to-image clean-kernel clean
 
 # `all` is arch-aware: every MMU-class arch builds the full system (kernel + world
@@ -244,12 +244,14 @@ AARCH64_ARCH_C_SRCS = \
 	sys/arch/aarch64/bringup/userelfdemo.c \
 	sys/arch/aarch64/bringup/vmmdemo.c \
 	sys/arch/aarch64/dev/bcm_fb.c \
+	sys/arch/aarch64/dev/bcm_genet.c \
 	sys/arch/aarch64/dev/bcm_intc.c \
 	sys/arch/aarch64/dev/bcm_mbox.c \
 	sys/arch/aarch64/dev/bcm_sdhci.c \
 	sys/arch/aarch64/dev/bcm_usb.c \
 	sys/arch/aarch64/dev/board_qemu.c \
 	sys/arch/aarch64/dev/board_rpi3.c \
+	sys/arch/aarch64/dev/board_rpi4.c \
 	sys/arch/aarch64/dev/console.c \
 	sys/arch/aarch64/dev/display.c \
 	sys/arch/aarch64/dev/fbcon.c \
@@ -424,6 +426,15 @@ kernel-rpi3:
 image-rpi3: kernel-rpi3
 	@sh ${CURDIR}/tools/fetch-rpi3-firmware.sh
 	@sh ${CURDIR}/tools/make-rpi3-sd.sh
+
+# Raspberry Pi 4 / Pi 400 (BCM2711) — same ARCH+BOARD pattern, BOARD_RPI4.  See
+# docs/design/raspberry-pi-4-400-bringup.md.
+kernel-rpi4:
+	@sh ${CURDIR}/tools/build-rpi4-kernel.sh
+
+image-rpi4: kernel-rpi4
+	@sh ${CURDIR}/tools/fetch-rpi4-firmware.sh
+	@sh ${CURDIR}/tools/make-rpi4-sd.sh
 
 # x86-64 bring-up kernel: assemble the long-mode entry, compile the COM1 banner,
 # link low at 1 MB.  Standalone (does NOT descend into sys/Makefile) — the same

@@ -2,19 +2,21 @@
  * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
- * BCM2837 (Raspberry Pi) VideoCore property mailbox transport (channel 8).  Shared
- * by the EMMC clock query (bcm_sdhci.c) and the framebuffer allocation (bcm_fb.c).
- * The caller fills a 16-byte-aligned property buffer (buf[0] = total byte size,
- * buf[1] = 0 request, then tag triples, then a 0 end tag); this hands it to the GPU
- * at its bus alias (phys | 0xC0000000) and cleans/invalidates the cache around the
- * call for coherency.  See docs/design/raspberry-pi-3b-bringup.md.
+ * BCM2837/BCM2711 (Raspberry Pi 3 / Pi 4) VideoCore property mailbox transport
+ * (channel 8).  Shared by the EMMC clock query (bcm_sdhci.c) and the framebuffer
+ * allocation (bcm_fb.c).  The caller fills a 16-byte-aligned property buffer
+ * (buf[0] = total byte size, buf[1] = 0 request, then tag triples, then a 0 end
+ * tag); this hands it to the GPU at its bus alias (phys | 0xC0000000) and
+ * cleans/invalidates the cache around the call for coherency.  The mailbox sits at
+ * peripheral+0xB880 on both SoCs (peri base 0x3F000000 on the Pi 3, 0xFE000000 on
+ * the Pi 4).  See docs/design/raspberry-pi-3b-bringup.md.
  */
 
-#ifdef BOARD_RPI3
+#if defined(BOARD_RPI3) || defined(BOARD_RPI4)
 
-#include "bringup.h"
+#include "bringup.h" /* defines BOARD_BCM + BCM_PERI_BASE for the body below */
 
-#define MBOX_BASE (PHYSMAP_BASE + 0x3F00B880UL)
+#define MBOX_BASE (PHYSMAP_BASE + BCM_PERI_BASE + 0xB880UL)
 #define MBOX_READ (*(volatile u_int32_t *)(MBOX_BASE + 0x00))
 #define MBOX_STATUS (*(volatile u_int32_t *)(MBOX_BASE + 0x18))
 #define MBOX_WRITE (*(volatile u_int32_t *)(MBOX_BASE + 0x20))
@@ -61,4 +63,4 @@ int aarch64_mbox_prop(volatile u_int32_t *msg)
 	return (msg[1] == 0x80000000u ? 0 : -1);
 }
 
-#endif /* BOARD_RPI3 */
+#endif /* BOARD_RPI3 || BOARD_RPI4 */

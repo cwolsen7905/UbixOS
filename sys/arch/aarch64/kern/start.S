@@ -36,8 +36,9 @@
 	 * + flags and relocates the kernel to a 2 MB-aligned base — but our kernel is
 	 * linked at a fixed 0x80000 and is NOT relocatable, so the header makes the Pi
 	 * load it at the wrong address and hang before serial.  The Pi wants a raw flat
-	 * binary with _start at byte 0 (0x80000), which is what omitting _head produces. */
-#ifndef BOARD_RPI3
+	 * binary with _start at byte 0 (0x80000), which is what omitting _head produces.
+	 * (Both BCM Pis — RPI3 and RPI4 — do this.) */
+#if !defined(BOARD_RPI3) && !defined(BOARD_RPI4)
 	.global _head
 _head:
 	b	_start			/* code0: branch to _start (preserves x0 = DTB) */

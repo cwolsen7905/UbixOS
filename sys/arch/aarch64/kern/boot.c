@@ -160,11 +160,11 @@ void kmain_aarch64(u_int64_t dtb_phys)
 	 * bumps a heartbeat the BSP observes here.  IRQs stay masked on the AP — the
 	 * per-CPU scheduler is M3.
 	 */
-#ifndef BOARD_RPI3
+#if !defined(BOARD_RPI3) && !defined(BOARD_RPI4)
 	aarch64_smp_start_aps();
 #else
-	/* Pi M1: BSP only.  Secondary cores need the spin-table release + the BCM
-	 * mailbox IPI/per-core timer routing, which are a later Pi milestone. */
+	/* Pi (RPI3/RPI4): BSP only.  Secondary cores need board-specific release (Pi 3
+	 * BCM local mailbox/spin-table; Pi 4 GIC SGIs + spin-table) — a later milestone. */
 	kprintf("smp: BSP only on the Pi (secondary cores are a later milestone)\n");
 #endif
 	vmm_mem_map_init();
@@ -212,8 +212,8 @@ void kmain_aarch64(u_int64_t dtb_phys)
 	 * disk-backed dynamic world; the embedded ramfs path below is the fallback
 	 * when no disk is attached. */
 	{
-#ifdef BOARD_RPI3
-		struct ubx_device *blk = aarch64_sd_init(); /* Pi: the microSD on the EMMC */
+#ifdef BOARD_BCM
+		struct ubx_device *blk = aarch64_sd_init(); /* Pi 3/4: the microSD on the EMMC/EMMC2 */
 #else
 		struct ubx_device *blk = aarch64_virtio_blk_init();
 #endif
@@ -229,7 +229,7 @@ void kmain_aarch64(u_int64_t dtb_phys)
 		 * vdev — the same path proven on i386.  On a bad/absent pool the mount
 		 * unwinds cleanly (initfs fails -> mountpoint freed), so we fall back to the
 		 * FAT partition, then to ramfs below. */
-#ifdef BOARD_RPI3
+#ifdef BOARD_BCM
 		pool_minor = (blk != 0) ? aarch64_sd_pool_minor() : -1;
 #else
 		pool_minor = (blk != 0) ? aarch64_virtio_blk_pool_minor() : -1;
@@ -237,13 +237,17 @@ void kmain_aarch64(u_int64_t dtb_phys)
 		if (pool_minor > 0)
 		{
 			ubfs_vfs_set_raw(1);
-#ifdef BOARD_RPI3
-			/* Pi M4 v1: mount the pool READ-ONLY — the SD driver has no write path
-			 * yet (CMD24/25 is a follow-up), and a RW CoW mount may write metadata. */
-			if (vfs_mount(1, pool_minor, 0, VFS_TYPE_UBIXFS, "/", "ro") == 0)
+			/* Pi: mount the pool READ-ONLY for now.  The SD *block* write path works
+			 * (aarch64_sd_write_ok self-test passes), but enabling a RW UbixFS mount
+			 * exercises the CoW/metadata-write path for the first time on the Pi and
+			 * corrupts kernel memory (crashes tcpip_thread with an ASCII FAR).  RW is
+			 * pending that debug.  QEMU (virtio-blk) stays rw as before. */
+#ifdef BOARD_BCM
+			const char *pool_mode = "ro";
 #else
-			if (vfs_mount(1, pool_minor, 0, VFS_TYPE_UBIXFS, "/", "rw") == 0)
+			const char *pool_mode = "rw";
 #endif
+			if (vfs_mount(1, pool_minor, 0, VFS_TYPE_UBIXFS, "/", pool_mode) == 0)
 			{
 				fileDescriptor_t *probe = fopen("/lib/libc.so", "r");
 				if (probe != 0)
@@ -363,11 +367,21 @@ void kmain_aarch64(u_int64_t dtb_phys)
 			 * and the NIC + lwIP.  The Pi uses the VideoCore mailbox framebuffer (M6)
 			 * and the USB SMSC Ethernet (M7); QEMU uses virtio-gpu/input/sound + net.
 			 * On the Pi, net_init runs AFTER usb_init (which brings up the SMSC). */
-#ifdef BOARD_RPI3
+#if defined(BOARD_RPI3)
 			aarch64_bcm_fb_init();
 			aarch64_fbcon_init(); /* on-screen kernel console (boot log/panic) */
 			aarch64_usb_init();   /* DWC2 USB host + hub walk + SMSC Ethernet (M7) */
 			aarch64_net_init();   /* lwIP over the SMSC NIC (if it came up) */
+#elif defined(BOARD_RPI4)
+			/* Pi 4: the VideoCore mailbox framebuffer is identical to the Pi 3, so the
+			 * HDMI desktop comes up the same way (R4.3).  Networking is the memory-mapped
+			 * GENET gigabit MAC (R4.5) — a different controller from the Pi 3's USB NIC,
+			 * but the same lwIP bridge.  USB (xHCI over PCIe) is a later milestone (R4.6),
+			 * so no input device is brought up here yet. */
+			aarch64_bcm_fb_init();
+			aarch64_fbcon_init(); /* on-screen kernel console (boot log/panic) */
+			aarch64_genet_init(); /* BCM2711 GENET gigabit Ethernet */
+			aarch64_net_init();   /* lwIP over GENET (if it came up) */
 #else
 			aarch64_virtio_net_init();
 			aarch64_net_init();

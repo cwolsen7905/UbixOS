@@ -11,7 +11,7 @@
 
 #include "bringup.h"
 
-#ifndef BOARD_RPI3 /* QEMU is the default board; the Pi build (board_rpi3.c) owns g_board */
+#if !defined(BOARD_RPI3) && !defined(BOARD_RPI4) /* QEMU default; the Pi builds own g_board */
 
 static struct aarch64_board g_board_qemu_virt = {
     .name = "qemu-virt",

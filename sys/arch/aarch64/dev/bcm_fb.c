@@ -2,16 +2,18 @@
  * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
- * BCM2837 (Raspberry Pi 3) framebuffer via the VideoCore property mailbox (M6).
- * Asks the GPU to allocate a 32-bpp linear framebuffer in RAM, then points the
- * shared display-stack globals (virtio_gpu_fb/width/height/pitch — the de-facto
- * framebuffer interface fbcon + display.c/sys_mapfb consume) at it.  Unlike
- * virtio-gpu (a transfer+flush present model), the VideoCore scans the buffer out
- * of RAM continuously, so "present" is just a dcache clean (aarch64_fb_present,
- * display.c) to push CPU writes to the scanout.  See raspberry-pi-3b-bringup.md.
+ * BCM2837/BCM2711 (Raspberry Pi 3 / Pi 4) framebuffer via the VideoCore property
+ * mailbox (M6 / R4.3).  Asks the GPU to allocate a 32-bpp linear framebuffer in
+ * RAM, then points the shared display-stack globals (virtio_gpu_fb/width/height/
+ * pitch — the de-facto framebuffer interface fbcon + display.c/sys_mapfb consume)
+ * at it.  Unlike virtio-gpu (a transfer+flush present model), the VideoCore scans
+ * the buffer out of RAM continuously, so "present" is just a dcache clean
+ * (aarch64_fb_present, display.c) to push CPU writes to the scanout.  The mailbox
+ * FB path is byte-identical on both SoCs — only the peripheral base (handled in
+ * bcm_mbox.c) differs.  See raspberry-pi-3b-bringup.md.
  */
 
-#ifdef BOARD_RPI3
+#if defined(BOARD_RPI3) || defined(BOARD_RPI4)
 
 #include "bringup.h"
 
@@ -93,13 +95,9 @@ int aarch64_bcm_fb_init(void)
 	virtio_gpu_height = h;
 	virtio_gpu_pitch = pitch;
 
-	kprintf("bcm_fb: %ux%u pitch=%u fb phys=0x%X (va=0x%lX)\n",
-	        w,
-	        h,
-	        pitch,
-	        base,
-	        (u_int64_t)(uintptr_t)virtio_gpu_fb);
+	kprintf(
+	    "bcm_fb: %ux%u pitch=%u fb phys=0x%X (va=0x%lX)\n", w, h, pitch, base, (u_int64_t)(uintptr_t)virtio_gpu_fb);
 	return (0);
 }
 
-#endif /* BOARD_RPI3 */
+#endif /* BOARD_RPI3 || BOARD_RPI4 */

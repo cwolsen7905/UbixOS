@@ -2,29 +2,45 @@
  * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
- * BCM2837 (Raspberry Pi 3) SD-card driver via the Arasan/EMMC SDHCI controller at
- * peripheral+0x300000 (M4 storage).  The Pi-3 firmware routes the microSD to the
- * Broadcom SDHOST and the EMMC to the WiFi SDIO; we re-mux GPIO48-53 to ALT3 to put
- * the card on the standard SDHCI, then run the SD init (CMD0/8/ACMD41/2/3/7) and
- * single/multi-block reads (CMD17/18).  Register layout + sequence per the BCM2835
- * peripherals datasheet + the SD physical-layer spec (the bare-metal-standard
- * approach; see docs/design/raspberry-pi-3b-bringup.md).
+ * BCM2837/BCM2711 (Raspberry Pi 3 / Pi 4) SD-card driver via the standard SDHCI
+ * register interface.  The controller and its register layout are the same on both
+ * SoCs; only the base address and a few board deltas differ:
+ *   - Pi 3 (BCM2837): the Arasan/EMMC controller at peripheral+0x300000.  The
+ *     firmware routes the microSD to the Broadcom SDHOST and the EMMC to the WiFi
+ *     SDIO, so we re-mux GPIO48-53 to ALT3 to put the card on the SDHCI.
+ *   - Pi 4 (BCM2711): the dedicated EMMC2 controller at peripheral+0x340000.  The
+ *     microSD is hard-wired to EMMC2 on its own SD-interface pins (no GPIO re-mux),
+ *     and its base clock is read as clock id 12 (EMMC2), not 1 (EMMC).
+ * Common path: the SD init (CMD0/8/ACMD41/2/3/7) and single/multi-block reads
+ * (CMD17/18) / writes (CMD24/25) per the SD physical-layer spec (the bare-metal-
+ * standard approach; see docs/design/raspberry-pi-3b-bringup.md and
+ * raspberry-pi-4-400-bringup.md).
  *
  * v1 polls the controller (boot-time pool reads).  IRQ-driven completion
  * (sleep-on-IRQ) is the follow-up so runtime reads don't block the scheduler.
  */
 
-#ifdef BOARD_RPI3
+#if defined(BOARD_RPI3) || defined(BOARD_RPI4)
 
-#include "bringup.h"
+#include "bringup.h"       /* defines BCM_PERI_BASE for the MMIO bases below */
 #include <sys/bus.h>       /* struct ubx_device + ubx_blk_ops */
 #include <sys/descrip.h>   /* g_device_find (vfs_mount resolves the block device) */
 #include <dev/partition.h> /* MBR partition parsing (sd0sN) */
 #include <string.h>        /* memset / strncpy */
 
-/* MMIO bases via the TTBR1 physmap. */
-#define EMMC_BASE (PHYSMAP_BASE + 0x3F300000UL)
-#define GPIO_BASE (PHYSMAP_BASE + 0x3F200000UL)
+/* MMIO bases via the TTBR1 physmap.  The SDHCI controller lives at a different
+ * peripheral offset on the two SoCs (Pi 3 Arasan EMMC = +0x300000; Pi 4 EMMC2 =
+ * +0x340000), and the mailbox EMMC clock id + base-clock fallback differ. */
+#define GPIO_BASE (PHYSMAP_BASE + BCM_PERI_BASE + 0x200000UL)
+#ifdef BOARD_RPI4
+#define EMMC_BASE (PHYSMAP_BASE + BCM_PERI_BASE + 0x340000UL) /* EMMC2 (dedicated SD) */
+#define SD_MBOX_CLOCK_ID 12u                                  /* mailbox clock id: EMMC2 */
+#define SD_BASE_CLK_FALLBACK 100000000u                       /* EMMC2 default base clock */
+#else
+#define EMMC_BASE (PHYSMAP_BASE + BCM_PERI_BASE + 0x300000UL) /* Arasan EMMC */
+#define SD_MBOX_CLOCK_ID 1u                                   /* mailbox clock id: EMMC */
+#define SD_BASE_CLK_FALLBACK 41666666u
+#endif
 #define EMMC(off) (*(volatile u_int32_t *)(EMMC_BASE + (off)))
 #define GPIO(off) (*(volatile u_int32_t *)(GPIO_BASE + (off)))
 
@@ -58,6 +74,8 @@
 
 /* INTERRUPT bits. */
 #define INT_READ_RDY 0x00000020u
+#define INT_WRITE_RDY 0x00000010u
+#define INT_DATA_DONE 0x00000002u
 #define INT_CMD_DONE 0x00000001u
 #define INT_CMD_TIMEOUT 0x00010000u
 #define INT_DATA_TIMEOUT 0x00100000u
@@ -65,6 +83,8 @@
 
 /* CONTROL0/1 bits. */
 #define C0_HCTL_DWIDTH 0x00000002u
+#define C0_SD_BUS_POWER 0x00000100u   /* SDHCI Power Control: SD Bus Power (EMMC2) */
+#define C0_SD_BUS_VOLT_33 0x00000E00u /* SDHCI Power Control: 3.3 V select (bits 11:9 = 0x7) */
 #define C1_SRST_HC 0x01000000u
 #define C1_TOUNIT_MAX 0x000E0000u
 #define C1_CLK_EN 0x00000004u
@@ -94,6 +114,8 @@
 #define CMD_STOP_TRANS 0x0C030000u
 #define CMD_READ_SINGLE 0x11220010u
 #define CMD_READ_MULTI 0x12220032u
+#define CMD_WRITE_SINGLE 0x18220000u /* CMD24: like READ_SINGLE but DAT_DIR=host→card */
+#define CMD_WRITE_MULTI 0x19220022u  /* CMD25: multi-block + blkcnt-en, DAT_DIR write */
 #define CMD_SET_BLOCKCNT 0x17020000u
 #define CMD_APP_CMD 0x37000000u
 #define CMD_SEND_OP_COND (0x29020000u | CMD_NEED_APP)
@@ -104,13 +126,13 @@
 #define SD_ERROR (-1)
 #define SD_TIMEOUT (-2)
 
-static u_int32_t g_sd_rca;                 /* relative card address (from CMD3) */
-static u_int32_t g_sd_scr[2];              /* SD config register words         */
-static u_int32_t g_sd_ccs;                 /* SCR_SUPP_CCS if a high-capacity (SDHC) card */
-static u_int32_t g_sd_hv;                  /* host controller spec version */
-static int g_sd_err;                       /* last error */
-static u_int32_t g_sd_last_int;            /* last INTERRUPT value seen by sd_int (debug) */
-static u_int32_t g_sd_base_clk = 41666666; /* EMMC base clock (Hz); set from the mailbox */
+static u_int32_t g_sd_rca;                             /* relative card address (from CMD3) */
+static u_int32_t g_sd_scr[2];                          /* SD config register words         */
+static u_int32_t g_sd_ccs;                             /* SCR_SUPP_CCS if a high-capacity (SDHC) card */
+static u_int32_t g_sd_hv;                              /* host controller spec version */
+static int g_sd_err;                                   /* last error */
+static u_int32_t g_sd_last_int;                        /* last INTERRUPT value seen by sd_int (debug) */
+static u_int32_t g_sd_base_clk = SD_BASE_CLK_FALLBACK; /* EMMC base clock (Hz); set from the mailbox */
 
 /** Busy-wait @us microseconds off the always-running virtual counter. */
 static void sd_wait_us(u_int32_t us)
@@ -290,6 +312,12 @@ static int sd_clk(u_int32_t freq)
 /** Route GPIO48-53 (CLK/CMD/DAT0-3) to ALT3 so the microSD lands on the EMMC. */
 static void sd_gpio_init(void)
 {
+#ifdef BOARD_RPI4
+	/* Pi 4: the microSD is hard-wired to the EMMC2 controller on its own dedicated
+	 * SD-interface pins (not GPIO 48-53), and the VideoCore firmware already powered
+	 * and read the card to load start4.elf + kernel8.img — so no GPIO ALT muxing or
+	 * pull configuration is needed here. */
+#else
 	u_int32_t r;
 
 	/* GPFSEL4: GPIO48 (field 8) + GPIO49 (field 9) = ALT3 (7). */
@@ -308,6 +336,7 @@ static void sd_gpio_init(void)
 	GPIO(0x9C) = (0x3Fu << 16); /* GPPUDCLK1: GPIO48..53 */
 	sd_wait_us(2);
 	GPIO(0x9C) = 0;
+#endif
 }
 
 /**
@@ -323,9 +352,9 @@ int aarch64_sd_card_init(void)
 
 	sd_gpio_init();
 	g_sd_hv = (EMMC(EMMC_SLOTISR_VER) & HOST_SPEC_NUM) >> HOST_SPEC_NUM_SHIFT;
-	g_sd_base_clk = mbox_clock_rate(1); /* clock id 1 = EMMC */
+	g_sd_base_clk = mbox_clock_rate(SD_MBOX_CLOCK_ID); /* 1 = EMMC (Pi 3), 12 = EMMC2 (Pi 4) */
 	if (g_sd_base_clk < 1000000u || g_sd_base_clk > 500000000u)
-		g_sd_base_clk = 41666666u; /* fall back to the common default */
+		g_sd_base_clk = SD_BASE_CLK_FALLBACK; /* fall back to the board's common default */
 	kprintf("sd: EMMC SLOTISR_VER=0x%X hv=%u base=%u Hz\n", EMMC(EMMC_SLOTISR_VER), g_sd_hv, g_sd_base_clk);
 
 	/* Reset the host controller. */
@@ -339,6 +368,14 @@ int aarch64_sd_card_init(void)
 		kprintf("sd: HC reset timeout\n");
 		return (SD_ERROR);
 	}
+
+#ifdef BOARD_RPI4
+	/* EMMC2 is a standard SDHCI 3.0 controller: enable SD Bus Power at 3.3 V before
+	 * any command (the Pi 3 Arasan hard-wires power on, so it never needed this).
+	 * Without it the controller won't drive the bus and CMD0 never completes. */
+	EMMC(EMMC_CONTROL0) |= C0_SD_BUS_VOLT_33 | C0_SD_BUS_POWER;
+	sd_wait_us(10);
+#endif
 
 	EMMC(EMMC_CONTROL1) |= C1_CLK_INTLEN | C1_TOUNIT_MAX;
 	sd_wait_us(10);
@@ -354,7 +391,10 @@ int aarch64_sd_card_init(void)
 	sd_cmd(CMD_GO_IDLE, 0);
 	if (g_sd_err != SD_OK)
 	{
-		kprintf("sd: CMD0 (GO_IDLE) failed\n");
+		kprintf("sd: CMD0 (GO_IDLE) failed (int=0x%X status=0x%X ctl0=0x%X)\n",
+		        g_sd_last_int,
+		        EMMC(EMMC_STATUS),
+		        EMMC(EMMC_CONTROL0));
 		return (SD_ERROR);
 	}
 	resp = sd_cmd(CMD_SEND_IF_COND, 0x000001AA);
@@ -505,6 +545,66 @@ int aarch64_sd_readblock(u_int32_t lba, u_int8_t *buffer, u_int32_t num)
 	return ((int)(num * 512u));
 }
 
+/**
+ * Write @num 512-byte blocks starting at LBA @lba from @buffer (a kernel pointer).
+ * Mirror of aarch64_sd_readblock: CMD24 (single) / CMD25 (multi), pushing each block
+ * into EMMC_DATA after WRITE_RDY and waiting DATA_DONE for the card's programming.
+ *
+ * @return the number of bytes written, or -1 on error.
+ */
+int aarch64_sd_writeblock(u_int32_t lba, const u_int8_t *buffer, u_int32_t num)
+{
+	u_int32_t c = 0, d;
+	const u_int32_t *buf = (const u_int32_t *)(const void *)buffer;
+
+	if (num < 1)
+		num = 1;
+	if (sd_status(SR_DAT_INHIBIT) != SD_OK)
+		return (-1);
+
+	if (g_sd_ccs != 0)
+	{
+		if (num > 1 && (g_sd_scr[0] & SCR_SUPP_SET_BLKCNT) != 0)
+		{
+			sd_cmd(CMD_SET_BLOCKCNT, num);
+			if (g_sd_err != SD_OK)
+				return (-1);
+		}
+		EMMC(EMMC_BLKSIZECNT) = (num << 16) | 512u;
+		sd_cmd(num == 1 ? CMD_WRITE_SINGLE : CMD_WRITE_MULTI, lba);
+		if (g_sd_err != SD_OK)
+			return (-1);
+	}
+	else
+	{
+		EMMC(EMMC_BLKSIZECNT) = (1u << 16) | 512u;
+	}
+
+	while (c < num)
+	{
+		if (g_sd_ccs == 0)
+		{
+			sd_cmd(CMD_WRITE_SINGLE, (lba + c) * 512u);
+			if (g_sd_err != SD_OK)
+				return (-1);
+		}
+		if (sd_int(INT_WRITE_RDY) != SD_OK)
+			return (-1);
+		for (d = 0; d < 128; d++)
+			EMMC(EMMC_DATA) = buf[d];
+		if (g_sd_ccs == 0 && sd_int(INT_DATA_DONE) != SD_OK) /* per-command programming wait */
+			return (-1);
+		buf += 128;
+		c++;
+	}
+	/* CCS multi/single: one DATA_DONE at the end of the transfer. */
+	if (g_sd_ccs != 0 && sd_int(INT_DATA_DONE) != SD_OK)
+		return (-1);
+	if (num > 1 && (g_sd_scr[0] & SCR_SUPP_SET_BLKCNT) == 0 && g_sd_ccs != 0)
+		sd_cmd(CMD_STOP_TRANS, 0);
+	return ((int)(num * 512u));
+}
+
 /* --- block-device registration (mirrors virtio_blk.c so the buffer cache + the
  *     MBR partition layer + the UbixFS mount path use the SD with no SD knowledge) --- */
 
@@ -513,6 +613,9 @@ static struct ubx_blk_ops sd_blk_ops;                     /* its block ops */
 static struct ubp_partition sd_parts[MBR_MAX_PARTITIONS]; /* MBR partitions (sd0sN) */
 static int sd_npart;
 static int sd_ready;
+static int sd_write_ok; /* the write path passed its self-test */
+static u_int8_t sd_scratch[512] __attribute__((aligned(4)));
+static u_int8_t sd_verify[512] __attribute__((aligned(4)));
 
 /**
  * ubx_blk_ops::read — read @count 512-byte sectors at @lba into @buf.
@@ -527,15 +630,65 @@ static int sd_blk_read(struct ubx_device *dev, u_int32_t lba, u_int32_t count, v
 }
 
 /**
- * ubx_blk_ops::write — M4 v1 is read-only; SD writes (CMD24/25) are a follow-up.
+ * ubx_blk_ops::write — write @count 512-byte sectors at @lba from @buf.
+ * @return 0 on success, -1 on error.
  */
 static int sd_blk_write(struct ubx_device *dev, u_int32_t lba, u_int32_t count, void *buf)
 {
 	(void)dev;
-	(void)lba;
-	(void)count;
-	(void)buf;
-	return (-1);
+	if (!sd_ready || !sd_write_ok) /* writes stay disabled until the self-test passes */
+		return (-1);
+	return (aarch64_sd_writeblock(lba, (const u_int8_t *)buf, count) == (int)(count * 512u) ? 0 : -1);
+}
+
+/**
+ * Non-destructive write self-test: on a reserved scratch sector (the MBR→partition-1
+ * gap, LBA 2000 — never part of any filesystem), save the original, write a pattern,
+ * read it back + verify, then restore the original.  Enables writes only if the
+ * round-trip matches, so a broken write path can never corrupt the pool.
+ */
+static void sd_write_selftest(void)
+{
+	const u_int32_t lba = 2000; /* reserved gap between the MBR and partition 1 */
+	u_int32_t i;
+
+	if (aarch64_sd_readblock(lba, sd_scratch, 1) != 512)
+	{
+		kprintf("sd: write self-test skipped (scratch read failed); pool read-only\n");
+		return;
+	}
+	for (i = 0; i < 512; i++)
+		sd_verify[i] = (u_int8_t)(i ^ 0xA5);
+	if (aarch64_sd_writeblock(lba, sd_verify, 1) != 512)
+	{
+		kprintf("sd: write self-test FAILED (write error); pool read-only\n");
+		return;
+	}
+	memset(sd_verify, 0, sizeof(sd_verify));
+	if (aarch64_sd_readblock(lba, sd_verify, 1) != 512)
+	{
+		kprintf("sd: write self-test FAILED (readback error); pool read-only\n");
+		(void)aarch64_sd_writeblock(lba, sd_scratch, 1);
+		return;
+	}
+	for (i = 0; i < 512; i++)
+	{
+		if (sd_verify[i] != (u_int8_t)(i ^ 0xA5))
+		{
+			kprintf("sd: write self-test FAILED (mismatch @%u); pool read-only\n", i);
+			(void)aarch64_sd_writeblock(lba, sd_scratch, 1);
+			return;
+		}
+	}
+	(void)aarch64_sd_writeblock(lba, sd_scratch, 1); /* restore the original content */
+	sd_write_ok = 1;
+	kprintf("sd: write self-test PASSED — writes enabled\n");
+}
+
+/** @return non-zero if SD writes are verified working (for the rw pool mount). */
+int aarch64_sd_write_ok(void)
+{
+	return (sd_write_ok);
 }
 
 /**
@@ -581,6 +734,7 @@ struct ubx_device *aarch64_sd_init(void)
 	sd_ready = 1;
 	g_device_find = sd_device_find;
 	kprintf("sd: microSD on the EMMC ready (sd0)\n");
+	sd_write_selftest(); /* verify the write path before any pool write can happen */
 
 	sd_npart = mbr_parse_partitions(&sd_blk_dev, sd_parts, MBR_MAX_PARTITIONS);
 	if (sd_npart < 0)
@@ -603,4 +757,4 @@ int aarch64_sd_pool_minor(void)
 	return (-1);
 }
 
-#endif /* BOARD_RPI3 */
+#endif /* BOARD_RPI3 || BOARD_RPI4 */

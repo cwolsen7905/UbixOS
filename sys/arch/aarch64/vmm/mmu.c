@@ -36,6 +36,23 @@ static u_int64_t physmap_l1[512] __attribute__((aligned(4096)));
 static u_int64_t l2_block0[512] __attribute__((aligned(4096)));
 #endif
 
+#ifdef BOARD_RPI4
+/* Raspberry Pi 4 / Pi 400 (BCM2711): the peripheral window is up at 0xFE000000 (low-
+ * peripheral mode) — in the 3-4 GB block (block 3), alongside RAM below it and the
+ * GIC-400 (0xFF84xxxx) above.  So block 3 is split into 2 MB blocks (RAM Normal,
+ * peripherals + GIC Device); blocks 0-2 and 4+ are Normal-RAM 1 GB blocks (the kernel
+ * loads at 0x80000 in block 0). */
+#define MMU_2MB (2UL << 20)
+#define DESC_TABLE 0x3UL
+#define RPI4_PERIPH_BASE 0xFE000000UL /* BCM2711 low-peripheral window base */
+/* The BCM2711 also has MMIO below the 0xFE000000 legacy window: the GENET gigabit
+ * MAC (0xFD580000) and the PCIe root complex (0xFD500000).  Map everything from
+ * 0xFC000000 up as Device so those register blocks aren't cached as Normal RAM
+ * (there is no RAM up here — the Pi's RAM lives in blocks 0-2). */
+#define RPI4_DEVICE_BASE 0xFC000000UL
+static u_int64_t l2_block3[512] __attribute__((aligned(4096)));
+#endif
+
 /**
  * The kernel's identity L1 root.  New address spaces (pmap_create_user_space,
  * fork) copy this so they all map the kernel + identity-mapped RAM, regardless
@@ -120,7 +137,30 @@ static void mmu_program_regs(void)
  */
 void aarch64_mmu_init(void)
 {
-#ifdef BOARD_RPI3
+#if defined(BOARD_RPI4)
+	/* Block 3 (0xC0000000): 2 MB granularity — Normal below 0xFC000000 (unused, no
+	 * RAM), Device at and above it (GENET 0xFD580000, PCIe 0xFD500000, the legacy
+	 * peripheral window 0xFE000000, and the GIC-400 0xFF84xxxx). */
+	for (unsigned j = 0; j < 512; j++)
+	{
+		u_int64_t pa = 0xC0000000UL + (u_int64_t)j * MMU_2MB;
+		u_int64_t attr =
+		    (pa < RPI4_DEVICE_BASE) ? (DESC_ATTR(ATTR_NORMAL_IDX) | DESC_SH_INNER) : DESC_ATTR(ATTR_DEVICE_IDX);
+		l2_block3[j] = pa | attr | DESC_AF | DESC_BLOCK;
+	}
+	/* Blocks 0-2 + 4..511: Normal-RAM 1 GB blocks (the kernel loads in block 0); block
+	 * 3 points at the split L2 above. */
+	for (unsigned i = 0; i < 512; i++)
+	{
+		u_int64_t blk;
+		if (i == 3)
+			blk = (u_int64_t)(uintptr_t)l2_block3 | DESC_TABLE;
+		else
+			blk = ((u_int64_t)i * MMU_1GB) | DESC_ATTR(ATTR_NORMAL_IDX) | DESC_SH_INNER | DESC_AF | DESC_BLOCK;
+		l1_table[i] = blk;
+		physmap_l1[i] = blk;
+	}
+#elif defined(BOARD_RPI3)
 	/* Block 0: 2 MB granularity — RAM Normal up to the peripheral window, Device
 	 * above.  (uintptr_t)l2_block0 resolves to its low PA here (adrp-relative, MMU
 	 * off), which is what the table descriptor needs. */

@@ -185,8 +185,14 @@ static void run_init_image(const void *image, const char *name)
 
 	/* smp-plan M3: the scheduler is up and init is scheduled — create each AP's
 	 * per-CPU idle task and release the APs into the shared run queue.  From here
-	 * they pull READY tasks alongside the BSP (true SMP). */
+	 * they pull READY tasks alongside the BSP (true SMP).  Skipped on the Raspberry
+	 * Pi (BSP-only): its APs were never started into our AP entry (start_aps is
+	 * gated off), so releasing them makes the firmware-held cores jump to the kernel
+	 * _start and re-run kmain — garbling serial and racing the BSP.  Pi SMP needs
+	 * board-specific spin-table/PSCI bring-up (a later milestone). */
+#ifndef BOARD_BCM
 	aarch64_smp_release_aps();
+#endif
 
 	for (;;)
 	{
@@ -591,8 +597,13 @@ void aarch64_run_dynamic_init(const char *path)
 	g_idle_task = _current;
 
 	/* smp-plan M3: scheduler up + init scheduled — create each AP's per-CPU idle
-	 * task and release the APs into the shared run queue (true SMP). */
+	 * task and release the APs into the shared run queue (true SMP).  Skipped on the
+	 * Raspberry Pi (BSP-only): its APs were never started into our AP entry, so
+	 * releasing them makes the firmware-held cores re-enter the kernel and re-run
+	 * kmain.  Pi SMP is a later milestone (board-specific spin-table/PSCI). */
+#ifndef BOARD_BCM
 	aarch64_smp_release_aps();
+#endif
 
 	for (;;)
 	{

@@ -23,6 +23,21 @@
 #define AARCH64_PHYS_OF(va) ((uintptr_t)(va) - PHYSMAP_BASE)
 #define AARCH64_VIRT_OF(pa) ((uintptr_t)(pa) + PHYSMAP_BASE)
 
+/* BCM VideoCore SoC family (Raspberry Pi).  The Pi 3 (BCM2837, peripheral base
+ * 0x3F000000) and the Pi 4 / 400 (BCM2711, peripheral base 0xFE000000) share the
+ * VideoCore property mailbox, the SDHCI SD driver, and the mailbox framebuffer —
+ * only the peripheral base (and the Pi 4's EMMC2 register offset + SD clock id)
+ * differ.  BOARD_BCM selects that shared BCM driver code; BCM_PERI_BASE is the
+ * physical peripheral base the mailbox/SDHCI/framebuffer drivers derive MMIO from. */
+#if defined(BOARD_RPI3) || defined(BOARD_RPI4)
+#define BOARD_BCM 1
+#endif
+#if defined(BOARD_RPI4)
+#define BCM_PERI_BASE 0xFE000000UL
+#elif defined(BOARD_RPI3)
+#define BCM_PERI_BASE 0x3F000000UL
+#endif
+
 /* M1 board abstraction (docs/design/raspberry-pi-3b-bringup.md): the kernel was
  * QEMU-`virt`-hardcoded; a struct aarch64_board carries the per-board MMIO bases so
  * one kernel can target QEMU virt, the Raspberry Pi 3 (BCM2837), and the Allwinner
@@ -207,7 +222,9 @@ int aarch64_virtio_blk_pool_minor(void); /* minor of the MBR pool partition (0x9
 
 /* bcm_sdhci.c — BCM2837 EMMC SD-card driver (Raspberry Pi 3, M4 storage). */
 int aarch64_sd_card_init(void);                                       /* bring up the microSD on the EMMC */
-int aarch64_sd_readblock(u_int32_t lba, u_int8_t *buf, u_int32_t num); /* read num 512-byte blocks */
+int aarch64_sd_readblock(u_int32_t lba, u_int8_t *buf, u_int32_t num);        /* read num 512-byte blocks */
+int aarch64_sd_writeblock(u_int32_t lba, const u_int8_t *buf, u_int32_t num); /* write num 512-byte blocks */
+int aarch64_sd_write_ok(void); /* non-zero if the SD write path passed its self-test */
 struct ubx_device *aarch64_sd_init(void); /* bring up + register the microSD as sd0 (block device) */
 int aarch64_sd_pool_minor(void);          /* minor of the UbixFS pool partition (0x9C), or -1 */
 
@@ -250,6 +267,14 @@ extern u_int8_t smsc_mac[6];
 extern int smsc_ready;
 int smsc_send(const void *frame, u_int32_t len);
 int smsc_poll_rx(void (*deliver)(const u_int8_t *, u_int32_t));
+
+/* bcm_genet.c — BCM2711 GENET gigabit Ethernet (Pi 4, R4.5); same lwIP NIC bridge
+ * interface as the SMSC/virtio backends. */
+extern u_int8_t genet_mac[6];
+extern int genet_ready;
+int aarch64_genet_init(void);                             /* bring up the MAC + PHY; 0 on success */
+int genet_send(const void *frame, u_int32_t len);         /* TX one Ethernet frame */
+int genet_poll_rx(void (*deliver)(const u_int8_t *, u_int32_t)); /* drain the RX ring */
 
 /* sys/fs/ubixfs/ubixfs_selftest.c — UbixFS core in-kernel self-test (plan K1). */
 void ubixfs_selftest(void); /* drive the lite-ZFS core over a RAM vdev; logs PASS/FAIL */

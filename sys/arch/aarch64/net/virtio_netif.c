@@ -34,11 +34,16 @@
 
 /* NIC backend: the SMSC LAN9514 USB Ethernet on the Raspberry Pi, virtio-net on
  * QEMU.  Both expose the same send/poll_rx/mac/ready interface. */
-#ifdef BOARD_RPI3
+#if defined(BOARD_RPI3)
 #define NET_MAC smsc_mac
 #define NET_READY smsc_ready
 #define NET_SEND smsc_send
 #define NET_POLL_RX smsc_poll_rx
+#elif defined(BOARD_RPI4)
+#define NET_MAC genet_mac
+#define NET_READY genet_ready
+#define NET_SEND genet_send
+#define NET_POLL_RX genet_poll_rx
 #else
 #define NET_MAC virtio_net_mac
 #define NET_READY virtio_net_ready
