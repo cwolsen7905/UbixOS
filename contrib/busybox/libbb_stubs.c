@@ -1191,7 +1191,11 @@ char *dirname(char *path)
 FILE *fopen_or_warn_stdin(const char *filename)
 {
 	FILE *fp;
-	if (filename[0] == '-' && filename[1] == '\0')
+	/* Applets (wc, head, tail, sed, ...) pass the bb_msg_standard_input
+	 * sentinel — matched by pointer, as upstream does — or a lone "-" to
+	 * mean stdin.  Without the sentinel check, `ls | wc` fopen()s a file
+	 * literally named "standard input" and fails with ENOENT. */
+	if (filename == bb_msg_standard_input || (filename[0] == '-' && filename[1] == '\0'))
 		return stdin;
 	fp = fopen(filename, "r");
 	if (!fp)
