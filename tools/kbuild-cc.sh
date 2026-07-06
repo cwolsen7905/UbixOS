@@ -35,5 +35,13 @@ fi
 
 [ "$stale" -eq 0 ] && exit 0
 
+# NOTE: do NOT exec the compiler here.  echo writes the progress line to stdout,
+# which is block-buffered when stdout is not a live terminal (the on-device build
+# terminal, or a redirect/pipe) — and exec() discards unflushed stdio buffers, so
+# the filename line would be lost and the build would look silent even while it
+# compiles.  Running the compiler as a child and letting the shell exit normally
+# flushes the buffer, so each file shows as it is built (matching the host).  The
+# shell's exit status is the compiler's (last command), so the recipe's `|| exit 1`
+# still catches failures.
 echo "$tag $src"
-exec "$@" -MMD -MF "$dep" -c "$src" -o "$obj"
+"$@" -MMD -MF "$dep" -c "$src" -o "$obj"
