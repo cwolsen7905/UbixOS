@@ -31,6 +31,7 @@ extern "C"
 }
 #include <objgfx/objgfx.h>
 #include <objgfx/ogScalableFont.h>
+#include <objgfx/ogScrollBar.h>
 
 #define RGB(r, g, b) ((uint32_t)(((r) << 16) | ((g) << 8) | (b)))
 
@@ -40,6 +41,7 @@ extern "C"
 #define HEADER_H 30
 #define SUMMARY_H 26 /* overall-CPU strip below the header */
 #define ROW_H 22
+#define SCROLLBAR_W 12 /* width of the process-list scrollbar track */
 #define FONT_PATH "/var/fonts/DejaVuSans.ttf"
 #define MAX_PROCS 256
 #define HIST 24       /* CPU-history samples kept per process (the sparkline) */
@@ -148,6 +150,13 @@ static int g_overall_x10;                     /* whole-machine CPU%, ×10       
 static int g_idle_x10 = 1000;                 /* whole-machine idle%, ×10 (the idle thread)     */
 static unsigned char g_hist[MAX_PROCS][HIST]; /* per-pid CPU% ring (0..100)      */
 static int g_hist_head;                       /* newest sample index in each ring              */
+
+/* Process-list scrolling (only the Processes tab scrolls). */
+static int g_top;              /* first visible row (scroll offset)             */
+static ogScrollBar g_sb;       /* the reusable objGFX scrollbar widget          */
+static bool g_scroll_drag;     /* true while dragging the scrollbar thumb        */
+static int g_scroll_drag_off;  /* cursor offset within the thumb at grab time   */
+static uint8_t g_prev_buttons; /* prior mouse button mask (for press/release edges) */
 
 /* ── Performance tab ─────────────────────────────────────────────────────────*/
 static int g_tab = TAB_PROCESSES;           /* active top-level view              */
@@ -718,12 +727,61 @@ static void draw_sparkline(struct prow *r, int y)
 	}
 }
 
+/** Y of the first process row (top of the scrollable list area). */
+static int list_top(void)
+{
+	return TABBAR_H + HEADER_H + SUMMARY_H;
+}
+
+/** Number of fully-visible rows for the current window height. */
+static int visible_rows(void)
+{
+	int h = g_h - list_top();
+	return h > 0 ? h / ROW_H : 0;
+}
+
+/** Largest valid scroll offset (0 when every row fits). */
+static int max_top(void)
+{
+	int m = g_nrows - visible_rows();
+	return m > 0 ? m : 0;
+}
+
+/** Clamp g_top into [0, max_top()] (call after any row-count or size change). */
+static void clamp_top(void)
+{
+	if (g_top > max_top())
+		g_top = max_top();
+	if (g_top < 0)
+		g_top = 0;
+}
+
+/** True when the list overflows the viewport and needs a scrollbar. */
+static bool scrollbar_visible(void)
+{
+	return g_nrows > visible_rows();
+}
+
+/** Populate the scrollbar widget from the current scroll state (call each frame). */
+static void sb_sync(void)
+{
+	g_sb.x = g_w - SCROLLBAR_W;
+	g_sb.y = list_top();
+	g_sb.w = SCROLLBAR_W;
+	g_sb.h = g_h - list_top();
+	g_sb.total = g_nrows;
+	g_sb.visible = visible_rows();
+	g_sb.top = g_top;
+}
+
 static void draw_rows(void)
 {
-	int top = TABBAR_H + HEADER_H + SUMMARY_H;
+	int top = list_top();
 	int y = top;
-	int maxrows = (g_h - top) / ROW_H;
-	for (int i = 0; i < g_nrows && i < maxrows; i++)
+	int vis = visible_rows();
+	int row_right = (scrollbar_visible() ? g_w - SCROLLBAR_W : g_w) - 1;
+	clamp_top();
+	for (int i = g_top; i < g_nrows && i < g_top + vis; i++)
 	{
 		struct prow *r = &g_rows[i];
 		bool sel = (r->pid == g_sel_pid);
@@ -733,9 +791,9 @@ static void draw_rows(void)
 		int ty = y + 3;
 
 		if (sel)
-			g_surf.ogFillRect(0, y, g_w - 1, y + ROW_H - 1, COL_SEL);
+			g_surf.ogFillRect(0, y, row_right, y + ROW_H - 1, COL_SEL);
 		else if (i & 1)
-			g_surf.ogFillRect(0, y, g_w - 1, y + ROW_H - 1, COL_ROW_ALT);
+			g_surf.ogFillRect(0, y, row_right, y + ROW_H - 1, COL_ROW_ALT);
 
 		if (!sel)
 			draw_sparkline(r, y); /* history behind the CPU% number */
@@ -781,6 +839,8 @@ static void render(void)
 	else
 	{
 		draw_rows();
+		sb_sync();
+		g_sb.Draw(g_surf); /* no-op when the list fits */
 		draw_summary();
 		draw_header(); /* header last so it stays crisp over row 0 */
 	}
@@ -830,17 +890,55 @@ static void on_click(int x, int y)
 		return;
 	}
 
+	/* Scrollbar: grab the thumb to drag, or click the track to page. */
+	if (scrollbar_visible() && x >= g_w - SCROLLBAR_W && y >= list_top())
+	{
+		sb_sync();
+		int hh = g_sb.HitTest(x, y);
+		if (hh == ogScrollBar::HIT_PAGEUP)
+			g_top -= visible_rows();
+		else if (hh == ogScrollBar::HIT_PAGEDOWN)
+			g_top += visible_rows();
+		else if (hh == ogScrollBar::HIT_THUMB)
+		{
+			int32 ty, th;
+			g_sb.Thumb(&ty, &th);
+			g_scroll_drag = true;
+			g_scroll_drag_off = y - ty;
+		}
+		clamp_top();
+		render();
+		return;
+	}
+
 	/* Click a row -> select it (the force-quit target). */
-	int top = TABBAR_H + HEADER_H + SUMMARY_H;
+	int top = list_top();
 	if (y >= top)
 	{
-		int i = (y - top) / ROW_H;
-		if (i >= 0 && i < g_nrows)
+		int i = g_top + (y - top) / ROW_H;
+		if (i >= g_top && i < g_nrows)
 		{
 			g_sel_pid = g_rows[i].pid;
 			render();
 		}
 	}
+}
+
+/** Pointer motion while the left button is held: drive a scrollbar-thumb drag. */
+static void on_drag(int y)
+{
+	if (!g_scroll_drag)
+		return;
+	sb_sync();
+	g_top = g_sb.DragTop(y, g_scroll_drag_off);
+	clamp_top();
+	render();
+}
+
+/** Left-button release: end any in-progress scrollbar drag. */
+static void on_release(void)
+{
+	g_scroll_drag = false;
 }
 
 int main(int argc, char **argv)
@@ -866,6 +964,7 @@ int main(int argc, char **argv)
 	req->min_h = 280;
 	req->max_w = 1000;
 	req->max_h = 800;
+	req->wants_motion = 1; /* deliver pointer motion so the scrollbar thumb drags */
 	while (mpi_postMessage((char *)g_views, DISPLAY_CLAIM, &msg) != 0)
 		sched_yield();
 
@@ -923,9 +1022,25 @@ int main(int argc, char **argv)
 			}
 			case DISPLAY_MOUSE:
 			{
+				/* Motion events arrive too (wants_motion): act on button edges —
+				 * a fresh press is a click, button-held motion drags the thumb,
+				 * and a release ends the drag.  The wheel scrolls the list. */
 				struct display_mouse_ev *me = (struct display_mouse_ev *)ev.data;
-				if (me->buttons & 1)
+				if (me->wheel != 0 && g_tab == TAB_PROCESSES)
+				{
+					g_top -= me->wheel * 3; /* one notch ≈ 3 rows */
+					clamp_top();
+					render();
+				}
+				uint8_t b = me->buttons;
+				bool lnow = (b & 1) != 0, lprev = (g_prev_buttons & 1) != 0;
+				if (lnow && !lprev)
 					on_click(me->x, me->y);
+				else if (lnow && lprev)
+					on_drag(me->y);
+				else if (!lnow && lprev)
+					on_release();
+				g_prev_buttons = b;
 				break;
 			}
 			case DISPLAY_KEY:
