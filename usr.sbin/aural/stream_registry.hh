@@ -102,6 +102,20 @@ class StreamRegistry
 	{
 		return slots_;
 	}
+
+	/**
+	 * @return the number of allocated (in_use) streams.  Zero means no client
+	 * holds an open stream — the server has nothing to poll and can block on
+	 * its mailbox rather than wake on the pacing tick.
+	 */
+	unsigned live_count() const
+	{
+		unsigned n = 0;
+		for (unsigned i = 0; i < MAX_STREAMS; i++)
+			if (slots_[i].in_use)
+				n++;
+		return n;
+	}
 	static unsigned slot_count()
 	{
 		return MAX_STREAMS;

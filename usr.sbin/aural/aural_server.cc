@@ -166,6 +166,24 @@ int AuralServer::run()
 				break; /* driver ring full */
 		}
 
+		/*
+		 * Pace vs. idle.  While any stream is claimed we must poll its shared
+		 * ring at ~10 ms: clients deliver PCM through shared memory, not MPI, so
+		 * there is nothing to block on for the data path.  But when no stream is
+		 * open there is genuinely nothing to do — block (descheduled) on the
+		 * mailbox until a client's control message arrives, instead of waking
+		 * 100×/s to scan empty slots.  mpi_waitMessage re-checks the queue under
+		 * lock before sleeping, so a claim that races the transition is not lost.
+		 */
+		if (reg_.live_count() == 0)
+		{
+			mpi_message_t idle_msg;
+			if (mbox_.wait(idle_msg)) /* timeout 0 = block until a message */
+				dispatch(idle_msg.header, idle_msg.data);
+			reap_ctr_ = 0;
+			continue;
+		}
+
 		aural_nap(); /* real ~10 ms descheduling sleep — never busy-spins */
 
 		if (++reap_ctr_ >= REAP_INTERVAL)
