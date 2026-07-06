@@ -579,12 +579,16 @@ static void usb_hub_walk(u_int32_t hubaddr, u_int32_t mps)
 		usb_wait_us(20000);
 
 		if (usb_control(hubaddr, mps, 0xA3, 0, 0, p, 4, g_data) == 0)
-		{
 			st = (u_int16_t)(g_data[0] | (g_data[1] << 8));
-			g_root_lowspeed = (st & (1u << 9)) ? 1 : 0; /* bit9 = low-speed */
-		}
+		g_root_lowspeed = (st & (1u << 9)) ? 1 : 0; /* bit9 = low-speed */
+		kprintf("usb: port %u connected, %s-speed\n",
+		        p,
+		        (st & (1u << 10)) ? "high" : ((st & (1u << 9)) ? "low" : "full"));
+
 		if (usb_enum_at0(next) >= 0)
 			next++;
+		else if ((st & (1u << 10)) == 0)
+			kprintf("usb:   port %u device is low/full-speed — needs split transactions (TODO)\n", p);
 	}
 }
 
@@ -746,8 +750,10 @@ static int smsc_chip_init(void)
 	/* No RX batching (read one frame per bulk transfer); bulk-in delay + BIR. */
 	smsc_write_reg(SMSC_BURST_CAP, 0);
 	smsc_write_reg(SMSC_BULK_IN_DLY, 0x00002000);
+	/* Set BIR (bulk-in empty response) + force RXDOFF=0 (bits 9-10) so the frame sits
+	 * immediately after the 4-byte RX status word, where smsc_poll_rx parses it. */
 	if (smsc_read_reg(SMSC_HW_CFG, &v) == 0)
-		smsc_write_reg(SMSC_HW_CFG, v | SMSC_HW_CFG_BIR);
+		smsc_write_reg(SMSC_HW_CFG, (v | SMSC_HW_CFG_BIR) & ~(3u << 9));
 	smsc_write_reg(SMSC_INTR_STATUS, 0xFFFFFFFF);
 	/* Drive the jack LEDs (speed / link+activity / full-duplex). */
 	smsc_write_reg(SMSC_LED_GPIO_CFG, (1u << 24) | (1u << 20) | (1u << 16));
@@ -897,7 +903,14 @@ int smsc_send(const void *frame, u_int32_t len)
 	h[0] = (len & 0x7FF) | (1u << 13) | (1u << 12); /* TX_CMD_A: size | FIRST | LAST */
 	h[1] = (len & 0x7FF);                           /* TX_CMD_B: packet length */
 	memcpy(g_txbuf + 8, frame, len);
-	return (usb_bulk(g_smsc_addr, g_smsc_ep_out, 0, g_smsc_bulk_mps, g_txbuf, len + 8));
+	{
+		int r = usb_bulk(g_smsc_addr, g_smsc_ep_out, 0, g_smsc_bulk_mps, g_txbuf, len + 8);
+		static u_int32_t n;
+		const u_int8_t *f = (const u_int8_t *)frame;
+		if (n < 30) /* log TX so we can see ARP replies (et 0x0806) go out */
+			kprintf("smsc: TX #%u len=%u dst=%X:%X et=%X%X -> %d\n", n++, len, f[0], f[1], f[12], f[13], r);
+		return (r);
+	}
 }
 
 /**
@@ -925,9 +938,30 @@ int smsc_poll_rx(void (*deliver)(const u_int8_t *, u_int32_t))
 	        ((u_int32_t)g_rxbuf[3] << 24);
 	if (rxhdr & (1u << 15)) /* RX error */
 		return (0);
-	framelen = (rxhdr >> 16) & 0x3FFF; /* includes the 4-byte FCS */
-	if (framelen < 4 + 14 || framelen + 4 > g_rx_bytes)
+	framelen = (rxhdr >> 16) & 0x3FFF; /* frame incl. the 4-byte FCS */
+	/* Bounds: a valid frame is (14-byte eth header + 4 FCS) .. (1518 + 4 FCS), and
+	 * must fit within what actually arrived.  Reject anything else — a garbage length
+	 * would hand lwIP a frame that reads off the end of g_rxbuf. */
+	if (framelen < 4 + 14 || framelen > 1518 + 4 || framelen + 4 > g_rx_bytes)
 		return (0);
+	{
+		static u_int32_t n;
+		int is_arp = (g_rxbuf[4 + 12] == 0x08 && g_rxbuf[4 + 13] == 0x06);
+		int is_bcast = (g_rxbuf[4] == 0xFF && g_rxbuf[5] == 0xFF);
+		/* Always log ARP + broadcast (the ping path); otherwise the first 24 frames. */
+		if (n < 24 || is_arp || is_bcast)
+		{
+			kprintf("smsc: RX #%u len=%u dstmac=%X:%X et=%X%X%s\n",
+			        n,
+			        framelen - 4,
+			        g_rxbuf[4],
+			        g_rxbuf[5],
+			        g_rxbuf[4 + 12],
+			        g_rxbuf[4 + 13],
+			        is_arp ? " ARP" : (is_bcast ? " BCAST" : ""));
+			n++;
+		}
+	}
 	deliver(g_rxbuf + 4, framelen - 4); /* strip status header + FCS */
 	return (1);
 }
