@@ -1,7 +1,10 @@
 # SMP Scheduler v2 — per-CPU run queues (design)
 
-**Status:** design / for review (2026-06-20). No code yet.
-**Owner decision pending:** approve the shape before implementation.
+**Status:** Phase 2c-lite shipped (per-CPU queues under the global lock, both arches;
+aarch64 APs enabled + cooperative).  **v2.1 (below) is the open design/work: make the
+secondaries first-class so all cores stay busy.**  History from 2026-06-20 preserved
+below; current state + forward plan at the end (see "Current state (2026-07-05)" and
+"v2.1 — make the secondaries first-class").
 
 ## Why a v2 (not more patches)
 
@@ -286,3 +289,97 @@ stays 0 pending interactive (graphical) validation and the default-flip decision
 Phase 2b (per-CPU `rq_lock` split) is now an optional scalability optimisation, not a
 correctness prerequisite. Next: enable aarch64 APs (GIC SGI reschedule already
 built) and interactive desktop validation before flipping the default.
+
+## Current state (2026-07-05) — cooperative secondaries, BSP-biased; cpu1 is overflow-only
+
+`CONFIG_SCHED_PERCPU 1` is the aarch64 default now (APs enabled), running the
+Phase-2c-lite shape: per-CPU run queues under the **single global
+`schedulerSpinLock`** (the 2b per-CPU `rq_lock` split is still not done).  Observed
+behavior on a 2-core `virt`:
+
+- **The BSP (cpu0) is the only preemptive core.**  The 100 Hz timer preempts the
+  running EL0 task on cpu0; the secondaries take timer ticks but **do not preempt a
+  running EL0 task** (`sys/arch/aarch64/kern/apsmp.c`: cooperative — *"their timer
+  wakes wfi but never preempts a running EL0 task"*).  A task on cpu1 runs until it
+  yields or blocks.  (Deferred because async preemption on a secondary hit
+  corruption — see v2.1 #1.)
+- **Placement is one-shot + BSP-biased.**  `t->rq_cpu` is chosen once at first enqueue
+  (`sched_select_cpu`) and kept for affinity.  `SCHED_SPILL_THRESH = 1` keeps a task
+  on cpu0 unless cpu0 already has a runnable task *at that instant*; only then does it
+  spill to the least-loaded secondary.  The balancer (`sched_balance_locked`) migrates
+  only **ready (queued)** tasks from a busy queue to an idle one — it can never move
+  the **running** task.
+
+Consequences the owner will observe:
+- A **single-threaded** CPU-bound app (vDoom) pins one core at 100% and leaves the
+  other at 0% — correct and unavoidable (one thread can't span cores; identical on
+  macOS/Linux).  SMP only helps when there is >1 runnable thread.
+- Even under light multi-process load the system tends to keep everything on cpu0:
+  tasks are usually created while cpu0 looks idle (the launching shell has blocked in
+  `wait`), so they home to cpu0; the one hot task can't migrate while running; the
+  secondary is spill-only because it's cooperative.  Net: **cpu1 is an overflow core
+  that rarely earns its keep** — early-stage SMP, not how a modern scheduler behaves.
+
+## v2.1 — make the secondaries first-class ("keep all cores busy")
+
+Goal: whenever there is more than one runnable thread, every online core stays busy —
+the modern-SMP baseline (XNU / Linux CFS-EEVDF / FreeBSD ULE).  Three pieces, in
+dependency order.
+
+### 1. Per-CPU preemption on the secondaries (the keystone)
+Only cpu0 preempts today.  Secondary preemption was **deferred** because of the coarse
+lock: in Phase-2c-lite the scheduler critical section is the **global**
+`schedulerSpinLock`, so an async timer interrupt that preempts a secondary **while it
+holds that lock mid-`switch_to`** re-enters the scheduler on that CPU and corrupts the
+switch (the exact v1 class of bug).  Cooperative secondaries dodge it by never
+preempting.  Two ways to make local preemption safe, preferred first:
+
+- **(a) Land the Phase-2b per-CPU `rq_lock` split** (designed above).  Once each CPU's
+  schedule path takes only `this_rq()->rq_lock` (no global lock), a local timer
+  preemption on a secondary is the same local re-entrancy the BSP already handles —
+  safe, because a task is only ever in one queue (no double-dispatch).  The clean,
+  correct route; the doc already scopes it.
+- **(b) Interim preemption gate** (only if 2b slips): the secondary timer ISR triggers
+  a reschedule only when the interrupted context is **EL0 and the CPU does not hold
+  `schedulerSpinLock`** (a per-CPU "in-scheduler" depth counter); otherwise it sets
+  `need_resched` and preemption is taken at the next safe boundary (lock release / EL0
+  return).  Preemptive secondaries under the coarse lock without the mid-switch
+  hazard, at the cost of slightly deferred preemption.
+
+Verify: fork/exec storm + a CPU-bound spinner pinned per-CPU, on HVF **and** TCG,
+watching for the torn-context / `ec=0x20` signature (TCG surfaces the faulting PC).
+
+### 2. Wake-time placement + idle work-stealing
+With preemptive secondaries, stop hoarding on the BSP:
+- **Wake-time placement:** when a task becomes runnable and its home CPU is busy while
+  another core is idle, enqueue + IPI it on the idle core instead of its old home.
+  Highest-impact change for "cpu1 does nothing" — a woken GUI/daemon task lands on the
+  free core instead of queuing behind the hot task on cpu0.  (Today `rq_enqueue_locked`
+  re-enqueues a waking task on its fixed `rq_cpu`; this makes wakeups re-evaluate.)
+- **Idle work-stealing:** before a core `wfi`s with an empty queue, if another core has
+  >1 ready task, steal one.  Catches imbalance the wake-time heuristic misses.
+
+### 3. Drop the BSP bias
+Once secondaries preempt, `sched_select_cpu` places on the genuinely least-loaded core
+(the code already computes it) instead of defaulting to cpu0 under
+`SCHED_SPILL_THRESH`.  Keep a *soft* affinity (prefer the last CPU on wake when it is
+not busier) for cache locality — but no hard BSP preference.
+
+### What stays the same / what's fundamental
+- Single-threaded apps still use one core — physics, not policy; nothing to "fix".
+- Priority bands + aging + the accounting design (utime/stime/iowait, per-CPU stats)
+  are unchanged; v2.1 is about **placement + preemption**, not fairness math (CFS/EEVDF
+  stays a non-goal for now).
+
+### v2.1 phasing
+1. Land Phase-2b `rq_lock` split on x86_64 (anchor; TCG-deterministic) → validate →
+   aarch64.
+2. Enable local preemption on secondaries (route (a); (b) only as a stopgap).
+3. Wake-time placement onto idle cores; gate = the owner's "two CPU-bound tasks" test
+   — a second vDoom (or vDoom + on-device build) must light up cpu1, and the desktop
+   must offload to cpu1 under load.
+4. Idle work-stealing; drop the BSP bias; re-measure balance (per-CPU `/proc/stat`).
+
+Each step: both arches build, UP-equivalent at `CONFIG_SCHED_PERCPU 0`, and
+on-hardware stress before the next — the same per-step verification discipline used
+for the FS / boot work.
