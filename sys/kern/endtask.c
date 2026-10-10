@@ -97,7 +97,10 @@ void endTask(pidType pid)
 	 */
 	if (sched_tgid_others_alive(_current->tgid, _current->id) == 0)
 	{
-		/* Close the task's PIPE and SOCKET fds (same policy as aarch64's endTask).
+		/* Close the task's FILE, PIPE and SOCKET fds (same policy as aarch64's endTask).
+		 * Regular files are shared with fork children through the descriptor's
+		 * dup count (fork_copy_fdtable), so this only really closes the last user;
+		 * an exited process used to leak every file it left open.
 		 * A reader blocked on this task's pipe write end sees EOF when the writer
 		 * exits (`cmd | wc -l` hung forever without it), and a socket's lwIP
 		 * netconn is released (socket_fo_close is refcount-safe across fork).
@@ -107,7 +110,7 @@ void endTask(pidType pid)
 		{
 			struct file *f = (struct file *)_current->td.o_files[fd];
 
-			if (f != 0 && (f->fd_type == FD_TYPE_PIPE || f->fd_type == FD_TYPE_SOCKET))
+			if (f != 0 && (f->fd_type == FD_TYPE_PIPE || f->fd_type == FD_TYPE_SOCKET || f->fd_type == FD_TYPE_FILE))
 			{
 				struct sys_close_args ca;
 				ca.fd = fd;
@@ -146,6 +149,7 @@ void endTask(pidType pid)
 	 * session here makes it exit instead of leaking across the next login. */
 	tty_hangup_by_owner(_current->id);
 
+	sched_reparent_children(_current);
 	sched_zombie(_current);
 
 	/* Switch away for good.  sched_yield() returns without switching when another

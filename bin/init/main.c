@@ -309,6 +309,11 @@ int main(int argc, char **argv, char **envp)
 	 * not here. */
 	for (;;)
 	{
+		/* Reap orphans: the kernel hands an exiting process's children to
+		 * init, so collect any that have exited (else they stay zombies). */
+		while (waitpid(-1, NULL, WNOHANG) > 0)
+			;
+
 		if (mpi_waitMessage("init", &myMsg, 100) == 0x0)
 		{
 			/* Restart / shut down on behalf of the desktop session (which runs

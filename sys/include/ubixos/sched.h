@@ -225,6 +225,7 @@ extern "C"
 	void sched_sleep(kTask_t *t, tState s);        /* WAIT / UNINTERRUPTIBLE — blocked  */
 	void sched_wakeup(kTask_t *t);                 /* RUNNING — unblocked, back to work */
 	void sched_stop(kTask_t *t, int sig);          /* STOPPED — suspended by signal     */
+	void sched_reparent_children(kTask_t *dying); /* orphans -> init (pid 1) at exit */
 	void sched_zombie(kTask_t *t);                 /* ZOMBIE  — exited, awaiting wait() */
 	void sched_io_wakeup(kTask_t *t);              /* I/O done: boost +4, re-enqueue    */
 	void sched_pi_boost(kTask_t *t, u_int8_t pri); /* PI: raise t to pri if higher      */
