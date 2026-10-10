@@ -259,9 +259,16 @@ int sys_lseek(struct thread *td, struct sys_lseek_args *args)
 
 	getfd(td, &fdd, args->fd);
 
-	if (fdd == 0x0 || fdd->fd == 0x0)
+	if (fdd == 0x0)
 	{
-		td->td_retval[0] = -1;
+		td->td_retval[0] = -EBADF;
+		return (-1);
+	}
+	if (fdd->fd == 0x0)
+	{
+		/* A pipe, socket or terminal: not seekable.  ESPIPE is how callers
+		 * (tail, cat, stdio) tell a stream from a file; -1 read as EPERM. */
+		td->td_retval[0] = -ESPIPE;
 		return (-1);
 	}
 

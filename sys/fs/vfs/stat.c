@@ -165,48 +165,78 @@ int _sys_stat(char *path, struct stat *sb, int flags)
 
 int sys_fstat(struct thread *td, struct sys_fstat_args *args)
 {
-	int error = 0;
-
 	struct file *fdd = 0x0;
 	fileDescriptor_t *fd = 0x0;
+	struct stat *sb = args->sb;
 
 	getfd(td, &fdd, args->fd);
 
-	if (fdd == 0x0 || fdd->fd == 0x0)
+	if (fdd == 0x0 || sb == 0x0)
 	{
-		td->td_retval[0] = EBADF;
+		td->td_retval[0] = -EBADF;
 		return (EBADF);
 	}
 
+	memset(sb, 0, sizeof(*sb));
+	sb->st_dev = 0xDEADBEEF;
+	sb->st_rdev = 0xBEEFDEAD;
+	sb->st_nlink = 1;
+
+	/* No underlying file: a pipe, socket or terminal.  These used to fail with
+	 * EBADF, so anything that fstat()s its input (tail, cat -, sort) refused to
+	 * read from a pipe. */
+	if (fdd->fd == 0x0)
+	{
+		switch (fdd->fd_type)
+		{
+			case FD_TYPE_PIPE:
+				sb->st_mode = 0010600; /* S_IFIFO | rw------- */
+				break;
+			case FD_TYPE_SOCKET:
+				sb->st_mode = 0140777; /* S_IFSOCK */
+				break;
+			case FD_TYPE_DIR:
+				sb->st_mode = 0040755; /* S_IFDIR */
+				sb->st_nlink = 2;
+				break;
+			default:
+				sb->st_mode = 0020620; /* S_IFCHR | rw--w---- : a terminal */
+				break;
+		}
+		td->td_retval[0] = 0;
+		return (0);
+	}
+
 	fd = fdd->fd;
+	sb->st_ino = fd->ino;
 
 	if (fd->res != 0x0)
 	{
-		args->sb->st_dev = 0xDEADBEEF;
-		args->sb->st_ino = fd->ino;
-		args->sb->st_rdev = 0xBEEFDEAD;
-		args->sb->st_size = fd->size;
-		args->sb->st_uid = 0;
-		args->sb->st_gid = 0;
+		/* devfs, FAT and ramfs files: no st_mode was set here before, so the
+		 * caller got whatever its buffer held. */
+		sb->st_size = fd->size;
+		if (fd->mp != NULL && fd->mp->fs != NULL && fd->mp->fs->vfsType == VFS_TYPE_DEVFS)
+			sb->st_mode = 0020666; /* S_IFCHR | rw-rw-rw- */
+		else
+			sb->st_mode = stat_mode_for_fd(fd, 0100644); /* S_IFREG */
 	}
 	else
 	{
-		args->sb->st_dev = 0xDEADBEEF;
-		args->sb->st_ino = fd->ino;
-		args->sb->st_mode = fd->inode.u.ufs2_i.di_mode;
-		args->sb->st_nlink = fd->inode.u.ufs2_i.di_nlink;
-		args->sb->st_uid = fd->inode.u.ufs2_i.di_uid;
-		args->sb->st_gid = fd->inode.u.ufs2_i.di_gid;
-		args->sb->st_rdev = 0xBEEFDEAD;
-		args->sb->st_size = fd->inode.u.ufs2_i.di_size;
-		args->sb->st_atime = fd->inode.u.ufs2_i.di_atime;
-		args->sb->st_mtime = fd->inode.u.ufs2_i.di_mtime;
-		args->sb->st_ctime = fd->inode.u.ufs2_i.di_ctime;
-		args->sb->st_mode = stat_mode_for_fd(fd, args->sb->st_mode);
+		sb->st_mode = fd->inode.u.ufs2_i.di_mode;
+		sb->st_nlink = fd->inode.u.ufs2_i.di_nlink ? fd->inode.u.ufs2_i.di_nlink : 1;
+		sb->st_uid = fd->inode.u.ufs2_i.di_uid;
+		sb->st_gid = fd->inode.u.ufs2_i.di_gid;
+		sb->st_size = fd->inode.u.ufs2_i.di_size;
+		sb->st_atime = fd->inode.u.ufs2_i.di_atime;
+		sb->st_mtime = fd->inode.u.ufs2_i.di_mtime;
+		sb->st_ctime = fd->inode.u.ufs2_i.di_ctime;
+		if (sb->st_mode == 0)
+			sb->st_mode = 0100644; /* S_IFREG when the filesystem stores none */
+		sb->st_mode = stat_mode_for_fd(fd, sb->st_mode);
 	}
 
-	td->td_retval[0] = error;
-	return (error);
+	td->td_retval[0] = 0;
+	return (0);
 }
 
 int sys_fstatat(struct thread *td, struct sys_fstatat_args *args)
@@ -460,8 +490,8 @@ int sys_statx(struct thread *td, struct sys_statx_args *args)
 			return (EBADF);
 		}
 
-		/* TTY placeholder fds have fd==NULL; return character-device stats so
-		 * isatty() works correctly. */
+		/* No underlying file: a terminal, pipe, socket or directory.  Report
+		 * the real type (pipes used to come back as character devices). */
 		if (fdd->fd == 0x0)
 		{
 			stx->stx_mask = args->mask & STATX_BASIC_STATS;
@@ -469,7 +499,21 @@ int sys_statx(struct thread *td, struct sys_statx_args *args)
 			stx->stx_nlink = 1;
 			stx->stx_uid = 0;
 			stx->stx_gid = 0;
-			stx->stx_mode = 0020620; /* S_IFCHR | 0620 */
+			switch (fdd->fd_type)
+			{
+				case FD_TYPE_PIPE:
+					stx->stx_mode = 0010600; /* S_IFIFO | 0600 */
+					break;
+				case FD_TYPE_SOCKET:
+					stx->stx_mode = 0140777; /* S_IFSOCK */
+					break;
+				case FD_TYPE_DIR:
+					stx->stx_mode = 0040755; /* S_IFDIR */
+					break;
+				default:
+					stx->stx_mode = 0020620; /* S_IFCHR | 0620: a terminal */
+					break;
+			}
 			stx->stx_ino = (u_int64_t)(uintptr_t)args->dirfd + 1;
 			stx->stx_size = 0;
 			stx->stx_blocks = 0;
