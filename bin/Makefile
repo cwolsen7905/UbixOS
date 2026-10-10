@@ -18,7 +18,7 @@
 # the same SUBDIRS; i386 is frozen) — an exported value still wins via ?=.
 _ARCH ?= aarch64
 .if ${_ARCH} == "aarch64" || ${_ARCH} == "x86_64"
-SUBDIRS = init login shell cp ls cat echo ln date mkdir mv rm sleep pwd expr ed tcsh
+SUBDIRS = init login shell cp ls cat echo ln date mkdir mv rm sleep pwd expr ed tcsh true false
 .else
 SUBDIRS = init login shell cp ls cat ed tcsh
 .endif

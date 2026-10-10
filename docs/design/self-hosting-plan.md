@@ -168,8 +168,8 @@ agent (`[ls/smp]` — it's their signal/sched/COW area) with a full repro; resum
 recipe verification once fixed. (oksh's own fork+exec+wait works — it reaps via
 SIG_DFL — so it's specific to delivering to a userland *handler* after COW fork.)
 
-**Still TODO:** coreutils gap-fill — `test`/`[`, `true`/`false` are not in the
-world yet (`rm`/`mv`/`sed`/`install`/`cmp`/`printf` are).
+**Still TODO:** coreutils gap-fill — `test`/`[` binaries (oksh has them as builtins; `true`/`false` are in /bin) —
+not in the world yet (`rm`/`mv`/`sed`/`install`/`cmp`/`printf` are).
 Also the file-backed-mmap SIGABRT from Phase 1 (re-enables bmake's `HAVE_MMAP`).
 
 ### Phase 3 — Stage 0: cross-build Clang + lld for uBixOS
