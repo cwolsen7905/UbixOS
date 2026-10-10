@@ -181,7 +181,9 @@ int fdprintf(int fd, const char *fmt, ...)
 int open_or_warn_stdin(const char *filename)
 {
 	int fd;
-	if (filename[0] == '-' && filename[1] == '\0')
+	/* As upstream: "-" and the bb_msg_standard_input pointer (tail, head and
+	 * friends substitute it for a missing filename) both mean stdin. */
+	if (filename == bb_msg_standard_input || (filename[0] == '-' && filename[1] == '\0'))
 		return 0;
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)

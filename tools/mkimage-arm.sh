@@ -19,9 +19,13 @@ BUILD=${2:-build/aarch64}
 # fallback root that keeps the desktop bootable while the raw-pool root beds in.
 FAT_SIZE_MB=48      # FAT32 partition (type 0x0C) — fallback root (full world)
 SWAP_SIZE_MB=16     # raw swap partition (type 0x82) — parity; unused on aarch64
-# The pool is the root filesystem; override for room to self-host, e.g.
-# POOL_SIZE_MB=1200 bmake image-arm (a native clang + lld alone is ~100 MB).
-POOL_SIZE_MB=${POOL_SIZE_MB:-96}             # UbixFS pool partition (type 0x9C) — the raw root /
+# Native LLVM (clang + lld, built by tools/build-llvm.sh): installed into the
+# root pool when its dist/ tree exists.  It is ~140 MB, so the pool defaults
+# to 1200 MB then (room to build in); otherwise 96 MB.  Override either way
+# with POOL_SIZE_MB=..., or LLVM_DIST=none to leave LLVM out.
+LLVM_DIST=${LLVM_DIST:-${LLVM_WORK:-build/llvm}/dist}
+if [ -x "${LLVM_DIST}/bin/clang" ]; then _pool_default=1200; else _pool_default=96; fi
+POOL_SIZE_MB=${POOL_SIZE_MB:-${_pool_default}} # UbixFS pool partition (type 0x9C) — the raw root /
 POOL_FS_MB=${POOL_FS_MB:-$((POOL_SIZE_MB - 8))} # pool filesystem size inside that partition
 SIZE_MB=$(( 1 + FAT_SIZE_MB + SWAP_SIZE_MB + POOL_SIZE_MB + 4 ))
 
@@ -226,8 +230,10 @@ if [ -f "${BUILD}/bin/tcc" ] && [ -f "${BUILD}/lib/tcc/libtcc1.a" ]; then
 	mmd -i "${IMG}@@1M" ::/usr ::/usr/include ::/usr/lib ::/usr/share ::/usr/share/examples ::/lib/tcc 2>/dev/null || true
 	mcopy -s -o -i "${IMG}@@1M" "${_inc}/"* ::/usr/include/
 	rm -rf "${_inc}"
-	for _o in crt1.o crti.o crtn.o Scrt1.o; do
-		mcopy -o -i "${IMG}@@1M" "${BUILD}/obj/musl/lib/${_o}" "::/usr/lib/${_o}"
+	# crt objects, plus musl's empty libm/libpthread/... stubs (all of it lives
+	# in libc) so the usual -lm -lpthread link flags resolve.
+	for _o in crt1.o crti.o crtn.o Scrt1.o libm.a libpthread.a libdl.a librt.a libutil.a libxnet.a libcrypt.a libresolv.a; do
+		[ -f "${BUILD}/obj/musl/lib/${_o}" ] && mcopy -o -i "${IMG}@@1M" "${BUILD}/obj/musl/lib/${_o}" "::/usr/lib/${_o}"
 	done
 	mcopy -s -o -i "${IMG}@@1M" "${BUILD}/lib/tcc/"* ::/lib/tcc/
 	printf '#include <stdio.h>\n\nint main(void)\n{\n\tprintf("Hello from tcc on uBixOS!\\n");\n\treturn 0;\n}\n' >/tmp/ubix_hello.c
@@ -276,6 +282,14 @@ if [ -x "${UBFS:-}" ] && [ -n "${POOL_LBA:-}" ]; then
 	done
 	# Scratch space: compilers (tcc, clang) and mkstemp() expect /tmp.
 	"${UBFS}" mkdir "${WPOOL}" /tmp >/dev/null 2>&1 || true
+	# Native LLVM straight into the pool (too big for the FAT mirror).
+	if [ -x "${LLVM_DIST}/bin/clang" ]; then
+		for _d in "${LLVM_DIST}"/*; do
+			"${UBFS}" cpr "${_d}" "${WPOOL}:/$(basename "${_d}")" >/dev/null 2>&1 ||
+				echo "mkimage-arm: WARNING: installing LLVM $(basename "${_d}") failed (pool too small?)"
+		done
+		echo "mkimage-arm: installed LLVM clang + lld from ${LLVM_DIST} (/bin, /lib/clang, /usr/lib, /usr/include/c++)"
+	fi
 	_mib=$(du -m "${MIRROR}" 2>/dev/null | tail -1 | cut -f1)
 	dd if="${WPOOL}" of="${IMG}" bs=512 seek="${POOL_LBA}" conv=notrunc 2>/dev/null
 	rm -rf "${WPOOL}" "${MIRROR}"

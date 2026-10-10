@@ -221,7 +221,7 @@ cp contrib/musl/arch/generic/bits/*.h "$STAGE/usr/include/bits/"
 cp contrib/musl/arch/i386/bits/*.h "$STAGE/usr/include/bits/"
 cp "$BUILD/obj/musl/obj/include/bits/"*.h "$STAGE/usr/include/bits/"
 cp -R contrib/musl/include/. "$STAGE/usr/include/"
-for o in crt1.o crti.o crtn.o; do
+for o in crt1.o crti.o crtn.o libm.a libpthread.a libdl.a librt.a libutil.a libxnet.a libcrypt.a libresolv.a; do
     [ -f "$BUILD/obj/musl/lib/$o" ] && cp "$BUILD/obj/musl/lib/$o" "$STAGE/usr/lib/$o"
 done
 # Same smoke test as the aarch64 image: tcc -run /usr/share/examples/hello.c
