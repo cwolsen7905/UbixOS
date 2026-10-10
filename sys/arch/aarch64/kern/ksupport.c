@@ -255,6 +255,17 @@ void endTask(pidType pid)
 		 * mailbox blocks a relaunched owner (e.g. a respawned authd/login) from
 		 * recreating it. */
 		mpi_destroyProcessMboxes(_current->id);
+		/* Disarm a pending timed-sleep callout (see sched_zombie): a task killed
+		 * mid-sleep must not stay linked on the global callout list. */
+		{
+			extern struct spinLock schedulerSpinLock;
+			u_int64_t daif;
+			__asm__ volatile("mrs %0, daif; msr daifset, #2" : "=r"(daif) : : "memory");
+			spinLock(&schedulerSpinLock);
+			callout_stop(&_current->sleep_callout);
+			spinUnlock(&schedulerSpinLock);
+			__asm__ volatile("msr daif, %0" : : "r"(daif) : "memory");
+		}
 		_current->state = ZOMBIE;
 	}
 }

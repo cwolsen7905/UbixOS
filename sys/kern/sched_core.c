@@ -905,6 +905,11 @@ void sched_zombie(kTask_t *t)
 	cli();
 	spinLock(&schedulerSpinLock);
 	rq_dequeue_locked(t);
+	/* A task killed mid timed-sleep still has its sleep callout armed.  Left
+	 * linked, the global callout list points into a task struct that is later
+	 * freed/reused — once reused, its next pointer cuts every later callout off
+	 * the list and those sleepers never wake (sleep(1), the taskbar clock). */
+	callout_stop(&t->sleep_callout);
 	t->state = ZOMBIE;
 	spinUnlock(&schedulerSpinLock);
 	restore_flags(flags);
