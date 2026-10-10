@@ -41,4 +41,11 @@ int sys_exec(struct thread *, char *, char **, char **);
  * and cmdline (argv joined) on exec.  Shared by the per-arch exec paths. */
 void exec_set_name_cmdline(kTask_t *t, const char *path, char **argv, int argc);
 
+/* Script support: if @path starts with "#!", build in @vec (EXEC_SCRIPT_MAXARGS
+ * slots) the interpreter's argv — interpreter, its optional single argument,
+ * @path, then @argv[1..] — and return its argc; return 0 for a non-script.
+ * @argv may be user pointers (readable in the caller's address space). */
+#define EXEC_SCRIPT_MAXARGS 4096
+int exec_script_argv(const char *path, char *const *argv, char **vec, char *interp, size_t isz, char *iarg, size_t asz);
+
 #endif /* END _UBIXOS_EXEC_H */

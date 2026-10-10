@@ -658,7 +658,53 @@ static void free_strvec(char **vec, int n, const char *keep)
 	kfree(vec);
 }
 
+static int exec_replace_elf(const char *path, char *const *uargv, char *const *uenvp, void *own);
+
+/* A script exec's interpreter argv, in one allocation freed by exec_replace_elf. */
+struct script_exec
+{
+	char interp[256];
+	char iarg[256];
+	char *vec[EXEC_SCRIPT_MAXARGS];
+};
+
+/**
+ * execve for a "#!" script: run its interpreter with the script as an
+ * argument.  One level only — the interpreter itself must be an ELF program.
+ *
+ * @return -1 if @path is not a script or the interpreter failed to load (the
+ *         call does not return on success).
+ */
+static int exec_script(const char *path, char *const *uargv, char *const *uenvp)
+{
+	struct script_exec *se = (struct script_exec *)kmalloc(sizeof(*se));
+
+	if (se == NULL)
+		return (-1);
+	if (exec_script_argv(path, uargv, se->vec, se->interp, sizeof(se->interp), se->iarg, sizeof(se->iarg)) == 0)
+	{
+		kfree(se);
+		return (-1);
+	}
+	/* Hands @se over: freed once its strings are copied (or on failure). */
+	return (exec_replace_elf(se->interp, se->vec, uenvp, se) == 0 ? 0 : -1);
+}
+
 int aarch64_exec_replace(const char *path, char *const *uargv, char *const *uenvp)
+{
+	if (exec_replace_elf(path, uargv, uenvp, NULL) == -2)
+		return (exec_script(path, uargv, uenvp));
+	return (-1);
+}
+
+/**
+ * execve of an ELF program.  @own (may be NULL) is a kernel allocation backing
+ * @path/@uargv that this function frees once it no longer needs them.
+ *
+ * @return -2 (without side effects) if @path is not ELF, so the caller can try
+ *         it as a script; -1 on failure; does not return on success.
+ */
+static int exec_replace_elf(const char *path, char *const *uargv, char *const *uenvp, void *own)
 {
 	elf64_src_t src;
 	fileDescriptor_t *efd;
@@ -673,7 +719,23 @@ int aarch64_exec_replace(const char *path, char *const *uargv, char *const *uenv
 	if (efd == NULL)
 	{
 		kprintf("execve: %s not loadable\n", path);
+		if (own != NULL)
+			kfree(own);
 		return (-1);
+	}
+	{
+		unsigned char magic[4];
+		if (src.read(&src, 0, magic, 4) != 0 || magic[0] != 0x7F || magic[1] != 'E' || magic[2] != 'L' ||
+		    magic[3] != 'F')
+		{
+			fclose(efd);
+			if (own != NULL)
+			{
+				kfree(own); /* a script's interpreter must be ELF */
+				return (-1);
+			}
+			return (-2); /* not ELF: maybe a #! script */
+		}
 	}
 
 	/* Copy name + argv + envp out of the old address space now — they are user
@@ -688,6 +750,8 @@ int aarch64_exec_replace(const char *path, char *const *uargv, char *const *uenv
 		if (kenvp != NULL)
 			kfree(kenvp);
 		fclose(efd);
+		if (own != NULL)
+			kfree(own);
 		return (-1);
 	}
 	strncpy(namebuf, path, sizeof(namebuf) - 1);
@@ -707,7 +771,9 @@ int aarch64_exec_replace(const char *path, char *const *uargv, char *const *uenv
 		pmap_free_user_space(l1); /* never became active */
 		free_strvec(kargv, argc, namebuf);
 		free_strvec(kenvp, envc, NULL);
-		kprintf("execve: %s failed to load\n", path);
+		kprintf("execve: %s failed to load\n", namebuf);
+		if (own != NULL)
+			kfree(own);
 		return (-1);
 	}
 	fclose(efd);
@@ -720,6 +786,9 @@ int aarch64_exec_replace(const char *path, char *const *uargv, char *const *uenv
 	 * kernel temporaries (but not namebuf, which is on our stack). */
 	free_strvec(kargv, argc, namebuf);
 	free_strvec(kenvp, envc, NULL);
+
+	if (own != NULL)
+		kfree(own); /* script interpreter argv: everything is copied now */
 
 	/* Repoint the current task at the new image, then make it live.  (name +
 	 * cmdline were already set by exec_set_name_cmdline above.) */

@@ -678,7 +678,41 @@ void execFile(char *file, char **argv, char **envp, int console)
 	return;
 }
 
+static int sys_exec_depth(struct thread *td, char *file, char **argv, char **envp, int depth);
+
+/* A script exec's interpreter argv, in one allocation. */
+struct script_exec
+{
+	char interp[256];
+	char iarg[256];
+	char *vec[EXEC_SCRIPT_MAXARGS];
+};
+
+/**
+ * execve for a "#!" script: run its interpreter with the script as an
+ * argument (one level; the interpreter must be an ELF program).
+ *
+ * @return sys_exec's result for the interpreter, or -1 if @file is no script.
+ */
+static int exec_script(struct thread *td, char *file, char **argv, char **envp)
+{
+	struct script_exec *se = (struct script_exec *)kmalloc(sizeof(*se));
+	int r = -1;
+
+	if (se == NULL)
+		return (-1);
+	if (exec_script_argv(file, argv, se->vec, se->interp, sizeof(se->interp), se->iarg, sizeof(se->iarg)) != 0)
+		r = sys_exec_depth(td, se->interp, se->vec, envp, 1); /* copies argv before returning */
+	kfree(se);
+	return (r);
+}
+
 int sys_exec(struct thread *td, char *file, char **argv, char **envp)
+{
+	return (sys_exec_depth(td, file, argv, envp, 0));
+}
+
+static int sys_exec_depth(struct thread *td, char *file, char **argv, char **envp, int depth)
 {
 
 	int i = 0x0;
@@ -751,9 +785,12 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 
 	if ((binaryHeader->e_ident[1] != 'E') || (binaryHeader->e_ident[2] != 'L') || (binaryHeader->e_ident[3] != 'F'))
 	{
-		kprintf("Exec Format Error: Binary File Not Executable7.\n");
 		kfree(binaryHeader);
 		fclose(fd);
+		/* Not ELF: a "#!" script runs through its interpreter (once). */
+		if (depth == 0)
+			return (exec_script(td, file, argv, envp));
+		kprintf("Exec Format Error: Binary File Not Executable7.\n");
 		return (-1);
 	}
 	else if (binaryHeader->e_type != ET_EXEC)

@@ -15,6 +15,7 @@
 #include <ubixos/exec.h>
 #include <string.h>
 #include <lib/kprintf.h> /* snprintf */
+#include <fs/vfs/file.h> /* fopen/fread — reading a script's #! line */
 
 /**
  * Set a task's display name and command line from the executable @path and its
@@ -66,4 +67,48 @@ void exec_set_name_cmdline(kTask_t *t, const char *path, char **argv, int argc)
 		pos += alen;
 	}
 	t->cmdline[pos] = '\0';
+}
+
+int exec_script_argv(const char *path, char *const *argv, char **vec, char *interp, size_t isz, char *iarg, size_t asz)
+{
+	fileDescriptor_t *fd;
+	char line[256];
+	size_t n, i = 2, k;
+	int vc = 0, a;
+
+	fd = fopen(path, "r");
+	if (fd == NULL)
+		return 0;
+	n = fread(line, 1, sizeof(line) - 1, fd);
+	fclose(fd);
+	if ((ssize_t)n < 3 || line[0] != '#' || line[1] != '!')
+		return 0;
+	line[n] = '\0';
+
+	/* "#!" [blanks] interpreter [blanks [argument]] newline — like Linux, the
+	 * rest of the line after the interpreter is one argument. */
+	while (line[i] == ' ' || line[i] == '\t')
+		i++;
+	for (k = 0; line[i] != '\0' && line[i] != ' ' && line[i] != '\t' && line[i] != '\n' && k + 1 < isz; i++)
+		interp[k++] = line[i];
+	interp[k] = '\0';
+	if (k == 0)
+		return 0;
+	while (line[i] == ' ' || line[i] == '\t')
+		i++;
+	for (k = 0; line[i] != '\0' && line[i] != '\n' && k + 1 < asz; i++)
+		iarg[k++] = line[i];
+	while (k > 0 && (iarg[k - 1] == ' ' || iarg[k - 1] == '\t' || iarg[k - 1] == '\r'))
+		k--;
+	iarg[k] = '\0';
+
+	vec[vc++] = interp;
+	if (iarg[0] != '\0')
+		vec[vc++] = iarg;
+	vec[vc++] = (char *)path;
+	if (argv != NULL && argv[0] != NULL)
+		for (a = 1; argv[a] != NULL && vc < EXEC_SCRIPT_MAXARGS - 1; a++)
+			vec[vc++] = argv[a];
+	vec[vc] = NULL;
+	return vc;
 }
