@@ -16,6 +16,8 @@
  * Write (vfsWrite/MakeDir/RemDir/Sync) is K3.  See docs/design/ubixfs-pool-plan.md.
  */
 #include <sys/types.h>
+#include <ubixos/spinlock.h> /* g_ubfs_lock */
+#include <ubixos/sched.h>    /* _current (lock owner) */
 #include <string.h>
 #include <lib/kprintf.h>
 #include <lib/kmalloc.h>
@@ -59,6 +61,44 @@ struct ubfs_mount
 	ubfs_fs_t fs;
 	uint64_t ds_obj;
 };
+
+/*
+ * One lock for all of UbixFS.  The portable core (pool allocator, CoW block
+ * trees, the transaction commit) has no locking of its own, so two CPUs inside
+ * it at once corrupt or wedge it.  Every VFS entry point runs under this lock.
+ * It is a sleeping (yielding) lock — the holder does disk I/O — and recursive
+ * for the owning task, so a call that re-enters UbixFS cannot deadlock.
+ */
+static struct spinLock g_ubfs_lock = SPIN_LOCK_INITIALIZER;
+static void *volatile g_ubfs_owner; /* task holding g_ubfs_lock, NULL if free */
+static int g_ubfs_depth;            /* recursion depth of the owner */
+
+/** Take the UbixFS lock (recursive for the holding task). */
+static void ubfs_lock(void)
+{
+	if (_current == 0)
+		return; /* early boot: single-threaded, no scheduler to yield to yet */
+	if (g_ubfs_owner == (void *)_current)
+	{
+		g_ubfs_depth++;
+		return;
+	}
+	spinLock(&g_ubfs_lock);
+	g_ubfs_owner = (void *)_current;
+	g_ubfs_depth = 1;
+}
+
+/** Release one level of the UbixFS lock. */
+static void ubfs_unlock(void)
+{
+	if (_current == 0)
+		return;
+	if (--g_ubfs_depth == 0)
+	{
+		g_ubfs_owner = 0;
+		spinUnlock(&g_ubfs_lock);
+	}
+}
 
 /* Per-open-file state, stored in fileDescriptor_t::res. */
 struct ubfs_file
@@ -234,7 +274,7 @@ static int raw_write(void *ctx, uint64_t blk, const void *buf)
  *
  * @return 1 on success, 0 on failure (the VFS treats 0 as a failed mount).
  */
-static int ubfs_vfs_initfs(struct vfs_mountPoint *mp)
+static int ubfs_vfs_initfs_locked(struct vfs_mountPoint *mp)
 {
 	struct ubfs_mount *m;
 
@@ -309,6 +349,17 @@ static int ubfs_vfs_initfs(struct vfs_mountPoint *mp)
 	return (1);
 }
 
+/** ubfs_vfs_initfs with the UbixFS lock held (see ubfs_lock). */
+static int ubfs_vfs_initfs(struct vfs_mountPoint *mp)
+{
+	int r;
+
+	ubfs_lock();
+	r = ubfs_vfs_initfs_locked(mp);
+	ubfs_unlock();
+	return (r);
+}
+
 /**
  * If @obj is a symlink, resolve it to the object it ultimately points at,
  * updating @obj in place.  @path is the (pool-relative) path @obj was reached
@@ -368,7 +419,7 @@ static int ubfs_follow_symlink(struct ubfs_mount *m, uint64_t *obj, const char *
  *
  * @return 0 on success, -1 on failure.
  */
-static int ubfs_vfs_symlink(const char *target, const char *linkpath, void *vmp)
+static int ubfs_vfs_symlink_locked(const char *target, const char *linkpath, void *vmp)
 {
 	struct vfs_mountPoint *mp = (struct vfs_mountPoint *)vmp;
 	struct ubfs_mount *m;
@@ -386,12 +437,23 @@ static int ubfs_vfs_symlink(const char *target, const char *linkpath, void *vmp)
 	return (ubfs_commit(m));
 }
 
+/** ubfs_vfs_symlink with the UbixFS lock held (see ubfs_lock). */
+static int ubfs_vfs_symlink(const char *target, const char *linkpath, void *vmp)
+{
+	int r;
+
+	ubfs_lock();
+	r = ubfs_vfs_symlink_locked(target, linkpath, vmp);
+	ubfs_unlock();
+	return (r);
+}
+
 /**
  * vfsReadlink: read @path's symlink target into @buf.
  *
  * @return the target length on success, -1 if @path is missing or not a link.
  */
-static int ubfs_vfs_readlink(const char *path, char *buf, int bufsz, void *vmp)
+static int ubfs_vfs_readlink_locked(const char *path, char *buf, int bufsz, void *vmp)
 {
 	struct vfs_mountPoint *mp = (struct vfs_mountPoint *)vmp;
 	struct ubfs_mount *m;
@@ -410,12 +472,23 @@ static int ubfs_vfs_readlink(const char *path, char *buf, int bufsz, void *vmp)
 	return (ubfs_fs_readlink(&m->fs, obj, buf, (uint64_t)bufsz));
 }
 
+/** ubfs_vfs_readlink with the UbixFS lock held (see ubfs_lock). */
+static int ubfs_vfs_readlink(const char *path, char *buf, int bufsz, void *vmp)
+{
+	int r;
+
+	ubfs_lock();
+	r = ubfs_vfs_readlink_locked(path, buf, bufsz, vmp);
+	ubfs_unlock();
+	return (r);
+}
+
 /**
  * vfsOpenFile: resolve @path within the pool and attach an open-file handle.
  *
  * @return 1 on success, 0 if the path does not exist.
  */
-static int ubfs_vfs_open(const char *path, fileDescriptor_t *fd)
+static int ubfs_vfs_open_locked(const char *path, fileDescriptor_t *fd)
 {
 	struct ubfs_mount *m;
 	struct ubfs_file *f;
@@ -493,12 +566,23 @@ static int ubfs_vfs_open(const char *path, fileDescriptor_t *fd)
 	return (1);
 }
 
+/** ubfs_vfs_open with the UbixFS lock held (see ubfs_lock). */
+static int ubfs_vfs_open(const char *path, fileDescriptor_t *fd)
+{
+	int r;
+
+	ubfs_lock();
+	r = ubfs_vfs_open_locked(path, fd);
+	ubfs_unlock();
+	return (r);
+}
+
 /**
  * vfsRead: read @size bytes at @offset from the open file into @data.
  *
  * @return the number of bytes read (clamped to file size), or a negative error.
  */
-static int ubfs_vfs_read(fileDescriptor_t *fd, char *data, off_t offset, long size)
+static int ubfs_vfs_read_locked(fileDescriptor_t *fd, char *data, off_t offset, long size)
 {
 	struct ubfs_file *f;
 
@@ -508,13 +592,24 @@ static int ubfs_vfs_read(fileDescriptor_t *fd, char *data, off_t offset, long si
 	return ((int)ubfs_fs_read(&f->m->fs, f->obj, (uint64_t)offset, data, (uint64_t)size));
 }
 
+/** ubfs_vfs_read with the UbixFS lock held (see ubfs_lock). */
+static int ubfs_vfs_read(fileDescriptor_t *fd, char *data, off_t offset, long size)
+{
+	int r;
+
+	ubfs_lock();
+	r = ubfs_vfs_read_locked(fd, data, offset, size);
+	ubfs_unlock();
+	return (r);
+}
+
 /**
  * vfsWrite: write @size bytes at @offset from @data into the open file, then
  * commit the transaction group so the change persists.
  *
  * @return the number of bytes written, or a negative error.
  */
-static int ubfs_vfs_write(fileDescriptor_t *fd, char *data, off_t offset, long size)
+static int ubfs_vfs_write_locked(fileDescriptor_t *fd, char *data, off_t offset, long size)
 {
 	struct ubfs_file *f;
 
@@ -535,6 +630,17 @@ static int ubfs_vfs_write(fileDescriptor_t *fd, char *data, off_t offset, long s
 	return ((int)size);
 }
 
+/** ubfs_vfs_write with the UbixFS lock held (see ubfs_lock). */
+static int ubfs_vfs_write(fileDescriptor_t *fd, char *data, off_t offset, long size)
+{
+	int r;
+
+	ubfs_lock();
+	r = ubfs_vfs_write_locked(fd, data, offset, size);
+	ubfs_unlock();
+	return (r);
+}
+
 /**
  * vfsClose: release the open-file handle.
  *
@@ -546,11 +652,22 @@ static int ubfs_vfs_write(fileDescriptor_t *fd, char *data, off_t offset, long s
  * allocation and frees a stray pointer (poison, or — worse — a valid adjacent
  * block).  Free the handle directly, per the VFS contract.
  */
-static int ubfs_vfs_close(void *res)
+static int ubfs_vfs_close_locked(void *res)
 {
 	if (res != 0)
 		kfree(res);
 	return (0);
+}
+
+/** ubfs_vfs_close with the UbixFS lock held (see ubfs_lock). */
+static int ubfs_vfs_close(void *res)
+{
+	int r;
+
+	ubfs_lock();
+	r = ubfs_vfs_close_locked(res);
+	ubfs_unlock();
+	return (r);
 }
 
 /**
@@ -558,7 +675,7 @@ static int ubfs_vfs_close(void *res)
  *
  * @return 1 on success, 0 if @path is not a directory in the pool.
  */
-static int ubfs_vfs_opendir(const char *path, kDIR_t *dir)
+static int ubfs_vfs_opendir_locked(const char *path, kDIR_t *dir)
 {
 	struct ubfs_mount *m;
 	struct ubfs_dir *d;
@@ -597,6 +714,17 @@ static int ubfs_vfs_opendir(const char *path, kDIR_t *dir)
 	return (1);
 }
 
+/** ubfs_vfs_opendir with the UbixFS lock held (see ubfs_lock). */
+static int ubfs_vfs_opendir(const char *path, kDIR_t *dir)
+{
+	int r;
+
+	ubfs_lock();
+	r = ubfs_vfs_opendir_locked(path, dir);
+	ubfs_unlock();
+	return (r);
+}
+
 /**
  * vfsReadDir: hand back the next entry, streamed one on-disk slot per call.
  * Emits "." then ".." first, then walks the raw dirent slots, skipping freed
@@ -604,7 +732,7 @@ static int ubfs_vfs_opendir(const char *path, kDIR_t *dir)
  *
  * @return 0 on a returned entry, -1 at end of directory.
  */
-static int ubfs_vfs_readdir(kDIR_t *dir, struct kdirent *ent)
+static int ubfs_vfs_readdir_locked(kDIR_t *dir, struct kdirent *ent)
 {
 	struct ubfs_dir *d;
 
@@ -651,10 +779,21 @@ static int ubfs_vfs_readdir(kDIR_t *dir, struct kdirent *ent)
 	return (-1);
 }
 
+/** ubfs_vfs_readdir with the UbixFS lock held (see ubfs_lock). */
+static int ubfs_vfs_readdir(kDIR_t *dir, struct kdirent *ent)
+{
+	int r;
+
+	ubfs_lock();
+	r = ubfs_vfs_readdir_locked(dir, ent);
+	ubfs_unlock();
+	return (r);
+}
+
 /**
  * vfsCloseDir: free the materialised entry list.
  */
-static int ubfs_vfs_closedir(kDIR_t *dir)
+static int ubfs_vfs_closedir_locked(kDIR_t *dir)
 {
 	if (dir != 0 && dir->dirHandle != 0)
 	{
@@ -664,12 +803,23 @@ static int ubfs_vfs_closedir(kDIR_t *dir)
 	return (0);
 }
 
+/** ubfs_vfs_closedir with the UbixFS lock held (see ubfs_lock). */
+static int ubfs_vfs_closedir(kDIR_t *dir)
+{
+	int r;
+
+	ubfs_lock();
+	r = ubfs_vfs_closedir_locked(dir);
+	ubfs_unlock();
+	return (r);
+}
+
 /**
  * vfsMakeDir: create directory @path (handed the full path) and commit.
  *
  * @return 0 on success, -1 on failure.
  */
-static int ubfs_vfs_mkdir(char *path, void *vfd)
+static int ubfs_vfs_mkdir_locked(char *path, void *vfd)
 {
 	fileDescriptor_t *fd = (fileDescriptor_t *)vfd;
 	struct ubfs_mount *m;
@@ -687,13 +837,24 @@ static int ubfs_vfs_mkdir(char *path, void *vfd)
 	return (ubfs_commit(m));
 }
 
+/** ubfs_vfs_mkdir with the UbixFS lock held (see ubfs_lock). */
+static int ubfs_vfs_mkdir(char *path, void *vfd)
+{
+	int r;
+
+	ubfs_lock();
+	r = ubfs_vfs_mkdir_locked(path, vfd);
+	ubfs_unlock();
+	return (r);
+}
+
 /**
  * vfsUnlink / vfsRemDir: remove @path (a mount-relative path) and commit.  The
  * core's unlink handles both files and empty directories.
  *
  * @return 0 on success, -1 on failure.
  */
-static int ubfs_vfs_unlink(char *path, void *vmp)
+static int ubfs_vfs_unlink_locked(char *path, void *vmp)
 {
 	struct vfs_mountPoint *mp = (struct vfs_mountPoint *)vmp;
 	struct ubfs_mount *m;
@@ -709,17 +870,39 @@ static int ubfs_vfs_unlink(char *path, void *vmp)
 	return (ubfs_commit(m));
 }
 
+/** ubfs_vfs_unlink with the UbixFS lock held (see ubfs_lock). */
+static int ubfs_vfs_unlink(char *path, void *vmp)
+{
+	int r;
+
+	ubfs_lock();
+	r = ubfs_vfs_unlink_locked(path, vmp);
+	ubfs_unlock();
+	return (r);
+}
+
 /**
  * vfsSync: commit the most-recently mounted pool (the hook takes no mount arg).
  * Mutations already commit eagerly, so this is a belt-and-braces flush.
  *
  * @return 0 on success or if nothing is mounted, -1 on a commit failure.
  */
-static int ubfs_vfs_sync(void)
+static int ubfs_vfs_sync_locked(void)
 {
 	if (g_mount == 0 || !g_mount->writable)
 		return (0);
 	return (ubfs_commit(g_mount));
+}
+
+/** ubfs_vfs_sync with the UbixFS lock held (see ubfs_lock). */
+static int ubfs_vfs_sync(void)
+{
+	int r;
+
+	ubfs_lock();
+	r = ubfs_vfs_sync_locked();
+	ubfs_unlock();
+	return (r);
 }
 
 /**
@@ -749,7 +932,7 @@ void ubfs_vfs_set_raw(int on)
  *
  * @return the number of pools written.
  */
-int ubfs_vfs_query(void *buf, int max)
+static int ubfs_vfs_query_locked(void *buf, int max)
 {
 	struct ubix_pool_info *out = (struct ubix_pool_info *)buf;
 	struct vfs_mountPoint *mp;
@@ -783,6 +966,17 @@ int ubfs_vfs_query(void *buf, int max)
 		n++;
 	}
 	return (n);
+}
+
+/** ubfs_vfs_query with the UbixFS lock held (see ubfs_lock). */
+int ubfs_vfs_query(void *buf, int max)
+{
+	int r;
+
+	ubfs_lock();
+	r = ubfs_vfs_query_locked(buf, max);
+	ubfs_unlock();
+	return (r);
 }
 
 /**

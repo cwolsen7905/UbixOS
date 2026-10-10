@@ -778,10 +778,13 @@ int main(int argc, char **argv)
 		while (mpi_postMessage(VIEWS_MBOX, DISPLAY_QUERY, &qmsg) != 0)
 			ubix::yield();
 
+		/* Bounded by TIME (~2 s), not by a count of yields: on SMP a yield
+		 * returns at once when this CPU has nothing else to run, so a counted
+		 * loop expired in milliseconds — before views, on another CPU, answered. */
 		mpi_message_t reply;
-		for (int i = 0; i < 5000; i++)
+		for (int waited = 0; waited < 200; waited += 5)
 		{
-			if (mbox.try_fetch(reply) && reply.header == DISPLAY_INFO)
+			if (mbox.wait(reply, 5) && reply.header == DISPLAY_INFO)
 			{
 				struct display_info *di = (struct display_info *)reply.data;
 				if (di->screen_w > 0)
@@ -790,7 +793,6 @@ int main(int argc, char **argv)
 					scr_h = (int)di->screen_h;
 				return true;
 			}
-			ubix::yield();
 		}
 		return false;
 	};
@@ -827,20 +829,20 @@ int main(int argc, char **argv)
 		 * created, leaving a black never-drawn box on the login screen.  A
 		 * timeout is treated as a deny; the retry loop re-queries + re-claims
 		 * (and releases any late-arriving ACK's window when draining). */
+		/* Bounded by time (~3 s), not a yield count (see query_screen). */
 		mpi_message_t reply;
 		bool acked = false;
-		for (int i = 0; i < 20000; i++)
+		for (int waited = 0; waited < 300 && !acked; waited += 5)
 		{
-			if (mbox.try_fetch(reply))
+			while (mbox.try_fetch(reply) || mbox.wait(reply, 5))
 			{
 				if (reply.header == DISPLAY_ACK)
 				{
 					acked = true;
 					break;
 				}
-				continue; /* stray (late DISPLAY_INFO etc.) — discard */
+				/* stray (late DISPLAY_INFO etc.) — discard and keep waiting */
 			}
-			ubix::yield();
 		}
 		if (!acked)
 		{

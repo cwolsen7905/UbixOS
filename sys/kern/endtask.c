@@ -38,6 +38,8 @@
 #include <vmm/vm_map.h>
 #include <lib/kprintf.h>
 #include <isa/8259.h>
+#include <sys/descrip.h>
+#include <sys/sysproto_posix.h> /* sys_close — close the task's fds on exit (pipe-EOF) */
 #include <mpi/mpi.h>
 
 /************************************************************************
@@ -95,6 +97,24 @@ void endTask(pidType pid)
 	 */
 	if (sched_tgid_others_alive(_current->tgid, _current->id) == 0)
 	{
+		/* Close the task's PIPE and SOCKET fds (same policy as aarch64's endTask).
+		 * A reader blocked on this task's pipe write end sees EOF when the writer
+		 * exits (`cmd | wc -l` hung forever without it), and a socket's lwIP
+		 * netconn is released (socket_fo_close is refcount-safe across fork).
+		 * tty/pty fds are shared devices without a refcount — left alone.
+		 * Last thread of the group only: rfork(RFMEM) siblings share the table. */
+		for (int fd = 0; fd < O_FILES; fd++)
+		{
+			struct file *f = (struct file *)_current->td.o_files[fd];
+
+			if (f != 0 && (f->fd_type == FD_TYPE_PIPE || f->fd_type == FD_TYPE_SOCKET))
+			{
+				struct sys_close_args ca;
+				ca.fd = fd;
+				sys_close(&_current->td, &ca);
+			}
+		}
+
 		/* Free the demand-fault VMA tree (+ its backing file fds) before reclaiming
 		 * the pages.  A demand-loaded image (execve) leaves file-backed VMAs holding
 		 * an fopen of the binary; without this every exec'd-then-exited process leaks

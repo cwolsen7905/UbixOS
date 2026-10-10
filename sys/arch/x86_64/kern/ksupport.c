@@ -103,8 +103,17 @@ void spinLock(spinLock_t lock)
 {
 	if (lock == 0)
 		return;
+	/* Mutex-style, as on aarch64: a holder may block (disk I/O, a yield) while
+	 * holding the lock, so a contender must yield its CPU rather than spin —
+	 * spinning could starve the holder off this very CPU forever (the kernel is
+	 * not preemptive).  Short holds still see a brief pause-spin first. */
 	while (__sync_lock_test_and_set(&lock->locked, 1) != 0)
-		__asm__ __volatile__("pause");
+	{
+		for (int i = 0; i < 64 && lock->locked != 0; i++)
+			__asm__ __volatile__("pause");
+		if (lock->locked != 0)
+			sched_yield();
+	}
 }
 
 void spinUnlock(spinLock_t lock)
