@@ -440,7 +440,32 @@ static u64 build_dynamic_from_path(const char *path, u64 *out_entry, u64 *out_us
  * marshalled onto the new image's SysV stack, so the shell/apps see their real
  * arguments + environment (TERM/HOME/PATH/SHELL, login-shell argv0, …).
  */
+static int x86_64_execve_elf(struct thread *td, struct sys_execve_args *uap);
+
+/**
+ * execve: a "#!" script runs its interpreter (one level — the interpreter must
+ * be an ELF program) with the script path and the original arguments; anything
+ * else is loaded as ELF.  The interpreter argv lives on this kernel stack: the
+ * loader copies it before the point of no return, and a successful exec never
+ * comes back here.  Mirrors aarch64_exec_replace.
+ */
 int sys_execve(struct thread *td, struct sys_execve_args *uap)
+{
+	char interp[256], iarg[256];
+	char *vec[MAXARG + 1];
+
+	if (uap->fname != NULL &&
+	    exec_script_argv(uap->fname, uap->argv, vec, MAXARG + 1, interp, sizeof(interp), iarg, sizeof(iarg)) > 0)
+	{
+		struct sys_execve_args sa = *uap;
+		sa.fname = interp;
+		sa.argv = vec;
+		return (x86_64_execve_elf(td, &sa));
+	}
+	return (x86_64_execve_elf(td, uap));
+}
+
+static int x86_64_execve_elf(struct thread *td, struct sys_execve_args *uap)
 {
 	u64 pml4, entry = 0, usp = 0, main_base = 0;
 	char *kargv[MAXARG], *kenvp[MAXARG];

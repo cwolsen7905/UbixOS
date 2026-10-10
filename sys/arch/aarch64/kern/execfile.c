@@ -661,7 +661,26 @@ static int copy_user_strvec(char *const *uvec, char **kvec, int max)
  *         @path does not exist, -ENOEXEC if it exists but is not a loadable image,
  *         -1 for an internal failure (e.g. arg region overflow).
  */
+static int aarch64_exec_replace_elf(const char *path, char *const *uargv, char *const *uenvp);
+
+/**
+ * execve: a "#!" script runs its interpreter (one level — the interpreter must
+ * be an ELF program) with the script path and the original arguments; anything
+ * else is loaded as ELF.  The interpreter argv lives on this kernel stack: the
+ * loader copies it before the point of no return, and a successful exec never
+ * comes back here.
+ */
 int aarch64_exec_replace(const char *path, char *const *uargv, char *const *uenvp)
+{
+	char interp[256], iarg[256];
+	char *vec[MAXARG + 1];
+
+	if (exec_script_argv(path, uargv, vec, MAXARG + 1, interp, sizeof(interp), iarg, sizeof(iarg)) > 0)
+		return (aarch64_exec_replace_elf(interp, vec, uenvp));
+	return (aarch64_exec_replace_elf(path, uargv, uenvp));
+}
+
+static int aarch64_exec_replace_elf(const char *path, char *const *uargv, char *const *uenvp)
 {
 	int argc, envc, i, dr;
 	u_int64_t *l1, entry = 0, usp = 0, kstack_top, old_ttbr0;

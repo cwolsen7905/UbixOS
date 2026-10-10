@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
+#include <sys/wait.h>
 
 static int g_fail;
 
@@ -73,6 +74,37 @@ int main(void)
 	check("faccessat existing", faccessat(AT_FDCWD, "/etc/passwd", F_OK, 0) == 0);
 	check("faccessat missing", faccessat(AT_FDCWD, "/etc/nope-nope", F_OK, 0) != 0);
 	check("access existing", access("/etc/passwd", F_OK) == 0);
+
+	/* "#!" scripts: the kernel runs the interpreter with its argument, the
+	 * script path and the original arguments. */
+	{
+		int p[2], st = -1;
+		pid_t pid;
+
+		unlink("/tmp/vfstest.sh");
+		fd = open("/tmp/vfstest.sh", O_WRONLY | O_CREAT | O_TRUNC, 0755);
+		write(fd, "#!/bin/echo hello\n", 18);
+		close(fd);
+		pipe(p);
+		pid = fork();
+		if (pid == 0)
+		{
+			char *av[] = {"/tmp/vfstest.sh", "arg1", NULL};
+			char *ev[] = {NULL};
+			dup2(p[1], 1);
+			close(p[0]);
+			close(p[1]);
+			execve("/tmp/vfstest.sh", av, ev);
+			_exit(127);
+		}
+		close(p[1]);
+		memset(buf, 0, sizeof(buf));
+		n = read(p[0], buf, sizeof(buf) - 1);
+		close(p[0]);
+		waitpid(pid, &st, 0);
+		check("#! script runs interpreter", strcmp(buf, "hello /tmp/vfstest.sh arg1\n") == 0);
+		check("#! script exit status 0", WIFEXITED(st) && WEXITSTATUS(st) == 0);
+	}
 
 	printf("vfstest: %s\n", g_fail ? "FAILED" : "all passed");
 	return g_fail;
