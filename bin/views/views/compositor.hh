@@ -96,9 +96,12 @@ class Compositor
 
 	/* Modern depth: soft drop shadow under each window and anti-aliased
 	 * rounded outer corners, both clipped to [clipx,clipy,clipw,cliph]. */
-	uint32_t desk_pixel(int x, int y) const;
 	void draw_window_shadow(const Window *w, int clipx, int clipy, int clipw, int cliph);
-	void round_window_corners(const Window *w, int clipx, int clipy, int clipw, int cliph);
+	bool frameless(const Window *w) const;
+	void save_corners(const Window *w);
+	void blend_blit(int dx, int dy, int w, int h, const uint32_t *src, int stride);
+	void frame_window(const Window *w, int clipx, int clipy, int clipw, int cliph);
+	uint32_t corner_bg_[4][UI_R_LG * UI_R_LG]; /* pixels under the corners (save_corners) */
 
 	void cursor_save(int x, int y);
 	void cursor_erase(int x, int y);
@@ -110,7 +113,7 @@ class Compositor
 	int init();
 	void startup();
 
-	/* Re-read /views/desktop/* and apply the background (image/solid/bars). */
+	/* Re-read the /views/desktop keys and apply the background (image/solid/bars). */
 	void set_desktop_from_registry();
 
 	/* Set the active session user (per-user desktop) and re-resolve the

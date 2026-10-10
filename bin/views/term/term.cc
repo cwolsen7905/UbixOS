@@ -47,6 +47,9 @@
 #include <objgfx/ogPixelFmt.h>
 #include <sys/kbd.h>
 
+/* musl gates this behind a feature macro the -nostdinc world does not set. */
+extern "C" int nanosleep(const struct timespec *req, struct timespec *rem);
+
 #define DEF_COLS 80
 #define DEF_ROWS 25
 #define TERM_FW 8 /* ROM8X14 cell size */
@@ -54,32 +57,40 @@
 #define TERM_MAX_COLS 200 /* matches kernel TTY_MAX_COLS */
 #define TERM_MAX_ROWS 64  /* matches kernel TTY_MAX_ROWS */
 #define MAX_CELL_BYTES (TERM_MAX_COLS * TERM_MAX_ROWS * 2)
-#define TERM_W (DEF_COLS * TERM_FW) /* 640 */
-#define TERM_H (DEF_ROWS * TERM_FH) /* 350 */
-#define TERM_BG 0x00000000u
+#define TERM_PAD_X 16 /* body padding (design: 12px 16px) */
+#define TERM_PAD_Y 12
+#define TERM_W (DEF_COLS * TERM_FW + 2 * TERM_PAD_X) /* 672 */
+#define TERM_H (DEF_ROWS * TERM_FH + 2 * TERM_PAD_Y) /* 374 */
+#define TERM_BG 0x000F1019u                          /* --c-console */
+#define TERM_CURSOR 0x00B5ABFCu                      /* --term-cursor */
 #define FONT_PATH "/var/fonts/DejaVuSansMono.ttf"
 
 /* Current grid dimensions (cells); change on a live window resize. */
 static int g_cols = DEF_COLS;
 static int g_rows = DEF_ROWS;
 
-/* CGA/VGA 16-colour text palette → 0x00RRGGBB. */
-static const uint32_t g_vga_palette[16] = {0x00000000,
-                                           0x000000AA,
-                                           0x0000AA00,
-                                           0x0000AAAA,
-                                           0x00AA0000,
-                                           0x00AA00AA,
-                                           0x00AA5500,
-                                           0x00AAAAAA,
-                                           0x00555555,
-                                           0x005555FF,
-                                           0x0055FF55,
-                                           0x0055FFFF,
-                                           0x00FF5555,
-                                           0x00FF55FF,
-                                           0x00FFFF55,
-                                           0x00FFFFFF};
+/* VGA 16-colour text attributes -> the ubixos-v2 terminal palette (tokens.css
+ * --ansi-*), mapped from VGA index order (blue, green, cyan, red, magenta,
+ * brown, ...) onto the design's ANSI colours.  0 is the console background.
+ * The terminal is always dark: it does not follow the light/dark mode. */
+static const uint32_t g_vga_palette[16] = {
+    0x000F1019, /* 0  black        -> console bg       */
+    0x009FB4FF, /* 1  blue         -> ansi 4           */
+    0x006FD3A0, /* 2  green        -> ansi 2           */
+    0x007AD7FF, /* 3  cyan         -> ansi 6           */
+    0x00F0788C, /* 4  red          -> ansi 1           */
+    0x00FF7AD9, /* 5  magenta      -> ansi 5           */
+    0x00E9D36B, /* 6  brown        -> ansi 3 (yellow)  */
+    0x00CFD3E5, /* 7  light grey   -> ansi 7 (term fg) */
+    0x00595D6C, /* 8  dark grey    -> ansi 8           */
+    0x00BCCBFF, /* 9  light blue   -> ansi 12          */
+    0x0094E6BD, /* 10 light green  -> ansi 10          */
+    0x00A3E4FF, /* 11 light cyan   -> ansi 14          */
+    0x00FF9AAA, /* 12 light red    -> ansi 9           */
+    0x00FF9FE5, /* 13 light magenta-> ansi 13          */
+    0x00F5E38F, /* 14 yellow       -> ansi 11          */
+    0x00F3F5FE, /* 15 white        -> ansi 15          */
+};
 
 /* ------------------------------------------------------------------ */
 /* TerminalView — draws a snapshotted 80x25 char+attribute cell grid    */
@@ -147,7 +158,7 @@ class TerminalView
 		if (ch == 0)
 			ch = ' ';
 		set_attr(attr);
-		int px = col * fw_, py = row * fh_;
+		int px = TERM_PAD_X + col * fw_, py = TERM_PAD_Y + row * fh_;
 		surf_.ogFillRect(px, py, px + fw_ - 1, py + fh_ - 1, cur_bg_);
 		if (ch != ' ')
 			font_.PutChar(surf_, px, py, (char)ch);
@@ -157,12 +168,12 @@ class TerminalView
 	/* Draw the block cursor (inverted glyph on a light cell) and damage it. */
 	void draw_cursor(const unsigned char *cells, int row, int col)
 	{
-		int px = col * fw_, py = row * fh_;
-		surf_.ogFillRect(px, py, px + fw_ - 1, py + fh_ - 1, 0x00AAAAAAu);
+		int px = TERM_PAD_X + col * fw_, py = TERM_PAD_Y + row * fh_;
+		surf_.ogFillRect(px, py, px + fw_ - 1, py + fh_ - 1, TERM_CURSOR);
 		unsigned char ch = cells[(row * g_cols + col) * 2];
 		if (ch != 0 && ch != ' ')
 		{
-			font_.SetFGColor(0, 0, 0, 255);
+			font_.SetFGColor(0x0F, 0x10, 0x19, 255); /* glyph under the cursor: console bg */
 			font_.SetBGColor(0, 0, 0, 0);
 			font_.PutChar(surf_, px, py, (char)ch);
 		}
@@ -217,11 +228,11 @@ class TerminalView
 				for (int col = 0; col < g_cols; col++)
 					draw_cell(cells, row, col);
 			static const char msg[] = " [process exited - press any key to close]";
-			int by = (g_rows - 1) * fh_;
-			surf_.ogFillRect(0, by, g_cols * fw_ - 1, by + fh_ - 1, 0x00701010u);
+			int by = TERM_PAD_Y + (g_rows - 1) * fh_;
+			surf_.ogFillRect(0, by, sw_ - 1, by + fh_ - 1, 0x005A2330u); /* --c-danger-hover */
 			font_.SetFGColor(0xFF, 0xFF, 0xFF, 255);
 			font_.SetBGColor(0, 0, 0, 0);
-			font_.PutString(surf_, 0, by, msg);
+			font_.PutString(surf_, TERM_PAD_X, by, msg);
 			mark(0, 0, sw_, sh_);
 			prev_exited_ = true;
 			force_full_ = false;
@@ -457,10 +468,10 @@ int main(int argc, char **argv)
 	creq->w = TERM_W;
 	creq->h = TERM_H;
 	/* Resizable: the grid reflows to whatever cells fit the window. */
-	creq->min_w = 40 * TERM_FW;
-	creq->min_h = 10 * TERM_FH;
-	creq->max_w = 120 * TERM_FW; /* 960 — fits a 1024-wide screen */
-	creq->max_h = 50 * TERM_FH;  /* 700 — fits a 768-tall screen  */
+	creq->min_w = 40 * TERM_FW + 2 * TERM_PAD_X;
+	creq->min_h = 10 * TERM_FH + 2 * TERM_PAD_Y;
+	creq->max_w = 120 * TERM_FW + 2 * TERM_PAD_X; /* 992 — fits a 1024-wide screen */
+	creq->max_h = 50 * TERM_FH + 2 * TERM_PAD_Y;  /* 724 — fits a 768-tall screen  */
 	creq->sender_pid = ubix::pid();
 	std::strncpy(creq->title, "Terminal", sizeof(creq->title) - 1);
 	std::strncpy(creq->reply, mbox.c_str(), sizeof(creq->reply) - 1);
@@ -557,8 +568,10 @@ int main(int argc, char **argv)
 			set_title("Terminal (exited)");
 		}
 
+		bool had_msg = false;
 		while (mbox.try_fetch(reply))
 		{
+			had_msg = true;
 			if (reply.header == DISPLAY_CLOSE)
 			{
 				close_term();
@@ -567,8 +580,8 @@ int main(int argc, char **argv)
 			if (reply.header == DISPLAY_WINRESIZE)
 			{
 				struct display_winresize *wr = (struct display_winresize *)reply.data;
-				int nc = wr->w / tv.fw();
-				int nr = wr->h / tv.fh();
+				int nc = (wr->w - 2 * TERM_PAD_X) / tv.fw();
+				int nr = (wr->h - 2 * TERM_PAD_Y) / tv.fh();
 				if (nc < 40)
 					nc = 40;
 				if (nc > 120)
@@ -612,14 +625,25 @@ int main(int argc, char **argv)
 		int cx = linear % g_cols;
 		int cy = linear / g_cols;
 
+		bool busy = had_msg;
 		if (got || shell_exited)
 		{
 			DirtyRect d = tv.render(grid, cx, cy, shell_exited);
 			if (d.any)
 				send_flip(d);
+			busy |= d.any;
 		}
 
-		ubix::yield();
+		/* Idle (no input, nothing redrawn): nap instead of spinning on
+		 * yield, which kept the terminal near 80% CPU doing nothing.  ~8 ms
+		 * keeps echo and shell output latency below a frame. */
+		if (busy)
+			ubix::yield();
+		else
+		{
+			struct timespec nap = {0, 8 * 1000 * 1000};
+			nanosleep(&nap, nullptr);
+		}
 	}
 
 	return 0;

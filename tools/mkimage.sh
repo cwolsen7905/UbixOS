@@ -210,11 +210,24 @@ for f in "$BUILD/lib"/*;     do [ -f "$f" ] && cp "$f" "$STAGE/lib/";     done
 [ -f "$BUILD/lib/libc.so" ] && cp "$BUILD/lib/libc.so" "$STAGE/lib/ld-musl-i386.so.1"
 for f in "$BUILD/libexec"/*; do [ -f "$f" ] && cp "$f" "$STAGE/libexec/"; done
 
-echo "==> Staging TCC compiler (lib/tcc/ and usr/bin/)"
-mkdir -p "$STAGE/lib/tcc/include" "$STAGE/usr/bin"
+echo "==> Staging TCC compiler (/usr/bin/tcc, /lib/tcc, /usr/include, /usr/lib crt)"
+# Same layout as the aarch64 image (tools/mkimage-arm.sh): tcc's own runtime in
+# /lib/tcc, musl's headers in /usr/include, the crt objects in /usr/lib.
+mkdir -p "$STAGE/lib/tcc/include" "$STAGE/usr/bin" "$STAGE/usr/include/bits" "$STAGE/usr/lib"
 for f in "$BUILD/lib/tcc"/*;         do [ -f "$f" ] && cp "$f" "$STAGE/lib/tcc/";         done
 for f in "$BUILD/lib/tcc/include"/*; do [ -f "$f" ] && cp "$f" "$STAGE/lib/tcc/include/"; done
 [ -f "$BUILD/bin/tcc" ] && cp "$BUILD/bin/tcc" "$STAGE/usr/bin/tcc"
+cp contrib/musl/arch/generic/bits/*.h "$STAGE/usr/include/bits/"
+cp contrib/musl/arch/i386/bits/*.h "$STAGE/usr/include/bits/"
+cp "$BUILD/obj/musl/obj/include/bits/"*.h "$STAGE/usr/include/bits/"
+cp -R contrib/musl/include/. "$STAGE/usr/include/"
+for o in crt1.o crti.o crtn.o; do
+    [ -f "$BUILD/obj/musl/lib/$o" ] && cp "$BUILD/obj/musl/lib/$o" "$STAGE/usr/lib/$o"
+done
+# Same smoke test as the aarch64 image: tcc -run /usr/share/examples/hello.c
+mkdir -p "$STAGE/usr/share/examples"
+printf '#include <stdio.h>\n\nint main(void)\n{\n\tprintf("Hello from tcc on uBixOS!\\n");\n\treturn 0;\n}\n' \
+    >"$STAGE/usr/share/examples/hello.c"
 
 # NetSurf browser runtime resources (Messages, CSS, icons) at a path baked into
 # nsfb's resource search list (/usr/local/share/netsurf).
@@ -307,6 +320,11 @@ mkdir -p "$STAGE/mnt" "$STAGE/tmp"
 echo "==> Staging assets (var/)"
 mkdir -p "$STAGE/var/log" "$STAGE/var/background" "$STAGE/var/fonts" "$STAGE/var/db"
 for f in tools/backgrounds/*.bmp tools/backgrounds/*.png; do [ -f "$f" ] && cp "$f" "$STAGE/var/background/"; done
+# UI icons (ubixos-v2 design), pre-rendered by tools/mkicons.sh
+for d in share/icons/*/; do
+    s=$(basename "$d"); [ "$s" = src ] && continue
+    mkdir -p "$STAGE/usr/share/icons/$s" && cp "$d"*.png "$STAGE/usr/share/icons/$s/"
+done
 for f in tools/*.DPF; do [ -f "$f" ] && cp "$f" "$STAGE/var/fonts/"; done
 for f in tools/*.ttf; do [ -f "$f" ] && cp "$f" "$STAGE/var/fonts/"; done
 # Regenerate the ubistry seed from its single source of truth (tools/makereg.c);

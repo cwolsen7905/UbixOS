@@ -77,6 +77,7 @@ class WindowManager
 	void handle_flip(struct display_flip *fl);
 	void handle_release(struct display_release *rel);
 	void handle_raise(struct display_raise *dr);
+	void handle_winctl(struct display_winctl *wc);
 	void handle_settitle(struct display_settitle *st);
 	void handle_refresh_desktop();
 	void handle_set_user(struct display_set_user *su);

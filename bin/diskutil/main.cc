@@ -28,6 +28,8 @@ extern "C"
 #include <objgfx/ogScalableFont.h>
 #include <objgfx/ogSegmentBar.h>
 #include <objgfx/ogButton.h>
+#include <views/theme.h>
+#include <views/uidraw.h>
 
 #define RGB(r, g, b) ((uint32_t)(((r) << 16) | ((g) << 8) | (b)))
 
@@ -38,15 +40,19 @@ extern "C"
 #define ROW_H 26
 #define FONT_PATH "/var/fonts/DejaVuSans.ttf"
 
-/* Palette. */
-static const uint32_t COL_WIN = RGB(0xF2, 0xF3, 0xF5);
-static const uint32_t COL_TOOLBAR = RGB(0xE6, 0xE8, 0xEC);
-static const uint32_t COL_SIDEBAR = RGB(0xEC, 0xEE, 0xF1);
-static const uint32_t COL_SEL = RGB(0x3B, 0x82, 0xF6);
-static const uint32_t COL_DIVIDER = RGB(0xC8, 0xCC, 0xD2);
-static const uint32_t COL_TEXT = RGB(0x20, 0x28, 0x30);
-static const uint32_t COL_TEXT_DIM = RGB(0x70, 0x78, 0x82);
-static const uint32_t COL_SEL_TEXT = RGB(0xFF, 0xFF, 0xFF);
+/* Palette: the system theme (views/theme.h), loaded at start-up. */
+static struct ui_theme g_t = ui_theme_dark;
+#define COL_WIN (g_t.ground)
+#define COL_TOOLBAR (g_t.ground)
+#define COL_SIDEBAR (g_t.surface)
+#define COL_SEL (g_t.accent_900)
+#define COL_DIVIDER (ui_mix(g_t.ground, g_t.divider, g_t.divider_a))
+#define COL_TEXT (g_t.text)
+#define COL_TEXT_DIM (g_t.text_muted)
+#define COL_SEL_TEXT (g_t.accent_200)
+/* Label inside a coloured bar segment: app colours are light in dark mode and
+ * dark in light mode, so the label takes the opposite end of the ramp. */
+#define COL_ON_SEGMENT (g_t.mode == UI_THEME_LIGHT ? 0x00F3F5FEu : 0x000F1019u)
 
 /* Partition fill colours by MBR type. */
 static uint32_t type_color(uint8_t t)
@@ -54,13 +60,13 @@ static uint32_t type_color(uint8_t t)
 	switch (t)
 	{
 		case UBIX_PT_FAT32:
-			return RGB(0x4A, 0x90, 0xD9); /* blue */
+			return g_t.app[UI_APP_BLUE];
 		case UBIX_PT_SWAP:
-			return RGB(0x90, 0x98, 0xA4); /* grey */
+			return g_t.neutral_600;
 		case UBIX_PT_UBPOOL:
-			return RGB(0x4C, 0xAF, 0x50); /* green */
+			return g_t.app[UI_APP_GREEN];
 		default:
-			return RGB(0xE0, 0x91, 0x3A); /* orange */
+			return g_t.app[UI_APP_ORANGE];
 	}
 }
 
@@ -251,7 +257,7 @@ static void draw_detail(void)
 	}
 	if (nseg > 0)
 		ogSegmentBar::Draw(
-		    g_surf, g_font, dx, bary, dw, barh, segs, nseg, COL_DIVIDER, COL_SEL_TEXT, COL_TEXT_DIM);
+		    g_surf, g_font, dx, bary, dw, barh, segs, nseg, COL_DIVIDER, COL_ON_SEGMENT, COL_TEXT_DIM);
 
 	/* Info grid. */
 	int gy = bary + barh + 28;
@@ -306,14 +312,15 @@ static void draw_detail(void)
 		hsize(useds, ulbl, sizeof(ulbl));
 		hsize(frees, flbl, sizeof(flbl));
 		cap[0].weight = useds ? useds : 1;
-		cap[0].color = COL_SEL;
+		cap[0].color = g_t.accent; /* used space */
 		cap[0].label = "Used";
 		cap[0].detail = ulbl;
 		cap[1].weight = frees ? frees : 1;
-		cap[1].color = RGB(0xD8, 0xDC, 0xE2);
+		cap[1].color = g_t.neutral_800; /* free space */
 		cap[1].label = "Free";
 		cap[1].detail = flbl;
-		ogSegmentBar::Draw(g_surf, g_font, dx, gy + 8, dw, 22, cap, 2, COL_DIVIDER, COL_TEXT, COL_TEXT_DIM);
+		ogSegmentBar::Draw(
+		    g_surf, g_font, dx, gy + 8, dw, 22, cap, 2, COL_DIVIDER, COL_ON_SEGMENT, COL_TEXT_DIM);
 	}
 }
 
@@ -367,6 +374,8 @@ static void on_click(int x, int y)
 
 int main(int argc, char **argv)
 {
+	g_t = ui_theme_load(getenv("USER"));
+	ui_style_buttons(g_t);
 	(void)argc;
 	(void)argv;
 

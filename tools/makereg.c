@@ -79,22 +79,19 @@ static const struct reg_entry g_defaults[] = {
      * own params.  Colours are packed 0xRRGGBB stored as integers.  The system
      * default is jailbars; a user's choice persists and overrides it. */
     {"/views/desktop/mode", "\"image\""},
-    {"/views/desktop/image", "\"/var/background/ubix.bmp\""}, /* system default wallpaper */
-    {"/views/desktop/color", "2900136"},                      /* 0x2C60A8 solid blue        */
-    {"/views/desktop/barcolor", "1710638"},                   /* 0x1A1A2E jailbar base shade */
+    {"/views/desktop/image", "\"/var/background/ubix-nocturne.png\""}, /* system default (ubixos-v2) */
+    {"/views/desktop/color", "2900136"},                               /* 0x2C60A8 solid blue        */
+    {"/views/desktop/barcolor", "1710638"},                            /* 0x1A1A2E jailbar base shade */
 
-    /* Per-user wallpaper overrides: root and reddawg get the tropical-miami
-     * wallpaper; everyone else (and the login screen, which is user-agnostic)
-     * uses the ubix.bmp system default above. */
-    {"/users/root/views/desktop/image", "\"/var/background/tropical-miami.png\""},
-    {"/users/reddawg/views/desktop/image", "\"/var/background/tropical-miami.png\""},
-
-    /* Theme: accent colour for focused window title bars (0xRRGGBB as int).
-     * Retro magenta/purple to match the default synthwave (miami) wallpaper. */
-    {"/views/theme/accent", "12595340"}, /* 0xC0308C magenta-purple */
+    /* Appearance (include/views/theme.h): mode is the OS-wide light/dark
+     * signal apps may follow.  No accent is seeded, so each mode uses its
+     * designed accent (0x9184D9 dark / 0x796CBF light) until a user picks one
+     * in Settings (/users/<u>/views/theme/accent). */
+    {"/views/theme/mode", "\"dark\""},
 
     /* Image choices offered by the Settings Desktop pane. */
-    {"/settings/wallpapers/0", "\"/var/background/ubix.bmp\""},
+    {"/settings/wallpapers/0", "\"/var/background/ubix-nocturne.png\""},
+    {"/settings/wallpapers/9", "\"/var/background/ubix.bmp\""},
     {"/settings/wallpapers/1", "\"/var/background/tropical-sunset.png\""},
     {"/settings/wallpapers/2", "\"/var/background/tropical-palms.png\""},
     {"/settings/wallpapers/3", "\"/var/background/tropical-miami.png\""},

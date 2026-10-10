@@ -40,17 +40,20 @@ extern "C"
 #include <objgfx/objgfx.h>
 #include <objgfx/ogScalableFont.h>
 #include <objgfx/ogButton.h>
+#include <views/theme.h>
+#include <views/uidraw.h>
+#include <api/ubfs_pool.h>
 
 #define RGB(r, g, b) ((uint32_t)(((r) << 16) | ((g) << 8) | (b)))
 
-#define WIN_W 820
-#define WIN_H 500
-#define TOOLBAR_H 44
-#define ADDR_H 32     /* breadcrumb address bar */
-#define SIDEBAR_W 176 /* left navigation sidebar */
-#define HEAD_H 26     /* column-header row */
-#define ROW_H 24      /* one list entry */
-#define STATUS_H 26
+#define WIN_W 980
+#define WIN_H 620
+#define TOOLBAR_H 44  /* buttons, breadcrumb, search, view toggle (design) */
+#define ADDR_H 0      /* the breadcrumb now lives in the toolbar */
+#define SIDEBAR_W 200 /* left navigation sidebar */
+#define HEAD_H 30     /* column-header row (list view) */
+#define ROW_H 28      /* one list / sidebar row */
+#define STATUS_H 24
 #define PAD 10
 #define ICON_W 18
 #define FONT_PATH "/var/fonts/DejaVuSans.ttf"
@@ -61,20 +64,38 @@ extern "C"
 #define NAME_MAX_LEN 256
 
 /* Palette — matches the diskutil / activity desktop look. */
-static const uint32_t COL_WIN = RGB(0xF7, 0xF8, 0xFA);
-static const uint32_t COL_TOOLBAR = RGB(0xE9, 0xEB, 0xEF);
-static const uint32_t COL_ADDR = RGB(0xFF, 0xFF, 0xFF);
-static const uint32_t COL_HEAD = RGB(0xEE, 0xF0, 0xF3);
-static const uint32_t COL_SEL = RGB(0x3B, 0x82, 0xF6);
-static const uint32_t COL_SEL_TEXT = RGB(0xFF, 0xFF, 0xFF);
-static const uint32_t COL_ROW_ALT = RGB(0xF1, 0xF3, 0xF6);
-static const uint32_t COL_DIVIDER = RGB(0xD2, 0xD6, 0xDC);
-static const uint32_t COL_TEXT = RGB(0x1E, 0x26, 0x30);
-static const uint32_t COL_TEXT_DIM = RGB(0x6C, 0x74, 0x80);
-static const uint32_t COL_FOLDER = RGB(0x54, 0x9D, 0xE0);
-static const uint32_t COL_FILE = RGB(0xB6, 0xBD, 0xC6);
-static const uint32_t COL_FILE_FOLD = RGB(0x90, 0x98, 0xA2);
-static const uint32_t COL_CRUMB = RGB(0x33, 0x6F, 0xC4);
+/* Colours follow the system theme (views/theme.h): Files is a regular app,
+ * so it honours light/dark; g_t is (re)loaded at start-up. */
+static struct ui_theme g_t = ui_theme_dark;
+#define COL_WIN (g_t.ground)
+#define COL_TOOLBAR (g_t.ground)
+#define COL_ADDR (g_t.surface)
+#define COL_HEAD (g_t.surface)
+#define COL_SEL (g_t.accent_900)
+#define COL_SEL_TEXT (g_t.accent_200)
+#define COL_ROW_ALT (ui_mix(g_t.ground, g_t.surface, 96))
+#define COL_DIVIDER (ui_mix(g_t.ground, g_t.divider, g_t.divider_a))
+#define COL_TEXT (g_t.text)
+#define COL_TEXT_DIM (g_t.text_muted)
+#define COL_FOLDER (g_t.accent_400)
+#define COL_FILE (g_t.text_faint)
+#define COL_FILE_FOLD (g_t.text_muted)
+#define COL_CRUMB (g_t.accent_300)
+
+static ogSurface g_surf; /* the window buffer */
+
+/**
+ * The window buffer as a ui_canvas (views/uidraw.h drawing).
+ */
+static ui_canvas files_canvas(void)
+{
+	ui_canvas c;
+	c.px = (uint32_t *)g_surf.ogGetPtr(0, 0);
+	c.w = (int)g_surf.ogGetMaxX() + 1;
+	c.h = (int)g_surf.ogGetMaxY() + 1;
+	c.stride = (int)((uint8_t *)g_surf.ogGetPtr(0, 1) - (uint8_t *)g_surf.ogGetPtr(0, 0)) / 4;
+	return c;
+}
 
 /* Sort columns. */
 enum
@@ -113,8 +134,19 @@ struct crumb
 static const char g_mbox[] = "files";
 static const char g_views[] = "views";
 
-static ogSurface g_surf;
-static ogScalableFont g_font;
+static ogScalableFont g_font;    /* 12px UI text */
+static ogScalableFont g_font_sm; /* 11px: tile labels, header, status */
+static ogScalableFont g_font_xs; /* 10px: section labels, meta */
+
+/* View mode and the search filter (toolbar). */
+enum
+{
+	VIEW_GRID = 0,
+	VIEW_LIST = 1
+};
+static int g_view = VIEW_GRID;
+static char g_query[64];    /* case-insensitive name filter for the current folder */
+static bool g_search_focus; /* typing goes to the search field */
 static uint32_t g_win_id;
 static int32_t g_w = WIN_W, g_h = WIN_H;
 
@@ -159,7 +191,7 @@ enum
 	BTN_COUNT
 };
 static ogButton g_btn[BTN_COUNT];
-static const char *g_btn_label[BTN_COUNT] = {"<", ">", "Up"};
+static const char *g_btn_icon[BTN_COUNT] = {"arrow-left", "arrow-right", "arrow-up"};
 
 /* Confirmation-dialog buttons (own objects so they don't alias the toolbar). */
 static ogButton g_dlg_ok;
@@ -355,6 +387,20 @@ static int entry_cmp(const void *a, const void *b)
  * "." and ".." dropped (Up and the breadcrumbs handle ascent).  Re-sorts and
  * clears the selection.
  */
+/* Case-insensitive substring match for the search filter. */
+static bool name_matches(const char *name, const char *q)
+{
+	for (; *name; name++)
+	{
+		const char *a = name, *b = q;
+		while (*a && *b && ((*a | 0x20) == (*b | 0x20)))
+			a++, b++;
+		if (*b == '\0')
+			return true;
+	}
+	return false;
+}
+
 static int read_dir(void)
 {
 	g_nent = 0;
@@ -371,6 +417,8 @@ static int read_dir(void)
 	while ((de = readdir(d)) != 0 && g_nent < MAX_ENTRIES)
 	{
 		if (strcmp(de->d_name, ".") == 0 || strcmp(de->d_name, "..") == 0)
+			continue;
+		if (g_query[0] && !name_matches(de->d_name, g_query))
 			continue;
 		struct fentry *e = &g_ent[g_nent];
 		snprintf(e->name, sizeof(e->name), "%s", de->d_name);
@@ -395,6 +443,10 @@ static int read_dir(void)
 	}
 	closedir(d);
 	qsort(g_ent, g_nent, sizeof(g_ent[0]), entry_cmp);
+	if (g_query[0])
+		snprintf(g_status, sizeof(g_status), "%d match%s", g_nent, g_nent == 1 ? "" : "es");
+	else
+		snprintf(g_status, sizeof(g_status), "%d item%s", g_nent, g_nent == 1 ? "" : "s");
 	return 0;
 }
 
@@ -428,6 +480,7 @@ static void navigate(const char *path, bool record)
 		snprintf(g_cwd, sizeof(g_cwd), "%s", path);
 	if (record)
 		hist_push(g_cwd);
+	g_query[0] = '\0'; /* a new folder starts unfiltered */
 	if (read_dir() == 0)
 		snprintf(g_status, sizeof(g_status), "%d item%s", g_nent, g_nent == 1 ? "" : "s");
 	/* On failure read_dir leaves an explanatory message in g_status. */
@@ -621,28 +674,28 @@ static void start_rename(void)
 
 /* ── layout queries ─────────────────────────────────────────────────────────*/
 
-/** Y of the first list row (below toolbar + address bar + header). */
-static int list_top(void)
-{
-	return TOOLBAR_H + ADDR_H + HEAD_H;
-}
-
-/** Y where the sidebar and the column-header row begin. */
+/** Y where the sidebar and the content begin (below the toolbar). */
 static int content_top(void)
 {
 	return TOOLBAR_H + ADDR_H;
 }
 
-/** Left X of the list content (right of the sidebar). */
+/** Y of the first list row (list view: below the column header). */
+static int list_top(void)
+{
+	return content_top() + HEAD_H;
+}
+
+/** Left X of the content (right of the sidebar). */
 static int content_x(void)
 {
 	return SIDEBAR_W;
 }
 
-/** X of the Name column / entry labels. */
+/** X of the Name column / entry labels (list view). */
 static int name_x(void)
 {
-	return content_x() + PAD + ICON_W + 6;
+	return content_x() + PAD + ICON_W + 8;
 }
 
 /** Number of fully-visible list rows for the current window height. */
@@ -668,67 +721,182 @@ static int col_mod_x(void)
 	return g_w - PAD - 150;
 }
 
+/* Grid view (design: 112x100 tiles, 4px gap, content padding 12 / 16). */
+#define TILE_W 112
+#define TILE_H 100
+#define TILE_GAP 4
+#define GRID_PX 16
+#define GRID_PY 12
+
+/** Tiles per grid row for the current width. */
+static int grid_cols(void)
+{
+	int w = g_w - content_x() - 2 * GRID_PX + TILE_GAP;
+	int c = w / (TILE_W + TILE_GAP);
+	return c > 0 ? c : 1;
+}
+
+/** Fully-visible grid rows for the current height. */
+static int grid_rows(void)
+{
+	int h = g_h - STATUS_H - content_top() - GRID_PY;
+	int r = h / TILE_H;
+	return r > 0 ? r : 1;
+}
+
+/** Entry index of the grid tile at (x,y), or -1. */
+static int grid_hit(int x, int y)
+{
+	int gx = x - content_x() - GRID_PX, gy = y - content_top() - GRID_PY;
+	if (gx < 0 || gy < 0)
+		return -1;
+	int c = gx / (TILE_W + TILE_GAP), r = gy / TILE_H;
+	if (c >= grid_cols() || gx % (TILE_W + TILE_GAP) >= TILE_W)
+		return -1;
+	int i = (g_top + r) * grid_cols() + c;
+	return (i < g_nent) ? i : -1;
+}
+
 /* ── drawing ────────────────────────────────────────────────────────────────*/
 
+/** Text left-aligned at x, vertically centred on row cy. */
+static void text_at(ogScalableFont &f, int x, int cy, const char *s, uint32_t col)
+{
+	ui_text(g_surf, f, x, cy, s, col);
+}
+
 /**
- * Draw a 16px folder or document glyph at (x,y) with objGFX primitives (no icon
- * assets yet — a small set comes in a later phase).
+ * The design's 48px file-type icon for an entry, by kind / extension.
+ */
+static const char *file_icon48(const struct fentry *e)
+{
+	if (e->is_dir)
+		return "file-folder";
+	char ext[16];
+	ext_of(e->name, ext, sizeof(ext));
+	static const struct
+	{
+		const char *exts, *icon;
+	} map[] = {
+	    {"|pdf|", "file-pdf"},
+	    {"|doc|docx|odt|rtf|", "file-doc"},
+	    {"|xls|xlsx|ods|csv|", "file-sheet"},
+	    {"|tar|gz|tgz|zip|bz2|xz|z|", "file-archive"},
+	    {"|png|jpg|jpeg|bmp|gif|ppm|", "file-image"},
+	    {"|mp3|wav|flac|ogg|mod|", "file-audio"},
+	    {"|c|h|cc|cpp|hh|hpp|s|py|js|sh|mk|asm|", "file-code"},
+	};
+	if (ext[0])
+	{
+		char key[24];
+		snprintf(key, sizeof(key), "|%s|", ext);
+		for (auto &m : map)
+			if (strstr(m.exts, key))
+				return m.icon;
+	}
+	return "file-text";
+}
+
+/**
+ * Draw a 16px folder or document glyph at (x,y) (list view, sidebar).
  */
 static void draw_icon(int x, int y, bool is_dir)
 {
+	ui_canvas cv = files_canvas();
 	if (is_dir)
-	{
-		g_surf.ogFillRect(x, y + 4, x + 15, y + 13, COL_FOLDER);
-		g_surf.ogFillRect(x, y + 2, x + 6, y + 5, COL_FOLDER); /* tab */
-	}
+		ui_draw_icon_tint(cv, ui_icon_get(16, "folder"), x, y, COL_FOLDER);
 	else
-	{
-		g_surf.ogFillRect(x + 1, y + 1, x + 12, y + 14, COL_FILE);
-		g_surf.ogFillRect(x + 9, y + 1, x + 12, y + 4, COL_FILE_FOLD); /* folded corner */
-	}
+		ui_draw_icon_tint(cv, ui_icon_get(16, "list"), x, y, COL_TEXT_DIM);
 }
 
 /**
- * Draw a 16px "home" glyph (a roof over a body) at (x,y).
+ * The 16px glyph for a sidebar place (Home, the filesystem, top-level dirs).
  */
-static void draw_home_icon(int x, int y)
+static const char *place_icon(const struct place *p)
 {
-	for (int i = 0; i < 7; i++) /* triangular roof */
-		g_surf.ogHLine(x + 7 - i, x + 7 + i, y + 1 + i, COL_FOLDER);
-	g_surf.ogFillRect(x + 2, y + 7, x + 12, y + 14, COL_FOLDER);
+	if (p->is_home)
+		return "home";
+	static const struct
+	{
+		const char *path, *icon;
+	} map[] = {{"/", "drive"},
+	           {"/bin", "terminal"},
+	           {"/boot", "power"},
+	           {"/etc", "sliders"},
+	           {"/lib", "code"},
+	           {"/usr", "folder"},
+	           {"/var", "folder"},
+	           {"/home", "home"},
+	           {"/tmp", "trash"}};
+	for (auto &m : map)
+		if (strcmp(p->path, m.path) == 0)
+			return m.icon;
+	return "folder";
 }
 
+/* Section label: 10px, upper-case, faint (design .section-label). */
+static void section_label(int x, int cy, const char *s)
+{
+	char up[32];
+	int i = 0;
+	for (; s[i] && i < (int)sizeof(up) - 1; i++)
+		up[i] = (char)((s[i] >= 'a' && s[i] <= 'z') ? s[i] - 32 : s[i]);
+	up[i] = '\0';
+	text_at(g_font_xs, x, cy, up, g_t.text_faint);
+}
+
+/* Sidebar geometry: rows start below the "Places" label. */
+#define SB_ROW_Y0 (content_top() + 8 + 24)
+
 /**
- * Draw the left navigation sidebar: a "Places" header over the quick-access rows
- * (Home, Filesystem, top-level folders).  The row matching the current directory
- * is highlighted.
+ * Draw the sidebar: Places (Home, Filesystem, top-level folders) as list rows
+ * with icons, the current one selected; then Devices — the mounted UbixFS pool
+ * with a usage bar (from ubix_pool_query).
  */
 static void draw_sidebar(void)
 {
 	int top = content_top();
 	int bottom = g_h - STATUS_H;
-	g_surf.ogFillRect(0, top, SIDEBAR_W - 1, bottom - 1, COL_HEAD);
-	g_surf.ogVLine(SIDEBAR_W - 1, top, bottom - 1, COL_DIVIDER);
+	ui_canvas cv = files_canvas();
+	ui_fill(cv, 0, top, SIDEBAR_W - 1, bottom - top, g_t.surface);
+	ui_fill(cv, SIDEBAR_W - 1, top, 1, bottom - top, COL_DIVIDER);
 
-	set_fg(COL_TEXT_DIM);
-	g_font.PutString(g_surf, PAD, top + 6, "PLACES");
-
-	int y = top + 6 + (int)g_font.GetHeight() + 6;
-	for (int i = 0; i < g_nplaces && y + ROW_H <= bottom; i++)
+	section_label(16, top + 8 + 12, "Places");
+	int y = SB_ROW_Y0;
+	for (int i = 0; i < g_nplaces && y + ROW_H <= bottom - 80; i++)
 	{
 		bool here = (strcmp(g_places[i].path, g_cwd) == 0);
 		if (here)
-			g_surf.ogFillRect(3, y, SIDEBAR_W - 4, y + ROW_H - 1, COL_SEL);
+			ui_fill_round(cv, 8, y, SIDEBAR_W - 17, ROW_H, UI_R_MD, g_t.accent_900);
+		ui_draw_icon_tint(
+		    cv, ui_icon_get(16, place_icon(&g_places[i])), 16, y + 6, here ? g_t.accent_400 : COL_TEXT_DIM);
+		text_at(g_font, 16 + 16 + 8, y + ROW_H / 2, g_places[i].label, here ? g_t.accent_200 : COL_TEXT);
+		y += ROW_H + 2;
+	}
 
-		if (g_places[i].is_home)
-			draw_home_icon(PAD, y + (ROW_H - 16) / 2);
-		else
-			draw_icon(PAD, y + (ROW_H - 16) / 2, true);
-
-		set_fg(here ? COL_SEL_TEXT : COL_TEXT);
-		g_font.PutString(
-		    g_surf, PAD + ICON_W + 6, y + (ROW_H - (int)g_font.GetHeight()) / 2, g_places[i].label);
-		y += ROW_H;
+	/* Devices: the root pool with its usage. */
+	struct ubix_pool_info pi[2];
+	int np = ubix_pool_query(pi, 2);
+	if (np > 0 && pi[0].total_blocks > 0)
+	{
+		y += 12;
+		section_label(16, y + 12, "Devices");
+		y += 24;
+		uint64_t bs = pi[0].block_size ? pi[0].block_size : 4096;
+		uint64_t total = pi[0].total_blocks * bs, used = (pi[0].total_blocks - pi[0].free_blocks) * bs;
+		ui_draw_icon_tint(cv, ui_icon_get(16, "drive"), 16, y + 6, COL_TEXT_DIM);
+		text_at(g_font, 40, y + ROW_H / 2, "System", COL_TEXT);
+		char u[24], t[24], meta[56];
+		hsize(used, u, sizeof(u));
+		hsize(total, t, sizeof(t));
+		snprintf(meta, sizeof(meta), "%s / %s", u, t);
+		text_at(
+		    g_font_xs, SIDEBAR_W - 16 - (int)g_font_xs.TextWidth(meta), y + ROW_H / 2, meta, g_t.text_faint);
+		int bx = 40, bw = SIDEBAR_W - 16 - bx, by = y + ROW_H + 2;
+		ui_fill_round(cv, bx, by, bw, 4, 2, g_t.neutral_800);
+		int fw = (int)(used * (uint64_t)bw / total);
+		if (fw > 0)
+			ui_fill_round(cv, bx, by, fw < 4 ? 4 : fw, 4, 2, g_t.accent);
 	}
 }
 
@@ -737,85 +905,67 @@ static void draw_sidebar(void)
  */
 static int sidebar_hit(int x, int y)
 {
-	if (x >= SIDEBAR_W)
+	if (x >= SIDEBAR_W || y < SB_ROW_Y0)
 		return -1;
-	int first = content_top() + 6 + (int)g_font.GetHeight() + 6;
-	if (y < first)
-		return -1;
-	int i = (y - first) / ROW_H;
+	int i = (y - SB_ROW_Y0) / (ROW_H + 2);
 	return (i >= 0 && i < g_nplaces) ? i : -1;
 }
 
+/* Toolbar control rectangles (set by draw_toolbar, used by on_click). */
+static int g_crumb_x0, g_crumb_x1; /* breadcrumb field */
+static int g_search_x, g_search_w; /* search field */
+static int g_view_x;               /* view toggle (72 wide: grid | list) */
+
 /**
- * Draw the navigation toolbar (Back / Forward / Up) and lay out / hit-enable its
- * buttons.  Back/Forward gate on history position, Up on not being at root.
+ * Draw the toolbar (design files.html): Back / Forward / Up icon buttons, the
+ * breadcrumb field, the search field and the grid/list view toggle.  Records
+ * crumb spans in g_crumb for click navigation.
  */
 static void draw_toolbar(void)
 {
-	g_surf.ogFillRect(0, 0, g_w - 1, TOOLBAR_H - 1, COL_TOOLBAR);
-	g_surf.ogHLine(0, g_w - 1, TOOLBAR_H - 1, COL_DIVIDER);
+	ui_canvas cv = files_canvas();
+	ui_fill(cv, 0, 0, g_w, TOOLBAR_H, COL_TOOLBAR);
+	ui_fill(cv, 0, TOOLBAR_H - 1, g_w, 1, COL_DIVIDER);
+	const int cy = TOOLBAR_H / 2, ch = 32, ty = (TOOLBAR_H - ch) / 2;
 
-	bool can_back = (g_hist_pos > 0);
-	bool can_fwd = (g_hist_pos + 1 < g_hist_len);
-
-	int bx = 8;
+	bool en[BTN_COUNT] = {g_hist_pos > 0, g_hist_pos + 1 < g_hist_len, !(g_cwd[0] == '/' && g_cwd[1] == '\0')};
+	int bx = 12;
 	for (int i = 0; i < BTN_COUNT; i++)
 	{
 		g_btn[i].x = bx;
-		g_btn[i].y = 7;
-		g_btn[i].w = (i == BTN_UP) ? 40 : 34;
-		g_btn[i].h = TOOLBAR_H - 14;
-		g_btn[i].label = g_btn_label[i];
-		switch (i)
-		{
-			case BTN_BACK:
-				g_btn[i].enabled = can_back;
-				break;
-			case BTN_FWD:
-				g_btn[i].enabled = can_fwd;
-				break;
-			case BTN_UP:
-				g_btn[i].enabled = !(g_cwd[0] == '/' && g_cwd[1] == '\0');
-				break;
-			default:
-				g_btn[i].enabled = true;
-				break;
-		}
-		g_btn[i].Draw(g_surf, g_font);
-		bx += g_btn[i].w + 6;
+		g_btn[i].y = ty;
+		g_btn[i].w = ch;
+		g_btn[i].h = ch;
+		g_btn[i].enabled = en[i];
+		ui_draw_icon_tint(
+		    cv, ui_icon_get(16, g_btn_icon[i]), bx + 8, ty + 8, en[i] ? COL_TEXT : g_t.text_faint);
+		bx += ch + 4;
 	}
-}
 
-/**
- * Draw the breadcrumb address bar, recording each segment's span + target path
- * in g_crumb for click navigation.
- */
-static void draw_address(void)
-{
-	int ay = TOOLBAR_H;
-	g_surf.ogFillRect(0, ay, g_w - 1, ay + ADDR_H - 1, COL_ADDR);
-	g_surf.ogHLine(0, g_w - 1, ay + ADDR_H - 1, COL_DIVIDER);
+	/* right side first: view toggle, then search */
+	g_view_x = g_w - 12 - 72;
+	g_search_w = 220;
+	g_search_x = g_view_x - 8 - g_search_w;
+	g_crumb_x0 = bx + 4;
+	g_crumb_x1 = g_search_x - 8;
 
+	/* breadcrumb field */
+	ui_fill_round(cv, g_crumb_x0, ty, g_crumb_x1 - g_crumb_x0, ch, UI_R_MD, g_t.surface);
 	g_ncrumb = 0;
-	int x = PAD;
-	int ty = ay + (ADDR_H - (int)g_font.GetHeight()) / 2;
-
-	/* Root crumb. */
-	set_fg(COL_CRUMB);
-	g_font.PutString(g_surf, x, ty, "/");
-	g_crumb[g_ncrumb].x0 = x;
-	g_crumb[g_ncrumb].x1 = x + (int)g_font.TextWidth("/");
-	snprintf(g_crumb[g_ncrumb].path, sizeof(g_crumb[0].path), "/");
-	x = g_crumb[g_ncrumb].x1 + 4;
-	g_ncrumb++;
-
-	/* Walk the path components, accumulating the prefix for each crumb. */
+	int x = g_crumb_x0 + 8;
 	char acc[512] = "";
 	const char *p = g_cwd;
+	/* root crumb */
+	g_crumb[0].x0 = x;
+	text_at(g_font, x + 6, cy, "/", g_cwd[1] ? COL_TEXT_DIM : COL_TEXT);
+	g_crumb[0].x1 = x + 12 + (int)g_font.TextWidth("/");
+	snprintf(g_crumb[0].path, sizeof(g_crumb[0].path), "/");
+	g_ncrumb = 1;
+	x = g_crumb[0].x1;
 	while (*p == '/')
 		p++;
 	char comp[NAME_MAX_LEN];
-	while (*p && g_ncrumb < MAX_CRUMBS)
+	while (*p && g_ncrumb < MAX_CRUMBS && x < g_crumb_x1 - 40)
 	{
 		int j = 0;
 		while (*p && *p != '/' && j < (int)sizeof(comp) - 1)
@@ -825,64 +975,95 @@ static void draw_address(void)
 			p++;
 		if (j == 0)
 			break;
-
 		size_t al = strlen(acc);
 		snprintf(acc + al, sizeof(acc) - al, "/%s", comp);
-
-		set_fg(COL_TEXT_DIM);
-		g_font.PutString(g_surf, x, ty, ">");
-		x += (int)g_font.TextWidth(">") + 4;
-
-		set_fg(COL_CRUMB);
-		g_font.PutString(g_surf, x, ty, comp);
+		ui_draw_icon_tint(cv, ui_icon_get(16, "chevron-right"), x, cy - 8, g_t.text_faint);
+		x += 16 + 2;
+		bool cur = (*p == '\0');
+		text_at(g_font, x + 6, cy, comp, cur ? COL_TEXT : COL_TEXT_DIM);
 		g_crumb[g_ncrumb].x0 = x;
-		g_crumb[g_ncrumb].x1 = x + (int)g_font.TextWidth(comp);
+		g_crumb[g_ncrumb].x1 = x + 12 + (int)g_font.TextWidth(comp);
 		snprintf(g_crumb[g_ncrumb].path, sizeof(g_crumb[0].path), "%s", acc);
-		x = g_crumb[g_ncrumb].x1 + 4;
+		x = g_crumb[g_ncrumb].x1;
 		g_ncrumb++;
+	}
+
+	/* search field */
+	ui_outlined_round(
+	    cv, g_search_x, ty, g_search_w, ch, UI_R_MD, g_search_focus ? g_t.accent : g_t.edge, g_t.ground);
+	if (g_search_focus)
+		ui_focus_ring(cv, g_search_x, ty, g_search_w, ch, UI_R_MD, g_t.accent);
+	ui_draw_icon_tint(cv, ui_icon_get(16, "search"), g_search_x + 12, ty + 8, COL_TEXT_DIM);
+	int sx = g_search_x + 12 + 16 + 8;
+	if (g_query[0])
+		text_at(g_font, sx, cy, g_query, COL_TEXT);
+	else if (!g_search_focus)
+	{
+		const char *base = strrchr(g_cwd, '/');
+		char ph[80];
+		snprintf(ph, sizeof(ph), "Search %s", (base && base[1]) ? base + 1 : "/");
+		text_at(g_font, sx, cy, ph, g_t.text_faint);
+	}
+	if (g_search_focus)
+		ui_fill(cv, sx + (int)g_font.TextWidth(g_query) + 1, cy - 8, 1, 16, g_t.accent_400);
+
+	/* view toggle (segmented: grid | list) */
+	ui_fill_round(cv, g_view_x, ty, 72, ch, 16, g_t.surface);
+	int half = (72 - 6 - 2) / 2;
+	for (int v = 0; v < 2; v++)
+	{
+		int ox = g_view_x + 3 + v * (half + 2);
+		bool sel = (g_view == v);
+		if (sel)
+			ui_outlined_round(cv, ox, ty + 3, half, ch - 6, (ch - 6) / 2, g_t.accent, g_t.accent_900);
+		ui_draw_icon_tint(cv,
+		                  ui_icon_get(16, v == VIEW_GRID ? "grid" : "list"),
+		                  ox + (half - 16) / 2,
+		                  ty + 8,
+		                  sel ? g_t.accent_200 : COL_TEXT_DIM);
 	}
 }
 
 /**
- * Draw one sortable column header label, with an ascending/descending caret when
- * it is the active sort key.  ASCII carets (not Unicode arrows) because the font
- * renderer is byte-indexed, not UTF-8 aware.
+ * Draw one sortable column header label (list view), with an ascending /
+ * descending caret on the active sort key.
  */
 static void draw_head_label(int x, const char *label, int col)
 {
-	set_fg(col == g_sort ? COL_TEXT : COL_TEXT_DIM);
 	char buf[48];
 	if (col == g_sort)
 		snprintf(buf, sizeof(buf), "%s %s", label, g_sort_desc ? "v" : "^");
 	else
 		snprintf(buf, sizeof(buf), "%s", label);
-	g_font.PutString(g_surf, x, TOOLBAR_H + ADDR_H + (HEAD_H - (int)g_font.GetHeight()) / 2, buf);
+	text_at(g_font_sm, x, content_top() + HEAD_H / 2, buf, col == g_sort ? COL_TEXT : COL_TEXT_DIM);
 }
 
 /**
- * Draw the column-header row (Name / Size / Type / Modified).
+ * Draw the column-header row (Name / Size / Type / Modified) — list view.
  */
 static void draw_header(void)
 {
-	int hy = TOOLBAR_H + ADDR_H;
-	g_surf.ogFillRect(content_x(), hy, g_w - 1, hy + HEAD_H - 1, COL_HEAD);
-	g_surf.ogHLine(content_x(), g_w - 1, hy + HEAD_H - 1, COL_DIVIDER);
+	int hy = content_top();
+	ui_canvas cv = files_canvas();
+	ui_fill(cv, content_x(), hy, g_w - content_x(), HEAD_H, COL_WIN);
+	ui_fill(cv, content_x() + PAD, hy + HEAD_H - 1, g_w - content_x() - 2 * PAD, 1, COL_DIVIDER);
 	draw_head_label(name_x(), "Name", SORT_NAME);
-	draw_head_label(col_size_r() - (int)g_font.TextWidth("Size") - 14, "Size", SORT_SIZE);
+	draw_head_label(col_size_r() - (int)g_font_sm.TextWidth("Size") - 14, "Size", SORT_SIZE);
 	draw_head_label(col_type_x(), "Type", SORT_TYPE);
 	draw_head_label(col_mod_x(), "Modified", SORT_MOD);
 }
 
 /**
- * Draw the visible slice of the file list, including row striping, the selection
- * highlight, and the inline rename editor when active.
+ * Draw the visible slice of the list view: 28px rounded rows, the selection,
+ * and the inline rename editor when active.
  */
 static void draw_list(void)
 {
 	int top = list_top();
 	int bottom = g_h - STATUS_H;
 	int cx = content_x();
-	g_surf.ogFillRect(cx, top, g_w - 1, bottom - 1, COL_WIN);
+	ui_canvas cv = files_canvas();
+	ui_fill(cv, cx, top, g_w - cx, bottom - top, COL_WIN);
 
 	int rows = visible_rows();
 	for (int r = 0; r < rows; r++)
@@ -892,51 +1073,39 @@ static void draw_list(void)
 			break;
 		struct fentry *e = &g_ent[i];
 		int y = top + r * ROW_H;
+		int cy = y + ROW_H / 2;
 		bool sel = (i == g_sel);
 
 		if (sel)
-			g_surf.ogFillRect(cx, y, g_w - 1, y + ROW_H - 1, COL_SEL);
-		else if (i & 1)
-			g_surf.ogFillRect(cx, y, g_w - 1, y + ROW_H - 1, COL_ROW_ALT);
+			ui_fill_round(cv, cx + 8, y, g_w - cx - 16, ROW_H, UI_R_MD, COL_SEL);
+		draw_icon(cx + PAD + 4, y + (ROW_H - 16) / 2, e->is_dir);
 
-		draw_icon(cx + PAD, y + (ROW_H - 16) / 2, e->is_dir);
-
-		int ty = y + (ROW_H - (int)g_font.GetHeight()) / 2;
 		uint32_t fg = sel ? COL_SEL_TEXT : COL_TEXT;
 		uint32_t dim = sel ? COL_SEL_TEXT : COL_TEXT_DIM;
 
-		/* Name (inline editor for the row being renamed). */
 		if (g_mode == MODE_RENAME && sel)
 		{
 			int ex = name_x();
-			g_surf.ogFillRect(ex - 2, y + 2, col_size_r() - 16, y + ROW_H - 3, COL_ADDR);
-			g_surf.ogRoundRect(ex - 2, y + 2, col_size_r() - 16, y + ROW_H - 3, 3, COL_SEL);
-			set_fg(COL_TEXT);
+			ui_outlined_round(
+			    cv, ex - 4, y + 3, col_size_r() - 16 - ex, ROW_H - 6, UI_R_SM, g_t.accent, g_t.ground);
 			char shown[NAME_MAX_LEN + 2];
 			snprintf(shown, sizeof(shown), "%s|", g_edit);
-			g_font.PutString(g_surf, ex, ty, shown);
+			text_at(g_font, ex, cy, shown, COL_TEXT);
 		}
 		else
-		{
-			set_fg(fg);
-			g_font.PutString(g_surf, name_x(), ty, e->name);
-		}
+			text_at(g_font, name_x(), cy, e->name, fg);
 
-		/* Size (right-aligned), folders show "--". */
 		char sz[24];
 		if (e->is_dir)
 			snprintf(sz, sizeof(sz), "--");
 		else
 			hsize(e->size, sz, sizeof(sz));
-		set_fg(dim);
-		g_font.PutString(g_surf, col_size_r() - (int)g_font.TextWidth(sz) - 14, ty, sz);
+		text_at(g_font, col_size_r() - (int)g_font.TextWidth(sz) - 14, cy, sz, dim);
 
-		/* Type. */
 		char ty_s[40];
 		type_of(e, ty_s, sizeof(ty_s));
-		g_font.PutString(g_surf, col_type_x(), ty, ty_s);
+		text_at(g_font, col_type_x(), cy, ty_s, dim);
 
-		/* Modified. */
 		if (e->mtime > 0)
 		{
 			time_t t = (time_t)e->mtime;
@@ -952,37 +1121,123 @@ static void draw_list(void)
 				         tmv->tm_mday,
 				         tmv->tm_hour,
 				         tmv->tm_min);
-				g_font.PutString(g_surf, col_mod_x(), ty, mod);
+				text_at(g_font, col_mod_x(), cy, mod, dim);
 			}
 		}
 	}
 }
 
 /**
- * Draw the status bar: item count plus the selected entry's name/size, or a
- * transient action message.
+ * Split a tile label into at most two lines that fit width w (the second
+ * line ellipsised).
+ */
+static void tile_lines(const char *name, int w, char *l1, size_t n1, char *l2, size_t n2)
+{
+	l1[0] = l2[0] = '\0';
+	size_t len = strlen(name), cut = len;
+	while (cut > 0)
+	{
+		char t[NAME_MAX_LEN];
+		snprintf(t, sizeof(t), "%.*s", (int)cut, name);
+		if ((int)g_font_sm.TextWidth(t) <= w)
+			break;
+		cut--;
+	}
+	snprintf(l1, n1, "%.*s", (int)cut, name);
+	if (cut < len)
+	{
+		/* second line: the rest, trimmed with "..." if needed */
+		const char *rest = name + cut;
+		snprintf(l2, n2, "%s", rest);
+		while (strlen(l2) > 1 && (int)g_font_sm.TextWidth(l2) > w)
+		{
+			size_t k = strlen(l2);
+			l2[k - 1] = '\0';
+			if (k >= 4)
+				memcpy(l2 + k - 4, "...", 4);
+		}
+	}
+}
+
+/**
+ * Draw the grid view: 112x100 tiles, a 48px file-type icon over a two-line
+ * label; the selection in the accent tint with an accent-700 outline.
+ */
+static void draw_grid(void)
+{
+	int top = content_top();
+	int bottom = g_h - STATUS_H;
+	int cx = content_x();
+	ui_canvas cv = files_canvas();
+	ui_fill(cv, cx, top, g_w - cx, bottom - top, COL_WIN);
+
+	int cols = grid_cols(), rows = grid_rows();
+	for (int r = 0; r <= rows; r++)
+		for (int c = 0; c < cols; c++)
+		{
+			int i = (g_top + r) * cols + c;
+			if (i >= g_nent)
+				return;
+			int x = cx + GRID_PX + c * (TILE_W + TILE_GAP), y = top + GRID_PY + r * TILE_H;
+			if (y + TILE_H > bottom)
+				return;
+			struct fentry *e = &g_ent[i];
+			bool sel = (i == g_sel);
+			if (sel)
+				ui_outlined_round(cv, x, y, TILE_W, TILE_H, UI_R_MD, g_t.accent_700, g_t.accent_900);
+			ui_draw_icon(cv, ui_icon_get(48, file_icon48(e)), x + (TILE_W - 48) / 2, y + 12);
+			char l1[NAME_MAX_LEN], l2[NAME_MAX_LEN];
+			tile_lines(e->name, TILE_W - 8, l1, sizeof(l1), l2, sizeof(l2));
+			uint32_t fg = sel ? COL_SEL_TEXT : COL_TEXT;
+			if (g_mode == MODE_RENAME && sel)
+			{
+				char shown[NAME_MAX_LEN + 2];
+				snprintf(shown, sizeof(shown), "%s|", g_edit);
+				ui_outlined_round(cv, x + 2, y + 66, TILE_W - 4, 20, UI_R_SM, g_t.accent, g_t.ground);
+				ui_text_c(g_surf, g_font_sm, x + TILE_W / 2, y + 76, shown, COL_TEXT);
+				continue;
+			}
+			ui_text_c(g_surf, g_font_sm, x + TILE_W / 2, y + 12 + 48 + 8 + 7, l1, fg);
+			if (l2[0])
+				ui_text_c(g_surf, g_font_sm, x + TILE_W / 2, y + 12 + 48 + 8 + 7 + 14, l2, fg);
+		}
+}
+
+/**
+ * Draw the status bar (design: 24px, 11px faint text): item count (or a
+ * transient message), the selection with its size, free space on the right.
  */
 static void draw_status(void)
 {
 	int sy = g_h - STATUS_H;
-	g_surf.ogFillRect(0, sy, g_w - 1, g_h - 1, COL_TOOLBAR);
-	g_surf.ogHLine(0, g_w - 1, sy, COL_DIVIDER);
-	set_fg(COL_TEXT_DIM);
-	int ty = sy + (STATUS_H - (int)g_font.GetHeight()) / 2;
-	g_font.PutString(g_surf, PAD, ty, g_status);
+	ui_canvas cv = files_canvas();
+	ui_fill(cv, 0, sy, g_w, STATUS_H, COL_TOOLBAR);
+	ui_fill(cv, 0, sy, g_w, 1, COL_DIVIDER);
+	int cy = sy + STATUS_H / 2;
+	text_at(g_font_sm, 12, cy, g_status, g_t.text_faint);
+	int x = 12 + (int)g_font_sm.TextWidth(g_status) + 24;
 
 	if (g_sel >= 0 && g_sel < g_nent)
 	{
-		char right[80];
+		char right[NAME_MAX_LEN + 48];
 		if (g_ent[g_sel].is_dir)
-			snprintf(right, sizeof(right), "%s", g_ent[g_sel].name);
+			snprintf(right, sizeof(right), "\"%s\" selected", g_ent[g_sel].name);
 		else
 		{
 			char sz[24];
 			hsize(g_ent[g_sel].size, sz, sizeof(sz));
-			snprintf(right, sizeof(right), "%s  -  %s", g_ent[g_sel].name, sz);
+			snprintf(right, sizeof(right), "\"%s\" selected \xB7 %s", g_ent[g_sel].name, sz);
 		}
-		g_font.PutString(g_surf, g_w - PAD - (int)g_font.TextWidth(right), ty, right);
+		text_at(g_font_sm, x, cy, right, g_t.text_faint);
+	}
+
+	struct ubix_pool_info pi[2];
+	if (ubix_pool_query(pi, 2) > 0 && pi[0].total_blocks > 0)
+	{
+		char fs[24], msg[40];
+		hsize(pi[0].free_blocks * (uint64_t)(pi[0].block_size ? pi[0].block_size : 4096), fs, sizeof(fs));
+		snprintf(msg, sizeof(msg), "%s free", fs);
+		text_at(g_font_sm, g_w - 16 - (int)g_font_sm.TextWidth(msg), cy, msg, g_t.text_faint);
 	}
 }
 
@@ -1144,10 +1399,14 @@ static void flip(void)
 static void render(void)
 {
 	g_surf.ogClear(COL_WIN);
-	draw_list();
+	if (g_view == VIEW_GRID)
+		draw_grid();
+	else
+	{
+		draw_list();
+		draw_header();
+	}
 	draw_sidebar();
-	draw_header();
-	draw_address();
 	draw_toolbar();
 	draw_status();
 	if (g_ctx_open)
@@ -1177,11 +1436,13 @@ static void ensure_visible(void)
 {
 	if (g_sel < 0)
 		return;
-	int rows = visible_rows();
-	if (g_sel < g_top)
-		g_top = g_sel;
-	else if (g_sel >= g_top + rows)
-		g_top = g_sel - rows + 1;
+	/* g_top counts list rows, or grid rows of tiles in the grid view */
+	int line = (g_view == VIEW_GRID) ? g_sel / grid_cols() : g_sel;
+	int rows = (g_view == VIEW_GRID) ? grid_rows() : visible_rows();
+	if (line < g_top)
+		g_top = line;
+	else if (line >= g_top + rows)
+		g_top = line - rows + 1;
 	if (g_top < 0)
 		g_top = 0;
 }
@@ -1225,9 +1486,11 @@ static void on_click(int x, int y)
 		return;
 	}
 
-	/* Toolbar (navigation only). */
+	/* Toolbar: navigation buttons, breadcrumb, search, view toggle. */
 	if (y < TOOLBAR_H)
 	{
+		bool was_search = g_search_focus;
+		g_search_focus = false;
 		if (g_btn[BTN_BACK].Hit(x, y) && g_hist_pos > 0)
 			navigate(g_hist[--g_hist_pos], false);
 		else if (g_btn[BTN_FWD].Hit(x, y) && g_hist_pos + 1 < g_hist_len)
@@ -1238,25 +1501,34 @@ static void on_click(int x, int y)
 			parent_of(g_cwd, up, sizeof(up));
 			navigate(up, true);
 		}
+		else if (x >= g_search_x && x < g_search_x + g_search_w)
+			g_search_focus = true;
+		else if (x >= g_view_x && x < g_view_x + 72)
+		{
+			int v = (x < g_view_x + 36) ? VIEW_GRID : VIEW_LIST;
+			if (v != g_view)
+			{
+				g_view = v;
+				g_top = 0;
+			}
+		}
+		else if (x >= g_crumb_x0 && x < g_crumb_x1)
+		{
+			for (int i = 0; i < g_ncrumb; i++)
+				if (x >= g_crumb[i].x0 && x < g_crumb[i].x1)
+				{
+					navigate(g_crumb[i].path, true);
+					break;
+				}
+		}
+		(void)was_search;
 		render();
 		return;
 	}
-
-	/* Breadcrumb bar. */
-	if (y >= TOOLBAR_H && y < TOOLBAR_H + ADDR_H)
-	{
-		for (int i = 0; i < g_ncrumb; i++)
-			if (x >= g_crumb[i].x0 - 2 && x <= g_crumb[i].x1 + 2)
-			{
-				navigate(g_crumb[i].path, true);
-				render();
-				return;
-			}
-		return;
-	}
+	g_search_focus = false;
 
 	/* Sidebar place → jump there. */
-	if (x < SIDEBAR_W && y >= content_top())
+	if (x < SIDEBAR_W)
 	{
 		int p = sidebar_hit(x, y);
 		if (p >= 0)
@@ -1265,8 +1537,8 @@ static void on_click(int x, int y)
 		return;
 	}
 
-	/* Column header → sort. */
-	if (y >= TOOLBAR_H + ADDR_H && y < list_top())
+	/* List view: column header → sort. */
+	if (g_view == VIEW_LIST && y >= content_top() && y < list_top())
 	{
 		int col;
 		if (x >= col_mod_x())
@@ -1289,12 +1561,19 @@ static void on_click(int x, int y)
 		return;
 	}
 
-	/* List row. */
-	if (y >= list_top() && y < g_h - STATUS_H)
+	/* Content: a grid tile or a list row (double-click opens). */
+	if (y >= content_top() && y < g_h - STATUS_H)
 	{
-		int r = (y - list_top()) / ROW_H;
-		int i = g_top + r;
-		if (i < 0 || i >= g_nent)
+		int i = -1;
+		if (g_view == VIEW_GRID)
+			i = grid_hit(x, y);
+		else if (y >= list_top())
+		{
+			i = g_top + (y - list_top()) / ROW_H;
+			if (i >= g_nent)
+				i = -1;
+		}
+		if (i < 0)
 		{
 			g_sel = -1;
 			render();
@@ -1373,6 +1652,63 @@ static void on_key(uint32_t kc)
 			g_edit[g_editlen++] = (char)kc;
 			g_edit[g_editlen] = '\0';
 		}
+		render();
+		return;
+	}
+
+	/* Search field: typing filters the current folder live. */
+	if (g_search_focus)
+	{
+		size_t ql = strlen(g_query);
+		if (kc == KEY_ESC)
+		{
+			if (ql)
+				g_query[0] = '\0';
+			else
+				g_search_focus = false;
+			read_dir();
+		}
+		else if (kc == '\r' || kc == '\n')
+			g_search_focus = false;
+		else if (kc == '\b' || kc == 0x7F)
+		{
+			if (ql)
+				g_query[ql - 1] = '\0';
+			read_dir();
+		}
+		else if (kc >= 0x20 && kc < 0x7F && ql < sizeof(g_query) - 1)
+		{
+			g_query[ql] = (char)kc;
+			g_query[ql + 1] = '\0';
+			read_dir();
+		}
+		else if (kc != KEY_UP && kc != KEY_DOWN && kc != KEY_LEFT && kc != KEY_RIGHT)
+		{
+			render();
+			return;
+		}
+		else
+			goto browse; /* arrows still move the selection */
+		render();
+		return;
+	}
+
+browse:
+	/* Grid view: arrows move by tile / by row. */
+	if (g_view == VIEW_GRID && (kc == KEY_LEFT || kc == KEY_RIGHT || kc == KEY_UP || kc == KEY_DOWN))
+	{
+		int step = (kc == KEY_LEFT) ? -1 : (kc == KEY_RIGHT) ? 1 : (kc == KEY_UP) ? -grid_cols() : grid_cols();
+		if (g_sel < 0)
+			g_sel = 0;
+		else if (g_sel + step >= 0 && g_sel + step < g_nent)
+			g_sel += step;
+		ensure_visible();
+		render();
+		return;
+	}
+	if (kc == '/')
+	{
+		g_search_focus = true; /* "/" jumps to the search field */
 		render();
 		return;
 	}
@@ -1476,6 +1812,8 @@ static void on_key(uint32_t kc)
  */
 int main(int argc, char **argv)
 {
+	g_t = ui_theme_load(getenv("USER"));
+	ui_style_buttons(g_t);
 	mpi_createMbox((char *)g_mbox);
 
 	/* Pick a starting directory: an absolute path argument, else the session
@@ -1525,7 +1863,9 @@ int main(int argc, char **argv)
 	g_h = ack->h;
 	if (!g_surf.ogAttach(ack->shm_base, (uint32_t)g_w, (uint32_t)g_h, OG_PIXFMT_32BPP))
 		return 1;
-	if (!g_font.Load(FONT_PATH, 13))
+	g_font_sm.Load(FONT_PATH, 13);   /* 11px */
+	g_font_xs.Load(FONT_PATH, 12);   /* 10px */
+	if (!g_font.Load(FONT_PATH, 14)) /* 12px */
 		return 1;
 
 	build_places();

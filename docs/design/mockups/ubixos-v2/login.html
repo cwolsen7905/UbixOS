@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>uBixOS — Login</title>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="ui.css">
+<style>
+  .login-scrim { position: absolute; left: 0; top: 0; width: 1280px; height: 800px; background: var(--c-scrim-login); }
+
+  .login-clock { position: absolute; left: 96px; top: 88px; }
+  .login-time  { font-size: var(--fs-56); line-height: 64px; color: var(--c-neutral-100); }
+  .login-date  { margin-top: var(--s-1); font-size: var(--fs-16); color: var(--c-neutral-300); }
+
+  .login-card {
+    position: absolute; left: 96px; top: 272px; width: 360px; height: 252px;
+    padding: var(--s-5);
+    background: var(--c-panel);
+    border: 1px solid var(--c-edge-strong);
+    border-radius: var(--r-xl);
+    box-shadow: var(--shadow-panel);
+  }
+  /* accent hairline on the card, same treatment as an active title bar */
+  .login-card::before {
+    content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px;
+    background: linear-gradient(90deg, rgba(145,132,217,0) 0, var(--c-accent) 48px, var(--c-accent) 312px, rgba(145,132,217,0) 360px);
+  }
+  .login-user { display: flex; align-items: center; gap: var(--s-3); }
+  .avatar {
+    width: 48px; height: 48px; border-radius: 24px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--c-accent-900); border: 1px solid var(--c-accent);
+    color: var(--c-accent-200); font-size: var(--fs-20); font-weight: var(--fw-bold);
+  }
+  .login-name { font-size: var(--fs-20); line-height: 24px; }
+  .login-role { color: var(--c-text-muted); font-size: var(--fs-11); }
+
+  .login-form { margin-top: var(--s-5); display: flex; flex-direction: column; gap: var(--s-3); }
+  .login-label { font-size: var(--fs-11); color: var(--c-text-muted); }
+  .password-dots { flex: 1; letter-spacing: 3px; color: var(--c-text); }
+  .login-actions { margin-top: var(--s-2); display: flex; align-items: center; gap: var(--s-3); }
+  .login-actions .segmented { width: 184px; }
+  .login-actions .btn-primary { flex: 1; }
+  .login-other { margin-top: var(--s-4); color: var(--c-text-muted); font-size: var(--fs-11); }
+
+  .login-footer { position: absolute; left: 96px; right: 96px; top: 728px; height: 32px; display: flex; align-items: center; gap: var(--s-2); }
+  .login-brand { display: flex; align-items: center; gap: var(--s-2); font-weight: var(--fw-bold); }
+  .login-host { margin-left: var(--s-2); color: var(--c-text-muted); }
+</style>
+</head>
+<body>
+<div class="screen">
+  <img class="wallpaper" src="assets/wallpaper-1280x800.png" width="1280" height="800" alt="">
+  <div class="login-scrim"></div>
+
+  <div class="login-clock">
+    <div class="login-time">21:41</div>
+    <div class="login-date">Friday, 9 October</div>
+  </div>
+
+  <div class="login-card">
+    <div class="login-user">
+      <div class="avatar">U</div>
+      <div>
+        <div class="login-name">ubix</div>
+        <div class="login-role">Administrator</div>
+      </div>
+    </div>
+
+    <div class="login-form">
+      <span class="login-label">Password</span>
+      <div class="field is-focused">
+        <img src="assets/icons/16/lock.svg" width="16" height="16" alt="">
+        <span class="password-dots">••••••••</span><span class="field-caret"></span>
+        <img src="assets/icons/16/eye.svg" width="16" height="16" alt="">
+      </div>
+      <div class="login-actions">
+        <div class="segmented">
+          <span class="segmented-option is-selected"><img src="assets/icons/16/monitor.svg" width="16" height="16" alt="">Desktop</span>
+          <span class="segmented-option"><img src="assets/icons/16/terminal.svg" width="16" height="16" alt="">Console</span>
+        </div>
+        <span class="btn btn-primary">Sign in <img src="assets/icons/16/arrow-right.svg" width="16" height="16" alt=""></span>
+      </div>
+    </div>
+    <div class="login-other">Other user…</div>
+  </div>
+
+  <div class="login-footer">
+    <span class="login-brand"><img src="assets/icons/24/ubix-mark.svg" width="24" height="24" alt="">uBixOS</span>
+    <span class="login-host">pi.local · tty7</span>
+    <span class="taskbar-spacer"></span>
+    <span class="tray-item"><img src="assets/icons/16/keyboard.svg" width="16" height="16" alt="">EN</span>
+    <span class="tray-item"><img src="assets/icons/16/wifi.svg" width="16" height="16" alt=""></span>
+    <span class="btn btn-icon"><img src="assets/icons/16/restart.svg" width="16" height="16" alt="Restart"></span>
+    <span class="btn btn-icon"><img src="assets/icons/16/power.svg" width="16" height="16" alt="Shut down"></span>
+  </div>
+</div>
+</body>
+</html>

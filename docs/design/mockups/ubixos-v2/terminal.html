@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>uBixOS — Terminal</title>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="ui.css">
+<style>
+  .terminal-window { left: 120px; top: 48px; width: 1040px; height: 656px; background: var(--c-console); }
+
+  /* Tabs live in the title bar */
+  .term-tabs { flex: 1; min-width: 0; height: 32px; display: flex; align-items: center; gap: var(--s-1); }
+  .term-tab {
+    height: 24px; width: 200px; padding: 0 var(--s-2);
+    display: flex; align-items: center; gap: var(--s-2);
+    border-radius: var(--r-md); color: var(--c-text-muted);
+    font: var(--fs-11) var(--font-mono);
+  }
+  .term-tab-label { flex: 1; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+  .term-tab.is-active { background: var(--c-console); color: var(--c-text); border: 1px solid var(--c-edge); }
+  .term-tab.is-hover { background: var(--c-raised); }
+  .term-tab-dot { width: 6px; height: 6px; border-radius: 3px; background: var(--ansi-2); }  /* running process */
+  .term-tab-close { opacity: var(--opacity-inactive-glyph); }
+
+  .term-body {
+    position: relative; flex: 1;
+    padding: var(--s-3) var(--s-4);
+    font: var(--fs-13)/var(--lh-term) var(--font-mono);
+    color: var(--term-fg);
+    white-space: pre;
+    overflow: hidden;
+  }
+  .term-statusbar { background: var(--c-console); font-family: var(--font-mono); }
+
+  /* ANSI roles */
+  .fg-0 { color: var(--ansi-0); } .fg-1 { color: var(--ansi-1); } .fg-2 { color: var(--ansi-2); } .fg-3 { color: var(--ansi-3); }
+  .fg-4 { color: var(--ansi-4); } .fg-5 { color: var(--ansi-5); } .fg-6 { color: var(--ansi-6); } .fg-7 { color: var(--ansi-7); }
+  .fg-8 { color: var(--ansi-8); } .bold { font-weight: var(--fw-bold); }
+  .selection { background: var(--c-selection-text); }
+  .cursor { display: inline-block; width: 8px; height: 16px; vertical-align: -3px; background: var(--term-cursor); }
+  .swatch { display: inline-block; width: 24px; height: 12px; vertical-align: -1px; }
+  .term-scrollbar { right: 4px; top: 8px; height: 576px; }
+  .term-scrollbar .scrollbar-thumb { top: 420px; height: 156px; }
+</style>
+</head>
+<body>
+<div class="screen">
+  <img class="wallpaper" src="assets/wallpaper-1280x800.png" width="1280" height="800" alt="">
+
+  <div class="window terminal-window">
+    <div class="titlebar titlebar-active">
+      <img class="titlebar-icon" src="assets/icons/16/app-terminal.svg" width="16" height="16" alt="">
+      <div class="term-tabs">
+        <div class="term-tab is-active"><span class="term-tab-dot"></span><span class="term-tab-label">~/src/ubix</span><img class="term-tab-close" src="assets/icons/16/win-close.svg" width="16" height="16" alt=""></div>
+        <div class="term-tab"><span class="term-tab-label">tail -f /var/log/views</span></div>
+        <span class="btn btn-icon" style="width:24px;height:24px"><img src="assets/icons/16/plus.svg" width="16" height="16" alt="New tab"></span>
+      </div>
+      <div class="window-controls">
+        <span class="winbtn"><img src="assets/icons/16/win-pin.svg" width="16" height="16" alt="Keep on top"></span>
+        <span class="window-controls-divider"></span>
+        <span class="winbtn"><img src="assets/icons/16/win-minimize.svg" width="16" height="16" alt="Minimize"></span>
+        <span class="winbtn"><img src="assets/icons/16/win-maximize.svg" width="16" height="16" alt="Maximize"></span>
+        <span class="winbtn winbtn-close"><img src="assets/icons/16/win-close.svg" width="16" height="16" alt="Close"></span>
+      </div>
+    </div>
+
+<div class="term-body"><span class="fg-8">Last login: Fri Oct  9 21:12 on tty1</span>
+
+<span class="fg-2 bold">ubix@pi</span> <span class="fg-4">~</span> <span class="fg-8">$</span> ubixfetch
+<span class="fg-5">      .-""-.  </span><span class="fg-6">o</span>      <span class="fg-2 bold">ubix</span>@<span class="fg-2 bold">pi</span>
+<span class="fg-5">     /      \</span>        <span class="fg-8">--------------------------------</span>
+<span class="fg-5">    |        |</span>       <span class="fg-6">OS</span>        uBixOS aarch64
+<span class="fg-5">    |        |</span>       <span class="fg-6">Host</span>      Raspberry Pi 4 Model B
+<span class="fg-5">     \      /</span>        <span class="fg-6">Uptime</span>    2 h 14 min
+<span class="fg-5">      '-..-'</span>         <span class="fg-6">Display</span>   1280×800 · objGFX
+                     <span class="fg-6">WM</span>        views
+                     <span class="fg-6">Memory</span>    412 MiB / 3.8 GiB
+                     <span class="swatch" style="background:var(--ansi-0)"></span><span class="swatch" style="background:var(--ansi-1)"></span><span class="swatch" style="background:var(--ansi-2)"></span><span class="swatch" style="background:var(--ansi-3)"></span><span class="swatch" style="background:var(--ansi-4)"></span><span class="swatch" style="background:var(--ansi-5)"></span><span class="swatch" style="background:var(--ansi-6)"></span><span class="swatch" style="background:var(--ansi-7)"></span>
+
+<span class="fg-2 bold">ubix@pi</span> <span class="fg-4">~</span> <span class="fg-8">$</span> cd src/ubix &amp;&amp; ls
+<span class="fg-4 bold">docs/  kernel/  objgfx/  tools/  views/</span>  Makefile  README.md
+<span class="fg-2 bold">ubix@pi</span> <span class="fg-4">~/src/ubix</span> <span class="fg-8">$</span> make -j4 views
+  <span class="fg-6">CC</span>   views/compositor.cpp
+  <span class="fg-6">CC</span>   views/titlebar.cpp
+  <span class="fg-6">CC</span>   views/taskbar.cpp
+  <span class="fg-3">WARN</span> views/taskbar.cpp:212: unused variable 'pad'
+  <span class="fg-6">LD</span>   build/views
+  <span class="fg-2 bold">OK</span>   build/views  <span class="fg-8">(1.84 MiB, 6.2 s)</span>
+<span class="fg-2 bold">ubix@pi</span> <span class="fg-4">~/src/ubix</span> <span class="fg-8">$</span> git status -s
+ <span class="fg-1">M</span> views/taskbar.cpp
+ <span class="fg-1">M</span> <span class="selection">views/theme.h</span>
+<span class="fg-8">??</span> assets/wallpaper-1280x800.png
+<span class="fg-2 bold">ubix@pi</span> <span class="fg-4">~/src/ubix</span> <span class="fg-8">$</span> <span class="cursor"></span>
+<div class="scrollbar scrollbar-track term-scrollbar"><div class="scrollbar-thumb"></div></div></div>
+
+    <div class="statusbar term-statusbar">
+      <span>sh</span><span>127×31</span><span>UTF-8</span>
+      <span class="taskbar-spacer"></span>
+      <span>pid 412</span>
+    </div>
+  </div>
+
+  <div class="taskbar">
+    <div class="launcher-button"><img src="assets/icons/24/ubix-mark.svg" width="24" height="24" alt="">uBix</div>
+    <div class="taskbar-divider"></div>
+    <div class="task-item is-active"><span class="task-item-indicator"></span><img src="assets/icons/16/app-terminal.svg" width="16" height="16" alt=""><span class="task-item-label">Terminal — ~/src/ubix</span></div>
+    <div class="task-item"><span class="task-item-indicator"></span><img src="assets/icons/16/app-files.svg" width="16" height="16" alt=""><span class="task-item-label">Files — Documents</span></div>
+    <div class="taskbar-spacer"></div>
+    <div class="tray">
+      <div class="tray-item"><img src="assets/icons/16/terminal.svg" width="16" height="16" alt=""></div>
+      <div class="tray-item"><img src="assets/icons/16/wifi.svg" width="16" height="16" alt=""></div>
+      <div class="tray-item"><img src="assets/icons/16/volume.svg" width="16" height="16" alt=""><span>62%</span></div>
+      <div class="clock"><span class="clock-date">Fri 9 Oct</span><span class="clock-time">21:41</span></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

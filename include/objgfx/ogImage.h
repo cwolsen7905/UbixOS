@@ -83,6 +83,10 @@ class ogImage
 	bool Load(const char *filename, ogSurface &surface);
 	bool Save(const char *filename, ogSurface &surface, ogImageType imageType, ogImageOptions *options = 0);
 
+	/* Decode a PNG keeping its alpha: returns a malloc'd w*h array of packed
+	 * 0xAARRGGBB (straight, not premultiplied), or nullptr.  Caller free()s. */
+	static uInt32 *LoadRGBA(const char *filename, int *w, int *h);
+
       private:
 	bool DecodeBMP(int fd, ogSurface &surface);
 	bool DecodePNG(int fd, ogSurface &surface);

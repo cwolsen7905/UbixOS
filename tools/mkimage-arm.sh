@@ -19,8 +19,10 @@ BUILD=${2:-build/aarch64}
 # fallback root that keeps the desktop bootable while the raw-pool root beds in.
 FAT_SIZE_MB=48      # FAT32 partition (type 0x0C) — fallback root (full world)
 SWAP_SIZE_MB=16     # raw swap partition (type 0x82) — parity; unused on aarch64
-POOL_SIZE_MB=96     # UbixFS pool partition (type 0x9C) — the raw root /
-POOL_FS_MB=88       # pool filesystem size inside that partition
+# The pool is the root filesystem; override for room to self-host, e.g.
+# POOL_SIZE_MB=1200 bmake image-arm (a native clang + lld alone is ~100 MB).
+POOL_SIZE_MB=${POOL_SIZE_MB:-96}             # UbixFS pool partition (type 0x9C) — the raw root /
+POOL_FS_MB=${POOL_FS_MB:-$((POOL_SIZE_MB - 8))} # pool filesystem size inside that partition
 SIZE_MB=$(( 1 + FAT_SIZE_MB + SWAP_SIZE_MB + POOL_SIZE_MB + 4 ))
 
 # Image profile (docs/design/console-and-arch-convergence-plan.md Phase 4):
@@ -192,7 +194,47 @@ if [ -d contrib/netsurf-res ]; then
 	echo "mkimage-arm: installed NetSurf resources (/usr/local/share/netsurf)"
 fi
 
+# UI icons (ubixos-v2 design), pre-rendered PNGs from share/icons/src via
+# tools/mkicons.sh -> /usr/share/icons/<size>/.  The pool-root mirror below
+# carries them into UbixFS with the rest of /usr.
+mmd -i "${IMG}@@1M" ::/usr ::/usr/share ::/usr/share/icons 2>/dev/null || true
+for _s in share/icons/*/; do
+	_s=$(basename "${_s}")
+	[ "${_s}" = src ] && continue
+	mmd -i "${IMG}@@1M" "::/usr/share/icons/${_s}" 2>/dev/null || true
+	mcopy -o -i "${IMG}@@1M" share/icons/"${_s}"/*.png "::/usr/share/icons/${_s}/"
+done
+echo "mkimage-arm: installed UI icons (/usr/share/icons)"
+
 fi # end desktop-profile assets
+
+# --- C toolchain (TCC) ---------------------------------------------------------
+# tcc (bin/tcc, upstream tinycc on aarch64) compiles C inside uBixOS: it needs
+# musl's headers in /usr/include, the crt startup objects in /usr/lib, and its
+# own runtime (libtcc1.a + compiler headers) in /lib/tcc.  libc.so is already
+# in /lib.  /usr/share/examples/hello.c is a smoke test:
+#   tcc -run /usr/share/examples/hello.c
+if [ -f "${BUILD}/bin/tcc" ] && [ -f "${BUILD}/lib/tcc/libtcc1.a" ]; then
+	_inc=$(mktemp -d -t ubixinc)
+	mkdir -p "${_inc}/bits"
+	# musl install-headers order: generic bits, then arch bits, then the
+	# generated ones (alltypes.h, syscall.h) win, then the public headers.
+	cp contrib/musl/arch/generic/bits/*.h "${_inc}/bits/"
+	cp contrib/musl/arch/aarch64/bits/*.h "${_inc}/bits/"
+	cp "${BUILD}/obj/musl/obj/include/bits/"*.h "${_inc}/bits/"
+	cp -R contrib/musl/include/. "${_inc}/"
+	mmd -i "${IMG}@@1M" ::/usr ::/usr/include ::/usr/lib ::/usr/share ::/usr/share/examples ::/lib/tcc 2>/dev/null || true
+	mcopy -s -o -i "${IMG}@@1M" "${_inc}/"* ::/usr/include/
+	rm -rf "${_inc}"
+	for _o in crt1.o crti.o crtn.o Scrt1.o; do
+		mcopy -o -i "${IMG}@@1M" "${BUILD}/obj/musl/lib/${_o}" "::/usr/lib/${_o}"
+	done
+	mcopy -s -o -i "${IMG}@@1M" "${BUILD}/lib/tcc/"* ::/lib/tcc/
+	printf '#include <stdio.h>\n\nint main(void)\n{\n\tprintf("Hello from tcc on uBixOS!\\n");\n\treturn 0;\n}\n' >/tmp/ubix_hello.c
+	mcopy -o -i "${IMG}@@1M" /tmp/ubix_hello.c ::/usr/share/examples/hello.c
+	rm -f /tmp/ubix_hello.c
+	echo "mkimage-arm: installed tcc toolchain (/usr/include, /usr/lib crt, /lib/tcc)"
+fi
 
 # UbixFS pool (plan K2/K3): stage a small file-backed (loopback) pool as
 # /pool.img, which the kernel mounts read-write at /pool.  Built with the host
@@ -232,6 +274,8 @@ if [ -x "${UBFS:-}" ] && [ -n "${POOL_LBA:-}" ]; then
 	for _d in "${MIRROR}"/*; do
 		[ -d "${_d}" ] && "${UBFS}" cpr "${_d}" "${WPOOL}:/$(basename "${_d}")" >/dev/null 2>&1
 	done
+	# Scratch space: compilers (tcc, clang) and mkstemp() expect /tmp.
+	"${UBFS}" mkdir "${WPOOL}" /tmp >/dev/null 2>&1 || true
 	_mib=$(du -m "${MIRROR}" 2>/dev/null | tail -1 | cut -f1)
 	dd if="${WPOOL}" of="${IMG}" bs=512 seek="${POOL_LBA}" conv=notrunc 2>/dev/null
 	rm -rf "${WPOOL}" "${MIRROR}"

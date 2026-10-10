@@ -27,6 +27,7 @@
  */
 
 #include <algorithm>
+#include <deque>
 #include <string>
 #include <vector>
 #include <cstdio>
@@ -40,88 +41,58 @@
 #include <objgfx/objgfx.h>
 #include <objgfx/ogScalableFont.h>
 #include <objgfx/ogPixelFmt.h>
+#include <objgfx/ogImage.h>
+#include <views/theme.h>
+#include <views/uidraw.h>
+#include <views/appicons.h>
+#include <api/power.h>
+#include <api/netcfg.h>
 #include <ubistry/ubistry.h>
 #include <audio/aural_proto.h>
 
 extern char **environ; /* inherited session env, forwarded to launched apps */
 
 #define FONT_PATH "/var/fonts/DejaVuSans.ttf"
-#define FONT_SIZE 14
+#define FONT_BOLD_PATH "/var/fonts/DejaVuSans-Bold.ttf"
+#define FONT_SIZE 14       /* line height for 12px UI text (views/theme.h UI_FS_UI) */
+#define FONT_SMALL_SIZE 13 /* 11px secondary text: volume % */
+#define FONT_CLOCK_SIZE 15 /* 12.5px tray clock (date + time, same size) */
 
-/* Taskbar geometry */
-#define TB_H 32
-#define BTN_W 104   /* start button: hamburger icon + "uBixOS" */
-#define CLOCK_W 160 /* fits "MM/DD  HH:MM:SS" */
-#define WIN_BTN_W 96
-#define TRAY_W 34 /* system-tray area (volume) left of the clock */
+/* Taskbar geometry (ubixos-v2): a floating rounded bar UI_TASKBAR_INSET px off
+ * the bottom/side edges.  The claimed strip is TB_H rows: the bar plus its
+ * inset below and an equal band above for the bar's soft shadow.  Menus and
+ * flyouts open flush above the strip (= 8px above the bar). */
+#define TB_H UI_TASKBAR_RESERVE
+#define BAR_X UI_TASKBAR_INSET
+#define BAR_Y (TB_H - UI_TASKBAR_INSET - UI_TASKBAR_H)
+#define BAR_H UI_TASKBAR_H
+#define ITEM_H 32 /* launcher pill, task items, tray items */
+#define ITEM_Y (BAR_Y + (BAR_H - ITEM_H) / 2)
+#define TASK_W 180 /* running-window item */
 
-/* Start-menu geometry (a Menu sizes its height to its item count). */
-#define MENU_W 180
-#define MENU_ITEM_H 28
-#define MENU_MAX_ITEMS 16
-#define MENU_FOOTER_H 32 /* user + power row at the bottom of the start menu */
+/* Volume pop-over geometry (design: 280px card above the tray). */
+#define MX_W 280     /* panel width */
+#define MX_PAD 16    /* panel padding */
+#define MX_ROW 32    /* per-app row height */
+#define MX_NAME_W 96 /* per-app name column */
+#define MX_MX 12     /* window margin left/right of the panel (shadow room) */
+#define MX_MT 10     /* ... above */
+#define MX_MB 16     /* ... below */
 
-/* Mixer flyout geometry: a titled card with one vertical slider per column
- * (master + each live app).  Tuned for a calm, modern pop-over: a thin rounded
- * track, a circular knob, and generous breathing room. */
-#define FLY_PAD 16       /* card inset from the window edge          */
-#define MIX_HEADER_H 24  /* "Volume" title band                      */
-#define MIX_COL_W 58     /* per-slider column width                  */
-#define MIX_TRACK_W 5    /* slider groove width (rounded)            */
-#define MIX_TRACK_TOP 60 /* y of the track top (header + value row)  */
-#define MIX_TRACK_H 110  /* slider travel                            */
-#define MIX_KNOB_R 8     /* knob radius                              */
-#define MIX_LABEL_GAP 12 /* gap from track bottom to the name label  */
-
-/* Colours: (r<<16)|(g<<8)|b.  All but white are derived from the per-user accent
- * colour (views/theme/accent) by apply_theme(); defaults are slate-derived to
- * match the compositor's calm default title-bar accent (0x333C4C). */
-static uint32_t TB_BG = 0x0028303Cu;      /* taskbar fill (slightly darker than title bars) */
-static uint32_t TB_BTN_N = 0x00333C4Cu;   /* window-button fill (= title-bar slate) */
-static uint32_t TB_BTN_P = 0x00424E62u;   /* pressed / active accent (lighter slate) */
-static uint32_t TB_SEP = 0x00191E26u;     /* top hairline / separators */
-static uint32_t FLY_BG_C = 0x002D3644u;   /* start-menu panel fill */
-static uint32_t FLY_ITEM_C = 0x00424E62u; /* start-menu item highlight */
-static const uint32_t COL_WHITE = 0x00FFFFFFu;
+/* System palette (views/theme.h) for the session user: light/dark mode and
+ * accent.  Everything the taskbar draws (bar, launcher, volume pop-over,
+ * power page) takes its colours from here. */
+static struct ui_theme g_t = ui_theme_dark;
+static bool g_clock24 = false; /* /views/clock/24h for the session user */
 
 /**
- * Scale a packed 0xRRGGBB colour's brightness by num/den (clamped to 0xFF).
- */
-static uint32_t scale_color(uint32_t c, int num, int den)
-{
-	int r = (int)((c >> 16) & 0xFF) * num / den;
-	int g = (int)((c >> 8) & 0xFF) * num / den;
-	int b = (int)(c & 0xFF) * num / den;
-	if (r > 255)
-		r = 255;
-	if (g > 255)
-		g = 255;
-	if (b > 255)
-		b = 255;
-	return ((uint32_t)r << 16) | ((uint32_t)g << 8) | (uint32_t)b;
-}
-
-/**
- * Re-derive the taskbar palette from the session user's accent colour.  Called
- * at startup and whenever a DISPLAY_THEME message arrives.
+ * Re-resolve the palette for the session user ($USER).  Called at startup and
+ * whenever a DISPLAY_THEME message arrives (mode or accent changed).
  */
 static void apply_theme(void)
 {
-	const char *user = getenv("USER");
-	int accent;
-
-	if (ubistry_get_for_int((user && user[0]) ? user : nullptr, "views/theme/accent", &accent) != 0)
-		return; /* keep current palette if the key is missing */
-
-	/* Derived so the window-button fill equals the title-bar accent (a) and the
-	 * bar sits a touch darker — matching the compositor's chrome. */
-	uint32_t a = (uint32_t)accent & 0x00FFFFFFu;
-	TB_BG = scale_color(a, 8, 10);
-	TB_SEP = scale_color(a, 5, 10);
-	TB_BTN_N = scale_color(a, 10, 10);
-	TB_BTN_P = scale_color(a, 13, 10);
-	FLY_BG_C = scale_color(a, 9, 10);
-	FLY_ITEM_C = scale_color(a, 13, 10);
+	g_t = ui_theme_load(getenv("USER"));
+	g_clock24 = ui_clock_24h(getenv("USER"));
 }
 
 /* ------------------------------------------------------------------ */
@@ -131,11 +102,6 @@ static void apply_theme(void)
 static void font_fg(ogScalableFont &f, uint32_t c)
 {
 	f.SetFGColor((c >> 16) & 0xFF, (c >> 8) & 0xFF, c & 0xFF, 255);
-}
-
-static void font_bg(ogScalableFont &f, uint32_t c)
-{
-	f.SetBGColor((c >> 16) & 0xFF, (c >> 8) & 0xFF, c & 0xFF, 255);
 }
 
 /* ------------------------------------------------------------------ */
@@ -171,20 +137,51 @@ static void load_timezone(void)
 	g_tz_loaded = true;
 }
 
-/* Format "MM/DD  HH:MM:SS" (local time, DST-aware) into buf (needs >= 16 bytes). */
-static void get_datetime_str(char *buf)
+/* Format the tray clock: date "Fri, Oct 9" and time "8:57 PM" / "20:57". */
+static void get_clock_strs(char *date, size_t dn, char *tm_s, size_t tn)
 {
+	static const char *const wd[] = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
+	static const char *const mo[] = {
+	    "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
 	if (!g_tz_loaded)
 		load_timezone();
 	time_t t = (time_t)gettime();
 	struct tm *lt = localtime(&t);
 	if (lt == nullptr)
 	{
-		buf[0] = '\0';
+		date[0] = tm_s[0] = '\0';
 		return;
 	}
-	snprintf(
-	    buf, 16, "%02d/%02d  %02d:%02d:%02d", lt->tm_mon + 1, lt->tm_mday, lt->tm_hour, lt->tm_min, lt->tm_sec);
+	snprintf(date, dn, "%s, %s %d", wd[lt->tm_wday % 7], mo[lt->tm_mon % 12], lt->tm_mday);
+	ui_format_time(tm_s, tn, lt, g_clock24);
+}
+
+/* ------------------------------------------------------------------ */
+/* Reply matching                                                       */
+/* ------------------------------------------------------------------ */
+
+/* Messages that arrived while waiting for a specific reply (a window grant,
+ * screen info); main() handles them, in order, before reading the mailbox. */
+static std::deque<mpi_message_t> g_deferred;
+
+/**
+ * Wait for a reply whose header is want_a or want_b, setting aside anything
+ * else (input, window notifications, theme changes) for the main loop instead
+ * of mistaking it for the reply or dropping it.
+ */
+static void await_reply(ubix::Mailbox &mbox, mpi_message_t &reply, uint32_t want_a, uint32_t want_b)
+{
+	for (;;)
+	{
+		if (!mbox.try_fetch(reply))
+		{
+			ubix::yield();
+			continue;
+		}
+		if (reply.header == want_a || reply.header == want_b)
+			return;
+		g_deferred.push_back(reply);
+	}
 }
 
 /* ------------------------------------------------------------------ */
@@ -286,267 +283,13 @@ class Launcher
 };
 
 /* ------------------------------------------------------------------ */
-/* Menu — a pop-up loaded from the registry.  An entry is a leaf (an    */
-/*        exec action) or a submenu (has an items/ container).          */
+/* MenuItem — one launchable entry (label + exec action).              */
 /* ------------------------------------------------------------------ */
 
 struct MenuItem
 {
 	std::string label;
-	std::string exec; /* leaf action: a program path, or "@builtin" */
-	std::string path; /* registry path of this entry (for submenus) */
-	bool submenu = false;
-};
-
-class Menu
-{
-	ogSurface surf_;
-	uint32_t win_id_ = 0;
-	bool open_ = false;
-	bool footer_ = false; /* show the user + power row (start menu only) */
-	int x_ = 0, y_ = 0, w_ = 0, h_ = 0;
-	int hover_item_ = -1; /* item under the cursor (highlight) */
-	int active_row_ = -1; /* row whose submenu is open (stays highlighted) */
-	std::vector<MenuItem> items_;
-
-	void draw(ogScalableFont &font)
-	{
-		/* Flat panel: items render straight on the panel fill (no per-item raised
-		 * boxes) for a modern pop-over look.  A 1px accent strip down the left
-		 * edge gives the menu a bit of identity.  The hovered item — and the row
-		 * whose submenu is open — get a highlight fill. */
-		surf_.ogFillRect(0, 0, w_ - 1, h_ - 1, FLY_BG_C);
-		surf_.ogFillRect(0, 0, 2, h_ - 1, FLY_ITEM_C);
-		for (int i = 0; i < (int)items_.size(); i++)
-		{
-			int top = i * MENU_ITEM_H;
-			int ty = top + (MENU_ITEM_H - FONT_SIZE) / 2;
-			bool hl = (i == hover_item_ || i == active_row_);
-			uint32_t bg = hl ? FLY_ITEM_C : FLY_BG_C;
-			if (hl)
-				surf_.ogFillRect(2, top, w_ - 1, top + MENU_ITEM_H - 1, FLY_ITEM_C);
-			font_fg(font, COL_WHITE);
-			font_bg(font, bg);
-			font.PutString(surf_, 14, ty, items_[i].label.c_str());
-			if (items_[i].submenu)
-				font.PutString(surf_, w_ - 16, ty, ">");
-		}
-		if (footer_)
-			draw_footer(font);
-	}
-
-	/* Bottom row: the logged-in user on the left, a power button on the right. */
-	void draw_footer(ogScalableFont &font)
-	{
-		int ftop = (int)items_.size() * MENU_ITEM_H;
-		int fcy = ftop + MENU_FOOTER_H / 2;
-
-		surf_.ogFillRect(8, ftop, w_ - 9, ftop, FLY_ITEM_C); /* separator */
-
-		const char *user = getenv("USER");
-		font_fg(font, 0x00C8C8D2u);
-		font_bg(font, FLY_BG_C);
-		font.PutString(surf_, 14, fcy - FONT_SIZE / 2, (user && user[0]) ? user : "user");
-
-		/* Power glyph: a ring with a vertical line breaking its top. */
-		int pcx = w_ - 18, pcy = fcy;
-		surf_.ogCircle(pcx, pcy, 7, 0x00FF6E6Eu);
-		surf_.ogFillRect(pcx - 1, pcy - 10, pcx + 1, pcy - 4, FLY_BG_C);
-		surf_.ogVLine(pcx, pcy - 9, pcy - 1, 0x00FF6E6Eu);
-	}
-
-	void load_fallback()
-	{
-		items_.clear();
-		items_.push_back({"Terminal", "/bin/term", "", false});
-		items_.push_back({"About", "@about", "", false});
-		items_.push_back({"Log Out", "@logout", "", false});
-	}
-
-      public:
-	bool is_open() const
-	{
-		return open_;
-	}
-	uint32_t win_id() const
-	{
-		return win_id_;
-	}
-	int count() const
-	{
-		return (int)items_.size();
-	}
-	int x() const
-	{
-		return x_;
-	}
-	int y() const
-	{
-		return y_;
-	}
-	int w() const
-	{
-		return w_;
-	}
-	const MenuItem *item(int i) const
-	{
-		return (i >= 0 && i < (int)items_.size()) ? &items_[i] : nullptr;
-	}
-
-	int hit_item(int y) const
-	{
-		if (!open_)
-			return -1;
-		int i = y / MENU_ITEM_H;
-		return (i >= 0 && i < (int)items_.size()) ? i : -1;
-	}
-
-	/* Show the user + power footer row (start menu only). */
-	void set_footer(bool on)
-	{
-		footer_ = on;
-	}
-
-	/* Update the hovered item (negative y / out-of-range clears it).  Returns
-	 * true if it changed (caller should redraw). */
-	bool set_hover(int item)
-	{
-		if (item == hover_item_)
-			return false;
-		hover_item_ = item;
-		return true;
-	}
-
-	/* Mark a row as "active" (its submenu is open) so it stays highlighted. */
-	void set_active_row(int row)
-	{
-		active_row_ = row;
-	}
-
-	/* Repaint and flip (used on hover changes). */
-	void redraw(ogScalableFont &font)
-	{
-		if (!open_)
-			return;
-		draw(font);
-		send_flip_msg(win_id_);
-	}
-
-	/* Total height including the footer when enabled. */
-	int height() const
-	{
-		return (int)items_.size() * MENU_ITEM_H + (footer_ ? MENU_FOOTER_H : 0);
-	}
-
-	/* True if (x,y) hits the footer's power button. */
-	bool footer_power_hit(int x, int y) const
-	{
-		if (!open_ || !footer_)
-			return false;
-		int ftop = (int)items_.size() * MENU_ITEM_H;
-		return (y >= ftop && y < ftop + MENU_FOOTER_H && x >= w_ - 32);
-	}
-
-	/* Populate from a registry container; fall back to a built-in menu if the
-	 * registry is unavailable or empty so the desktop is never broken. */
-	void load(const char *regpath)
-	{
-		char names[UB_NAMES_MAX];
-		int n = ubistry_enum(regpath, names, sizeof(names));
-
-		items_.clear();
-		if (n <= 0)
-		{
-			load_fallback();
-			return;
-		}
-
-		std::string ns(names);
-		size_t start = 0;
-		while (start < ns.size() && (int)items_.size() < MENU_MAX_ITEMS)
-		{
-			size_t nl = ns.find('\n', start);
-			std::string child = ns.substr(start, nl == std::string::npos ? std::string::npos : nl - start);
-			start = (nl == std::string::npos) ? ns.size() : nl + 1;
-			if (child.empty())
-				continue;
-
-			MenuItem it;
-			it.path = std::string(regpath) + "/" + child;
-
-			char buf[128];
-			if (ubistry_get_str((it.path + "/label").c_str(), buf, sizeof(buf)) == 0)
-				it.label = buf;
-			else
-				it.label = child;
-
-			char scratch[UB_NAMES_MAX];
-			it.submenu = (ubistry_enum((it.path + "/items").c_str(), scratch, sizeof(scratch)) >= 0);
-			if (!it.submenu && ubistry_get_str((it.path + "/exec").c_str(), buf, sizeof(buf)) == 0)
-				it.exec = buf;
-
-			items_.push_back(it);
-		}
-		if (items_.empty())
-			load_fallback();
-	}
-
-	void show(int x, int y, ubix::Mailbox &mbox, ogScalableFont &font)
-	{
-		if (open_ || items_.empty())
-			return;
-
-		w_ = MENU_W;
-		h_ = height();
-		x_ = x < 0 ? 0 : x;
-		y_ = y < 0 ? 0 : y;
-
-		mpi_message_t claim = {};
-		struct display_claim_req *creq = (struct display_claim_req *)claim.data;
-		claim.header = DISPLAY_CLAIM;
-		creq->x = x_;
-		creq->y = y_;
-		creq->w = w_;
-		creq->h = h_;
-		creq->sender_pid = ubix::pid();
-		creq->no_decor = 1;
-		creq->wants_motion = 1; /* receive hover motion for highlighting */
-		std::strncpy(creq->title, "menu", sizeof(creq->title) - 1);
-		creq->title[sizeof(creq->title) - 1] = '\0';
-		std::strncpy(creq->reply, "taskbar", sizeof(creq->reply) - 1);
-		creq->reply[sizeof(creq->reply) - 1] = '\0';
-		ubix::post_message("views", DISPLAY_CLAIM, claim);
-
-		mpi_message_t reply;
-		while (!mbox.try_fetch(reply))
-			ubix::yield();
-		if (reply.header != DISPLAY_ACK)
-			return;
-
-		struct display_ack *da = (struct display_ack *)reply.data;
-		win_id_ = da->window_id;
-		surf_.ogAttach(da->shm_base, (uint32_t)w_, (uint32_t)h_, OG_PIXFMT_32BPP);
-		open_ = true;
-		draw(font);
-		send_flip_msg(win_id_);
-	}
-
-	void hide()
-	{
-		if (!open_)
-			return;
-
-		mpi_message_t msg = {};
-		struct display_release *rel = (struct display_release *)msg.data;
-		msg.header = DISPLAY_RELEASE;
-		rel->window_id = win_id_;
-		ubix::post_message("views", DISPLAY_RELEASE, msg);
-
-		open_ = false;
-		win_id_ = 0;
-		hover_item_ = -1;
-		active_row_ = -1;
-	}
+	std::string exec; /* a program path (with args), or "@builtin" */
 };
 
 /* ------------------------------------------------------------------ */
@@ -590,20 +333,21 @@ class MixerFlyout
 	uint32_t win_id_ = 0;
 	bool open_ = false;
 	int x_ = 0, y_ = 0, w_ = 0, h_ = 0;
-	int active_col_ = -1; /* column under a held button (0 = master, 1.. = app) */
-	int hover_col_ = -1;  /* column under the cursor (knob highlight)            */
+	int active_col_ = -1; /* row under a held button (0 = master, 1.. = app) */
+	int hover_col_ = -1;  /* row under the cursor (knob highlight)            */
+	ui_canvas cv_;        /* window pixels (translucent: shape + shadow in alpha) */
 
 	int master_vol_ = 100;
 	bool master_mute_ = false;
 	struct aural_list_reply data_ = {}; /* live streams (from AURAL_LIST) */
 
-	/* Master column plus one per live stream. */
+	/* Master row plus one per live stream. */
 	int columns() const
 	{
 		return 1 + (int)data_.count;
 	}
 
-	/* Display level 0..100 for column @p c (0 = master). */
+	/* Display level 0..100 for row @p c (0 = master). */
 	int col_level(int c) const
 	{
 		if (c == 0)
@@ -615,106 +359,115 @@ class MixerFlyout
 
 	const char *col_name(int c) const
 	{
-		return (c == 0) ? "Master" : data_.streams[c - 1].name;
+		return (c == 0) ? "Volume" : data_.streams[c - 1].name;
 	}
 
-	/* Column under x (flyout-relative), or -1 outside any slider column. */
-	int col_at(int x) const
+	/* Row geometry (window-local): the panel sits at (MX_MX, MX_MT). */
+	int row_y(int c) const
 	{
-		if (x < FLY_PAD)
+		return MX_MT + MX_PAD + (c == 0 ? 0 : 24 + 12 + 16 + (c - 1) * MX_ROW);
+	}
+	int row_h(int c) const
+	{
+		return c == 0 ? 24 : MX_ROW;
+	}
+	int track_x0(int c) const
+	{
+		return MX_MX + MX_PAD + (c == 0 ? 24 + 12 : MX_NAME_W);
+	}
+	int track_x1() const
+	{
+		return MX_MX + MX_W - MX_PAD - 40 - 14; /* room for "100%" + the knob */
+	}
+
+	/* Row under (x, y), or -1. */
+	int col_at(int x, int y) const
+	{
+		if (x < MX_MX || x >= MX_MX + MX_W)
 			return -1;
-		int c = (x - FLY_PAD) / MIX_COL_W;
-		return (c >= 0 && c < columns()) ? c : -1;
+		for (int c = 0; c < columns(); c++)
+			if (y >= row_y(c) - 4 && y < row_y(c) + row_h(c) + 4)
+				return c;
+		return -1;
 	}
 
-	/* Map a flyout-relative y onto a 0..100 slider level (clamped to track). */
-	static int level_at(int y)
+	/* Map a window-local x onto row c's 0..100 level (clamped to its track). */
+	int level_at(int c, int x) const
 	{
-		int top = MIX_TRACK_TOP, bot = MIX_TRACK_TOP + MIX_TRACK_H;
-		if (y <= top)
-			return 100;
-		if (y >= bot)
+		int x0 = track_x0(c), x1 = track_x1();
+		if (x <= x0)
 			return 0;
-		return (bot - y) * 100 / MIX_TRACK_H;
+		if (x >= x1)
+			return 100;
+		return (x - x0) * 100 / (x1 - x0);
 	}
 
+	/* Text centred on row cy, blended over the surface. */
+	void text(ogScalableFont &f, int x, int cy, const char *str, uint32_t fg)
+	{
+		ui_text(surf_, f, x, cy, str, fg);
+	}
+
+	/* One horizontal slider row (design: 2px track, accent fill, 14px knob). */
 	void draw_slider(ogScalableFont &font, int c)
 	{
-		int x0 = FLY_PAD + c * MIX_COL_W;
-		int cx = x0 + MIX_COL_W / 2;
-		int top = MIX_TRACK_TOP, bot = MIX_TRACK_TOP + MIX_TRACK_H;
+		const ui_theme &t = g_t;
+		int y = row_y(c), cy = y + row_h(c) / 2;
+		int x0 = track_x0(c), x1 = track_x1();
 		int lvl = col_level(c);
-		int kn_y = bot - lvl * MIX_TRACK_H / 100;
-		bool master = (c == 0);
 		bool lit = (c == active_col_ || c == hover_col_);
-		int hw = MIX_TRACK_W / 2;
 
-		uint32_t panel = FLY_BG_C;
-		uint32_t groove = ogSurface::ogBlendColor(panel, 0x00000000u, 96);
-		/* Filled portion: master in a brighter accent, apps in the calmer one. */
-		uint32_t fill = master ? ogSurface::ogBlendColor(FLY_ITEM_C, COL_WHITE, 80) : FLY_ITEM_C;
-		if (lit)
-			fill = ogSurface::ogBlendColor(fill, COL_WHITE, 48);
+		if (c == 0)
+			ui_draw_icon_tint(cv_,
+			                  ui_icon_get(24, master_mute_ ? "volume-mute" : "volume"),
+			                  MX_MX + MX_PAD,
+			                  y,
+			                  t.text_muted);
+		else
+		{
+			char nm[24];
+			fit_label(font, nm, sizeof(nm), col_name(c), MX_NAME_W - 12);
+			text(font, MX_MX + MX_PAD, cy, nm, t.text);
+		}
 
-		/* Rounded groove, then the filled portion from the knob to the bottom. */
-		surf_.ogFillRoundRect(cx - hw, top, cx + hw, bot, hw, groove);
-		if (kn_y < bot - 1)
-			surf_.ogFillRoundRect(cx - hw, kn_y, cx + hw, bot, hw, fill);
+		int kx = x0 + lvl * (x1 - x0) / 100;
+		ui_fill_round(cv_, x0, cy - 1, x1 - x0, 2, 1, t.neutral_800);
+		if (kx > x0)
+			ui_fill_round(cv_, x0, cy - 1, kx - x0, 2, 1, t.accent);
+		int kr = lit ? 8 : 7;
+		ui_fill_round(cv_, kx - kr, cy - kr, 2 * kr, 2 * kr, kr, t.accent);
+		ui_fill_round(cv_, kx - kr + 2, cy - kr + 2, 2 * kr - 4, 2 * kr - 4, kr - 2, 0xE4E7F5u);
 
-		/* Knob: a white disc with a thin ring and an accent pip; grows when lit. */
-		int r = MIX_KNOB_R + (lit ? 1 : 0);
-		surf_.ogFillCircle(cx, kn_y, r, COL_WHITE);
-		surf_.ogCircle(cx, kn_y, r, ogSurface::ogBlendColor(panel, 0x00000000u, 70));
-		surf_.ogFillCircle(cx, kn_y, r - 4, fill);
-
-		/* Name below the track: trimmed to the column width, then centred under it. */
-		char nm[24];
-		fit_label(font, nm, sizeof(nm), col_name(c), MIX_COL_W - 6);
-		int nx = x0 + (MIX_COL_W - (int)font.TextWidth(nm)) / 2;
-		font_fg(font, master ? ogSurface::ogBlendColor(panel, COL_WHITE, 230) : 0x00AEB6C2u);
-		font_bg(font, panel);
-		font.PutString(surf_, nx, bot + MIX_LABEL_GAP, nm);
-
-		/* Persistent level under the name (centred, quiet secondary tone). */
 		char pct[8];
 		std::snprintf(pct, sizeof(pct), "%d%%", lvl);
-		int px = x0 + (MIX_COL_W - (int)font.TextWidth(pct)) / 2;
-		font_fg(font, ogSurface::ogBlendColor(panel, COL_WHITE, 140));
-		font.PutString(surf_, px, bot + MIX_LABEL_GAP + FONT_SIZE + 3, pct);
+		text(font, MX_MX + MX_W - MX_PAD - (int)font.TextWidth(pct), cy, pct, t.text_muted);
 	}
 
 	void draw(ogScalableFont &font)
 	{
-		/* Card: a 1px darker frame around a rounded inner fill reads as a floating
-		 * panel (the compositor already lays a soft drop shadow around the window;
-		 * the window itself is opaque + rectangular, so true rounded outer corners
-		 * are not possible — this fakes the card edge instead). */
-		uint32_t panel = FLY_BG_C;
-		uint32_t edge = ogSurface::ogBlendColor(panel, 0x00000000u, 80);
-		surf_.ogFillRect(0, 0, w_ - 1, h_ - 1, edge);
-		surf_.ogFillRoundRect(1, 1, w_ - 2, h_ - 2, 10, panel);
-
-		/* Header: a quiet title with a hairline rule under it.  Per-slider values
-		 * live persistently under each knob, so the header never reflows. */
-		int hy = (MIX_HEADER_H - FONT_SIZE) / 2 + 8;
-		font_fg(font, ogSurface::ogBlendColor(panel, COL_WHITE, 215));
-		font_bg(font, panel);
-		font.PutString(surf_, FLY_PAD, hy, "Volume");
-		surf_.ogHLine(
-		    FLY_PAD, w_ - 1 - FLY_PAD, MIX_HEADER_H + 8, ogSurface::ogBlendColor(panel, COL_WHITE, 30));
-
-		/* A faint divider sets the master column apart from the app columns. */
+		const ui_theme &t = g_t;
+		ui_fill(cv_, 0, 0, w_, h_, t.panel);
 		if (columns() > 1)
 		{
-			int sx = FLY_PAD + MIX_COL_W;
-			surf_.ogVLine(sx,
-			              MIX_TRACK_TOP - 10,
-			              MIX_TRACK_TOP + MIX_TRACK_H + 10,
-			              ogSurface::ogBlendColor(panel, COL_WHITE, 24));
+			int ly = row_y(0) + 24 + 12;
+			ui_fill(
+			    cv_, MX_MX + MX_PAD, ly - 6, MX_W - 2 * MX_PAD, 1, ui_mix(t.panel, t.divider, t.divider_a));
+			ui_text(surf_, font, MX_MX + MX_PAD, ly + 8, "Apps", t.text_faint);
 		}
-
 		for (int c = 0; c < columns(); c++)
 			draw_slider(font, c);
+		ui_alpha_shape(cv_,
+		               MX_MX,
+		               MX_MT,
+		               MX_W,
+		               h_ - MX_MT - MX_MB,
+		               UI_R_XL,
+		               t.panel_a,
+		               t.edge_strong,
+		               t.shadow_panel_y,
+		               t.shadow_panel_reach,
+		               t.shadow_panel_a,
+		               t.shadow);
 	}
 
 	/* Push a column's new level to aural (master -> codec, app -> stream gain). */
@@ -806,6 +559,16 @@ class MixerFlyout
 		return win_id_;
 	}
 
+	/* Current master level / mute as shown in the pop-over. */
+	int master() const
+	{
+		return master_vol_;
+	}
+	bool master_muted() const
+	{
+		return master_mute_;
+	}
+
 	/* Seed the master mirror from the taskbar's ubistry cache before showing. */
 	void set_master(int vol, bool mute)
 	{
@@ -821,13 +584,14 @@ class MixerFlyout
 			return;
 		query_aural();
 
-		w_ = FLY_PAD * 2 + columns() * MIX_COL_W;
-		/* track + name line + value line + bottom padding */
-		h_ = MIX_TRACK_TOP + MIX_TRACK_H + MIX_LABEL_GAP + 2 * FONT_SIZE + 14;
-		x_ = anchor_right - w_;
+		/* Panel: master row, then (if any app streams) an "Apps" list. */
+		int ph = MX_PAD + 24 + (columns() > 1 ? 12 + 16 + (columns() - 1) * MX_ROW : 0) + MX_PAD;
+		w_ = MX_MX + MX_W + MX_MX;
+		h_ = MX_MT + ph + MX_MB;
+		x_ = anchor_right - MX_W - MX_MX;
 		if (x_ < 0)
 			x_ = 0;
-		y_ = screen_h - TB_H - h_;
+		y_ = screen_h - TB_H - ph - MX_MT;
 		if (y_ < 0)
 			y_ = 0;
 
@@ -841,6 +605,7 @@ class MixerFlyout
 		creq->sender_pid = ubix::pid();
 		creq->no_decor = 1;
 		creq->wants_motion = 1; /* receive drag motion while a button is held */
+		creq->translucent = 1;
 		std::strncpy(creq->title, "mixer", sizeof(creq->title) - 1);
 		creq->title[sizeof(creq->title) - 1] = '\0';
 		std::strncpy(creq->reply, "taskbar", sizeof(creq->reply) - 1);
@@ -848,14 +613,17 @@ class MixerFlyout
 		ubix::post_message("views", DISPLAY_CLAIM, claim);
 
 		mpi_message_t reply;
-		while (!mbox.try_fetch(reply))
-			ubix::yield();
+		await_reply(mbox, reply, DISPLAY_ACK, DISPLAY_DENIED);
 		if (reply.header != DISPLAY_ACK)
 			return;
 
 		struct display_ack *da = (struct display_ack *)reply.data;
 		win_id_ = da->window_id;
 		surf_.ogAttach(da->shm_base, (uint32_t)w_, (uint32_t)h_, OG_PIXFMT_32BPP);
+		cv_.px = (uint32_t *)surf_.ogGetPtr(0, 0);
+		cv_.w = w_;
+		cv_.h = h_;
+		cv_.stride = (int)((uint8_t *)surf_.ogGetPtr(0, 1) - (uint8_t *)surf_.ogGetPtr(0, 0)) / 4;
 		open_ = true;
 		active_col_ = -1;
 		hover_col_ = -1;
@@ -891,7 +659,7 @@ class MixerFlyout
 		if (!down)
 		{
 			active_col_ = -1;
-			int hc = (me->x < 0) ? -1 : col_at(me->x);
+			int hc = (me->x < 0) ? -1 : col_at(me->x, me->y);
 			if (hc != hover_col_)
 			{
 				hover_col_ = hc;
@@ -902,13 +670,206 @@ class MixerFlyout
 		}
 
 		if (active_col_ < 0)
-			active_col_ = col_at(me->x); /* lock the column on press */
+			active_col_ = col_at(me->x, me->y); /* lock the row on press */
 		if (active_col_ < 0)
 			return;
 
 		hover_col_ = active_col_;
-		apply_level(active_col_, level_at(me->y));
+		apply_level(active_col_, level_at(active_col_, me->x));
 		draw(font);
+		send_flip_msg(win_id_);
+	}
+};
+
+/* ------------------------------------------------------------------ */
+/* CalendarPanel — the clock's pop-over: big time, long date and the    */
+/*   current month (Monday-first), today ringed in the accent.          */
+/* ------------------------------------------------------------------ */
+
+#define CAL_W 340 /* panel width (design: 340, 32px padding) */
+#define CAL_PAD 28
+#define CAL_CELL 36
+
+/**
+ * Monday-first column (0..6) of the 1st of lt's month.
+ */
+static int cal_first_col(const struct tm &lt)
+{
+	return (lt.tm_wday - (lt.tm_mday - 1) % 7 + 7 + 6) % 7;
+}
+
+/**
+ * Days in month mon (0..11) of year y (full year).
+ */
+static int cal_days(int mon, int y)
+{
+	static const int mdays[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+	bool leap = (y % 4 == 0 && y % 100 != 0) || y % 400 == 0;
+	return mdays[mon % 12] + (mon == 1 && leap);
+}
+
+class CalendarPanel
+{
+	ogSurface surf_;
+	ui_canvas cv_;
+	ogScalableFont big_; /* 32px time */
+	ogScalableFont *font_ = nullptr;
+	ogScalableFont *small_ = nullptr;
+	uint32_t win_id_ = 0;
+	bool open_ = false;
+	int w_ = 0, h_ = 0, ph_ = 0;
+
+	void draw()
+	{
+		static const char *const wd[] = {
+		    "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+		static const char *const mo[] = {"January",
+		                                 "February",
+		                                 "March",
+		                                 "April",
+		                                 "May",
+		                                 "June",
+		                                 "July",
+		                                 "August",
+		                                 "September",
+		                                 "October",
+		                                 "November",
+		                                 "December"};
+		static const char *const dow[] = {"Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"};
+		const ui_theme &t = g_t;
+		ui_fill(cv_, 0, 0, w_, h_, t.panel);
+
+		time_t now = (time_t)gettime();
+		struct tm lt = *localtime(&now);
+		int x = MX_MX + CAL_PAD, y = MX_MT + CAL_PAD;
+		char buf[48];
+		ui_format_time(buf, sizeof(buf), &lt, g_clock24);
+		ui_text(surf_, big_, x, y + 18, buf, t.text);
+		std::snprintf(buf,
+		              sizeof(buf),
+		              "%s, %s %d, %d",
+		              wd[lt.tm_wday % 7],
+		              mo[lt.tm_mon % 12],
+		              lt.tm_mday,
+		              lt.tm_year + 1900);
+		ui_text(surf_, *font_, x, y + 46, buf, t.neutral_400);
+		std::snprintf(buf, sizeof(buf), "%s %d", mo[lt.tm_mon % 12], lt.tm_year + 1900);
+		ui_text(surf_, *font_, x, y + 84, buf, t.text);
+
+		/* Weekday labels, then the month grid (other months' days dimmed). */
+		int gy = y + 108, cw = (CAL_W - 2 * CAL_PAD) / 7;
+		for (int i = 0; i < 7; i++)
+			ui_text_c(surf_, *small_, x + i * cw + cw / 2, gy + 8, dow[i], t.text_faint);
+		gy += 24;
+		int off = cal_first_col(lt);
+		int dim = cal_days(lt.tm_mon, lt.tm_year + 1900);
+		int pdim = cal_days((lt.tm_mon + 11) % 12, lt.tm_year + 1900);
+		int cells = ((off + dim + 6) / 7) * 7;
+		for (int i = 0; i < cells; i++)
+		{
+			int d = i - off + 1;
+			bool in = d >= 1 && d <= dim;
+			int n = in ? d : (d < 1 ? pdim + d : d - dim);
+			int cx = x + (i % 7) * cw + cw / 2, cy = gy + (i / 7) * CAL_CELL + CAL_CELL / 2;
+			bool today = in && d == lt.tm_mday;
+			if (today)
+				ui_outlined_round(cv_, cx - 16, cy - 16, 32, 32, 16, t.accent, t.accent_800);
+			std::snprintf(buf, sizeof(buf), "%d", n);
+			ui_text_c(surf_, *font_, cx, cy, buf, today ? t.accent_200 : (in ? t.text : t.neutral_700));
+		}
+
+		ui_alpha_shape(cv_,
+		               MX_MX,
+		               MX_MT,
+		               CAL_W,
+		               ph_,
+		               UI_R_XL,
+		               t.panel_a,
+		               t.edge_strong,
+		               t.shadow_panel_y,
+		               t.shadow_panel_reach,
+		               t.shadow_panel_a,
+		               t.shadow);
+	}
+
+      public:
+	void init(ogScalableFont *font, ogScalableFont *small)
+	{
+		font_ = font;
+		small_ = small;
+		big_.Load(FONT_PATH, 37); /* 32px */
+	}
+	bool is_open() const
+	{
+		return open_;
+	}
+	uint32_t win_id() const
+	{
+		return win_id_;
+	}
+
+	/* Open right-aligned to anchor_right, just above the taskbar strip. */
+	void show(int anchor_right, int screen_h, ubix::Mailbox &mbox)
+	{
+		if (open_)
+			return;
+		time_t now = (time_t)gettime();
+		struct tm lt = *localtime(&now);
+		int rows = (cal_first_col(lt) + cal_days(lt.tm_mon, lt.tm_year + 1900) + 6) / 7;
+		ph_ = CAL_PAD + 108 + 24 + rows * CAL_CELL + CAL_PAD - 8;
+		w_ = MX_MX + CAL_W + MX_MX;
+		h_ = MX_MT + ph_ + MX_MB;
+		int x = anchor_right - CAL_W - MX_MX, y = screen_h - TB_H - ph_ - MX_MT;
+
+		mpi_message_t claim = {};
+		struct display_claim_req *creq = (struct display_claim_req *)claim.data;
+		claim.header = DISPLAY_CLAIM;
+		creq->x = x < 0 ? 0 : x;
+		creq->y = y < 0 ? 0 : y;
+		creq->w = w_;
+		creq->h = h_;
+		creq->sender_pid = ubix::pid();
+		creq->no_decor = 1;
+		creq->translucent = 1;
+		std::strncpy(creq->title, "calendar", sizeof(creq->title) - 1);
+		std::strncpy(creq->reply, "taskbar", sizeof(creq->reply) - 1);
+		ubix::post_message("views", DISPLAY_CLAIM, claim);
+
+		mpi_message_t reply;
+		await_reply(mbox, reply, DISPLAY_ACK, DISPLAY_DENIED);
+		if (reply.header != DISPLAY_ACK)
+			return;
+		struct display_ack *da = (struct display_ack *)reply.data;
+		win_id_ = da->window_id;
+		surf_.ogAttach(da->shm_base, (uint32_t)w_, (uint32_t)h_, OG_PIXFMT_32BPP);
+		cv_.px = (uint32_t *)surf_.ogGetPtr(0, 0);
+		cv_.w = w_;
+		cv_.h = h_;
+		cv_.stride = (int)((uint8_t *)surf_.ogGetPtr(0, 1) - (uint8_t *)surf_.ogGetPtr(0, 0)) / 4;
+		open_ = true;
+		draw();
+		send_flip_msg(win_id_);
+	}
+
+	void hide()
+	{
+		if (!open_)
+			return;
+		mpi_message_t msg = {};
+		struct display_release *rel = (struct display_release *)msg.data;
+		msg.header = DISPLAY_RELEASE;
+		rel->window_id = win_id_;
+		ubix::post_message("views", DISPLAY_RELEASE, msg);
+		open_ = false;
+		win_id_ = 0;
+	}
+
+	/* Repaint (the minute changed). */
+	void refresh()
+	{
+		if (!open_)
+			return;
+		draw();
 		send_flip_msg(win_id_);
 	}
 };
@@ -918,135 +879,889 @@ class MixerFlyout
 /*           routing; delegates to Menu and Launcher                   */
 /* ------------------------------------------------------------------ */
 
+/**
+ * Draw an app's icon (views/appicons.h) in the session palette.
+ */
+static void draw_app_icon(ui_canvas &cv, const std::string &label, const std::string &exec, int size, int x, int y)
+{
+	ui_draw_app_icon(cv, label, exec, size, x, y, g_t);
+}
+
+/* ------------------------------------------------------------------ */
+/* LauncherPanel — the uBix launcher (ubixos-v2 launcher-menu): a       */
+/*   category rail + search + app grid + "Continue" (recent apps).     */
+/*   Apps come from the same /views/startmenu registry tree the old    */
+/*   cascading menu used; recents are per user (views/launcher/recent). */
+/* ------------------------------------------------------------------ */
+
+#define LP_W 640 /* panel size (design 640x472) */
+#define LP_H 472
+#define LP_MARGIN_X 8  /* window margin left of the panel (shadow room) */
+#define LP_MARGIN_T 10 /* ... above */
+#define LP_MARGIN_B 16 /* ... below (shadow is offset down) */
+#define LP_RAIL_W 176
+#define LP_TILE_W 104
+#define LP_TILE_H 80
+#define LP_RECENT_MAX 3
+
+struct LaunchApp
+{
+	std::string label, exec;
+	int cat; /* index into the category list (0 = All, never stored) */
+};
+
+/* What a launcher click/keypress asks the taskbar to do. */
+struct LaunchAction
+{
+	enum
+	{
+		NONE,
+		REDRAW,
+		RESTART,
+		SHUTDOWN,
+		CLOSE,
+		LAUNCH,
+		LOGOUT
+	} kind = NONE;
+	std::string label, exec;
+};
+
+class LauncherPanel
+{
+	ogSurface surf_;
+	ui_canvas cv_;
+	ogScalableFont *font_ = nullptr;  /* 12px */
+	ogScalableFont *small_ = nullptr; /* 11px */
+	ogScalableFont *bold_ = nullptr;  /* 12px bold */
+	ogScalableFont tiny_;             /* 10px: counts, section labels */
+	uint32_t win_id_ = 0;
+	bool open_ = false;
+	int wx_ = 0, wy_ = 0, ww_ = 0, wh_ = 0; /* window rect (screen) */
+	int pw_ = LP_W, ph_ = LP_H;             /* panel size; panel sits at (LP_MARGIN_X, LP_MARGIN_T) */
+
+	std::vector<std::string> cats_; /* [0] = "All" */
+	std::vector<LaunchApp> apps_;
+	int cat_ = 0;
+	std::string query_;
+
+	struct Recent
+	{
+		std::string label, exec;
+		long when;
+	};
+	std::vector<Recent> recent_;
+
+	/* hit rects from the last draw (window-local): x, y, w, h */
+	struct Rect
+	{
+		int x, y, w, h;
+		bool in(int px, int py) const
+		{
+			return px >= x && px < x + w && py >= y && py < y + h;
+		}
+	};
+	std::vector<Rect> cat_r_, tile_r_, recent_r_;
+	std::vector<int> visible_; /* apps_ indices in grid order */
+	Rect settings_r_ = {0, 0, 0, 0}, power_r_ = {0, 0, 0, 0};
+	int hov_cat_ = -1, hov_tile_ = -1, hov_recent_ = -1, hov_btn_ = -1; /* btn: 0 settings, 1 power */
+
+	/* Power pop-over above the rail's power button: Log out / Restart / Shut down. */
+	bool power_open_ = false;
+	int hov_pow_ = -1;
+	Rect pow_r_[3] = {};
+
+	/* Draw the power pop-over (rows recorded in pow_r_). */
+	void draw_power_menu()
+	{
+		static const char *const labels[3] = {"Log out", "Restart", "Shut down"};
+		static const char *const icons[3] = {"arrow-left", "restart", "power"};
+		const ui_theme &t = g_t;
+		int w = 168, h = 4 + 3 * 34 + 2 + 4;
+		int x = power_r_.x + power_r_.w - w, y = power_r_.y - 8 - h;
+		ui_shadow(cv_, x, y, w, h, UI_R_MD, 8, 14, t.shadow_win_a, t.shadow);
+		ui_outlined_round(cv_, x, y, w, h, UI_R_MD, t.edge, t.ground);
+		for (int i = 0; i < 3; i++)
+		{
+			pow_r_[i] = {x + 4, y + 4 + i * 35, w - 8, 34};
+			const Rect &r = pow_r_[i];
+			if (i == hov_pow_)
+				ui_fill_round(cv_, r.x, r.y, r.w, r.h, UI_R_MD, t.neutral_800);
+			ui_draw_icon_tint(cv_, ui_icon_get(16, icons[i]), r.x + 16, r.y + 9, t.text_muted);
+			text(*font_, r.x + 16 + 16 + 16, r.y + r.h / 2, labels[i], t.text);
+		}
+	}
+
+	static std::string lower(const std::string &in)
+	{
+		std::string o;
+		for (char c : in)
+			o += (char)((c >= 'A' && c <= 'Z') ? c + 32 : c);
+		return o;
+	}
+
+	/* Text vertically centred on row cy, blended over what is drawn. */
+	void text(ogScalableFont &f, int x, int cy, const char *str, uint32_t fg)
+	{
+		font_fg(f, fg);
+		f.SetBGColor(0, 0, 0, 0);
+		f.PutString(surf_, x, cy - (int)f.GetHeight() / 2 + 1, str);
+	}
+
+	/* Section label: 10px, upper-case, +0.06em tracking. */
+	void section(int x, int cy, const std::string &label)
+	{
+		std::string u;
+		for (char c : label)
+			u += (char)((c >= 'a' && c <= 'z') ? c - 32 : c);
+		char one[2] = {0, 0};
+		for (char c : u)
+		{
+			one[0] = c;
+			text(tiny_, x, cy, one, g_t.text_faint);
+			x += (int)tiny_.TextWidth(one) + 1;
+		}
+	}
+
+	/* Walk a registry menu container, collecting leaf entries into category cat. */
+	void collect(const std::string &path, int cat, int depth)
+	{
+		char names[UB_NAMES_MAX];
+		if (depth > 4 || ubistry_enum(path.c_str(), names, sizeof(names)) <= 0)
+			return;
+		std::string ns(names);
+		size_t start = 0;
+		while (start < ns.size())
+		{
+			size_t nl = ns.find('\n', start);
+			std::string child = ns.substr(start, nl == std::string::npos ? std::string::npos : nl - start);
+			start = (nl == std::string::npos) ? ns.size() : nl + 1;
+			if (child.empty())
+				continue;
+			std::string p = path + "/" + child;
+			char buf[128], scratch[UB_NAMES_MAX];
+			std::string label =
+			    ubistry_get_str((p + "/label").c_str(), buf, sizeof(buf)) == 0 ? buf : child;
+			if (ubistry_enum((p + "/items").c_str(), scratch, sizeof(scratch)) >= 0)
+			{
+				int c = cat;
+				if (depth == 0) /* a top-level submenu is a category */
+				{
+					cats_.push_back(label);
+					c = (int)cats_.size() - 1;
+				}
+				collect(p + "/items", c, depth + 1);
+			}
+			else if (ubistry_get_str((p + "/exec").c_str(), buf, sizeof(buf)) == 0)
+				apps_.push_back({label, buf, cat});
+		}
+	}
+
+	void load_recent()
+	{
+		const char *u = getenv("USER");
+		recent_.clear();
+		for (int i = 0; i < LP_RECENT_MAX; i++)
+		{
+			char l[128], e[128];
+			int w = 0;
+			std::string k = "views/launcher/recent/" + std::to_string(i);
+			if (ubistry_get_for(u, (k + "/label").c_str(), l, sizeof(l)) != 0 ||
+			    ubistry_get_for(u, (k + "/exec").c_str(), e, sizeof(e)) != 0)
+				break;
+			ubistry_get_for_int(u, (k + "/when").c_str(), &w);
+			recent_.push_back({l, e, (long)w});
+		}
+	}
+
+	static std::string ago(long when)
+	{
+		static const char *const wd[] = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
+		long d = (long)gettime() - when;
+		if (d < 60)
+			return "now";
+		if (d < 3600)
+			return std::to_string(d / 60) + " min";
+		if (d < 86400)
+			return std::to_string(d / 3600) + " h";
+		time_t t = (time_t)when;
+		struct tm *lt = localtime(&t);
+		return lt ? wd[lt->tm_wday % 7] : "";
+	}
+
+	void filter()
+	{
+		visible_.clear();
+		std::string q = lower(query_);
+		for (int i = 0; i < (int)apps_.size(); i++)
+		{
+			if (!q.empty())
+			{
+				if (lower(apps_[i].label).find(q) == std::string::npos)
+					continue;
+			}
+			else if (cat_ != 0 && apps_[i].cat != cat_)
+				continue;
+			visible_.push_back(i);
+		}
+	}
+
+	void draw()
+	{
+		const ui_theme &t = g_t;
+		int px = LP_MARGIN_X, py = LP_MARGIN_T;
+		ui_fill(cv_, 0, 0, ww_, wh_, t.panel);
+
+		/* --- rail ------------------------------------------------------ */
+		ui_fill(cv_, px, py, LP_RAIL_W, ph_, t.surface);
+		ui_fill(cv_, px + LP_RAIL_W, py, 1, ph_, ui_mix(t.panel, t.divider, t.divider_a));
+
+		const char *user = getenv("USER");
+		std::string un = (user && user[0]) ? user : "user";
+		int ay = py + 16;
+		ui_outlined_round(cv_, px + 16, ay, 32, 32, 16, t.accent, t.accent_900);
+		char ini[2] = {(char)((un[0] >= 'a' && un[0] <= 'z') ? un[0] - 32 : un[0]), 0};
+		text(*bold_, px + 16 + (32 - (int)bold_->TextWidth(ini)) / 2, ay + 16, ini, t.accent_200);
+		text(*font_, px + 16 + 32 + 8, ay + 9, un.c_str(), t.text);
+		char host[64];
+		if (ubistry_get_str("/system/hostname", host, sizeof(host)) != 0)
+			std::strncpy(host, "ubix.local", sizeof(host) - 1), host[sizeof(host) - 1] = '\0';
+		text(tiny_, px + 16 + 32 + 8, ay + 25, host, t.text_faint);
+
+		static const char *const cat_icons[] = {
+		    "grid", "folder", "monitor", "sliders", "terminal", "code", "music"};
+		cat_r_.clear();
+		int ry = ay + 32 + 16;
+		for (int i = 0; i < (int)cats_.size(); i++)
+		{
+			Rect r = {px + 8, ry, LP_RAIL_W - 16, UI_ROW_H};
+			cat_r_.push_back(r);
+			bool sel = (i == cat_ && query_.empty());
+			if (sel)
+				ui_fill_round(cv_, r.x, r.y, r.w, r.h, UI_R_MD, t.accent_900);
+			else if (i == hov_cat_)
+				ui_fill_round(cv_, r.x, r.y, r.w, r.h, UI_R_MD, t.raised);
+			uint32_t fg = sel ? t.accent_200 : t.text;
+			ui_draw_icon_tint(cv_,
+			                  ui_icon_get(16, cat_icons[i % 7]),
+			                  r.x + 8,
+			                  r.y + 6,
+			                  sel ? t.accent_400 : t.text_muted);
+			text(*font_, r.x + 8 + 16 + 8, r.y + r.h / 2, cats_[i].c_str(), fg);
+			int n = 0;
+			for (auto &a : apps_)
+				n += (i == 0 || a.cat == i);
+			std::string ns = std::to_string(n);
+			text(tiny_,
+			     r.x + r.w - 8 - (int)tiny_.TextWidth(ns.c_str()),
+			     r.y + r.h / 2,
+			     ns.c_str(),
+			     t.text_faint);
+			ry += UI_ROW_H + 2;
+		}
+
+		/* rail actions: Settings (left), Log out (right) */
+		int by = py + ph_ - 8 - UI_CONTROL_H;
+		settings_r_ = {px + 8, by, UI_CONTROL_H, UI_CONTROL_H};
+		power_r_ = {px + LP_RAIL_W - 8 - UI_CONTROL_H, by, UI_CONTROL_H, UI_CONTROL_H};
+		const Rect *btns[2] = {&settings_r_, &power_r_};
+		const char *bicons[2] = {"sliders", "power"};
+		for (int i = 0; i < 2; i++)
+		{
+			const Rect &b = *btns[i];
+			if (hov_btn_ == i || (i == 1 && power_open_))
+				ui_fill_round(cv_, b.x, b.y, b.w, b.h, UI_R_MD, t.raised);
+			ui_draw_icon_tint(cv_, ui_icon_get(16, bicons[i]), b.x + 8, b.y + 8, t.text_muted);
+		}
+
+		/* --- main column ------------------------------------------------ */
+		int mx = px + LP_RAIL_W + 1 + 16, mw = pw_ - LP_RAIL_W - 1 - 32;
+		int sy = py + 16;
+		ui_outlined_round(cv_, mx, sy, mw, 36, 18, t.accent, t.ground);
+		ui_focus_ring(cv_, mx, sy, mw, 36, 18, t.accent);
+		/* keycap hint: Super opens the launcher */
+		{
+			int kw = 12 + (int)tiny_.TextWidth("Super");
+			int kx = mx + mw - 10 - kw;
+			ui_outlined_round(cv_, kx, sy + 9, kw, 18, UI_R_SM, t.edge, t.surface);
+			text(tiny_, kx + 6, sy + 18, "Super", t.text_muted);
+		}
+		ui_draw_icon_tint(cv_, ui_icon_get(16, "search"), mx + 12, sy + 10, t.text_muted);
+		int qx = mx + 12 + 16 + 8;
+		if (query_.empty())
+			text(*font_, qx + 3, sy + 18, "Search apps, or type a command to run...", t.text_faint);
+		else
+			text(*font_, qx, sy + 18, query_.c_str(), t.text);
+		ui_fill(cv_, qx + (int)font_->TextWidth(query_.c_str()) + 1, sy + 10, 1, 16, t.accent_400);
+
+		bool searching = !query_.empty();
+		int hy = sy + 36 + 12;
+		section(mx + 8, hy + 14, searching ? "Results" : (cat_ == 0 ? "All apps" : cats_[cat_]));
+		int gy = hy + 28;
+
+		tile_r_.clear();
+		int max_rows = searching || recent_.empty() ? 4 : 3;
+		int shown = 0;
+		for (int vi = 0; vi < (int)visible_.size() && shown < max_rows * 4; vi++, shown++)
+		{
+			const LaunchApp &a = apps_[visible_[vi]];
+			Rect r = {
+			    mx + (shown % 4) * (LP_TILE_W + 4), gy + (shown / 4) * LP_TILE_H, LP_TILE_W, LP_TILE_H};
+			tile_r_.push_back(r);
+			if (vi == hov_tile_ || (searching && vi == 0))
+				ui_fill_round(cv_, r.x, r.y, r.w, r.h, UI_R_MD, t.surface);
+			draw_app_icon(cv_, a.label, a.exec, 48, r.x + (r.w - 48) / 2, r.y + 8);
+			char lbl[40];
+			fit_label(*small_, lbl, sizeof(lbl), a.label.c_str(), r.w - 8);
+			text(*small_, r.x + (r.w - (int)small_->TextWidth(lbl)) / 2, r.y + 8 + 48 + 6 + 8, lbl, t.text);
+		}
+		if (visible_.empty())
+			text(*font_,
+			     mx + 8,
+			     gy + 16,
+			     searching ? "No app matches - Enter runs it as a command" : "Nothing here yet",
+			     t.text_muted);
+
+		/* Continue: recently launched apps */
+		recent_r_.clear();
+		if (!searching && !recent_.empty())
+		{
+			int cy = gy + 3 * LP_TILE_H + 12;
+			section(mx + 8, cy + 14, "Continue");
+			cy += 28;
+			for (int i = 0; i < (int)recent_.size(); i++)
+			{
+				Rect r = {mx, cy, mw, UI_ROW_H};
+				recent_r_.push_back(r);
+				if (i == hov_recent_)
+					ui_fill_round(cv_, r.x, r.y, r.w, r.h, UI_R_MD, t.surface);
+				draw_app_icon(cv_, recent_[i].label, recent_[i].exec, 16, r.x + 8, r.y + 6);
+				text(*font_, r.x + 8 + 16 + 8, r.y + r.h / 2, recent_[i].label.c_str(), t.text);
+				std::string w = ago(recent_[i].when);
+				text(tiny_,
+				     r.x + r.w - 8 - (int)tiny_.TextWidth(w.c_str()),
+				     r.y + r.h / 2,
+				     w.c_str(),
+				     t.text_faint);
+				cy += UI_ROW_H;
+			}
+		}
+
+		if (power_open_)
+			draw_power_menu();
+
+		ui_alpha_shape(cv_,
+		               px,
+		               py,
+		               pw_,
+		               ph_,
+		               UI_R_XL,
+		               t.panel_a,
+		               t.edge_strong,
+		               t.shadow_panel_y,
+		               t.shadow_panel_reach,
+		               t.shadow_panel_a,
+		               t.shadow);
+	}
+
+      public:
+	void init(ogScalableFont *font, ogScalableFont *small, ogScalableFont *bold)
+	{
+		font_ = font;
+		small_ = small;
+		bold_ = bold;
+		tiny_.Load(FONT_PATH, 12);
+	}
+
+	bool is_open() const
+	{
+		return open_;
+	}
+	uint32_t win_id() const
+	{
+		return win_id_;
+	}
+
+	/* Open above the taskbar strip, starting on "All" with an empty search. */
+	void show(int screen_w, int screen_h, ubix::Mailbox &mbox)
+	{
+		if (open_)
+			return;
+		cats_.assign(1, "All");
+		apps_.clear();
+		collect("/views/startmenu", 0, 0);
+		/* top-level leaves (Settings, About) belong to a "System" category */
+		bool loose = false;
+		for (auto &a : apps_)
+			loose |= (a.cat == 0);
+		if (loose)
+		{
+			cats_.push_back("System");
+			for (auto &a : apps_)
+				if (a.cat == 0)
+					a.cat = (int)cats_.size() - 1;
+		}
+		load_recent();
+		cat_ = 0;
+		query_.clear();
+		hov_cat_ = hov_tile_ = hov_recent_ = hov_btn_ = hov_pow_ = -1;
+		power_open_ = false;
+		filter();
+
+		pw_ = std::min(LP_W, screen_w - 2 * UI_TASKBAR_INSET);
+		ph_ = std::min(LP_H, screen_h - TB_H - LP_MARGIN_T);
+		ww_ = LP_MARGIN_X + pw_ + 12;
+		wh_ = LP_MARGIN_T + ph_ + LP_MARGIN_B;
+		wx_ = UI_TASKBAR_INSET - LP_MARGIN_X;
+		wy_ = screen_h - TB_H - ph_ - LP_MARGIN_T;
+
+		mpi_message_t claim = {};
+		struct display_claim_req *creq = (struct display_claim_req *)claim.data;
+		claim.header = DISPLAY_CLAIM;
+		creq->x = wx_;
+		creq->y = wy_;
+		creq->w = ww_;
+		creq->h = wh_;
+		creq->sender_pid = ubix::pid();
+		creq->no_decor = 1;
+		creq->wants_motion = 1;
+		creq->translucent = 1;
+		std::strncpy(creq->title, "launcher", sizeof(creq->title) - 1);
+		std::strncpy(creq->reply, "taskbar", sizeof(creq->reply) - 1);
+		ubix::post_message("views", DISPLAY_CLAIM, claim);
+
+		mpi_message_t reply;
+		await_reply(mbox, reply, DISPLAY_ACK, DISPLAY_DENIED);
+		if (reply.header != DISPLAY_ACK)
+			return;
+		struct display_ack *da = (struct display_ack *)reply.data;
+		win_id_ = da->window_id;
+		surf_.ogAttach(da->shm_base, (uint32_t)ww_, (uint32_t)wh_, OG_PIXFMT_32BPP);
+		cv_.px = (uint32_t *)surf_.ogGetPtr(0, 0);
+		cv_.w = ww_;
+		cv_.h = wh_;
+		cv_.stride = (int)((uint8_t *)surf_.ogGetPtr(0, 1) - (uint8_t *)surf_.ogGetPtr(0, 0)) / 4;
+		open_ = true;
+		draw();
+		send_flip_msg(win_id_);
+	}
+
+	void hide()
+	{
+		if (!open_)
+			return;
+		mpi_message_t msg = {};
+		struct display_release *rel = (struct display_release *)msg.data;
+		msg.header = DISPLAY_RELEASE;
+		rel->window_id = win_id_;
+		ubix::post_message("views", DISPLAY_RELEASE, msg);
+		open_ = false;
+		win_id_ = 0;
+	}
+
+	void redraw()
+	{
+		if (!open_)
+			return;
+		draw();
+		send_flip_msg(win_id_);
+	}
+
+	/* Record a launch at the top of the user's recent list (deduplicated). */
+	void remember(const std::string &label, const std::string &exec)
+	{
+		const char *u = getenv("USER");
+		if (u == nullptr || u[0] == '\0')
+			return;
+		load_recent();
+		std::vector<Recent> r;
+		r.push_back({label, exec, (long)gettime()});
+		for (auto &e : recent_)
+			if (e.exec != exec && (int)r.size() < LP_RECENT_MAX)
+				r.push_back(e);
+		for (int i = 0; i < (int)r.size(); i++)
+		{
+			std::string k = "views/launcher/recent/" + std::to_string(i);
+			ubistry_set_user(u, (k + "/label").c_str(), r[i].label.c_str());
+			ubistry_set_user(u, (k + "/exec").c_str(), r[i].exec.c_str());
+			ubistry_set_user_int(u, (k + "/when").c_str(), (int)r[i].when);
+		}
+	}
+
+	/* Pointer event on the launcher window (window-local coordinates). */
+	LaunchAction on_mouse(const display_mouse_ev *me, bool click)
+	{
+		LaunchAction act;
+
+		/* While the power pop-over is open it takes the pointer. */
+		if (power_open_)
+		{
+			int hp = -1;
+			for (int i = 0; i < 3 && me->x >= 0; i++)
+				if (pow_r_[i].in(me->x, me->y))
+					hp = i;
+			if (hp != hov_pow_)
+			{
+				hov_pow_ = hp;
+				act.kind = LaunchAction::REDRAW;
+			}
+			if (!click)
+				return act;
+			power_open_ = false;
+			hov_pow_ = -1;
+			if (hp == 0)
+				act.kind = LaunchAction::LOGOUT;
+			else if (hp == 1)
+				act.kind = LaunchAction::RESTART;
+			else if (hp == 2)
+				act.kind = LaunchAction::SHUTDOWN;
+			else
+				act.kind = LaunchAction::REDRAW; /* clicked elsewhere: just close it */
+			return act;
+		}
+
+		int hc = -1, ht = -1, hr = -1, hb = -1;
+		if (me->x >= 0)
+		{
+			for (int i = 0; i < (int)cat_r_.size(); i++)
+				if (cat_r_[i].in(me->x, me->y))
+					hc = i;
+			for (int i = 0; i < (int)tile_r_.size(); i++)
+				if (tile_r_[i].in(me->x, me->y))
+					ht = i;
+			for (int i = 0; i < (int)recent_r_.size(); i++)
+				if (recent_r_[i].in(me->x, me->y))
+					hr = i;
+			hb = settings_r_.in(me->x, me->y) ? 0 : (power_r_.in(me->x, me->y) ? 1 : -1);
+		}
+		if (hc != hov_cat_ || ht != hov_tile_ || hr != hov_recent_ || hb != hov_btn_)
+		{
+			hov_cat_ = hc;
+			hov_tile_ = ht;
+			hov_recent_ = hr;
+			hov_btn_ = hb;
+			act.kind = LaunchAction::REDRAW;
+		}
+		if (!click)
+			return act;
+		if (hc >= 0)
+		{
+			cat_ = hc;
+			query_.clear();
+			filter();
+			hov_tile_ = -1;
+			act.kind = LaunchAction::REDRAW;
+		}
+		else if (ht >= 0 && ht < (int)visible_.size())
+		{
+			act.kind = LaunchAction::LAUNCH;
+			act.label = apps_[visible_[ht]].label;
+			act.exec = apps_[visible_[ht]].exec;
+		}
+		else if (hr >= 0)
+		{
+			act.kind = LaunchAction::LAUNCH;
+			act.label = recent_[hr].label;
+			act.exec = recent_[hr].exec;
+		}
+		else if (hb == 0)
+		{
+			act.kind = LaunchAction::LAUNCH;
+			act.label = "Settings";
+			act.exec = "/bin/settings";
+		}
+		else if (hb == 1)
+		{
+			power_open_ = true;
+			hov_pow_ = -1;
+			act.kind = LaunchAction::REDRAW;
+		}
+		return act;
+	}
+
+	/* Keystroke while the launcher has focus: type to search, Enter to run. */
+	LaunchAction on_key(uint32_t kc)
+	{
+		LaunchAction act;
+		act.kind = LaunchAction::REDRAW;
+		if (kc == 0x1B && power_open_)
+			power_open_ = false; /* Esc closes the pop-over first */
+		else if (kc == 0x1B)
+			act.kind = LaunchAction::CLOSE;
+		else if (kc == '\n' || kc == '\r')
+		{
+			if (!visible_.empty() && (!query_.empty() || cat_ != 0))
+			{
+				act.kind = LaunchAction::LAUNCH;
+				act.label = apps_[visible_[0]].label;
+				act.exec = apps_[visible_[0]].exec;
+			}
+			else if (!query_.empty())
+			{
+				act.kind = LaunchAction::LAUNCH; /* not an app: run it as a command */
+				act.label = query_;
+				act.exec = query_[0] == '/' ? query_ : "/bin/" + query_;
+			}
+			else
+				act.kind = LaunchAction::NONE;
+		}
+		else if (kc == '\b' || kc == 0x7F)
+		{
+			if (!query_.empty())
+				query_.pop_back();
+			filter();
+		}
+		else if (kc >= 0x20 && kc < 0x7F && query_.size() < 48)
+		{
+			query_ += (char)kc;
+			filter();
+		}
+		else
+			act.kind = LaunchAction::NONE;
+		hov_tile_ = -1;
+		return act;
+	}
+};
+
 class Taskbar
 {
 	ogSurface surf_;
-	ogScalableFont font_;
+	ogScalableFont font_;       /* 12px regular */
+	ogScalableFont font_bold_;  /* 12px bold: launcher label, clock time */
+	ogScalableFont font_small_; /* 11px: volume % */
+	ogScalableFont font_clock_; /* 12.5px: tray date + time */
 	uint32_t win_id_ = 0;
 	uint32_t sw_ = 0;
 	uint32_t sh_ = 0;
 	std::vector<TrackedWin> tracked_;
-	Menu start_menu_;
-	Menu submenu_;
 	MixerFlyout mixer_;
+	LauncherPanel panel_;           /* the uBix launcher pop-over */
+	CalendarPanel cal_;             /* the clock\'s month pop-over */
+	ubix::Mailbox *mbox_ = nullptr; /* our mailbox (set in init) */
 	Launcher launcher_;
 	bool btn_pressed_ = false;
 	bool prev_down_ = false;  /* previous button-1 state, for release-edge clicks */
+	bool prev_mdown_ = false; /* previous middle-button state */
 	uint32_t focused_id_ = 0; /* active window (DISPLAY_FOCUS); highlights its tab */
 
 	/* Hover state on the strip (updated from pointer-motion events). */
-	bool hover_start_ = false; /* cursor over the start button */
-	int hover_tab_ = -1;       /* window tab under the cursor, or -1 */
-	bool hover_vol_ = false;   /* cursor over the volume tray glyph */
+	bool hover_start_ = false; /* cursor over the launcher pill */
+	int hover_tab_ = -1;       /* window item under the cursor, or -1 */
+	bool hover_vol_ = false;   /* cursor over the volume tray item */
+	bool hover_clock_ = false; /* cursor over the clock */
 
-	/* System tray: master volume mirrored from ubistry (/aural/*). */
+	/* Bar layout (layout()): floating + rounded normally; on small screens
+	 * (< 1000px wide, e.g. 800x480 Pi panels) edge-to-edge, square, and the
+	 * tray drops the date (design NOTES, "Smaller screens"). */
+	bool compact_ = false;
+	int bar_x_ = BAR_X, bar_y_ = BAR_Y, item_y_ = ITEM_Y, task_w_ = TASK_W, bar_r_ = UI_R_XL;
+
+	void layout()
+	{
+		compact_ = sw_ < UI_COMPACT_W;
+		bar_x_ = compact_ ? 0 : BAR_X;
+		bar_y_ = compact_ ? TB_H - BAR_H : BAR_Y;
+		bar_r_ = compact_ ? 0 : UI_R_XL;
+		item_y_ = bar_y_ + (BAR_H - ITEM_H) / 2;
+		task_w_ = TASK_W;
+	}
+
+	/* Geometry from the last draw_strip(), used by the hit tests (strip-local x). */
+	int start_x_ = 0, start_w_ = 0;
+	int tabs_x_ = 0, tabs_n_ = 0;
+	int vol_x_ = 0, vol_w_ = 0;
+	int net_x_ = 0, net_w_ = 0;
+	bool hover_net_ = false;
+
+	/* Network item: default interface state (ubix_net_status, polled 1/s). */
+	bool net_have_ = false, net_online_ = false;
+	int clock_x_ = 0, clock_w_ = 0;
+
+	/* System tray: master volume mirrored from ubistry (/aural/volume, /aural/mute). */
 	int volume_ = 100;
 	bool muted_ = false;
 
-	/* Draw the hamburger "menu" glyph for the start button. */
-	void draw_start_icon(int cx, int cy)
+	/* The strip's pixels (set by attach()); shapes are drawn with views/uidraw.h. */
+	ui_canvas cv_;
+
+	/* Point surf_ and cv_ at the (re)claimed shared buffer. */
+	void attach(void *shm)
 	{
-		for (int i = -1; i <= 1; i++)
-			surf_.ogFillRect(cx - 7, cy + i * 5 - 1, cx + 7, cy + i * 5, COL_WHITE);
+		surf_.ogAttach(shm, sw_, TB_H, OG_PIXFMT_32BPP);
+		cv_.px = (uint32_t *)surf_.ogGetPtr(0, 0);
+		cv_.w = (int)sw_;
+		cv_.h = TB_H;
+		cv_.stride = (int)((uint8_t *)surf_.ogGetPtr(0, 1) - (uint8_t *)surf_.ogGetPtr(0, 0)) / 4;
 	}
 
-	/* Draw a compact speaker glyph for the volume tray.  Red + slashed when
-	 * muted; a couple of "wave" ticks to the right scale with the level. */
-	void draw_volume_glyph(int cx, int cy)
+	/* Draw text vertically centred on row cy, anti-aliased over whatever is
+	 * already drawn (transparent background: no cell fill). */
+	void text(ogScalableFont &f, int x, int cy, const char *str, uint32_t fg)
 	{
-		uint32_t col = muted_ ? 0x00FF6E6Eu : (hover_vol_ ? COL_WHITE : 0x00C8C8D2u);
-		surf_.ogFillRect(cx - 7, cy - 2, cx - 5, cy + 2, col); /* driver block */
-		for (int c = 0; c <= 5; c++)                           /* cone widens right */
-			surf_.ogVLine(cx - 4 + c, cy - c, cy + c, col);
-		if (muted_)
-		{
-			surf_.ogLine(cx - 7, cy + 6, cx + 7, cy - 6, 0x00FF6E6Eu); /* mute slash */
-		}
-		else
-		{
-			if (volume_ > 5)
-				surf_.ogVLine(cx + 4, cy - 3, cy + 3, col);
-			if (volume_ >= 55)
-				surf_.ogVLine(cx + 7, cy - 5, cy + 5, col);
-		}
+		font_fg(f, fg);
+		f.SetBGColor(0, 0, 0, 0);
+		f.PutString(surf_, x, cy - (int)f.GetHeight() / 2 + 1, str);
+	}
+
+	/**
+	 * Give the strip its floating shape: per-pixel alpha for the rounded bar
+	 * (92% fill, opaque 1px edge) and its soft offset shadow below/around it;
+	 * everything else is fully clear.  Runs after all content is drawn.
+	 */
+	void shape_pass()
+	{
+		ui_alpha_shape(cv_,
+		               bar_x_,
+		               bar_y_,
+		               (int)sw_ - 2 * bar_x_,
+		               BAR_H,
+		               bar_r_,
+		               g_t.taskbar_a,
+		               g_t.edge,
+		               g_t.shadow_bar_y,
+		               g_t.shadow_bar_reach,
+		               g_t.shadow_bar_a,
+		               g_t.shadow);
 	}
 
 	void draw_strip()
 	{
+		layout();
 		int sw = (int)sw_;
+		int bw = sw - 2 * bar_x_;
+		const int cy = item_y_ + ITEM_H / 2;
 
-		surf_.ogFillRect(0, 0, sw - 1, TB_H - 1, TB_BG);
-		surf_.ogFillRect(0, 0, sw - 1, 0, TB_SEP); /* 1px top hairline */
+		/* Bar fill over its bounding box; shape_pass() rounds and edges it. */
+		ui_fill(cv_, 0, 0, sw, TB_H, g_t.taskbar);
 
-		/* Launcher button — flat; hamburger icon + brand.  Fills on press, and a
-		 * subtle highlight on hover. */
-		uint32_t start_bg = btn_pressed_ ? TB_BTN_P : (hover_start_ ? TB_BTN_N : TB_BG);
-		if (btn_pressed_ || hover_start_)
-			surf_.ogFillRect(2, 1, 2 + BTN_W - 1, TB_H - 1, start_bg);
-		draw_start_icon(16, TB_H / 2);
-		font_fg(font_, COL_WHITE);
-		font_bg(font_, start_bg);
-		font_.PutString(surf_, 30, 12, "uBixOS");
+		/* Launcher pill: ubix mark + "uBix", outlined; accent when the menu is open. */
+		bool open = panel_.is_open();
+		start_x_ = bar_x_ + 1 + 4;
+		start_w_ = 8 + 24 + 8 + (int)font_bold_.TextWidth("uBix") + 16;
+		uint32_t pill_bg = open ? g_t.accent_900 : ((hover_start_ || btn_pressed_) ? g_t.raised : g_t.taskbar);
+		ui_outlined_round(
+		    cv_, start_x_, item_y_, start_w_, ITEM_H, UI_R_PILL, open ? g_t.accent : g_t.edge, pill_bg);
+		ui_draw_icon(cv_, ui_icon_get(24, "ubix-mark"), start_x_ + 8, item_y_ + 4);
+		text(font_bold_, start_x_ + 8 + 24 + 8, cy, "uBix", g_t.text);
 
-		/* Window list — flat tabs; focused window gets a brighter fill + accent
-		 * underline, hovered tab a lighter fill, the rest a flat fill. */
-		int wx = 2 + BTN_W + 4;
-		int clock_x = sw - CLOCK_W - 2;
-		int tray_x = clock_x - TRAY_W;
+		/* Divider. */
+		int x = start_x_ + start_w_ + 4 + 4;
+		ui_fill(cv_, x, bar_y_ + (BAR_H - 20) / 2, 1, 20, ui_mix(g_t.taskbar, g_t.divider, g_t.divider_a));
+		x += 1 + 4 + 4;
+
+		/* Tray, laid out from the right: [volume] [clock]. */
+		char date[24], tstr[16];
+		get_clock_strs(date, sizeof(date), tstr, sizeof(tstr));
+		if (compact_)
+			date[0] = '\0'; /* small screens keep just the time */
+		int right = bar_x_ + bw - 1 - 4;
+		clock_w_ =
+		    16 + (date[0] ? (int)font_clock_.TextWidth(date) + 12 : 0) + (int)font_clock_.TextWidth(tstr) + 16;
+		clock_x_ = right - clock_w_;
+		char vol[8];
+		std::snprintf(vol, sizeof(vol), "%d%%", muted_ ? 0 : volume_);
+		vol_w_ = 8 + 16 + 4 + (int)font_small_.TextWidth(vol) + 8;
+		vol_x_ = clock_x_ - 2 - vol_w_;
+		net_w_ = net_have_ ? 32 : 0;
+		net_x_ = vol_x_ - (net_w_ ? 2 + net_w_ : 0);
+
+		/* Running windows: icon + title, a short mark on top (accent = focused). */
+		tabs_x_ = x;
+		tabs_n_ = 0;
+		/* Items drop their label (40px, icon only) when 180px items won't fit. */
+		int avail = net_x_ - 8 - x;
+		if (!tracked_.empty() && (int)tracked_.size() * (TASK_W + 4) > avail)
+			task_w_ = 40;
+		bool icon_only = task_w_ < 100;
 		int i = 0;
 		for (const auto &tw : tracked_)
 		{
-			if (wx + WIN_BTN_W > tray_x - 4)
+			if (x + task_w_ > net_x_ - 8)
 				break;
 			bool active = (tw.id == focused_id_);
 			bool hover = (i == hover_tab_);
-			uint32_t fill = active ? TB_BTN_P : TB_BTN_N;
-			surf_.ogFillRect(wx, 4, wx + WIN_BTN_W - 1, TB_H - 1, fill);
+			uint32_t bg = active ? g_t.neutral_800 : (hover ? g_t.raised : g_t.taskbar);
 			if (active || hover)
-				surf_.ogFillRect(
-				    wx, TB_H - 3, wx + WIN_BTN_W - 1, TB_H - 1, active ? COL_WHITE : TB_BTN_P);
-			font_fg(font_, (active || hover) ? COL_WHITE : 0x00C8C8D2u);
-			font_bg(font_, fill);
-			/* Truncate the title to the button so long names don't spill past the
-			 * highlighted tab (8px left pad + a small right margin). */
-			char label[40];
-			fit_label(font_, label, sizeof(label), tw.title.c_str(), WIN_BTN_W - 14);
-			font_.PutString(surf_, wx + 8, 12, label);
-			wx += WIN_BTN_W + 2;
+				ui_fill_round(cv_, x, item_y_, task_w_, ITEM_H, UI_R_MD, bg);
+			ui_fill_round(
+			    cv_, x + task_w_ / 2 - 8, item_y_, 16, 2, 1, active ? g_t.accent : g_t.neutral_600);
+			draw_app_icon(cv_, tw.title, "", 16, icon_only ? x + (task_w_ - 16) / 2 : x + 8, item_y_ + 8);
+			if (!icon_only)
+			{
+				char label[48];
+				fit_label(font_, label, sizeof(label), tw.title.c_str(), task_w_ - 32 - 12);
+				text(font_, x + 32, cy, label, active ? g_t.text : g_t.text_muted);
+			}
+			x += task_w_ + 4;
 			i++;
+			tabs_n_++;
 		}
 
-		/* System tray: volume glyph. */
-		draw_volume_glyph(tray_x + TRAY_W / 2, TB_H / 2);
+		/* Network tray item: faded while the link is down / no address yet. */
+		if (net_w_)
+		{
+			if (hover_net_)
+				ui_fill_round(cv_, net_x_, item_y_, net_w_, ITEM_H, UI_R_MD, g_t.raised);
+			uint32_t nc = net_online_ ? g_t.text_muted : ui_mix(g_t.taskbar, g_t.text_muted, 110);
+			ui_draw_icon_tint(cv_, ui_icon_get(16, "ethernet"), net_x_ + 8, item_y_ + 8, nc);
+		}
 
-		/* Clock — boxless date + time, right-aligned text on the bar. */
-		char tstr[20];
-		get_datetime_str(tstr);
-		font_fg(font_, COL_WHITE);
-		font_bg(font_, TB_BG);
-		font_.PutString(surf_, clock_x + 8, 12, tstr);
+		/* Volume tray item. */
+		if (hover_vol_ || mixer_.is_open())
+			ui_fill_round(cv_, vol_x_, item_y_, vol_w_, ITEM_H, UI_R_MD, g_t.raised);
+		ui_draw_icon_tint(
+		    cv_, ui_icon_get(16, muted_ ? "volume-mute" : "volume"), vol_x_ + 8, item_y_ + 8, g_t.text_muted);
+		text(font_small_, vol_x_ + 8 + 16 + 4, cy, vol, g_t.text_muted);
+
+		/* Clock: muted date + bright time, same size (design: 12.5px, time 500). */
+		if (hover_clock_)
+			ui_fill_round(cv_, clock_x_, item_y_, clock_w_, ITEM_H, UI_R_MD, g_t.raised);
+		text(font_clock_, clock_x_ + 16, cy, date, g_t.neutral_400);
+		text(font_clock_, clock_x_ + 16 + (int)font_clock_.TextWidth(date) + 12, cy, tstr, g_t.text);
+
+		shape_pass();
 	}
 
-	/* Tray hit-test: true if mx is over the volume glyph. */
+	bool start_hit(int mx) const
+	{
+		return mx >= start_x_ && mx < start_x_ + start_w_;
+	}
+
+	/* Tray hit-test: true if mx is over the volume item. */
 	bool vol_hit(int mx) const
 	{
-		int tray_x = (int)sw_ - CLOCK_W - 2 - TRAY_W;
-		return mx >= tray_x && mx < tray_x + TRAY_W;
+		return mx >= vol_x_ && mx < vol_x_ + vol_w_;
+	}
+
+	bool net_hit(int mx) const
+	{
+		return net_w_ && mx >= net_x_ && mx < net_x_ + net_w_;
+	}
+
+	bool clock_hit(int mx) const
+	{
+		return mx >= clock_x_ && mx < clock_x_ + clock_w_;
 	}
 
 	int winbtn_hit(int mx) const
 	{
-		int wx = 2 + BTN_W + 4;
-		int tray_x = (int)sw_ - CLOCK_W - 2 - TRAY_W;
-		for (int i = 0; i < (int)tracked_.size(); i++)
+		for (int i = 0; i < tabs_n_; i++)
 		{
-			if (wx + WIN_BTN_W > tray_x - 4)
-				break;
-			if (mx >= wx && mx < wx + WIN_BTN_W)
+			int x = tabs_x_ + i * (task_w_ + 4);
+			if (mx >= x && mx < x + task_w_)
 				return i;
-			wx += WIN_BTN_W + 2;
 		}
 		return -1;
+	}
+
+	/* Ask views to minimize / close a window (DISPLAY_WINCTL). */
+	void win_ctl(uint32_t id, uint32_t op)
+	{
+		mpi_message_t msg = {};
+		struct display_winctl *wc = (struct display_winctl *)msg.data;
+		msg.header = DISPLAY_WINCTL;
+		wc->window_id = id;
+		wc->op = op;
+		ubix::post_message("views", DISPLAY_WINCTL, msg);
 	}
 
 	void raise_window(uint32_t id)
@@ -1061,6 +1776,7 @@ class Taskbar
       public:
 	bool init(ubix::Mailbox &mbox, const char *font_path)
 	{
+		mbox_ = &mbox;
 		launcher_.init();
 
 		/* Query screen geometry */
@@ -1072,8 +1788,7 @@ class Taskbar
 		ubix::post_message("views", DISPLAY_QUERY, msg);
 
 		mpi_message_t reply;
-		while (!mbox.try_fetch(reply))
-			ubix::yield();
+		await_reply(mbox, reply, DISPLAY_INFO, DISPLAY_INFO);
 		if (reply.header != DISPLAY_INFO)
 		{
 			std::printf("taskbar: unexpected reply to DISPLAY_QUERY\n");
@@ -1094,14 +1809,14 @@ class Taskbar
 		creq->sender_pid = ubix::pid();
 		creq->no_decor = 1;
 		creq->wants_motion = 1; /* receive hover motion for highlighting */
+		creq->translucent = 1;  /* floating bar: we draw shape + shadow in alpha */
 		std::strncpy(creq->title, "taskbar", sizeof(creq->title) - 1);
 		creq->title[sizeof(creq->title) - 1] = '\0';
 		std::strncpy(creq->reply, "taskbar", sizeof(creq->reply) - 1);
 		creq->reply[sizeof(creq->reply) - 1] = '\0';
 		ubix::post_message("views", DISPLAY_CLAIM, claim);
 
-		while (!mbox.try_fetch(reply))
-			ubix::yield();
+		await_reply(mbox, reply, DISPLAY_ACK, DISPLAY_DENIED);
 		if (reply.header != DISPLAY_ACK)
 		{
 			std::printf("taskbar: DISPLAY_CLAIM denied\n");
@@ -1118,13 +1833,19 @@ class Taskbar
 			return false;
 		}
 
-		surf_.ogAttach(shm, sw_, TB_H, OG_PIXFMT_32BPP);
+		attach(shm);
 
 		if (!font_.Load(font_path, FONT_SIZE))
 		{
 			std::printf("taskbar: font load failed\n");
 			return false;
 		}
+		if (!font_bold_.Load(FONT_BOLD_PATH, FONT_SIZE))
+			font_bold_.Load(font_path, FONT_SIZE); /* fall back to regular */
+		font_small_.Load(font_path, FONT_SMALL_SIZE);
+		font_clock_.Load(font_path, FONT_CLOCK_SIZE);
+		panel_.init(&font_, &font_small_, &font_bold_);
+		cal_.init(&font_, &font_small_);
 
 		std::printf("taskbar: window %u at 0x%X, %dx%d+%d+%d\n",
 		            win_id_,
@@ -1140,6 +1861,7 @@ class Taskbar
 	void draw()
 	{
 		draw_strip();
+		cal_.refresh(); /* an open calendar follows the clock */
 	}
 
 	void send_flip()
@@ -1148,12 +1870,27 @@ class Taskbar
 	}
 
 	/* Re-read master volume/mute from ubistry into the cached members. */
-	void refresh_volume()
+	/* Re-read the default interface's state; true if it changed. */
+	bool refresh_net()
+	{
+		struct net_status ns;
+		bool have = ubix_net_status(&ns) == 0;
+		bool online = have && ns.up && ns.link && (ns.ip[0] | ns.ip[1] | ns.ip[2] | ns.ip[3]) != 0;
+		bool changed = have != net_have_ || online != net_online_;
+		net_have_ = have;
+		net_online_ = online;
+		return changed;
+	}
+
+	bool refresh_volume()
 	{
 		int v = 0, m = 0;
+		int old_vol = volume_;
+		bool old_mute = muted_;
 		if (ubistry_get_int("/aural/volume", &v) == 0)
 			volume_ = v < 0 ? 0 : (v > 100 ? 100 : v);
 		muted_ = (ubistry_get_int("/aural/mute", &m) == 0) && (m != 0);
+		return volume_ != old_vol || muted_ != old_mute;
 	}
 
 	/*
@@ -1182,6 +1919,7 @@ class Taskbar
 		creq->sender_pid = ubix::pid();
 		creq->no_decor = 1;
 		creq->wants_motion = 1; /* receive hover motion for highlighting */
+		creq->translucent = 1;  /* floating bar: we draw shape + shadow in alpha */
 		std::strncpy(creq->title, "taskbar", sizeof(creq->title) - 1);
 		creq->title[sizeof(creq->title) - 1] = '\0';
 		std::strncpy(creq->reply, "taskbar", sizeof(creq->reply) - 1);
@@ -1197,6 +1935,7 @@ class Taskbar
 			{
 				if (reply.header == DISPLAY_ACK)
 					break;
+				g_deferred.push_back(reply); /* handled by main() afterwards */
 			}
 			else
 			{
@@ -1210,7 +1949,7 @@ class Taskbar
 		win_id_ = da->window_id;
 		if (da->shm_base == nullptr)
 			return false;
-		surf_.ogAttach(da->shm_base, sw_, TB_H, OG_PIXFMT_32BPP);
+		attach(da->shm_base);
 		return true;
 	}
 
@@ -1235,9 +1974,124 @@ class Taskbar
 
 	void close_menus()
 	{
-		submenu_.hide();
-		start_menu_.hide();
 		mixer_.hide();
+		panel_.hide();
+		cal_.hide();
+	}
+
+	/* Carry out what the launcher asked for. */
+	void do_launch_action(const LaunchAction &act)
+	{
+		switch (act.kind)
+		{
+			case LaunchAction::REDRAW:
+				panel_.redraw();
+				break;
+			case LaunchAction::CLOSE:
+				close_menus();
+				draw_strip();
+				send_flip();
+				break;
+			case LaunchAction::LAUNCH:
+			{
+				MenuItem it;
+				it.label = act.label;
+				it.exec = act.exec;
+				panel_.remember(act.label, act.exec);
+				close_menus();
+				draw_strip();
+				send_flip();
+				dispatch(it);
+				break;
+			}
+			case LaunchAction::RESTART:
+			case LaunchAction::SHUTDOWN:
+				close_menus();
+				power(act.kind == LaunchAction::SHUTDOWN);
+				break;
+			case LaunchAction::LOGOUT:
+				close_menus();
+				::exit(0); /* log out — vlogin shows the lock screen */
+			default:
+				break;
+		}
+	}
+
+	/**
+	 * Restart or shut down: cover the screen with the power page (so the user
+	 * sees what is happening while disks sync), then ask for it via
+	 * ubix_power() — through init when the session user is not root.
+	 */
+	void power(bool off)
+	{
+		mpi_message_t claim = {};
+		struct display_claim_req *creq = (struct display_claim_req *)claim.data;
+		claim.header = DISPLAY_CLAIM;
+		creq->x = 0;
+		creq->y = 0;
+		creq->w = (int32_t)sw_;
+		creq->h = (int32_t)sh_;
+		creq->sender_pid = ubix::pid();
+		creq->no_decor = 1;
+		std::strncpy(creq->title, "power", sizeof(creq->title) - 1);
+		std::strncpy(creq->reply, "taskbar", sizeof(creq->reply) - 1);
+		ubix::post_message("views", DISPLAY_CLAIM, claim);
+
+		mpi_message_t reply;
+		await_reply(*mbox_, reply, DISPLAY_ACK, DISPLAY_DENIED);
+		if (reply.header == DISPLAY_ACK)
+		{
+			struct display_ack *da = (struct display_ack *)reply.data;
+			ogSurface ps;
+			ps.ogAttach(da->shm_base, sw_, sh_, OG_PIXFMT_32BPP);
+			ui_canvas pc;
+			pc.px = (uint32_t *)ps.ogGetPtr(0, 0);
+			pc.w = (int)sw_;
+			pc.h = (int)sh_;
+			pc.stride = (int)((uint8_t *)ps.ogGetPtr(0, 1) - (uint8_t *)ps.ogGetPtr(0, 0)) / 4;
+			ogScalableFont title;
+			title.Load(FONT_PATH, 19); /* 16px */
+			ui_power_screen(pc,
+			                ps,
+			                title,
+			                font_,
+			                off ? "Shutting down..." : "Restarting...",
+			                "Closing apps and syncing disks");
+			send_flip_msg(da->window_id);
+			struct timespec ts = {0, 700 * 1000 * 1000}; /* let it be seen */
+			nanosleep(&ts, nullptr);
+		}
+		ubix_power(off ? UBIX_POWER_OFF : UBIX_POWER_REBOOT);
+	}
+
+	/* A key while one of our pop-overs has focus (only the launcher types). */
+	void on_key(const display_key *dk)
+	{
+		if (!dk->pressed || !panel_.is_open())
+			return;
+		do_launch_action(panel_.on_key(dk->keycode));
+	}
+
+	/* Super key: open the launcher (or close it if open). */
+	void toggle_launcher(ubix::Mailbox &mbox)
+	{
+		bool was = panel_.is_open();
+		close_menus();
+		if (!was)
+			panel_.show((int)sw_, (int)sh_, mbox);
+		draw_strip();
+		send_flip();
+	}
+
+	/* Focus moved to another window: an open launcher closes, like a menu. */
+	void focus_changed(uint32_t id)
+	{
+		if (id != 0 && panel_.is_open())
+		{
+			close_menus();
+			draw_strip();
+			send_flip();
+		}
 	}
 
 	/* Run a leaf entry: a built-in "@action" or a program to launch. */
@@ -1256,32 +2110,6 @@ class Taskbar
 		launcher_.launch(it.exec.c_str());
 	}
 
-	/* Open the submenu for a top-level entry beside its row, on-screen. */
-	void open_submenu(const MenuItem &parent, int row, ubix::Mailbox &mbox)
-	{
-		submenu_.hide();
-		submenu_.load((parent.path + "/items").c_str());
-
-		/* Gap so the submenu clears the compositor's ~10px window drop shadow:
-		 * opening flush let the submenu's left shadow darken the parent menu's
-		 * right edge — the reported "submenu overlaps the main menu". */
-		const int GAP = 10; /* == draw_window_shadow() reach in compositor.cc */
-		int sx = start_menu_.x() + start_menu_.w() + GAP;
-		int sy = start_menu_.y() + row * MENU_ITEM_H;
-		int sh_px = submenu_.count() * MENU_ITEM_H;
-		/* No room on the right?  Open to the LEFT of the parent — but only with
-		 * real room there; never clamp into a spot that overlaps the parent (the
-		 * old `x - MENU_W` could go negative and get pinned onto the menu). */
-		if (sx + MENU_W > (int)sw_)
-		{
-			int left = start_menu_.x() - MENU_W - GAP;
-			sx = (left >= 0) ? left : (int)sw_ - MENU_W;
-		}
-		if (sy + sh_px > (int)sh_ - TB_H)
-			sy = (int)sh_ - TB_H - sh_px;
-		submenu_.show(sx, sy, mbox, font_);
-	}
-
 	/* Update hover highlight from a pointer event (motion or click).  Negative
 	 * coords are the "cursor left" signal; they clear the relevant hover. */
 	void update_hover(const display_mouse_ev *me)
@@ -1289,27 +2117,22 @@ class Taskbar
 		bool exited = (me->x < 0);
 		if (me->window_id == win_id_)
 		{
-			bool hs = !exited && (me->x >= 2 && me->x < 2 + BTN_W);
+			bool hs = !exited && start_hit(me->x);
 			int ht = exited ? -1 : winbtn_hit(me->x);
 			bool hv = !exited && vol_hit(me->x);
-			if (hs != hover_start_ || ht != hover_tab_ || hv != hover_vol_)
+			bool hc = !exited && clock_hit(me->x);
+			bool hn = !exited && net_hit(me->x);
+			if (hs != hover_start_ || ht != hover_tab_ || hv != hover_vol_ || hc != hover_clock_ ||
+			    hn != hover_net_)
 			{
 				hover_start_ = hs;
 				hover_tab_ = ht;
 				hover_vol_ = hv;
+				hover_clock_ = hc;
+				hover_net_ = hn;
 				draw_strip();
 				send_flip();
 			}
-		}
-		else if (me->window_id == start_menu_.win_id() && start_menu_.is_open())
-		{
-			if (start_menu_.set_hover(exited ? -1 : start_menu_.hit_item(me->y)))
-				start_menu_.redraw(font_);
-		}
-		else if (me->window_id == submenu_.win_id() && submenu_.is_open())
-		{
-			if (submenu_.set_hover(exited ? -1 : submenu_.hit_item(me->y)))
-				submenu_.redraw(font_);
 		}
 	}
 
@@ -1318,54 +2141,29 @@ class Taskbar
 		bool down = (me->buttons & 1) != 0;
 		bool click = !down && prev_down_; /* release edge = a completed click */
 		prev_down_ = down;
+		bool mdown = (me->buttons & 4) != 0; /* middle button */
+		bool mclick = !mdown && prev_mdown_;
+		prev_mdown_ = mdown;
 
 		update_hover(me);
+
+		/* Launcher: hover, categories, launching. */
+		if (panel_.is_open() && me->window_id == panel_.win_id())
+		{
+			do_launch_action(panel_.on_mouse(me, click));
+			return;
+		}
 
 		/* Mixer flyout: drag a slider (press + motion); clicks stay inside it. */
 		if (me->window_id == mixer_.win_id() && mixer_.is_open())
 		{
 			mixer_.on_event(me, font_);
-			return;
-		}
-
-		/* Submenu click: dispatch the chosen leaf. */
-		if (me->window_id == submenu_.win_id() && submenu_.is_open())
-		{
-			if (click)
+			if (mixer_.master() != volume_ || mixer_.master_muted() != muted_)
 			{
-				const MenuItem *it = submenu_.item(submenu_.hit_item(me->y));
-				MenuItem sel = it ? *it : MenuItem();
-				close_menus();
-				if (it)
-					dispatch(sel);
-			}
-			return;
-		}
-
-		/* Top-level menu click: power button, cascade a submenu, or dispatch. */
-		if (me->window_id == start_menu_.win_id() && start_menu_.is_open())
-		{
-			if (click)
-			{
-				if (start_menu_.footer_power_hit(me->x, me->y))
-				{
-					close_menus();
-					::exit(0); /* log out — vlogin resumes the session */
-				}
-				int row = start_menu_.hit_item(me->y);
-				const MenuItem *it = start_menu_.item(row);
-				if (it && it->submenu)
-				{
-					start_menu_.set_active_row(row); /* keep parent lit */
-					open_submenu(*it, row, mbox);
-				}
-				else
-				{
-					MenuItem sel = it ? *it : MenuItem();
-					close_menus();
-					if (it)
-						dispatch(sel);
-				}
+				volume_ = mixer_.master(); /* the tray follows the slider live */
+				muted_ = mixer_.master_muted();
+				draw_strip();
+				send_flip();
 			}
 			return;
 		}
@@ -1377,14 +2175,43 @@ class Taskbar
 			draw_strip();
 			send_flip();
 		}
+		if (mclick && me->window_id == win_id_)
+		{
+			int mi = winbtn_hit(me->x); /* middle-click closes the window */
+			if (mi >= 0)
+				win_ctl(tracked_[mi].id, WINCTL_CLOSE);
+			return;
+		}
 		if (!click)
 			return;
 
 		int wi = winbtn_hit(me->x);
 		if (wi >= 0)
 		{
+			/* Design: clicking the focused window's item minimizes it; any
+			 * other (or minimized) window is raised / restored. */
 			close_menus();
-			raise_window(tracked_[wi].id);
+			if (tracked_[wi].id == focused_id_)
+				win_ctl(tracked_[wi].id, WINCTL_MINIMIZE);
+			else
+				raise_window(tracked_[wi].id);
+			return;
+		}
+		if (net_hit(me->x))
+		{
+			close_menus();
+			MenuItem it;
+			it.label = "Settings";
+			it.exec = "/bin/settings network"; /* opens on the Network pane */
+			dispatch(it);
+			return;
+		}
+		if (clock_hit(me->x))
+		{
+			bool was = cal_.is_open();
+			close_menus();
+			if (!was)
+				cal_.show(clock_x_ + clock_w_, (int)sh_, mbox);
 			return;
 		}
 		if (vol_hit(me->x))
@@ -1397,25 +2224,24 @@ class Taskbar
 			else
 			{
 				close_menus();
-				int tray_right = (int)sw_ - CLOCK_W - 2;
+				int tray_right = vol_x_ + vol_w_;
 				mixer_.set_master(volume_, muted_);
 				mixer_.show(tray_right, (int)sh_, mbox, font_);
 			}
 			return;
 		}
-		bool in_btn = (me->x >= 2 && me->x < 2 + BTN_W);
+		bool in_btn = start_hit(me->x);
 		if (in_btn)
 		{
-			if (start_menu_.is_open())
-			{
+			if (panel_.is_open())
 				close_menus();
-			}
 			else
 			{
-				start_menu_.load("/views/startmenu");
-				start_menu_.set_footer(true); /* user + power row */
-				start_menu_.show(2, (int)sh_ - TB_H - start_menu_.height(), mbox, font_);
+				close_menus();
+				panel_.show((int)sw_, (int)sh_, mbox);
 			}
+			draw_strip(); /* pill shows the open state */
+			send_flip();
 		}
 		else
 		{
@@ -1451,29 +2277,55 @@ int main(int argc, char **argv)
 	tb.draw();
 	tb.send_flip();
 
-	int last_sec = -1;
+	int last_sec = -1, last_min = gettime() / 60;
 	for (;;)
 	{
-		int t = gettime() % 60;
-		if (t != last_sec)
+		/* Once a second, pick up volume/mute changes; repaint only when the
+		 * volume or the clock's minute actually changed (the strip and its
+		 * shape pass are not free on Pi-class hardware). */
+		int now = gettime();
+		if (now % 60 != last_sec)
 		{
-			last_sec = t;
-			tb.refresh_volume(); /* pick up volume/mute changes once a second */
-			tb.draw();
-			tb.send_flip();
+			last_sec = now % 60;
+			bool changed = tb.refresh_volume();
+			changed |= tb.refresh_net();
+			if (changed || now / 60 != last_min)
+			{
+				last_min = now / 60;
+				tb.draw();
+				tb.send_flip();
+			}
 		}
 
 		/* Block on the mailbox instead of busy-yielding: wake instantly on a client
 		 * message (input/focus/notify/theme/resize), or after ~0.2 s (20 ticks) to
 		 * repaint the live seconds clock.  Drops an idle taskbar from ~82% CPU to
 		 * ~1% — the residual is the unavoidable cost of a ticking seconds display. */
+		/* Messages set aside while waiting for a reply come first, in order. */
+		auto next = [&](mpi_message_t &m) -> bool
+		{
+			if (g_deferred.empty())
+				return mbox.try_fetch(m);
+			m = g_deferred.front();
+			g_deferred.pop_front();
+			return true;
+		};
 		mpi_message_t reply;
-		if (!mbox.wait(reply, 20))
+		if (!next(reply) && !mbox.wait(reply, 20))
 			continue;
 		do
 		{
 			if (reply.header == DISPLAY_KEY)
+			{
+				tb.on_key((const display_key *)reply.data);
 				continue;
+			}
+
+			if (reply.header == DISPLAY_LAUNCHER)
+			{
+				tb.toggle_launcher(mbox);
+				continue;
+			}
 
 			if (reply.header == DISPLAY_THEME)
 			{
@@ -1510,6 +2362,7 @@ int main(int argc, char **argv)
 			{
 				struct display_focus *df = (struct display_focus *)reply.data;
 				tb.set_focused_id(df->window_id);
+				tb.focus_changed(df->window_id);
 				tb.draw();
 				tb.send_flip();
 				continue;
@@ -1520,7 +2373,7 @@ int main(int argc, char **argv)
 
 			struct display_mouse_ev *me = (struct display_mouse_ev *)reply.data;
 			tb.on_mouse(me, mbox);
-		} while (mbox.try_fetch(reply));
+		} while (next(reply));
 	}
 
 	return 0;
