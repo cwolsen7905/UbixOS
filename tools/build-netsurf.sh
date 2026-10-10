@@ -66,9 +66,12 @@ if [ ! -x "$NSGENBIND_BIN" ]; then
 	echo "==> Building nsgenbind (host JS-binding generator)"
 	# CC=cc forces NetSurf's buildsystem to detect the host clang (Apple LLVM)
 	# rather than hunting for a <triplet>-gcc that doesn't exist on macOS.
+	# env -u BUILD: our BUILD (the output dir, exported by bmake) is the build-
+	# machine triplet to NetSurf's buildsystem — leaking it in yields a bogus
+	# build-/abs/path-... output dir the glob below never finds.
 	( cd "$NSGENBIND_SRC"
 	  PATH="${BISON_PATH:+$BISON_PATH:}/usr/bin:$PATH" \
-	    "$GMAKE" NSSHARED="$NSBUILD" CC=cc >"$BUILD/nsgenbind-build.log" 2>&1 )
+	    env -u BUILD "$GMAKE" NSSHARED="$NSBUILD" CC=cc >"$BUILD/nsgenbind-build.log" 2>&1 )
 	GEN=$(ls -d "$NSGENBIND_SRC"/build-*/nsgenbind 2>/dev/null | head -1)
 	[ -n "$GEN" ] || { echo "ERROR: nsgenbind build failed (see $BUILD/nsgenbind-build.log)" >&2; exit 1; }
 	mkdir -p "$BUILD/netsurf-tools"

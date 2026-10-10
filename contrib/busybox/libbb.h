@@ -934,7 +934,7 @@ FILE  *xfopen_stdin(const char *filename);
 FILE  *fopen_for_read(const char *filename);
 FILE  *fopen_for_write(const char *filename);
 char  *xmalloc_fgetline(FILE *fp);
-char  *bb_get_chunk_from_file(FILE *file, int *end);
+char  *bb_get_chunk_from_file(FILE *file, size_t *end);
 char  bb_process_escape_sequence(const char **ptr);
 void   bb_simple_perror_msg_and_die(const char *s) NORETURN;
 FILE  *fopen_or_warn(const char *path, const char *mode);
