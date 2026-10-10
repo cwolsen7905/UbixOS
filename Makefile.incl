@@ -17,6 +17,13 @@
 .if defined(TARGET) && !empty(TARGET)
 TARGET_ARCH ?= ${TARGET}
 .endif
+.if !defined(TARGET_ARCH)
+# Building on uBixOS itself: default to this machine's architecture.
+_UBIX_HOST_OS != uname -s
+.if ${_UBIX_HOST_OS} == "UBIX"
+TARGET_ARCH != uname -m
+.endif
+.endif
 TARGET_ARCH ?= aarch64
 _ARCH       ?= ${TARGET_ARCH}
 

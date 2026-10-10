@@ -11,6 +11,8 @@
 # i386-only build flags and stay i386-only until their Makefiles are
 # de-hardcoded.  crt.a is an x86_64-elf libgcc shim (real aarch64 libgcc is
 # complete) and is not on the bin/ link line, so it is omitted.
+.include "../Makefile.incl" # _ARCH and the toolchain, for a direct `bmake` here
+
 .if ${_ARCH} == "aarch64"
 all: ubix_api-code objgfx-code libaudio-code libbearssl-code libpw-code libhttp-code zlib-code \
      libwapcaplet-code libparserutils-code libcss-code libhubbub-code libdom-code \

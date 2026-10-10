@@ -665,8 +665,13 @@ size_t fwrite(void *ptr, int size, int nmemb, fileDescriptor_t *fd)
 
 	if (fd != 0x0 && fd->mp->fs->vfsWrite != NULL)
 	{
+		/* O_APPEND ("a"): every write goes to the current end of the file.
+		 * fd->size is kept current by the filesystems' write paths. */
+		if (fd->mode & fileAppend)
+			fd->offset = fd->size;
 		res = fd->mp->fs->vfsWrite(fd, ptr, fd->offset, size * nmemb);
-		fd->offset += size * nmemb;
+		if (res > 0)
+			fd->offset += res;
 	}
 	return (res);
 }

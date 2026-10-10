@@ -1644,8 +1644,9 @@ static unsigned vgetopt32(char **argv, const char *applet_opts, va_list ap)
 		char  letter;
 		char  takes_arg;
 		char  is_star;
+		char  is_num;
 		void *target;
-	} opts[16];
+	} opts[32]; /* getopt32 returns a 32-bit mask */
 	int nopts = 0;
 	const char *p = applet_opts;
 
@@ -1655,14 +1656,17 @@ static unsigned vgetopt32(char **argv, const char *applet_opts, va_list ap)
 	while (*p == '^' || *p == '!' || *p == '+' || *p == '-')
 		p++;
 
-	while (*p && nopts < 16) {
+	while (*p && nopts < 32) {
 		opts[nopts].letter    = *p++;
 		opts[nopts].takes_arg = 0;
 		opts[nopts].is_star   = 0;
+		opts[nopts].is_num    = 0;
 		opts[nopts].target    = NULL;
 		while (*p == ':' || *p == '*' || *p == '+') {
 			if (*p == ':') opts[nopts].takes_arg = 1;
 			if (*p == '*') opts[nopts].is_star   = 1;
+			/* "x:+" = numeric argument, stored as an int (upstream) */
+			if (*p == '+' && opts[nopts].takes_arg) opts[nopts].is_num = 1;
 			p++;
 		}
 		nopts++;
@@ -1707,11 +1711,16 @@ static unsigned vgetopt32(char **argv, const char *applet_opts, va_list ap)
 					bb_show_usage();
 				}
 				if (opts[found].is_star) {
+					/* append, as upstream's llist_add_to_end: -e A -e B keeps order */
 					llist_t **head = (llist_t **)opts[found].target;
 					llist_t *node = xmalloc(sizeof(llist_t));
 					node->data = xstrdup(val);
-					node->link = *head;
+					node->link = NULL;
+					while (*head)
+						head = &(*head)->link;
 					*head = node;
+				} else if (opts[found].is_num && opts[found].target) {
+					*(int *)opts[found].target = atoi(val);
 				} else if (opts[found].target) {
 					*(char **)opts[found].target = xstrdup(val);
 				}
