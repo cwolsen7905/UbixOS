@@ -11,7 +11,7 @@
 # Default _ARCH for a DIRECT in-tree build (no Makefile.incl here); a top-down/
 # cross build's exported _ARCH wins via ?=.  See bin/Makefile for the rationale.
 _ARCH ?= aarch64
-SUBDIRS = syscheck filetest pipetest selfhostck ttytest udptest fbtest sigtest
+SUBDIRS = syscheck filetest pipetest selfhostck ttytest udptest fbtest sigtest vfstest
 .if ${_ARCH} == "i386"
 SUBDIRS += clonetest tlstest futextest pthreadtest condtest detachtest vmtest \
            nsfbtest rndtest pwtest ssltest hello

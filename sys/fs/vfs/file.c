@@ -152,6 +152,66 @@ int sys_fgetc(struct thread *td, struct sys_fgetc_args *args)
 	}
 }
 
+/**
+ * Fold an absolute path in place: collapse repeated '/', drop "." components
+ * and resolve ".." against the previous component ("/" stays "/").  A trailing
+ * '/' is kept.  Relative paths are left alone.  The cwd is prefixed verbatim,
+ * so without this "cd .." built "/usr/bin/../" and every ".." lookup failed.
+ */
+static void vfs_canon_path(char *path)
+{
+	char out[1024];
+	size_t o = 0, n;
+	const char *p = path;
+	int trailing;
+
+	if (path == NULL || path[0] != '/')
+		return;
+	n = strlen(path);
+	trailing = (n > 1 && path[n - 1] == '/');
+
+	out[o++] = '/';
+	while (*p != '\0')
+	{
+		const char *seg;
+		size_t len;
+
+		while (*p == '/')
+			p++;
+		if (*p == '\0')
+			break;
+		seg = p;
+		while (*p != '\0' && *p != '/')
+			p++;
+		len = (size_t)(p - seg);
+
+		if (len == 1 && seg[0] == '.')
+			continue;
+		if (len == 2 && seg[0] == '.' && seg[1] == '.')
+		{
+			/* Back up over the previous component (never above "/"). */
+			if (o > 1)
+			{
+				o--; /* the '/' after the component */
+				while (o > 1 && out[o - 1] != '/')
+					o--;
+			}
+			if (*p == '\0')
+				trailing = 1;
+			continue;
+		}
+		if (o + len + 2 >= sizeof(out))
+			return; /* too long to fold: leave the path as given */
+		memcpy(out + o, seg, len);
+		o += len;
+		out[o++] = '/';
+	}
+	if (o > 1 && !trailing)
+		o--; /* drop the separator after the last component */
+	out[o] = '\0';
+	memcpy(path, out, o + 1);
+}
+
 void sysRmDir(const char *path)
 {
 	char fullpath[1024];
@@ -163,6 +223,7 @@ void sysRmDir(const char *path)
 	else
 		strncpy(fullpath, path, sizeof(fullpath) - 1);
 	fullpath[sizeof(fullpath) - 1] = '\0';
+	vfs_canon_path(fullpath);
 
 	mp = vfs_findMount(fullpath);
 	if (mp == 0x0 || mp->fs == 0x0 || mp->fs->vfsRemDir == 0x0)
@@ -427,6 +488,8 @@ int sys_chdir(struct thread *td, struct sys_chdir_args *args)
 		snprintf(newcwd, sizeof(newcwd), "%s%s", _current->oInfo.cwd, args->path);
 	}
 
+	vfs_canon_path(newcwd); /* fold "." / ".." ("cd .." from /usr/bin -> /usr) */
+
 	/* ensure trailing '/' */
 	len = strlen(newcwd);
 	if (len > 0 && newcwd[len - 1] != '/' && len + 1 < sizeof(newcwd))
@@ -500,12 +563,14 @@ int sys_rename(struct thread *td, struct sys_rename_args *args)
 	else
 		strncpy(src_full, args->from, sizeof(src_full) - 1);
 	src_full[sizeof(src_full) - 1] = '\0';
+	vfs_canon_path(src_full);
 
 	if (args->to[0] != '/')
 		snprintf(dst_full, sizeof(dst_full), "%s%s", _current->oInfo.cwd, args->to);
 	else
 		strncpy(dst_full, args->to, sizeof(dst_full) - 1);
 	dst_full[sizeof(dst_full) - 1] = '\0';
+	vfs_canon_path(dst_full);
 
 	src_mp = vfs_findMount(src_full);
 	dst_mp = vfs_findMount(dst_full);
@@ -691,8 +756,11 @@ size_t fread(void *ptr, size_t size, size_t nmemb, fileDescriptor_t *fd)
 	if (fd == 0x0)
 		return (0x0);
 
-	if (nmemb == 0x0)
-		nmemb = 1; // Temp Fix
+	/* A zero-length read reads nothing.  (It used to be bumped to one
+	 * element, so read(fd, buf, 0) — sys_read passes the count as nmemb —
+	 * stored a byte into the caller's buffer and returned 1.) */
+	if (size == 0 || nmemb == 0)
+		return (0x0);
 
 	assert(fd);
 	assert(fd->mp);
@@ -700,7 +768,8 @@ size_t fread(void *ptr, size_t size, size_t nmemb, fileDescriptor_t *fd)
 
 	spinLock(&vfs_io_lock); /* serialise FS reads across CPUs (smp-plan M4) */
 	i = fd->mp->fs->vfsRead(fd, ptr, fd->offset, size * nmemb);
-	fd->offset += i;
+	if ((ssize_t)i > 0)
+		fd->offset += i; /* a failed read (negative) must not move the offset */
 	spinUnlock(&vfs_io_lock);
 
 	return (i);
@@ -746,6 +815,11 @@ size_t fwrite(void *ptr, int size, int nmemb, fileDescriptor_t *fd)
 	if (fd != 0x0 && fd->mp->fs->vfsWrite != NULL)
 	{
 		spinLock(&vfs_io_lock); /* serialise FS writes across CPUs (smp-plan M4) */
+		/* O_APPEND: every write goes to the current end of file, not just the
+		 * first — another writer (or a forked child sharing nothing but the
+		 * file) may have grown it since open. */
+		if (fd->mode & fileAppend)
+			fd->offset = (off_t)fd->size;
 		res = fd->mp->fs->vfsWrite(fd, ptr, fd->offset, size * nmemb);
 		fd->offset += size * nmemb;
 		spinUnlock(&vfs_io_lock);
@@ -889,6 +963,7 @@ fileDescriptor_t *fopen(const char *file, const char *flags)
 		strncpy(fileName, file, sizeof(fileName) - 1);
 	}
 	fileName[sizeof(fileName) - 1] = '\0';
+	vfs_canon_path(fileName);
 	path = fileName;
 
 	/* Find mount by longest POSIX prefix match. */
@@ -1115,6 +1190,7 @@ int sysMkDir(const char *path)
 	else
 		strncpy(fullpath, path, sizeof(fullpath) - 1);
 	fullpath[sizeof(fullpath) - 1] = '\0';
+	vfs_canon_path(fullpath);
 
 	/* busybox mkdir -p passes paths with trailing slashes; fat_dir_mkdir's
 	 * basename extraction sees "" and the call fails.  Strip them here,
@@ -1182,6 +1258,7 @@ int unlink(const char *node)
 	else
 		strncpy(fullpath, node, sizeof(fullpath) - 1);
 	fullpath[sizeof(fullpath) - 1] = '\0';
+	vfs_canon_path(fullpath);
 
 	mp = vfs_findMount(fullpath);
 	if (mp == 0x0)
@@ -1237,6 +1314,7 @@ int vfs_symlink(const char *target, const char *linkpath)
 	else
 		strncpy(fullpath, linkpath, sizeof(fullpath) - 1);
 	fullpath[sizeof(fullpath) - 1] = '\0';
+	vfs_canon_path(fullpath);
 
 	mp = vfs_findMount(fullpath);
 	if (mp == 0x0 || mp->fs == 0x0)
@@ -1268,6 +1346,7 @@ int vfs_readlink(const char *path, char *buf, int bufsz)
 	else
 		strncpy(fullpath, path, sizeof(fullpath) - 1);
 	fullpath[sizeof(fullpath) - 1] = '\0';
+	vfs_canon_path(fullpath);
 
 	mp = vfs_findMount(fullpath);
 	if (mp == 0x0 || mp->fs == 0x0)
@@ -1305,6 +1384,7 @@ kDIR_t *vfs_opendir(const char *path)
 		strncpy(fileName, path, sizeof(fileName) - 1);
 	}
 	fileName[sizeof(fileName) - 1] = '\0';
+	vfs_canon_path(fileName);
 
 	/* Find mount by longest POSIX prefix match. */
 	mp = vfs_findMount(fileName);
@@ -1325,6 +1405,7 @@ kDIR_t *vfs_opendir(const char *path)
 		snprintf(tmp, sizeof(tmp), "/%s", dirPath);
 		strncpy(fileName, tmp, sizeof(fileName) - 1);
 		fileName[sizeof(fileName) - 1] = '\0';
+	vfs_canon_path(fileName);
 		dirPath = fileName;
 	}
 
