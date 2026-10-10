@@ -41,6 +41,35 @@
 #include <string.h>
 #include <assert.h>
 
+/*
+ * The userland ABI for sigaction/sigprocmask is musl's (Linux-style): every
+ * program is built against musl, which issues rt_sigaction/rt_sigprocmask
+ * (UbixOS slots 416/340) with its own kernel structure and flag values.  The
+ * kernel keeps FreeBSD-style state internally; these helpers translate at the
+ * boundary.  Getting this wrong corrupted user memory — the kernel used to copy
+ * its 16-byte sigset_t into musl's 8-byte buffers (clobbering the caller's
+ * stack) — and misread flags (musl SA_SIGINFO == kernel SA_RESETHAND).
+ */
+struct musl_ksigaction
+{
+	void *handler;
+	unsigned long flags;
+	void *restorer;
+	u_int32_t mask[2]; /* musl _NSIG/8 == 8 bytes: signals 1..64 */
+};
+
+/* musl (Linux) sa_flags values, identical on i386 and aarch64. */
+#define MUSL_SA_NOCLDSTOP 0x00000001UL
+#define MUSL_SA_NOCLDWAIT 0x00000002UL
+#define MUSL_SA_SIGINFO 0x00000004UL
+#define MUSL_SA_ONSTACK 0x08000000UL
+#define MUSL_SA_RESTART 0x10000000UL
+#define MUSL_SA_NODEFER 0x40000000UL
+#define MUSL_SA_RESETHAND 0x80000000UL
+
+/* Bytes of a user sigset musl passes (its _NSIG/8). */
+#define MUSL_SIGSET_BYTES 8
+
 /* -----------------------------------------------------------------------
  * Signals with SIG_DFL action = terminate the process.
  * Bit N-1 represents signal N (same encoding as sig_pending).
@@ -386,6 +415,27 @@ void signal_exec_reset(struct thread *td)
 	}
 }
 
+/*
+ * 64-bit siginfo for SA_SIGINFO handlers, in musl's (Linux) layout: si_signo,
+ * si_errno, si_code, then the union at offset 16; 128 bytes total.  Built on
+ * the user stack above the sigcontext; the kernel fills signo and code (SI_USER).
+ */
+#if defined(__aarch64__) || defined(__x86_64__)
+#define UBX_SIGINFO64_BYTES 128
+
+static u_int64_t signal_push_siginfo(u_int64_t sp, int sig)
+{
+	u_int64_t si = (sp - UBX_SIGINFO64_BYTES) & ~(u_int64_t)15;
+	int *w = (int *)(uintptr_t)si;
+
+	memset(w, 0, UBX_SIGINFO64_BYTES);
+	w[0] = sig; /* si_signo */
+	w[1] = 0;   /* si_errno */
+	w[2] = 0;   /* si_code = SI_USER */
+	return si;
+}
+#endif
+
 #if defined(__i386__)
 
 /**
@@ -594,7 +644,11 @@ int sys_sigreturn(struct thread *td, struct sys_sigreturn_args *args)
  */
 void signal_deliver_frame(int sig, struct sigaction *sa, struct trapframe *frame, struct thread *td)
 {
-	u_int64_t new_sp = (frame->tf_sp - (u_int64_t)sizeof(struct ubx_sigframe)) & ~(u_int64_t)15;
+	/* SA_SIGINFO: a real siginfo above the frame (the handler used to get NULL,
+	 * so si->si_signo faulted). */
+	u_int64_t si = (sa->sa_flags & SA_SIGINFO) ? signal_push_siginfo(frame->tf_sp, sig) : 0;
+	u_int64_t top = si ? si : frame->tf_sp;
+	u_int64_t new_sp = (top - (u_int64_t)sizeof(struct ubx_sigframe)) & ~(u_int64_t)15;
 	struct ubx_sigframe *fp = (struct ubx_sigframe *)(uintptr_t)new_sp;
 	struct ubx_sigcontext *sc = &fp->sf_sc;
 
@@ -621,8 +675,8 @@ void signal_deliver_frame(int sig, struct sigaction *sa, struct trapframe *frame
 		td->sigmask.__bits[0] |= (1u << (sig - 1));
 
 	frame->tf_x[0] = (u_int64_t)(unsigned)sig;
-	frame->tf_x[1] = 0;
-	frame->tf_x[2] = 0;
+	frame->tf_x[1] = si; /* siginfo_t * (0 unless SA_SIGINFO) */
+	frame->tf_x[2] = 0;  /* ucontext: not provided */
 	frame->tf_x[30] = AARCH64_SIGTRAMP_RETADDR;
 	frame->tf_sp = new_sp;
 	frame->tf_elr =
@@ -675,7 +729,12 @@ int sys_sigreturn(struct thread *td, struct sys_sigreturn_args *args)
  */
 void signal_deliver_frame(int sig, struct sigaction *sa, struct trapframe *frame, struct thread *td)
 {
-	u_int64_t sc_addr = (frame->tf_rsp - (u_int64_t)sizeof(struct ubx_sigcontext)) & ~(u_int64_t)15;
+	/* Skip the SysV 128-byte red zone below RSP: a leaf function may keep live
+	 * data there, which the frame would otherwise overwrite. */
+	u_int64_t below = frame->tf_rsp - 128;
+	u_int64_t si = (sa->sa_flags & SA_SIGINFO) ? signal_push_siginfo(below, sig) : 0;
+	u_int64_t top = si ? si : below;
+	u_int64_t sc_addr = (top - (u_int64_t)sizeof(struct ubx_sigcontext)) & ~(u_int64_t)15;
 	u_int64_t new_rsp = sc_addr - 8; /* the magic return address sits here */
 	struct ubx_sigcontext *sc = (struct ubx_sigcontext *)(uintptr_t)sc_addr;
 
@@ -715,6 +774,8 @@ void signal_deliver_frame(int sig, struct sigaction *sa, struct trapframe *frame
 	*(u_int64_t *)(uintptr_t)new_rsp = X86_64_SIGTRAMP_RETADDR;
 
 	frame->tf_rdi = (u_int64_t)(unsigned)sig; /* handler's first arg */
+	frame->tf_rsi = si;                       /* siginfo_t * (0 unless SA_SIGINFO) */
+	frame->tf_rdx = 0;                        /* ucontext: not provided */
 	frame->tf_rsp = new_rsp;
 	frame->tf_rip =
 	    (sa->sa_flags & SA_SIGINFO) ? (u_int64_t)(uintptr_t)sa->sa_sigaction : (u_int64_t)(uintptr_t)sa->sa_handler;
@@ -777,21 +838,28 @@ int sys_sigreturn(struct thread *td, struct sys_sigreturn_args *args)
  */
 int sys_sigprocmask(struct thread *td, struct sys_sigprocmask_args *args)
 {
+	sigset_t in;
+
 	td->td_retval[0] = -1;
 
+	/* musl's sigsets are MUSL_SIGSET_BYTES (signals 1..64): copy exactly that
+	 * much each way, never the kernel's wider sigset_t. */
 	if (args->oset != 0x0)
 	{
-		memcpy(args->oset, &td->sigmask, sizeof(sigset_t));
+		memcpy(args->oset, &td->sigmask, MUSL_SIGSET_BYTES);
 		td->td_retval[0] = 0x0;
 	}
 
 	if (args->set != 0x0)
 	{
+		memset(&in, 0, sizeof(in));
+		memcpy(&in, args->set, MUSL_SIGSET_BYTES);
 		if (args->how == SIG_SETMASK)
 		{
 			if (args->set != 0x0)
 			{
-				memcpy(&td->sigmask, args->set, sizeof(sigset_t));
+				td->sigmask.__bits[0] = in.__bits[0];
+				td->sigmask.__bits[1] = in.__bits[1];
 				td->td_retval[0] = 0;
 			}
 			else
@@ -803,10 +871,10 @@ int sys_sigprocmask(struct thread *td, struct sys_sigprocmask_args *args)
 		{
 			if (args->set != 0x0)
 			{
-				td->sigmask.__bits[0] |= args->set->__bits[0];
-				td->sigmask.__bits[1] |= args->set->__bits[1];
-				td->sigmask.__bits[2] |= args->set->__bits[2];
-				td->sigmask.__bits[3] |= args->set->__bits[3];
+				td->sigmask.__bits[0] |= in.__bits[0];
+				td->sigmask.__bits[1] |= in.__bits[1];
+				td->sigmask.__bits[2] |= in.__bits[2];
+				td->sigmask.__bits[3] |= in.__bits[3];
 				td->td_retval[0] = 0;
 			}
 			else
@@ -818,10 +886,10 @@ int sys_sigprocmask(struct thread *td, struct sys_sigprocmask_args *args)
 		{
 			if (args->set != 0x0)
 			{
-				td->sigmask.__bits[0] &= ~args->set->__bits[0];
-				td->sigmask.__bits[1] &= ~args->set->__bits[1];
-				td->sigmask.__bits[2] &= ~args->set->__bits[2];
-				td->sigmask.__bits[3] &= ~args->set->__bits[3];
+				td->sigmask.__bits[0] &= ~in.__bits[0];
+				td->sigmask.__bits[1] &= ~in.__bits[1];
+				td->sigmask.__bits[2] &= ~in.__bits[2];
+				td->sigmask.__bits[3] &= ~in.__bits[3];
 				td->td_retval[0] = 0;
 			}
 			else
@@ -895,6 +963,7 @@ void signal_ast_check(void)
 				        sig,
 				        _current->id,
 				        _current->name);
+				_current->exit_signal = (u_int8_t)(sig & 0x7f); /* wait4 W_SIGNALED */
 				endTask(_current->id);
 				/* Loop: see the SIG_DFL terminate above — a bailed yield must
 				 * never resume the dead task. */
@@ -940,7 +1009,8 @@ int sys_sigsuspend(struct thread *td, struct sys_sigsuspend_args *args)
 	memcpy(&td->td_oldsigmask, &td->sigmask, sizeof(sigset_t));
 	td->td_pflags |= TDP_OLDMASK;
 
-	memcpy(&td->sigmask, args->sigmask, sizeof(sigset_t));
+	memset(&td->sigmask, 0, sizeof(sigset_t));
+	memcpy(&td->sigmask, args->sigmask, MUSL_SIGSET_BYTES); /* musl's 8-byte set */
 	td->sigmask.__bits[0] &= ~(1u << (SIGKILL - 1));
 
 	/* Spin (yielding) until an unblocked signal arrives. */
@@ -959,6 +1029,54 @@ int sys_sigsuspend(struct thread *td, struct sys_sigsuspend_args *args)
 }
 
 /**
+ * Translate musl sa_flags to the kernel's (FreeBSD-valued) SA_* flags.
+ */
+static int musl_to_kernel_saflags(unsigned long f)
+{
+	int k = 0;
+
+	if (f & MUSL_SA_NOCLDSTOP)
+		k |= SA_NOCLDSTOP;
+	if (f & MUSL_SA_NOCLDWAIT)
+		k |= SA_NOCLDWAIT;
+	if (f & MUSL_SA_SIGINFO)
+		k |= SA_SIGINFO;
+	if (f & MUSL_SA_ONSTACK)
+		k |= SA_ONSTACK;
+	if (f & MUSL_SA_RESTART)
+		k |= SA_RESTART;
+	if (f & MUSL_SA_NODEFER)
+		k |= SA_NODEFER;
+	if (f & MUSL_SA_RESETHAND)
+		k |= SA_RESETHAND;
+	return (k);
+}
+
+/**
+ * Translate the kernel's SA_* flags back to musl's values.
+ */
+static unsigned long kernel_to_musl_saflags(int k)
+{
+	unsigned long f = 0;
+
+	if (k & SA_NOCLDSTOP)
+		f |= MUSL_SA_NOCLDSTOP;
+	if (k & SA_NOCLDWAIT)
+		f |= MUSL_SA_NOCLDWAIT;
+	if (k & SA_SIGINFO)
+		f |= MUSL_SA_SIGINFO;
+	if (k & SA_ONSTACK)
+		f |= MUSL_SA_ONSTACK;
+	if (k & SA_RESTART)
+		f |= MUSL_SA_RESTART;
+	if (k & SA_NODEFER)
+		f |= MUSL_SA_NODEFER;
+	if (k & SA_RESETHAND)
+		f |= MUSL_SA_RESETHAND;
+	return (f);
+}
+
+/**
  * sys_sigaction - examine or change signal action for the calling task
  * @td: thread state for the calling task
  * @args: syscall arguments containing signal number, new action, and old action
@@ -969,22 +1087,41 @@ int sys_sigsuspend(struct thread *td, struct sys_sigsuspend_args *args)
  */
 int sys_sigaction(struct thread *td, struct sys_sigaction_args *args)
 {
+	const struct musl_ksigaction *uact = (const struct musl_ksigaction *)args->act;
+	struct musl_ksigaction *uoact = (struct musl_ksigaction *)args->oact;
+	struct sigaction *k;
+
 	td->td_retval[0] = -1;
 
 	if (args->sig < 1 || (size_t)args->sig >= (sizeof(td->sigact) / sizeof(td->sigact[0])))
 	{
 		return (0);
 	}
+	k = &td->sigact[args->sig];
 
-	if (args->oact != 0x0)
+	if (uoact != 0x0)
 	{
-		memcpy(args->oact, &td->sigact[args->sig], sizeof(struct sigaction));
+		struct musl_ksigaction o;
+
+		memset(&o, 0, sizeof(o));
+		o.handler = (void *)k->sa_handler;
+		o.flags = kernel_to_musl_saflags(k->sa_flags);
+		o.mask[0] = k->sa_mask.__bits[0];
+		o.mask[1] = k->sa_mask.__bits[1];
+		memcpy(uoact, &o, sizeof(o));
 		td->td_retval[0] = 0;
 	}
 
-	if (args->act != 0x0)
+	if (uact != 0x0)
 	{
-		memcpy(&td->sigact[args->sig], args->act, sizeof(struct sigaction));
+		struct musl_ksigaction a;
+
+		memcpy(&a, uact, sizeof(a));
+		memset(k, 0, sizeof(*k));
+		k->sa_handler = (void (*)(int))a.handler;
+		k->sa_flags = musl_to_kernel_saflags(a.flags);
+		k->sa_mask.__bits[0] = a.mask[0];
+		k->sa_mask.__bits[1] = a.mask[1];
 		td->td_retval[0] = 0;
 	}
 	return (0);

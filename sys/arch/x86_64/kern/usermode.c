@@ -649,6 +649,7 @@ void x86_64_syscall(struct x86_64_trapframe *tf)
 	if (tf->rax == SYS_EXIT)
 	{
 		kprintf("  [ring3] exit(%d) -> terminating task pid=%d\n", (int)tf->rdi, _current ? _current->id : -1);
+		_current->exit_code = (u_int32_t)(tf->rdi & 0xff); /* saved for wait4 (W_EXITED) */
 		endTask(_current->id);
 		sched();
 		return; /* unreachable */
@@ -797,6 +798,9 @@ void x86_64_native_syscall(struct x86_64_trapframe *tf)
 	switch (n)
 	{
 		case NATIVE_EXIT_GROUP:
+			/* musl's exit() ends here: record the status, or wait() reports 0
+			 * for every child (`false`, a failed compile, ... all "succeed"). */
+			_current->exit_code = (u_int32_t)(args[0] & 0xff); /* wait4 W_EXITED */
 			endTask(_current->id);
 			sched();
 			return; /* unreachable */
