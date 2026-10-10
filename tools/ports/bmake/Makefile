@@ -14,7 +14,8 @@
 
 PORT_NAME    = bmake
 PORT_VERSION = 20240212
-PORT_URL     = https://www.crufty.net/ftp/pub/sjg/bmake-${PORT_VERSION}.tar.gz
+# crufty.net moves superseded releases into old/ (the top-level URL 404s).
+PORT_URL     = https://www.crufty.net/ftp/pub/sjg/old/bmake-${PORT_VERSION}.tar.gz
 PORT_SHA256  = 971d5a364035349e984d82c2a48d546a0c73e52f3b8f2aa29a3be3d2408ffaa8
 
 # ── Cross-build settings (uBixOS musl world toolchain) ───────────────────────
