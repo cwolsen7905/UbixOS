@@ -142,6 +142,16 @@ int AuralServer::run()
 		 */
 		for (int i = 0; i < AURAL_FEED_BURST; i++)
 		{
+			/* A chunk mixed last time but refused (driver ring full) goes first:
+			 * mixing consumes the client rings, so dropping it loses audio. */
+			if (pending_bytes_ > 0)
+			{
+				if (sink_.write_period(period_, pending_bytes_) <= 0)
+					break; /* still full — retry next wake */
+				pending_bytes_ = 0;
+				continue;
+			}
+
 			uint32_t ready = 0; /* max readable among PRIMED streams */
 			Stream *sl = reg_.slots();
 			for (unsigned k = 0; k < StreamRegistry::slot_count(); k++)
@@ -163,7 +173,10 @@ int AuralServer::run()
 
 			mixer_.mix(reg_, period_, frames);
 			if (sink_.write_period(period_, frames * FRAME_BYTES) <= 0)
-				break; /* driver ring full */
+			{
+				pending_bytes_ = (int)(frames * FRAME_BYTES); /* keep it for next wake */
+				break;                                        /* driver ring full */
+			}
 		}
 
 		aural_nap(); /* real ~10 ms descheduling sleep — never busy-spins */

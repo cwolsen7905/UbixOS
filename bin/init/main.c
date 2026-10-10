@@ -36,6 +36,7 @@
 #include <sys/mpi.h>
 #include <sys/wait.h>
 #include <api/ubix.h>
+#include <api/power.h>
 
 #define INITD_PATH "/etc/init.d"
 #define INITD_MAXSVCS 64
@@ -236,7 +237,14 @@ int main(int argc, char **argv, char **envp)
 	{
 		if (mpi_waitMessage("init", &myMsg, 100) == 0x0)
 		{
-			/* reserved for future init control messages */
+			/* Restart / shut down on behalf of the desktop session (which runs
+			 * as the signed-in user; reboot(2) is root-only). */
+			if (myMsg.header == INIT_MSG_POWER)
+			{
+				struct init_power_req *r = (struct init_power_req *)myMsg.data;
+				printf("init: %s requested\n", (r->howto & UBIX_POWER_OFF) ? "power-off" : "restart");
+				ubix_power(r->howto & UBIX_POWER_OFF);
+			}
 		}
 	}
 

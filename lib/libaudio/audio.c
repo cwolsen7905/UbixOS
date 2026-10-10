@@ -51,6 +51,10 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdint.h>
+#include <time.h>
+
+/* musl gates this behind a feature macro the -nostdinc world does not set. */
+int nanosleep(const struct timespec *req, struct timespec *rem);
 
 /*
  * audio_open returns an int "fd".  A legacy result is a real file descriptor
@@ -62,7 +66,13 @@
 
 /* Bounded spins so a wedged/dead server can never hang an app forever. */
 #define AURAL_CLAIM_TRIES 200000
-#define AURAL_WRITE_STALL 2000000
+/* A full ring is retried every AURAL_WRITE_NAP_NS; after AURAL_WRITE_STALL
+ * naps with no progress (~2 s) the server is presumed gone.  Counted in naps
+ * of real time, not bare yields: a yield loop burns millions of iterations a
+ * second on a fast core and used to give up mid-sound (aplay's 3 s tone
+ * stopped after ~1 s). */
+#define AURAL_WRITE_STALL 2000
+#define AURAL_WRITE_NAP_NS 1000000
 
 struct aural_client
 {
@@ -262,7 +272,9 @@ int audio_write(int fd, const void *buf, int n)
 			}
 			else
 			{
-				sched_yield(); /* ring full — let aural drain, then retry */
+				/* ring full — nap so aural can drain, then retry */
+				struct timespec nap = {0, AURAL_WRITE_NAP_NS};
+				nanosleep(&nap, NULL);
 			}
 		}
 		return total;
