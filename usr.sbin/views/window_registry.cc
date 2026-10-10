@@ -69,9 +69,22 @@ Window *WindowRegistry::find(uint32_t id) const
 	return nullptr;
 }
 
+/* Stacking layer: app windows (0) < pinned / keep-on-top (1) < system
+ * surfaces without a title bar — taskbar, launcher, pop-overs, the login and
+ * power screens (2).  A raised window never covers a higher layer. */
+static int z_layer(const Window *w)
+{
+	if (w->decor_h == 0)
+		return 2;
+	return w->pinned ? 1 : 0;
+}
+
+/* Insert w at the top of its layer. */
 void WindowRegistry::z_push(Window *w)
 {
-	z_stack_.push_back(w);
+	int l = z_layer(w);
+	auto it = std::find_if(z_stack_.begin(), z_stack_.end(), [l](const Window *o) { return z_layer(o) > l; });
+	z_stack_.insert(it, w);
 }
 
 void WindowRegistry::z_remove(Window *w)

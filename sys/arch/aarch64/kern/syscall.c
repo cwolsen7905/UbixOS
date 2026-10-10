@@ -561,13 +561,6 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args)
 
 	switch (number)
 	{
-		case SYS_REBOOT:
-			/* reboot(2): reset the machine via PSCI SYSTEM_RESET.  On QEMU virt this
-			 * re-runs the bootloader (U-Boot re-loads the kernel from /boot on FAT) —
-			 * the reboot step of the self-rebuild loop.  Does not return. */
-			aarch64_system_reset();
-			return 0; /* unreachable */
-
 		case SYS_WRITE:
 		{
 			/* A pty slave (FD_TYPE_TTYV), socket, or pipe fd must dispatch through

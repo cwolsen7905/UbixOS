@@ -155,6 +155,10 @@ struct syscall_entry systemCalls[] = {
      "set_hostname",
      (sys_call_t *)sys_set_hostname,
      SYSCALL_VALID}, // 70 - set machine hostname (ubix_set_hostname; ubistry->kernel sync)
+    {ARG_COUNT(sys_net_status_args),
+     "net_status",
+     (sys_call_t *)sys_net_status,
+     SYSCALL_VALID}, // 71 - default interface up/link/IPv4 (taskbar network item)
 };
 
 int totalCalls = sizeof(systemCalls) / sizeof(struct syscall_entry);

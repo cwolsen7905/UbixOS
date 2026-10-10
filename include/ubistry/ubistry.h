@@ -119,6 +119,11 @@ extern "C"
 	/* Read a string value into buf.  @return 0 on success, -1 if missing/error. */
 	int ubistry_get_str(const char *path, char *buf, int len);
 
+	/* Wait up to @timeout_ms for the registry daemon to answer (it is started
+	 * by init alongside the desktop and may still be loading its database).
+	 * @return 0 once it answers, -1 on timeout. */
+	int ubistry_wait_ready(int timeout_ms);
+
 	/* Read an integer (or bool) value.  @return 0 on success, -1 if missing/error. */
 	int ubistry_get_int(const char *path, int *out);
 

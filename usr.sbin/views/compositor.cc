@@ -55,10 +55,9 @@ static const uint32_t g_jailbar_colors[4] = {
     FB_RGB(0x00, 0x1A, 0x1A),
 };
 
-/* Focused title-bar colours; driven by the per-user accent (views/theme/accent),
- * resolved in set_desktop_from_registry().  Default to a calm desaturated slate. */
-uint32_t g_theme_decor_bg = FB_RGB(0x33, 0x3C, 0x4C);
-uint32_t g_theme_decor_hi = FB_RGB(0x4A, 0x55, 0x68);
+/* System palette for window chrome (views/theme.h); re-resolved per session
+ * user in set_desktop_from_registry() from views/theme/{mode,accent}. */
+struct ui_theme g_ui = ui_theme_dark;
 
 Compositor::Compositor(WindowRegistry &reg)
     : reg_(reg), cur_x_(0), cur_y_(0), cur_drawn_(false), damage_{0, 0, 0, 0, false}
@@ -75,6 +74,7 @@ int Compositor::init()
 
 void Compositor::startup()
 {
+	ubistry_wait_ready(15000); /* wallpaper + theme come from the registry */
 	set_desktop_from_registry();
 	draw_desktop();
 	cur_x_ = (int)fb_.width / 2;
@@ -247,20 +247,8 @@ void Compositor::set_desktop_from_registry()
 	if (ubistry_get_for_int(u, "views/desktop/barcolor", &ival) == 0)
 		bar_base_ = (uint32_t)ival & 0x00FFFFFFu;
 
-	/* Accent colour for the focused window title bar — a calm, desaturated
-	 * slate-blue (modern) rather than the old saturated primary blue. */
-	g_theme_decor_bg = FB_RGB(0x33, 0x3C, 0x4C);
-	g_theme_decor_hi = FB_RGB(0x4A, 0x55, 0x68);
-	/* Per-user accent first, then the seeded system value; reject a zero (pure black)
-	 * result as "unset" so a missing/zeroed per-user override can't black out the title
-	 * bar (it would just keep the slate default set above). */
-	if ((ubistry_get_for_int(u, "views/theme/accent", &ival) == 0 && ((uint32_t)ival & 0x00FFFFFFu) != 0) ||
-	    (ubistry_get_int("/views/theme/accent", &ival) == 0 && ((uint32_t)ival & 0x00FFFFFFu) != 0))
-	{
-		uint32_t a = (uint32_t)ival & 0x00FFFFFFu;
-		g_theme_decor_bg = a;
-		g_theme_decor_hi = scale_color(a, 14, 10); /* brighter highlight line */
-	}
+	/* Window chrome palette: light/dark mode + the user's accent override. */
+	g_ui = ui_theme_load(u);
 
 	wp_.clear();
 	wp_w_ = wp_h_ = 0;
@@ -593,7 +581,7 @@ void Compositor::draw_switcher()
 
 		if (sel)
 		{
-			uint32_t ac = g_theme_decor_bg;
+			uint32_t ac = g_ui.accent;
 			fb_.rect(cx - 4, ty - 4, tile_w + 8, 2, ac);
 			fb_.rect(cx - 4, ty + tile_h + labelh - 2, tile_w + 8, 2, ac);
 			fb_.rect(cx - 4, ty - 4, 2, tile_h + labelh + 4, ac);
@@ -634,12 +622,8 @@ bool Compositor::rect_covered(int rx, int ry, int rw, int rh)
 {
 	for (auto *w : reg_.z_stack())
 	{
-		if (w->minimized)
-			continue;
-		/* A translucent window does not hide what's behind it, so it must not
-		 * suppress the desktop refill — the blend needs a fresh background. */
-		if (w->opacity < 255)
-			continue;
+		if (w->minimized || w->translucent || w->opacity < 255)
+			continue; /* a translucent or semi-opaque window never hides what is beneath it */
 		int cy = w->y + w->decor_h;
 		if (w->x <= rx && w->y <= ry && w->x + w->w >= rx + rw && cy + w->h >= ry + rh)
 			return true;
@@ -655,7 +639,11 @@ void Compositor::reblit_rect(int rx, int ry, int rw, int rh)
 			continue;
 		int cy = w->y + w->decor_h;
 
-		draw_window_shadow(w, rx, ry, rw, rh);
+		if (!w->translucent)
+		{
+			draw_window_shadow(w, rx, ry, rw, rh);
+			save_corners(w);
+		}
 
 		/* Translucent+blur: blur the freshly-drawn backdrop over the window's full
 		 * content region before the tint blends (flush() promoted the damage to the
@@ -669,14 +657,19 @@ void Compositor::reblit_rect(int rx, int ry, int rw, int rh)
 		int y2 = (ry + rh < cy + w->h) ? ry + rh : cy + w->h;
 		if (x2 > x1 && y2 > y1)
 		{
+			int bx = x1 - w->x;
+			int by = y1 - cy;
 			if (w->opacity < 255)
-			{
-				w->blend_rect(fb_, x1, y1, x2, y2);
-			}
+				w->blend_rect(fb_, x1, y1, x2, y2); /* whole-window opacity (acrylic panels) */
+			else if (w->translucent)
+				blend_blit(x1,
+				           y1,
+				           x2 - x1,
+				           y2 - y1,
+				           (const uint32_t *)((const uint8_t *)w->buf + (uint32_t)by * w->pitch +
+				                              (uint32_t)bx * WIN_BPP),
+				           (int)(w->pitch / WIN_BPP)); /* per-pixel alpha (floating taskbar) */
 			else
-			{
-				int bx = x1 - w->x;
-				int by = y1 - cy;
 				fb_.blit(x1,
 				         y1,
 				         x2 - x1,
@@ -684,13 +677,13 @@ void Compositor::reblit_rect(int rx, int ry, int rw, int rh)
 				         (const uint32_t *)((const uint8_t *)w->buf + (uint32_t)by * w->pitch +
 				                            (uint32_t)bx * WIN_BPP),
 				         (int)(w->pitch / WIN_BPP));
-			}
 		}
 
 		if (w->decor_h > 0 && rx < w->x + w->w && rx + rw > w->x && ry < w->y + w->decor_h && ry + rh > w->y)
 			w->draw_decor(fb_, w == reg_.focused());
 		w->draw_grip(fb_);
-		round_window_corners(w, rx, ry, rw, rh);
+		if (!w->translucent)
+			frame_window(w, rx, ry, rw, rh);
 	}
 }
 
@@ -727,12 +720,41 @@ void Compositor::cursor_draw(int x, int y)
 	}
 }
 
-uint32_t Compositor::desk_pixel(int x, int y) const
+/* Blend a straight-alpha 0xAARRGGBB buffer over the framebuffer (translucent
+ * windows).  Fully clear pixels are skipped and opaque ones copied, so the
+ * common cases cost no more than a plain blit. */
+void Compositor::blend_blit(int dx, int dy, int w, int h, const uint32_t *src, int stride)
 {
-	if (x >= 0 && y >= 0 && x < dc_w_ && y < dc_h_ && (int)desk_cache_.size() >= dc_w_ * dc_h_ &&
-	    dc_w_ == (int)fb_.width)
-		return desk_cache_[(size_t)y * dc_w_ + x];
-	return fb_.read(x, y);
+	for (int row = 0; row < h; row++)
+	{
+		int py = dy + row;
+		if (py < 0 || py >= (int)fb_.height)
+			continue;
+		const uint32_t *s = src + (size_t)row * stride;
+		for (int col = 0; col < w; col++)
+		{
+			int px = dx + col;
+			if (px < 0 || px >= (int)fb_.width)
+				continue;
+			uint32_t a = s[col] >> 24;
+			if (a == 0)
+				continue;
+			uint32_t c = s[col] & 0x00FFFFFFu;
+			fb_.pixel(px, py, a == 255 ? c : ui_mix(fb_.read(px, py), c, a + (a >> 7)));
+		}
+	}
+}
+
+/**
+ * Integer square root (floor) for small non-negative values — the corner
+ * anti-aliasing stays integer-only, like the shadow (world is -mno-sse).
+ */
+static int isqrt_small(int v)
+{
+	int r = 0;
+	while ((r + 1) * (r + 1) <= v)
+		r++;
+	return r;
 }
 
 /* Soft drop shadow: darken the framebuffer in a band around the window, offset
@@ -740,9 +762,12 @@ uint32_t Compositor::desk_pixel(int x, int y) const
  * Reads-then-darkens so it is idempotent within a single repaint pass. */
 void Compositor::draw_window_shadow(const Window *w, int clipx, int clipy, int clipw, int cliph)
 {
-	const int reach = 10;      /* shadow reach in px */
-	const int y_off = 4;       /* downward offset (light from above) */
-	const int alpha_max = 120; /* peak darkening alpha (/256) */
+	if (frameless(w))
+		return; /* maximized / full-screen windows sit flush: no shadow */
+	bool active = (w == reg_.focused());
+	const int reach = active ? g_ui.shadow_win_reach : g_ui.shadow_inact_reach;
+	const int y_off = active ? g_ui.shadow_win_y : g_ui.shadow_inact_y;
+	const int alpha_max = active ? g_ui.shadow_win_a : g_ui.shadow_inact_a;
 
 	int wx0 = w->x, wy0 = w->y;
 	int wx1 = w->x + w->w, wy1 = w->y + w->decor_h + w->h;
@@ -770,9 +795,15 @@ void Compositor::draw_window_shadow(const Window *w, int clipx, int clipy, int c
 	{
 		for (int px = bx0; px < bx1; px++)
 		{
-			/* The window itself is opaque — never shadow under it. */
+			/* The window itself is opaque — never shadow under it, except the
+			 * corner squares, whose outside-the-arc pixels show through. */
 			if (px >= wx0 && px < wx1 && py >= wy0 && py < wy1)
-				continue;
+			{
+				bool cx = px < wx0 + UI_R_LG || px >= wx1 - UI_R_LG;
+				bool cy = py < wy0 + UI_R_LG || py >= wy1 - UI_R_LG;
+				if (!(cx && cy))
+					continue;
+			}
 			int dx = (px < rx0) ? (rx0 - px) : ((px >= rx1) ? (px - rx1 + 1) : 0);
 			int dy = (py < ry0) ? (ry0 - py) : ((py >= ry1) ? (py - ry1 + 1) : 0);
 			int d2 = dx * dx + dy * dy;
@@ -781,50 +812,98 @@ void Compositor::draw_window_shadow(const Window *w, int clipx, int clipy, int c
 			int a = alpha_max * (reach * reach - d2) / (reach * reach);
 			if (a <= 0)
 				continue;
-			fb_.pixel(px, py, ogSurface::ogBlendColor(fb_.read(px, py), 0, (uInt32)a));
+			fb_.pixel(px, py, ui_mix(fb_.read(px, py), g_ui.shadow, (uint32_t)a));
 		}
 	}
 }
 
-/* Round the four outer window corners with a 1px anti-aliased ring, revealing
- * the cached desktop background outside the arc. */
-void Compositor::round_window_corners(const Window *w, int clipx, int clipy, int clipw, int cliph)
+/* True for windows drawn flush with no shadow, outline or rounding: maximized
+ * windows and anything covering the whole screen (the login screen). */
+bool Compositor::frameless(const Window *w) const
 {
-	const int radius = 6;
+	return w->maximized ||
+	       (w->x <= 0 && w->y <= 0 && w->x + w->w >= (int)fb_.width && w->y + w->decor_h + w->h >= (int)fb_.height);
+}
+
+/* Snapshot the four corner squares under a window (desktop, shadow and any
+ * windows below) before it is drawn, so frame_window() can restore exactly
+ * what belongs outside the rounded corner — not just the wallpaper. */
+void Compositor::save_corners(const Window *w)
+{
+	const int r = UI_R_LG;
+	int wx1 = w->x + w->w, wy1 = w->y + w->decor_h + w->h;
+	int ox[4] = {w->x, wx1 - r, w->x, wx1 - r};
+	int oy[4] = {w->y, w->y, wy1 - r, wy1 - r};
+	for (int c = 0; c < 4; c++)
+		for (int py = 0; py < r; py++)
+			for (int px = 0; px < r; px++)
+			{
+				int sx = ox[c] + px, sy = oy[c] + py;
+				bool on = sx >= 0 && sy >= 0 && sx < (int)fb_.width && sy < (int)fb_.height;
+				corner_bg_[c][py * r + px] = on ? fb_.read(sx, sy) : 0;
+			}
+}
+
+/* Draw the 1px window outline (edge-strong focused / edge unfocused) and round
+ * the outer corners to UI_R_LG with anti-aliasing, restoring the pixels saved
+ * by save_corners() outside the arc.  Everything is clipped to the damage
+ * rectangle [clipx,clipy,clipw,cliph].  Maximized windows stay square. */
+void Compositor::frame_window(const Window *w, int clipx, int clipy, int clipw, int cliph)
+{
+	if (frameless(w))
+		return;
+	const int r = UI_R_LG;
+	uint32_t edge = (w == reg_.focused()) ? g_ui.edge_strong : g_ui.edge;
 	int wx0 = w->x, wy0 = w->y;
 	int wx1 = w->x + w->w, wy1 = w->y + w->decor_h + w->h;
 
-	/* (region-x0, region-y0, arc-center-x, arc-center-y) for each corner. */
-	int corners[4][4] = {
-	    {wx0, wy0, wx0 + radius, wy0 + radius},                           /* top-left */
-	    {wx1 - radius, wy0, wx1 - 1 - radius, wy0 + radius},              /* top-right */
-	    {wx0, wy1 - radius, wx0 + radius, wy1 - 1 - radius},              /* bottom-left */
-	    {wx1 - radius, wy1 - radius, wx1 - 1 - radius, wy1 - 1 - radius}, /* bottom-right */
+	auto put = [&](int px, int py, uint32_t col)
+	{
+		if (px < clipx || px >= clipx + clipw || py < clipy || py >= clipy + cliph || px < 0 || py < 0 ||
+		    px >= (int)fb_.width || py >= (int)fb_.height)
+			return;
+		fb_.pixel(px, py, col);
 	};
 
-	for (auto &c : corners)
+	/* Straight edges between the corner squares. */
+	for (int px = wx0 + r; px < wx1 - r; px++)
 	{
-		int rx = c[0], ry = c[1], cxc = c[2], cyc = c[3];
-		for (int py = ry; py < ry + radius; py++)
-		{
-			if (py < clipy || py >= clipy + cliph || py < 0 || py >= (int)fb_.height)
-				continue;
-			for (int px = rx; px < rx + radius; px++)
+		put(px, wy0, edge);
+		put(px, wy1 - 1, edge);
+	}
+	for (int py = wy0 + r; py < wy1 - r; py++)
+	{
+		put(wx0, py, edge);
+		put(wx1 - 1, py, edge);
+	}
+
+	/* Corners: per pixel, coverage of the window disc (radius r) and of its
+	 * 1px outline ring, in half-pixel units to avoid floating point. */
+	int ox[4] = {wx0, wx1 - r, wx0, wx1 - r};
+	int oy[4] = {wy0, wy0, wy1 - r, wy1 - r};
+	for (int c = 0; c < 4; c++)
+	{
+		bool left = (c == 0 || c == 2), top = (c < 2);
+		for (int py = 0; py < r; py++)
+			for (int px = 0; px < r; px++)
 			{
-				if (px < clipx || px >= clipx + clipw || px < 0 || px >= (int)fb_.width)
+				int sx = ox[c] + px, sy = oy[c] + py;
+				if (sx < clipx || sx >= clipx + clipw || sy < clipy || sy >= clipy + cliph || sx < 0 ||
+				    sy < 0 || sx >= (int)fb_.width || sy >= (int)fb_.height)
 					continue;
-				int dx = px - cxc, dy = py - cyc;
-				int d2 = dx * dx + dy * dy;
-				if (d2 <= (radius - 1) * (radius - 1))
-					continue; /* inside — leave the window pixel */
-				uint32_t bg = desk_pixel(px, py);
-				if (d2 >= radius * radius)
-					fb_.pixel(px, py, bg); /* outside — background */
-				else
-					fb_.pixel(
-					    px, py, ogSurface::ogBlendColor(bg, fb_.read(px, py), 128)); /* AA edge */
+				/* distance (x2) from the arc centre to this pixel's centre */
+				int dx = left ? (2 * (r - px) - 1) : (2 * (px + 1) - 1);
+				int dy = top ? (2 * (r - py) - 1) : (2 * (py + 1) - 1);
+				int d = isqrt_small(dx * dx + dy * dy); /* 2 * distance */
+				int R2 = 2 * r;
+				/* outside coverage 0..256 (1 px soft edge), ring coverage 0..256 */
+				int in_cov = (R2 + 1 - d) * 128;
+				in_cov = in_cov < 0 ? 0 : (in_cov > 256 ? 256 : in_cov);
+				int ring = (d - (R2 - 3)) * 128;
+				ring = ring < 0 ? 0 : (ring > 256 ? 256 : ring);
+				uint32_t win = ui_mix(fb_.read(sx, sy), edge, (uint32_t)ring);
+				fb_.pixel(sx, sy, ui_mix(corner_bg_[c][py * r + px], win, (uint32_t)in_cov));
 			}
-		}
 	}
 }
 
@@ -835,14 +914,21 @@ void Compositor::composite_all()
 	{
 		if (w->minimized)
 			continue;
+		if (w->translucent)
+		{
+			blend_blit(
+			    w->x, w->y + w->decor_h, w->w, w->h, (const uint32_t *)w->buf, (int)(w->pitch / WIN_BPP));
+			continue;
+		}
 		draw_window_shadow(w, 0, 0, (int)fb_.width, (int)fb_.height);
 		if (w->opacity < 255 && w->blur_radius > 0)
 			blur_region(w->x, w->y + w->decor_h, w->w, w->h, w->blur_radius);
+		save_corners(w);
 		w->blit_to(fb_);
 		if (w->decor_h > 0)
 			w->draw_decor(fb_, w == reg_.focused());
 		w->draw_grip(fb_);
-		round_window_corners(w, 0, 0, (int)fb_.width, (int)fb_.height);
+		frame_window(w, 0, 0, (int)fb_.width, (int)fb_.height);
 	}
 	if (resize_preview_)
 	{

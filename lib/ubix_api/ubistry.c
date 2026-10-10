@@ -36,6 +36,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <time.h>
 #include <sched.h>
 #include <sys/mpi.h>
 #include <ubistry/ubistry.h>
@@ -218,4 +219,28 @@ int ubistry_set_user_int(const char *user, const char *key, int val)
 
 	snprintf(b, sizeof(b), "%d", val);
 	return (ubistry_set_user(user, key, b));
+}
+
+/**
+ * Wait up to @timeout_ms for the registry daemon to answer a query, probing
+ * /system/hostname (always seeded) every 50 ms.  Desktop components call this
+ * before their first settings read: on a slow machine (x86_64 under emulation)
+ * they otherwise read before ubistry serves and fall back to defaults for the
+ * whole session — no wallpaper, an empty launcher.
+ *
+ * @return 0 once the daemon answers, -1 on timeout.
+ */
+int ubistry_wait_ready(int timeout_ms)
+{
+	char buf[64];
+	struct timespec nap = {0, 50 * 1000 * 1000};
+
+	for (int waited = 0;; waited += 50)
+	{
+		if (ubistry_get_str("/system/hostname", buf, sizeof(buf)) == 0)
+			return (0);
+		if (waited >= timeout_ms)
+			return (-1);
+		nanosleep(&nap, NULL);
+	}
 }

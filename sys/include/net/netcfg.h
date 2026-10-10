@@ -52,4 +52,15 @@ struct net_config
 	u_int8_t dns[4]; /* all-zero = leave DNS unchanged */
 };
 
+/* Live state of the default interface (native syscall 71, net_status).  Must
+ * match userland's struct net_status in include/api/netcfg.h. */
+struct net_status
+{
+	u_int32_t up;
+	u_int32_t link;
+	u_int8_t ip[4];
+	u_int8_t gateway[4];
+	char name[8];
+};
+
 #endif /* _NET_NETCFG_H */

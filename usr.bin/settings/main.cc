@@ -54,14 +54,19 @@
 #include <api/ubix.h>
 #include <audio/audio.h>
 #include <sys/kbd.h>
+#include <views/theme.h>
+#include <views/uidraw.h>
 
 extern char **environ; /* session env, forwarded to launched helpers */
 
 #define WIN_W 520
 #define WIN_H 360
-#define BG 0x00202830u
-#define SIDEBAR_BG 0x00181E26u
-#define ROW_SEL 0x00405890u
+/* Colours come from the system theme (views/theme.h), reloaded when the user
+ * changes Appearance, so Settings follows light/dark like the rest of the UI. */
+static struct ui_theme g_t = ui_theme_dark;
+#define BG (g_t.ground)
+#define SIDEBAR_BG (g_t.surface)
+#define ROW_SEL (g_t.accent_900)
 #define SIDEBAR_W 128
 #define ROW_H 24
 #define SIDE_TOP 8
@@ -97,6 +102,19 @@ extern char **environ; /* session env, forwarded to launched helpers */
 #define APPLY_H 24
 
 /* Sidebar categories (index == pane id); Settings opens on General. */
+/**
+ * View an attached surface as a ui_canvas (views/uidraw.h drawing).
+ */
+static ui_canvas canvas_of(ogSurface &surf)
+{
+	ui_canvas c;
+	c.px = (uint32_t *)surf.ogGetPtr(0, 0);
+	c.w = (int)surf.ogGetMaxX() + 1;
+	c.h = (int)surf.ogGetMaxY() + 1;
+	c.stride = (int)((uint8_t *)surf.ogGetPtr(0, 1) - (uint8_t *)surf.ogGetPtr(0, 0)) / 4;
+	return c;
+}
+
 static const char *g_pane_labels[] = {"General", "Desktop", "Appearance", "Network", "Display", "Sound", "About"};
 #define PANE_GENERAL 0
 #define PANE_DESKTOP 1
@@ -350,26 +368,76 @@ static void apply()
 }
 
 /* Write the accent colour as the user's override and notify views + taskbar. */
-static void apply_accent()
+/**
+ * Re-resolve the theme after an Appearance change and tell views (window
+ * chrome, desktop) and the taskbar (bar, launcher) to re-read it.
+ */
+static void theme_changed()
 {
-	ubistry_set_user_int(current_user(), "views/theme/accent", (int)packed(g_accent));
-	refresh_desktop(); /* views re-reads the accent for window title bars */
+	g_t = ui_theme_load(current_user());
+	refresh_desktop(); /* views re-reads the theme for window chrome */
 
 	mpi_message_t r = {};
 	r.header = DISPLAY_THEME;
 	ubix::post_message("taskbar", DISPLAY_THEME, r); /* taskbar re-reads its palette */
 }
 
+/* Write the accent colour as the user's override and apply it. */
+static void apply_accent()
+{
+	ubistry_set_user_int(current_user(), "views/theme/accent", (int)packed(g_accent));
+	theme_changed();
+}
+
+/* Drop the user's accent override: back to the mode's designed accent. */
+static void reset_accent()
+{
+	ubistry_del((std::string("/users/") + current_user() + "/views/theme/accent").c_str());
+	theme_changed();
+	g_accent[0] = (g_t.accent >> 16) & 0xFF;
+	g_accent[1] = (g_t.accent >> 8) & 0xFF;
+	g_accent[2] = g_t.accent & 0xFF;
+}
+
+/* Switch the user's light/dark mode. */
+static void apply_mode(bool light)
+{
+	ubistry_set_user(current_user(), "views/theme/mode", light ? "light" : "dark");
+	bool custom = false;
+	int v;
+	custom = ubistry_get_for_int(current_user(), "views/theme/accent", &v) == 0;
+	theme_changed();
+	if (!custom) /* keep the picker showing the (new) designed accent */
+	{
+		g_accent[0] = (g_t.accent >> 16) & 0xFF;
+		g_accent[1] = (g_t.accent >> 8) & 0xFF;
+		g_accent[2] = g_t.accent & 0xFF;
+	}
+}
+
+/* Appearance pane layout (window-local). */
+#define AP_SEG_Y (CONTENT_TOP + 50)
+#define AP_SEG_W 220
+#define AP_SW_Y (AP_SEG_Y + 32 + 40)
+#define AP_SW_D 24
+#define AP_SW_STEP 34
+#define AP_PICK_Y (AP_SW_Y + AP_SW_D + 40)
+#define AP_RESET_Y (AP_PICK_Y + 3 * PICK_ROW + 8)
+
+/* Accent presets offered as swatches; [0] is "the mode's designed accent". */
+static const uint32_t g_accent_presets[] = {0, 0x5B8DEF, 0x4FB6A8, 0x6FBF73, 0xE0A84F, 0xE07A5F, 0xD77FBF, 0x8A93A3};
+#define AP_NSW ((int)(sizeof(g_accent_presets) / sizeof(g_accent_presets[0])))
+
 /**
  * Draw a click-to-set RGB picker editing rgb[3], with a colour preview.
  */
-static void draw_picker(ogSurface &surf, ogScalableFont &font, const int *rgb)
+static void draw_picker(ogSurface &surf, ogScalableFont &font, const int *rgb, int top = SUB_TOP)
 {
 	static const char *chan = "RGB";
 	for (int k = 0; k < 3; k++)
 	{
-		int by = SUB_TOP + k * PICK_ROW;
-		set_color(font, 0x00C0C0C0, BG);
+		int by = top + k * PICK_ROW;
+		set_color(font, g_t.text_muted, BG);
 		char lbl[2] = {chan[k], '\0'};
 		font.PutString(surf, CONTENT_X, by + 3, lbl);
 
@@ -381,12 +449,12 @@ static void draw_picker(ogSurface &surf, ogScalableFont &font, const int *rgb)
 			surf.ogFillRect(PICK_X + dx, by, PICK_X + dx, by + 13, c);
 		}
 		int mx = PICK_X + rgb[k] * (PICK_W - 1) / 255;
-		surf.ogFillRect(mx - 1, by - 2, mx + 1, by + 15, 0x00FFFFFFu);
+		surf.ogFillRect(mx - 1, by - 2, mx + 1, by + 15, g_t.text);
 	}
 
 	uint32_t col = packed(rgb);
-	surf.ogFillRect(PREVIEW_X, SUB_TOP, PREVIEW_X + 28, SUB_TOP + 3 * PICK_ROW - 14, col);
-	surf.ogRect(PREVIEW_X, SUB_TOP, PREVIEW_X + 28, SUB_TOP + 3 * PICK_ROW - 14, 0x00808080u);
+	surf.ogFillRect(PREVIEW_X, top, PREVIEW_X + 28, top + 3 * PICK_ROW - 14, col);
+	surf.ogRect(PREVIEW_X, top, PREVIEW_X + 28, top + 3 * PICK_ROW - 14, g_t.edge);
 }
 
 /**
@@ -429,13 +497,13 @@ static void draw_thumb(ogSurface &surf, ogScalableFont &font)
 	if (g_thumb_for != g_img_sel)
 		build_thumb();
 
-	set_color(font, 0x00A0B0C0, BG);
+	set_color(font, g_t.text_muted, BG);
 	font.PutString(surf, THUMB_X, THUMB_Y - 13, "Preview");
 
 	if (!g_thumb_ok)
 	{
-		surf.ogFillRect(THUMB_X, THUMB_Y, THUMB_X + THUMB_W - 1, THUMB_Y + THUMB_H - 1, 0x00181E26u);
-		surf.ogRect(THUMB_X, THUMB_Y, THUMB_X + THUMB_W - 1, THUMB_Y + THUMB_H - 1, 0x00586470u);
+		surf.ogFillRect(THUMB_X, THUMB_Y, THUMB_X + THUMB_W - 1, THUMB_Y + THUMB_H - 1, g_t.ground);
+		surf.ogRect(THUMB_X, THUMB_Y, THUMB_X + THUMB_W - 1, THUMB_Y + THUMB_H - 1, g_t.edge);
 		return;
 	}
 
@@ -446,7 +514,7 @@ static void draw_thumb(ogSurface &surf, ogScalableFont &font)
 			surf.ogSetPixel(
 			    THUMB_X + tx, THUMB_Y + ty, (uint8_t)(c >> 16), (uint8_t)(c >> 8), (uint8_t)c, 255);
 		}
-	surf.ogRect(THUMB_X, THUMB_Y, THUMB_X + THUMB_W - 1, THUMB_Y + THUMB_H - 1, 0x00586470u);
+	surf.ogRect(THUMB_X, THUMB_Y, THUMB_X + THUMB_W - 1, THUMB_Y + THUMB_H - 1, g_t.edge);
 }
 
 /**
@@ -458,23 +526,32 @@ static void draw_dropdown(ogSurface &surf, ogScalableFont &font)
 {
 	const char *cur = g_images.empty() ? "(none)" : g_images[g_img_sel].label.c_str();
 
-	surf.ogFillRect(DD_X, SUB_TOP, DD_X + DD_W, SUB_TOP + ROW_H - 2, 0x00303A46u);
-	surf.ogRect(DD_X, SUB_TOP, DD_X + DD_W, SUB_TOP + ROW_H - 2, 0x00586470u);
-	set_color(font, 0x00F0F0F0, 0x00303A46u);
-	font.PutString(surf, DD_X + 6, SUB_TOP + 6, cur);
-	font.PutString(surf, DD_X + DD_W - 14, SUB_TOP + 6, g_img_open ? "^" : "v");
+	ui_canvas cv = canvas_of(surf);
+	ui_outlined_round(
+	    cv, DD_X, SUB_TOP, DD_W + 1, ROW_H - 1, UI_R_MD, g_img_open ? g_t.accent : g_t.edge, g_t.surface);
+	ui_text(surf, font, DD_X + 10, SUB_TOP + (ROW_H - 1) / 2, cur, g_t.text);
+	ui_draw_icon_tint(
+	    cv, ui_icon_get(16, "chevron-down"), DD_X + DD_W - 22, SUB_TOP + (ROW_H - 1 - 16) / 2, g_t.text_muted);
 
 	if (!g_img_open)
 		return;
 
+	/* the open list: a panel with rounded rows, the current one selected */
+	int ly = SUB_TOP + ROW_H, lh = (int)g_images.size() * ROW_H; /* rows = the click rects */
+	ui_shadow(cv, DD_X, ly, DD_W + 1, lh, UI_R_MD, 6, 10, g_t.shadow_panel_a, g_t.shadow);
+	ui_outlined_round(cv, DD_X, ly, DD_W + 1, lh, UI_R_MD, g_t.edge_strong, g_t.ground);
 	for (int i = 0; i < (int)g_images.size(); i++)
 	{
-		int y = SUB_TOP + ROW_H + i * ROW_H;
-		uint32_t bg = (i == g_img_sel) ? ROW_SEL : 0x00283038u;
-		surf.ogFillRect(DD_X, y, DD_X + DD_W, y + ROW_H - 1, bg);
-		surf.ogRect(DD_X, y, DD_X + DD_W, y + ROW_H - 1, 0x00404A56u);
-		set_color(font, 0x00F0F0F0, bg);
-		font.PutString(surf, DD_X + 6, y + 6, g_images[i].label.c_str());
+		int y = ly + i * ROW_H;
+		bool sel = (i == g_img_sel);
+		if (sel)
+			ui_fill_round(cv, DD_X + 3, y + 1, DD_W - 5, ROW_H - 2, UI_R_MD, g_t.accent_900);
+		ui_text(surf,
+		        font,
+		        DD_X + 10,
+		        y + (ROW_H - 1) / 2,
+		        g_images[i].label.c_str(),
+		        sel ? g_t.accent_200 : g_t.text);
 	}
 }
 
@@ -507,19 +584,76 @@ static void apply_network()
 	g_launcher.launch("/usr/sbin/netcfg");
 }
 
+/* True if a network status line reports a live connection. */
+static bool ns_ok(const char *line)
+{
+	return std::strncmp(line, "Connected ", 10) == 0;
+}
+
+/**
+ * A row of n tabs as the design's segmented control: a rounded surface track
+ * with the selected option outlined in the accent.  Tab i occupies
+ * (x + i*(tw+4), y, tw, TAB_H) — the same rectangles the click handlers test.
+ */
+static void draw_tabs(
+    ogSurface &surf, ogScalableFont &font, int x, int y, int tw, const char *const *labels, int n, int sel)
+{
+	ui_canvas cv = canvas_of(surf);
+	int track_w = n * (tw + 4) - 4 + 6;
+	ui_fill_round(cv, x - 3, y - 3, track_w, TAB_H + 6, (TAB_H + 6) / 2, g_t.surface);
+	for (int i = 0; i < n; i++)
+	{
+		int tx = x + i * (tw + 4);
+		if (i == sel)
+			ui_outlined_round(cv, tx, y, tw, TAB_H, TAB_H / 2, g_t.accent, g_t.accent_900);
+		ui_text_c(
+		    surf, font, tx + tw / 2, y + TAB_H / 2, labels[i], i == sel ? g_t.accent_200 : g_t.text_muted);
+	}
+}
+
+/**
+ * A push button: primary = accent outline + accent text (the main action);
+ * secondary = surface fill + edge.
+ */
+static void draw_button(
+    ogSurface &surf, ogScalableFont &font, int x, int y, int w, int h, const char *label, bool primary)
+{
+	ui_canvas cv = canvas_of(surf);
+	if (primary)
+		ui_outlined_round(cv, x, y, w, h, UI_R_MD, g_t.accent, BG);
+	else
+		ui_outlined_round(cv, x, y, w, h, UI_R_MD, g_t.edge, g_t.surface);
+	ui_text_c(surf, font, x + w / 2, y + h / 2, label, primary ? g_t.accent_300 : g_t.text);
+}
+
 static void draw_network(ogSurface &surf, ogScalableFont &font)
 {
 	static const char *modes[2] = {"DHCP", "Static"};
+	draw_tabs(surf, font, CONTENT_X, TAB_Y, TAB_W, modes, 2, g_net_mode);
 
-	for (int m = 0; m < 2; m++)
-	{
-		int tx = CONTENT_X + m * (TAB_W + 4);
-		uint32_t bg = (m == g_net_mode) ? ROW_SEL : 0x00303A46u;
-		surf.ogFillRect(tx, TAB_Y, tx + TAB_W - 1, TAB_Y + TAB_H - 1, bg);
-		surf.ogRect(tx, TAB_Y, tx + TAB_W - 1, TAB_Y + TAB_H - 1, 0x00586470u);
-		set_color(font, 0x00F0F0F0, bg);
-		font.PutString(surf, tx + 12, TAB_Y + 7, modes[m]);
-	}
+	/* Live status of the default interface. */
+	struct net_status ns;
+	char line[96];
+	if (ubix_net_status(&ns) != 0)
+		snprintf(line, sizeof(line), "No network interface");
+	else if (!ns.link || !ns.up)
+		snprintf(line, sizeof(line), "Disconnected (%s)", ns.name);
+	else if ((ns.ip[0] | ns.ip[1] | ns.ip[2] | ns.ip[3]) == 0)
+		snprintf(line, sizeof(line), "Connecting (%s)...", ns.name);
+	else
+		snprintf(line,
+		         sizeof(line),
+		         "Connected \xB7 %u.%u.%u.%u via %u.%u.%u.%u (%s)",
+		         ns.ip[0],
+		         ns.ip[1],
+		         ns.ip[2],
+		         ns.ip[3],
+		         ns.gateway[0],
+		         ns.gateway[1],
+		         ns.gateway[2],
+		         ns.gateway[3],
+		         ns.name);
+	ui_text(surf, font, CONTENT_X, NET_APPLY_Y - 18, line, ns_ok(line) ? g_t.app[UI_APP_GREEN] : g_t.text_muted);
 
 	if (g_net_mode == NM_STATIC)
 	{
@@ -527,12 +661,15 @@ static void draw_network(ogSurface &surf, ogScalableFont &font)
 		{
 			int y = SUB_TOP + i * NET_RH;
 			bool focus = (i == g_net_focus);
-			set_color(font, 0x00C0C8D0, BG);
+			set_color(font, g_t.text_muted, BG);
 			font.PutString(surf, CONTENT_X, y + 6, g_net_flabels[i]);
-			uint32_t box = focus ? 0x00304060u : 0x00181E26u;
-			surf.ogFillRect(NET_FX, y, NET_FX + NET_FW - 1, y + ROW_H - 2, box);
-			surf.ogRect(NET_FX, y, NET_FX + NET_FW - 1, y + ROW_H - 2, focus ? 0x0090B0E0u : 0x00586470u);
-			set_color(font, 0x00FFFFFF, box);
+			uint32_t box = g_t.ground;
+			ui_canvas cv = canvas_of(surf);
+			ui_outlined_round(
+			    cv, NET_FX, y, NET_FW, ROW_H - 1, UI_R_MD, focus ? g_t.accent : g_t.edge, box);
+			if (focus)
+				ui_focus_ring(cv, NET_FX, y, NET_FW, ROW_H - 1, UI_R_MD, g_t.accent);
+			set_color(font, g_t.text, box);
 			char shown[28];
 			snprintf(shown, sizeof(shown), focus ? "%s_" : "%s", g_net_field[i]);
 			font.PutString(surf, NET_FX + 5, y + 6, shown);
@@ -540,14 +677,11 @@ static void draw_network(ogSurface &surf, ogScalableFont &font)
 	}
 	else
 	{
-		set_color(font, 0x00A0B0C0, BG);
+		set_color(font, g_t.text_muted, BG);
 		font.PutString(surf, CONTENT_X, SUB_TOP + 6, "Address obtained automatically via DHCP.");
 	}
 
-	surf.ogFillRect(CONTENT_X, NET_APPLY_Y, CONTENT_X + 89, NET_APPLY_Y + ROW_H - 1, ROW_SEL);
-	surf.ogRect(CONTENT_X, NET_APPLY_Y, CONTENT_X + 89, NET_APPLY_Y + ROW_H - 1, 0x00586470u);
-	set_color(font, 0x00FFFFFF, ROW_SEL);
-	font.PutString(surf, CONTENT_X + 26, NET_APPLY_Y + 8, "Apply");
+	draw_button(surf, font, CONTENT_X, NET_APPLY_Y, 90, ROW_H, "Apply", true);
 }
 
 /* Handle a click in the Network pane; returns true if anything changed. */
@@ -668,7 +802,7 @@ static void apply_display()
 
 static void draw_display(ogSurface &surf, ogScalableFont &font)
 {
-	set_color(font, 0x00A0B0C0, BG);
+	set_color(font, g_t.text_muted, BG);
 	font.PutString(surf, CONTENT_X, CONTENT_TOP + 22, "Screen resolution");
 
 	if (g_disp_count <= 0)
@@ -682,21 +816,25 @@ static void draw_display(ogSurface &surf, ogScalableFont &font)
 		int r = i / DISP_COLS, c = i % DISP_COLS;
 		int x = CONTENT_X + c * DISP_CW;
 		int y = SUB_TOP + r * DISP_CH;
-		uint32_t bg = (i == g_disp_sel) ? ROW_SEL : 0x00303A46u;
-		surf.ogFillRect(x, y, x + DISP_CW - 4, y + DISP_CH - 3, bg);
-		surf.ogRect(x, y, x + DISP_CW - 4, y + DISP_CH - 3, 0x00586470u);
-		set_color(font, 0x00F0F0F0, bg);
+		bool sel = (i == g_disp_sel);
+		ui_canvas cv = canvas_of(surf);
+		ui_outlined_round(cv,
+		                  x,
+		                  y,
+		                  DISP_CW - 3,
+		                  DISP_CH - 2,
+		                  UI_R_MD,
+		                  sel ? g_t.accent : g_t.edge,
+		                  sel ? g_t.accent_900 : g_t.surface);
 		char lbl[24];
 		snprintf(lbl, sizeof(lbl), "%ux%u", g_disp_modes[i].width, g_disp_modes[i].height);
-		font.PutString(surf, x + 8, y + 5, lbl);
+		ui_text_c(
+		    surf, font, x + (DISP_CW - 3) / 2, y + (DISP_CH - 2) / 2, lbl, sel ? g_t.accent_200 : g_t.text);
 	}
 
 	int rows = (g_disp_count + DISP_COLS - 1) / DISP_COLS;
 	int ay = SUB_TOP + rows * DISP_CH + 8;
-	surf.ogFillRect(CONTENT_X, ay, CONTENT_X + 89, ay + ROW_H - 1, ROW_SEL);
-	surf.ogRect(CONTENT_X, ay, CONTENT_X + 89, ay + ROW_H - 1, 0x00586470u);
-	set_color(font, 0x00FFFFFF, ROW_SEL);
-	font.PutString(surf, CONTENT_X + 26, ay + 8, "Apply");
+	draw_button(surf, font, CONTENT_X, ay, 90, ROW_H, "Apply", true);
 }
 
 /* Handle a click in the Display pane (resolution grid + Apply). */
@@ -736,10 +874,10 @@ static void draw_general(ogSurface &surf, ogScalableFont &font)
 {
 	char line[96];
 
-	set_color(font, 0x00FFFFFF, BG);
+	set_color(font, g_t.text, BG);
 	font.PutString(surf, CONTENT_X, CONTENT_TOP + 30, g_uts_ok ? g_uts.version : "UbixOS");
 
-	set_color(font, 0x00A0B0C0, BG);
+	set_color(font, g_t.text_muted, BG);
 	snprintf(line, sizeof(line), "Logged in as %s", session_user());
 	font.PutString(surf, CONTENT_X, CONTENT_TOP + 56, line);
 	if (g_uts_ok)
@@ -760,9 +898,9 @@ static void draw_about(ogSurface &surf, ogScalableFont &font)
 	int y = CONTENT_TOP + 28;
 	auto row = [&](const char *k, const char *v)
 	{
-		set_color(font, 0x00A0B0C0, BG);
+		set_color(font, g_t.text_muted, BG);
 		font.PutString(surf, CONTENT_X, y, k);
-		set_color(font, 0x00FFFFFF, BG);
+		set_color(font, g_t.text, BG);
 		font.PutString(surf, ABOUT_VAL_X, y, v);
 		y += 20;
 	};
@@ -799,7 +937,7 @@ static void draw_about(ogSurface &surf, ogScalableFont &font)
 		row("Memory", buf);
 	}
 
-	set_color(font, 0x0080909C, BG);
+	set_color(font, g_t.text_faint, BG);
 	font.PutString(surf, CONTENT_X, y + 14, "(C) 2002-2026 The UbixOS Project");
 }
 
@@ -858,32 +996,32 @@ static void draw_sound(ogSurface &surf, ogScalableFont &font)
 	if (!g_sound_loaded)
 		sound_load();
 
-	set_color(font, 0x00A0B0C0, BG);
+	set_color(font, g_t.text_muted, BG);
 	font.PutString(surf, CONTENT_X, CONTENT_TOP + 22, "Master volume");
 
 	/* Slider track with a filled level and a position marker. */
 	int ty = SND_TRACK_Y;
-	surf.ogFillRect(PICK_X, ty, PICK_X + PICK_W, ty + 12, 0x00303A46u);
+	surf.ogFillRect(PICK_X, ty, PICK_X + PICK_W, ty + 12, g_t.surface);
 	int fillw = g_volume * PICK_W / 100;
-	uint32_t fillc = g_muted ? 0x00555A66u : 0x00409CFFu;
+	uint32_t fillc = g_muted ? g_t.neutral_700 : g_t.accent;
 	if (fillw > 0)
 		surf.ogFillRect(PICK_X, ty, PICK_X + fillw, ty + 12, fillc);
-	surf.ogRect(PICK_X, ty, PICK_X + PICK_W, ty + 12, 0x00586470u);
+	surf.ogRect(PICK_X, ty, PICK_X + PICK_W, ty + 12, g_t.edge);
 	int mx = PICK_X + g_volume * (PICK_W - 1) / 100;
-	surf.ogFillRect(mx - 1, ty - 2, mx + 1, ty + 14, 0x00FFFFFFu);
+	surf.ogFillRect(mx - 1, ty - 2, mx + 1, ty + 14, g_t.text);
 
 	char pbuf[8];
 	snprintf(pbuf, sizeof(pbuf), "%d%%", g_volume);
-	set_color(font, 0x00FFFFFF, BG);
+	set_color(font, g_t.text, BG);
 	font.PutString(surf, PICK_X + PICK_W + 14, ty - 1, pbuf);
 
 	/* Mute checkbox. */
 	int my = SND_MUTE_Y;
-	surf.ogFillRect(CONTENT_X, my, CONTENT_X + SND_BOX, my + SND_BOX, 0x00303A46u);
-	surf.ogRect(CONTENT_X, my, CONTENT_X + SND_BOX, my + SND_BOX, 0x00586470u);
+	surf.ogFillRect(CONTENT_X, my, CONTENT_X + SND_BOX, my + SND_BOX, g_t.surface);
+	surf.ogRect(CONTENT_X, my, CONTENT_X + SND_BOX, my + SND_BOX, g_t.edge);
 	if (g_muted)
-		surf.ogFillRect(CONTENT_X + 3, my + 3, CONTENT_X + SND_BOX - 3, my + SND_BOX - 3, 0x00409CFFu);
-	set_color(font, 0x00C0C0C0, BG);
+		surf.ogFillRect(CONTENT_X + 3, my + 3, CONTENT_X + SND_BOX - 3, my + SND_BOX - 3, g_t.accent);
+	set_color(font, g_t.text_muted, BG);
 	font.PutString(surf, CONTENT_X + SND_BOX + 10, my + 1, "Mute");
 }
 
@@ -911,17 +1049,62 @@ static bool sound_click(int x, int y)
 	return false;
 }
 
+/**
+ * Appearance: light/dark mode (segmented), accent swatches, a custom RGB
+ * picker and "Reset to default".
+ */
+static void draw_appearance(ogSurface &surf, ogScalableFont &font)
+{
+	ui_canvas cv = canvas_of(surf);
+	char mode[16] = "dark";
+	ubistry_get_for(current_user(), "views/theme/mode", mode, sizeof(mode));
+	bool light = std::strcmp(mode, "light") == 0;
+
+	ui_text(surf, font, CONTENT_X, AP_SEG_Y - 14, "Mode", g_t.text_muted);
+	ui_fill_round(cv, CONTENT_X, AP_SEG_Y, AP_SEG_W, 32, 16, g_t.surface);
+	int half = (AP_SEG_W - 6 - 2) / 2;
+	int sx = CONTENT_X + 3 + (light ? half + 2 : 0);
+	ui_outlined_round(cv, sx, AP_SEG_Y + 3, half, 26, 13, g_t.accent, g_t.accent_900);
+	ui_text_c(surf, font, CONTENT_X + 3 + half / 2, AP_SEG_Y + 16, "Dark", light ? g_t.text_muted : g_t.accent_200);
+	ui_text_c(surf,
+	          font,
+	          CONTENT_X + 3 + half + 2 + half / 2,
+	          AP_SEG_Y + 16,
+	          "Light",
+	          light ? g_t.accent_200 : g_t.text_muted);
+
+	int cur = 0;
+	ui_text(surf, font, CONTENT_X, AP_SW_Y - 14, "Accent", g_t.text_muted);
+	uint32_t acc = (uint32_t)packed(g_accent);
+	for (int i = 0; i < AP_NSW; i++)
+	{
+		uint32_t c = g_accent_presets[i] ? g_accent_presets[i] : (light ? UI_ACCENT_LIGHT : UI_ACCENT_DARK);
+		int x = CONTENT_X + i * AP_SW_STEP;
+		bool sel = (c == acc);
+		cur |= sel;
+		if (sel)
+			ui_stroke_round(
+			    cv, x - 4, AP_SW_Y - 4, AP_SW_D + 8, AP_SW_D + 8, (AP_SW_D + 8) / 2, 2, g_t.text);
+		ui_fill_round(cv, x, AP_SW_Y, AP_SW_D, AP_SW_D, AP_SW_D / 2, c);
+	}
+
+	ui_text(
+	    surf, font, CONTENT_X, AP_PICK_Y - 18, cur ? "Custom colour" : "Custom colour (in use)", g_t.text_muted);
+	draw_picker(surf, font, g_accent, AP_PICK_Y);
+
+	ui_outlined_round(cv, CONTENT_X, AP_RESET_Y, 140, 28, UI_R_MD, g_t.edge, g_t.surface);
+	ui_text_c(surf, font, CONTENT_X + 70, AP_RESET_Y + 14, "Reset to default", g_t.text);
+}
+
 static void draw_content(ogSurface &surf, ogScalableFont &font, int pane)
 {
 	surf.ogFillRect(SIDEBAR_W, 0, WIN_W - 1, g_win_h - 1, BG);
-	set_color(font, 0x00FFFFFF, BG);
+	set_color(font, g_t.text, BG);
 	font.PutString(surf, CONTENT_X, CONTENT_TOP, g_pane_labels[pane]);
 
 	if (pane == PANE_APPEARANCE)
 	{
-		set_color(font, 0x00A0B0C0, BG);
-		font.PutString(surf, CONTENT_X, CONTENT_TOP + 22, "Accent colour (window title bars)");
-		draw_picker(surf, font, g_accent);
+		draw_appearance(surf, font);
 		return;
 	}
 
@@ -957,22 +1140,14 @@ static void draw_content(ogSurface &surf, ogScalableFont &font, int pane)
 
 	if (pane != PANE_DESKTOP)
 	{
-		set_color(font, 0x00A0B0C0, BG);
+		set_color(font, g_t.text_muted, BG);
 		font.PutString(surf, CONTENT_X, CONTENT_TOP + 28, "UbixOS desktop settings.");
 		font.PutString(surf, CONTENT_X, CONTENT_TOP + 44, "Choose a category on the left.");
 		return;
 	}
 
 	/* Mode tabs. */
-	for (int m = 0; m < 3; m++)
-	{
-		int tx = CONTENT_X + m * (TAB_W + 4);
-		uint32_t bg = (m == g_mode) ? ROW_SEL : 0x00303A46u;
-		surf.ogFillRect(tx, TAB_Y, tx + TAB_W - 1, TAB_Y + TAB_H - 1, bg);
-		surf.ogRect(tx, TAB_Y, tx + TAB_W - 1, TAB_Y + TAB_H - 1, 0x00586470u);
-		set_color(font, 0x00F0F0F0, bg);
-		font.PutString(surf, tx + 8, TAB_Y + 7, g_mode_labels[m]);
-	}
+	draw_tabs(surf, font, CONTENT_X, TAB_Y, TAB_W, g_mode_labels, 3, g_mode);
 
 	if (g_mode == DM_IMAGE)
 	{
@@ -980,10 +1155,7 @@ static void draw_content(ogSurface &surf, ogScalableFont &font, int pane)
 		if (!g_img_open)
 		{
 			draw_thumb(surf, font);
-			surf.ogFillRect(APPLY_X, APPLY_Y, APPLY_X + APPLY_W - 1, APPLY_Y + APPLY_H - 1, ROW_SEL);
-			surf.ogRect(APPLY_X, APPLY_Y, APPLY_X + APPLY_W - 1, APPLY_Y + APPLY_H - 1, 0x00586470u);
-			set_color(font, 0x00FFFFFF, ROW_SEL);
-			font.PutString(surf, APPLY_X + 26, APPLY_Y + 8, "Apply");
+			draw_button(surf, font, APPLY_X, APPLY_Y, APPLY_W, APPLY_H, "Apply", true);
 		}
 	}
 	else
@@ -1074,9 +1246,41 @@ static bool desktop_click(int x, int y)
 /* Handle a click in the Appearance pane (the accent RGB picker). */
 static bool appearance_click(int x, int y)
 {
+	/* Mode: Dark | Light */
+	if (y >= AP_SEG_Y && y < AP_SEG_Y + 32 && x >= CONTENT_X && x < CONTENT_X + AP_SEG_W)
+	{
+		apply_mode(x >= CONTENT_X + AP_SEG_W / 2);
+		return true;
+	}
+	/* Accent swatches */
+	if (y >= AP_SW_Y - 4 && y < AP_SW_Y + AP_SW_D + 4)
+		for (int i = 0; i < AP_NSW; i++)
+		{
+			int sx = CONTENT_X + i * AP_SW_STEP;
+			if (x >= sx - 4 && x < sx + AP_SW_D + 4)
+			{
+				if (g_accent_presets[i] == 0)
+					reset_accent();
+				else
+				{
+					g_accent[0] = (g_accent_presets[i] >> 16) & 0xFF;
+					g_accent[1] = (g_accent_presets[i] >> 8) & 0xFF;
+					g_accent[2] = g_accent_presets[i] & 0xFF;
+					apply_accent();
+				}
+				return true;
+			}
+		}
+	/* Reset to default */
+	if (y >= AP_RESET_Y && y < AP_RESET_Y + 28 && x >= CONTENT_X && x < CONTENT_X + 140)
+	{
+		reset_accent();
+		return true;
+	}
+	/* Custom RGB picker */
 	for (int k = 0; k < 3; k++)
 	{
-		int by = SUB_TOP + k * PICK_ROW;
+		int by = AP_PICK_Y + k * PICK_ROW;
 		if (y >= by - 2 && y <= by + 15 && x >= PICK_X && x < PICK_X + PICK_W)
 		{
 			int v = (x - PICK_X) * 255 / (PICK_W - 1);
@@ -1145,6 +1349,10 @@ static bool desktop_key(uint32_t kc)
 
 int main(int argc, char **argv)
 {
+	g_t = ui_theme_load(current_user());
+	g_accent[0] = (g_t.accent >> 16) & 0xFF; /* overwritten by a user override in load_desktop() */
+	g_accent[1] = (g_t.accent >> 8) & 0xFF;
+	g_accent[2] = g_t.accent & 0xFF;
 	/* Optional argv[1] selects the initial pane by name (e.g. "about"). */
 	int initial_pane = PANE_GENERAL;
 	if (argc > 1 && argv[1])
@@ -1230,10 +1438,13 @@ int main(int argc, char **argv)
 		for (int i = 0; i < NUM_PANES; i++)
 		{
 			int y = SIDE_TOP + i * ROW_H;
-			uint32_t bg = (i == active) ? ROW_SEL : SIDEBAR_BG;
-			surf.ogFillRect(4, y, SIDEBAR_W - 5, y + ROW_H - 2, bg);
-			set_color(font, 0x00F0F0F0, bg);
-			font.PutString(surf, 14, y + 6, g_pane_labels[i]);
+			bool sel = (i == active);
+			if (sel)
+			{
+				ui_canvas cv = canvas_of(surf);
+				ui_fill_round(cv, 6, y, SIDEBAR_W - 12, ROW_H - 1, UI_R_MD, ROW_SEL);
+			}
+			ui_text(surf, font, 16, y + ROW_H / 2, g_pane_labels[i], sel ? g_t.accent_200 : g_t.text);
 		}
 	};
 

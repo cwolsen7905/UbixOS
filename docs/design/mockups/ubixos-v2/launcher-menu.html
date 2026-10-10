@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>uBixOS — Launcher menu</title>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="ui.css">
+<style>
+  .launcher { left: 8px; top: 272px; width: 640px; height: 472px; display: flex; }
+
+  .launcher-rail { width: 176px; flex: none; padding: var(--s-4) var(--s-2) var(--s-2); display: flex; flex-direction: column; gap: 2px; background: var(--c-surface); border-right: 1px solid var(--c-divider); }
+  .rail-user { display: flex; align-items: center; gap: var(--s-2); padding: 0 var(--s-2) var(--s-4); }
+  .rail-avatar { width: 32px; height: 32px; border-radius: 16px; display: flex; align-items: center; justify-content: center; background: var(--c-accent-900); border: 1px solid var(--c-accent); color: var(--c-accent-200); font-weight: var(--fw-bold); }
+  .rail-user-sub { font-size: var(--fs-10); color: var(--c-text-faint); }
+  .rail-count { margin-left: auto; font-size: var(--fs-10); color: var(--c-text-faint); }
+  .rail-spacer { flex: 1; }
+  .rail-actions { display: flex; gap: 2px; }
+
+  .launcher-main { flex: 1; padding: var(--s-4); display: flex; flex-direction: column; }
+  .launcher-search { height: 36px; border-radius: 18px; }
+  .launcher-search .field-placeholder { flex: 1; }
+  .launcher-heading { margin-top: var(--s-3); }
+  .app-grid { display: grid; grid-template-columns: repeat(4, 104px); gap: 0 4px; }
+  .app-tile { width: 104px; height: 80px; padding-top: var(--s-2); display: flex; flex-direction: column; align-items: center; gap: 6px; border-radius: var(--r-md); font-size: var(--fs-11); color: var(--c-neutral-200); }
+  .app-tile.is-hover { background: var(--c-surface); }
+  .recent-when { margin-left: auto; font-size: var(--fs-10); color: var(--c-text-faint); }
+</style>
+</head>
+<body>
+<div class="screen">
+  <img class="wallpaper" src="assets/wallpaper-1280x800.png" width="1280" height="800" alt="">
+
+  <div class="panel launcher">
+    <div class="launcher-rail">
+      <div class="rail-user">
+        <div class="rail-avatar">U</div>
+        <div><div>ubix</div><div class="rail-user-sub">pi.local</div></div>
+      </div>
+      <div class="list-row is-selected"><img src="assets/icons/16/grid.svg" width="16" height="16" alt="">All<span class="rail-count">12</span></div>
+      <div class="list-row"><img src="assets/icons/16/terminal.svg" width="16" height="16" alt="">System<span class="rail-count">4</span></div>
+      <div class="list-row is-hover"><img src="assets/icons/16/code.svg" width="16" height="16" alt="">Develop<span class="rail-count">2</span></div>
+      <div class="list-row"><img src="assets/icons/16/music.svg" width="16" height="16" alt="">Media<span class="rail-count">2</span></div>
+      <div class="list-row"><img src="assets/icons/16/folder.svg" width="16" height="16" alt="">Office<span class="rail-count">4</span></div>
+      <div class="rail-spacer"></div>
+      <div class="rail-actions">
+        <span class="btn btn-icon"><img src="assets/icons/16/lock.svg" width="16" height="16" alt="Lock"></span>
+        <span class="btn btn-icon"><img src="assets/icons/16/sliders.svg" width="16" height="16" alt="Settings"></span>
+        <span class="taskbar-spacer"></span>
+        <span class="btn btn-icon"><img src="assets/icons/16/restart.svg" width="16" height="16" alt="Restart"></span>
+        <span class="btn btn-icon"><img src="assets/icons/16/power.svg" width="16" height="16" alt="Shut down"></span>
+      </div>
+    </div>
+
+    <div class="launcher-main">
+      <div class="field launcher-search is-focused">
+        <img src="assets/icons/16/search.svg" width="16" height="16" alt="">
+        <span class="field-caret"></span><span class="field-placeholder">Search apps, or type a command to run…</span>
+        <span class="kbd">Super</span>
+      </div>
+
+      <div class="section-label launcher-heading">All apps</div>
+      <div class="app-grid">
+        <div class="app-tile"><img src="assets/icons/48/app-terminal.svg" width="48" height="48" alt="">Terminal</div>
+        <div class="app-tile"><img src="assets/icons/48/app-files.svg" width="48" height="48" alt="">Files</div>
+        <div class="app-tile is-hover"><img src="assets/icons/48/app-editor.svg" width="48" height="48" alt="">Editor</div>
+        <div class="app-tile"><img src="assets/icons/48/app-browser.svg" width="48" height="48" alt="">Browser</div>
+        <div class="app-tile"><img src="assets/icons/48/app-mail.svg" width="48" height="48" alt="">Mail</div>
+        <div class="app-tile"><img src="assets/icons/48/app-music.svg" width="48" height="48" alt="">Music</div>
+        <div class="app-tile"><img src="assets/icons/48/app-photos.svg" width="48" height="48" alt="">Photos</div>
+        <div class="app-tile"><img src="assets/icons/48/app-notes.svg" width="48" height="48" alt="">Notes</div>
+        <div class="app-tile"><img src="assets/icons/48/app-calendar.svg" width="48" height="48" alt="">Calendar</div>
+        <div class="app-tile"><img src="assets/icons/48/app-calculator.svg" width="48" height="48" alt="">Calculator</div>
+        <div class="app-tile"><img src="assets/icons/48/app-packages.svg" width="48" height="48" alt="">Packages</div>
+        <div class="app-tile"><img src="assets/icons/48/app-settings.svg" width="48" height="48" alt="">Settings</div>
+      </div>
+
+      <div class="section-label launcher-heading">Continue</div>
+      <div class="list-row"><img src="assets/icons/16/app-terminal.svg" width="16" height="16" alt="">~/src/ubix<span class="recent-when">Terminal · 5 min</span></div>
+      <div class="list-row"><img src="assets/icons/16/app-editor.svg" width="16" height="16" alt="">views/theme.h<span class="recent-when">Editor · 12 min</span></div>
+      <div class="list-row"><img src="assets/icons/16/app-files.svg" width="16" height="16" alt="">Q3 Review.pdf<span class="recent-when">Documents · Tue</span></div>
+    </div>
+  </div>
+
+  <div class="taskbar">
+    <div class="launcher-button is-open"><img src="assets/icons/24/ubix-mark.svg" width="24" height="24" alt="">uBix</div>
+    <div class="taskbar-divider"></div>
+    <div class="task-item"><span class="task-item-indicator"></span><img src="assets/icons/16/app-terminal.svg" width="16" height="16" alt=""><span class="task-item-label">Terminal — ~/src/ubix</span></div>
+    <div class="task-item"><span class="task-item-indicator"></span><img src="assets/icons/16/app-files.svg" width="16" height="16" alt=""><span class="task-item-label">Files — Documents</span></div>
+    <div class="taskbar-spacer"></div>
+    <div class="tray">
+      <div class="tray-item"><img src="assets/icons/16/terminal.svg" width="16" height="16" alt=""></div>
+      <div class="tray-item"><img src="assets/icons/16/wifi.svg" width="16" height="16" alt=""></div>
+      <div class="tray-item"><img src="assets/icons/16/volume.svg" width="16" height="16" alt=""><span>62%</span></div>
+      <div class="clock"><span class="clock-date">Fri 9 Oct</span><span class="clock-time">21:41</span></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,128 @@
+/* ==========================================================================
+   uBixOS — design tokens
+   Every value the screens use lives here. Pixel values are integers so they
+   map 1:1 onto the framebuffer. Alpha is written as rgba() and repeated in
+   the comment as hex + alpha byte (#RRGGBBAA) for the C++ side.
+   ========================================================================== */
+
+:root {
+  /* ---- Ground & surfaces ------------------------------------------------ */
+  --c-ground:          #161826;  /* window body, login card, panels           */
+  --c-surface:         #232532;  /* active title bar, sidebars, inputs on panels */
+  --c-raised:          #292b31;  /* hover on surface                          */
+  --c-edge:            #3f424d;  /* 1px outlines on windows, fields, cards    */
+  --c-edge-strong:     #595d6c;  /* hovered outlines, active window edge      */
+  --c-console:         #0f1019;  /* terminal background — darkest value       */
+
+  /* ---- Neutral ramp (text + chrome) ------------------------------------ */
+  --c-neutral-100:     #f3f5fe;
+  --c-neutral-200:     #e4e7f5;
+  --c-neutral-300:     #cfd3e5;  /* icon glyph colour (baked into SVGs)       */
+  --c-neutral-400:     #b2b6ca;
+  --c-neutral-500:     #9397ab;
+  --c-neutral-600:     #75798c;
+  --c-neutral-700:     #595d6c;
+  --c-neutral-800:     #3f424d;
+  --c-neutral-900:     #292b31;
+
+  --c-text:            #e9e9ed;  /* primary text                             */
+  --c-text-muted:      #9397ab;  /* secondary text, inactive titles          */
+  --c-text-faint:      #75798c;  /* captions, placeholders                   */
+
+  /* ---- Accent ramp (single accent, blurple) ---------------------------- */
+  --c-accent:          #9184d9;  /* lines, outlines, focus ring, indicators  */
+  --c-accent-200:      #e7e5fe;  /* text on accent tints                      */
+  --c-accent-300:      #d2cefd;  /* accent-coloured body text                 */
+  --c-accent-400:      #b5abfc;  /* accent icons, pressed outline            */
+  --c-accent-700:      #5d5294;  /* pressed fill                             */
+  --c-accent-800:      #423a6a;  /* pressed / strong selection              */
+  --c-accent-900:      #2b2741;  /* hover tint, selection fill               */
+
+  /* ---- Danger (close button only) -------------------------------------- */
+  --c-danger:          #d0485e;
+  --c-danger-hover:    #5a2330;
+  --c-danger-pressed:  #7a2d3d;
+
+  /* ---- Translucent fills (alpha-blended, never blurred) ---------------- */
+  --c-taskbar:         rgba(22, 24, 38, 0.92);   /* #161826EB */
+  --c-panel:           rgba(22, 24, 38, 0.96);   /* #161826F5 launcher, popovers */
+  --c-scrim-login:     rgba(8, 6, 22, 0.62);     /* #0806169E wallpaper dim on login */
+  --c-divider:         rgba(233, 233, 237, 0.12);/* #E9E9ED1F */
+  --c-selection-text:  rgba(145, 132, 217, 0.35);/* #9184D959 terminal selection */
+
+  /* ---- App identity colours (used in icons + launcher) ----------------- */
+  --c-app-green:       #6fd3a0;
+  --c-app-cyan:        #7ad7ff;
+  --c-app-orange:      #ffb36b;
+  --c-app-pink:        #ff7ad9;
+  --c-app-yellow:      #e9d36b;
+  --c-app-blue:        #9fb4ff;
+  --c-app-red:         #f0788c;
+  --c-app-gold:        #f0c36b;
+
+  /* ---- Terminal ANSI palette (0–15) ------------------------------------ */
+  --ansi-0:  #161826;  --ansi-8:  #595d6c;
+  --ansi-1:  #f0788c;  --ansi-9:  #ff9aaa;
+  --ansi-2:  #6fd3a0;  --ansi-10: #94e6bd;
+  --ansi-3:  #e9d36b;  --ansi-11: #f5e38f;
+  --ansi-4:  #9fb4ff;  --ansi-12: #bccbff;
+  --ansi-5:  #ff7ad9;  --ansi-13: #ff9fe5;
+  --ansi-6:  #7ad7ff;  --ansi-14: #a3e4ff;
+  --ansi-7:  #cfd3e5;  --ansi-15: #f3f5fe;
+  --term-fg:     #cfd3e5;
+  --term-cursor: #b5abfc;
+
+  /* ---- Type (DejaVu only: Book 400 + Bold 700) ------------------------- */
+  --font-sans:  "DejaVu Sans", Verdana, sans-serif;
+  --font-mono:  "DejaVu Sans Mono", Menlo, Consolas, monospace;
+  --font-serif: "DejaVu Serif", Georgia, serif;
+  --fw-regular: 400;
+  --fw-bold:    700;
+
+  --fs-10: 10px;  /* captions, badges                         */
+  --fs-11: 11px;  /* secondary labels, tray date              */
+  --fs-12: 12px;  /* default UI text, titles                  */
+  --fs-13: 13px;  /* terminal text, field text                */
+  --fs-16: 16px;  /* panel headings                           */
+  --fs-20: 20px;  /* login user name                          */
+  --fs-56: 56px;  /* login clock                              */
+  --lh-ui:   16px;   /* line height for 11–12px UI text */
+  --lh-term: 18px;   /* terminal cell height at 13px    */
+
+  /* ---- Spacing (4px grid) --------------------------------------------- */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 24px;
+  --s-6: 32px;
+  --s-7: 48px;
+
+  /* ---- Radii ----------------------------------------------------------- */
+  --r-sm:     4px;   /* scrollbar thumb, badges        */
+  --r-md:     6px;   /* buttons, fields, list rows     */
+  --r-lg:     10px;  /* windows                        */
+  --r-xl:     12px;  /* taskbar, launcher, login card  */
+  --r-pill:   16px;  /* 32px-high pills (launcher button, segmented) */
+
+  /* ---- Fixed sizes ----------------------------------------------------- */
+  --taskbar-h:      40px;
+  --taskbar-inset:  8px;   /* gap between taskbar and screen edge */
+  --titlebar-h:     32px;
+  --winbtn:         22px;  /* circular window-control button */
+  --control-h:      32px;  /* buttons, fields                 */
+  --row-h:          28px;  /* list rows                       */
+  --scrollbar-w:    8px;
+  --focus-ring-w:   2px;
+  --focus-ring-gap: 2px;
+
+  /* ---- Shadows: ONE offset shadow per element (x y blur colour) -------- */
+  --shadow-window:          0 8px 24px rgba(0, 0, 0, 0.55); /* #0000008C */
+  --shadow-window-inactive: 0 4px 12px rgba(0, 0, 0, 0.40); /* #00000066 */
+  --shadow-panel:           0 6px 18px rgba(0, 0, 0, 0.50); /* #00000080 */
+  --shadow-taskbar:         0 4px 12px rgba(0, 0, 0, 0.45); /* #00000073 */
+
+  /* ---- Opacity --------------------------------------------------------- */
+  --opacity-disabled: 0.45;
+  --opacity-inactive-glyph: 0.55;
+}

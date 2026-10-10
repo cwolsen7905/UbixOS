@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>uBixOS — States sheet</title>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="ui.css">
+<style>
+  .states { display: grid; grid-template-columns: 176px repeat(5, 200px); }
+  .states-head { height: 32px; display: flex; align-items: center; font-size: var(--fs-10); color: var(--c-text-faint); letter-spacing: .06em; text-transform: uppercase; border-bottom: 1px solid var(--c-divider); }
+  .states-label { height: 76px; display: flex; flex-direction: column; justify-content: center; gap: 2px; border-bottom: 1px solid var(--c-divider); }
+  .states-cell { height: 76px; display: flex; align-items: center; border-bottom: 1px solid var(--c-divider); }
+  .states-cell .field { width: 168px; }
+  .states-cell .list-row { width: 168px; }
+  .row-panel { padding: 4px; border-radius: var(--r-md); background: var(--c-ground); border: 1px solid var(--c-edge); }
+  .sb-demo { position: relative; width: 8px; height: 56px; }
+  .sb-demo .scrollbar { left: 0; top: 0; height: 56px; }
+  .sb-demo .scrollbar-thumb { top: 12px; height: 24px; }
+</style>
+</head>
+<body>
+<div class="screen sheet">
+  <h1 class="sheet-title">States sheet</h1>
+  <p class="sheet-sub">Focus ring is always a 2px accent stroke, 2px outside the control's shape. Disabled is the normal state at 45% alpha and ignores input.</p>
+
+  <div class="states">
+    <span class="states-head"></span>
+    <span class="states-head">Normal</span><span class="states-head">Hover</span><span class="states-head">Pressed</span><span class="states-head">Focused</span><span class="states-head">Disabled</span>
+
+    <div class="states-label"><span>Primary button</span><span class="spec-note">accent outline, never filled</span></div>
+    <div class="states-cell"><span class="btn btn-primary">Sign in</span></div>
+    <div class="states-cell"><span class="btn btn-primary is-hover">Sign in</span></div>
+    <div class="states-cell"><span class="btn btn-primary is-pressed">Sign in</span></div>
+    <div class="states-cell"><span class="btn btn-primary is-focused">Sign in</span></div>
+    <div class="states-cell"><span class="btn btn-primary is-disabled">Sign in</span></div>
+
+    <div class="states-label"><span>Secondary button</span><span class="spec-note">surface fill + edge</span></div>
+    <div class="states-cell"><span class="btn btn-secondary">Cancel</span></div>
+    <div class="states-cell"><span class="btn btn-secondary is-hover">Cancel</span></div>
+    <div class="states-cell"><span class="btn btn-secondary is-pressed">Cancel</span></div>
+    <div class="states-cell"><span class="btn btn-secondary is-focused">Cancel</span></div>
+    <div class="states-cell"><span class="btn btn-secondary is-disabled">Cancel</span></div>
+
+    <div class="states-label"><span>Icon button</span><span class="spec-note">32px square, ghost</span></div>
+    <div class="states-cell"><span class="btn btn-icon"><img src="assets/icons/16/arrow-left.svg" width="16" height="16" alt=""></span></div>
+    <div class="states-cell"><span class="btn btn-icon is-hover"><img src="assets/icons/16/arrow-left.svg" width="16" height="16" alt=""></span></div>
+    <div class="states-cell"><span class="btn btn-icon is-pressed"><img src="assets/icons/16/arrow-left.svg" width="16" height="16" alt=""></span></div>
+    <div class="states-cell"><span class="btn btn-icon is-focused"><img src="assets/icons/16/arrow-left.svg" width="16" height="16" alt=""></span></div>
+    <div class="states-cell"><span class="btn btn-icon is-disabled"><img src="assets/icons/16/arrow-left.svg" width="16" height="16" alt=""></span></div>
+
+    <div class="states-label"><span>Text field</span><span class="spec-note">pressed = mouse down / selecting</span></div>
+    <div class="states-cell"><span class="field"><span class="field-placeholder">Hostname</span></span></div>
+    <div class="states-cell"><span class="field is-hover"><span class="field-placeholder">Hostname</span></span></div>
+    <div class="states-cell"><span class="field is-hover" style="border-color:var(--c-accent-700)">pi<span class="field-caret"></span>.local</span></div>
+    <div class="states-cell"><span class="field is-focused">pi.local<span class="field-caret"></span></span></div>
+    <div class="states-cell"><span class="field is-disabled"><span class="field-placeholder">Hostname</span></span></div>
+
+    <div class="states-label"><span>List row</span><span class="spec-note">28px, radius 6</span></div>
+    <div class="states-cell"><div class="row-panel"><div class="list-row"><img src="assets/icons/16/folder.svg" width="16" height="16" alt="">Downloads</div></div></div>
+    <div class="states-cell"><div class="row-panel"><div class="list-row is-hover"><img src="assets/icons/16/folder.svg" width="16" height="16" alt="">Downloads</div></div></div>
+    <div class="states-cell"><div class="row-panel"><div class="list-row is-pressed"><img src="assets/icons/16/folder.svg" width="16" height="16" alt="">Downloads</div></div></div>
+    <div class="states-cell"><div class="row-panel"><div class="list-row is-focused"><img src="assets/icons/16/folder.svg" width="16" height="16" alt="">Downloads</div></div></div>
+    <div class="states-cell"><div class="row-panel"><div class="list-row is-disabled"><img src="assets/icons/16/folder.svg" width="16" height="16" alt="">Downloads</div></div></div>
+
+    <div class="states-label"><span>Selected list row</span><span class="spec-note">unfocused window → raised grey</span></div>
+    <div class="states-cell"><div class="row-panel"><div class="list-row is-selected"><img src="assets/icons/16/folder.svg" width="16" height="16" alt="">Documents</div></div></div>
+    <div class="states-cell"><div class="row-panel"><div class="list-row is-selected is-hover"><img src="assets/icons/16/folder.svg" width="16" height="16" alt="">Documents</div></div></div>
+    <div class="states-cell"><div class="row-panel"><div class="list-row is-selected" style="background:var(--c-accent-700)"><img src="assets/icons/16/folder.svg" width="16" height="16" alt="">Documents</div></div></div>
+    <div class="states-cell"><div class="row-panel"><div class="list-row is-selected is-focused"><img src="assets/icons/16/folder.svg" width="16" height="16" alt="">Documents</div></div></div>
+    <div class="states-cell"><div class="row-panel"><div class="list-row is-selected-unfocused"><img src="assets/icons/16/folder.svg" width="16" height="16" alt="">Documents</div></div></div>
+
+    <div class="states-label"><span>Scrollbar</span><span class="spec-note">8px overlay; focused = keyboard-scrolled pane</span></div>
+    <div class="states-cell"><div class="sb-demo"><div class="scrollbar scrollbar-track"><div class="scrollbar-thumb"></div></div></div></div>
+    <div class="states-cell"><div class="sb-demo"><div class="scrollbar scrollbar-track is-hover"><div class="scrollbar-thumb"></div></div></div></div>
+    <div class="states-cell"><div class="sb-demo"><div class="scrollbar scrollbar-track is-pressed"><div class="scrollbar-thumb"></div></div></div></div>
+    <div class="states-cell"><div class="sb-demo"><div class="scrollbar scrollbar-track is-hover"><div class="scrollbar-thumb" style="background:var(--c-accent-700)"></div></div></div></div>
+    <div class="states-cell"><div class="sb-demo is-disabled"><div class="scrollbar scrollbar-track"><div class="scrollbar-thumb"></div></div></div></div>
+  </div>
+</div>
+</body>
+</html>

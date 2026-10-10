@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>uBixOS — Window chrome</title>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="ui.css">
+<style>
+  .chrome-layout { display: flex; gap: var(--s-6); }
+  .chrome-left { width: 680px; display: flex; flex-direction: column; gap: var(--s-5); }
+  .chrome-right { flex: 1; }
+  .specimen { display: flex; flex-direction: column; gap: var(--s-2); }
+  .specimen-window { position: relative; width: 680px; height: 88px; }
+  .specimen-window.is-maximized { border-radius: 0; border-left: 0; border-right: 0; box-shadow: none; }
+  .specimen-body { flex: 1; }
+
+  .matrix { display: grid; grid-template-columns: 96px repeat(4, 1fr); gap: var(--s-2); align-items: center; }
+  .matrix-head { font-size: var(--fs-10); color: var(--c-text-faint); letter-spacing: .06em; text-transform: uppercase; }
+  .matrix-cell { height: 44px; display: flex; align-items: center; justify-content: center; border-radius: var(--r-md); background: var(--c-surface); }
+  .matrix-cell.on-inactive { background: var(--c-ground); border: 1px solid var(--c-edge); }
+  .matrix-cell.on-inactive img { opacity: var(--opacity-inactive-glyph); }
+
+  .measure { margin-top: var(--s-5); display: grid; grid-template-columns: 160px 1fr; gap: 6px var(--s-3); font-size: var(--fs-11); }
+  .measure dt { color: var(--c-text-faint); }
+  .measure dd { margin: 0; color: var(--c-text); font-family: var(--font-mono); }
+</style>
+</head>
+<body>
+<div class="screen sheet">
+  <h1 class="sheet-title">Window chrome</h1>
+  <p class="sheet-sub">Title bar 32px. Controls sit in a capsule on the right: keep-on-top, divider, minimize, maximize/restore, close.</p>
+
+  <div class="chrome-layout">
+    <div class="chrome-left">
+      <div class="specimen">
+        <span class="spec-label">Active</span>
+        <div class="window specimen-window">
+          <div class="titlebar titlebar-active">
+            <img class="titlebar-icon" src="assets/icons/16/app-files.svg" width="16" height="16" alt="">
+            <span class="titlebar-title">Files — Documents</span>
+            <div class="window-controls">
+              <span class="winbtn"><img src="assets/icons/16/win-pin.svg" width="16" height="16" alt=""></span>
+              <span class="window-controls-divider"></span>
+              <span class="winbtn"><img src="assets/icons/16/win-minimize.svg" width="16" height="16" alt=""></span>
+              <span class="winbtn"><img src="assets/icons/16/win-maximize.svg" width="16" height="16" alt=""></span>
+              <span class="winbtn winbtn-close"><img src="assets/icons/16/win-close.svg" width="16" height="16" alt=""></span>
+            </div>
+          </div>
+          <div class="specimen-body"></div>
+        </div>
+        <span class="spec-note">Surface fill, primary text, 1px accent hairline on the top edge fading out over 48px, edge-strong outline, window shadow.</span>
+      </div>
+
+      <div class="specimen">
+        <span class="spec-label">Inactive</span>
+        <div class="window specimen-window is-inactive">
+          <div class="titlebar titlebar-inactive">
+            <img class="titlebar-icon" src="assets/icons/16/app-terminal.svg" width="16" height="16" alt="">
+            <span class="titlebar-title">Terminal — ~/src/ubix</span>
+            <div class="window-controls">
+              <span class="winbtn"><img src="assets/icons/16/win-pin.svg" width="16" height="16" alt=""></span>
+              <span class="window-controls-divider"></span>
+              <span class="winbtn"><img src="assets/icons/16/win-minimize.svg" width="16" height="16" alt=""></span>
+              <span class="winbtn"><img src="assets/icons/16/win-maximize.svg" width="16" height="16" alt=""></span>
+              <span class="winbtn winbtn-close"><img src="assets/icons/16/win-close.svg" width="16" height="16" alt=""></span>
+            </div>
+          </div>
+          <div class="specimen-body"></div>
+        </div>
+        <span class="spec-note">Ground fill (title bar merges with body), muted text, no hairline, glyphs at 55% alpha, smaller shadow.</span>
+      </div>
+
+      <div class="specimen">
+        <span class="spec-label">Active · maximized · pinned</span>
+        <div class="window specimen-window is-maximized">
+          <div class="titlebar titlebar-active">
+            <img class="titlebar-icon" src="assets/icons/16/app-editor.svg" width="16" height="16" alt="">
+            <span class="titlebar-title">Editor — views/theme.h</span>
+            <div class="window-controls">
+              <span class="winbtn is-on"><img src="assets/icons/16/win-pin.svg" width="16" height="16" alt=""></span>
+              <span class="window-controls-divider"></span>
+              <span class="winbtn"><img src="assets/icons/16/win-minimize.svg" width="16" height="16" alt=""></span>
+              <span class="winbtn"><img src="assets/icons/16/win-restore.svg" width="16" height="16" alt=""></span>
+              <span class="winbtn winbtn-close"><img src="assets/icons/16/win-close.svg" width="16" height="16" alt=""></span>
+            </div>
+          </div>
+          <div class="specimen-body"></div>
+        </div>
+        <span class="spec-note">Maximized: radius 0, no side edges, no shadow; fills 0,0 → 1280×744 (stops 8px above the taskbar). Maximize glyph becomes Restore.</span>
+      </div>
+    </div>
+
+    <div class="chrome-right">
+      <span class="spec-label">Control states</span>
+      <div class="matrix" style="margin-top:var(--s-2)">
+        <span></span><span class="matrix-head">Normal</span><span class="matrix-head">Hover</span><span class="matrix-head">Pressed</span><span class="matrix-head">Inactive win</span>
+
+        <span class="spec-note">Keep on top</span>
+        <span class="matrix-cell"><span class="winbtn"><img src="assets/icons/16/win-pin.svg" width="16" height="16" alt=""></span></span>
+        <span class="matrix-cell"><span class="winbtn is-hover"><img src="assets/icons/16/win-pin.svg" width="16" height="16" alt=""></span></span>
+        <span class="matrix-cell"><span class="winbtn is-pressed"><img src="assets/icons/16/win-pin.svg" width="16" height="16" alt=""></span></span>
+        <span class="matrix-cell on-inactive"><span class="winbtn"><img src="assets/icons/16/win-pin.svg" width="16" height="16" alt=""></span></span>
+
+        <span class="spec-note">Minimize</span>
+        <span class="matrix-cell"><span class="winbtn"><img src="assets/icons/16/win-minimize.svg" width="16" height="16" alt=""></span></span>
+        <span class="matrix-cell"><span class="winbtn is-hover"><img src="assets/icons/16/win-minimize.svg" width="16" height="16" alt=""></span></span>
+        <span class="matrix-cell"><span class="winbtn is-pressed"><img src="assets/icons/16/win-minimize.svg" width="16" height="16" alt=""></span></span>
+        <span class="matrix-cell on-inactive"><span class="winbtn"><img src="assets/icons/16/win-minimize.svg" width="16" height="16" alt=""></span></span>
+
+        <span class="spec-note">Maximize</span>
+        <span class="matrix-cell"><span class="winbtn"><img src="assets/icons/16/win-maximize.svg" width="16" height="16" alt=""></span></span>
+        <span class="matrix-cell"><span class="winbtn is-hover"><img src="assets/icons/16/win-maximize.svg" width="16" height="16" alt=""></span></span>
+        <span class="matrix-cell"><span class="winbtn is-pressed"><img src="assets/icons/16/win-maximize.svg" width="16" height="16" alt=""></span></span>
+        <span class="matrix-cell on-inactive"><span class="winbtn"><img src="assets/icons/16/win-maximize.svg" width="16" height="16" alt=""></span></span>
+
+        <span class="spec-note">Restore</span>
+        <span class="matrix-cell"><span class="winbtn"><img src="assets/icons/16/win-restore.svg" width="16" height="16" alt=""></span></span>
+        <span class="matrix-cell"><span class="winbtn is-hover"><img src="assets/icons/16/win-restore.svg" width="16" height="16" alt=""></span></span>
+        <span class="matrix-cell"><span class="winbtn is-pressed"><img src="assets/icons/16/win-restore.svg" width="16" height="16" alt=""></span></span>
+        <span class="matrix-cell on-inactive"><span class="winbtn"><img src="assets/icons/16/win-restore.svg" width="16" height="16" alt=""></span></span>
+
+        <span class="spec-note">Close</span>
+        <span class="matrix-cell"><span class="winbtn winbtn-close"><img src="assets/icons/16/win-close.svg" width="16" height="16" alt=""></span></span>
+        <span class="matrix-cell"><span class="winbtn winbtn-close is-hover"><img src="assets/icons/16/win-close.svg" width="16" height="16" alt=""></span></span>
+        <span class="matrix-cell"><span class="winbtn winbtn-close is-pressed"><img src="assets/icons/16/win-close.svg" width="16" height="16" alt=""></span></span>
+        <span class="matrix-cell on-inactive"><span class="winbtn winbtn-close"><img src="assets/icons/16/win-close.svg" width="16" height="16" alt=""></span></span>
+      </div>
+
+      <dl class="measure">
+        <dt>Title bar height</dt><dd>32 px</dd>
+        <dt>Left padding / icon</dt><dd>12 px · 16 px icon · 8 px gap</dd>
+        <dt>Capsule</dt><dd>28 px high, radius 14, 3 px padding, 1px edge</dd>
+        <dt>Button</dt><dd>22 px circle, 2 px apart, 16 px glyph</dd>
+        <dt>Capsule → right edge</dt><dd>4 px</dd>
+        <dt>Hover / pressed</dt><dd>neutral-800 / accent-800</dd>
+        <dt>Close hover / pressed</dt><dd>danger-hover / danger-pressed</dd>
+        <dt>Resize hit area</dt><dd>6 px edges, 14 px corners (invisible)</dd>
+      </dl>
+    </div>
+  </div>
+</div>
+</body>
+</html>

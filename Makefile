@@ -126,6 +126,8 @@ AARCH64_KCFLAGS += ${AARCH64_KCFLAGS_EXTRA}
 # Arch-neutral kernel sources now linked into the aarch64 kernel.  Grows as more
 # of the generic kernel is ported; the scheduler core is the first to link.
 AARCH64_GENERIC_SRCS = \
+	sys/net/net/netstatus.c \
+	sys/kern/reboot.c \
 	sys/kern/sched_core.c \
 	sys/kern/sched_dispatch.c \
 	sys/kern/cpu_enum.c \
@@ -449,6 +451,8 @@ X86_64_KCFLAGS = ${KERN_TARGET_CFLAGS} -O -Wall -Wno-incompatible-pointer-types 
 # advances (mirrors AARCH64_GENERIC_SRCS); Phase 3 links the physical allocator
 # + kernel heap.
 X86_64_GENERIC_SRCS = \
+	sys/net/net/netstatus.c \
+	sys/kern/reboot.c \
 	sys/vmm/vmm_memory.c \
 	sys/lib/kmalloc.c \
 	sys/kern/sched_core.c \

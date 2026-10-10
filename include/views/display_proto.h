@@ -58,6 +58,8 @@
 #define DISPLAY_WINRESIZE 19       /* display → client: window resized; re-attach new buffer */
 #define DISPLAY_FOCUS 20           /* display → taskbar: focused window changed */
 #define DISPLAY_PREVIEW 21         /* taskbar → display: show/hide a hover thumbnail */
+#define DISPLAY_LAUNCHER 23        /* display → taskbar: Super pressed, toggle the launcher */
+#define DISPLAY_WINCTL 24          /* taskbar → display: minimize / close another window */
 
 /* display → client */
 #define DISPLAY_ACK 4     /* region granted; carries window_id + shm token */
@@ -69,7 +71,7 @@
 #define DISPLAY_NOTIFY 12 /* window added or removed (sent to taskbar) */
 
 /* Height of the server-drawn title bar (0 for no_decor windows) */
-#define DECOR_H 28
+#define DECOR_H 32 /* = UI_TITLEBAR_H (views/theme.h) */
 
 /*
  * DISPLAY_CLAIM payload (client → display).
@@ -104,6 +106,12 @@ struct display_claim_req
 	 * >0 and opacity<255, the compositor box-blurs what's behind the window before
 	 * blending its tint — an acrylic/frosted-glass panel.  Trailing field. */
 	uint8_t blur_radius;
+	/* 1 = the buffer's top byte is per-pixel alpha (straight, 0 = clear,
+	 * 255 = opaque) and the compositor blends the window over what is beneath
+	 * it.  Such windows draw their own shape and shadow (the compositor adds
+	 * none) — e.g. the floating taskbar.  Default 0: opaque, top byte ignored.
+	 * Trailing field so existing claim layouts are unchanged. */
+	uint8_t translucent;
 };
 
 /*
@@ -200,6 +208,18 @@ struct display_info
 struct display_raise
 {
 	uint32_t window_id;
+};
+
+/*
+ * DISPLAY_WINCTL payload (taskbar → display): act on a window the sender does
+ * not own, as its title-bar buttons would.
+ */
+#define WINCTL_MINIMIZE 1
+#define WINCTL_CLOSE 2
+struct display_winctl
+{
+	uint32_t window_id;
+	uint32_t op; /* WINCTL_* */
 };
 
 /*

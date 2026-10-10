@@ -25,6 +25,38 @@
  * affordance on i386; inactive here — no MI provider linked for x86_64). */
 volatile u_int32_t reboot_at_tick = 0;
 
+/**
+ * machine_power (x86_64): power off through the ACPI PM1a control register QEMU
+ * exposes (0x604 for the PIIX4/ICH9 PM block, 0xB004 on Bochs / older QEMU);
+ * otherwise, and for a reset, pulse the CPU reset line through the 8042, then
+ * fall back to a triple fault.  Does not return.
+ *
+ * Real hardware would need the FADT's PM1a port and SLP_TYPa value (ACPI table
+ * parsing) — not done yet; on such machines power-off resets instead.
+ */
+void machine_power(int off)
+{
+	__asm__ volatile("cli");
+	if (off)
+	{
+		outw(0x604, 0x2000);
+		outw(0xB004, 0x2000);
+	}
+	for (int i = 0; i < 100000 && (inb(0x64) & 0x02); i++)
+		;
+	outb(0x64, 0xFE); /* 8042: pulse the CPU reset line */
+	{
+		struct __attribute__((packed))
+		{
+			u_int16_t limit;
+			u_int64_t base;
+		} nullidt = {0, 0};
+		__asm__ volatile("lidt %0; int3" : : "m"(nullidt)); /* triple fault */
+	}
+	for (;;)
+		__asm__ volatile("hlt");
+}
+
 /* NOTE: systemVitals, the g_device_find + g_fs + g_tty hooks, getfd, klog,
  * the callout helpers, krandom_stir, endTask and smp_cpu_count are now provided
  * by the real MI files (vitals.c, descrip.c, klog.c, callout.c, random.c,

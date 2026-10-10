@@ -52,6 +52,9 @@ class InputRouter
 	Window *resize_win_ = nullptr;
 	int resize_start_w_ = 0, resize_start_h_ = 0;
 	int resize_start_cx_ = 0, resize_start_cy_ = 0;
+	int resize_start_x_ = 0, resize_start_y_ = 0;
+	int resize_edges_ = 0; /* Window::RZ_* being dragged */
+	void resize_geometry(int &nx, int &ny, int &nw, int &nh) const;
 
 	/* Double-click-on-title detection (toggles maximize). */
 	long last_click_ms_ = 0;
@@ -68,6 +71,13 @@ class InputRouter
 	bool shift_held_ = false;
 	bool switcher_active_ = false;
 	void commit_switch(uint32_t id);
+	/* Window whose title-bar control is hovered/pressed (0 if none), by id. */
+	uint32_t ctl_hover_id_ = 0;
+
+	/* Window that received the last left press (by id): its release goes there
+	 * too, even when the press did not move focus (taskbar, pop-overs). */
+	uint32_t press_id_ = 0;
+	void update_ctl_hover(uint8_t buttons);
 
 	/* on_close_ is called when the user clicks the close button.
 	 * WindowManager sets this to its own close_window method via a

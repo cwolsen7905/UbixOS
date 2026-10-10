@@ -12,9 +12,21 @@
 #include <objgfx/objgfx.h>
 #include <objgfx/ogScalableFont.h>
 
+/* Colours + shape for every ogButton.  objGFX stays toolkit-neutral: apps set
+ * ogButton::style once (e.g. from the system theme in views/theme.h). */
+struct ogButtonStyle
+{
+	uInt32 face, face_pressed, face_disabled;
+	uInt32 edge, edge_pressed, edge_disabled;
+	uInt32 text, text_disabled;
+	uInt32 radius; /* corner radius, 0 = square */
+};
+
 class ogButton
 {
       public:
+	static ogButtonStyle style;
+
 	int32 x, y, w, h;
 	const char *label;
 	bool enabled;

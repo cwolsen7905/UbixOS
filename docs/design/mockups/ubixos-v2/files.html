@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>uBixOS — Files</title>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="ui.css">
+<style>
+  .files-window { left: 96px; top: 40px; width: 1088px; height: 688px; }
+
+  .breadcrumb { flex: 1; margin: 0 var(--s-2); font-size: var(--fs-12); gap: 2px; padding: 0 var(--s-2); background: var(--c-surface); }
+  .crumb { height: 24px; padding: 0 6px; display: flex; align-items: center; border-radius: var(--r-sm); color: var(--c-text-muted); }
+  .crumb.is-current { color: var(--c-text); }
+  .files-search { width: 220px; font-size: var(--fs-12); }
+  .view-toggle { width: 72px; margin-left: var(--s-2); }
+
+  .sidebar { width: 200px; flex: none; padding: var(--s-2); background: var(--c-surface); border-right: 1px solid var(--c-divider); }
+  .disk-usage { margin: var(--s-1) var(--s-2) var(--s-2) 32px; height: 4px; border-radius: 2px; background: var(--c-neutral-800); }
+  .disk-usage-fill { width: 41%; height: 4px; border-radius: 2px; background: var(--c-accent); }
+  .row-meta { margin-left: auto; font-size: var(--fs-10); color: var(--c-text-faint); }
+
+  .content { position: relative; flex: 1; padding: var(--s-3) var(--s-4); }
+  .icon-grid { display: grid; grid-template-columns: repeat(7, 112px); gap: var(--s-1); }
+  .icon-tile {
+    width: 112px; height: 100px; padding: var(--s-3) var(--s-1) var(--s-2);
+    display: flex; flex-direction: column; align-items: center; gap: var(--s-2);
+    border: 1px solid transparent; border-radius: var(--r-md);
+    font-size: var(--fs-11); text-align: center; line-height: 14px;
+  }
+  .icon-tile.is-hover { background: var(--c-surface); }
+  .icon-tile.is-selected { background: var(--c-accent-900); border-color: var(--c-accent-700); color: var(--c-accent-200); }
+  .content-scrollbar { right: 4px; top: 8px; height: 576px; }
+  .content-scrollbar .scrollbar-thumb { top: 0; height: 400px; }
+</style>
+</head>
+<body>
+<div class="screen">
+  <img class="wallpaper" src="assets/wallpaper-1280x800.png" width="1280" height="800" alt="">
+
+  <div class="window files-window">
+    <div class="titlebar titlebar-active">
+      <img class="titlebar-icon" src="assets/icons/16/app-files.svg" width="16" height="16" alt="">
+      <span class="titlebar-title">Files — Documents</span>
+      <div class="window-controls">
+        <span class="winbtn"><img src="assets/icons/16/win-pin.svg" width="16" height="16" alt="Keep on top"></span>
+        <span class="window-controls-divider"></span>
+        <span class="winbtn"><img src="assets/icons/16/win-minimize.svg" width="16" height="16" alt="Minimize"></span>
+        <span class="winbtn"><img src="assets/icons/16/win-maximize.svg" width="16" height="16" alt="Maximize"></span>
+        <span class="winbtn winbtn-close"><img src="assets/icons/16/win-close.svg" width="16" height="16" alt="Close"></span>
+      </div>
+    </div>
+
+    <div class="toolbar">
+      <span class="btn btn-icon"><img src="assets/icons/16/arrow-left.svg" width="16" height="16" alt="Back"></span>
+      <span class="btn btn-icon is-disabled"><img src="assets/icons/16/arrow-right.svg" width="16" height="16" alt="Forward"></span>
+      <span class="btn btn-icon"><img src="assets/icons/16/arrow-up.svg" width="16" height="16" alt="Up"></span>
+      <div class="field breadcrumb">
+        <span class="crumb">Home</span>
+        <img src="assets/icons/16/chevron-right.svg" width="16" height="16" alt="" style="opacity:.5">
+        <span class="crumb is-current">Documents</span>
+      </div>
+      <div class="field files-search"><img src="assets/icons/16/search.svg" width="16" height="16" alt=""><span class="field-placeholder">Search Documents</span></div>
+      <div class="segmented view-toggle">
+        <span class="segmented-option is-selected"><img src="assets/icons/16/grid.svg" width="16" height="16" alt="Grid"></span>
+        <span class="segmented-option"><img src="assets/icons/16/list.svg" width="16" height="16" alt="List"></span>
+      </div>
+    </div>
+
+    <div class="window-body">
+      <div class="sidebar">
+        <div class="section-label">Places</div>
+        <div class="list-row"><img src="assets/icons/16/home.svg" width="16" height="16" alt="">Home</div>
+        <div class="list-row"><img src="assets/icons/16/monitor.svg" width="16" height="16" alt="">Desktop</div>
+        <div class="list-row is-selected"><img src="assets/icons/16/folder.svg" width="16" height="16" alt="">Documents</div>
+        <div class="list-row is-hover"><img src="assets/icons/16/download.svg" width="16" height="16" alt="">Downloads</div>
+        <div class="list-row"><img src="assets/icons/16/image.svg" width="16" height="16" alt="">Pictures</div>
+        <div class="list-row"><img src="assets/icons/16/music.svg" width="16" height="16" alt="">Music</div>
+        <div class="list-row"><img src="assets/icons/16/code.svg" width="16" height="16" alt="">src</div>
+        <div class="list-row"><img src="assets/icons/16/trash.svg" width="16" height="16" alt="">Trash</div>
+        <div class="section-label" style="margin-top:var(--s-3)">Devices</div>
+        <div class="list-row"><img src="assets/icons/16/drive.svg" width="16" height="16" alt="">SD card<span class="row-meta">12 / 29 GB</span></div>
+        <div class="disk-usage"><div class="disk-usage-fill"></div></div>
+        <div class="list-row"><img src="assets/icons/16/drive.svg" width="16" height="16" alt="">USB drive<span class="row-meta">⏏</span></div>
+      </div>
+
+      <div class="content">
+        <div class="icon-grid">
+          <div class="icon-tile"><img src="assets/icons/48/file-folder.svg" width="48" height="48" alt="">Invoices</div>
+          <div class="icon-tile"><img src="assets/icons/48/file-folder.svg" width="48" height="48" alt="">Reports</div>
+          <div class="icon-tile is-selected"><img src="assets/icons/48/file-pdf.svg" width="48" height="48" alt="">Q3 Review.pdf</div>
+          <div class="icon-tile"><img src="assets/icons/48/file-doc.svg" width="48" height="48" alt="">Roadmap.odt</div>
+          <div class="icon-tile is-hover"><img src="assets/icons/48/file-sheet.svg" width="48" height="48" alt="">Budget 2026.ods</div>
+          <div class="icon-tile"><img src="assets/icons/48/file-text.svg" width="48" height="48" alt="">meeting-notes.md</div>
+          <div class="icon-tile"><img src="assets/icons/48/file-archive.svg" width="48" height="48" alt="">backup.tar.gz</div>
+          <div class="icon-tile"><img src="assets/icons/48/file-code.svg" width="48" height="48" alt="">theme.h</div>
+          <div class="icon-tile"><img src="assets/icons/48/file-image.svg" width="48" height="48" alt="">sunset.png</div>
+          <div class="icon-tile"><img src="assets/icons/48/file-audio.svg" width="48" height="48" alt="">nightdrive.flac</div>
+        </div>
+        <div class="scrollbar scrollbar-track content-scrollbar"><div class="scrollbar-thumb"></div></div>
+      </div>
+    </div>
+
+    <div class="statusbar">
+      <span>10 items</span><span>“Q3 Review.pdf” selected · 2.4 MB</span>
+      <span class="taskbar-spacer"></span><span>17 GB free</span>
+    </div>
+  </div>
+
+  <div class="taskbar">
+    <div class="launcher-button"><img src="assets/icons/24/ubix-mark.svg" width="24" height="24" alt="">uBix</div>
+    <div class="taskbar-divider"></div>
+    <div class="task-item"><span class="task-item-indicator"></span><img src="assets/icons/16/app-terminal.svg" width="16" height="16" alt=""><span class="task-item-label">Terminal — ~/src/ubix</span></div>
+    <div class="task-item is-active"><span class="task-item-indicator"></span><img src="assets/icons/16/app-files.svg" width="16" height="16" alt=""><span class="task-item-label">Files — Documents</span></div>
+    <div class="taskbar-spacer"></div>
+    <div class="tray">
+      <div class="tray-item"><img src="assets/icons/16/terminal.svg" width="16" height="16" alt=""></div>
+      <div class="tray-item"><img src="assets/icons/16/wifi.svg" width="16" height="16" alt=""></div>
+      <div class="tray-item"><img src="assets/icons/16/volume.svg" width="16" height="16" alt=""><span>62%</span></div>
+      <div class="clock"><span class="clock-date">Fri 9 Oct</span><span class="clock-time">21:41</span></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
