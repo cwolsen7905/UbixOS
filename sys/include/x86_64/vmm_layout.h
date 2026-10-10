@@ -24,6 +24,7 @@
  *
  * PAGE_SIZE must be in scope (via <vmm/vmm.h>) wherever the *_TOP macros expand.
  */
+#define EXEC_BASE 0x040000000UL       /* lowest user VA: a static ET_EXEC must load at or above this */
 #define DYN_MAIN_BASE 0x100000000UL   /* PIE main exe load base */
 #define DYN_INTERP_BASE 0x140000000UL /* dynamic linker load base */
 

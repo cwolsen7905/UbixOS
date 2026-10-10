@@ -18,10 +18,16 @@
 _UBIX_TARGET_MK = 1
 
 # Same cross toolchain as i386, but no -m32 — build for long mode.
+# On-device (UBIX_NATIVE, set by ubix.platform.mk when uname -s is UBIX) the
+# platform already chose the native toolchain and /lib/libgcc.a: do not re-set
+# the cross prefix or exec a host gcc that does not exist.  Same as aarch64.
+.if defined(UBIX_NATIVE)
+.else
 CROSS_PREFIX = x86_64-elf-
 CROSS_M32    =
 
 LIBGCC != ${CROSS_PREFIX}gcc -print-libgcc-file-name 2>/dev/null
+.endif
 
 # Kernel ISA/ABI flags.  Like i386 the kernel touches no FP/vector unit (it would
 # require saving XMM/x87 in the trap path), so disable SSE/MMX.  -mno-red-zone is

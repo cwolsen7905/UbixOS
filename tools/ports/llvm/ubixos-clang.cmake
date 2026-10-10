@@ -70,6 +70,13 @@ file(GLOB _gcclib_dirs "/opt/homebrew/opt/${UBIXOS_TARGET}-elf-gcc/lib/gcc/${UBI
 list(GET _gcclib_dirs 0 _gcclib)
 set(_stub   "${UBIXOS_SRCTOP}/build/ports/llvm-18.1.8/musl-stublibs")
 set(CMAKE_EXE_LINKER_FLAGS_INIT "-nostdlib -static -fuse-ld=lld ${_build}/obj/musl/lib/crt1.o ${_build}/obj/musl/lib/crti.o")
+# x86_64: the low 1 GB of every user address space is the kernel's identity map
+# (sys/include/x86_64/vmm_layout.h), so a static ET_EXEC must load at or above
+# EXEC_BASE (0x40000000).  lld's default 0x200000 put clang's code on top of the
+# kernel mappings and it crashed on its first instructions.
+if(UBIXOS_TARGET STREQUAL "x86_64")
+  string(APPEND CMAKE_EXE_LINKER_FLAGS_INIT " -Wl,--image-base=0x40000000")
+endif()
 set(CMAKE_CXX_STANDARD_LIBRARIES "-L${_rt}/lib -L${_build}/lib -L${_gcclib} -L${_stub} -Wl,--start-group -lc++ -lc++abi -lunwind -lc -lgcc -Wl,--end-group ${_build}/obj/musl/lib/crtn.o")
 
 set(CMAKE_FIND_ROOT_PATH "${_rt}" "${_build}" "${_musl}")

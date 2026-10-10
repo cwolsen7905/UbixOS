@@ -529,14 +529,54 @@ static int x86_64_execve_elf(struct thread *td, struct sys_execve_args *uap)
 	{
 		fileDescriptor_t *pf = fopen(namebuf, "r");
 		Elf64_Ehdr peek;
+		int too_low = 0;
 
 		if (pf != 0)
 		{
-			if (vfs_pread_locked(pf, &peek, 0, sizeof(peek)) == sizeof(peek) && peek.e_type == ET_DYN)
+			if (vfs_pread_locked(pf, &peek, 0, sizeof(peek)) == sizeof(peek))
 			{
-				main_base = DYN_MAIN_BASE;
+				if (peek.e_type == ET_DYN)
+				{
+					main_base = DYN_MAIN_BASE;
+				}
+				else if (peek.e_type == ET_EXEC)
+				{
+					/* A static ET_EXEC loads at its linked address, and the low 1 GB of
+					 * every user address space is the kernel's identity map: a segment
+					 * below EXEC_BASE would be mapped over kernel memory (lld's
+					 * default 0x200000 base crashed clang on its first instructions).
+					 * Refuse it cleanly.  Link with -Wl,--image-base=0x40000000. */
+					Elf64_Phdr ph;
+					int k;
+
+					for (k = 0; k < peek.e_phnum; k++)
+					{
+						if (vfs_pread_locked(pf, &ph, (off_t)(peek.e_phoff + (u64)k * peek.e_phentsize), sizeof(ph)) != sizeof(ph))
+							break;
+						if (ph.p_type == PT_LOAD && ph.p_vaddr < EXEC_BASE)
+						{
+							too_low = 1;
+							break;
+						}
+					}
+				}
 			}
 			fclose(pf);
+		}
+		if (too_low)
+		{
+			kprintf("execve: %s is linked below 0x%lx (the kernel's low 1 GB); relink with "
+			        "-Wl,--image-base=0x40000000\n",
+			        namebuf,
+			        (unsigned long)EXEC_BASE);
+			x86_64_free_user_space(pml4);
+			for (i = 0; i < argc; i++)
+				if (kargv[i] != namebuf)
+					kfree(kargv[i]);
+			for (i = 0; i < envc; i++)
+				kfree(kenvp[i]);
+			_current->td.td_retval[0] = -ENOEXEC;
+			return (-ENOEXEC);
 		}
 	}
 
