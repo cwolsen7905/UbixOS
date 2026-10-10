@@ -307,4 +307,12 @@ struct sys_sysinfo_args
 };
 int sys_sysinfo(struct thread *, struct sys_sysinfo_args *);
 
+struct sys_net_status_args
+{
+	char st_l_[PADL_(void *)];
+	void *st; /* user pointer to struct net_status */
+	char st_r_[PADR_(void *)];
+};
+int sys_net_status(struct thread *, struct sys_net_status_args *);
+
 #endif

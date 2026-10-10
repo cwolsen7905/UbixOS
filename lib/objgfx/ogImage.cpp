@@ -308,3 +308,71 @@ bool ogImage::Save(const char *filename, ogSurface &surface, ogImageType imageTy
 	close(fd);
 	return ok;
 }
+
+/**
+ * Decode a PNG file to straight-alpha 0xAARRGGBB pixels.
+ *
+ * Unlike Load(), which flattens to a 24bpp surface, this keeps the alpha
+ * channel so callers can composite icons or use them as tintable masks.
+ *
+ * @return malloc'd w*h pixel array (caller free()s), or nullptr on failure.
+ */
+uInt32 *ogImage::LoadRGBA(const char *filename, int *w, int *h)
+{
+	struct stat st;
+	int fd = open(filename, O_RDONLY);
+
+	if (fd < 0)
+		return nullptr;
+	if (fstat(fd, &st) != 0 || st.st_size <= 0)
+	{
+		close(fd);
+		return nullptr;
+	}
+
+	size_t sz = (size_t)st.st_size;
+	unsigned char *file = (unsigned char *)malloc(sz);
+	if (file == nullptr)
+	{
+		close(fd);
+		return nullptr;
+	}
+	size_t got = 0;
+	while (got < sz)
+	{
+		ssize_t r = read(fd, file + got, sz - got);
+		if (r <= 0)
+			break;
+		got += (size_t)r;
+	}
+	close(fd);
+	if (got != sz)
+	{
+		free(file);
+		return nullptr;
+	}
+
+	int iw = 0, ih = 0, ch = 0;
+	unsigned char *px = stbi_load_from_memory(file, (int)sz, &iw, &ih, &ch, 4);
+	free(file);
+	if (px == nullptr || iw <= 0 || ih <= 0)
+	{
+		if (px)
+			stbi_image_free(px);
+		return nullptr;
+	}
+
+	uInt32 *out = (uInt32 *)malloc((size_t)iw * (size_t)ih * sizeof(uInt32));
+	if (out != nullptr)
+	{
+		for (size_t i = 0; i < (size_t)iw * (size_t)ih; i++)
+		{
+			const unsigned char *s = px + i * 4;
+			out[i] = ((uInt32)s[3] << 24) | ((uInt32)s[0] << 16) | ((uInt32)s[1] << 8) | (uInt32)s[2];
+		}
+		*w = iw;
+		*h = ih;
+	}
+	stbi_image_free(px);
+	return out;
+}

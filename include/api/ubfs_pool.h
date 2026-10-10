@@ -41,6 +41,13 @@ struct ubix_pool_info
  *
  * @return the number of pools written (>= 0), or -1 on error.
  */
-int ubix_pool_query(struct ubix_pool_info *buf, uint32_t max);
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+	int ubix_pool_query(struct ubix_pool_info *buf, uint32_t max);
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _API_UBFS_POOL_H */

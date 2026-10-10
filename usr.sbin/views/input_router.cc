@@ -73,6 +73,21 @@ static void clamp_resize(const Window *w, int &nw, int &nh)
 		nh = w->max_h;
 }
 
+/**
+ * The window geometry the current edge drag implies: size from the dragged
+ * edges (clamped to the window's limits), and for left/top edges the origin
+ * moves so the opposite edge stays put.
+ */
+void InputRouter::resize_geometry(int &nx, int &ny, int &nw, int &nh) const
+{
+	int dx = comp_.cur_x() - resize_start_cx_, dy = comp_.cur_y() - resize_start_cy_;
+	nw = resize_start_w_ + ((resize_edges_ & Window::RZ_R) ? dx : (resize_edges_ & Window::RZ_L) ? -dx : 0);
+	nh = resize_start_h_ + ((resize_edges_ & Window::RZ_B) ? dy : (resize_edges_ & Window::RZ_T) ? -dy : 0);
+	clamp_resize(resize_win_, nw, nh);
+	nx = (resize_edges_ & Window::RZ_L) ? resize_start_x_ + (resize_start_w_ - nw) : resize_start_x_;
+	ny = (resize_edges_ & Window::RZ_T) ? resize_start_y_ + (resize_start_h_ - nh) : resize_start_y_;
+}
+
 void InputRouter::send_mouse(Window *w, int cx, int cy, uint8_t buttons, int8_t wheel)
 {
 	if (w->mbox.empty())
@@ -95,9 +110,49 @@ void InputRouter::close_window(Window *w)
 	close_fn_(close_ctx_, w);
 }
 
+/**
+ * Track which title-bar control (minimize / maximize / close) is under the
+ * cursor and whether it is held down, repainting only the title bars whose
+ * hover/pressed state changed.
+ */
+void InputRouter::update_ctl_hover(uint8_t buttons)
+{
+	int cx = comp_.cur_x(), cy = comp_.cur_y();
+	Window *top = nullptr;
+	if (!dragging_ && !resizing_)
+		for (auto it = reg_.z_stack().rbegin(); it != reg_.z_stack().rend(); ++it)
+			if (!(*it)->minimized && (*it)->hit_test(cx, cy))
+			{
+				top = *it;
+				break;
+			}
+	int kind = (top != nullptr && top->decor_h > 0) ? top->ctl_at(cx, cy) : -1;
+	uint32_t id = kind >= 0 ? top->id : 0;
+	bool down = (buttons & 1) != 0;
+
+	if (ctl_hover_id_ != 0 && ctl_hover_id_ != id)
+	{
+		Window *old = reg_.find(ctl_hover_id_);
+		if (old != nullptr)
+		{
+			old->hover_ctl = -1;
+			old->ctl_pressed = false;
+			comp_.invalidate(old->x, old->y, old->w, old->decor_h);
+		}
+	}
+	if (kind >= 0 && (top->hover_ctl != kind || top->ctl_pressed != down))
+	{
+		top->hover_ctl = kind;
+		top->ctl_pressed = down;
+		comp_.invalidate(top->x, top->y, top->w, top->decor_h);
+	}
+	ctl_hover_id_ = id;
+}
+
 void InputRouter::handle_mouse(mouse_event_t &ev)
 {
 	comp_.cursor_move(ev.dx, ev.dy);
+	update_ctl_hover(ev.buttons);
 
 	if (dragging_ && drag_win_ && (ev.dx || ev.dy))
 	{
@@ -121,10 +176,9 @@ void InputRouter::handle_mouse(mouse_event_t &ev)
 
 	if (resizing_ && resize_win_ && (ev.dx || ev.dy))
 	{
-		int nw = resize_start_w_ + (comp_.cur_x() - resize_start_cx_);
-		int nh = resize_start_h_ + (comp_.cur_y() - resize_start_cy_);
-		clamp_resize(resize_win_, nw, nh);
-		comp_.set_resize_preview(true, resize_win_->x, resize_win_->y, nw, nh + resize_win_->decor_h);
+		int nx, ny, nw, nh;
+		resize_geometry(nx, ny, nw, nh);
+		comp_.set_resize_preview(true, nx, ny, nw, nh + resize_win_->decor_h);
 	}
 
 	/*
@@ -220,11 +274,13 @@ void InputRouter::handle_mouse(mouse_event_t &ev)
 
 	if (!pressed && resizing_)
 	{
-		int nw = resize_start_w_ + (comp_.cur_x() - resize_start_cx_);
-		int nh = resize_start_h_ + (comp_.cur_y() - resize_start_cy_);
-		clamp_resize(resize_win_, nw, nh);
+		int nx, ny, nw, nh;
+		resize_geometry(nx, ny, nw, nh);
 		comp_.set_resize_preview(false, 0, 0, 0, 0);
+		resize_win_->x = nx;
+		resize_win_->y = ny;
 		resize_fn_(close_ctx_, resize_win_, nw, nh);
+		comp_.invalidate_all();
 		resizing_ = false;
 		resize_win_ = nullptr;
 	}
@@ -245,14 +301,24 @@ void InputRouter::handle_mouse(mouse_event_t &ev)
 		}
 		if (hit)
 		{
+			press_id_ = hit->id;
 			reg_.z_raise(hit);
-			focus_fn_(close_ctx_, hit);
+			/* Panels without a title bar (taskbar, pop-overs) don't take focus
+			 * from the app: a taskbar click must still see which window was
+			 * active.  They are focused when they open, if they need keys. */
+			if (hit->decor_h > 0)
+				focus_fn_(close_ctx_, hit);
 			comp_.invalidate_all();
 
-			if (hit->in_resize_grip(cx, cy))
+			int edges =
+			    hit->in_resize_grip(cx, cy) ? (Window::RZ_R | Window::RZ_B) : hit->resize_edges_at(cx, cy);
+			if (edges != 0)
 			{
 				resizing_ = true;
 				resize_win_ = hit;
+				resize_edges_ = edges;
+				resize_start_x_ = hit->x;
+				resize_start_y_ = hit->y;
 				resize_start_w_ = hit->w;
 				resize_start_h_ = hit->h;
 				resize_start_cx_ = cx;
@@ -265,6 +331,12 @@ void InputRouter::handle_mouse(mouse_event_t &ev)
 			else if (hit->in_min_btn(cx, cy))
 			{
 				min_fn_(close_ctx_, hit);
+			}
+			else if (hit->in_pin_btn(cx, cy))
+			{
+				hit->pinned = !hit->pinned; /* keep-on-top toggle */
+				reg_.z_raise(hit);          /* re-file into its layer */
+				comp_.invalidate_all();
 			}
 			else if (hit->in_max_btn(cx, cy))
 			{
@@ -303,9 +375,29 @@ void InputRouter::handle_mouse(mouse_event_t &ev)
 	}
 	else
 	{
-		Window *f = reg_.focused();
-		if (f)
-			send_mouse(f, comp_.cur_x(), comp_.cur_y(), ev.buttons);
+		/* Left release: the window that took the press.  A middle / right
+		 * button change goes to the window under the cursor, so e.g. a
+		 * middle-click on a taskbar item reaches the taskbar. */
+		Window *target = reg_.focused();
+		if ((prev_buttons_ & 1) && press_id_ != 0)
+		{
+			Window *pw = reg_.find(press_id_);
+			if (pw != nullptr)
+				target = pw;
+			press_id_ = 0;
+		}
+		if ((ev.buttons ^ prev_buttons_) & ~1u)
+		{
+			int cx = comp_.cur_x(), cy = comp_.cur_y();
+			for (auto it = reg_.z_stack().rbegin(); it != reg_.z_stack().rend(); ++it)
+				if (!(*it)->minimized && (*it)->hit_test(cx, cy))
+				{
+					target = *it;
+					break;
+				}
+		}
+		if (target)
+			send_mouse(target, comp_.cur_x(), comp_.cur_y(), ev.buttons);
 	}
 
 	prev_buttons_ = ev.buttons;
@@ -357,6 +449,19 @@ void InputRouter::handle_kbd(kbd_event_t &ev)
 		{
 			comp_.switcher_end();
 			switcher_active_ = false;
+		}
+		return;
+	}
+
+	/* Super is a system key: it toggles the launcher (taskbar) and is never
+	 * delivered to the focused app. */
+	if (ev.keycode == KEY_SUPER)
+	{
+		if (ev.pressed)
+		{
+			mpi_message_t m = {};
+			m.header = DISPLAY_LAUNCHER;
+			ubix::post_message("taskbar", DISPLAY_LAUNCHER, m);
 		}
 		return;
 	}

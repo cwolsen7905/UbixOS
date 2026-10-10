@@ -283,6 +283,14 @@ if [ -d share/icons ]; then
 	for _ic in share/icons/*.png; do
 		[ -f "$_ic" ] && cp "$_ic" "${STAGE}/usr/share/icons/"
 	done
+	# ubixos-v2 UI icon set, rendered from share/icons/src by tools/mkicons.sh
+	# into one directory per pixel size (16 / 24 / 48).
+	for _d in share/icons/*/; do
+		_s=$(basename "$_d")
+		[ "$_s" = src ] && continue
+		mkdir -p "${STAGE}/usr/share/icons/$_s"
+		cp "$_d"*.png "${STAGE}/usr/share/icons/$_s/" 2>/dev/null || true
+	done
 	echo "mkimage: installed app icons into /usr/share/icons"
 fi
 

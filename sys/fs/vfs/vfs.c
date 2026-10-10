@@ -138,3 +138,18 @@ void *vfsSync) {
 
   return(0x0);
   }
+
+/**
+ * Flush every registered filesystem through its vfsSync hook (if it has one).
+ * Used before power-off/reboot so pending pool state reaches the disk.
+ *
+ * @return 0 if every sync succeeded, -1 if any reported a failure.
+ */
+int vfs_sync_all(void)
+{
+	int rc = 0;
+	for (struct fileSystem *fs = systemVitals->fileSystems; fs != 0; fs = fs->next)
+		if (fs->vfsSync != 0 && fs->vfsSync() != 0)
+			rc = -1;
+	return (rc);
+}

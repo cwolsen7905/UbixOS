@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>uBixOS — Desktop</title>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="ui.css">
+<style>
+  /* Volume popover, anchored above the volume tray item */
+  .volume-popover { left: 968px; top: 640px; width: 280px; height: 104px; padding: var(--s-4); }
+  .volume-row { display: flex; align-items: center; gap: var(--s-3); }
+  .volume-value { width: 32px; text-align: right; color: var(--c-text-muted); font-size: var(--fs-11); }
+  .slider { position: relative; flex: 1; height: 16px; }
+  .slider-track { position: absolute; left: 0; right: 0; top: 7px; height: 2px; border-radius: 1px; background: var(--c-neutral-800); }
+  .slider-fill  { position: absolute; left: 0; top: 7px; width: 62%; height: 2px; border-radius: 1px; background: var(--c-accent); }
+  .slider-knob  { position: absolute; left: calc(62% - 7px); top: 1px; width: 14px; height: 14px; border-radius: 7px; background: var(--c-neutral-200); border: 2px solid var(--c-accent); }
+  .volume-device { margin-top: var(--s-4); display: flex; align-items: center; gap: var(--s-2); color: var(--c-text-muted); font-size: var(--fs-11); }
+  .volume-device-name { flex: 1; color: var(--c-text); font-size: var(--fs-12); }
+</style>
+</head>
+<body>
+<div class="screen">
+  <img class="wallpaper" src="assets/wallpaper-1280x800.png" width="1280" height="800" alt="">
+
+  <!-- Tray popover: volume (opened from the volume tray item) -->
+  <div class="panel volume-popover">
+    <div class="volume-row">
+      <img src="assets/icons/24/volume.svg" width="24" height="24" alt="">
+      <div class="slider"><div class="slider-track"></div><div class="slider-fill"></div><div class="slider-knob"></div></div>
+      <span class="volume-value">62%</span>
+    </div>
+    <div class="volume-device">
+      <img src="assets/icons/16/monitor.svg" width="16" height="16" alt="">
+      <span class="volume-device-name">HDMI-A-1</span>
+      <img src="assets/icons/16/chevron-down.svg" width="16" height="16" alt="">
+    </div>
+  </div>
+
+  <!-- Taskbar: launcher | running windows | tray (console, network, volume, clock) -->
+  <div class="taskbar">
+    <div class="launcher-button"><img src="assets/icons/24/ubix-mark.svg" width="24" height="24" alt="">uBix</div>
+    <div class="taskbar-divider"></div>
+    <div class="task-item"><span class="task-item-indicator"></span><img src="assets/icons/16/app-terminal.svg" width="16" height="16" alt=""><span class="task-item-label">Terminal — ~/src/ubix</span></div>
+    <div class="task-item"><span class="task-item-indicator"></span><img src="assets/icons/16/app-files.svg" width="16" height="16" alt=""><span class="task-item-label">Files — Documents</span></div>
+    <div class="taskbar-spacer"></div>
+    <div class="tray">
+      <div class="tray-item" title="Switch to console (Ctrl+Alt+F1)"><img src="assets/icons/16/terminal.svg" width="16" height="16" alt=""></div>
+      <div class="tray-item"><img src="assets/icons/16/wifi.svg" width="16" height="16" alt=""></div>
+      <div class="tray-item is-hover"><img src="assets/icons/16/volume.svg" width="16" height="16" alt=""><span>62%</span></div>
+      <div class="clock"><span class="clock-date">Fri 9 Oct</span><span class="clock-time">21:41</span></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

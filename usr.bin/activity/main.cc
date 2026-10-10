@@ -32,6 +32,8 @@ extern "C"
 #include <objgfx/objgfx.h>
 #include <objgfx/ogScalableFont.h>
 #include <objgfx/ogScrollBar.h>
+#include <views/theme.h>
+#include <views/uidraw.h>
 
 #define RGB(r, g, b) ((uint32_t)(((r) << 16) | ((g) << 8) | (b)))
 
@@ -57,28 +59,31 @@ enum
 	NTABS
 };
 
-/* Palette (light, macOS-ish). */
-static const uint32_t COL_WIN = RGB(0xFB, 0xFC, 0xFD);
-static const uint32_t COL_HEADER = RGB(0xE9, 0xEC, 0xF0);
-static const uint32_t COL_DIVIDER = RGB(0xD2, 0xD6, 0xDC);
-static const uint32_t COL_TEXT = RGB(0x20, 0x28, 0x30);
-static const uint32_t COL_TEXT_DIM = RGB(0x6B, 0x74, 0x80);
-static const uint32_t COL_ROW_ALT = RGB(0xF1, 0xF3, 0xF6);
-static const uint32_t COL_CPU_BAR = RGB(0x3B, 0x82, 0xF6);
-static const uint32_t COL_SEL = RGB(0x3B, 0x82, 0xF6);
-static const uint32_t COL_SEL_TEXT = RGB(0xFF, 0xFF, 0xFF);
-static const uint32_t COL_SPARK = RGB(0xBC, 0xE0, 0xBC); /* faint — text reads over it */
+/* Palette: the system theme (views/theme.h), loaded at start-up, so Activity
+ * Monitor follows light/dark.  Graphs use the design's app colours (CPU cyan,
+ * memory pink) with a faint fill blended toward the plot background. */
+static struct ui_theme g_t = ui_theme_dark;
+#define COL_WIN (g_t.ground)
+#define COL_HEADER (g_t.surface)
+#define COL_DIVIDER (ui_mix(g_t.ground, g_t.divider, g_t.divider_a))
+#define COL_TEXT (g_t.text)
+#define COL_TEXT_DIM (g_t.text_muted)
+#define COL_ROW_ALT (ui_mix(g_t.ground, g_t.surface, 96))
+#define COL_CPU_BAR (g_t.accent)
+#define COL_SEL (g_t.accent_900)
+#define COL_SEL_TEXT (g_t.accent_200)
+#define COL_SPARK (ui_mix(g_t.ground, g_t.app[UI_APP_GREEN], 70)) /* faint — text reads over it */
 
-/* Tab strip + Performance-tab graphs (Windows Task Manager palette). */
-static const uint32_t COL_TAB_BG = RGB(0xF1, 0xF3, 0xF6);         /* inactive tab strip fill */
-static const uint32_t COL_TAB_ACTIVE = RGB(0xFB, 0xFC, 0xFD);     /* active tab (= window bg) */
-static const uint32_t COL_TAB_ACCENT = RGB(0x17, 0x9C, 0xE6);     /* active-tab underline      */
-static const uint32_t COL_GRAPH_CPU = RGB(0x17, 0x9C, 0xE6);      /* CPU line (Win blue)       */
-static const uint32_t COL_GRAPH_CPU_FILL = RGB(0xD3, 0xEC, 0xF8); /* CPU area fill           */
-static const uint32_t COL_GRAPH_MEM = RGB(0x90, 0x3D, 0xB0);      /* memory line (Win purple)  */
-static const uint32_t COL_GRAPH_MEM_FILL = RGB(0xEA, 0xDC, 0xF1); /* memory area fill        */
-static const uint32_t COL_GRID = RGB(0xE2, 0xE6, 0xEB);           /* graph grid lines          */
-static const uint32_t COL_GRAPH_BG = RGB(0xFF, 0xFF, 0xFF);       /* graph plot background     */
+/* Tab strip + Performance-tab graphs. */
+#define COL_TAB_BG (g_t.surface)
+#define COL_TAB_ACTIVE (g_t.ground)
+#define COL_TAB_ACCENT (g_t.accent)
+#define COL_GRAPH_CPU (g_t.app[UI_APP_CYAN])
+#define COL_GRAPH_CPU_FILL (ui_mix(COL_GRAPH_BG, g_t.app[UI_APP_CYAN], 48))
+#define COL_GRAPH_MEM (g_t.app[UI_APP_PINK])
+#define COL_GRAPH_MEM_FILL (ui_mix(COL_GRAPH_BG, g_t.app[UI_APP_PINK], 48))
+#define COL_GRID (ui_mix(COL_GRAPH_BG, g_t.edge, 128))
+#define COL_GRAPH_BG (g_t.mode == UI_THEME_LIGHT ? g_t.surface : g_t.console)
 
 /* ── columns ────────────────────────────────────────────────────────────────*/
 enum
@@ -943,6 +948,7 @@ static void on_release(void)
 
 int main(int argc, char **argv)
 {
+	g_t = ui_theme_load(getenv("USER"));
 	(void)argc;
 	(void)argv;
 

@@ -78,7 +78,9 @@ void kmain_x86_64(u32 mb_magic, u32 mb_info)
 	 * the scheduler reads systemVitals->sysTicks, so this must run before any sched(). */
 	{
 		extern int vitals_init(void);
+		extern int time_init(void);
 		vitals_init();
+		time_init(); /* boot wall-clock epoch from the CMOS RTC (else clock = 1970) */
 	}
 
 	/* SMP phase 1: enumerate CPUs from the ACPI MADT into the MI cpu_enum table
@@ -95,6 +97,10 @@ void kmain_x86_64(u32 mb_magic, u32 mb_info)
 	pit_init(100); /* 100 Hz */
 	__asm__ __volatile__("sti");
 	serial_puts("PIC remapped (IRQ 32-47), PIT at 100 Hz, interrupts on.\n");
+	{
+		extern void x86_64_tsc_calibrate(void);
+		x86_64_tsc_calibrate(); /* TSC clock source: uptime + lost-tick catch-up */
+	}
 
 	/* Verify the timer IRQ fires: print the first 3 one-second marks. */
 	{

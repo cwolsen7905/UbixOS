@@ -26,14 +26,6 @@ long sys_fork()
 {
 	return -1;
 }
-long sys_getcwd()
-{
-	return -1;
-}
-long sys_getvfscwd()
-{
-	return -1;
-}
 long sys_klog_read()
 {
 	return -1;
@@ -60,10 +52,6 @@ long sys_sysctl()
 	return -1;
 }
 long sys_thread_exit_unmap()
-{
-	return -1;
-}
-long sys_ubfs_query()
 {
 	return -1;
 }

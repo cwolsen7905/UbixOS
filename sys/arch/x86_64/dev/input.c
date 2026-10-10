@@ -133,7 +133,7 @@ int sys_getkbd(struct thread *td, struct sys_getkbd_args *args)
 
 	if (g_ext)
 	{
-		/* Extended (arrow) keys: only the press edge is interesting to the UI. */
+		/* Extended keys (arrows, Super): press and release both reported. */
 		u_int32_t kc = 0;
 		g_ext = 0;
 		switch (sc)
@@ -149,6 +149,10 @@ int sys_getkbd(struct thread *td, struct sys_getkbd_args *args)
 				break;
 			case 0x4D:
 				kc = KEY_RIGHT;
+				break;
+			case 0x5B: /* left Super / Windows */
+			case 0x5C: /* right Super */
+				kc = KEY_SUPER;
 				break;
 			default:
 				td->td_retval[0] = -1;

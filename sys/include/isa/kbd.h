@@ -63,6 +63,7 @@ typedef struct kbd_event kbd_event_t;
 #define KEY_LSHIFT 0x116   /* left or right shift (modifier press/release) */
 #define KEY_LCTRL  0x117   /* left ctrl */
 #define KEY_LALT   0x118   /* left alt */
+#define KEY_SUPER  0x119   /* Super / Windows / Meta key (opens the launcher) */
 #define KEY_ESC    0x1B
 
 int  kbd_getEvent(kbd_event_t *ev);

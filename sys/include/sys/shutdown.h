@@ -38,6 +38,15 @@ typedef enum {
 
 int sys_shutdown(shutdownCMD_t);
 
+/* reboot(2) howto bits (FreeBSD values). */
+#define RB_HALT 0x08
+#define RB_POWEROFF 0x4000
+
+struct thread;
+int sys_reboot(struct thread *td, void *uap);
+/* Per-arch: power off (off != 0) or reset the machine.  Does not return. */
+void machine_power(int off);
+
 /*
  * Deferred-reboot countdown deadline, in scheduler ticks (0 = inactive).  Armed
  * by the platform's reboot affordance (i386: Ctrl-M in the AT keyboard driver)

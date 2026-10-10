@@ -150,4 +150,6 @@ struct super_block
 	} u;
 };
 
+int vfs_sync_all(void); /* flush every registered filesystem (before power-off) */
+
 #endif

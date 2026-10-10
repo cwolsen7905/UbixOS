@@ -208,7 +208,7 @@ void WindowManager::place_window(Window *w, int mode)
 
 	int sw = (int)comp_.screen_w();
 	int sh = (int)comp_.screen_h();
-	const int reserve = 32; /* leave room for the taskbar at the bottom */
+	const int reserve = ui_taskbar_reserve(sw); /* leave room for the taskbar */
 	int avail_h = sh - reserve;
 
 	/* Restore from a maximized/snapped state (the maximize button toggles). */
@@ -305,6 +305,36 @@ void WindowManager::handle_claim(struct display_claim_req *creq)
 	if (wy + (int32_t)dh + wh > (int32_t)comp_.screen_h())
 		wh = (int32_t)comp_.screen_h() - wy - (int32_t)dh;
 
+	/* Decorated windows stay clear of the taskbar.  On small screens (design:
+	 * "windows open maximized by default") a resizable window opens filling
+	 * the usable area; elsewhere a too-tall window is moved up, then shrunk. */
+	bool open_max = false;
+	int32_t req_x = wx, req_y = wy, req_w = ww, req_h = wh;
+	if (dh > 0)
+	{
+		int32_t sw = (int32_t)comp_.screen_w();
+		int32_t usable = (int32_t)comp_.screen_h() - ui_taskbar_reserve(sw);
+		bool resizable = creq->max_w > creq->min_w || creq->max_h > creq->min_h;
+		if (sw < UI_COMPACT_W && resizable)
+		{
+			open_max = true;
+			wx = 0;
+			wy = 0;
+			ww = (creq->max_w > 0 && creq->max_w < sw) ? creq->max_w : sw;
+			wh = usable - (int32_t)dh;
+			if (creq->max_h > 0 && wh > creq->max_h)
+				wh = creq->max_h;
+		}
+		else if (wy + (int32_t)dh + wh > usable)
+		{
+			wy = usable - (int32_t)dh - wh;
+			if (wy < 0)
+				wy = 0;
+			if (wy + (int32_t)dh + wh > usable)
+				wh = usable - wy - (int32_t)dh;
+		}
+	}
+
 	uint32_t pitch = (uint32_t)ww * WIN_BPP;
 	uint32_t buf_size = pitch * (uint32_t)wh;
 	uint32_t alloc_size = (buf_size + PAGE_SIZE - 1) & ~(uint32_t)(PAGE_SIZE - 1);
@@ -339,11 +369,20 @@ void WindowManager::handle_claim(struct display_claim_req *creq)
 	w->wants_motion = creq->wants_motion != 0;
 	w->opacity = creq->opacity != 0 ? creq->opacity : 255; /* 0 = unset → opaque */
 	w->blur_radius = creq->blur_radius;
+	w->translucent = creq->translucent != 0;
 	/* Resize constraints: default to fixed at the granted size. */
 	w->min_w = creq->min_w > 0 ? creq->min_w : ww;
 	w->min_h = creq->min_h > 0 ? creq->min_h : wh;
 	w->max_w = creq->max_w > 0 ? creq->max_w : ww;
 	w->max_h = creq->max_h > 0 ? creq->max_h : wh;
+	if (open_max)
+	{
+		w->maximized = true; /* restore returns to the requested geometry */
+		w->saved_x = req_x;
+		w->saved_y = req_y;
+		w->saved_w = req_w;
+		w->saved_h = req_h;
+	}
 
 	/* Assign a stable ID after alloc so find() works from this point on */
 	static uint32_t next_id = 1;
@@ -461,6 +500,21 @@ void WindowManager::handle_raise(struct display_raise *dr)
 	comp_.invalidate_all();
 }
 
+/**
+ * Minimize or close a window on the taskbar's behalf (task item click on the
+ * focused window / middle-click), exactly as its title-bar buttons do.
+ */
+void WindowManager::handle_winctl(struct display_winctl *wc)
+{
+	Window *w = reg_.find(wc->window_id);
+	if (!w || w->decor_h == 0)
+		return; /* only app windows */
+	if (wc->op == WINCTL_MINIMIZE)
+		minimize_window(w);
+	else if (wc->op == WINCTL_CLOSE)
+		close_window(w);
+}
+
 void WindowManager::handle_settitle(struct display_settitle *st)
 {
 	Window *w = reg_.find(st->window_id);
@@ -559,6 +613,7 @@ void WindowManager::dispatch(uint32_t id, void *data)
 	    {DISPLAY_FLIP, [](WindowManager &wm, void *d) { wm.handle_flip((struct display_flip *)d); }},
 	    {DISPLAY_RELEASE, [](WindowManager &wm, void *d) { wm.handle_release((struct display_release *)d); }},
 	    {DISPLAY_RAISE, [](WindowManager &wm, void *d) { wm.handle_raise((struct display_raise *)d); }},
+	    {DISPLAY_WINCTL, [](WindowManager &wm, void *d) { wm.handle_winctl((struct display_winctl *)d); }},
 	    {DISPLAY_SETTITLE, [](WindowManager &wm, void *d) { wm.handle_settitle((struct display_settitle *)d); }},
 	    {DISPLAY_PREVIEW, [](WindowManager &wm, void *d) { wm.handle_preview((struct display_preview *)d); }},
 	    {DISPLAY_REFRESH_DESKTOP,

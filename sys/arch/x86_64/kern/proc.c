@@ -23,6 +23,16 @@
 void md_new_task(kTask_t *t)
 {
 	u64 cr3;
+	u8 *fp = (u8 *)(((uintptr_t)t->md.md_fpu + 15) & ~(uintptr_t)15);
+
+	/* Power-on FP state, not all-zero: FCW 0 / MXCSR 0 unmask every x87 and SSE
+	 * exception (and set x87 to single precision), so the first inexact float op
+	 * would #XM-kill the task on real hardware. */
+	memset(fp, 0, 512);
+	*(u16 *)(fp + 0) = 0x037F;      /* FCW: all x87 exceptions masked, 64-bit precision */
+	*(u32 *)(fp + 24) = 0x1F80;     /* MXCSR: all SSE exceptions masked, round-nearest */
+	*(u32 *)(fp + 28) = 0x0000FFFF; /* MXCSR_MASK (ignored by FXRSTOR, kept sane) */
+
 	t->md.md_kstack = 0;
 	__asm__ __volatile__("mov %%cr3, %0" : "=r"(cr3));
 	t->md.md_cr3 = cr3;

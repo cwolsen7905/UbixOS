@@ -1,0 +1,2180 @@
+{
+  "window": [
+    {
+      "file": "window/btn-pin-normal.png",
+      "size": [
+        22,
+        22
+      ],
+      "fill": "transparent",
+      "glyph_alpha": 1
+    },
+    {
+      "file": "window/btn-pin-hover.png",
+      "size": [
+        22,
+        22
+      ],
+      "fill": "#3f424d",
+      "glyph_alpha": 1
+    },
+    {
+      "file": "window/btn-pin-pressed.png",
+      "size": [
+        22,
+        22
+      ],
+      "fill": "#423a6a",
+      "glyph_alpha": 1
+    },
+    {
+      "file": "window/btn-pin-inactive.png",
+      "size": [
+        22,
+        22
+      ],
+      "fill": "transparent",
+      "glyph_alpha": 0.55
+    },
+    {
+      "file": "window/btn-minimize-normal.png",
+      "size": [
+        22,
+        22
+      ],
+      "fill": "transparent",
+      "glyph_alpha": 1
+    },
+    {
+      "file": "window/btn-minimize-hover.png",
+      "size": [
+        22,
+        22
+      ],
+      "fill": "#3f424d",
+      "glyph_alpha": 1
+    },
+    {
+      "file": "window/btn-minimize-pressed.png",
+      "size": [
+        22,
+        22
+      ],
+      "fill": "#423a6a",
+      "glyph_alpha": 1
+    },
+    {
+      "file": "window/btn-minimize-inactive.png",
+      "size": [
+        22,
+        22
+      ],
+      "fill": "transparent",
+      "glyph_alpha": 0.55
+    },
+    {
+      "file": "window/btn-maximize-normal.png",
+      "size": [
+        22,
+        22
+      ],
+      "fill": "transparent",
+      "glyph_alpha": 1
+    },
+    {
+      "file": "window/btn-maximize-hover.png",
+      "size": [
+        22,
+        22
+      ],
+      "fill": "#3f424d",
+      "glyph_alpha": 1
+    },
+    {
+      "file": "window/btn-maximize-pressed.png",
+      "size": [
+        22,
+        22
+      ],
+      "fill": "#423a6a",
+      "glyph_alpha": 1
+    },
+    {
+      "file": "window/btn-maximize-inactive.png",
+      "size": [
+        22,
+        22
+      ],
+      "fill": "transparent",
+      "glyph_alpha": 0.55
+    },
+    {
+      "file": "window/btn-restore-normal.png",
+      "size": [
+        22,
+        22
+      ],
+      "fill": "transparent",
+      "glyph_alpha": 1
+    },
+    {
+      "file": "window/btn-restore-hover.png",
+      "size": [
+        22,
+        22
+      ],
+      "fill": "#3f424d",
+      "glyph_alpha": 1
+    },
+    {
+      "file": "window/btn-restore-pressed.png",
+      "size": [
+        22,
+        22
+      ],
+      "fill": "#423a6a",
+      "glyph_alpha": 1
+    },
+    {
+      "file": "window/btn-restore-inactive.png",
+      "size": [
+        22,
+        22
+      ],
+      "fill": "transparent",
+      "glyph_alpha": 0.55
+    },
+    {
+      "file": "window/btn-close-normal.png",
+      "size": [
+        22,
+        22
+      ],
+      "fill": "transparent",
+      "glyph_alpha": 1
+    },
+    {
+      "file": "window/btn-close-hover.png",
+      "size": [
+        22,
+        22
+      ],
+      "fill": "#5a2330",
+      "glyph_alpha": 1
+    },
+    {
+      "file": "window/btn-close-pressed.png",
+      "size": [
+        22,
+        22
+      ],
+      "fill": "#7a2d3d",
+      "glyph_alpha": 1
+    },
+    {
+      "file": "window/btn-close-inactive.png",
+      "size": [
+        22,
+        22
+      ],
+      "fill": "transparent",
+      "glyph_alpha": 0.55
+    },
+    {
+      "file": "window/btn-pin-on.png",
+      "size": [
+        22,
+        22
+      ],
+      "fill": "#2b2741",
+      "glyph_alpha": 1
+    },
+    {
+      "file": "window/hairline-left.png",
+      "size": [
+        48,
+        1
+      ]
+    },
+    {
+      "file": "window/hairline-right.png",
+      "size": [
+        48,
+        1
+      ]
+    },
+    {
+      "file": "window/controls-capsule-reference.png",
+      "size": [
+        121,
+        28
+      ],
+      "note": "reference composite"
+    }
+  ],
+  "icons": [
+    {
+      "name": "app-browser",
+      "size": 16,
+      "png": "png/16/app-browser.png",
+      "svg": "icons/16/app-browser.svg",
+      "kind": "app"
+    },
+    {
+      "name": "app-calculator",
+      "size": 16,
+      "png": "png/16/app-calculator.png",
+      "svg": "icons/16/app-calculator.svg",
+      "kind": "app"
+    },
+    {
+      "name": "app-calendar",
+      "size": 16,
+      "png": "png/16/app-calendar.png",
+      "svg": "icons/16/app-calendar.svg",
+      "kind": "app"
+    },
+    {
+      "name": "app-editor",
+      "size": 16,
+      "png": "png/16/app-editor.png",
+      "svg": "icons/16/app-editor.svg",
+      "kind": "app"
+    },
+    {
+      "name": "app-files",
+      "size": 16,
+      "png": "png/16/app-files.png",
+      "svg": "icons/16/app-files.svg",
+      "kind": "app"
+    },
+    {
+      "name": "app-mail",
+      "size": 16,
+      "png": "png/16/app-mail.png",
+      "svg": "icons/16/app-mail.svg",
+      "kind": "app"
+    },
+    {
+      "name": "app-music",
+      "size": 16,
+      "png": "png/16/app-music.png",
+      "svg": "icons/16/app-music.svg",
+      "kind": "app"
+    },
+    {
+      "name": "app-notes",
+      "size": 16,
+      "png": "png/16/app-notes.png",
+      "svg": "icons/16/app-notes.svg",
+      "kind": "app"
+    },
+    {
+      "name": "app-packages",
+      "size": 16,
+      "png": "png/16/app-packages.png",
+      "svg": "icons/16/app-packages.svg",
+      "kind": "app"
+    },
+    {
+      "name": "app-photos",
+      "size": 16,
+      "png": "png/16/app-photos.png",
+      "svg": "icons/16/app-photos.svg",
+      "kind": "app"
+    },
+    {
+      "name": "app-settings",
+      "size": 16,
+      "png": "png/16/app-settings.png",
+      "svg": "icons/16/app-settings.svg",
+      "kind": "app"
+    },
+    {
+      "name": "app-terminal",
+      "size": 16,
+      "png": "png/16/app-terminal.png",
+      "svg": "icons/16/app-terminal.svg",
+      "kind": "app"
+    },
+    {
+      "name": "arrow-left",
+      "size": 16,
+      "png": "png/16/arrow-left.png",
+      "svg": "icons/16/arrow-left.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "arrow-right",
+      "size": 16,
+      "png": "png/16/arrow-right.png",
+      "svg": "icons/16/arrow-right.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "arrow-up",
+      "size": 16,
+      "png": "png/16/arrow-up.png",
+      "svg": "icons/16/arrow-up.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "bluetooth",
+      "size": 16,
+      "png": "png/16/bluetooth.png",
+      "svg": "icons/16/bluetooth.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "chevron-down",
+      "size": 16,
+      "png": "png/16/chevron-down.png",
+      "svg": "icons/16/chevron-down.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "chevron-right",
+      "size": 16,
+      "png": "png/16/chevron-right.png",
+      "svg": "icons/16/chevron-right.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "code",
+      "size": 16,
+      "png": "png/16/code.png",
+      "svg": "icons/16/code.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "download",
+      "size": 16,
+      "png": "png/16/download.png",
+      "svg": "icons/16/download.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "drive",
+      "size": 16,
+      "png": "png/16/drive.png",
+      "svg": "icons/16/drive.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "ethernet",
+      "size": 16,
+      "png": "png/16/ethernet.png",
+      "svg": "icons/16/ethernet.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "eye",
+      "size": 16,
+      "png": "png/16/eye.png",
+      "svg": "icons/16/eye.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "folder",
+      "size": 16,
+      "png": "png/16/folder.png",
+      "svg": "icons/16/folder.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "grid",
+      "size": 16,
+      "png": "png/16/grid.png",
+      "svg": "icons/16/grid.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "home",
+      "size": 16,
+      "png": "png/16/home.png",
+      "svg": "icons/16/home.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "image",
+      "size": 16,
+      "png": "png/16/image.png",
+      "svg": "icons/16/image.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "keyboard",
+      "size": 16,
+      "png": "png/16/keyboard.png",
+      "svg": "icons/16/keyboard.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "list",
+      "size": 16,
+      "png": "png/16/list.png",
+      "svg": "icons/16/list.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "lock",
+      "size": 16,
+      "png": "png/16/lock.png",
+      "svg": "icons/16/lock.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "monitor",
+      "size": 16,
+      "png": "png/16/monitor.png",
+      "svg": "icons/16/monitor.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "moon",
+      "size": 16,
+      "png": "png/16/moon.png",
+      "svg": "icons/16/moon.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "music",
+      "size": 16,
+      "png": "png/16/music.png",
+      "svg": "icons/16/music.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "plus",
+      "size": 16,
+      "png": "png/16/plus.png",
+      "svg": "icons/16/plus.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "power",
+      "size": 16,
+      "png": "png/16/power.png",
+      "svg": "icons/16/power.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "restart",
+      "size": 16,
+      "png": "png/16/restart.png",
+      "svg": "icons/16/restart.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "search",
+      "size": 16,
+      "png": "png/16/search.png",
+      "svg": "icons/16/search.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "sliders",
+      "size": 16,
+      "png": "png/16/sliders.png",
+      "svg": "icons/16/sliders.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "terminal",
+      "size": 16,
+      "png": "png/16/terminal.png",
+      "svg": "icons/16/terminal.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "trash",
+      "size": 16,
+      "png": "png/16/trash.png",
+      "svg": "icons/16/trash.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "user",
+      "size": 16,
+      "png": "png/16/user.png",
+      "svg": "icons/16/user.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "volume-mute",
+      "size": 16,
+      "png": "png/16/volume-mute.png",
+      "svg": "icons/16/volume-mute.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "volume",
+      "size": 16,
+      "png": "png/16/volume.png",
+      "svg": "icons/16/volume.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "wifi",
+      "size": 16,
+      "png": "png/16/wifi.png",
+      "svg": "icons/16/wifi.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "win-close",
+      "size": 16,
+      "png": "png/16/win-close.png",
+      "svg": "icons/16/win-close.svg",
+      "kind": "window-glyph"
+    },
+    {
+      "name": "win-maximize",
+      "size": 16,
+      "png": "png/16/win-maximize.png",
+      "svg": "icons/16/win-maximize.svg",
+      "kind": "window-glyph"
+    },
+    {
+      "name": "win-minimize",
+      "size": 16,
+      "png": "png/16/win-minimize.png",
+      "svg": "icons/16/win-minimize.svg",
+      "kind": "window-glyph"
+    },
+    {
+      "name": "win-pin",
+      "size": 16,
+      "png": "png/16/win-pin.png",
+      "svg": "icons/16/win-pin.svg",
+      "kind": "window-glyph"
+    },
+    {
+      "name": "win-restore",
+      "size": 16,
+      "png": "png/16/win-restore.png",
+      "svg": "icons/16/win-restore.svg",
+      "kind": "window-glyph"
+    },
+    {
+      "name": "app-browser",
+      "size": 24,
+      "png": "png/24/app-browser.png",
+      "svg": "icons/24/app-browser.svg",
+      "kind": "app"
+    },
+    {
+      "name": "app-calculator",
+      "size": 24,
+      "png": "png/24/app-calculator.png",
+      "svg": "icons/24/app-calculator.svg",
+      "kind": "app"
+    },
+    {
+      "name": "app-calendar",
+      "size": 24,
+      "png": "png/24/app-calendar.png",
+      "svg": "icons/24/app-calendar.svg",
+      "kind": "app"
+    },
+    {
+      "name": "app-editor",
+      "size": 24,
+      "png": "png/24/app-editor.png",
+      "svg": "icons/24/app-editor.svg",
+      "kind": "app"
+    },
+    {
+      "name": "app-files",
+      "size": 24,
+      "png": "png/24/app-files.png",
+      "svg": "icons/24/app-files.svg",
+      "kind": "app"
+    },
+    {
+      "name": "app-mail",
+      "size": 24,
+      "png": "png/24/app-mail.png",
+      "svg": "icons/24/app-mail.svg",
+      "kind": "app"
+    },
+    {
+      "name": "app-music",
+      "size": 24,
+      "png": "png/24/app-music.png",
+      "svg": "icons/24/app-music.svg",
+      "kind": "app"
+    },
+    {
+      "name": "app-notes",
+      "size": 24,
+      "png": "png/24/app-notes.png",
+      "svg": "icons/24/app-notes.svg",
+      "kind": "app"
+    },
+    {
+      "name": "app-packages",
+      "size": 24,
+      "png": "png/24/app-packages.png",
+      "svg": "icons/24/app-packages.svg",
+      "kind": "app"
+    },
+    {
+      "name": "app-photos",
+      "size": 24,
+      "png": "png/24/app-photos.png",
+      "svg": "icons/24/app-photos.svg",
+      "kind": "app"
+    },
+    {
+      "name": "app-settings",
+      "size": 24,
+      "png": "png/24/app-settings.png",
+      "svg": "icons/24/app-settings.svg",
+      "kind": "app"
+    },
+    {
+      "name": "app-terminal",
+      "size": 24,
+      "png": "png/24/app-terminal.png",
+      "svg": "icons/24/app-terminal.svg",
+      "kind": "app"
+    },
+    {
+      "name": "arrow-left",
+      "size": 24,
+      "png": "png/24/arrow-left.png",
+      "svg": "icons/24/arrow-left.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "arrow-right",
+      "size": 24,
+      "png": "png/24/arrow-right.png",
+      "svg": "icons/24/arrow-right.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "arrow-up",
+      "size": 24,
+      "png": "png/24/arrow-up.png",
+      "svg": "icons/24/arrow-up.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "bluetooth",
+      "size": 24,
+      "png": "png/24/bluetooth.png",
+      "svg": "icons/24/bluetooth.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "chevron-down",
+      "size": 24,
+      "png": "png/24/chevron-down.png",
+      "svg": "icons/24/chevron-down.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "chevron-right",
+      "size": 24,
+      "png": "png/24/chevron-right.png",
+      "svg": "icons/24/chevron-right.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "code",
+      "size": 24,
+      "png": "png/24/code.png",
+      "svg": "icons/24/code.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "download",
+      "size": 24,
+      "png": "png/24/download.png",
+      "svg": "icons/24/download.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "drive",
+      "size": 24,
+      "png": "png/24/drive.png",
+      "svg": "icons/24/drive.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "ethernet",
+      "size": 24,
+      "png": "png/24/ethernet.png",
+      "svg": "icons/24/ethernet.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "eye",
+      "size": 24,
+      "png": "png/24/eye.png",
+      "svg": "icons/24/eye.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "folder",
+      "size": 24,
+      "png": "png/24/folder.png",
+      "svg": "icons/24/folder.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "grid",
+      "size": 24,
+      "png": "png/24/grid.png",
+      "svg": "icons/24/grid.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "home",
+      "size": 24,
+      "png": "png/24/home.png",
+      "svg": "icons/24/home.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "image",
+      "size": 24,
+      "png": "png/24/image.png",
+      "svg": "icons/24/image.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "keyboard",
+      "size": 24,
+      "png": "png/24/keyboard.png",
+      "svg": "icons/24/keyboard.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "list",
+      "size": 24,
+      "png": "png/24/list.png",
+      "svg": "icons/24/list.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "lock",
+      "size": 24,
+      "png": "png/24/lock.png",
+      "svg": "icons/24/lock.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "monitor",
+      "size": 24,
+      "png": "png/24/monitor.png",
+      "svg": "icons/24/monitor.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "moon",
+      "size": 24,
+      "png": "png/24/moon.png",
+      "svg": "icons/24/moon.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "music",
+      "size": 24,
+      "png": "png/24/music.png",
+      "svg": "icons/24/music.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "plus",
+      "size": 24,
+      "png": "png/24/plus.png",
+      "svg": "icons/24/plus.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "power",
+      "size": 24,
+      "png": "png/24/power.png",
+      "svg": "icons/24/power.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "restart",
+      "size": 24,
+      "png": "png/24/restart.png",
+      "svg": "icons/24/restart.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "search",
+      "size": 24,
+      "png": "png/24/search.png",
+      "svg": "icons/24/search.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "sliders",
+      "size": 24,
+      "png": "png/24/sliders.png",
+      "svg": "icons/24/sliders.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "terminal",
+      "size": 24,
+      "png": "png/24/terminal.png",
+      "svg": "icons/24/terminal.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "trash",
+      "size": 24,
+      "png": "png/24/trash.png",
+      "svg": "icons/24/trash.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "ubix-mark",
+      "size": 24,
+      "png": "png/24/ubix-mark.png",
+      "svg": "icons/24/ubix-mark.svg",
+      "kind": "brand"
+    },
+    {
+      "name": "user",
+      "size": 24,
+      "png": "png/24/user.png",
+      "svg": "icons/24/user.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "volume-mute",
+      "size": 24,
+      "png": "png/24/volume-mute.png",
+      "svg": "icons/24/volume-mute.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "volume",
+      "size": 24,
+      "png": "png/24/volume.png",
+      "svg": "icons/24/volume.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "wifi",
+      "size": 24,
+      "png": "png/24/wifi.png",
+      "svg": "icons/24/wifi.svg",
+      "kind": "ui"
+    },
+    {
+      "name": "app-browser",
+      "size": 48,
+      "png": "png/48/app-browser.png",
+      "svg": "icons/48/app-browser.svg",
+      "kind": "app"
+    },
+    {
+      "name": "app-calculator",
+      "size": 48,
+      "png": "png/48/app-calculator.png",
+      "svg": "icons/48/app-calculator.svg",
+      "kind": "app"
+    },
+    {
+      "name": "app-calendar",
+      "size": 48,
+      "png": "png/48/app-calendar.png",
+      "svg": "icons/48/app-calendar.svg",
+      "kind": "app"
+    },
+    {
+      "name": "app-editor",
+      "size": 48,
+      "png": "png/48/app-editor.png",
+      "svg": "icons/48/app-editor.svg",
+      "kind": "app"
+    },
+    {
+      "name": "app-files",
+      "size": 48,
+      "png": "png/48/app-files.png",
+      "svg": "icons/48/app-files.svg",
+      "kind": "app"
+    },
+    {
+      "name": "app-mail",
+      "size": 48,
+      "png": "png/48/app-mail.png",
+      "svg": "icons/48/app-mail.svg",
+      "kind": "app"
+    },
+    {
+      "name": "app-music",
+      "size": 48,
+      "png": "png/48/app-music.png",
+      "svg": "icons/48/app-music.svg",
+      "kind": "app"
+    },
+    {
+      "name": "app-notes",
+      "size": 48,
+      "png": "png/48/app-notes.png",
+      "svg": "icons/48/app-notes.svg",
+      "kind": "app"
+    },
+    {
+      "name": "app-packages",
+      "size": 48,
+      "png": "png/48/app-packages.png",
+      "svg": "icons/48/app-packages.svg",
+      "kind": "app"
+    },
+    {
+      "name": "app-photos",
+      "size": 48,
+      "png": "png/48/app-photos.png",
+      "svg": "icons/48/app-photos.svg",
+      "kind": "app"
+    },
+    {
+      "name": "app-settings",
+      "size": 48,
+      "png": "png/48/app-settings.png",
+      "svg": "icons/48/app-settings.svg",
+      "kind": "app"
+    },
+    {
+      "name": "app-terminal",
+      "size": 48,
+      "png": "png/48/app-terminal.png",
+      "svg": "icons/48/app-terminal.svg",
+      "kind": "app"
+    },
+    {
+      "name": "file-archive",
+      "size": 48,
+      "png": "png/48/file-archive.png",
+      "svg": "icons/48/file-archive.svg",
+      "kind": "file-type"
+    },
+    {
+      "name": "file-audio",
+      "size": 48,
+      "png": "png/48/file-audio.png",
+      "svg": "icons/48/file-audio.svg",
+      "kind": "file-type"
+    },
+    {
+      "name": "file-code",
+      "size": 48,
+      "png": "png/48/file-code.png",
+      "svg": "icons/48/file-code.svg",
+      "kind": "file-type"
+    },
+    {
+      "name": "file-doc",
+      "size": 48,
+      "png": "png/48/file-doc.png",
+      "svg": "icons/48/file-doc.svg",
+      "kind": "file-type"
+    },
+    {
+      "name": "file-folder",
+      "size": 48,
+      "png": "png/48/file-folder.png",
+      "svg": "icons/48/file-folder.svg",
+      "kind": "file-type"
+    },
+    {
+      "name": "file-image",
+      "size": 48,
+      "png": "png/48/file-image.png",
+      "svg": "icons/48/file-image.svg",
+      "kind": "file-type"
+    },
+    {
+      "name": "file-pdf",
+      "size": 48,
+      "png": "png/48/file-pdf.png",
+      "svg": "icons/48/file-pdf.svg",
+      "kind": "file-type"
+    },
+    {
+      "name": "file-sheet",
+      "size": 48,
+      "png": "png/48/file-sheet.png",
+      "svg": "icons/48/file-sheet.svg",
+      "kind": "file-type"
+    },
+    {
+      "name": "file-text",
+      "size": 48,
+      "png": "png/48/file-text.png",
+      "svg": "icons/48/file-text.svg",
+      "kind": "file-type"
+    },
+    {
+      "name": "ubix-mark",
+      "size": 48,
+      "png": "png/48/ubix-mark.png",
+      "svg": "icons/48/ubix-mark.svg",
+      "kind": "brand"
+    }
+  ],
+  "wallpapers": [
+    {
+      "png": "wallpaper-1280x800.png",
+      "size": [
+        1280,
+        800
+      ]
+    },
+    {
+      "png": "wallpaper-800x480.png",
+      "size": [
+        800,
+        480
+      ]
+    }
+  ],
+  "decor": [
+    {
+      "file": "decor/window-active.png",
+      "size": [
+        104,
+        104
+      ],
+      "bounds": [
+        32,
+        24,
+        40,
+        40
+      ],
+      "slice": [
+        42,
+        34,
+        42,
+        50
+      ],
+      "note": "Window frame. bounds = window rect; stretch centre."
+    },
+    {
+      "file": "decor/window-inactive.png",
+      "size": [
+        104,
+        104
+      ],
+      "bounds": [
+        32,
+        24,
+        40,
+        40
+      ],
+      "slice": [
+        42,
+        34,
+        42,
+        50
+      ]
+    },
+    {
+      "file": "decor/panel.png",
+      "size": [
+        96,
+        96
+      ],
+      "bounds": [
+        24,
+        18,
+        48,
+        48
+      ],
+      "slice": [
+        36,
+        30,
+        36,
+        42
+      ],
+      "note": "Launcher, popovers, login card."
+    },
+    {
+      "file": "decor/taskbar.png",
+      "size": [
+        72,
+        72
+      ],
+      "bounds": [
+        16,
+        12,
+        40,
+        40
+      ],
+      "slice": [
+        28,
+        24,
+        28,
+        32
+      ],
+      "note": "Taskbar bar. bounds height = 40."
+    },
+    {
+      "file": "decor/titlebar-active.png",
+      "size": [
+        64,
+        32
+      ],
+      "slice": [
+        12,
+        0,
+        12,
+        0
+      ],
+      "note": "Draw inside the window frame at (1,1). Maximized: use a plain rect."
+    },
+    {
+      "file": "decor/titlebar-inactive.png",
+      "size": [
+        64,
+        32
+      ],
+      "slice": [
+        12,
+        0,
+        12,
+        0
+      ],
+      "note": "Draw inside the window frame at (1,1). Maximized: use a plain rect."
+    },
+    {
+      "file": "decor/controls-capsule-active.png",
+      "size": [
+        28,
+        28
+      ],
+      "bounds": [
+        0,
+        0,
+        28,
+        28
+      ],
+      "slice": [
+        14,
+        0,
+        14,
+        0
+      ]
+    },
+    {
+      "file": "decor/controls-capsule-inactive.png",
+      "size": [
+        28,
+        28
+      ],
+      "bounds": [
+        0,
+        0,
+        28,
+        28
+      ],
+      "slice": [
+        14,
+        0,
+        14,
+        0
+      ]
+    },
+    {
+      "file": "decor/launcher-pill-normal.png",
+      "size": [
+        32,
+        32
+      ],
+      "bounds": [
+        0,
+        0,
+        32,
+        32
+      ],
+      "slice": [
+        16,
+        0,
+        16,
+        0
+      ]
+    },
+    {
+      "file": "decor/launcher-pill-hover.png",
+      "size": [
+        32,
+        32
+      ],
+      "bounds": [
+        0,
+        0,
+        32,
+        32
+      ],
+      "slice": [
+        16,
+        0,
+        16,
+        0
+      ]
+    },
+    {
+      "file": "decor/launcher-pill-open.png",
+      "size": [
+        32,
+        32
+      ],
+      "bounds": [
+        0,
+        0,
+        32,
+        32
+      ],
+      "slice": [
+        16,
+        0,
+        16,
+        0
+      ]
+    },
+    {
+      "file": "decor/task-item-hover.png",
+      "size": [
+        24,
+        32
+      ],
+      "bounds": [
+        0,
+        0,
+        24,
+        32
+      ],
+      "slice": [
+        6,
+        6,
+        6,
+        6
+      ],
+      "note": "Task item 180x32."
+    },
+    {
+      "file": "decor/task-item-active.png",
+      "size": [
+        24,
+        32
+      ],
+      "bounds": [
+        0,
+        0,
+        24,
+        32
+      ],
+      "slice": [
+        6,
+        6,
+        6,
+        6
+      ]
+    },
+    {
+      "file": "decor/task-indicator-running.png",
+      "size": [
+        16,
+        2
+      ],
+      "bounds": [
+        0,
+        0,
+        16,
+        2
+      ],
+      "slice": null,
+      "note": "Top-centre of task item, y=0."
+    },
+    {
+      "file": "decor/task-indicator-focused.png",
+      "size": [
+        16,
+        2
+      ],
+      "bounds": [
+        0,
+        0,
+        16,
+        2
+      ],
+      "slice": null
+    },
+    {
+      "file": "decor/tray-item-hover.png",
+      "size": [
+        24,
+        32
+      ],
+      "bounds": [
+        0,
+        0,
+        24,
+        32
+      ],
+      "slice": [
+        6,
+        6,
+        6,
+        6
+      ],
+      "note": "Tray items and clock."
+    },
+    {
+      "file": "decor/btn-primary-normal.png",
+      "size": [
+        32,
+        40
+      ],
+      "bounds": [
+        4,
+        4,
+        24,
+        32
+      ],
+      "slice": [
+        10,
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "file": "decor/btn-primary-hover.png",
+      "size": [
+        32,
+        40
+      ],
+      "bounds": [
+        4,
+        4,
+        24,
+        32
+      ],
+      "slice": [
+        10,
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "file": "decor/btn-primary-pressed.png",
+      "size": [
+        32,
+        40
+      ],
+      "bounds": [
+        4,
+        4,
+        24,
+        32
+      ],
+      "slice": [
+        10,
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "file": "decor/btn-primary-focused.png",
+      "size": [
+        32,
+        40
+      ],
+      "bounds": [
+        4,
+        4,
+        24,
+        32
+      ],
+      "slice": [
+        10,
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "file": "decor/btn-primary-disabled.png",
+      "size": [
+        32,
+        40
+      ],
+      "bounds": [
+        4,
+        4,
+        24,
+        32
+      ],
+      "slice": [
+        10,
+        10,
+        10,
+        10
+      ],
+      "note": "Draw at 45% alpha; text/glyph also 45%."
+    },
+    {
+      "file": "decor/btn-secondary-normal.png",
+      "size": [
+        32,
+        40
+      ],
+      "bounds": [
+        4,
+        4,
+        24,
+        32
+      ],
+      "slice": [
+        10,
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "file": "decor/btn-secondary-hover.png",
+      "size": [
+        32,
+        40
+      ],
+      "bounds": [
+        4,
+        4,
+        24,
+        32
+      ],
+      "slice": [
+        10,
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "file": "decor/btn-secondary-pressed.png",
+      "size": [
+        32,
+        40
+      ],
+      "bounds": [
+        4,
+        4,
+        24,
+        32
+      ],
+      "slice": [
+        10,
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "file": "decor/btn-secondary-focused.png",
+      "size": [
+        32,
+        40
+      ],
+      "bounds": [
+        4,
+        4,
+        24,
+        32
+      ],
+      "slice": [
+        10,
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "file": "decor/btn-secondary-disabled.png",
+      "size": [
+        32,
+        40
+      ],
+      "bounds": [
+        4,
+        4,
+        24,
+        32
+      ],
+      "slice": [
+        10,
+        10,
+        10,
+        10
+      ],
+      "note": "Draw at 45% alpha; text/glyph also 45%."
+    },
+    {
+      "file": "decor/btn-icon-normal.png",
+      "size": [
+        40,
+        40
+      ],
+      "bounds": [
+        4,
+        4,
+        32,
+        32
+      ],
+      "slice": null
+    },
+    {
+      "file": "decor/btn-icon-hover.png",
+      "size": [
+        40,
+        40
+      ],
+      "bounds": [
+        4,
+        4,
+        32,
+        32
+      ],
+      "slice": null
+    },
+    {
+      "file": "decor/btn-icon-pressed.png",
+      "size": [
+        40,
+        40
+      ],
+      "bounds": [
+        4,
+        4,
+        32,
+        32
+      ],
+      "slice": null
+    },
+    {
+      "file": "decor/btn-icon-focused.png",
+      "size": [
+        40,
+        40
+      ],
+      "bounds": [
+        4,
+        4,
+        32,
+        32
+      ],
+      "slice": null
+    },
+    {
+      "file": "decor/btn-icon-disabled.png",
+      "size": [
+        40,
+        40
+      ],
+      "bounds": [
+        4,
+        4,
+        32,
+        32
+      ],
+      "slice": null,
+      "note": "Draw at 45% alpha; text/glyph also 45%."
+    },
+    {
+      "file": "decor/field-normal.png",
+      "size": [
+        32,
+        40
+      ],
+      "bounds": [
+        4,
+        4,
+        24,
+        32
+      ],
+      "slice": [
+        10,
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "file": "decor/field-hover.png",
+      "size": [
+        32,
+        40
+      ],
+      "bounds": [
+        4,
+        4,
+        24,
+        32
+      ],
+      "slice": [
+        10,
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "file": "decor/field-focused.png",
+      "size": [
+        32,
+        40
+      ],
+      "bounds": [
+        4,
+        4,
+        24,
+        32
+      ],
+      "slice": [
+        10,
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "file": "decor/field-error.png",
+      "size": [
+        32,
+        40
+      ],
+      "bounds": [
+        4,
+        4,
+        24,
+        32
+      ],
+      "slice": [
+        10,
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "file": "decor/field-disabled.png",
+      "size": [
+        32,
+        40
+      ],
+      "bounds": [
+        4,
+        4,
+        24,
+        32
+      ],
+      "slice": [
+        10,
+        10,
+        10,
+        10
+      ],
+      "note": "45% alpha."
+    },
+    {
+      "file": "decor/field-pill-focused.png",
+      "size": [
+        52,
+        52
+      ],
+      "bounds": [
+        4,
+        4,
+        44,
+        44
+      ],
+      "slice": [
+        26,
+        26,
+        26,
+        26
+      ],
+      "note": "Launcher search / login password (pill fields)."
+    },
+    {
+      "file": "decor/list-row-hover.png",
+      "size": [
+        24,
+        36
+      ],
+      "bounds": [
+        4,
+        4,
+        16,
+        28
+      ],
+      "slice": [
+        10,
+        10,
+        10,
+        10
+      ],
+      "note": "On ground (window body). Row 28px."
+    },
+    {
+      "file": "decor/list-row-pressed.png",
+      "size": [
+        24,
+        36
+      ],
+      "bounds": [
+        4,
+        4,
+        16,
+        28
+      ],
+      "slice": [
+        10,
+        10,
+        10,
+        10
+      ],
+      "note": "On ground (window body). Row 28px."
+    },
+    {
+      "file": "decor/list-row-selected.png",
+      "size": [
+        24,
+        36
+      ],
+      "bounds": [
+        4,
+        4,
+        16,
+        28
+      ],
+      "slice": [
+        10,
+        10,
+        10,
+        10
+      ],
+      "note": "On ground (window body). Row 28px."
+    },
+    {
+      "file": "decor/list-row-selected-hover.png",
+      "size": [
+        24,
+        36
+      ],
+      "bounds": [
+        4,
+        4,
+        16,
+        28
+      ],
+      "slice": [
+        10,
+        10,
+        10,
+        10
+      ],
+      "note": "On ground (window body). Row 28px."
+    },
+    {
+      "file": "decor/list-row-selected-unfocused.png",
+      "size": [
+        24,
+        36
+      ],
+      "bounds": [
+        4,
+        4,
+        16,
+        28
+      ],
+      "slice": [
+        10,
+        10,
+        10,
+        10
+      ],
+      "note": "On ground (window body). Row 28px."
+    },
+    {
+      "file": "decor/list-row-focused.png",
+      "size": [
+        24,
+        36
+      ],
+      "bounds": [
+        4,
+        4,
+        16,
+        28
+      ],
+      "slice": [
+        10,
+        10,
+        10,
+        10
+      ],
+      "note": "On ground (window body). Row 28px."
+    },
+    {
+      "file": "decor/sidebar-row-hover.png",
+      "size": [
+        16,
+        28
+      ],
+      "bounds": [
+        0,
+        0,
+        16,
+        28
+      ],
+      "slice": [
+        6,
+        6,
+        6,
+        6
+      ],
+      "note": "On surface (Files sidebar, launcher rail)."
+    },
+    {
+      "file": "decor/sidebar-row-selected.png",
+      "size": [
+        16,
+        28
+      ],
+      "bounds": [
+        0,
+        0,
+        16,
+        28
+      ],
+      "slice": [
+        6,
+        6,
+        6,
+        6
+      ]
+    },
+    {
+      "file": "decor/icon-tile-hover.png",
+      "size": [
+        112,
+        100
+      ],
+      "bounds": [
+        0,
+        0,
+        112,
+        100
+      ],
+      "slice": null,
+      "note": "Files grid tile."
+    },
+    {
+      "file": "decor/icon-tile-selected.png",
+      "size": [
+        112,
+        100
+      ],
+      "bounds": [
+        0,
+        0,
+        112,
+        100
+      ],
+      "slice": null
+    },
+    {
+      "file": "decor/segmented-track.png",
+      "size": [
+        32,
+        32
+      ],
+      "bounds": [
+        0,
+        0,
+        32,
+        32
+      ],
+      "slice": [
+        16,
+        0,
+        16,
+        0
+      ]
+    },
+    {
+      "file": "decor/segmented-selected.png",
+      "size": [
+        24,
+        24
+      ],
+      "bounds": [
+        0,
+        0,
+        24,
+        24
+      ],
+      "slice": [
+        12,
+        0,
+        12,
+        0
+      ]
+    },
+    {
+      "file": "decor/disk-usage-track.png",
+      "size": [
+        8,
+        4
+      ],
+      "bounds": [
+        0,
+        0,
+        8,
+        4
+      ],
+      "slice": [
+        2,
+        0,
+        2,
+        0
+      ]
+    },
+    {
+      "file": "decor/disk-usage-fill.png",
+      "size": [
+        8,
+        4
+      ],
+      "bounds": [
+        0,
+        0,
+        8,
+        4
+      ],
+      "slice": [
+        2,
+        0,
+        2,
+        0
+      ]
+    },
+    {
+      "file": "decor/scrollbar-thumb-normal.png",
+      "size": [
+        8,
+        24
+      ],
+      "bounds": [
+        0,
+        0,
+        8,
+        24
+      ],
+      "slice": [
+        0,
+        4,
+        0,
+        4
+      ]
+    },
+    {
+      "file": "decor/scrollbar-thumb-hover.png",
+      "size": [
+        8,
+        24
+      ],
+      "bounds": [
+        0,
+        0,
+        8,
+        24
+      ],
+      "slice": [
+        0,
+        4,
+        0,
+        4
+      ]
+    },
+    {
+      "file": "decor/scrollbar-thumb-pressed.png",
+      "size": [
+        8,
+        24
+      ],
+      "bounds": [
+        0,
+        0,
+        8,
+        24
+      ],
+      "slice": [
+        0,
+        4,
+        0,
+        4
+      ]
+    },
+    {
+      "file": "decor/scrollbar-track-hover.png",
+      "size": [
+        8,
+        24
+      ],
+      "bounds": [
+        0,
+        0,
+        8,
+        24
+      ],
+      "slice": [
+        0,
+        4,
+        0,
+        4
+      ]
+    },
+    {
+      "file": "decor/slider-track.png",
+      "size": [
+        8,
+        2
+      ],
+      "bounds": [
+        0,
+        0,
+        8,
+        2
+      ],
+      "slice": [
+        1,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "file": "decor/slider-fill.png",
+      "size": [
+        8,
+        2
+      ],
+      "bounds": [
+        0,
+        0,
+        8,
+        2
+      ],
+      "slice": [
+        1,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "file": "decor/slider-knob.png",
+      "size": [
+        14,
+        14
+      ],
+      "bounds": [
+        0,
+        0,
+        14,
+        14
+      ],
+      "slice": null
+    },
+    {
+      "file": "decor/avatar-48.png",
+      "size": [
+        48,
+        48
+      ],
+      "bounds": [
+        0,
+        0,
+        48,
+        48
+      ],
+      "slice": null,
+      "note": "Initial letter: DejaVu Sans Bold 20, #e7e5fe, centred."
+    },
+    {
+      "file": "decor/avatar-32.png",
+      "size": [
+        32,
+        32
+      ],
+      "bounds": [
+        0,
+        0,
+        32,
+        32
+      ],
+      "slice": null
+    },
+    {
+      "file": "decor/text-caret.png",
+      "size": [
+        1,
+        16
+      ],
+      "bounds": [
+        0,
+        0,
+        1,
+        16
+      ],
+      "slice": null
+    },
+    {
+      "file": "decor/terminal-cursor.png",
+      "size": [
+        8,
+        16
+      ],
+      "bounds": [
+        0,
+        0,
+        8,
+        16
+      ],
+      "slice": null
+    },
+    {
+      "file": "decor/divider-v.png",
+      "size": [
+        1,
+        20
+      ],
+      "bounds": [
+        0,
+        0,
+        1,
+        20
+      ],
+      "slice": null,
+      "note": "Taskbar divider; capsule divider is 1x12."
+    }
+  ]
+}

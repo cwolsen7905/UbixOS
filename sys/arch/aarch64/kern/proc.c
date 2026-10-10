@@ -233,6 +233,36 @@ static int aarch64_fork_common(u_int64_t *parent_tf, u_int64_t child_sp)
 	child->md.md_usp = child_sp; /* fork: copied parent SP; clone: caller's clone stack */
 	child->md.md_entry = 0;      /* unused — the trapframe drives the return */
 
+	/* The child continues the parent's FPSIMD state (POSIX fork; d8-d15 are
+	 * callee-saved, so a zeroed copy corrupted live doubles in the caller of
+	 * fork).  The parent's state is live in the registers — save it straight
+	 * into the child's area, the same layout switch_to restores. */
+	{
+		u_int8_t *fp = (u_int8_t *)(((uintptr_t)child->md.md_fpu + 15) & ~(uintptr_t)15);
+		__asm__ __volatile__(".arch_extension fp\n\t"
+		                     "stp q0, q1, [%0, #0]\n\t"
+		                     "stp q2, q3, [%0, #32]\n\t"
+		                     "stp q4, q5, [%0, #64]\n\t"
+		                     "stp q6, q7, [%0, #96]\n\t"
+		                     "stp q8, q9, [%0, #128]\n\t"
+		                     "stp q10, q11, [%0, #160]\n\t"
+		                     "stp q12, q13, [%0, #192]\n\t"
+		                     "stp q14, q15, [%0, #224]\n\t"
+		                     "stp q16, q17, [%0, #256]\n\t"
+		                     "stp q18, q19, [%0, #288]\n\t"
+		                     "stp q20, q21, [%0, #320]\n\t"
+		                     "stp q22, q23, [%0, #352]\n\t"
+		                     "stp q24, q25, [%0, #384]\n\t"
+		                     "stp q26, q27, [%0, #416]\n\t"
+		                     "stp q28, q29, [%0, #448]\n\t"
+		                     "stp q30, q31, [%0, #480]\n\t"
+		                     :
+		                     : "r"(fp)
+		                     : "memory");
+		__asm__ volatile(".arch_extension fp\n\tmrs %0, fpsr" : "=r"(child->md.md_fpsr));
+		__asm__ volatile(".arch_extension fp\n\tmrs %0, fpcr" : "=r"(child->md.md_fpcr));
+	}
+
 	/* Inherit the parent's mmap cursor + heap break.  The child's address space is
 	 * a copy of the parent's, so its inherited shared libraries, mmap regions, and
 	 * brk all live at the same VAs.  schedNewTask() zeroed these, and a zero

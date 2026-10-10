@@ -15,7 +15,8 @@
 _ARCH ?= aarch64
 SUBDIRS = taskbar term settings uname basename cut dirname env find grep head \
           less more sort sed stat tail touch tr uniq wc which cmp install diff \
-          printf awk make vi nc diskutil activity files vdoom tessera cubitaire
+          printf awk make vi nc diskutil activity files vdoom tessera cubitaire \
+          aplay mp3play
 .if ${_ARCH} == "x86_64"
 SUBDIRS += wget httpsget
 .endif
@@ -24,7 +25,7 @@ SUBDIRS += wget httpsget
 # they build to /usr/bin when/if i386 work resumes; not built on master.
 # (top/edit/muffin also live in this tree but were never wired into any build.)
 .if ${_ARCH} == "i386"
-SUBDIRS += clock tcc doom aplay mp3play
+SUBDIRS += clock tcc doom
 .endif
 
 .PHONY: all clean ${SUBDIRS}

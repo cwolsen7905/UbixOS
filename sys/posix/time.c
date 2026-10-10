@@ -30,6 +30,7 @@
 #include <ubixos/vitals.h>
 #include <lib/kprintf.h>
 #include <assert.h>
+#include <machine/proc.h> /* SCHED_HZ — the PIT tick rate behind md_uptime */
 
 static int month[12] = {0,
                         DAY * (31),
@@ -47,13 +48,22 @@ static int month[12] = {0,
 #if !defined(__aarch64__)
 static int timeCmosRead(int addr)
 {
+#if defined(__x86_64__)
+	/* x86_64's inportByte/outportByteP are link stubs (syscall_stubs.c); do the
+	 * port I/O inline. */
+	__asm__ __volatile__("outb %0, $0x70" : : "a"((unsigned char)addr));
+	unsigned char v;
+	__asm__ __volatile__("inb $0x71, %0" : "=a"(v));
+	return ((int)v);
+#else
 	outportByteP(0x70, addr);
 	return ((int)inportByte(0x71));
+#endif
 }
 
 int time_init()
 {
-	int i;
+	int i, statb, pm;
 	struct timeStruct time;
 
 	for (i = 0; i < 1000000; i++)
@@ -74,22 +84,37 @@ int time_init()
 		time.year = timeCmosRead(9);
 	} while (time.sec != timeCmosRead(0));
 
-	BCD_TO_BIN(time.sec);
-	BCD_TO_BIN(time.min);
-	BCD_TO_BIN(time.hour);
-	BCD_TO_BIN(time.day);
-	BCD_TO_BIN(time.mon);
-	BCD_TO_BIN(time.year);
+	/* Status B: bit 2 = binary (else BCD), bit 1 = 24-hour (else 12-hour with
+	 * the PM flag in hour bit 7).  QEMU and most firmware use BCD/24h, but honour
+	 * both rather than assume. */
+	statb = timeCmosRead(11);
+	pm = !(statb & 0x02) && (time.hour & 0x80);
+	time.hour &= 0x7F;
+	if (!(statb & 0x04))
+	{
+		BCD_TO_BIN(time.sec);
+		BCD_TO_BIN(time.min);
+		BCD_TO_BIN(time.hour);
+		BCD_TO_BIN(time.day);
+		BCD_TO_BIN(time.mon);
+		BCD_TO_BIN(time.year);
+	}
+	if (!(statb & 0x02))
+		time.hour = (time.hour % 12) + (pm ? 12 : 0);
+
+	kprintf("rtc: %i/%i/%i %i:%i.%i UTC\n", time.mon, time.day, time.year, time.hour, time.min, time.sec);
+
+	/* timeMake indexes month[] from 0 (January); the RTC counts months 1..12. */
+	time.mon -= 1;
 
 	/* Set up our start time in seconds */
 	systemVitals->timeStart = timeMake(&time);
-
-	kprintf("%i/%i/%i %i:%i.%i\n", time.mon, time.day, time.year, time.hour, time.min, time.sec);
 
 	/* Return so we know all went well */
 	return (0x0);
 }
 
+#if defined(__i386__)
 /*
  * md_uptime (i386): monotonic time since boot from the PIT scheduler tick
  * (systemVitals->sysTicks at 200 Hz = 5 ms resolution).  i386 has no finer
@@ -99,11 +124,14 @@ void md_uptime(u_int64_t *sec, u_int64_t *nsec)
 {
 	u_int32_t ticks = (systemVitals != 0) ? systemVitals->sysTicks : 0;
 
+	/* SCHED_HZ is the PIT rate: 200 on i386, 100 on x86_64.  A hardcoded 200
+	 * made x86_64's clock run at half speed. */
 	if (sec != 0)
-		*sec = ticks / 200u;
+		*sec = ticks / SCHED_HZ;
 	if (nsec != 0)
-		*nsec = (u_int64_t)(ticks % 200u) * 5000000ULL; /* 5 ms in ns */
+		*nsec = (u_int64_t)(ticks % SCHED_HZ) * (1000000000ULL / SCHED_HZ);
 }
+#endif /* __i386__ — x86_64's md_uptime reads the TSC (arch/x86_64/kern/irq.c) */
 #endif /* !__aarch64__ */
 
 u_int32_t timeMake(struct timeStruct *time)

@@ -223,6 +223,21 @@ void x86_64_ap_entry(u32 cpuid)
 
 	x86_64_pcpu_install(cpuid);         /* GS_BASE -> g_pcpu[cpuid]; curcpu() valid */
 	x86_64_ap_load_gdt_tss(cpuid);      /* shared GDT + this CPU's TSS + the shared IDT */
+
+	/* Every CPU has its own local APIC and must enable it itself: x2APIC mode +
+	 * the SVR software-enable bit, as the BSP does in x86_64_smp_init.  Without
+	 * this the AP's LAPIC stays software-disabled and silently drops the
+	 * reschedule IPI — tasks homed on this CPU's run queue sat READY forever
+	 * while it slept in hlt (the 2-CPU desktop hang: authd/login never ran).
+	 * LINT0/LINT1 stay masked: the legacy 8259 (PIT) is routed to the BSP only. */
+	{
+		u64 ab = rdmsr64(MSR_APIC_BASE);
+		wrmsr64(MSR_APIC_BASE, ab | APIC_BASE_ENABLE | APIC_BASE_X2APIC);
+		wrmsr64(MSR_X2APIC_SVR, SVR_ENABLE | 0xFF);
+		wrmsr64(MSR_X2APIC_LINT0, 0x10000u); /* masked */
+		wrmsr64(MSR_X2APIC_LINT1, 0x10000u); /* masked */
+	}
+
 	curcpu()->heartbeat = 0xA5 + cpuid; /* liveness marker the BSP polls */
 
 	/* Become this CPU's idle task.  schedNewTask gives it a kTask_t + kernel stack

@@ -25,6 +25,7 @@
 #include <x86_64/pcpu.h>     /* curcpu() — per-CPU kernel RSP for the syscall entry */
 #include <fs/vfs/file.h>     /* fopen/fread/fclose, fileDescriptor_t (bring-up open/read) */
 #include <sys/thread.h>      /* O_FILES, td.o_files[] */
+#include <sys/descrip.h>     /* struct file, FD_TYPE_* (console write routing) */
 #include <ubixos/syscalls.h> /* systemCalls_posix, totalCalls_posix, struct syscall_entry */
 
 #define KCODE_SEL 0x08
@@ -139,6 +140,18 @@ void x86_64_ap_load_gdt_tss(u32 cpuid)
 	                     "movw %0, %%ss\n\t"
 	                     :
 	                     : "r"((u16)KDATA_SEL));
+	/* Reload CS too: the trampoline entered long mode on its own GDT's 64-bit
+	 * code selector 0x18, which in this GDT is the USER data segment.  The first
+	 * interrupt on this CPU then pushed CS=0x18 and its iretq #GP'd (err 0x18) —
+	 * the AP died on its first reschedule IPI.  A far return loads KCODE_SEL. */
+	__asm__ __volatile__("pushq %0\n\t"
+	                     "leaq 1f(%%rip), %%rax\n\t"
+	                     "pushq %%rax\n\t"
+	                     "lretq\n"
+	                     "1:\n\t"
+	                     :
+	                     : "i"((u64)KCODE_SEL)
+	                     : "rax", "memory");
 	__asm__ __volatile__("ltr %0" : : "r"(TSS_SEL(cpuid)));
 	idt_load(); /* adopt the shared IDT so this CPU can take interrupts */
 
@@ -150,7 +163,8 @@ void x86_64_ap_load_gdt_tss(u32 cpuid)
 	cr |= 0x600;                                       /* OSFXSR (bit 9) | OSXMMEXCPT (bit 10) */
 	__asm__ __volatile__("mov %0, %%cr4" : : "r"(cr)); /* PAE is already set by the trampoline */
 	__asm__ __volatile__("mov %%cr0, %0" : "=r"(cr));
-	cr &= ~(u64)0x4; /* clear EM (no FPU emulation) */
+	cr &= ~(u64)0x4;        /* clear EM (no FPU emulation) */
+	cr &= ~(u64)0x60000000; /* clear CD|NW: the AP comes out of INIT with caches disabled */
 	cr |= 0x2;       /* set MP */
 	__asm__ __volatile__("mov %0, %%cr0" : : "r"(cr));
 	__asm__ __volatile__("fninit");
@@ -590,6 +604,20 @@ void *md_phys_to_virt(u64 phys)
 	return P2V(phys);
 }
 
+/* True when @fd is a bare console placeholder (no fd table entry, or an
+ * FD_TYPE_TTY slot with no underlying descriptor) — the only fds the bring-up
+ * serial write path may take.  Same test as aarch64's SYS_WRITE routing. */
+static int x86_64_console_placeholder_fd(int fd)
+{
+	struct file *f;
+
+	if (_current == 0 || fd < 0 || fd >= O_FILES)
+		return (1);
+	f = (struct file *)_current->td.o_files[fd];
+	return (f == 0 || !(f->fd_type == FD_TYPE_TTYV || f->fd_type == FD_TYPE_SOCKET || f->fd_type == FD_TYPE_PIPE ||
+	                    f->fd_type == FD_TYPE_PTMASTER || f->fd != 0));
+}
+
 /**
  * Service a ring-3 `int $0x80`.  Bring-up calls only: write (to the serial
  * console) and exit.  Args follow the SysV order in the trapframe: rax = nr,
@@ -684,10 +712,13 @@ void x86_64_syscall(struct x86_64_trapframe *tf)
 			tf->rax = 0;
 		}
 	}
-	else if (tf->rax == SYS_WRITE && (tf->rdi == 1 || tf->rdi == 2))
+	else if (tf->rax == SYS_WRITE && (tf->rdi == 1 || tf->rdi == 2) && x86_64_console_placeholder_fd((int)tf->rdi))
 	{
-		/* Bring-up console fast path: write to fd 1/2 goes straight to serial
-		 * (the x86_64 tty/pty fileops are not wired yet). */
+		/* Bring-up console fast path: a write to a bare console placeholder fd 1/2
+		 * (FD_TYPE_TTY, no underlying descriptor) goes straight to serial, as on
+		 * aarch64 (sc_write).  A pty/pipe/socket/file on fd 1/2 takes the MI
+		 * sys_write below — routing those to serial lost a graphical shell's
+		 * write()-based output (tcsh's builtins, echo) to the serial console. */
 		const char *buf = (const char *)(uintptr_t)tf->rsi;
 		u64 len = tf->rdx;
 		for (u64 i = 0; i < len; i++)

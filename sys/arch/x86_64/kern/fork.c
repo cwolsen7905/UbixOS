@@ -157,6 +157,12 @@ static long x86_64_fork_common(struct x86_64_trapframe *parent_tf, u64 child_sp)
 	child->md.md_fsbase = _current->md.md_fsbase;
 	child->md.md_mmap_next = _current->md.md_mmap_next;
 	child->md.md_brk = _current->md.md_brk;
+	/* The child continues the parent's FP/SSE state (POSIX fork); the parent's is
+	 * live in the registers, so save it straight into the child's area. */
+	{
+		u8 *fp = (u8 *)(((uintptr_t)child->md.md_fpu + 15) & ~(uintptr_t)15);
+		__asm__ __volatile__("fxsave (%0)" : : "r"(fp) : "memory");
+	}
 	child->parent = _current;
 	_current->children++;
 

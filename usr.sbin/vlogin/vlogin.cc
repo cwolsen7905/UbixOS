@@ -34,41 +34,31 @@
 #include <objgfx/ogPixelFmt.h>
 #include <ubistry/ubistry.h>
 #include <authd.h>
+#include <views/theme.h>
+#include <views/uidraw.h>
+#include <api/power.h>
+#include <ctime>
 #include <vector>
-
-/* ------------------------------------------------------------------ */
-/* Colours                                                              */
-/* ------------------------------------------------------------------ */
-
-/* Calm slate palette — matches the modern (Win11-flat) views chrome instead of
- * the old saturated navy.  Packed 0x00RRGGBB. */
-#define BG_COLOR 0x00202530u      /* solid background (wallpaper fallback) */
-#define CARD_COLOR 0x00272E3Au    /* login card fill */
-#define CARD_BORDER 0x00394456u   /* 1px card outline */
-#define FIELD_BG 0x001B2029u      /* inset text field (idle) */
-#define FIELD_FOCUS 0x00222B38u   /* inset text field (focused) */
-#define ACCENT_COLOR 0x005B8DEFu  /* focus underline / caret (modern blue) */
-#define DIVIDER_COLOR 0x00333C4Cu /* header divider line */
-#define TEXT_COLOR 0x00F0F2F6u    /* primary text (near white) */
-#define LABEL_COLOR 0x008A93A3u   /* field labels (muted slate) */
-#define HINT_COLOR 0x00697283u    /* bottom hint */
-#define ERROR_COLOR 0x00FF6E6Eu   /* error message (matches close-glyph red) */
 
 /* ------------------------------------------------------------------ */
 /* Constants                                                            */
 /* ------------------------------------------------------------------ */
 
-/* Clean sans UI face (was DejaVuSansMono — monospace read as "terminal/old").
- * A larger bold face gives the "uBixOS" title real typographic hierarchy, the
- * way macOS/Win11 sign-in screens do. */
 #define FONT_PATH "/var/fonts/DejaVuSans.ttf"
-#define FONT_SIZE 15
-#define TITLE_FONT_PATH "/var/fonts/DejaVuSans-Bold.ttf"
-#define TITLE_SIZE 26
-#define CLOCK_SIZE 46 /* big lock-screen time */
+#define FONT_BOLD_PATH "/var/fonts/DejaVuSans-Bold.ttf"
 #define VIEWS_MBOX "views"
 #define TASKBAR_PATH "/usr/bin/taskbar"
 #define MAX_FIELD 31 /* max username / password length */
+
+/* Lock-screen layout (ubixos-v2 design canvas): big clock top-left, the
+ * sign-in card anchored bottom-left, a status footer.  Proportions follow the
+ * design's clamp()s so the screen also works at 800x480. */
+#define LG_CARD_W 380
+#define LG_PAD 32    /* card padding and gap between its sections */
+#define LG_AVATAR 64 /* avatar ring diameter */
+#define LG_PILL_H 44 /* password / username pill */
+#define LG_SEG_H 38  /* Desktop / Console segmented control */
+#define LAST_USER_KEY "/views/login/last_user"
 
 extern "C" int pidStatus(int pid);
 extern "C" int gettime(); /* seconds since epoch (libubix_api) */
@@ -77,61 +67,147 @@ extern "C" int gettime(); /* seconds since epoch (libubix_api) */
 extern "C" int setenv(const char *name, const char *value, int overwrite);
 extern "C" void tzset(void);
 
+/* musl gates these behind a feature macro the -nostdinc world does not set. */
+extern "C" int setenv(const char *name, const char *value, int overwrite);
+extern "C" void tzset(void);
+extern "C" int nanosleep(const struct timespec *req, struct timespec *rem);
+
+/* What the login screen shows; owned by main()'s event loop. */
+struct LoginState
+{
+	std::string last_user; /* remembered user ("" = none: always "other" mode) */
+	bool other = false;    /* typing a username instead of the remembered user */
+	std::string user, pass;
+	bool in_pass = true;     /* focus: password pill (else the username pill) */
+	std::string err;         /* error line (red); empty = hint */
+	bool busy = false;       /* authenticating */
+	bool power_open = false; /* footer power pop-over (Restart / Shut down) */
+
+	/* The account being signed in to. */
+	const std::string &account() const
+	{
+		return other ? user : last_user;
+	}
+};
+
+/* Clickable regions from the last draw (screen coordinates). */
+struct LoginHits
+{
+	int sign_x = 0, sign_y = 0, sign_d = 0; /* round sign-in button */
+	int user_x = 0, user_y = 0, user_w = 0; /* username pill (other mode) */
+	int pass_x = 0, pass_y = 0, pass_w = 0; /* password pill */
+	int link_x = 0, link_y = 0, link_w = 0; /* "Other user..." link */
+	int pwr_x = 0, pwr_y = 0;               /* footer power button (32x32) */
+	int pop_x = 0, pop_y = 0, pop_w = 0;    /* power pop-over; rows of 34 at pop_y + 4 + i*35 */
+
+	static bool in(int px, int py, int x, int y, int w, int h)
+	{
+		return px >= x && px < x + w && py >= y && py < y + h;
+	}
+};
+
 /* ------------------------------------------------------------------ */
-/* LoginUI — draws the login panel onto an ogSurface                   */
+/* LoginUI — draws the lock screen onto an ogSurface                   */
 /* ------------------------------------------------------------------ */
 
 class LoginUI
 {
 	ogSurface &surf_;
-	ogScalableFont font_;      /* body: fields, hint, date (sans) */
-	ogScalableFont title_;     /* the "uBixOS" wordmark (larger, bold) */
-	ogScalableFont clockfont_; /* big lock-screen time */
-	bool have_title_ = false;  /* title_ loaded (else fall back to font_) */
-	bool have_clock_ = false;  /* clockfont_ loaded */
-	int sw_, sh_;              /* screen width / height */
+	ui_canvas cv_;
+	ogScalableFont font_;       /* 12px: greeting, hint, links, footer */
+	ogScalableFont font_bold_;  /* 12px bold: footer brand */
+	ogScalableFont font_field_; /* 14px: typed username */
+	ogScalableFont font_name_;  /* 22px: user name */
+	ogScalableFont font_init_;  /* 24px: avatar initial */
+	ogScalableFont font_date_;  /* 18px: date under the clock */
+	ogScalableFont font_clock_; /* ~104px: clock */
+	int sw_, sh_;
+	struct ui_theme t_;
 
-	std::vector<uint32_t> bg_; /* wallpaper stretched to the screen (32bpp) */
+	std::vector<uint32_t> bg_; /* wallpaper stretched to the screen + scrim */
 	bool have_bg_ = false;
 
-	/* card + field geometry (computed in layout()) */
-	int px_, py_, pw_, ph_;               /* card rect */
-	int fbx_, fbw_;                       /* field-box x and width (shared by both fields) */
-	int field_h_;                         /* field-box height */
-	int avatar_cx_, avatar_y_, avatar_d_; /* round monogram avatar */
-	int title_y_, sub_y_, div_y_;
-	int user_field_y_, pass_field_y_; /* inline-placeholder fields (no label row) */
-	int msg_y_;
+	int left_, clock_y_;   /* left column x, clock top */
+	bool compact_ = false; /* small screen (e.g. 800x480): centred card, 32px clock */
+	int pad_ = LG_PAD, av_ = LG_AVATAR;
 
       public:
 	bool loaded = false;
+	LoginHits hits;
 
 	explicit LoginUI(ogSurface &s, int sw, int sh) : surf_(s), sw_(sw), sh_(sh)
 	{
-		loaded = font_.Load(FONT_PATH, FONT_SIZE);
-		have_title_ = title_.Load(TITLE_FONT_PATH, TITLE_SIZE);
-		have_clock_ = clockfont_.Load(FONT_PATH, CLOCK_SIZE);
+		t_ = ui_theme_load(nullptr); /* system default: nobody is logged in yet */
+
+		/* clamp(32px, 8vw, 128px) / clamp(24px, 10vh, 120px) */
+		left_ = clampi(sw_ * 8 / 100, 32, 128);
+		clock_y_ = clampi(sh_ * 10 / 100, 24, 120);
+		int clock_css = clampi(std::min(sw_ * 9 / 100, sh_ * 13 / 100), 48, 112);
+		compact_ = sw_ < 1000 || sh_ < 600;
+		if (compact_)
+		{
+			/* design "Smaller screens": card centred at 340px, clock 32px */
+			clock_css = 32;
+			clock_y_ = 16;
+			left_ = 32;
+			pad_ = 20;
+			av_ = 48;
+		}
+
+		loaded = font_.Load(FONT_PATH, 14);
+		if (!font_bold_.Load(FONT_BOLD_PATH, 14))
+			font_bold_.Load(FONT_PATH, 14);
+		font_field_.Load(FONT_PATH, 16);
+		font_name_.Load(FONT_PATH, 26);
+		font_init_.Load(FONT_PATH, 28);
+		font_date_.Load(FONT_PATH, 21);
+		font_clock_.Load(FONT_PATH, clock_css * 1164 / 1000); /* CSS px -> line height */
+
+		cv_.px = (uint32_t *)surf_.ogGetPtr(0, 0);
+		cv_.w = sw_;
+		cv_.h = sh_;
+		cv_.stride = (int)((uint8_t *)surf_.ogGetPtr(0, 1) - (uint8_t *)surf_.ogGetPtr(0, 0)) / 4;
+
 		load_timezone();
-		layout();
 		load_background();
 	}
 
-	/* Decode the desktop wallpaper (ubix.bmp) and nearest-neighbour stretch it
-	 * into a screen-sized 32bpp cache once, so each redraw is a fast blit.  If
-	 * the image is missing, have_bg_ stays false and draw() falls back to the
-	 * solid BG_COLOR. */
+	static int clampi(int v, int lo, int hi)
+	{
+		return v < lo ? lo : (v > hi ? hi : v);
+	}
+
+	/* Apply /system/timezone ($TZ) so localtime() matches the taskbar clock. */
+	static void load_timezone()
+	{
+		char tz[64];
+		if (ubistry_get_str("/system/timezone", tz, sizeof(tz)) != 0)
+		{
+			std::strncpy(tz, "EST5EDT,M3.2.0,M11.1.0", sizeof(tz) - 1);
+			tz[sizeof(tz) - 1] = '\0';
+		}
+		setenv("TZ", tz, 1);
+		tzset();
+	}
+
+	/* Minutes since the epoch (the clock face changes when this does). */
+	static long minute_now()
+	{
+		return (long)gettime() / 60;
+	}
+
+	/* Decode the system-default wallpaper, stretch it to the screen and bake in
+	 * the lock scrim: a horizontal gradient, heavy behind the left column
+	 * (0.90 -> 0.62 at 42% -> 0.12 at the right edge) so the wallpaper still
+	 * shows on the right.  Missing image falls back to a solid ground. */
 	void load_background()
 	{
-		/* Use the *system-default* desktop wallpaper (no user — login does not
-		 * know who is logging in yet).  Honour the desktop mode: only show an
-		 * image when the system desktop is in image mode; otherwise fall back to
-		 * the solid login background. */
 		char mode[32] = {0};
 		char path[256] = {0};
 		if (ubistry_get_str("views/desktop/mode", mode, sizeof(mode)) == 0 && std::strcmp(mode, "image") != 0)
 			return;
 		if (ubistry_get_str("views/desktop/image", path, sizeof(path)) != 0 || path[0] == '\0')
-			std::strncpy(path, "/var/background/ubix.bmp", sizeof(path) - 1);
+			std::strncpy(path, "/var/background/ubix-nocturne.png", sizeof(path) - 1);
 
 		ogImage img;
 		ogSurface src;
@@ -142,6 +218,15 @@ class LoginUI
 		if (iw <= 0 || ih <= 0 || sw_ <= 0 || sh_ <= 0)
 			return;
 
+		bool light = t_.mode == UI_THEME_LIGHT;
+		uint32_t scrim = light ? t_.ground : t_.scrim;
+		int a0 = light ? 235 : 230, a1 = light ? 179 : 159, a2 = light ? 26 : 31; /* /256 */
+		std::vector<uint32_t> col_a((size_t)sw_);
+		int knee = sw_ * 42 / 100;
+		for (int x = 0; x < sw_; x++)
+			col_a[x] = (uint32_t)(x < knee ? a0 + (a1 - a0) * x / (knee ? knee : 1)
+			                               : a1 + (a2 - a1) * (x - knee) / (sw_ - knee ? sw_ - knee : 1));
+
 		bg_.resize((size_t)sw_ * (size_t)sh_);
 		for (int dy = 0; dy < sh_; dy++)
 		{
@@ -151,244 +236,374 @@ class LoginUI
 				int sx = dx * iw / sw_;
 				uInt8 r, g, b;
 				src.ogUnpack(src.ogGetPixel(sx, sy), r, g, b);
-				bg_[(size_t)dy * sw_ + dx] = ((uint32_t)r << 16) | ((uint32_t)g << 8) | b;
+				uint32_t c = ((uint32_t)r << 16) | ((uint32_t)g << 8) | b;
+				bg_[(size_t)dy * sw_ + dx] = ui_mix(c, scrim, col_a[dx]);
 			}
 		}
 		have_bg_ = true;
 	}
 
-	/* Paint the cached wallpaper (or the solid fallback) as the full background. */
-	void draw_background()
+	/* Screen rect changed by the last draw() (for a partial DISPLAY_FLIP). */
+	int dirty_x = 0, dirty_y = 0, dirty_w = 0, dirty_h = 0;
+
+	/**
+	 * Draw the lock screen for st.  The static layer (wallpaper + scrim, clock,
+	 * card panel and shadow, hint, session control, links, footer) is cached
+	 * and rebuilt only when one of its inputs changes; a keystroke repaints just
+	 * the avatar and input pills from the cache, keeping typing responsive.
+	 * Sets dirty_* to the area that changed.
+	 */
+	void draw(const LoginState &st)
 	{
-		if (!have_bg_)
+		/* Column bottom: 72px footer band + clamp(0, 6vh, 72) breathing room. */
+		int col_bottom = sh_ - 72 - clampi(sh_ * 6 / 100, 0, 72);
+		bool show_link = !st.last_user.empty();
+		int links_h = show_link ? 16 : 0;
+		int ch =
+		    pad_ + av_ + pad_ + (st.other ? LG_PILL_H + 12 : 0) + LG_PILL_H + 12 + 16 + pad_ + LG_SEG_H + pad_;
+		int cw = std::min(compact_ ? 340 : LG_CARD_W, sw_ - 64);
+		int cx = left_, cy = col_bottom - links_h - (show_link ? 24 : 0) - ch;
+		if (compact_)
 		{
-			surf_.ogFillRect(0, 0, sw_ - 1, sh_ - 1, BG_COLOR);
-			return;
-		}
-		for (int y = 0; y < sh_; y++)
-		{
-			uint32_t *row = (uint32_t *)surf_.ogGetPtr(0, (uInt32)y);
-			if (row)
-				std::memcpy(row, &bg_[(size_t)y * sw_], (size_t)sw_ * sizeof(uint32_t));
-		}
-	}
-
-	/* Load /system/timezone once (default US Eastern w/ DST) so localtime() is
-	 * local, matching the taskbar clock. */
-	void load_timezone()
-	{
-		char tz[64];
-		if (ubistry_get_str("/system/timezone", tz, sizeof(tz)) != 0)
-			std::strncpy(tz, "EST5EDT,M3.2.0,M11.1.0", sizeof(tz) - 1);
-		tz[sizeof(tz) - 1] = '\0';
-		setenv("TZ", tz, 1);
-		tzset();
-	}
-
-	/* AA text composited straight over the wallpaper (transparent background — no
-	 * dark "box" halo), with a soft dark drop shadow so it stays legible over a
-	 * bright photo.  Used for the clock, which sits on the bare desktop. */
-	void draw_text_over_bg(ogScalableFont &f, int x, int y, const char *s, uint32_t fg)
-	{
-		f.SetBGColor(0, 0, 0, 0); /* transparent → blend over the actual pixels */
-		f.SetFGColor(0, 0, 0, 255);
-		f.PutString(surf_, x + 1, y + 2, s); /* drop shadow */
-		f.PutString(surf_, x + 2, y + 2, s);
-		f.SetFGColor((fg >> 16) & 0xFF, (fg >> 8) & 0xFF, fg & 0xFF, 255);
-		f.PutString(surf_, x, y, s); /* the text itself */
-	}
-
-	/* macOS/Win11-style clock: a big time over a smaller date, in the bottom-right
-	 * corner, right-aligned.  Composited over the wallpaper (no box) with a drop
-	 * shadow.  Redrawn each idle tick. */
-	void draw_clock()
-	{
-		time_t t = (time_t)gettime();
-		struct tm *lt = localtime(&t);
-		if (lt == nullptr)
-			return;
-		char tstr[16], dstr[64];
-		std::strftime(tstr, sizeof(tstr), "%H:%M", lt);
-		std::strftime(dstr, sizeof(dstr), "%A, %B %d", lt);
-
-		ogScalableFont &tf = have_clock_ ? clockfont_ : (have_title_ ? title_ : font_);
-		int th = (int)tf.GetHeight();
-		int dh = (int)font_.GetHeight();
-		int tw = (int)tf.TextWidth(tstr);
-		int dw = (int)font_.TextWidth(dstr);
-
-		const int margin = 34;
-		const int gap = 4;
-		int by = sh_ - margin - (th + gap + dh); /* top of the time line */
-		draw_text_over_bg(tf, sw_ - margin - tw, by, tstr, TEXT_COLOR);
-		draw_text_over_bg(font_, sw_ - margin - dw, by + th + gap, dstr, TEXT_COLOR);
-	}
-
-	void layout()
-	{
-		int fh = (int)font_.GetHeight();
-		int title_fh = have_title_ ? (int)title_.GetHeight() : fh;
-
-		const int pad = 28;       /* card inner padding (fixed px, not glyph-derived) */
-		const int block_gap = 16; /* one field block → the next */
-		field_h_ = fh + 16;       /* roomier input box */
-
-		/* Fixed pixel width — a proportional font has no single glyph width, and a
-		 * ~360 px card matches the macOS/Win11 sign-in proportion. */
-		pw_ = 360;
-
-		avatar_d_ = 60; /* round monogram avatar diameter */
-
-		/* Stack the contents top-to-bottom, accumulating the card height; then
-		 * centre the card and convert the running offsets to absolute y. */
-		int y = pad;
-		int avatar_o = y;
-		y += avatar_d_ + 14;
-		int title_o = y;
-		y += title_fh + 10;
-		int sub_o = y;
-		y += fh + 14;
-		int div_o = y;
-		y += 18;
-		int uf_o = y;
-		y += field_h_ + block_gap;
-		int pf_o = y;
-		y += field_h_ + block_gap;
-		int msg_o = y;
-		y += fh;
-		y += pad;
-		ph_ = y;
-
-		/* Horizontally centred; nudged below dead-centre so the card sits a touch
-		 * lower on the screen (feels more grounded than perfectly centred). */
-		const int vertical_offset = 45;
-		px_ = (sw_ - pw_) / 2;
-		py_ = (sh_ - ph_) / 2 + vertical_offset;
-
-		fbx_ = px_ + pad;
-		fbw_ = pw_ - 2 * pad;
-
-		avatar_cx_ = px_ + pw_ / 2;
-		avatar_y_ = py_ + avatar_o;
-		title_y_ = py_ + title_o;
-		sub_y_ = py_ + sub_o;
-		div_y_ = py_ + div_o;
-		user_field_y_ = py_ + uf_o;
-		pass_field_y_ = py_ + pf_o;
-		msg_y_ = py_ + msg_o;
-	}
-
-	void draw(const std::string &user, const std::string &pass, bool in_pass, const std::string &err, bool caret_on)
-	{
-		/* Background (desktop wallpaper, or solid fallback) + the lock-screen clock. */
-		draw_background();
-		draw_clock();
-
-		/* Soft drop shadow, then the rounded card and its hairline border —
-		 * all shared objGFX primitives (ogDropShadow / ogFillRoundRect /
-		 * ogRoundRect) rather than bespoke per-app drawing. */
-		const int radius = 12;
-		surf_.ogDropShadow(px_, py_, px_ + pw_, py_ + ph_, 12, 6, 110);
-		surf_.ogFillRoundRect(px_, py_, px_ + pw_, py_ + ph_, radius, CARD_COLOR);
-		surf_.ogRoundRect(px_, py_, px_ + pw_, py_ + ph_, radius, CARD_BORDER);
-
-		/* Round monogram avatar — a rounded-rect with a full-corner radius (a smooth
-		 * AA "squircle", avoiding the aliased ogFillCircle), tinted with the accent
-		 * and carrying the typed username's initial (macOS/Win11 sign-in cue). */
-		{
-			int ax = avatar_cx_ - avatar_d_ / 2;
-			surf_.ogFillRoundRect(
-			    ax, avatar_y_, ax + avatar_d_, avatar_y_ + avatar_d_, avatar_d_ / 2, ACCENT_COLOR);
-			if (!user.empty())
-			{
-				ogScalableFont &mf = have_title_ ? title_ : font_;
-				char mono[2] = {(char)std::toupper((unsigned char)user[0]), 0};
-				int mw = (int)mf.TextWidth(mono);
-				int mh = (int)mf.GetHeight();
-				mf.SetFGColor(0xFF, 0xFF, 0xFF, 255);
-				mf.SetBGColor(
-				    (ACCENT_COLOR >> 16) & 0xFF, (ACCENT_COLOR >> 8) & 0xFF, ACCENT_COLOR & 0xFF, 255);
-				mf.PutString(surf_, avatar_cx_ - mw / 2, avatar_y_ + (avatar_d_ - mh) / 2, mono);
-			}
+			/* centred, below the small clock, above the footer */
+			int top = clock_y_ + (int)font_clock_.GetHeight() + 8 + 21 + 12;
+			cx = (sw_ - cw) / 2;
+			cy = top + (sh_ - 56 - links_h - (show_link ? 12 : 0) - top - ch) / 2;
+			if (cy < top)
+				cy = top;
 		}
 
-		/* Header: bold product wordmark + sign-in subtitle, both centred. */
-		put_centered_f(have_title_ ? title_ : font_, title_y_, "uBixOS", TEXT_COLOR, CARD_COLOR);
-		put_centered_f(font_, sub_y_, "Sign in", LABEL_COLOR, CARD_COLOR);
-		surf_.ogHLine(fbx_, fbx_ + fbw_, div_y_, DIVIDER_COLOR);
-
-		/* Fields (inline placeholders — no stacked labels) */
-		draw_field("Username", user, !in_pass, user_field_y_, caret_on);
-		std::string masked(pass.size(), '*');
-		draw_field("Password", masked, in_pass, pass_field_y_, caret_on);
-
-		/* Error / hint */
-		if (!err.empty())
+		std::string key = std::to_string((int)st.other) + "|" + st.last_user + "|" +
+		                  std::to_string(minute_now()) + "|" + st.err + "|" + std::to_string((int)st.busy) +
+		                  "|" + std::to_string((int)st.power_open);
+		if (key != base_key_ || base_.empty())
 		{
-			set_text(ERROR_COLOR, CARD_COLOR);
-			font_.PutString(surf_, fbx_, msg_y_, err.c_str());
+			draw_static(st, cx, cy, cw, ch, col_bottom, show_link);
+			base_.resize((size_t)sw_ * (size_t)sh_);
+			for (int y = 0; y < sh_; y++)
+				std::memcpy(&base_[(size_t)y * sw_], cv_.px + (size_t)y * cv_.stride, (size_t)sw_ * 4);
+			base_key_ = key;
+			dirty_x = dirty_y = 0;
+			dirty_w = sw_;
+			dirty_h = sh_;
 		}
 		else
 		{
-			set_text(HINT_COLOR, CARD_COLOR);
-			font_.PutString(surf_, fbx_, msg_y_, "Enter to sign in   |   Tab to switch field");
+			/* Restore just the avatar + pills band (with room for the avatar
+			 * glow and the focus rings) from the cached layer. */
+			int y0 = cy + pad_ - 16;
+			int y1 = cy + pad_ + av_ + pad_ + (st.other ? LG_PILL_H + 12 : 0) + LG_PILL_H + 6;
+			for (int y = y0; y < y1; y++)
+				std::memcpy(
+				    cv_.px + (size_t)y * cv_.stride + cx, &base_[(size_t)y * sw_ + cx], (size_t)cw * 4);
+			dirty_x = cx;
+			dirty_y = y0;
+			dirty_w = cw;
+			dirty_h = y1 - y0;
 		}
+		draw_card_dynamic(st, cx, cy, cw);
 	}
 
       private:
-	/* Draw one labelled text field: muted label, an inset box (lit when focused
-	 * with an accent underline + caret), and the value text centred in the box. */
-	/* One rounded input field with an inline placeholder: the muted @placeholder
-	 * shows inside the empty box (no stacked label), replaced by @value once the
-	 * user types.  Focused fields get an accent ring + blinking caret. */
-	void draw_field(const char *placeholder, const std::string &value, bool focused, int field_y, bool caret_on)
+	std::vector<uint32_t> base_; /* cached static layer (screen-sized) */
+	std::string base_key_;       /* inputs base_ was drawn for */
+
+	/* Render the static layer into the surface. */
+	void draw_static(const LoginState &st, int cx, int cy, int cw, int ch, int col_bottom, bool show_link)
 	{
-		int fh = (int)font_.GetHeight();
-		const int r = 8; /* field corner radius — echoes the rounded card */
+		if (have_bg_)
+			for (int y = 0; y < sh_; y++)
+				std::memcpy(cv_.px + (size_t)y * cv_.stride,
+				            &bg_[(size_t)y * sw_],
+				            (size_t)sw_ * sizeof(uint32_t));
+		else
+			ui_fill(cv_, 0, 0, sw_, sh_, t_.console);
 
-		uint32_t fill = focused ? FIELD_FOCUS : FIELD_BG;
-		surf_.ogFillRoundRect(fbx_, field_y, fbx_ + fbw_, field_y + field_h_, r, fill);
-		/* Focused: an accent ring around the whole field; idle: a hairline in the
-		 * card-border colour (a rounded box, not a bottom bar — cleaner + modern). */
-		surf_.ogRoundRect(
-		    fbx_, field_y, fbx_ + fbw_, field_y + field_h_, r, focused ? ACCENT_COLOR : CARD_BORDER);
+		draw_clock();
+		draw_card_static(st, cx, cy, cw, ch);
 
-		int tx = fbx_ + 14;
-		int ty = field_y + (field_h_ - fh) / 2;
-		if (value.empty())
+		/* Links under the card. */
+		if (show_link)
 		{
-			set_text(HINT_COLOR, fill); /* grey placeholder */
-			font_.PutString(surf_, tx, ty, placeholder);
+			std::string l = st.other ? "Back to " + st.last_user : std::string("Other user...");
+			hits.link_x = cx + 16;
+			hits.link_y = cy + ch + (compact_ ? 8 : 24); /* under the card */
+			hits.link_w = (int)font_.TextWidth(l.c_str());
+			text(font_,
+			     hits.link_x,
+			     hits.link_y + 8,
+			     l.c_str(),
+			     t_.mode == UI_THEME_LIGHT ? 0x595D6Cu : 0xCFD3E5u);
 		}
 		else
-		{
-			set_text(TEXT_COLOR, fill);
-			font_.PutString(surf_, tx, ty, value.c_str());
-		}
+			hits.link_w = 0;
 
-		if (focused && caret_on)
-		{
-			/* Proportional font: caret after the measured value width (at the
-			 * field start when empty, so it sits over the placeholder). */
-			int cx = tx + (value.empty() ? 0 : (int)font_.TextWidth(value.c_str()));
-			surf_.ogFillRect(cx + 1, ty + 2, cx + 2, ty + fh - 2, ACCENT_COLOR);
-		}
+		draw_footer(st);
 	}
 
-	/* Centre a string on the card using the given font's measured pixel width
-	 * (proportional-safe — no fixed glyph-width assumption). */
-	void put_centered_f(ogScalableFont &f, int y, const char *s, uint32_t fg, uint32_t bg)
+      private:
+	/* Draw text vertically centred on row cy, anti-aliased over the surface. */
+	void text(ogScalableFont &f, int x, int cy, const char *str, uint32_t fg)
 	{
-		int tw = (int)f.TextWidth(s);
 		f.SetFGColor((fg >> 16) & 0xFF, (fg >> 8) & 0xFF, fg & 0xFF, 255);
-		f.SetBGColor((bg >> 16) & 0xFF, (bg >> 8) & 0xFF, bg & 0xFF, 255);
-		f.PutString(surf_, px_ + (pw_ - tw) / 2, y, s);
+		f.SetBGColor(0, 0, 0, 0);
+		f.PutString(surf_, x, cy - (int)f.GetHeight() / 2 + 1, str);
 	}
 
-	void set_text(uint32_t fg, uint32_t bg)
+	/* Huge clock + long date, top-left (local time). */
+	void draw_clock()
 	{
-		font_.SetFGColor((fg >> 16) & 0xFF, (fg >> 8) & 0xFF, fg & 0xFF, 255);
-		font_.SetBGColor((bg >> 16) & 0xFF, (bg >> 8) & 0xFF, bg & 0xFF, 255);
+		static const char *const wd[] = {
+		    "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+		static const char *const mo[] = {"January",
+		                                 "February",
+		                                 "March",
+		                                 "April",
+		                                 "May",
+		                                 "June",
+		                                 "July",
+		                                 "August",
+		                                 "September",
+		                                 "October",
+		                                 "November",
+		                                 "December"};
+		time_t now = (time_t)gettime();
+		struct tm *lt = localtime(&now);
+		if (lt == nullptr)
+			return;
+		char tm_s[16], date[48];
+		ui_format_time(tm_s, sizeof(tm_s), lt, ui_clock_24h(nullptr));
+		std::snprintf(date,
+		              sizeof(date),
+		              "%s, %s %d, %d",
+		              wd[lt->tm_wday % 7],
+		              mo[lt->tm_mon % 12],
+		              lt->tm_mday,
+		              lt->tm_year + 1900);
+		int th = (int)font_clock_.GetHeight();
+		text(font_clock_, left_ - th / 20, clock_y_ + th / 2, tm_s, t_.text);
+		text(
+		    font_date_, left_, clock_y_ + th + 8 + 10, date, t_.mode == UI_THEME_LIGHT ? 0x595D6Cu : 0xCFD3E5u);
+	}
+
+	static const char *greeting()
+	{
+		time_t now = (time_t)gettime();
+		struct tm *lt = localtime(&now);
+		int h = lt ? lt->tm_hour : 12;
+		return h < 5 ? "Good night" : h < 12 ? "Good morning" : h < 18 ? "Good afternoon" : "Good evening";
+	}
+
+	/* A 44px pill input: ground fill, 1px edge (accent focused / red on error),
+	 * focus ring, leading 16px icon, contents drawn by the caller. */
+	void pill(int x, int y, int w, bool focused, bool error, const char *icon)
+	{
+		uint32_t edge = error ? t_.danger : (focused ? t_.accent : t_.edge);
+		ui_outlined_round(cv_, x, y, w, LG_PILL_H, LG_PILL_H / 2, edge, t_.ground);
+		if (focused)
+			ui_focus_ring(cv_, x, y, w, LG_PILL_H, LG_PILL_H / 2, t_.accent);
+		ui_draw_icon_tint(cv_, ui_icon_get(16, icon), x + 14, y + (LG_PILL_H - 16) / 2, t_.text_faint);
+	}
+
+	/* The per-keystroke layer: avatar, name and the input pills. */
+	void draw_card_dynamic(const LoginState &st, int x, int y, int w)
+	{
+		int ix = x + pad_, iw = w - 2 * pad_;
+		int yy = y + pad_;
+
+		/* Avatar: glow, 1px accent ring, 3px gap, gradient disc, initial. */
+		const std::string &acct = st.account();
+		int ax = ix, ay = yy;
+		ui_shadow(cv_, ax, ay, av_, av_, av_ / 2, 0, 14, 150, t_.accent_700);
+		ui_outlined_round(cv_, ax, ay, av_, av_, av_ / 2, t_.accent, t_.ground);
+		int d = av_ - 8;
+		for (int r = 0; r < d; r++) /* vertical accent-800 -> accent-900 gradient disc */
+			for (int c = 0; c < d; c++)
+			{
+				uint32_t a = ui_cov(ui_rr_dist4(ax + 4 + c, ay + 4 + r, ax + 4, ay + 4, d, d, d / 2));
+				if (a)
+					cv_.blend(ax + 4 + c,
+					          ay + 4 + r,
+					          ui_mix(t_.accent_800, t_.accent_900, (uint32_t)(r * 256 / d)),
+					          a);
+			}
+		if (acct.empty())
+			ui_draw_icon_tint(
+			    cv_, ui_icon_get(24, "user"), ax + (av_ - 24) / 2, ay + (av_ - 24) / 2, t_.accent_200);
+		else
+		{
+			char ini[2] = {(char)((acct[0] >= 'a' && acct[0] <= 'z') ? acct[0] - 32 : acct[0]), 0};
+			text(font_init_,
+			     ax + (av_ - (int)font_init_.TextWidth(ini)) / 2,
+			     ay + av_ / 2,
+			     ini,
+			     t_.accent_200);
+		}
+		int tx = ax + av_ + 24;
+		text(font_, tx, ay + av_ / 2 - 13, greeting(), t_.text_muted);
+		text(font_name_, tx, ay + av_ / 2 + 9, acct.empty() ? "Who's there?" : acct.c_str(), t_.text);
+		yy += av_ + pad_;
+
+		/* Username pill (other user). */
+		if (st.other)
+		{
+			bool f = !st.in_pass && !st.busy;
+			pill(ix, yy, iw, f, false, "user");
+			int mid = yy + LG_PILL_H / 2;
+			if (st.user.empty() && !f)
+				text(font_field_, ix + 40, mid, "Username", t_.text_faint);
+			else
+				text(font_field_, ix + 40, mid, st.user.c_str(), t_.text);
+			if (f)
+				ui_fill(cv_,
+				        ix + 40 + (int)font_field_.TextWidth(st.user.c_str()) + 1,
+				        mid - 8,
+				        1,
+				        16,
+				        t_.accent_400);
+			hits.user_x = ix;
+			hits.user_y = yy;
+			hits.user_w = iw;
+			yy += LG_PILL_H + 12;
+		}
+		else
+			hits.user_w = 0;
+
+		/* Password pill with the round sign-in button inside it. */
+		bool pf = st.in_pass && !st.busy;
+		pill(ix, yy, iw, pf, !st.err.empty(), "lock");
+		int mid = yy + LG_PILL_H / 2;
+		if (st.pass.empty() && !pf)
+			text(font_field_, ix + 40, mid, "Password", t_.text_faint);
+		for (size_t i = 0; i < st.pass.size(); i++)
+			ui_fill_round(cv_, ix + 40 + (int)i * 12, mid - 4, 8, 8, 4, t_.text);
+		if (pf)
+			ui_fill(cv_, ix + 40 + (int)st.pass.size() * 12 + 1, mid - 8, 1, 16, t_.accent_400);
+		hits.pass_x = ix;
+		hits.pass_y = yy;
+		hits.pass_w = iw;
+		int bd = 34, bx = ix + iw - 5 - bd, by = yy + (LG_PILL_H - bd) / 2;
+		ui_outlined_round(cv_, bx, by, bd, bd, bd / 2, t_.accent, st.busy ? t_.accent_800 : t_.ground);
+		ui_draw_icon_tint(cv_, ui_icon_get(16, "arrow-right"), bx + 9, by + 9, t_.accent_300);
+		hits.sign_x = bx;
+		hits.sign_y = by;
+		hits.sign_d = bd;
+	}
+
+	/* The card's cached part: shadow, translucent panel, hairline, hint and
+	 * session control (everything below the pills). */
+	void draw_card_static(const LoginState &st, int x, int y, int w, int h)
+	{
+		/* Translucent panel (78% of the ground over the dimmed wallpaper), one
+		 * soft shadow, accent hairline. */
+		ui_shadow(cv_, x, y, w, h, UI_R_XL, 16, 20, t_.shadow_win_a, t_.shadow);
+		for (int yy = y; yy < y + h; yy++)
+			for (int xx = x; xx < x + w; xx++)
+			{
+				uint32_t a = ui_cov(ui_rr_dist4(xx, yy, x, y, w, h, UI_R_XL));
+				if (a)
+					cv_.blend(xx, yy, t_.ground, a * 200 >> 8);
+			}
+		ui_hairline(cv_, x + 1, y, w - 2, t_.accent);
+
+		int ix = x + pad_, iw = w - 2 * pad_;
+		int yy = y + pad_ + av_ + pad_ + (st.other ? LG_PILL_H + 12 : 0) + LG_PILL_H + 12;
+
+		/* Hint / error line. */
+		const char *hint = st.busy           ? "Signing in..."
+		                   : !st.err.empty() ? st.err.c_str()
+		                   : st.other        ? "Tab switches field \xB7 Enter signs in"
+		                                     : "Press Enter to sign in";
+		text(font_, ix + 24, yy + 8, hint, st.err.empty() ? t_.text_muted : t_.danger);
+		yy += 16 + pad_;
+
+		/* Session: Desktop (selected) / Console (not available yet). */
+		ui_fill_round(cv_, ix, yy, iw, LG_SEG_H, LG_SEG_H / 2, t_.surface);
+		int half = (iw - 6 - 2) / 2;
+		ui_outlined_round(cv_, ix + 3, yy + 3, half, 32, 16, t_.edge, t_.ground);
+		segment(ix + 3, yy + 3, half, "monitor", "Desktop", t_.text);
+		segment(ix + 3 + half + 2, yy + 3, half, "terminal", "Console", ui_mix(t_.surface, t_.text_muted, 115));
+	}
+
+	void segment(int x, int y, int w, const char *icon, const char *label, uint32_t col)
+	{
+		int lw = 15 + 8 + (int)font_.TextWidth(label);
+		int lx = x + (w - lw) / 2;
+		ui_draw_icon_tint(cv_, ui_icon_get(16, icon), lx, y + 8, col);
+		text(font_, lx + 15 + 8, y + 16, label, col);
+	}
+
+	/* Footer: ring-and-dot mark, name, host; keyboard + network at the right. */
+	void draw_footer(const LoginState &st)
+	{
+		int y = sh_ - 20 - 16; /* centre row of the 32px footer band */
+		uint32_t muted = t_.mode == UI_THEME_LIGHT ? 0x595D6Cu : 0xCFD3E5u;
+		/* the mark: 16px ring (2px accent-400) + 6px accent-300 dot top-right */
+		ui_stroke_round(cv_, left_, y - 8, 16, 16, 8, 2, t_.accent_400);
+		ui_fill_round(cv_, left_ + 12 - 2, y - 8 - 2, 6, 6, 3, t_.accent_300);
+		text(font_bold_, left_ + 16 + 12, y, "uBixOS", t_.text);
+		char host[64];
+		if (ubistry_get_str("/system/hostname", host, sizeof(host)) != 0)
+			std::strncpy(host, "ubix.local", sizeof(host) - 1), host[sizeof(host) - 1] = '\0';
+		text(font_, left_ + 16 + 12 + (int)font_bold_.TextWidth("uBixOS") + 12, y, host, t_.text_muted);
+
+		int rx = sw_ - std::max(16, std::min(sw_ * 3 / 100, 32));
+
+		/* Power button (btn-icon) at the far right, with its pop-over. */
+		rx -= UI_CONTROL_H;
+		hits.pwr_x = rx;
+		hits.pwr_y = y - UI_CONTROL_H / 2;
+		if (st.power_open)
+			ui_fill_round(cv_, rx, hits.pwr_y, UI_CONTROL_H, UI_CONTROL_H, UI_R_MD, t_.raised);
+		ui_draw_icon_tint(cv_, ui_icon_get(16, "power"), rx + 8, y - 8, muted);
+		if (st.power_open)
+			draw_power_menu(rx + UI_CONTROL_H, hits.pwr_y - 12);
+		rx -= 8;
+
+		rx -= 16 + 24;
+		ui_draw_icon_tint(cv_, ui_icon_get(16, "ethernet"), rx + 12, y - 8, muted);
+		int kw = 16 + 8 + (int)font_.TextWidth("EN");
+		rx -= kw + 12;
+		ui_draw_icon_tint(cv_, ui_icon_get(16, "keyboard"), rx, y - 8, muted);
+		text(font_, rx + 16 + 8, y, "EN", muted);
+	}
+
+	/* Restart / Shut down pop-over, right edge at right, bottom edge at bottom. */
+	void draw_power_menu(int right, int bottom)
+	{
+		static const char *const labels[2] = {"Restart", "Shut down"};
+		static const char *const icons[2] = {"restart", "power"};
+		int w = 168, h = 4 + 2 * 34 + 1 + 4;
+		int x = right - w, y = bottom - h;
+		ui_shadow(cv_, x, y, w, h, UI_R_MD, 8, 14, t_.shadow_win_a, t_.shadow);
+		ui_outlined_round(cv_, x, y, w, h, UI_R_MD, t_.edge, t_.ground);
+		for (int i = 0; i < 2; i++)
+		{
+			int ry = y + 4 + i * 35;
+			ui_draw_icon_tint(cv_, ui_icon_get(16, icons[i]), x + 4 + 16, ry + 9, t_.text_muted);
+			text(font_, x + 4 + 16 + 16 + 16, ry + 17, labels[i], t_.text);
+		}
+		hits.pop_x = x;
+		hits.pop_y = y;
+		hits.pop_w = w;
+	}
+
+      public:
+	/* Cover the screen with the restart / shut-down page (caller flips). */
+	void draw_power(bool off)
+	{
+		ogScalableFont title;
+		title.Load(FONT_PATH, 19); /* 16px */
+		ui_power_screen(cv_,
+		                surf_,
+		                title,
+		                font_,
+		                off ? "Shutting down..." : "Restarting...",
+		                "Closing apps and syncing disks");
+		base_key_.clear(); /* the cached layer no longer matches the screen */
+		dirty_x = dirty_y = 0;
+		dirty_w = sw_;
+		dirty_h = sh_;
 	}
 };
 
@@ -563,10 +778,13 @@ int main(int argc, char **argv)
 		while (mpi_postMessage(VIEWS_MBOX, DISPLAY_QUERY, &qmsg) != 0)
 			ubix::yield();
 
+		/* Bounded by TIME (~2 s), not by a count of yields: on SMP a yield
+		 * returns at once when this CPU has nothing else to run, so a counted
+		 * loop expired in milliseconds — before views, on another CPU, answered. */
 		mpi_message_t reply;
-		for (int i = 0; i < 5000; i++)
+		for (int waited = 0; waited < 200; waited += 5)
 		{
-			if (mbox.try_fetch(reply) && reply.header == DISPLAY_INFO)
+			if (mbox.wait(reply, 5) && reply.header == DISPLAY_INFO)
 			{
 				struct display_info *di = (struct display_info *)reply.data;
 				if (di->screen_w > 0)
@@ -575,7 +793,6 @@ int main(int argc, char **argv)
 					scr_h = (int)di->screen_h;
 				return true;
 			}
-			ubix::yield();
 		}
 		return false;
 	};
@@ -612,20 +829,20 @@ int main(int argc, char **argv)
 		 * created, leaving a black never-drawn box on the login screen.  A
 		 * timeout is treated as a deny; the retry loop re-queries + re-claims
 		 * (and releases any late-arriving ACK's window when draining). */
+		/* Bounded by time (~3 s), not a yield count (see query_screen). */
 		mpi_message_t reply;
 		bool acked = false;
-		for (int i = 0; i < 20000; i++)
+		for (int waited = 0; waited < 300 && !acked; waited += 5)
 		{
-			if (mbox.try_fetch(reply))
+			while (mbox.try_fetch(reply) || mbox.wait(reply, 5))
 			{
 				if (reply.header == DISPLAY_ACK)
 				{
 					acked = true;
 					break;
 				}
-				continue; /* stray (late DISPLAY_INFO etc.) — discard */
+				/* stray (late DISPLAY_INFO etc.) — discard and keep waiting */
 			}
-			ubix::yield();
 		}
 		if (!acked)
 		{
@@ -717,30 +934,76 @@ int main(int argc, char **argv)
 			struct display_flip *fl = (struct display_flip *)m.data;
 			m.header = DISPLAY_FLIP;
 			fl->window_id = win_id;
-			fl->dirty_x = 0;
-			fl->dirty_y = 0;
-			fl->dirty_w = act_w;
-			fl->dirty_h = act_h;
+			fl->dirty_x = ui.dirty_x; /* only what the last draw() changed */
+			fl->dirty_y = ui.dirty_y;
+			fl->dirty_w = ui.dirty_w;
+			fl->dirty_h = ui.dirty_h;
 			ubix::post_message(VIEWS_MBOX, DISPLAY_FLIP, m);
 		};
 
-		std::string username, password, errmsg;
-		bool in_pass = false;
+		LoginState st;
 		bool do_session = false;
 		struct auth_response session_resp = {};
 
+		/* Remembered user: the card offers them first ("Other user..." to switch). */
+		{
+			char last[64];
+			if (ubistry_get_str(LAST_USER_KEY, last, sizeof(last)) == 0)
+				st.last_user = last;
+		}
 		auto reset = [&]()
 		{
-			username.clear();
-			password.clear();
-			errmsg.clear();
-			in_pass = false;
+			st.other = st.last_user.empty();
+			st.user.clear();
+			st.pass.clear();
+			st.err.clear();
+			st.busy = false;
+			st.in_pass = !st.other;
+		};
+		auto redraw = [&]()
+		{
+			ui.draw(st);
+			flip();
+		};
+		/* Switch between the remembered user and typing another name. */
+		auto toggle_other = [&]()
+		{
+			if (st.last_user.empty())
+				return;
+			st.other = !st.other;
+			st.user.clear();
+			st.pass.clear();
+			st.err.clear();
+			st.in_pass = !st.other;
+		};
+		/* Authenticate the shown account; true = start the session. */
+		auto submit = [&]() -> bool
+		{
+			if (st.account().empty())
+			{
+				st.in_pass = false;
+				return false;
+			}
+			st.busy = true;
+			st.err.clear();
+			redraw();
+			session_resp = do_auth(auth_mbox, st.account(), st.pass);
+			st.busy = false;
+			if (session_resp.ok)
+			{
+				ubistry_set_str(LAST_USER_KEY, st.account().c_str());
+				return true;
+			}
+			st.err = "Wrong password \xB7 try again";
+			st.pass.clear();
+			st.in_pass = true;
+			return false;
 		};
 
 		reset();
-		unsigned blink = 1; /* caret visibility, toggled on each idle tick */
-		ui.draw(username, password, in_pass, errmsg, blink != 0);
-		flip();
+		redraw();
+		long shown_minute = LoginUI::minute_now();
+		uint8_t prev_buttons = 0; /* last mouse button state, for release-edge clicks */
 
 		/* ---- Inner login loop ------------------------------------- */
 		for (;;)
@@ -750,79 +1013,131 @@ int main(int argc, char **argv)
 			 * later, tick a clock) rather than busy-spinning on yield(). */
 			if (!mbox.wait(ev, 25))
 			{
-				blink ^= 1u;
-				ui.draw(username, password, in_pass, errmsg, blink != 0);
-				flip();
+				/* Idle: keep the big clock current. */
+				if (LoginUI::minute_now() != shown_minute)
+				{
+					shown_minute = LoginUI::minute_now();
+					redraw();
+				}
+				ubix::yield();
 				continue;
 			}
 
 			if (ev.header == DISPLAY_CLOSE)
 				goto done;
 
+			if (ev.header == DISPLAY_MOUSE)
+			{
+				/* Clicks: sign-in button, fields (focus), "Other user..." link. */
+				struct display_mouse_ev *me = (struct display_mouse_ev *)ev.data;
+				bool click = (prev_buttons & 1) && !(me->buttons & 1); /* release edge */
+				prev_buttons = me->buttons;
+				if (!click || st.busy)
+					continue;
+				const LoginHits &h = ui.hits;
+				int mx = me->x, my = me->y;
+
+				/* Power: the pop-over takes the click while open. */
+				if (st.power_open)
+				{
+					st.power_open = false;
+					for (int i = 0; i < 2; i++)
+						if (LoginHits::in(
+						        mx, my, h.pop_x + 4, h.pop_y + 4 + i * 35, h.pop_w - 8, 34))
+						{
+							bool off = (i == 1);
+							ui.draw_power(off);
+							flip();
+							struct timespec ts = {0, 700 * 1000 * 1000};
+							nanosleep(&ts, nullptr);
+							ubix_power(off ? UBIX_POWER_OFF : UBIX_POWER_REBOOT);
+						}
+					redraw();
+					continue;
+				}
+				if (LoginHits::in(mx, my, h.pwr_x, h.pwr_y, UI_CONTROL_H, UI_CONTROL_H))
+				{
+					st.power_open = true;
+					redraw();
+					continue;
+				}
+				int dx = mx - (h.sign_x + h.sign_d / 2), dy = my - (h.sign_y + h.sign_d / 2);
+				if (dx * dx + dy * dy <= (h.sign_d / 2) * (h.sign_d / 2))
+				{
+					if (submit())
+					{
+						do_session = true;
+						break;
+					}
+				}
+				else if (h.link_w && LoginHits::in(mx, my, h.link_x, h.link_y, h.link_w, 16))
+					toggle_other();
+				else if (h.user_w && LoginHits::in(mx, my, h.user_x, h.user_y, h.user_w, LG_PILL_H))
+					st.in_pass = false;
+				else if (LoginHits::in(mx, my, h.pass_x, h.pass_y, h.pass_w, LG_PILL_H))
+					st.in_pass = true;
+				else
+					continue;
+				redraw();
+				continue;
+			}
+
 			if (ev.header != DISPLAY_KEY)
 				continue;
 
 			struct display_key *dk = (struct display_key *)ev.data;
-			if (!dk->pressed)
+			if (!dk->pressed || st.busy)
 				continue;
 
 			uint32_t kc = dk->keycode;
 
-			if (kc == '\t')
+			if (kc == 0x1B && st.power_open)
+				st.power_open = false; /* Esc closes the power pop-over first */
+			else if (kc == 0x1B)           /* Esc: remembered user <-> other user */
+				toggle_other();
+			else if (kc == '\t')
 			{
-				in_pass = !in_pass;
-				errmsg.clear();
+				if (st.other)
+					st.in_pass = !st.in_pass;
 			}
 			else if (kc == '\n' || kc == '\r')
 			{
-				if (!in_pass)
+				if (!st.in_pass)
 				{
-					if (!username.empty())
-						in_pass = true;
+					if (!st.user.empty())
+						st.in_pass = true;
 				}
-				else
+				else if (submit())
 				{
-					ui.draw(username, password, in_pass, "Authenticating...", false);
-					flip();
-
-					session_resp = do_auth(auth_mbox, username, password);
-
-					if (session_resp.ok)
-					{
-						do_session = true;
-						break; /* exit inner loop → release → session */
-					}
-					else
-					{
-						errmsg = "Login incorrect.";
-						password.clear();
-						in_pass = false;
-					}
+					do_session = true;
+					break; /* exit inner loop → release → session */
 				}
 			}
 			else if (kc == '\b' || kc == 0x7F) /* BS or DEL — both keyboards send 0x7F */
 			{
-				std::string &field = in_pass ? password : username;
+				std::string &field = st.in_pass ? st.pass : st.user;
 				if (!field.empty())
 					field.pop_back();
 			}
 			else if (kc >= 0x20 && kc < 0x7F)
 			{
-				std::string &field = in_pass ? password : username;
+				std::string &field = st.in_pass ? st.pass : st.user;
 				if ((int)field.size() < MAX_FIELD)
 					field += (char)kc;
+				st.err.clear();
 			}
 
-			blink = 1; /* show the caret immediately after a keystroke */
-			ui.draw(username, password, in_pass, errmsg, blink != 0);
-			flip();
+			redraw();
 		}
 
 		/* Release window so the session (taskbar + apps) owns the screen */
 		release_window();
 
 		if (do_session)
-			run_session(session_resp, username);
+		{
+			std::printf("vlogin: starting session for %s\n", st.account().c_str());
+			run_session(session_resp, st.account());
+		}
 		/* Loop back to claim_window for the next user */
 	}
 

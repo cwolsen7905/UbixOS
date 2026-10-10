@@ -111,6 +111,22 @@ static int64_t psci_call(u_int64_t fn, u_int64_t a0, u_int64_t a1, u_int64_t a2)
  * SYSTEM_RESET does not return on success, so reaching the SMC (or the WFI spin)
  * means the prior conduit was not the active one.
  */
+/**
+ * machine_power (aarch64): PSCI SYSTEM_OFF for power-off, SYSTEM_RESET
+ * otherwise.  Does not return.
+ */
+void machine_power(int off)
+{
+	if (off)
+	{
+		register u_int64_t x0 __asm__("x0") = 0x84000008UL; /* PSCI SYSTEM_OFF */
+		__asm__ __volatile__("hvc #0" : "+r"(x0) : : "x1", "x2", "x3", "memory");
+		x0 = 0x84000008UL;
+		__asm__ __volatile__("smc #0" : "+r"(x0) : : "x1", "x2", "x3", "memory");
+	}
+	aarch64_system_reset(); /* reset, or the fallback if power-off had no effect */
+}
+
 void aarch64_system_reset(void)
 {
 	register u_int64_t x0 __asm__("x0") = PSCI_SYSTEM_RESET;
