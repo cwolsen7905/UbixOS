@@ -63,12 +63,12 @@
 #define AT_FLAGS 8  /* Flags (unused for i386). */
 #define AT_ENTRY 9  /* Where interpreter should transfer control. */
 
-#define AUXARGS_ENTRY(pos, id, val)                                            \
-	{                                                                      \
-		*pos = id;                                                     \
-		pos++;                                                         \
-		*pos = val;                                                    \
-		pos++;                                                         \
+#define AUXARGS_ENTRY(pos, id, val)                                                                                    \
+	{                                                                                                              \
+		*pos = id;                                                                                             \
+		pos++;                                                                                                 \
+		*pos = val;                                                                                            \
+		pos++;                                                                                                 \
 	}
 
 static int argv_count(char **argv)
@@ -96,15 +96,15 @@ static int args_copyin(char **argv_in, char **argv_out, char **args_out)
 
 	int argc = argv_count(argv_in);
 
-	u_int32_t *argv_tmp = (u_int32_t *)kmalloc(
-	    sizeof(char *) * (argc + 2)); /* + 1 For ARGC + 1 For NULL TERM */
+	u_int32_t *argv_tmp = (u_int32_t *)kmalloc(sizeof(char *) * (argc + 2)); /* + 1 For ARGC + 1 For NULL TERM */
 
 	if (argv_tmp == 0x0)
 		return (-1);
 
 	char *args_tmp = (char *)kmalloc(ARGV_PAGE);
 
-	if (args_tmp == 0x0) {
+	if (args_tmp == 0x0)
+	{
 		kfree(argv_tmp);
 		return (-1);
 	}
@@ -118,7 +118,8 @@ static int args_copyin(char **argv_in, char **argv_out, char **args_out)
 	for (i = 1; i <= argc; i++)
 	{
 		size_t alen = strlen(argv_in[i - 1]) + 1;
-		if (sp + alen > ARGV_PAGE) {
+		if (sp + alen > ARGV_PAGE)
+		{
 			kfree(argv_tmp);
 			kfree(args_tmp);
 			return (-1);
@@ -141,8 +142,7 @@ static int envs_copyin(char **envp_in, char **envp_out, char **envs_out)
 
 	int envc = envp_count(envp_in);
 
-	u_int32_t *envp_tmp = (u_int32_t *)kmalloc(
-	    sizeof(char *) * (envc + 1)); // + 1 For NULL TERM
+	u_int32_t *envp_tmp = (u_int32_t *)kmalloc(sizeof(char *) * (envc + 1)); // + 1 For NULL TERM
 
 	char *envs_tmp = (char *)kmalloc(ENVP_PAGE);
 
@@ -162,7 +162,8 @@ static int envs_copyin(char **envp_in, char **envp_out, char **envs_out)
 	for (i = 0; i < envc; i++)
 	{
 		size_t elen = strlen(envp_in[i]) + 1;
-		if (sp + elen > ENVP_PAGE) {
+		if (sp + elen > ENVP_PAGE)
+		{
 			kfree(envp_tmp);
 			kfree(envs_tmp);
 			return (-1);
@@ -205,8 +206,7 @@ u_int32_t execThread(void (*tproc)(void), u_int32_t stack, char *arg, const char
 	if (name != 0x0)
 		strncpy(newProcess->name, name, sizeof(newProcess->name) - 1);
 
-	stackAddr =
-	    (u_int32_t)vmm_get_free_kernel_page(newProcess->id, stack / PAGE_SIZE);
+	stackAddr = (u_int32_t)vmm_get_free_kernel_page(newProcess->id, stack / PAGE_SIZE);
 
 	/* Set All The Correct Thread Attributes */
 	newProcess->md.md_tss.back_link = 0x0;
@@ -300,10 +300,10 @@ void execFile(char *file, char **argv, char **envp, int console)
 
 	u_int32_t *tmp = 0x0;
 
-	u_int32_t seg_data_addr   = 0x0;
+	u_int32_t seg_data_addr = 0x0;
 	u_int32_t seg_data_npages = 0x0;
-	u_int32_t ldAddr          = 0x0;
-	char    *interp          = 0x0;
+	u_int32_t ldAddr = 0x0;
+	char *interp = 0x0;
 
 	Elf_Ehdr *binaryHeader = 0x0;
 
@@ -316,10 +316,10 @@ void execFile(char *file, char **argv, char **envp, int console)
 	newProcess = schedNewTask();
 	assert(newProcess);
 
-	newProcess->gid    = 0x0;
-	newProcess->uid    = 0x0;
-	newProcess->pgrp   = newProcess->id;
-	newProcess->sid    = newProcess->id;
+	newProcess->gid = 0x0;
+	newProcess->uid = 0x0;
+	newProcess->pgrp = newProcess->id;
+	newProcess->sid = newProcess->id;
 	newProcess->ct_tty = NULL;
 
 	{
@@ -330,7 +330,8 @@ void execFile(char *file, char **argv, char **envp, int console)
 		strncpy(newProcess->name, base, sizeof(newProcess->name) - 1);
 		size_t pos = 0;
 		int j;
-		for (j = 0; j < argc && pos < sizeof(newProcess->cmdline) - 1; j++) {
+		for (j = 0; j < argc && pos < sizeof(newProcess->cmdline) - 1; j++)
+		{
 			if (j > 0)
 				newProcess->cmdline[pos++] = ' ';
 			size_t alen = strlen(argv[j]);
@@ -344,7 +345,8 @@ void execFile(char *file, char **argv, char **envp, int console)
 
 	newProcess->term = tty_find(console);
 
-	if (newProcess->term == 0x0) {
+	if (newProcess->term == 0x0)
+	{
 		kprintf("Error: invalid console %i for %s\n", console, file);
 		klog(KLOG_ERR, "execFile: invalid console %i for %s", console, file);
 		sched_setStatus(newProcess->id, DEAD);
@@ -361,10 +363,7 @@ void execFile(char *file, char **argv, char **envp, int console)
 
 	/* To Better Load This Application We Will Switch Over To Its VM Space
 	 */
-	asm volatile("movl %0,%%cr3\n"
-	             :
-	             : "r"(newProcess->md.md_tss.cr3)
-	             : "memory");
+	asm volatile("movl %0,%%cr3\n" : : "r"(newProcess->md.md_tss.cr3) : "memory");
 
 	/* Lets Find The File */
 	if (newProcess->files[0] != 0x0)
@@ -417,9 +416,7 @@ void execFile(char *file, char **argv, char **envp, int console)
 	fread(binaryHeader, sizeof(Elf_Ehdr), 1, newProcess->files[0]);
 
 	/* Check If App Is A Real Application */
-	if ((binaryHeader->e_ident[1] != 'E') ||
-	    (binaryHeader->e_ident[2] != 'L') ||
-	    (binaryHeader->e_ident[3] != 'F'))
+	if ((binaryHeader->e_ident[1] != 'E') || (binaryHeader->e_ident[2] != 'L') || (binaryHeader->e_ident[3] != 'F'))
 	{
 		kprintf("Exec Format Error: Binary File Not Executable3.\n");
 		kfree(binaryHeader);
@@ -449,7 +446,8 @@ void execFile(char *file, char **argv, char **envp, int console)
 
 	newProcess->td.abi = binaryHeader->e_ident[EI_OSABI];
 
-	if (binaryHeader->e_phnum > 256) {
+	if (binaryHeader->e_phnum > 256)
+	{
 		kprintf("Exec Format Error: e_phnum too large (%u)\n", binaryHeader->e_phnum);
 		kfree(binaryHeader);
 		fclose(newProcess->files[0]);
@@ -458,12 +456,10 @@ void execFile(char *file, char **argv, char **envp, int console)
 	}
 
 	/* Load The Program Header(s) */
-	programHeader =
-	    (Elf_Phdr *)kmalloc(sizeof(Elf_Phdr) * binaryHeader->e_phnum);
+	programHeader = (Elf_Phdr *)kmalloc(sizeof(Elf_Phdr) * binaryHeader->e_phnum);
 	kern_fseek(newProcess->files[0], binaryHeader->e_phoff, 0);
 
-	fread(programHeader, (sizeof(Elf_Phdr) * binaryHeader->e_phnum), 1,
-	      newProcess->files[0]);
+	fread(programHeader, (sizeof(Elf_Phdr) * binaryHeader->e_phnum), 1, newProcess->files[0]);
 
 	/* Loop Through The Header And Load Sections Which Need To Be Loaded */
 	for (i = 0; i < binaryHeader->e_phnum; i++)
@@ -475,57 +471,45 @@ void execFile(char *file, char **argv, char **envp, int console)
 			 Memory With Correct Settings so it helps us in the
 			 future
 			 */
-			for (x = 0x0; x < (int)programHeader[i].p_memsz;
-			     x += 0x1000)
+			for (x = 0x0; x < (int)programHeader[i].p_memsz; x += 0x1000)
 			{
 				/* Make readonly and read/write !!! */
-				if (vmm_remap_page(
-				        vmm_find_free_page(newProcess->id),
-				        ((programHeader[i].p_vaddr &
-				          0xFFFFF000) +
-				         x),
-				        PAGE_DEFAULT, newProcess->id, 0) == 0x0)
+				if (vmm_remap_page(vmm_find_free_page(newProcess->id),
+				                   ((programHeader[i].p_vaddr & 0xFFFFF000) + x),
+				                   PAGE_DEFAULT,
+				                   newProcess->id,
+				                   0) == 0x0)
 					K_PANIC("Remap Page Failed");
 
-				memset((void *)((programHeader[i].p_vaddr &
-				                 0xFFFFF000) +
-				                x),
-				       0x0, 0x1000);
+				memset((void *)((programHeader[i].p_vaddr & 0xFFFFF000) + x), 0x0, 0x1000);
 			}
 
 			/* Now Load Section To Memory */
-			kern_fseek(newProcess->files[0],
-			           programHeader[i].p_offset, 0);
+			kern_fseek(newProcess->files[0], programHeader[i].p_offset, 0);
 
-			fread((void *)programHeader[i].p_vaddr,
-			      programHeader[i].p_filesz, 1,
-			      newProcess->files[0]);
+			fread((void *)programHeader[i].p_vaddr, programHeader[i].p_filesz, 1, newProcess->files[0]);
 
 			if ((programHeader[i].p_flags & 0x2) != 0x2)
 			{
-				for (x = 0x0; x < (int)programHeader[i].p_memsz;
-				     x += 0x1000)
+				for (x = 0x0; x < (int)programHeader[i].p_memsz; x += 0x1000)
 				{
-					if ((vmm_set_page_attributes(
-					        (programHeader[i].p_vaddr &
-					         0xFFFFF000) +
-					            x,
-					        PAGE_PRESENT | PAGE_USER)) !=
-					    0x0)
+					if ((vmm_set_page_attributes((programHeader[i].p_vaddr & 0xFFFFF000) + x,
+					                             PAGE_PRESENT | PAGE_USER)) != 0x0)
 						kpanic("Error: "
 						       "vmm_set_page_attributes "
 						       "failed, File: %s, "
 						       "Line: %i\n",
-						       __FILE__, __LINE__);
+						       __FILE__,
+						       __LINE__);
 				}
 			}
 			else
 			{
 				/* Writable segment — track as data for vm_daddr/vm_dsize */
-				seg_data_addr   = programHeader[i].p_vaddr & 0xFFFFF000;
-				seg_data_npages = (programHeader[i].p_memsz +
-				                   (programHeader[i].p_vaddr & 0xFFF) +
-				                   PAGE_SIZE - 1) >> PAGE_SHIFT;
+				seg_data_addr = programHeader[i].p_vaddr & 0xFFFFF000;
+				seg_data_npages =
+				    (programHeader[i].p_memsz + (programHeader[i].p_vaddr & 0xFFF) + PAGE_SIZE - 1) >>
+				    PAGE_SHIFT;
 			}
 		}
 		else if (programHeader[i].p_type == PT_INTERP)
@@ -543,8 +527,8 @@ void execFile(char *file, char **argv, char **envp, int console)
 
 	/* Set Virtual Memory Start */
 	newProcess->oInfo.vmStart = 0x80000000;
-	newProcess->td.vm_daddr  = (u_long)seg_data_addr;
-	newProcess->td.vm_dsize  = seg_data_npages;
+	newProcess->td.vm_daddr = (u_long)seg_data_addr;
+	newProcess->td.vm_dsize = seg_data_npages;
 
 	/* Set Up Stack Space */
 	// MrOlsen (2016-01-14) FIX: is the stack start supposed to be
@@ -553,8 +537,10 @@ void execFile(char *file, char **argv, char **envp, int console)
 	for (x = 1; x <= 100; x++)
 	{
 		vmm_remap_page(vmm_find_free_page(newProcess->id),
-		              (STACK_ADDR + 1) - (x * PAGE_SIZE),
-		              PAGE_DEFAULT | PAGE_STACK, newProcess->id, 0);
+		               (STACK_ADDR + 1) - (x * PAGE_SIZE),
+		               PAGE_DEFAULT | PAGE_STACK,
+		               newProcess->id,
+		               0);
 		bzero((void *)((STACK_ADDR + 1) - (x * PAGE_SIZE)), PAGE_SIZE);
 	}
 
@@ -597,9 +583,9 @@ void execFile(char *file, char **argv, char **envp, int console)
 
 	// sched_setStatus(newProcess->id, READY);
 
-	u_int32_t e_entry    = binaryHeader->e_entry;
-	u_int32_t e_phoff    = binaryHeader->e_phoff;
-	u_int32_t e_phnum    = binaryHeader->e_phnum;
+	u_int32_t e_entry = binaryHeader->e_entry;
+	u_int32_t e_phoff = binaryHeader->e_phoff;
+	u_int32_t e_phnum = binaryHeader->e_phnum;
 	u_int32_t e_phentsize = binaryHeader->e_phentsize;
 
 	kfree(binaryHeader);
@@ -612,8 +598,7 @@ void execFile(char *file, char **argv, char **envp, int console)
 	tmp[0] = e_entry;
 	tmp[3] = STACK_ADDR - 12;
 
-	newProcess->md.md_tss.esp = STACK_ADDR - ARGV_PAGE - ENVP_PAGE - ELF_AUX -
-	                      (argc + 1) - (envc + 1) - STACK_PAD;
+	newProcess->md.md_tss.esp = STACK_ADDR - ARGV_PAGE - ENVP_PAGE - ELF_AUX - (argc + 1) - (envc + 1) - STACK_PAD;
 
 	tmp = (u_int32_t *)newProcess->md.md_tss.esp;
 
@@ -637,43 +622,40 @@ void execFile(char *file, char **argv, char **envp, int console)
 		strcpy((char *)tmp[ex + i], envp[ex]);
 		sp += strlen(envp[ex]) + 1;
 	}
-	tmp[i + envc] = 0x0;  /* envp null terminator */
+	tmp[i + envc] = 0x0; /* envp null terminator */
 
 	/* auxv — required by musl's _dlstart to resolve the dynamic linker */
-	if (ldAddr) {
+	if (ldAddr)
+	{
 		u_int32_t *av = &tmp[i + envc + 1];
-		AUXARGS_ENTRY(av, AT_PHDR,   e_phoff + 0x08048000);
-		AUXARGS_ENTRY(av, AT_PHENT,  e_phentsize);
-		AUXARGS_ENTRY(av, AT_PHNUM,  e_phnum);
+		AUXARGS_ENTRY(av, AT_PHDR, e_phoff + 0x08048000);
+		AUXARGS_ENTRY(av, AT_PHENT, e_phentsize);
+		AUXARGS_ENTRY(av, AT_PHNUM, e_phnum);
 		AUXARGS_ENTRY(av, AT_PAGESZ, PAGE_SIZE);
-		AUXARGS_ENTRY(av, AT_BASE,   LD_START);
-		AUXARGS_ENTRY(av, AT_ENTRY,  e_entry);
-		AUXARGS_ENTRY(av, AT_NULL,   0);
+		AUXARGS_ENTRY(av, AT_BASE, LD_START);
+		AUXARGS_ENTRY(av, AT_ENTRY, e_entry);
+		AUXARGS_ENTRY(av, AT_NULL, 0);
 	}
 
 	/* Build LDT For GS and FS */
 	vmm_unmap_page(VMM_USER_LDT, VMM_KEEP);
 
-	if (vmm_remap_page(vmm_find_free_page(newProcess->id), VMM_USER_LDT,
-	                  PAGE_DEFAULT, newProcess->id, 0) == 0x0)
+	if (vmm_remap_page(vmm_find_free_page(newProcess->id), VMM_USER_LDT, PAGE_DEFAULT, newProcess->id, 0) == 0x0)
 	{
 		K_PANIC("Error: Remap Page Failed");
 	}
 
 	struct gdtDescriptor *taskLDT = 0x0;
 
-	taskLDT = (struct gdtDescriptor *)(VMM_USER_LDT +
-	                                   sizeof(struct gdtDescriptor));
+	taskLDT = (struct gdtDescriptor *)(VMM_USER_LDT + sizeof(struct gdtDescriptor));
 	u_int32_t data_addr = 0x0;
 
 	taskLDT->limitLow = (0xFFFFF & 0xFFFF);
 	taskLDT->baseLow = (data_addr & 0xFFFF);
 	taskLDT->baseMed = ((data_addr >> 16) & 0xFF);
-	taskLDT->access =
-	    ((dData + dWrite + dBig + dBiglim + dDpl3) + dPresent) >> 8;
+	taskLDT->access = ((dData + dWrite + dBig + dBiglim + dDpl3) + dPresent) >> 8;
 	taskLDT->limitHigh = (0xFFFFF >> 16);
-	taskLDT->granularity =
-	    ((dData + dWrite + dBig + dBiglim + dDpl3) & 0xFF) >> 4;
+	taskLDT->granularity = ((dData + dWrite + dBig + dBiglim + dDpl3) & 0xFF) >> 4;
 	taskLDT->baseHigh = data_addr >> 24;
 
 	/* Switch Back To The Kernels VM Space */
@@ -767,9 +749,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 
 	fread(binaryHeader, sizeof(Elf_Ehdr), 1, fd);
 
-	if ((binaryHeader->e_ident[1] != 'E') ||
-	    (binaryHeader->e_ident[2] != 'L') ||
-	    (binaryHeader->e_ident[3] != 'F'))
+	if ((binaryHeader->e_ident[1] != 'E') || (binaryHeader->e_ident[2] != 'L') || (binaryHeader->e_ident[3] != 'F'))
 	{
 		kprintf("Exec Format Error: Binary File Not Executable7.\n");
 		kfree(binaryHeader);
@@ -801,7 +781,8 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 	u_int32_t *argv_out = 0x0;
 	char *args_out = 0x0;
 
-	if (args_copyin(argv, (char **)&argv_out, &args_out) != 0) {
+	if (args_copyin(argv, (char **)&argv_out, &args_out) != 0)
+	{
 		kprintf("sys_exec: args_copyin failed for %s\n", file);
 		fclose(fd);
 		td->td_retval[0] = -7; /* E2BIG */
@@ -817,7 +798,8 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 	u_int32_t *envp_out = 0x0;
 	char *envs_out = 0x0;
 
-	if (envs_copyin(envp, (char **)&envp_out, &envs_out) != 0) {
+	if (envs_copyin(envp, (char **)&envp_out, &envs_out) != 0)
+	{
 		kprintf("sys_exec: envs_copyin failed for %s\n", file);
 		kfree(argv_out);
 		kfree(args_out);
@@ -840,8 +822,10 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 	for (x = 1; x <= 100; x++)
 	{
 		vmm_remap_page(vmm_find_free_page(_current->id),
-		              (STACK_ADDR + 1) - (x * 0x1000),
-		              PAGE_DEFAULT | PAGE_STACK, _current->id, 0);
+		               (STACK_ADDR + 1) - (x * 0x1000),
+		               PAGE_DEFAULT | PAGE_STACK,
+		               _current->id,
+		               0);
 		bzero((void *)((STACK_ADDR + 1) - (x * 0x1000)), 0x1000);
 	}
 
@@ -849,8 +833,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 	td->abi = binaryHeader->e_ident[EI_OSABI];
 
 	/* Load The Program Header(s) */
-	if ((programHeader = (Elf_Phdr *)kmalloc(sizeof(Elf_Phdr) *
-	                                         binaryHeader->e_phnum)) == 0x0)
+	if ((programHeader = (Elf_Phdr *)kmalloc(sizeof(Elf_Phdr) * binaryHeader->e_phnum)) == 0x0)
 		K_PANIC("MALLOC FAILED");
 
 	assert(programHeader);
@@ -860,8 +843,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 	/* Done Loading Program Header(s) */
 
 	/* Load The Section Header(s) */
-	if ((sectionHeader = (Elf_Shdr *)kmalloc(sizeof(Elf_Shdr) *
-	                                         binaryHeader->e_shnum)) == 0x0)
+	if ((sectionHeader = (Elf_Shdr *)kmalloc(sizeof(Elf_Shdr) * binaryHeader->e_shnum)) == 0x0)
 		K_PANIC("MALLOC FAILED");
 
 	assert(sectionHeader);
@@ -877,145 +859,126 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 	{
 		switch (programHeader[i].p_type)
 		{
-		case PT_LOAD:
-			if (programHeader[i].p_memsz == 0x0)
-				break;
+			case PT_LOAD:
+				if (programHeader[i].p_memsz == 0x0)
+					break;
 
-			seg_addr = trunc_page(programHeader[i].p_vaddr);
-			seg_size =
-			    round_page(programHeader[i].p_memsz +
-			               programHeader[i].p_vaddr - seg_addr);
+				seg_addr = trunc_page(programHeader[i].p_vaddr);
+				seg_size = round_page(programHeader[i].p_memsz + programHeader[i].p_vaddr - seg_addr);
 
-			/*
-			 Allocate Memory Im Going To Have To Make This Load
-			 Memory With Correct Settings so it helps us in the
-			 future
-			 */
-			for (x = 0x0;
-			     x < (round_page(programHeader[i].p_memsz));
-			     x += 0x1000)
-			{
-				/* Make readonly and read/write !!! */
-				if (vmm_remap_page(
-				        vmm_find_free_page(_current->id),
-				        ((programHeader[i].p_vaddr &
-				          0xFFFFF000) +
-				         x),
-				        PAGE_DEFAULT, _current->id, 0) == 0x0)
+				/*
+				 Allocate Memory Im Going To Have To Make This Load
+				 Memory With Correct Settings so it helps us in the
+				 future
+				 */
+				for (x = 0x0; x < (round_page(programHeader[i].p_memsz)); x += 0x1000)
 				{
-					K_PANIC("Error: Remap Page Failed");
+					/* Make readonly and read/write !!! */
+					if (vmm_remap_page(vmm_find_free_page(_current->id),
+					                   ((programHeader[i].p_vaddr & 0xFFFFF000) + x),
+					                   PAGE_DEFAULT,
+					                   _current->id,
+					                   0) == 0x0)
+					{
+						K_PANIC("Error: Remap Page Failed");
+					}
+					else
+					{
+						// MrOlsen 2018-01-15
+						// kprintf("rP[0x%X]",
+						// (programHeader[i].p_vaddr &
+						// 0xFFFFF000) + x);
+					}
+
+					memset((void *)((programHeader[i].p_vaddr & 0xFFFFF000) + x), 0x0, 0x1000);
+				}
+
+				/* Now Load Section To Memory */
+				kern_fseek(fd, programHeader[i].p_offset, 0);
+				// fread((void *) programHeader[i].p_vaddr,
+				// programHeader[i].p_filesz, 1, fd);
+				fread((void *)programHeader[i].p_vaddr, programHeader[i].p_filesz, 1, fd);
+
+				if ((programHeader[i].p_flags & 0x2) != 0x2)
+				{
+					for (x = 0x0; x < (round_page(programHeader[i].p_memsz)); x += 0x1000)
+					{
+						if ((vmm_set_page_attributes((programHeader[i].p_vaddr & 0xFFFFF000) +
+						                                 x,
+						                             PAGE_PRESENT | PAGE_USER)) != 0x0)
+							kpanic("Error: "
+							       "vmm_set_page_attributes "
+							       "failed, File: %s,Line: "
+							       "%i\n",
+							       __FILE__,
+							       __LINE__);
+					}
+
+					if (round_page(programHeader[i].p_memsz) == 0x33000)
+					{
+						char *b = (void *)programHeader[i].p_vaddr;
+						kprintf("T: %c", b[0x2c094]);
+					}
+				}
+
+				if ((programHeader[i].p_flags & PF_X) && text_size < seg_size)
+				{
+					// MrOlsen 2018kprintf("setting text: 0x%X -
+					// 0x%X\n", seg_addr, seg_size);
+					text_size = seg_size;
+					text_addr = seg_addr;
 				}
 				else
 				{
-					// MrOlsen 2018-01-15
-					// kprintf("rP[0x%X]",
-					// (programHeader[i].p_vaddr &
-					// 0xFFFFF000) + x);
+					// MrOlsen 2018kprintf("setting data: 0x%X -
+					// 0x%X\n", seg_addr, seg_size);
+					data_size = seg_size;
+					data_addr = seg_addr;
+					/*
+					 _current->td.vm_dsize = seg_size >> PAGE_SHIFT;
+					 _current->td.vm_daddr = (char *) seg_addr;
+					 kprintf( "setting daddr: 0x%X, dsiize: 0x%X\n",
+					 _current->td.vm_daddr, _current->td.vm_dsize );
+					 */
 				}
 
-				memset((void *)((programHeader[i].p_vaddr &
-				                 0xFFFFF000) +
-				                x),
-				       0x0, 0x1000);
-			}
-
-			/* Now Load Section To Memory */
-			kern_fseek(fd, programHeader[i].p_offset, 0);
-			// fread((void *) programHeader[i].p_vaddr,
-			// programHeader[i].p_filesz, 1, fd);
-			fread((void *)programHeader[i].p_vaddr,
-			      programHeader[i].p_filesz, 1, fd);
-
-			if ((programHeader[i].p_flags & 0x2) != 0x2)
-			{
-				for (x = 0x0;
-				     x < (round_page(programHeader[i].p_memsz));
-				     x += 0x1000)
-				{
-					if ((vmm_set_page_attributes(
-					        (programHeader[i].p_vaddr &
-					         0xFFFFF000) +
-					            x,
-					        PAGE_PRESENT | PAGE_USER)) !=
-					    0x0)
-						kpanic("Error: "
-						       "vmm_set_page_attributes "
-						       "failed, File: %s,Line: "
-						       "%i\n",
-						       __FILE__, __LINE__);
-				}
-
-				if (round_page(programHeader[i].p_memsz) ==
-				    0x33000)
-				{
-					char *b =
-					    (void *)programHeader[i].p_vaddr;
-					kprintf("T: %c", b[0x2c094]);
-				}
-			}
-
-			if ((programHeader[i].p_flags & PF_X) &&
-			    text_size < seg_size)
-			{
-				// MrOlsen 2018kprintf("setting text: 0x%X -
-				// 0x%X\n", seg_addr, seg_size);
-				text_size = seg_size;
-				text_addr = seg_addr;
-			}
-			else
-			{
-				// MrOlsen 2018kprintf("setting data: 0x%X -
-				// 0x%X\n", seg_addr, seg_size);
-				data_size = seg_size;
-				data_addr = seg_addr;
 				/*
-				 _current->td.vm_dsize = seg_size >> PAGE_SHIFT;
-				 _current->td.vm_daddr = (char *) seg_addr;
-				 kprintf( "setting daddr: 0x%X, dsiize: 0x%X\n",
-				 _current->td.vm_daddr, _current->td.vm_dsize );
+				 *  MrOlsen (2016-01-19) NOTE: Note Sure, I should Do
+				 * This Later Thjis is for stack space
 				 */
-			}
-
-			/*
-			 *  MrOlsen (2016-01-19) NOTE: Note Sure, I should Do
-			 * This Later Thjis is for stack space
-			 */
-			_current->oInfo.vmStart =
-			    ((programHeader[i].p_vaddr & 0xFFFFF000) +
-			     0xA900000);
-			break;
-		case PT_DYNAMIC:
-			// newLoc = (char *)programHeader[i].phVaddr;
-			// elfDynamicS = (elfDynamic *)
-			// programHeader[i].p_vaddr;
-			ef->dynamic = (Elf_Dyn *)programHeader[i].p_vaddr;
-			// fseek( fd, programHeader[i].phOffset, 0 );
-			// fread( (void *) programHeader[i].phVaddr,
-			// programHeader[i].phFilesz, 1, fd );
-			break;
-		case PT_INTERP:
+				_current->oInfo.vmStart = ((programHeader[i].p_vaddr & 0xFFFFF000) + 0xA900000);
+				break;
+			case PT_DYNAMIC:
+				// newLoc = (char *)programHeader[i].phVaddr;
+				// elfDynamicS = (elfDynamic *)
+				// programHeader[i].p_vaddr;
+				ef->dynamic = (Elf_Dyn *)programHeader[i].p_vaddr;
+				// fseek( fd, programHeader[i].phOffset, 0 );
+				// fread( (void *) programHeader[i].phVaddr,
+				// programHeader[i].phFilesz, 1, fd );
+				break;
+			case PT_INTERP:
 #ifdef DEBUG_EXEC
-			kprintf("%s:%i>Malloc: %i\n", _FILE_, _LINE_,
-			        programHeader[i].p_filesz);
+				kprintf("%s:%i>Malloc: %i\n", _FILE_, _LINE_, programHeader[i].p_filesz);
 #endif
-			interp = (char *)kmalloc(programHeader[i].p_filesz);
-			if (interp == 0x0)
-				K_PANIC("MALLOC FAILED");
-			kern_fseek(fd, programHeader[i].p_offset, 0);
-			fread((void *)interp, programHeader[i].p_filesz, 1, fd);
+				interp = (char *)kmalloc(programHeader[i].p_filesz);
+				if (interp == 0x0)
+					K_PANIC("MALLOC FAILED");
+				kern_fseek(fd, programHeader[i].p_offset, 0);
+				fread((void *)interp, programHeader[i].p_filesz, 1, fd);
 #ifdef DEBUG_EXEC
-			kprintf("Interp: [%s]\n", interp);
+				kprintf("Interp: [%s]\n", interp);
 #endif
-			ldAddr = ldEnable(interp, _current->id);
-			kfree(interp);
-			interp = 0x0;
-			// ef->ld_addr = ldEnable();
-			break;
-		case PT_GNU_STACK:
-			asm("nop");
-			break;
-		default:
-			break;
+				ldAddr = ldEnable(interp, _current->id);
+				kfree(interp);
+				interp = 0x0;
+				// ef->ld_addr = ldEnable();
+				break;
+			case PT_GNU_STACK:
+				asm("nop");
+				break;
+			default:
+				break;
 		}
 	}
 
@@ -1032,8 +995,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 
 	// asm("cld");
 	// irqDisable(0);
-	iFrame = (struct i386_frame *)(_current->md.md_tss.esp0 -
-	                               sizeof(struct i386_frame));
+	iFrame = (struct i386_frame *)(_current->md.md_tss.esp0 - sizeof(struct i386_frame));
 
 	// iFrame->ebp = 0x0;
 
@@ -1046,10 +1008,9 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 	/* Below the argv/envp string pages: the pointer vector — argc, argv[],
 	 * NULL, envp[], NULL (4 bytes each, not 1: counting entries as bytes let a
 	 * long argument list run into the env strings) — then the auxv. */
-	iFrame->user_esp =
-	    (u_int32_t)(STACK_ADDR - ARGV_PAGE - ENVP_PAGE - ELF_AUX -
-	               sizeof(u_int32_t) * (u_int32_t)(1 + (argc + 1) + (envc + 1)) - STACK_PAD) &
-	    0xFFFFF000;
+	iFrame->user_esp = (u_int32_t)(STACK_ADDR - ARGV_PAGE - ENVP_PAGE - ELF_AUX -
+	                               sizeof(u_int32_t) * (u_int32_t)(1 + (argc + 1) + (envc + 1)) - STACK_PAD) &
+	                   0xFFFFF000;
 
 	tmp = (u_int32_t *)iFrame->user_esp;
 
@@ -1120,9 +1081,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 	 */
 	if (ldAddr != 0x0 && ef != 0x0 && ef->got != 0x0)
 	{
-		ef->got[1] =
-		    (Elf_Addr)_current
-		        ->files[0]; /* fileDescriptor_t*, not integer fd */
+		ef->got[1] = (Elf_Addr)_current->files[0]; /* fileDescriptor_t*, not integer fd */
 		ef->got[2] = (Elf_Addr)ldAddr;
 	}
 
@@ -1217,26 +1176,22 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 
 	/* Build LDT For GS and FS */
 	vmm_unmap_page(VMM_USER_LDT, VMM_KEEP); // Can I Free This?
-	if (vmm_remap_page(vmm_find_free_page(_current->id), VMM_USER_LDT,
-	                  PAGE_DEFAULT, _current->id, 0) == 0x0)
+	if (vmm_remap_page(vmm_find_free_page(_current->id), VMM_USER_LDT, PAGE_DEFAULT, _current->id, 0) == 0x0)
 	{
 		K_PANIC("Error: Remap Page Failed");
 	}
 
 	struct gdtDescriptor *taskLDT = 0x0;
 
-	taskLDT = (struct gdtDescriptor *)(VMM_USER_LDT +
-	                                   sizeof(struct gdtDescriptor));
+	taskLDT = (struct gdtDescriptor *)(VMM_USER_LDT + sizeof(struct gdtDescriptor));
 
 	// data_addr = 0x0; //TEMP
 	taskLDT->limitLow = (0xFFFFF & 0xFFFF);
 	taskLDT->baseLow = (data_addr & 0xFFFF);
 	taskLDT->baseMed = ((data_addr >> 16) & 0xFF);
-	taskLDT->access =
-	    ((dData + dWrite + dBig + dBiglim + dDpl3) + dPresent) >> 8;
+	taskLDT->access = ((dData + dWrite + dBig + dBiglim + dDpl3) + dPresent) >> 8;
 	taskLDT->limitHigh = (0xFFFFF >> 16);
-	taskLDT->granularity =
-	    ((dData + dWrite + dBig + dBiglim + dDpl3) & 0xFF) >> 4;
+	taskLDT->granularity = ((dData + dWrite + dBig + dBiglim + dDpl3) & 0xFF) >> 4;
 	taskLDT->baseHigh = data_addr >> 24;
 
 	_current->md.md_tss.gs = 0xF; // Select 0x8 + Ring 3 + LDT
@@ -1244,7 +1199,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 	/* Clear any temporary I/O boost — the new binary starts clean at its
 	 * QoS floor.  base_priority is preserved (QoS class survives exec). */
 	_current->boost_quanta = 0;
-	_current->priority     = _current->base_priority;
+	_current->priority = _current->base_priority;
 
 	/*
 	 * POSIX: execve resets the disposition of every CAUGHT signal to
@@ -1255,7 +1210,8 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 	 * here).  memset clears sa_handler/sa_sigaction, sa_flags and sa_mask in
 	 * one shot.
 	 */
-	for (i = 0; (size_t)i < sizeof(_current->td.sigact) / sizeof(_current->td.sigact[0]); i++) {
+	for (i = 0; (size_t)i < sizeof(_current->td.sigact) / sizeof(_current->td.sigact[0]); i++)
+	{
 		if ((void *)_current->td.sigact[i].sa_handler != (void *)0x1 /* SIG_IGN */)
 			memset(&_current->td.sigact[i], 0, sizeof(_current->td.sigact[i]));
 	}
@@ -1286,87 +1242,81 @@ static int elf_parse_dynamic(elf_file_t ef)
 	{
 		switch (dynp->d_tag)
 		{
-		case DT_NEEDED:
-			asm("nop");
-			break;
-		case DT_INIT:
-			asm("nop");
-			break;
-		case DT_FINI:
-			asm("nop");
-			break;
-		case DT_HASH:
-			asm("nop");
-			/* From src/libexec/rtld-elf/rtld.c */
-			const Elf_Hashelt *hashtab =
-			    (const Elf_Hashelt *)(ef->address +
-			                          dynp->d_un.d_ptr);
-			ef->nbuckets = hashtab[0];
-			ef->nchains = hashtab[1];
-			ef->buckets = hashtab + 2;
-			ef->chains = ef->buckets + ef->nbuckets;
-			break;
-		case DT_STRTAB:
-			ef->strtab = (caddr_t)(ef->address + dynp->d_un.d_ptr);
-			break;
-		case DT_STRSZ:
-			ef->strsz = dynp->d_un.d_val;
-			break;
-		case DT_SYMTAB:
-			ef->symtab =
-			    (Elf_Sym *)(ef->address + dynp->d_un.d_ptr);
-			break;
-		case DT_SYMENT:
-			if (dynp->d_un.d_val != sizeof(Elf32_Sym))
-				return (ENOEXEC);
-			break;
-		case DT_REL:
-			ef->rel =
-			    (const Elf_Rel *)(ef->address + dynp->d_un.d_ptr);
-			break;
-		case DT_RELSZ:
-			ef->relsize = dynp->d_un.d_val;
-			break;
-		case DT_RELENT:
-			if (dynp->d_un.d_val != sizeof(Elf_Rel))
-				return (ENOEXEC);
-			break;
-		case DT_JMPREL:
-			ef->pltrel =
-			    (const Elf_Rel *)(ef->address + dynp->d_un.d_ptr);
-			break;
-		case DT_PLTRELSZ:
-			ef->pltrelsize = dynp->d_un.d_val;
-			break;
-		case DT_RELA:
-			ef->rela =
-			    (const Elf_Rela *)(ef->address + dynp->d_un.d_ptr);
-			break;
-		case DT_RELASZ:
-			ef->relasize = dynp->d_un.d_val;
-			break;
-		case DT_RELAENT:
-			if (dynp->d_un.d_val != sizeof(Elf_Rela))
-				return (ENOEXEC);
-			break;
-		case DT_PLTREL:
-			plttype = dynp->d_un.d_val;
-			if (plttype != DT_REL && plttype != DT_RELA)
-				return (ENOEXEC);
-			break;
-		case DT_PLTGOT:
-			ef->got = (Elf_Addr *)(ef->address + dynp->d_un.d_ptr);
-			/*
-			 tmp = (void *) dynp->d_un.d_ptr;
-			 //elfDynamicS[i].dynPtr; tmp[2] = (u_int32_t) ef->ld_addr;
-			 tmp[1] = (u_int32_t) ef; //0x0;//0xBEEFEAD;//STACK_ADDR -
-			 128;//_current->imageFd;//0xBEEFDEAD;//ef;
-			 */
-			break;
-		default:
-			asm("nop");
-			// kprintf("t_tag: 0x%X>", dynp->d_tag);
-			break;
+			case DT_NEEDED:
+				asm("nop");
+				break;
+			case DT_INIT:
+				asm("nop");
+				break;
+			case DT_FINI:
+				asm("nop");
+				break;
+			case DT_HASH:
+				asm("nop");
+				/* From src/libexec/rtld-elf/rtld.c */
+				const Elf_Hashelt *hashtab = (const Elf_Hashelt *)(ef->address + dynp->d_un.d_ptr);
+				ef->nbuckets = hashtab[0];
+				ef->nchains = hashtab[1];
+				ef->buckets = hashtab + 2;
+				ef->chains = ef->buckets + ef->nbuckets;
+				break;
+			case DT_STRTAB:
+				ef->strtab = (caddr_t)(ef->address + dynp->d_un.d_ptr);
+				break;
+			case DT_STRSZ:
+				ef->strsz = dynp->d_un.d_val;
+				break;
+			case DT_SYMTAB:
+				ef->symtab = (Elf_Sym *)(ef->address + dynp->d_un.d_ptr);
+				break;
+			case DT_SYMENT:
+				if (dynp->d_un.d_val != sizeof(Elf32_Sym))
+					return (ENOEXEC);
+				break;
+			case DT_REL:
+				ef->rel = (const Elf_Rel *)(ef->address + dynp->d_un.d_ptr);
+				break;
+			case DT_RELSZ:
+				ef->relsize = dynp->d_un.d_val;
+				break;
+			case DT_RELENT:
+				if (dynp->d_un.d_val != sizeof(Elf_Rel))
+					return (ENOEXEC);
+				break;
+			case DT_JMPREL:
+				ef->pltrel = (const Elf_Rel *)(ef->address + dynp->d_un.d_ptr);
+				break;
+			case DT_PLTRELSZ:
+				ef->pltrelsize = dynp->d_un.d_val;
+				break;
+			case DT_RELA:
+				ef->rela = (const Elf_Rela *)(ef->address + dynp->d_un.d_ptr);
+				break;
+			case DT_RELASZ:
+				ef->relasize = dynp->d_un.d_val;
+				break;
+			case DT_RELAENT:
+				if (dynp->d_un.d_val != sizeof(Elf_Rela))
+					return (ENOEXEC);
+				break;
+			case DT_PLTREL:
+				plttype = dynp->d_un.d_val;
+				if (plttype != DT_REL && plttype != DT_RELA)
+					return (ENOEXEC);
+				break;
+			case DT_PLTGOT:
+				ef->got = (Elf_Addr *)(ef->address + dynp->d_un.d_ptr);
+				/*
+				 tmp = (void *) dynp->d_un.d_ptr;
+				 //elfDynamicS[i].dynPtr; tmp[2] = (u_int32_t) ef->ld_addr;
+				 tmp[1] = (u_int32_t) ef; //0x0;//0xBEEFEAD;//STACK_ADDR -
+				 128;//_current->imageFd;//0xBEEFDEAD;//ef;
+				 */
+				break;
+			default:
+				asm("nop");
+				// kprintf("t_tag: 0x%X>", dynp->d_tag);
+				break;
 		}
 	}
 

@@ -39,25 +39,25 @@
 #define FIRST_TSS_ENTRY 6
 #define VM_MASK 0x00020000
 
-#define store_TR(n)                                                                                                                                                                                                                                            \
-	__asm__("str %%ax\n\t"                                                                                                                                                                                                                                 \
-	        "subl %2,%%eax\n\t"                                                                                                                                                                                                                            \
-	        "shrl $4,%%eax"                                                                                                                                                                                                                                \
-	        : "=a"(n)                                                                                                                                                                                                                                      \
+#define store_TR(n)                                                                                                    \
+	__asm__("str %%ax\n\t"                                                                                         \
+	        "subl %2,%%eax\n\t"                                                                                    \
+	        "shrl $4,%%eax"                                                                                        \
+	        : "=a"(n)                                                                                              \
 	        : "0"(0), "i"(FIRST_TSS_ENTRY << 3))
 
-#define get_seg_long(seg, addr)                                                                                                                                                                                                                                \
-	({                                                                                                                                                                                                                                                     \
-		register unsigned long __res;                                                                                                                                                                                                                  \
-		__asm__("push %%fs;mov %%ax,%%fs;movl %%fs:%2,%%eax;pop %%fs" : "=a"(__res) : "0"(seg), "m"(*(addr)));                                                                                                                                         \
-		__res;                                                                                                                                                                                                                                         \
+#define get_seg_long(seg, addr)                                                                                        \
+	({                                                                                                             \
+		register unsigned long __res;                                                                          \
+		__asm__("push %%fs;mov %%ax,%%fs;movl %%fs:%2,%%eax;pop %%fs" : "=a"(__res) : "0"(seg), "m"(*(addr))); \
+		__res;                                                                                                 \
 	})
 
-#define get_seg_byte(seg, addr)                                                                                                                                                                                                                                \
-	({                                                                                                                                                                                                                                                     \
-		register char __res;                                                                                                                                                                                                                           \
-		__asm__("push %%fs;mov %%ax,%%fs;movb %%fs:%2,%%al;pop %%fs" : "=a"(__res) : "0"(seg), "m"(*(addr)));                                                                                                                                          \
-		__res;                                                                                                                                                                                                                                         \
+#define get_seg_byte(seg, addr)                                                                                        \
+	({                                                                                                             \
+		register char __res;                                                                                   \
+		__asm__("push %%fs;mov %%ax,%%fs;movb %%fs:%2,%%al;pop %%fs" : "=a"(__res) : "0"(seg), "m"(*(addr)));  \
+		__res;                                                                                                 \
 	})
 
 /**
@@ -77,7 +77,11 @@ void die_if_kernel(char *str, struct trapframe *regs, long err)
 	unsigned short ss;
 	unsigned long *stack;
 
-	kprintf("DIK: str=0x%X regs=0x%X err=0x%X v86=%d\n", (u_int32_t)str, (u_int32_t)regs, (u_int32_t)err, _current->oInfo.v86Task);
+	kprintf("DIK: str=0x%X regs=0x%X err=0x%X v86=%d\n",
+	        (u_int32_t)str,
+	        (u_int32_t)regs,
+	        (u_int32_t)err,
+	        _current->oInfo.v86Task);
 
 	/* If this is a VM86 task, kill it gracefully instead of dumping */
 	if (_current->oInfo.v86Task)
@@ -106,14 +110,34 @@ void die_if_kernel(char *str, struct trapframe *regs, long err)
 		ss = 0x10;
 	}
 
-	kprintf("\n%s: 0x%X:%i, CPU %d, EIP: 0x%X, EFLAGS: 0x%X\n", str, regs->tf_err, regs->tf_trapno, 0x0, regs->tf_eip, regs->tf_eflags);
-	kprintf("eax: %08lx   ebx: %08lx   ecx: %08lx   edx: %08lx\n", regs->tf_eax, regs->tf_ebx, regs->tf_ecx, regs->tf_edx);
+	kprintf("\n%s: 0x%X:%i, CPU %d, EIP: 0x%X, EFLAGS: 0x%X\n",
+	        str,
+	        regs->tf_err,
+	        regs->tf_trapno,
+	        0x0,
+	        regs->tf_eip,
+	        regs->tf_eflags);
+	kprintf("eax: %08lx   ebx: %08lx   ecx: %08lx   edx: %08lx\n",
+	        regs->tf_eax,
+	        regs->tf_ebx,
+	        regs->tf_ecx,
+	        regs->tf_edx);
 	kprintf("esi: %08lx   edi: %08lx   ebp: %08lx   esp: %08lx\n", regs->tf_esi, regs->tf_edi, regs->tf_ebp, esp);
-	kprintf("cs:  0x%X ds: 0x%X  es:  0x%X fs: 0x%X gs: 0x%X ss: 0x%X\n", regs->tf_cs, regs->tf_ds, regs->tf_es, regs->tf_fs, regs->tf_gs, ss);
+	kprintf("cs:  0x%X ds: 0x%X  es:  0x%X fs: 0x%X gs: 0x%X ss: 0x%X\n",
+	        regs->tf_cs,
+	        regs->tf_ds,
+	        regs->tf_es,
+	        regs->tf_fs,
+	        regs->tf_gs,
+	        ss);
 	kprintf("cr0: 0x%X, cr2: 0x%X, cr3: 0x%X, cr4: 0x%X\n", rcr0(), rcr2(), rcr3(), rcr4());
 
 	store_TR(i);
-	kprintf("Process %s (pid: %i, process nr: %d, stackpage=%08lx)\nStack:", _current->name, _current->id, 0xffff & i, esp);
+	kprintf("Process %s (pid: %i, process nr: %d, stackpage=%08lx)\nStack:",
+	        _current->name,
+	        _current->id,
+	        0xffff & i,
+	        esp);
 
 	stack = (unsigned long *)esp;
 
@@ -149,7 +173,13 @@ void trap(struct trapframe *frame)
 
 	/* Only log unexpected traps; page faults (12) are handled silently below */
 	if (frame->tf_trapno != 0xc)
-		kprintf("trap: tno=%d efl=0x%X cs=0x%X eip=0x%X cr2=0x%X v86=%d\n", frame->tf_trapno, frame->tf_eflags, frame->tf_cs, frame->tf_eip, cr2, _current->oInfo.v86Task);
+		kprintf("trap: tno=%d efl=0x%X cs=0x%X eip=0x%X cr2=0x%X v86=%d\n",
+		        frame->tf_trapno,
+		        frame->tf_eflags,
+		        frame->tf_cs,
+		        frame->tf_eip,
+		        cr2,
+		        _current->oInfo.v86Task);
 
 	/*
 	 * VM86 tasks can fault with IF=0 — the BIOS uses CLI legitimately and
@@ -162,7 +192,7 @@ void trap(struct trapframe *frame)
 			vmm_page_fault(frame, cr2);
 		else
 			_current->exit_status = 11; /* wait(): killed by a fault (SIGSEGV) */
-			endTask(_current->id);
+		endTask(_current->id);
 		return;
 	}
 

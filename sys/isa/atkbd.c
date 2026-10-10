@@ -262,14 +262,15 @@ static int atkbd_scan()
 
 void keyboardHandler(struct trapframe *frame)
 {
-	int      key;
+	int key;
 	u_int32_t kc;
 
 	if (spinTryLock(&atkbdSpinLock))
 		return;
 
 	key = atkbd_scan();
-	if (key >= 255) {
+	if (key >= 255)
+	{
 		spinUnlock(&atkbdSpinLock);
 		return;
 	}
@@ -277,14 +278,17 @@ void keyboardHandler(struct trapframe *frame)
 	/* 0xE0 prefixes the extended keys.  Only the Super/Windows keys (E0 5B /
 	 * E0 5C, release with bit 7) are decoded so far — the compositor opens the
 	 * launcher on KEY_SUPER; other extended codes keep their legacy handling. */
-	if (key == 0xE0) {
+	if (key == 0xE0)
+	{
 		g_atkbd_e0 = 1;
 		spinUnlock(&atkbdSpinLock);
 		return;
 	}
-	if (g_atkbd_e0) {
+	if (g_atkbd_e0)
+	{
 		g_atkbd_e0 = 0;
-		if ((key & 0x7F) == 0x5B || (key & 0x7F) == 0x5C) {
+		if ((key & 0x7F) == 0x5B || (key & 0x7F) == 0x5C)
+		{
 			kbd_ring_push(KEY_SUPER, (key & 0x80) ? 0 : 1);
 			spinUnlock(&atkbdSpinLock);
 			return;
@@ -294,53 +298,78 @@ void keyboardHandler(struct trapframe *frame)
 	/* Modifier key state tracking.
 	 * Also push KEY_L* events to the ring so that GUI apps (e.g. DOOM) can
 	 * treat Ctrl, Alt, and Shift as first-class keys (fire/strafe/run). */
-	if (key == 0x1D) {
-		if (!(controlKeys & controlKey)) {
+	if (key == 0x1D)
+	{
+		if (!(controlKeys & controlKey))
+		{
 			controlKeys |= controlKey;
 			kbd_ring_push(KEY_LCTRL, 1);
 		}
 	}
-	if (key == 0x80 + 0x1D) {
+	if (key == 0x80 + 0x1D)
+	{
 		controlKeys &= ~controlKey;
 		kbd_ring_push(KEY_LCTRL, 0);
 	}
-	if (key == 0x38) {
-		if (!(controlKeys & altKey)) {
+	if (key == 0x38)
+	{
+		if (!(controlKeys & altKey))
+		{
 			controlKeys |= altKey;
 			kbd_ring_push(KEY_LALT, 1);
 		}
 	}
-	if (key == 0x80 + 0x38) {
+	if (key == 0x80 + 0x38)
+	{
 		controlKeys &= ~altKey;
 		kbd_ring_push(KEY_LALT, 0);
 	}
-	if ((key == 0x2A || key == 0x36) && !(controlKeys & shiftKey)) {
+	if ((key == 0x2A || key == 0x36) && !(controlKeys & shiftKey))
+	{
 		controlKeys |= shiftKey;
 		kbd_ring_push(KEY_LSHIFT, 1);
 	}
-	if ((key == 0x80 + 0x2A) || (key == 0x80 + 0x36)) {
+	if ((key == 0x80 + 0x2A) || (key == 0x80 + 0x36))
+	{
 		controlKeys &= ~shiftKey;
 		kbd_ring_push(KEY_LSHIFT, 0);
 	}
 
 	/* Lock keys */
-	if (key == 0x3A) { ledStatus ^= ledCapslock;   setLED(); }
-	if (key == 0x45) { ledStatus ^= ledNumlock;     setLED(); }
-	if (key == 0x46) { ledStatus ^= ledScrolllock;  setLED(); }
+	if (key == 0x3A)
+	{
+		ledStatus ^= ledCapslock;
+		setLED();
+	}
+	if (key == 0x45)
+	{
+		ledStatus ^= ledNumlock;
+		setLED();
+	}
+	if (key == 0x46)
+	{
+		ledStatus ^= ledScrolllock;
+		setLED();
+	}
 
 	/* keyMap index */
-	if (controlKeys == 0)      keyMap = 0;
-	else if (controlKeys == 1) keyMap = 1;
-	else if (controlKeys == 2) keyMap = 2;
-	else if (controlKeys == 4) keyMap = 3;
+	if (controlKeys == 0)
+		keyMap = 0;
+	else if (controlKeys == 1)
+		keyMap = 1;
+	else if (controlKeys == 2)
+		keyMap = 2;
+	else if (controlKeys == 4)
+		keyMap = 3;
 
 	/* For key-up events: modifiers already pushed above; push key-up for
 	 * regular keys so callers (DOOM, etc.) can clear their held-key state. */
-	if (key >= 0x80) {
+	if (key >= 0x80)
+	{
 		u_int8_t down_scan = (u_int8_t)(key & 0x7F);
 		/* Skip modifier scancodes — already handled above */
-		if (down_scan != 0x1D && down_scan != 0x38 &&
-		    down_scan != 0x2A && down_scan != 0x36) {
+		if (down_scan != 0x1D && down_scan != 0x38 && down_scan != 0x2A && down_scan != 0x36)
+		{
 			u_int32_t kc_up = keyboardMap[down_scan][keyMap];
 			if (kc_up != 0)
 				kbd_ring_push(kc_up, 0);
@@ -350,32 +379,34 @@ void keyboardHandler(struct trapframe *frame)
 	}
 
 	kc = keyboardMap[key][keyMap];
-	if (kc == 0) {
+	if (kc == 0)
+	{
 		spinUnlock(&atkbdSpinLock);
 		return;
 	}
 
 	/* ISR-context emergency keys: handle and do not forward to ring.
 	 * Ctrl-C/Ctrl-\/Ctrl-Z are now handled by tty_inject via ISIG. */
-	switch (kc) {
-	case 0x09: /* Ctrl-Tab / Alt-C: immediate reboot */
-		sys_shutdown(REBOOT);
-		break;
-	case 0x0D: /* Ctrl-M: 5-second countdown reboot (only with Ctrl held) */
-		if (!(controlKeys & controlKey))
-			break; /* plain Enter — push to ring */
-		if (reboot_at_tick == 0) {
-			reboot_at_tick = systemVitals->sysTicks + 5 * PIT_TIMER;
-			kprintf("\nSystem rebooting in 5 seconds...\n");
-		}
-		spinUnlock(&atkbdSpinLock);
-		return;
-	case 0x18: /* Ctrl-X: kernel panic */
-		if (tty_foreground != NULL &&
-		    tty_foreground->owner == _current->id)
-			die_if_kernel("CTRL-X", frame, frame->tf_eax);
-		spinUnlock(&atkbdSpinLock);
-		return;
+	switch (kc)
+	{
+		case 0x09: /* Ctrl-Tab / Alt-C: immediate reboot */
+			sys_shutdown(REBOOT);
+			break;
+		case 0x0D: /* Ctrl-M: 5-second countdown reboot (only with Ctrl held) */
+			if (!(controlKeys & controlKey))
+				break; /* plain Enter — push to ring */
+			if (reboot_at_tick == 0)
+			{
+				reboot_at_tick = systemVitals->sysTicks + 5 * PIT_TIMER;
+				kprintf("\nSystem rebooting in 5 seconds...\n");
+			}
+			spinUnlock(&atkbdSpinLock);
+			return;
+		case 0x18: /* Ctrl-X: kernel panic */
+			if (tty_foreground != NULL && tty_foreground->owner == _current->id)
+				die_if_kernel("CTRL-X", frame, frame->tf_eax);
+			spinUnlock(&atkbdSpinLock);
+			return;
 	}
 
 	/* All other keys: push to ring — TTY and GUI both read from there */
@@ -399,8 +430,7 @@ void setLED()
  * kbd_apply_event — translate a raw PS/2 keycode and inject into the
  * foreground TTY via the common tty_inject() line discipline.
  */
-static void
-kbd_apply_event(u_int32_t kc)
+static void kbd_apply_event(u_int32_t kc)
 {
 	/* Specials (>= 0x100) and null keycodes are not TTY characters */
 	if (kc == 0 || kc >= 0x100 || tty_foreground == NULL)
@@ -408,12 +438,11 @@ kbd_apply_event(u_int32_t kc)
 	tty_inject(tty_foreground, (char)(u_int8_t)kc);
 }
 
-int
-getchar()
+int getchar()
 {
 	kbd_event_t ev;
-	int         retKey;
-	u_int32_t      i;
+	int retKey;
+	u_int32_t i;
 
 	if (tty_foreground == NULL)
 		return (0);
@@ -427,7 +456,8 @@ getchar()
 	 * cannot corrupt the ring while we shift the contents. */
 	u_int32_t eflags;
 	asm volatile("pushfl; popl %0; cli" : "=r"(eflags) : : "memory");
-	if (tty_foreground->stdinSize == 0) {
+	if (tty_foreground->stdinSize == 0)
+	{
 		asm volatile("pushl %0; popfl" : : "r"(eflags) : "memory");
 		return (0);
 	}

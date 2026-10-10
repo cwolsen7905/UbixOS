@@ -45,33 +45,37 @@ Notes:
 02/20/2004 - Approved for quality
 
 ************************************************************************/
-int vfs_init() {
-  /* Set up default fileSystems list */
-  systemVitals->fileSystems = 0x0;
+int vfs_init()
+{
+	/* Set up default fileSystems list */
+	systemVitals->fileSystems = 0x0;
 
-  bcache_init();
+	bcache_init();
 
-  /* Print information */
-  kprintf("vfs0: addr=0x%X\n", systemVitals->fileSystems);
+	/* Print information */
+	kprintf("vfs0: addr=0x%X\n", systemVitals->fileSystems);
 
-  /* Return so we know things went well */
-  return(0x0);
-  }
+	/* Return so we know things went well */
+	return (0x0);
+}
 
-struct fileSystem *vfs_findFS(int vfsType) {
-  struct fileSystem *tmp = 0x0;
+struct fileSystem *vfs_findFS(int vfsType)
+{
+	struct fileSystem *tmp = 0x0;
 
-  /* Search For File System */
-  for (tmp=systemVitals->fileSystems;tmp;tmp=tmp->next) {
-    /* If Found Return File System */
-    if (tmp->vfsType == vfsType) {
-      return(tmp);
-      }
-    }
+	/* Search For File System */
+	for (tmp = systemVitals->fileSystems; tmp; tmp = tmp->next)
+	{
+		/* If Found Return File System */
+		if (tmp->vfsType == vfsType)
+		{
+			return (tmp);
+		}
+	}
 
-  /* If FS Not Found Return NULL */
-  return(0x0);
-  }
+	/* If FS Not Found Return NULL */
+	return (0x0);
+}
 
 /*!
  * \brief register a file system
@@ -80,64 +84,69 @@ struct fileSystem *vfs_findFS(int vfsType) {
  *
  * \param newFS pointer to fileSystem structure
  */
-int vfsRegisterFS(struct fileSystem newFS) {
-/*
-int vfsType,
-void *vfsInitFS,
-void *vfsRead,
-void *vfsWrite,
-void *vfsOpenFile,
-void *vfsUnlink,
-void *vfsMakeDir,
-void *vfsRemDir,
-void *vfsSync) {
- */
-  struct fileSystem *tmpFs = 0x0;
+int vfsRegisterFS(struct fileSystem newFS)
+{
+	/*
+	int vfsType,
+	void *vfsInitFS,
+	void *vfsRead,
+	void *vfsWrite,
+	void *vfsOpenFile,
+	void *vfsUnlink,
+	void *vfsMakeDir,
+	void *vfsRemDir,
+	void *vfsSync) {
+	 */
+	struct fileSystem *tmpFs = 0x0;
 
-  if (vfs_findFS(newFS.vfsType) != 0x0) {
-    kprintf("FS Is already Registered\n");
-    return(0x1);
-    }
+	if (vfs_findFS(newFS.vfsType) != 0x0)
+	{
+		kprintf("FS Is already Registered\n");
+		return (0x1);
+	}
 
-  /* Allocate Memory */
-  tmpFs = (struct fileSystem *)kmalloc(sizeof(struct fileSystem));
-  if (tmpFs == NULL) {
-	kprintf("vfsRegisterFS: memory allocation failed\n");
-    /* Memory Allocation Failed */
-    return(0x1);
-    }
+	/* Allocate Memory */
+	tmpFs = (struct fileSystem *)kmalloc(sizeof(struct fileSystem));
+	if (tmpFs == NULL)
+	{
+		kprintf("vfsRegisterFS: memory allocation failed\n");
+		/* Memory Allocation Failed */
+		return (0x1);
+	}
 
-  /* Set Up FS Defaults */
+	/* Set Up FS Defaults */
 
-/* 2004 7-16-2004 mji
- * Old method:
- * tmpFs->vfsType       = newFS.vfsType;
- * tmpFs->vfsInitFS     = newFS.vfsInitFS;
- * tmpFs->vfsRead       = newFS.vfsRead;
- * tmpFs->vfsWrite      = newFS.vfsWrite;
- * tmpFs->vfsOpenFile   = newFS.vfsOpenFile;
- * tmpFs->vfsUnlink     = newFS.vfsUnlink;
- * tmpFs->vfsMakeDir    = newFS.vfsMakeDir;
- * tmpFs->vfsRemDir     = newFS.vfsRemDir;
- * tmpFs->vfsSync       = newFS.vfsSync;
- */
- /* new method: */
+	/* 2004 7-16-2004 mji
+	 * Old method:
+	 * tmpFs->vfsType       = newFS.vfsType;
+	 * tmpFs->vfsInitFS     = newFS.vfsInitFS;
+	 * tmpFs->vfsRead       = newFS.vfsRead;
+	 * tmpFs->vfsWrite      = newFS.vfsWrite;
+	 * tmpFs->vfsOpenFile   = newFS.vfsOpenFile;
+	 * tmpFs->vfsUnlink     = newFS.vfsUnlink;
+	 * tmpFs->vfsMakeDir    = newFS.vfsMakeDir;
+	 * tmpFs->vfsRemDir     = newFS.vfsRemDir;
+	 * tmpFs->vfsSync       = newFS.vfsSync;
+	 */
+	/* new method: */
 
-  memcpy(tmpFs, &newFS, sizeof(struct fileSystem));
-  if (!systemVitals->fileSystems) {
-    tmpFs->prev               = 0x0;
-    tmpFs->next               = 0x0;
-    systemVitals->fileSystems = tmpFs;
-    }
-  else {
-    tmpFs->prev                     = 0x0;
-    tmpFs->next                     = systemVitals->fileSystems;
-    systemVitals->fileSystems->prev = tmpFs;
-    systemVitals->fileSystems       = tmpFs;
-    }
+	memcpy(tmpFs, &newFS, sizeof(struct fileSystem));
+	if (!systemVitals->fileSystems)
+	{
+		tmpFs->prev = 0x0;
+		tmpFs->next = 0x0;
+		systemVitals->fileSystems = tmpFs;
+	}
+	else
+	{
+		tmpFs->prev = 0x0;
+		tmpFs->next = systemVitals->fileSystems;
+		systemVitals->fileSystems->prev = tmpFs;
+		systemVitals->fileSystems = tmpFs;
+	}
 
-  return(0x0);
-  }
+	return (0x0);
+}
 
 /**
  * Flush every registered filesystem through its vfsSync hook (if it has one).

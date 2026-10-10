@@ -64,104 +64,104 @@ static u_int32_t hid_to_key(u_int8_t hid, int shifted)
 
 	switch (hid)
 	{
-	case 0x1E:
-		return (shifted ? '!' : '1');
-	case 0x1F:
-		return (shifted ? '@' : '2');
-	case 0x20:
-		return (shifted ? '#' : '3');
-	case 0x21:
-		return (shifted ? '$' : '4');
-	case 0x22:
-		return (shifted ? '%' : '5');
-	case 0x23:
-		return (shifted ? '^' : '6');
-	case 0x24:
-		return (shifted ? '&' : '7');
-	case 0x25:
-		return (shifted ? '*' : '8');
-	case 0x26:
-		return (shifted ? '(' : '9');
-	case 0x27:
-		return (shifted ? ')' : '0');
-	case 0x28:
-		return ('\r');
-	case 0x29:
-		return (KEY_ESC);
-	case 0x2A:
-		return ('\b');
-	case 0x2B:
-		return ('\t');
-	case 0x2C:
-		return (' ');
-	case 0x2D:
-		return (shifted ? '_' : '-');
-	case 0x2E:
-		return (shifted ? '+' : '=');
-	case 0x2F:
-		return (shifted ? '{' : '[');
-	case 0x30:
-		return (shifted ? '}' : ']');
-	case 0x31:
-		return (shifted ? '|' : '\\');
-	case 0x33:
-		return (shifted ? ':' : ';');
-	case 0x34:
-		return (shifted ? '"' : '\'');
-	case 0x35:
-		return (shifted ? '~' : '`');
-	case 0x36:
-		return (shifted ? '<' : ',');
-	case 0x37:
-		return (shifted ? '>' : '.');
-	case 0x38:
-		return (shifted ? '?' : '/');
-	case 0x3A:
-		return (KEY_F1);
-	case 0x3B:
-		return (KEY_F2);
-	case 0x3C:
-		return (KEY_F3);
-	case 0x3D:
-		return (KEY_F4);
-	case 0x3E:
-		return (KEY_F5);
-	case 0x3F:
-		return (KEY_F6);
-	case 0x40:
-		return (KEY_F7);
-	case 0x41:
-		return (KEY_F8);
-	case 0x42:
-		return (KEY_F9);
-	case 0x43:
-		return (KEY_F10);
-	case 0x44:
-		return (KEY_F11);
-	case 0x45:
-		return (KEY_F12);
-	case 0x49:
-		return (KEY_INS);
-	case 0x4A:
-		return (KEY_HOME);
-	case 0x4B:
-		return (KEY_PGUP);
-	case 0x4C:
-		return (KEY_DEL);
-	case 0x4D:
-		return (KEY_END);
-	case 0x4E:
-		return (KEY_PGDN);
-	case 0x4F:
-		return (KEY_RIGHT);
-	case 0x50:
-		return (KEY_LEFT);
-	case 0x51:
-		return (KEY_DOWN);
-	case 0x52:
-		return (KEY_UP);
-	default:
-		return (0);
+		case 0x1E:
+			return (shifted ? '!' : '1');
+		case 0x1F:
+			return (shifted ? '@' : '2');
+		case 0x20:
+			return (shifted ? '#' : '3');
+		case 0x21:
+			return (shifted ? '$' : '4');
+		case 0x22:
+			return (shifted ? '%' : '5');
+		case 0x23:
+			return (shifted ? '^' : '6');
+		case 0x24:
+			return (shifted ? '&' : '7');
+		case 0x25:
+			return (shifted ? '*' : '8');
+		case 0x26:
+			return (shifted ? '(' : '9');
+		case 0x27:
+			return (shifted ? ')' : '0');
+		case 0x28:
+			return ('\r');
+		case 0x29:
+			return (KEY_ESC);
+		case 0x2A:
+			return ('\b');
+		case 0x2B:
+			return ('\t');
+		case 0x2C:
+			return (' ');
+		case 0x2D:
+			return (shifted ? '_' : '-');
+		case 0x2E:
+			return (shifted ? '+' : '=');
+		case 0x2F:
+			return (shifted ? '{' : '[');
+		case 0x30:
+			return (shifted ? '}' : ']');
+		case 0x31:
+			return (shifted ? '|' : '\\');
+		case 0x33:
+			return (shifted ? ':' : ';');
+		case 0x34:
+			return (shifted ? '"' : '\'');
+		case 0x35:
+			return (shifted ? '~' : '`');
+		case 0x36:
+			return (shifted ? '<' : ',');
+		case 0x37:
+			return (shifted ? '>' : '.');
+		case 0x38:
+			return (shifted ? '?' : '/');
+		case 0x3A:
+			return (KEY_F1);
+		case 0x3B:
+			return (KEY_F2);
+		case 0x3C:
+			return (KEY_F3);
+		case 0x3D:
+			return (KEY_F4);
+		case 0x3E:
+			return (KEY_F5);
+		case 0x3F:
+			return (KEY_F6);
+		case 0x40:
+			return (KEY_F7);
+		case 0x41:
+			return (KEY_F8);
+		case 0x42:
+			return (KEY_F9);
+		case 0x43:
+			return (KEY_F10);
+		case 0x44:
+			return (KEY_F11);
+		case 0x45:
+			return (KEY_F12);
+		case 0x49:
+			return (KEY_INS);
+		case 0x4A:
+			return (KEY_HOME);
+		case 0x4B:
+			return (KEY_PGUP);
+		case 0x4C:
+			return (KEY_DEL);
+		case 0x4D:
+			return (KEY_END);
+		case 0x4E:
+			return (KEY_PGDN);
+		case 0x4F:
+			return (KEY_RIGHT);
+		case 0x50:
+			return (KEY_LEFT);
+		case 0x51:
+			return (KEY_DOWN);
+		case 0x52:
+			return (KEY_UP);
+		default:
+			return (0);
 	}
 }
 
@@ -181,7 +181,7 @@ static void hid_kbd_callback(void *arg, u_int8_t *data, int len)
 	cur = (struct hid_kbd_report *)data;
 	last = &sc->kd_last;
 	shifted = (cur->modifier & HID_MOD_SHIFT) ? 1 : 0;
-	ctrl    = (cur->modifier & (HID_MOD_LCTRL | HID_MOD_RCTRL)) ? 1 : 0;
+	ctrl = (cur->modifier & (HID_MOD_LCTRL | HID_MOD_RCTRL)) ? 1 : 0;
 
 	/* Key-press: keycodes in cur but not in last */
 	for (i = 0; i < 6; i++)
@@ -217,22 +217,22 @@ static void hid_kbd_callback(void *arg, u_int8_t *data, int len)
 	 * as first-class key events (mirrors the PS/2 atkbd treatment). */
 	{
 		u_int8_t changed = cur->modifier ^ last->modifier;
-		if (changed & (HID_MOD_LCTRL | HID_MOD_RCTRL)) {
-			kbd_ring_push(KEY_LCTRL,
-			    (cur->modifier & (HID_MOD_LCTRL | HID_MOD_RCTRL)) ? 1 : 0);
+		if (changed & (HID_MOD_LCTRL | HID_MOD_RCTRL))
+		{
+			kbd_ring_push(KEY_LCTRL, (cur->modifier & (HID_MOD_LCTRL | HID_MOD_RCTRL)) ? 1 : 0);
 		}
-		if (changed & (HID_MOD_LALT | HID_MOD_RALT)) {
-			kbd_ring_push(KEY_LALT,
-			    (cur->modifier & (HID_MOD_LALT | HID_MOD_RALT)) ? 1 : 0);
+		if (changed & (HID_MOD_LALT | HID_MOD_RALT))
+		{
+			kbd_ring_push(KEY_LALT, (cur->modifier & (HID_MOD_LALT | HID_MOD_RALT)) ? 1 : 0);
 		}
-		if (changed & HID_MOD_SHIFT) {
-			kbd_ring_push(KEY_LSHIFT,
-			    (cur->modifier & HID_MOD_SHIFT) ? 1 : 0);
+		if (changed & HID_MOD_SHIFT)
+		{
+			kbd_ring_push(KEY_LSHIFT, (cur->modifier & HID_MOD_SHIFT) ? 1 : 0);
 		}
 		/* Super/Windows/Meta (GUI) key: the compositor opens the launcher. */
-		if (changed & (HID_MOD_LMETA | HID_MOD_RMETA)) {
-			kbd_ring_push(KEY_SUPER,
-			    (cur->modifier & (HID_MOD_LMETA | HID_MOD_RMETA)) ? 1 : 0);
+		if (changed & (HID_MOD_LMETA | HID_MOD_RMETA))
+		{
+			kbd_ring_push(KEY_SUPER, (cur->modifier & (HID_MOD_LMETA | HID_MOD_RMETA)) ? 1 : 0);
 		}
 	}
 
@@ -296,7 +296,13 @@ static int hid_kbd_attach(struct usb_device *dev)
 		return (-1);
 
 	/* SET_PROTOCOL(Boot=0) — wIndex = interface number */
-	rc = usb_control(dev, USB_DIR_OUT | USB_TYPE_CLASS | USB_RECIP_INTERFACE, USB_REQ_SET_PROTOCOL, 0, dev->ud_iface_desc.bInterfaceNumber, NULL, 0);
+	rc = usb_control(dev,
+	                 USB_DIR_OUT | USB_TYPE_CLASS | USB_RECIP_INTERFACE,
+	                 USB_REQ_SET_PROTOCOL,
+	                 0,
+	                 dev->ud_iface_desc.bInterfaceNumber,
+	                 NULL,
+	                 0);
 	if (rc != 0)
 	{
 		kprintf("hid_kbd: SET_PROTOCOL failed\n");
@@ -304,7 +310,13 @@ static int hid_kbd_attach(struct usb_device *dev)
 	}
 
 	/* SET_IDLE(rate=0, report_id=0) — only report on state change */
-	rc = usb_control(dev, USB_DIR_OUT | USB_TYPE_CLASS | USB_RECIP_INTERFACE, USB_REQ_SET_IDLE, 0, dev->ud_iface_desc.bInterfaceNumber, NULL, 0);
+	rc = usb_control(dev,
+	                 USB_DIR_OUT | USB_TYPE_CLASS | USB_RECIP_INTERFACE,
+	                 USB_REQ_SET_IDLE,
+	                 0,
+	                 dev->ud_iface_desc.bInterfaceNumber,
+	                 NULL,
+	                 0);
 	if (rc != 0)
 		kprintf("hid_kbd: SET_IDLE failed (non-fatal)\n");
 
@@ -314,7 +326,8 @@ static int hid_kbd_attach(struct usb_device *dev)
 	memset(sc, 0, sizeof(*sc));
 	sc->kd_dev = dev;
 
-	sc->kd_intr_qh = uhci_schedule_intr(dev->ud_hc, dev->ud_addr, USB_EP_NUM(ep), ep->wMaxPacketSize, ep->bInterval, hid_kbd_callback, sc);
+	sc->kd_intr_qh = uhci_schedule_intr(
+	    dev->ud_hc, dev->ud_addr, USB_EP_NUM(ep), ep->wMaxPacketSize, ep->bInterval, hid_kbd_callback, sc);
 	if (sc->kd_intr_qh == NULL)
 	{
 		kfree(sc);
@@ -322,7 +335,8 @@ static int hid_kbd_attach(struct usb_device *dev)
 	}
 
 	dev->ud_drv_softc = sc;
-	kprintf("hid_kbd: attached addr=%d ep=0x%02X maxpkt=%d\n", dev->ud_addr, ep->bEndpointAddress, ep->wMaxPacketSize);
+	kprintf(
+	    "hid_kbd: attached addr=%d ep=0x%02X maxpkt=%d\n", dev->ud_addr, ep->bEndpointAddress, ep->wMaxPacketSize);
 	return (0);
 }
 
