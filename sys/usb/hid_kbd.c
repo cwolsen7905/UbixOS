@@ -229,6 +229,11 @@ static void hid_kbd_callback(void *arg, u_int8_t *data, int len)
 			kbd_ring_push(KEY_LSHIFT,
 			    (cur->modifier & HID_MOD_SHIFT) ? 1 : 0);
 		}
+		/* Super/Windows/Meta (GUI) key: the compositor opens the launcher. */
+		if (changed & (HID_MOD_LMETA | HID_MOD_RMETA)) {
+			kbd_ring_push(KEY_SUPER,
+			    (cur->modifier & (HID_MOD_LMETA | HID_MOD_RMETA)) ? 1 : 0);
+		}
 	}
 
 	/* Key-release: only special keys need up events (in kbd_ring for GUI) */

@@ -49,6 +49,17 @@ struct net_config
 	uint8_t dns[4]; /* all-zero = leave DNS unchanged */
 };
 
+/* Live state of the default interface (ubix_net_status, native slot 70).
+ * MUST stay byte-for-byte identical with the kernel's struct (net/netcfg.h). */
+struct net_status
+{
+	uint32_t up;   /* interface administratively up */
+	uint32_t link; /* link (carrier) present */
+	uint8_t ip[4]; /* IPv4 address, 0.0.0.0 while DHCP is pending */
+	uint8_t gateway[4];
+	char name[8]; /* e.g. "vt0", "en0" */
+};
+
 #ifdef __cplusplus
 extern "C"
 {
@@ -57,6 +68,10 @@ extern "C"
 	/* Push a network configuration to the kernel lwIP stack.
 	 * @return 0 if the request was queued, -1 on error. */
 	int ubix_net_configure(const struct net_config *cfg);
+
+	/* Read the default interface's live state.
+	 * @return 0 on success, -1 if there is no network interface. */
+	int ubix_net_status(struct net_status *st);
 
 #ifdef __cplusplus
 }

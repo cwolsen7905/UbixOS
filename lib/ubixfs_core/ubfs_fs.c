@@ -222,7 +222,7 @@ int ubfs_fs_read(ubfs_fs_t *fs, uint64_t obj, uint64_t off, void *buf, uint64_t 
 		return -1;
 	if (off >= in.size)
 		return 0;
-	if (off + len > in.size)
+	if (len > in.size - off) /* not off + len: a huge len (read(fd, buf, SIZE_MAX)) would wrap */
 		len = in.size - off;
 	if (ubfs_dmu_read(fs->os, obj, off, buf, len) < 0)
 		return -1;
@@ -279,4 +279,36 @@ int ubfs_fs_unlink(ubfs_fs_t *fs, const char *path)
 	/* v1: drop the directory entry; object reclamation (free dnode + data) is a
 	 * follow-up (needs a dmu_object_free). nlink bookkeeping kept for later. */
 	return ubfs_dir_remove(fs->os, pobj, leaf);
+}
+
+int ubfs_fs_rename(ubfs_fs_t *fs, const char *from, const char *to)
+{
+	char fbuf[1024], tbuf[1024];
+	const char *fleaf = split_parent(from, fbuf, sizeof(fbuf));
+	const char *tleaf;
+	uint64_t fpobj, tpobj, obj, old;
+	uint8_t type = 0, otype = 0;
+
+	if (ubfs_fs_lookup(fs, fbuf, &fpobj) < 0)
+		return -1;
+	if (ubfs_dir_lookup(fs->os, fpobj, fleaf, &obj, &type) < 0)
+		return -2;
+	tleaf = split_parent(to, tbuf, sizeof(tbuf));
+	if (ubfs_fs_lookup(fs, tbuf, &tpobj) < 0)
+		return -1;
+	if (ubfs_dir_lookup(fs->os, tpobj, tleaf, &old, &otype) == 0)
+	{
+		ubfs_inode_t in;
+		if (old == obj)
+			return 0; /* rename onto itself */
+		if (inode_get(fs, old, &in) < 0 || (in.mode & UBFS_S_IFMT) == UBFS_S_IFDIR)
+			return -4; /* replacing a directory is not supported */
+		if (ubfs_dir_remove(fs->os, tpobj, tleaf) < 0)
+			return -3;
+	}
+	/* Link under the new name first, then drop the old entry, so a failure in
+	 * between leaves the object reachable. */
+	if (ubfs_dir_add(fs->os, tpobj, tleaf, obj, type) < 0)
+		return -3;
+	return ubfs_dir_remove(fs->os, fpobj, fleaf);
 }

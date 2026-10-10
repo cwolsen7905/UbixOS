@@ -83,6 +83,7 @@ void die_if_kernel(char *str, struct trapframe *regs, long err)
 	if (_current->oInfo.v86Task)
 	{
 		sched_dead(_current);
+		_current->exit_status = 11; /* wait(): killed by a fault (SIGSEGV) */
 		endTask(_current->id);
 		return;
 	}
@@ -125,6 +126,7 @@ void die_if_kernel(char *str, struct trapframe *regs, long err)
 
 	kprintf("\n ");
 
+	_current->exit_status = 11; /* wait(): killed by a fault (SIGSEGV) */
 	endTask(_current->id);
 }
 
@@ -159,6 +161,7 @@ void trap(struct trapframe *frame)
 		if (frame->tf_trapno == 0xc)
 			vmm_page_fault(frame, cr2);
 		else
+			_current->exit_status = 11; /* wait(): killed by a fault (SIGSEGV) */
 			endTask(_current->id);
 		return;
 	}
@@ -195,6 +198,7 @@ void trap(struct trapframe *frame)
 	{
 		kpanic("TRAPCODE");
 		die_if_kernel("trapCode", frame, frame->tf_trapno);
+		_current->exit_status = 11; /* wait(): killed by a fault (SIGSEGV) */
 		endTask(_current->id);
 		sched_yield();
 	}

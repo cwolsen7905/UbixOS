@@ -20,6 +20,7 @@ OBJS = \
 	random.o \
 	sched_core.o \
 	sched_dispatch.o \
+	reboot.o \
 	shutdown.o \
 	syscall.o \
 	syscalls.o \

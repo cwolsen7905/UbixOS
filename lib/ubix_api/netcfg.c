@@ -34,3 +34,4 @@
 
 #include <sys/ubix_syscall.h>
 UBIX_NATIVE_THUNK(ubix_net_configure, 59);
+UBIX_NATIVE_THUNK(ubix_net_status, 70);

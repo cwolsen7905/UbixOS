@@ -87,7 +87,10 @@ static void mmu_program_regs(void)
 	__asm__ volatile("mrs %0, sctlr_el1" : "=r"(sctlr));
 	sctlr |= (1UL << 0)     /* M — MMU enable */
 	         | (1UL << 2)   /* C — data/unified cache */
-	         | (1UL << 12); /* I — instruction cache */
+	         | (1UL << 12)  /* I — instruction cache */
+	         | (1UL << 14)  /* DZE — EL0 may DC ZVA (musl memset) */
+	         | (1UL << 15)  /* UCT — EL0 may read CTR_EL0 (cache line sizes) */
+	         | (1UL << 26); /* UCI — EL0 cache maintenance (JITs/tcc -run flush i-cache) */
 	__asm__ volatile("msr sctlr_el1, %0; isb" : : "r"(sctlr));
 }
 

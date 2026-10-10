@@ -31,6 +31,7 @@
 #include <sys/sysproto_posix.h>
 #include <sys/pipe.h>
 #include <ubixos/time.h>
+#include <sys/shutdown.h> /* sys_reboot (slot 55) */
 
 int sys_setitimer(struct thread *td, struct setitimer_args *uap);
 int sys_getitimer(struct thread *td, struct setitimer_args *uap);
@@ -92,7 +93,7 @@ struct syscall_entry systemCalls_posix[] = {
     {0, "No Call", sys_invalid, SYSCALL_INVALID},                                                               /* 52 */
     {0, "sigaltstack", sys_invalid, SYSCALL_NOTIMP},                                                            /* 53 */
     {ARG_COUNT(sys_ioctl_args), "ioctl", sys_ioctl, SYSCALL_VALID},                                             // 54 - ioctl
-    {0, "reboot", sys_invalid, SYSCALL_NOTIMP},                                                                 // 55 - reboot
+    {1, "reboot", (sys_call_t *)sys_reboot, SYSCALL_VALID},                                                    // 55 - reboot
     {0, "revoke", sys_invalid, SYSCALL_NOTIMP},                                                                 // 56 - revoke
     {ARG_COUNT(symlink_args), "symlink", (sys_call_t *)symlink, SYSCALL_VALID},                            /* 57 */
     {ARG_COUNT(sys_readlink_args), "readlink", sys_readlink, SYSCALL_VALID},                                    /* 58 */
@@ -526,7 +527,7 @@ struct syscall_entry systemCalls_posix[] = {
     {0, "cpuset_getid", sys_invalid, SYSCALL_NOTIMP},                                                           /* 486 - Invalid */
     {0, "cpuset_getaffinity", sys_invalid, SYSCALL_NOTIMP},                                                     /* 487 - Invalid */
     {0, "cpuset_setaffinity", sys_invalid, SYSCALL_NOTIMP},                                                     /* 488 - Invalid */
-    {0, "faccessat", sys_invalid, SYSCALL_NOTIMP},                                                              /* 489 - Invalid */
+    {ARG_COUNT(sys_faccessat_args), "faccessat", (sys_call_t *)sys_faccessat, SYSCALL_VALID},                  /* 489 */
     {0, "fchmodat", sys_invalid, SYSCALL_NOTIMP},                                                               /* 490 - Invalid */
     {0, "fchownat", sys_invalid, SYSCALL_NOTIMP},                                                               /* 491 - Invalid */
     {0, "fexecve", sys_invalid, SYSCALL_NOTIMP},                                                                /* 492 - Invalid */

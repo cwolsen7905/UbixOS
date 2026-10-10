@@ -128,6 +128,9 @@ int sys_rfork(struct thread *td, struct sys_rfork_args *args) {
   newThread->td.vm_taddr = _current->td.vm_taddr;
   newThread->td.vm_dsize = _current->td.vm_dsize;
   newThread->td.vm_daddr = _current->td.vm_daddr;
+  /* The mmap cursor too: schedNewTask zeroed it, and the anonymous-mmap
+   * reservation panics on a cursor below 1 MB. */
+  newThread->oInfo.vmStart = _current->oInfo.vmStart;
 
   /* SHARE the address space — same page directory as the caller (do NOT copy). */
   newThread->md.md_tss.cr3 = _current->md.md_tss.cr3;
@@ -175,6 +178,16 @@ int sys_fork(struct thread *td, struct sys_fork_args *args) {
 
   /* Copy the open-file table (deep copy + pipe refcounts) — MI helper. */
   fork_copy_fdtable(newProcess, td);
+
+  /* The child inherits the parent's FPU state (control word, rounding, masks).
+   * With lazy switching the live state may still be in the FPU registers. */
+  if (_current->usedMath)
+  {
+    if (_usedMath == _current)
+      asm volatile("clts; fnsave %0; frstor %0" : "+m"(_current->md.md_i387));
+    memcpy(&newProcess->md.md_i387, &_current->md.md_i387, sizeof(newProcess->md.md_i387));
+    newProcess->usedMath = _current->usedMath;
+  }
 
   /* Set Up Task State (i386 TSS frame from the parent trapframe). */
   newProcess->md.md_tss.eip = td->frame->tf_eip;

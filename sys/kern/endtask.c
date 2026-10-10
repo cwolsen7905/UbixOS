@@ -92,14 +92,27 @@ void endTask(pidType pid)
 	 * must leave the shared pages mapped for its still-running siblings.  The
 	 * reaper frees the page tables/dir only for the task flagged here.
 	 */
-	if (sched_tgid_others_alive(_current->tgid, _current->id) == 0)
 	{
-		_current->reap_free_as = 1;
-		vmm_clean_virtual_space(0x400000U);
-	}
-	else
-	{
-		_current->reap_free_as = 0; /* siblings still use the shared AS */
+		int last = (sched_tgid_others_alive(_current->tgid, _current->id) == 0);
+
+		/* Close descriptors, stop the sleep callout, hand children to init —
+		 * shared with aarch64 (kern_fork.c). */
+		proc_exit_cleanup(_current, last);
+
+		/* The lazy-FPU owner pointer must not outlive this task: the next #NM
+		 * would fnsave into its freed struct. */
+		if (_usedMath == _current)
+			_usedMath = NULL;
+
+		if (last)
+		{
+			_current->reap_free_as = 1;
+			vmm_clean_virtual_space(0x400000U);
+		}
+		else
+		{
+			_current->reap_free_as = 0; /* siblings still use the shared AS */
+		}
 	}
 
 	/* Free any MPI mailboxes this task owned so their names/pids do not leak

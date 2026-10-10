@@ -260,6 +260,7 @@ asm(
 
 void __divideError(struct trapframe *frame) {
   die_if_kernel("Divid-by-Zero", frame, 0);
+  _current->exit_status = 8; /* wait(): killed by signal 8 */
   endTask(_current->id);
     sched_yield();
 }
@@ -287,6 +288,7 @@ asm(
 
 void __debug(struct trapframe *frame) {
   die_if_kernel("debug", frame, 0x2);
+  _current->exit_status = 5; /* wait(): killed by signal 5 */
   endTask(_current->id);
   sched_yield();
 }
@@ -314,6 +316,7 @@ asm(
 
 void __nmi(struct trapframe *frame) {
   die_if_kernel("nmi", frame, 0x2);
+  _current->exit_status = 9; /* wait(): killed by signal 9 */
   endTask(_current->id);
   sched_yield();
 }
@@ -342,18 +345,21 @@ asm(
 
 static void _int3() {
   kpanic("int3: Breakpoint [%i]\n", _current->id);
+  _current->exit_status = 5; /* wait(): killed by signal 5 */
   endTask(_current->id);
   sched_yield();
 }
 
 static void _int4() {
   kpanic("int4: Overflow [%i]\n", _current->id);
+  _current->exit_status = 11; /* wait(): killed by signal 11 */
   endTask(_current->id);
   sched_yield();
 }
 
 static void _int5() {
   kpanic("int5: Bounds check [%i]\n", _current->id);
+  _current->exit_status = 11; /* wait(): killed by signal 11 */
   endTask(_current->id);
   sched_yield();
 }
@@ -363,6 +369,7 @@ void __int6(struct trapframe *frame) {
     kprintf("__int6: v86 pid=%d tss.cs=0x%X tss.eip=0x%X\n",
         _current->id, (u_int16_t)_current->md.md_tss.cs, _current->md.md_tss.eip);
   die_if_kernel("invalid_opcode", frame, 6);
+  _current->exit_status = 4; /* wait(): killed by signal 4 */
   endTask(_current->id);
   sched_yield();
 }
@@ -390,6 +397,7 @@ asm(
 
 void __doubleFault(struct trapframe *frame) {
   die_if_kernel("double fault", frame, 0x8);
+  _current->exit_status = 9; /* wait(): killed by signal 9 */
   endTask(_current->id);
   sched_yield();
 }
@@ -416,6 +424,7 @@ asm(
 
 static void _int9() {
   kpanic("int9: Coprocessor Segment Overrun! [%i]\n", _current->id);
+  _current->exit_status = 9; /* wait(): killed by signal 9 */
   endTask(_current->id);
   sched_yield();
 }
@@ -432,18 +441,21 @@ static __attribute__((optimize("O0"))) void _int10(void) {
           (u_int32_t)_current->md.md_tss.ds, (u_int32_t)_current->md.md_tss.gs,
           (u_int32_t)_current->md.md_tss.ldt);
   kpanic("int10: Invalid TSS! [%i]\n", _current->id);
+  _current->exit_status = 11; /* wait(): killed by signal 11 */
   endTask(_current->id);
   sched_yield();
 }
 
 static void _int11() {
   kpanic("int11: Segment Not Present! [%i]\n", _current->id);
+  _current->exit_status = 7; /* wait(): killed by signal 7 */
   endTask(_current->id);
   sched_yield();
 }
 
 static void _int12() {
   kpanic("int12: Stack-Segment Fault! [%i]\n", _current->id);
+  _current->exit_status = 11; /* wait(): killed by signal 11 */
   endTask(_current->id);
   sched_yield();
 }
@@ -465,6 +477,7 @@ void __gpf(struct trapframe *frame) {
    */
   if (!(frame->tf_eflags & EFLAG_VM)) {
     die_if_kernel("general protection", frame, frame->tf_err);
+    _current->exit_status = 11; /* wait(): killed by signal 11 */
     endTask(_current->id);
     sched_yield();
     return;
@@ -847,6 +860,7 @@ asm(
 
 void __floatingPoint(struct trapframe *frame) {
   die_if_kernel("floating point", frame, 0x10);
+  _current->exit_status = 8; /* wait(): killed by signal 8 */
   endTask(_current->id);
   sched_yield();
 }
@@ -874,6 +888,7 @@ asm(
 
 void __alignmentCheck(struct trapframe *frame) {
   die_if_kernel("alignment check", frame, 0x11);
+  _current->exit_status = 7; /* wait(): killed by signal 7 */
   endTask(_current->id);
   sched_yield();
 }
@@ -900,6 +915,7 @@ asm(
 
 void __machineCheck(struct trapframe *frame) {
   die_if_kernel("machine check", frame, 0x12);
+  _current->exit_status = 9; /* wait(): killed by signal 9 */
   endTask(_current->id);
   sched_yield();
 }

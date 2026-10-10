@@ -29,6 +29,9 @@
 #include <ubixos/syscalls.h>    /* systemCalls[] / systemCalls_posix[] tables */
 #include <sys/elf_load.h>       /* md_sync_icache (file-backed/exec mmap) */
 #include <fs/vfs/file.h>        /* fread (file-backed mmap) */
+#include <sys/errno.h>          /* ENOMEM (mprotect) */
+#include <lib/kmalloc.h>        /* kmalloc/kfree (shared-mapping records) */
+#include <lib/kprintf.h>        /* snprintf */
 
 /* Generic table-driven dispatch engine (sys/kern/syscall_dispatch.c). */
 register_t ksyscall_dispatch(
@@ -62,6 +65,7 @@ register_t ksyscall_dispatch(
 #define SYS_BRK 17
 #define SYS_GETPID 20
 #define SYS_MPROTECT 74
+#define SYS_MSYNC 65 /* FreeBSD ABI */
 #define SYS_FSTAT 189
 #define SYS_MMAP 477
 #define SYS_LSEEK 478
@@ -95,6 +99,7 @@ static void do_exit(u_int64_t code)
 	kprintf("[kernel] EL0 process exit(%lu)\n", code);
 	if (_current != 0 && _current->md.md_usp != 0)
 	{
+		_current->exit_status = (int)((code & 0xFF) << 8); /* W_EXITED */
 		endTask(_current->id);
 		sched_yield();
 	}
@@ -132,6 +137,124 @@ static struct file *aarch64_lookup_fd(int fd)
 	return (struct file *)_current->td.o_files[fd];
 }
 
+/*
+ * MAP_SHARED, writable, file-backed mappings.  Pages are filled from the file at
+ * mmap time like any file mapping (private frames); this list remembers which
+ * ranges must be written back so the program's stores reach the file — on
+ * munmap, msync, and when the process exits or execs.  The linker (lld) emits
+ * its output this way: ftruncate + mmap(MAP_SHARED) + stores + munmap.
+ */
+struct shmap
+{
+	u_int64_t va, len;     /* mapped range */
+	u_int64_t foff;        /* file offset of va */
+	u_int64_t fsize;       /* file length when mapped: bytes past it are not written */
+	fileDescriptor_t *kfd; /* kernel's own handle on the file */
+	struct shmap *next;
+};
+
+/**
+ * Write the pages of @m that overlap [@lo, @hi) back to its file, reading each
+ * frame through its physical alias in @l1.
+ */
+static void shmap_writeback(struct shmap *m, u_int64_t *l1, u_int64_t lo, u_int64_t hi)
+{
+	u_int64_t va;
+
+	if (lo < m->va)
+		lo = m->va;
+	if (hi > m->va + m->len)
+		hi = m->va + m->len;
+	for (va = lo & ~0xFFFUL; va < hi; va += PAGE_SIZE)
+	{
+		u_int64_t off = m->foff + (va - m->va), n = PAGE_SIZE, pa;
+
+		if (off >= m->fsize)
+			break;
+		if (n > m->fsize - off)
+			n = m->fsize - off;
+		pa = pmap_extract(l1, va);
+		if (pa == 0)
+			continue; /* unmapped (never touched) */
+		m->kfd->offset = (off_t)off;
+		fwrite((void *)(uintptr_t)(pa & ~0xFFFUL), 1, (int)n, m->kfd);
+	}
+}
+
+/**
+ * Remember a MAP_SHARED writable mapping of @fp at [@va, @va+@len) for
+ * write-back.  Opens the kernel's own handle on the file (by path) so the
+ * mapping outlives the program's descriptor, as POSIX requires.
+ */
+static void shmap_add(fileDescriptor_t *fp, u_int64_t va, u_int64_t len, u_int64_t foff)
+{
+	char path[1024];
+	struct shmap *m;
+	size_t ml;
+
+	if (fp == NULL || fp->mp == NULL)
+		return;
+	ml = strlen(fp->mp->mountPoint);
+	if (ml > 1)
+		snprintf(path, sizeof(path), "%s%s", fp->mp->mountPoint, fp->fileName);
+	else
+		snprintf(path, sizeof(path), "%s", fp->fileName);
+	m = (struct shmap *)kmalloc(sizeof(*m));
+	if (m == NULL)
+		return;
+	m->kfd = fopen(path, "r+b");
+	if (m->kfd == NULL)
+	{
+		kfree(m);
+		return;
+	}
+	m->va = va;
+	m->len = len;
+	m->foff = foff;
+	m->fsize = fp->size;
+	m->next = (struct shmap *)_current->md.md_shmaps;
+	_current->md.md_shmaps = m;
+}
+
+/**
+ * munmap/msync: write back every shared mapping overlapping [@lo, @hi); with
+ * @drop, forget (and close) the ones the range covers completely.
+ */
+static void shmap_sync(u_int64_t *l1, u_int64_t lo, u_int64_t hi, int drop)
+{
+	struct shmap **pp = (struct shmap **)&_current->md.md_shmaps, *m;
+
+	while ((m = *pp) != NULL)
+	{
+		if (m->va < hi && lo < m->va + m->len)
+		{
+			shmap_writeback(m, l1, lo, hi);
+			if (drop && lo <= m->va && m->va + m->len <= hi)
+			{
+				*pp = m->next;
+				fclose(m->kfd);
+				kfree(m);
+				continue;
+			}
+		}
+		pp = &m->next;
+	}
+}
+
+void aarch64_shmap_release_all(kTask_t *t, u_int64_t *l1)
+{
+	struct shmap *m, *next;
+
+	for (m = (struct shmap *)t->md.md_shmaps; m != NULL; m = next)
+	{
+		next = m->next;
+		shmap_writeback(m, l1, m->va, m->va + m->len);
+		fclose(m->kfd);
+		kfree(m);
+	}
+	t->md.md_shmaps = NULL;
+}
+
 /**
  * mmap(addr, len, prot, flags, fd, off): private mapping, anonymous or
  * file-backed.  Arch glue around the generic policy (vmm_uregion_mmap_anon):
@@ -162,7 +285,16 @@ static u_int64_t sc_mmap(u_int64_t addr, u_int64_t len, u_int64_t prot, u_int64_
 
 	/* MAP_FIXED is FreeBSD flag 0x10: the caller (e.g. mallocng's guard page,
 	 * or the loader placing a segment) requires the mapping to land at addr. */
-	va = vmm_uregion_mmap_anon(l1, &next, (size_t)len, (flags & 0x10) && addr != 0, (uintptr_t)addr);
+	/* Anonymous memory is demand-zero (reserved now, backed on first touch);
+	 * file-backed pages are filled through their physical alias below, so they
+	 * are backed up front. */
+	va = vmm_uregion_mmap_anon(l1,
+	                           &next,
+	                           (size_t)len,
+	                           (flags & 0x10) && addr != 0,
+	                           (uintptr_t)addr,
+	                           (flags & 0x20) != 0 || (int)fd < 0,
+	                           (prot & 0x4) != 0);
 	_current->md.md_mmap_next = (u_int64_t)next;
 	if (va == 0)
 		return (u_int64_t)-1;
@@ -181,6 +313,10 @@ static u_int64_t sc_mmap(u_int64_t addr, u_int64_t len, u_int64_t prot, u_int64_
 			int ro = ((prot & 0x2) == 0); /* PROT_WRITE == 0x2 */
 			int ex = ((prot & 0x4) != 0); /* PROT_EXEC  == 0x4 */
 			int cacheable = ro && fp->fd->ino != 0;
+
+			/* MAP_SHARED (0x1) + PROT_WRITE: the stores must reach the file. */
+			if ((flags & 0x1) != 0 && !ro)
+				shmap_add(fp->fd, va, len, (u_int64_t)off * PAGE_SIZE);
 			void *mp = fp->fd->mp;
 			u_int32_t ino = fp->fd->ino;
 
@@ -248,20 +384,8 @@ static u_int64_t sc_mmap(u_int64_t addr, u_int64_t len, u_int64_t prot, u_int64_
 		}
 	}
 
-	/* Anonymous (or file-backed with no usable fd): honour PROT_EXEC. */
-	if ((prot & 0x4) != 0)
-	{
-		u_int64_t done;
-		for (done = 0; done < len; done += PAGE_SIZE)
-		{
-			u_int64_t phys = pmap_extract(l1, va + done);
-			if (phys == 0)
-				continue;
-			pmap_map_user_page(l1, va + done, phys, 1 /* executable */);
-			md_sync_icache((uintptr_t)phys, PAGE_SIZE);
-		}
-	}
-
+	/* Anonymous (or file-backed with no usable fd): PROT_EXEC was recorded in
+	 * the reservation and takes effect (with an I-cache sync) on first touch. */
 	return (u_int64_t)va;
 }
 
@@ -434,8 +558,26 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args)
 			/* addr, len, prot, flags, fd, off — file-backed when no MAP_ANON. */
 			return sc_mmap(args[0], args[1], args[2], args[3], args[4], args[5]);
 
+		case SYS_MSYNC:
+			/* msync(addr, len, flags): write shared file mappings back now. */
+			if (_current == 0 || _current->md.md_ttbr0 == 0)
+				return (u_int64_t)-EINVAL;
+			shmap_sync(
+			    (u_int64_t *)(uintptr_t)_current->md.md_ttbr0, args[0] & ~0xFFFUL, args[0] + args[1], 0);
+			return 0;
+
 		case SYS_MPROTECT:
-			return 0; /* mmap pages are already RW; no fine-grained enforcement yet */
+			/* mprotect(addr, len, prot): only PROT_EXEC is enforced (pages stay
+			 * EL0-RW) — enough for musl's loader and JITs such as tcc -run that
+			 * write code into heap/mmap memory and then flip it executable. */
+			if (_current == 0 || _current->md.md_ttbr0 == 0)
+				return (u_int64_t)-1;
+			if (pmap_protect((u_int64_t *)(uintptr_t)_current->md.md_ttbr0,
+			                 args[0],
+			                 args[1],
+			                 (args[2] & 0x4) != 0) != 0)
+				return (u_int64_t)-ENOMEM;
+			return 0;
 
 		case SYS_BRK:
 			return sc_brk(args[0]);
@@ -487,8 +629,14 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args)
 			/* fcntl(92) pre-case pruned (Phase 3) — falls through to the table. */
 
 		case SYS_MUNMAP:
-			/* No-op: the anonymous-mmap region is a bump allocator with no reclaim
-			 * yet, so unmapping just leaks (harmless for short-lived programs). */
+			/* munmap(addr, len): release the frames (and reservations) behind the
+			 * range.  The bump allocator does not reuse the VA (the mmap region has
+			 * hundreds of GB of it), but the memory goes back to the system. */
+			if (_current == 0 || _current->md.md_ttbr0 == 0 || (args[0] & 0xFFFUL) != 0)
+				return (u_int64_t)-EINVAL;
+			shmap_sync((u_int64_t *)(uintptr_t)_current->md.md_ttbr0, args[0], args[0] + args[1], 1);
+			vmm_uregion_munmap(
+			    (u_int64_t *)(uintptr_t)_current->md.md_ttbr0, (uintptr_t)args[0], (size_t)args[1]);
 			return 0;
 
 		case SYS_NANOSLEEP:

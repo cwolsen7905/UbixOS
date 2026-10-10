@@ -111,6 +111,14 @@ int sys_munmap(struct thread *td, struct sys_munmap_args *uap)
 	u_int32_t base = (u_int32_t)uap->addr & ~0xFFFU;
 	u_int32_t end = base + round_page(uap->len);
 
+	/* Only user memory may be unmapped: a bad (or hostile) range must never
+	 * free kernel pages. */
+	if (end <= base || base < VMM_USER_START || end > VMM_USER_END + 1)
+	{
+		td->td_retval[0] = -EINVAL;
+		return (0);
+	}
+
 	/* Flush MAP_SHARED writable file pages before tearing the mapping down,
 	 * while the VMA and its backing fd still exist. */
 	vmm_writeback_range(base, end);

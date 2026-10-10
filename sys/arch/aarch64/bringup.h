@@ -49,7 +49,7 @@ void aarch64_mmu_enable_secondary(void); /* AP: reuse the BSP's page tables (smp
 /* apsmp.c — start the application processors via PSCI CPU_ON (smp-plan M1).
  * Each AP lands in secondary_entry (apentry.S) -> c_ap_boot_arm(). */
 void aarch64_smp_start_aps(void);
-void c_ap_boot_arm(u_int32_t id); /* AP C entry, called from apentry.S */
+void c_ap_boot_arm(u_int32_t id);   /* AP C entry, called from apentry.S */
 void aarch64_smp_release_aps(void); /* M3: create per-AP idle tasks + release APs into the scheduler */
 
 /* vmm_machdep.c — read real RAM size from the DTB /memory node (x0 at entry).
@@ -82,11 +82,19 @@ int pmap_map_user_page_shared(u_int64_t *l1,
                               int executable);                           /* RO shared file-cache page */
 int pmap_map_user_page_wired(u_int64_t *l1, u_int64_t va, u_int64_t pa); /* RW wired device/shared page */
 u_int64_t *pmap_create_user_space(void);
-u_int64_t pmap_extract(u_int64_t *l1, u_int64_t va);          /* user VA -> phys (file-backed mmap) */
-u_int64_t *pmap_fork_copy(u_int64_t *parent);                 /* COW-share user mappings (fork) */
-int pmap_cow_fault(u_int64_t *l1, u_int64_t va, pidType pid); /* resolve a COW write fault */
-void pmap_free_user_space(u_int64_t *l1);                     /* free a replaced image's user pages + tables (exec) */
+u_int64_t pmap_extract(u_int64_t *l1, u_int64_t va);                          /* user VA -> phys (file-backed mmap) */
+int pmap_protect(u_int64_t *l1, u_int64_t va, u_int64_t len, int executable); /* mprotect PROT_EXEC */
+void pmap_reserve_user_page(u_int64_t *l1, u_int64_t va, int executable);     /* demand-zero reservation */
+int pmap_lazy_fault(u_int64_t *l1, u_int64_t va);                             /* back a reserved page on first touch */
+u_int64_t pmap_populate(u_int64_t *l1, u_int64_t va);                         /* pmap_extract, backing a reservation */
+void pmap_unmap_range(u_int64_t *l1, u_int64_t va, u_int64_t len);            /* munmap */
+u_int64_t *pmap_fork_copy(u_int64_t *parent);                                 /* COW-share user mappings (fork) */
+int pmap_cow_fault(u_int64_t *l1, u_int64_t va, pidType pid);                 /* resolve a COW write fault */
+void pmap_free_user_space(u_int64_t *l1); /* free a replaced image's user pages + tables (exec) */
 void pmap_switch(u_int64_t *l1);
+void aarch64_reap_dead_tasks(void); /* ksupport.c — free tasks queued by wait() */
+struct taskStruct;
+void aarch64_shmap_release_all(struct taskStruct *t, u_int64_t *l1); /* syscall.c — flush MAP_SHARED file maps */
 
 /* vectors.S — a fork child's first-dispatch landing pad (ERETs to EL0). */
 void ret_from_fork(void);

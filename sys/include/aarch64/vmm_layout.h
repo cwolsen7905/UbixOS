@@ -36,9 +36,12 @@
 #define DYN_INTERP_BASE 0x140000000UL /* dynamic linker load base (L1 idx 5) */
 
 /* Initial user stack for a dynamically-linked program (argv/env/auxv in the top
- * page).  64 pages = 256 KB — busybox et al. need more than one page. */
+ * page).  2048 pages = 8 MB, the usual Unix default (compilers recurse deeply).
+ * Only the top page is backed at exec; the rest is demand-zero, and the lowest
+ * page is left unmapped as a guard so an overflow faults instead of running
+ * into whatever lies below. */
 #define DYN_STACK_VA 0x180000000UL
-#define DYN_STACK_PAGES 64
+#define DYN_STACK_PAGES 2048
 #define DYN_STACK_TOP (DYN_STACK_VA + (u_int64_t)DYN_STACK_PAGES * PAGE_SIZE)
 
 /* Single-page stack for the standalone static-ELF bring-up path (just above the

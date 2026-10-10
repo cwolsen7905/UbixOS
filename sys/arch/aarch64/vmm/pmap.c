@@ -21,6 +21,7 @@
 #include <vmm/vm_filecache.h> /* shared file-page cache (PTE_SHARED pages) */
 #include <lib/kmalloc.h>      /* sysID */
 #include <string.h>           /* memset, memcpy */
+#include <sys/elf_load.h>     /* md_sync_icache */
 
 /* 39-bit VA, 4 KB granule: level index extractors. */
 #define L1_IDX(va) (((va) >> 30) & 0x1FFUL)
@@ -42,6 +43,17 @@
 #define PTE_COW (1UL << 55)               /* software bit: copy-on-write (frame shared RO) */
 #define PTE_SHARED (1UL << 56)            /* software bit: shared file-cache page (RO, refcounted) */
 #define PTE_WIRED (1UL << 57)             /* software bit: wired device/shared RW (fork shares verbatim, never freed) */
+#define PTE_LAZY (1UL << 58)              /* software bit in an INVALID descriptor: reserved demand-zero page */
+
+/* Descriptor stored for a reserved-but-untouched anonymous page.  Bit 0 (valid)
+ * is clear, so the MMU faults on first touch and pmap_lazy_fault() backs it;
+ * PTE_UXN records whether the page is to be executable. */
+#define PTE_IS_LAZY(e) (((e) & (PTE_VALID | PTE_LAZY)) == PTE_LAZY)
+
+/* User VA region for processes (block 4 = 4 GB and up): below this are the
+ * kernel identity blocks (0-1) and bring-up demo scratch — not per-process data,
+ * so fork shares them via the kernel-L1 copy rather than duplicating them. */
+#define USER_L1_MIN 4
 
 /* Output-address field of a descriptor (bits [47:12]). */
 #define PTE_ADDR_MASK 0x0000FFFFFFFFF000UL
@@ -176,6 +188,192 @@ u_int64_t pmap_extract(u_int64_t *l1, u_int64_t va)
 	return (e & PTE_ADDR_MASK) | (va & 0xFFFUL);
 }
 
+/**
+ * Apply mprotect(2)'s execute permission to the user pages in [@va, @va+@len).
+ *
+ * Only EL0 execute (UXN) is changed; write permission is left as mapped
+ * (COW/shared pages keep their read-only bit, so their fault path still works).
+ * Unmapped pages and wired device/shared-region pages are skipped.  A page made
+ * executable gets its D-cache cleaned and I-cache invalidated, so code a JIT
+ * (tcc -run, musl's loader) just wrote is fetched correctly.
+ *
+ * @return 0 if every page in the range was mapped, -1 if any was not.
+ */
+int pmap_protect(u_int64_t *l1, u_int64_t va, u_int64_t len, int executable)
+{
+	u_int64_t end = (va + len + 0xFFFUL) & ~0xFFFUL;
+	int rc = 0;
+
+	for (va &= ~0xFFFUL; va < end; va += PAGE_SIZE)
+	{
+		u_int64_t e = l1[L1_IDX(va)];
+		u_int64_t *l2, *l3, pte;
+
+		if ((e & PTE_VALID) == 0 || (e & PTE_TYPE_MASK) != PTE_TABLE)
+		{
+			rc = -1;
+			continue;
+		}
+		l2 = (u_int64_t *)(uintptr_t)(e & PTE_ADDR_MASK);
+		e = l2[L2_IDX(va)];
+		if ((e & PTE_VALID) == 0 || (e & PTE_TYPE_MASK) != PTE_TABLE)
+		{
+			rc = -1;
+			continue;
+		}
+		l3 = (u_int64_t *)(uintptr_t)(e & PTE_ADDR_MASK);
+		pte = l3[L3_IDX(va)];
+		if (PTE_IS_LAZY(pte))
+		{
+			/* Not backed yet: just record the permission for the first touch. */
+			l3[L3_IDX(va)] = executable ? (pte & ~PTE_UXN) : (pte | PTE_UXN);
+			continue;
+		}
+		if ((pte & PTE_VALID) == 0)
+		{
+			rc = -1;
+			continue;
+		}
+		if ((pte & PTE_WIRED) != 0 || (pte & PTE_AP_EL0) == 0)
+			continue;
+		if (executable)
+			pte &= ~PTE_UXN;
+		else
+			pte |= PTE_UXN;
+		l3[L3_IDX(va)] = pte;
+		__asm__ volatile("dsb ishst; tlbi vaae1is, %0; dsb ish; isb" : : "r"(va >> 12) : "memory");
+		if (executable)
+			md_sync_icache((uintptr_t)(pte & PTE_ADDR_MASK), PAGE_SIZE); /* via the identity alias */
+	}
+	return rc;
+}
+
+/**
+ * Return a pointer to the L3 slot for @va in @l1, or NULL if the L2/L3 tables
+ * that would hold it do not exist (never allocates).
+ */
+static u_int64_t *pte_slot(u_int64_t *l1, u_int64_t va)
+{
+	u_int64_t e = l1[L1_IDX(va)];
+
+	if ((e & PTE_VALID) == 0 || (e & PTE_TYPE_MASK) != PTE_TABLE)
+		return 0;
+	e = ((u_int64_t *)(uintptr_t)(e & PTE_ADDR_MASK))[L2_IDX(va)];
+	if ((e & PTE_VALID) == 0 || (e & PTE_TYPE_MASK) != PTE_TABLE)
+		return 0;
+	return &((u_int64_t *)(uintptr_t)(e & PTE_ADDR_MASK))[L3_IDX(va)];
+}
+
+/**
+ * Drop this address space's hold on the frame behind a valid user PTE: wired
+ * pages belong to their device/region owner, file-cache pages drop a cache
+ * reference, everything else goes back to the allocator (COW-/MMIO-safe).
+ */
+static void pte_release(u_int64_t pte)
+{
+	if ((pte & PTE_VALID) == 0 || (pte & PTE_WIRED) != 0)
+		return;
+	if (pte & PTE_SHARED)
+		vm_filecache_unref_phys((u_int32_t)(pte & PTE_ADDR_MASK));
+	else
+		free_page((uintptr_t)(pte & PTE_ADDR_MASK));
+}
+
+/**
+ * Reserve user page @va in @l1 as demand-zero: no frame is allocated until the
+ * first access faults (pmap_lazy_fault).  Whatever was mapped at @va before is
+ * released first, which gives MAP_FIXED its replace semantics.
+ *
+ * @param executable  non-zero to make the page EL0-executable once backed.
+ */
+void pmap_reserve_user_page(u_int64_t *l1, u_int64_t va, int executable)
+{
+	u_int64_t *l2 = table_next(l1, L1_IDX(va));
+	u_int64_t *l3 = table_next(l2, L2_IDX(va));
+	u_int64_t old = l3[L3_IDX(va)];
+
+	l3[L3_IDX(va)] = PTE_LAZY | (executable ? 0 : PTE_UXN);
+	if (old & PTE_VALID)
+	{
+		__asm__ volatile("dsb ishst; tlbi vaae1is, %0; dsb ish; isb" : : "r"(va >> 12) : "memory");
+		pte_release(old);
+	}
+}
+
+/**
+ * Back a reserved demand-zero page on its first touch: allocate a zeroed frame
+ * and map it EL0 read-write (executable if it was reserved so).
+ *
+ * Called from the data/instruction-abort paths for translation faults, both at
+ * EL0 and at EL1 (a syscall writing into a user buffer nobody has touched yet).
+ *
+ * @return 0 if @va was a reserved page and is now mapped, -1 otherwise (a real
+ *         fault, or out of memory).
+ */
+int pmap_lazy_fault(u_int64_t *l1, u_int64_t va)
+{
+	u_int64_t *slot;
+	uintptr_t frame;
+
+	if (l1 == 0 || L1_IDX(va) < USER_L1_MIN)
+		return -1;
+	slot = pte_slot(l1, va);
+	if (slot == 0 || !PTE_IS_LAZY(*slot))
+		return -1;
+	frame = vmm_find_free_page(sysID);
+	if (frame == 0)
+		return -1;
+	memset((void *)frame, 0, PAGE_SIZE);
+	pmap_map_user_page(l1, va & ~0xFFFUL, (u_int64_t)frame, (*slot & PTE_UXN) == 0);
+	if ((*slot & PTE_UXN) == 0)
+		md_sync_icache(frame, PAGE_SIZE);
+	return 0;
+}
+
+/**
+ * Like pmap_extract(), but first backs a reserved demand-zero page, for kernel
+ * code that needs the physical frame behind a user VA (window-buffer sharing,
+ * file-backed mmap).
+ *
+ * @return the physical address, or 0 if @va is not mapped or reserved.
+ */
+u_int64_t pmap_populate(u_int64_t *l1, u_int64_t va)
+{
+	u_int64_t pa = pmap_extract(l1, va);
+
+	if (pa == 0 && pmap_lazy_fault(l1, va) == 0)
+		pa = pmap_extract(l1, va);
+	return pa;
+}
+
+/**
+ * munmap(2): remove every user mapping in [@va, @va+@len) from @l1, releasing
+ * the frames (wired/shared pages are released per their ownership) and clearing
+ * reservations.  Unmapped holes are skipped; page tables are kept.
+ */
+void pmap_unmap_range(u_int64_t *l1, u_int64_t va, u_int64_t len)
+{
+	u_int64_t end = (va + len + 0xFFFUL) & ~0xFFFUL;
+
+	for (va &= ~0xFFFUL; va < end; va += PAGE_SIZE)
+	{
+		u_int64_t *slot, old;
+
+		if (L1_IDX(va) < USER_L1_MIN)
+			continue;
+		slot = pte_slot(l1, va);
+		if (slot == 0 || *slot == 0)
+			continue;
+		old = *slot;
+		*slot = 0;
+		if (old & PTE_VALID)
+		{
+			__asm__ volatile("dsb ishst; tlbi vaae1is, %0; dsb ish; isb" : : "r"(va >> 12) : "memory");
+			pte_release(old);
+		}
+	}
+}
+
 /* ---- machine-dependent hooks for the generic ELF64 loader (sys/elf_load.h) ---- */
 
 /**
@@ -184,6 +382,22 @@ u_int64_t pmap_extract(u_int64_t *l1, u_int64_t va)
 void md_map_user_page(u_int64_t *aspace_root, u_int64_t va, u_int64_t pa, int executable)
 {
 	pmap_map_user_page(aspace_root, va, pa, executable);
+}
+
+/**
+ * Reserve a demand-zero user page for the generic uregion code (mmap/brk).
+ */
+void md_reserve_user_page(u_int64_t *aspace_root, u_int64_t va, int executable)
+{
+	pmap_reserve_user_page(aspace_root, va, executable);
+}
+
+/**
+ * Unmap a user range for the generic uregion code (munmap).
+ */
+void md_unmap_user_range(u_int64_t *aspace_root, u_int64_t va, u_int64_t len)
+{
+	pmap_unmap_range(aspace_root, va, len);
 }
 
 /**
@@ -232,11 +446,6 @@ u_int64_t *pmap_create_user_space(void)
 	return l1;
 }
 
-/* User VA region for processes (block 4 = 4 GB and up): below this are the
- * kernel identity blocks (0-1) and bring-up demo scratch — not per-process data,
- * so fork shares them via the kernel-L1 copy rather than duplicating them. */
-#define USER_L1_MIN 4
-
 /**
  * Deep-copy the user mappings of @parent into a fresh child address space:
  * every mapped 4 KB user page (L1 index >= USER_L1_MIN) is duplicated into a new
@@ -264,6 +473,14 @@ u_int64_t *pmap_fork_copy(u_int64_t *parent)
 
 			for (i3 = 0; i3 < 512; i3++)
 			{
+				if (PTE_IS_LAZY(l3[i3]))
+				{
+					/* Untouched reservation: the child gets its own (still lazy) one. */
+					u_int64_t cva = (i1 << 30) | (i2 << 21) | (i3 << 12);
+					u_int64_t *c3 = table_next(table_next(child, i1), i2);
+					c3[L3_IDX(cva)] = l3[i3];
+					continue;
+				}
 				if ((l3[i3] & PTE_VALID) == 0)
 					continue;
 				u_int64_t va = (i1 << 30) | (i2 << 21) | (i3 << 12);
@@ -417,19 +634,9 @@ void pmap_free_user_space(u_int64_t *l1)
 
 			for (i3 = 0; i3 < 512; i3++)
 			{
-				if ((l3[i3] & PTE_VALID) == 0)
-					continue;
-				/* A wired device/shared page (GPU framebuffer, shared-region buffer)
-				 * is owned elsewhere — drop the mapping but never free the frame.  A
-				 * shared file-cache page drops a cache reference (freed at the last
-				 * unref).  Everything else goes back to the allocator (free_page is
-				 * COW-/MMIO-safe). */
-				if (l3[i3] & PTE_WIRED)
-					; /* owned by the device/region; leave the frame alone */
-				else if (l3[i3] & PTE_SHARED)
-					vm_filecache_unref_phys((u_int32_t)(l3[i3] & PTE_ADDR_MASK));
-				else
-					free_page((uintptr_t)(l3[i3] & PTE_ADDR_MASK));
+				/* Wired pages stay with their owner, file-cache pages drop a
+				 * reference, the rest are freed; reservations hold no frame. */
+				pte_release(l3[i3]);
 			}
 
 			free_page((uintptr_t)l3); /* the L3 table */

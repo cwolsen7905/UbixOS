@@ -38,14 +38,13 @@
  */
 void md_new_task(kTask_t *t)
 {
-	u_int64_t ttbr0;
-
 	t->md.md_kstack = 0; /* "not yet seeded" — sched_ready() builds the frame */
 
-	/* Inherit the current (kernel) address space by default.  A user process
-	 * overrides md_ttbr0 with its own page-table root at exec time. */
-	__asm__ volatile("mrs %0, ttbr0_el1" : "=r"(ttbr0));
-	t->md.md_ttbr0 = ttbr0 & 0x0000FFFFFFFFF000UL;
+	/* Kernel address space by default; a user process overrides md_ttbr0 with
+	 * its own root at exec/fork time.  Never inherit the *active* TTBR0: a kernel
+	 * thread created while some process was current would keep running on that
+	 * process's tables after the process exits and they are freed. */
+	t->md.md_ttbr0 = (u_int64_t)(uintptr_t)aarch64_kernel_l1();
 }
 
 /**
@@ -105,8 +104,16 @@ void switch_to(kTask_t *prev, kTask_t *next)
 	 * switching between tasks that share one, e.g. kernel threads).  All address
 	 * spaces map the kernel + identity-mapped stacks, so it is safe to swap here
 	 * before the register switch resumes next. */
-	if (next->md.md_ttbr0 != 0 && next->md.md_ttbr0 != prev->md.md_ttbr0)
-		pmap_switch((u_int64_t *)(uintptr_t)next->md.md_ttbr0);
+	{
+		/* A task with no address space of its own runs on the kernel's — never on
+		 * the previous task's, which may be freed once that task is reaped. */
+		u_int64_t want = next->md.md_ttbr0 != 0 ? next->md.md_ttbr0 : (u_int64_t)(uintptr_t)aarch64_kernel_l1();
+		u_int64_t cur;
+
+		__asm__ volatile("mrs %0, ttbr0_el1" : "=r"(cur));
+		if ((cur & 0x0000FFFFFFFFF000UL) != want)
+			pmap_switch((u_int64_t *)(uintptr_t)want);
+	}
 
 	/* Save/restore the EL0 TLS thread pointer.  musl keeps its thread-control
 	 * block here (errno, cancellation state, stack-canary base); leaking the
@@ -115,6 +122,14 @@ void switch_to(kTask_t *prev, kTask_t *next)
 	 * exits would inherit the child's thread pointer and fault. */
 	__asm__ volatile("mrs %0, tpidr_el0" : "=r"(prev->md.md_tpidr));
 	__asm__ volatile("msr tpidr_el0, %0" : : "r"(next->md.md_tpidr));
+
+	/* And the EL0 FP/SIMD register file — the kernel never uses it, so it still
+	 * holds the outgoing task's user values. */
+	if (prev != next)
+	{
+		aarch64_fpsimd_save(prev->md.md_fpsimd);
+		aarch64_fpsimd_restore(next->md.md_fpsimd);
+	}
 
 	aarch64_ctx_switch(&prev->md.md_kstack, next->md.md_kstack);
 }
@@ -156,6 +171,12 @@ int aarch64_fork(u_int64_t *parent_tf)
 	child->md.md_ttbr0 = (u_int64_t)(uintptr_t)child_l1;
 	child->md.md_usp = parent_tf[TF_SLOT_SP_EL0]; /* same user SP (copied space); marks a user task */
 	child->md.md_entry = 0;                       /* unused — the trapframe drives the return */
+	/* The child's address space is a copy of the parent's, so it must continue
+	 * from the parent's mmap cursor and program break.  Starting over at
+	 * MMAP_BASE/BRK_BASE would place its next mmap/sbrk on top of memory it
+	 * inherited (and replacing those pages wipes the parent-copied heap). */
+	child->md.md_mmap_next = _current->md.md_mmap_next;
+	child->md.md_brk = _current->md.md_brk;
 
 	/* Parent linkage so wait4() can find + reap this child (and so the generic
 	 * sched() reaper notifies the right parent). */
@@ -177,6 +198,7 @@ int aarch64_fork(u_int64_t *parent_tf)
 	 * copy, so the parent's TCB lives at the same VA.  The child resumes at the
 	 * fork return point and must see its TLS until it sets up its own. */
 	__asm__ volatile("mrs %0, tpidr_el0" : "=r"(child->md.md_tpidr));
+	aarch64_fpsimd_save(child->md.md_fpsimd); /* the child resumes with the parent's FP/SIMD state */
 
 	/* Build the child kernel stack: a copy of the parent trapframe at the top
 	 * (with x0 = 0), and below it a ctx frame that ret_from_fork's into it. */

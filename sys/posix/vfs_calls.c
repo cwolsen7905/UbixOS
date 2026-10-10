@@ -322,7 +322,7 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 
 int sys_pread(struct thread *td, struct sys_pread_args *args)
 {
-	int offset = 0;
+	off_t offset = 0;
 
 	struct file *fd = 0x0;
 
@@ -334,11 +334,14 @@ int sys_pread(struct thread *td, struct sys_pread_args *args)
 		return (-1);
 	}
 
-	if (args->fd > 3)
+	/* A regular file is any fd with a VFS descriptor — not "fd > 3": fds 0-3 are
+	 * ordinary once reused (a compiler's first open() is often fd 3), and
+	 * treating them as the console made pread() block on terminal input. */
+	if (fd->fd != NULL)
 	{
 		offset = fd->fd->offset;
 		fd->fd->offset = args->offset;
-		td->td_retval[0] = fread(args->buf, args->nbyte, 1, fd->fd);
+		td->td_retval[0] = fread(args->buf, 1, args->nbyte, fd->fd);
 		fd->fd->offset = offset;
 	}
 	else if (g_console_ops != NULL && g_console_ops->read != NULL)
@@ -439,11 +442,63 @@ int sys_write(struct thread *td, struct sys_write_args *uap)
 	return (0x0);
 }
 
+/**
+ * faccessat(2): access() relative to a directory fd.  musl implements access()
+ * itself with faccessat(AT_FDCWD, ...) on aarch64, so without this every
+ * existence check (a compiler probing for its headers and crt files) failed.
+ * Only AT_FDCWD and absolute paths are supported (the VFS resolves against the
+ * cwd); other dirfds return ENOSYS.
+ *
+ * @return 0 (result in td_retval: 0 or a negative errno).
+ */
+int sys_faccessat(struct thread *td, struct sys_faccessat_args *args)
+{
+	struct sys_access_args a;
+
+	if (args->fd != -100 /* AT_FDCWD */ && (args->path == NULL || args->path[0] != '/'))
+	{
+		td->td_retval[0] = -ENOSYS;
+		return (0);
+	}
+	a.path = args->path;
+	a.amode = args->amode;
+	return (sys_access(td, &a));
+}
+
+/**
+ * access(2): report whether @path exists.  Permission bits are not enforced
+ * yet (single-user root system), so any existing file or directory passes;
+ * a missing one fails with ENOENT.  This used to always succeed, which sent
+ * programs that probe a search path (compilers looking for crt files) to the
+ * first, nonexistent candidate.
+ *
+ * @return 0 (result in td_retval: 0 or -ENOENT).
+ */
 int sys_access(struct thread *td, struct sys_access_args *args)
 {
-	/* XXX - This is a temporary as it always returns true */
+	fileDescriptor_t *fd;
+	kDIR_t *dir;
 
-	td->td_retval[0] = 0;
+	if (args->path == NULL || args->path[0] == '\0')
+	{
+		td->td_retval[0] = -ENOENT;
+		return (0);
+	}
+	fd = fopen(args->path, "rb");
+	if (fd != NULL)
+	{
+		fclose(fd);
+		td->td_retval[0] = 0;
+		return (0);
+	}
+	dir = vfs_opendir(args->path);
+	if (dir != NULL)
+	{
+		vfs_closedir(dir);
+		td->td_retval[0] = 0;
+		return (0);
+	}
+	td->td_retval[0] = -ENOENT;
 	return (0);
 }
 
@@ -513,6 +568,23 @@ int sys_getdirentries(struct thread *td, struct sys_getdirentries_args *args)
 int sys_readlink(struct thread *thr, struct sys_readlink_args *args)
 {
 	const char *path = args->path;
+
+	/* /proc/self/exe → the running program's path (recorded at exec). */
+	if (strcmp(path, "/proc/self/exe") == 0)
+	{
+		size_t n = strlen(_current->exe_path);
+
+		if (n == 0)
+		{
+			thr->td_retval[0] = -ENOENT;
+			return (ENOENT);
+		}
+		if ((size_t)args->count < n)
+			n = (size_t)args->count;
+		memcpy(args->buf, _current->exe_path, n);
+		thr->td_retval[0] = (int)n;
+		return (0);
+	}
 
 	/* /proc/self/fd/N → synthesize a path from the open fd. */
 	if (strncmp(path, "/proc/self/fd/", 14) == 0)

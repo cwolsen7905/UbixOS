@@ -150,6 +150,15 @@ static int envs_copyin(char **envp_in, char **envp_out, char **envs_out)
 
 	int i = 0x0;
 
+	if (envp_tmp == NULL || envs_tmp == NULL)
+	{
+		if (envp_tmp != NULL)
+			kfree(envp_tmp);
+		if (envs_tmp != NULL)
+			kfree(envs_tmp);
+		return (-1);
+	}
+
 	for (i = 0; i < envc; i++)
 	{
 		size_t elen = strlen(envp_in[i]) + 1;
@@ -782,7 +791,10 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 		return (-1);
 	}
 
-	/* Set Threads FD to open FD */
+	/* Set Threads FD to open FD, releasing the replaced image's reference
+	 * (fclose only drops it if its AT_EXECFD slot is still open). */
+	if (_current->files[0] != 0x0 && _current->files[0] != fd)
+		fclose(_current->files[0]);
 	_current->files[0] = fd;
 
 	/* Copy In ARGS & ENVS Before Cleaning Virtual Space */
@@ -1031,9 +1043,12 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 
 	// iFrame->edx = 0x0;
 
+	/* Below the argv/envp string pages: the pointer vector — argc, argv[],
+	 * NULL, envp[], NULL (4 bytes each, not 1: counting entries as bytes let a
+	 * long argument list run into the env strings) — then the auxv. */
 	iFrame->user_esp =
 	    (u_int32_t)(STACK_ADDR - ARGV_PAGE - ENVP_PAGE - ELF_AUX -
-	               (argc + 1) - (envc + 1) - STACK_PAD) &
+	               sizeof(u_int32_t) * (u_int32_t)(1 + (argc + 1) + (envc + 1)) - STACK_PAD) &
 	    0xFFFFF000;
 
 	tmp = (u_int32_t *)iFrame->user_esp;
@@ -1091,6 +1106,12 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 	falloc(&_current->td, &tFP, &tFD);
 
 	tFP->fd = _current->files[0];
+	/* The fd table now shares the exec image's descriptor with files[0]: take
+	 * a reference, so closing this slot (or exit's close-all) only drops it and
+	 * the reaper's fclose(files[0]) does the final free.  Without it the
+	 * descriptor was freed twice and a later process's file read freed memory. */
+	if (tFP->fd != NULL)
+		tFP->fd->dup++;
 
 	/* Patch the binary's GOT so the PLT resolver trampoline works:
 	 *   GOT[1] = fileDescriptor_t* the ld.so ld() stores in FILE::fd for

@@ -110,6 +110,7 @@ AARCH64_GENERIC_SRCS = \
 	sys/kern/kern_fork.c \
 	sys/kern/kern_exec.c \
 	sys/kern/access.c \
+	sys/kern/reboot.c \
 	sys/fs/vfs/mount.c \
 	sys/fs/vfs/file.c \
 	sys/fs/procfs/procfs.c \
@@ -169,7 +170,8 @@ AARCH64_GENERIC_SRCS = \
 	sys/net/api/sockets.c \
 	sys/net/api/tcpip.c \
 	sys/net/netif/ethernet.c \
-	sys/net/net/sys_arch.c
+	sys/net/net/sys_arch.c \
+	sys/net/net/netstatus.c
 
 # UbixFS pooled-CoW filesystem: the portable lite-ZFS core (lib/ubixfs_core,
 # unmodified) + the kernel glue.  Compiled with extra include paths so the

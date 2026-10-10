@@ -151,6 +151,10 @@ struct syscall_entry systemCalls[] = {
      "mpiWaitMessage",
      (sys_call_t *)sys_mpiWaitMessage,
      SYSCALL_VALID}, // 69 - blocking MPI receive (sleep until a message / timeout)
+    {ARG_COUNT(sys_net_status_args),
+     "net_status",
+     (sys_call_t *)sys_net_status,
+     SYSCALL_VALID}, // 70 - default interface up/link/IPv4 (taskbar network item)
 };
 
 int totalCalls = sizeof(systemCalls) / sizeof(struct syscall_entry);

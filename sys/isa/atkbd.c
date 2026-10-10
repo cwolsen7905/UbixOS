@@ -48,6 +48,7 @@
 #include <ubixos/vitals.h>
 #include <ubixos/signal.h>
 
+static int g_atkbd_e0; /* last scancode was the 0xE0 extended prefix */
 static int atkbd_scan();
 
 static unsigned int keyMap = 0x0;
@@ -271,6 +272,23 @@ void keyboardHandler(struct trapframe *frame)
 	if (key >= 255) {
 		spinUnlock(&atkbdSpinLock);
 		return;
+	}
+
+	/* 0xE0 prefixes the extended keys.  Only the Super/Windows keys (E0 5B /
+	 * E0 5C, release with bit 7) are decoded so far — the compositor opens the
+	 * launcher on KEY_SUPER; other extended codes keep their legacy handling. */
+	if (key == 0xE0) {
+		g_atkbd_e0 = 1;
+		spinUnlock(&atkbdSpinLock);
+		return;
+	}
+	if (g_atkbd_e0) {
+		g_atkbd_e0 = 0;
+		if ((key & 0x7F) == 0x5B || (key & 0x7F) == 0x5C) {
+			kbd_ring_push(KEY_SUPER, (key & 0x80) ? 0 : 1);
+			spinUnlock(&atkbdSpinLock);
+			return;
+		}
 	}
 
 	/* Modifier key state tracking.

@@ -32,8 +32,8 @@
 
 typedef struct ubfs_fs
 {
-	ubfs_dmu_os_t *os;  /* the filesystem dataset's object set */
-	uint64_t       now; /* timestamp stamped into inode times (caller sets it) */
+	ubfs_dmu_os_t *os; /* the filesystem dataset's object set */
+	uint64_t now;      /* timestamp stamped into inode times (caller sets it) */
 } ubfs_fs_t;
 
 /** Wrap an (already opened) filesystem object set. */
@@ -65,5 +65,9 @@ int ubfs_fs_readdir(ubfs_fs_t *fs, uint64_t dirobj, ubfs_dir_cb cb, void *arg);
 
 /** Remove a file/symlink/empty-dir entry from its parent. */
 int ubfs_fs_unlink(ubfs_fs_t *fs, const char *path);
+
+/* Move the entry at @from to @to (same filesystem), replacing a non-directory
+ * at @to.  Returns 0, or <0 if @from is missing or @to is a directory. */
+int ubfs_fs_rename(ubfs_fs_t *fs, const char *from, const char *to);
 
 #endif /* _UBIXFS_FS_H */

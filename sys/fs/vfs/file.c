@@ -48,6 +48,8 @@
 
 static struct spinLock fdTable_lock = SPIN_LOCK_INITIALIZER;
 
+static int vfs_abspath(const char *file, char *out, size_t size);
+
 int sysMkDir(const char *path);
 
 fileDescriptor_t *fdTable = 0x0;
@@ -301,10 +303,18 @@ int sys_ftruncate(struct thread *td, struct sys_ftruncate_args *args)
 		return (EINVAL);
 	}
 
-	/* FAT: ask the driver to resize the chain.  Other FSes (ufs/ubixfs)
-	 * land in the in-memory-only fallback below since they're read-only
-	 * for our current workloads. */
-	if (fd->res != NULL && fd->mp != NULL && fd->mp->fs != NULL && fd->mp->fs->vfsType == 0xFA)
+	/* A filesystem with a truncate hook (UbixFS) resizes the file itself. */
+	if (fd->res != NULL && fd->mp != NULL && fd->mp->fs != NULL && fd->mp->fs->vfsTruncate != NULL)
+	{
+		if (fd->mp->fs->vfsTruncate(fd, args->length) != 0)
+		{
+			td->td_retval[0] = -EIO;
+			return (EIO);
+		}
+	}
+	/* FAT: ask the driver to resize the chain.  Other FSes (ufs) land in the
+	 * in-memory-only fallback below. */
+	else if (fd->res != NULL && fd->mp != NULL && fd->mp->fs != NULL && fd->mp->fs->vfsType == 0xFA)
 	{
 		if (g_fs_truncate == NULL || g_fs_truncate(fd->res, (u_int32_t)args->length) != 0)
 		{
@@ -456,18 +466,13 @@ int sys_rename(struct thread *td, struct sys_rename_args *args)
 		return (EFAULT);
 	}
 
-	/* Resolve both paths against CWD if relative. */
-	if (args->from[0] != '/')
-		snprintf(src_full, sizeof(src_full), "%s%s", _current->oInfo.cwd, args->from);
-	else
-		strncpy(src_full, args->from, sizeof(src_full) - 1);
-	src_full[sizeof(src_full) - 1] = '\0';
-
-	if (args->to[0] != '/')
-		snprintf(dst_full, sizeof(dst_full), "%s%s", _current->oInfo.cwd, args->to);
-	else
-		strncpy(dst_full, args->to, sizeof(dst_full) - 1);
-	dst_full[sizeof(dst_full) - 1] = '\0';
+	/* Resolve both paths against the cwd ("." / ".." folded). */
+	if (vfs_abspath(args->from, src_full, sizeof(src_full)) != 0 ||
+	    vfs_abspath(args->to, dst_full, sizeof(dst_full)) != 0)
+	{
+		td->td_retval[0] = -ENAMETOOLONG;
+		return (ENAMETOOLONG);
+	}
 
 	src_mp = vfs_findMount(src_full);
 	dst_mp = vfs_findMount(dst_full);
@@ -491,7 +496,19 @@ int sys_rename(struct thread *td, struct sys_rename_args *args)
 	if (dst_fs[0] == '\0')
 		dst_fs = "/";
 
-	/* Only FAT supports rename today. */
+	/* Filesystems with a native rename hook (UbixFS). */
+	if (src_mp->fs->vfsRename != NULL)
+	{
+		if (src_mp->fs->vfsRename(src_mp, src_fs, dst_fs) != 0)
+		{
+			td->td_retval[0] = -EIO;
+			return (EIO);
+		}
+		td->td_retval[0] = 0;
+		return (0);
+	}
+
+	/* Otherwise only FAT supports rename today. */
 	if (src_mp->fs->vfsType != 0xFA)
 	{
 		td->td_retval[0] = -EXDEV;
@@ -614,16 +631,25 @@ size_t fread(void *ptr, size_t size, size_t nmemb, fileDescriptor_t *fd)
 	if (fd == 0x0)
 		return (0x0);
 
-	if (nmemb == 0x0)
-		nmemb = 1; // Temp Fix
+	/* A zero-length read is legal (read(fd, buf, 0)) and must not touch the
+	 * file: musl/tcc's full_read() ends every loop with one. */
+	if (size == 0x0 || nmemb == 0x0)
+		return (0x0);
 
 	assert(fd);
 	assert(fd->mp);
 	assert(fd->mp->fs);
 
-	i = fd->mp->fs->vfsRead(fd, ptr, fd->offset, size * nmemb);
+	/* vfsRead takes a long and returns an int: cap huge requests (read(fd, buf,
+	 * SIZE_MAX) is legal and just means "whatever is left"). */
+	i = size * nmemb;
+	if (i > 0x7FFFFFFF)
+		i = 0x7FFFFFFF;
+	i = fd->mp->fs->vfsRead(fd, ptr, fd->offset, (long)i);
 
-	fd->offset += i;
+	/* vfsRead returns int: an error (-1) must not move the offset back. */
+	if ((ssize_t)i > 0)
+		fd->offset += i;
 
 	return (i);
 }
@@ -718,6 +744,67 @@ int fgetc(fileDescriptor_t *fd)
 	return (-1);
 }
 
+/**
+ * Resolve @file against the caller's cwd into a canonical absolute path.
+ *
+ * Joins a relative path onto _current->oInfo.cwd, then folds "//", "." and
+ * ".." components ("/.." stays "/").  Without this, open("hello", ...) handed
+ * the bare name to vfs_findMount, which only matches absolute prefixes, so
+ * every relative open/create failed with ENOENT.
+ *
+ * @return 0 on success, -1 if the result does not fit in @size bytes.
+ */
+static int vfs_abspath(const char *file, char *out, size_t size)
+{
+	char joined[1024];
+	const char *cwd = (_current != 0 && _current->oInfo.cwd[0] != '\0') ? _current->oInfo.cwd : "/";
+	const char *p;
+	size_t o = 0;
+
+	if (file[0] == '/')
+		snprintf(joined, sizeof(joined), "%s", file);
+	else
+		snprintf(joined, sizeof(joined), "%s/%s", cwd, file);
+
+	if (size < 2)
+		return (-1);
+	out[o++] = '/';
+	for (p = joined; *p != '\0';)
+	{
+		const char *seg;
+		size_t len;
+
+		while (*p == '/')
+			p++;
+		seg = p;
+		while (*p != '\0' && *p != '/')
+			p++;
+		len = (size_t)(p - seg);
+		if (len == 0 || (len == 1 && seg[0] == '.'))
+			continue;
+		if (len == 2 && seg[0] == '.' && seg[1] == '.')
+		{
+			/* Drop the last component (never past the root). */
+			if (o > 1)
+			{
+				o--; /* the trailing '/' */
+				while (o > 1 && out[o - 1] != '/')
+					o--;
+			}
+			continue;
+		}
+		if (o + len + 1 >= size)
+			return (-1);
+		memcpy(out + o, seg, len);
+		o += len;
+		out[o++] = '/';
+	}
+	if (o > 1)
+		o--; /* no trailing '/' except for the root itself */
+	out[o] = '\0';
+	return (0);
+}
+
 /************************************************************************
 
  Function: fileDescriptor_t *fopen(const char *file,cont char *flags)
@@ -751,16 +838,13 @@ fileDescriptor_t *fopen(const char *file, const char *flags)
 		return (NULL);
 	}
 
-	/* Resolve path: '.' expands to CWD; everything else is taken as-is. */
-	if (file[0] == '.' && file[1] == '\0')
+	/* Resolve relative paths against the cwd and fold "."/".." so the mount
+	 * lookup below always sees a canonical absolute path. */
+	if (vfs_abspath(file, fileName, sizeof(fileName)) != 0)
 	{
-		strncpy(fileName, _current->oInfo.cwd, sizeof(fileName) - 1);
+		kfree(tmpFd);
+		return (NULL);
 	}
-	else
-	{
-		strncpy(fileName, file, sizeof(fileName) - 1);
-	}
-	fileName[sizeof(fileName) - 1] = '\0';
 	path = fileName;
 
 	/* Find mount by longest POSIX prefix match. */

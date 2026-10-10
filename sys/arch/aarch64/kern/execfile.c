@@ -43,7 +43,8 @@
 #define AT_ENTRY 9
 #define AT_RANDOM 25
 
-#define MAXARG 48 /* cap on argv/envp entries marshalled into a new image */
+#define MAXARG 4096               /* cap on argv/envp entries marshalled into a new image */
+#define ARG_AREA_MAX (256 * 1024) /* cap on argv+envp strings + vector (Linux ARG_MAX is 128 KB+) */
 
 /**
  * Load ELF @image into a fresh user address space and build the minimal SysV
@@ -240,44 +241,56 @@ static char *read_elf_file(const char *path, int *out_size)
 }
 
 /**
- * Build the SysV initial stack for a dynamically-linked program in @phys_page
- * (the identity-mapped kernel pointer to the stack frame, which is mapped at
- * DYN_STACK_VA in the user space).  Lays down argv[0], a 16-byte AT_RANDOM block,
- * then the argc / argv / envp / auxv vector musl's __libc_start_main + the
- * dynamic linker consume.  All in-stack pointers use the user VA.
+ * Build the SysV initial stack for a dynamically-linked program at the top of
+ * its stack (just below DYN_STACK_TOP) in the new address space @l1: argv and
+ * envp strings, a 16-byte AT_RANDOM block, then the argc / argv / envp / auxv
+ * vector musl's __libc_start_main + the dynamic linker consume.  All in-stack
+ * pointers use the user VA.
  *
- * @return the user-space stack pointer (16-byte aligned, points at argc).
+ * The area is laid out in a kernel scratch buffer and copied page by page into
+ * the (lazily reserved) stack pages, so it may span many pages — a compiler's
+ * command line easily exceeds the one page this used to be limited to.
+ *
+ * @return the user-space stack pointer (16-byte aligned, points at argc), or 0
+ *         if the arguments do not fit in ARG_AREA_MAX or memory ran out.
  */
-static u_int64_t build_dyn_stack(uintptr_t phys_page,
-                                 u_int64_t page_uva,
-                                 char **argv,
-                                 int argc,
-                                 char **envp,
-                                 int envc,
-                                 const elf64_load_info_t *mi,
-                                 u_int64_t interp_base)
+static u_int64_t build_dyn_stack(
+    u_int64_t *l1, char **argv, int argc, char **envp, int envc, const elf64_load_info_t *mi, u_int64_t interp_base)
 {
-	u_int8_t *page = (u_int8_t *)phys_page;
-	u_int8_t *p = page + PAGE_SIZE;
-	u_int64_t argv_uva[MAXARG], envp_uva[MAXARG], random_uva;
-	u_int64_t *vec;
+	size_t strbytes = 0, need, size;
+	u_int8_t *buf, *end, *p;
+	u_int64_t *vec, random_uva, va, usp;
 	int i, k = 0, nvec;
-#define UVA(ptr) (page_uva + (u_int64_t)((u_int8_t *)(ptr) - page))
+#define UVA(ptr) (DYN_STACK_TOP - (u_int64_t)(end - (u_int8_t *)(ptr)))
 
-	/* argv + envp strings, then 16 random bytes for the stack canary, near top. */
+	for (i = 0; i < argc; i++)
+		strbytes += strlen(argv[i]) + 1;
+	for (i = 0; i < envc; i++)
+		strbytes += strlen(envp[i]) + 1;
+	nvec = 1 + argc + 1 + envc + 1 + 16;
+	need = strbytes + 16 + 32 + (size_t)nvec * sizeof(u_int64_t);
+	if (need > ARG_AREA_MAX)
+		return (0);
+	size = (need + PAGE_SIZE - 1) & ~(size_t)(PAGE_SIZE - 1);
+	buf = (u_int8_t *)kmalloc((u_int32_t)size);
+	if (buf == NULL)
+		return (0);
+	memset(buf, 0, size);
+	end = buf + size;
+
+	/* Strings top-down: argv, then envp (pointers fixed up in the vector pass). */
+	p = end;
 	for (i = 0; i < argc; i++)
 	{
 		size_t l = strlen(argv[i]) + 1;
 		p -= l;
 		memcpy(p, argv[i], l);
-		argv_uva[i] = UVA(p);
 	}
 	for (i = 0; i < envc; i++)
 	{
 		size_t l = strlen(envp[i]) + 1;
 		p -= l;
 		memcpy(p, envp[i], l);
-		envp_uva[i] = UVA(p);
 	}
 
 	p -= 16;
@@ -286,19 +299,27 @@ static u_int64_t build_dyn_stack(uintptr_t phys_page,
 
 	/* Vector: argc, argv[..], NULL, envp[..], NULL, then 8 auxv pairs.  Align the
 	 * base down to 16 so SP is 16-byte aligned at the program entry. */
-	nvec = 1 + argc + 1 + envc + 1 + 16;
 	p = (u_int8_t *)((uintptr_t)p & ~(uintptr_t)15);
 	p -= (u_int64_t)nvec * sizeof(u_int64_t);
 	p = (u_int8_t *)((uintptr_t)p & ~(uintptr_t)15);
 	vec = (u_int64_t *)p;
 
 	vec[k++] = (u_int64_t)argc;
-	for (i = 0; i < argc; i++)
-		vec[k++] = argv_uva[i];
-	vec[k++] = 0; /* argv terminator */
-	for (i = 0; i < envc; i++)
-		vec[k++] = envp_uva[i];
-	vec[k++] = 0; /* envp terminator */
+	{
+		u_int8_t *s = end;
+		for (i = 0; i < argc; i++)
+		{
+			s -= strlen(argv[i]) + 1;
+			vec[k++] = UVA(s);
+		}
+		vec[k++] = 0; /* argv terminator */
+		for (i = 0; i < envc; i++)
+		{
+			s -= strlen(envp[i]) + 1;
+			vec[k++] = UVA(s);
+		}
+		vec[k++] = 0; /* envp terminator */
+	}
 	vec[k++] = AT_PHDR;
 	vec[k++] = mi->phdr_va;
 	vec[k++] = AT_PHENT;
@@ -319,9 +340,59 @@ static u_int64_t build_dyn_stack(uintptr_t phys_page,
 	vec[k++] = random_uva;
 	vec[k++] = AT_NULL;
 	vec[k++] = 0;
+	usp = UVA(vec);
 
-	return UVA(vec);
+	/* Copy the area into the stack pages (backing each reserved page). */
+	for (va = DYN_STACK_TOP - size; va < DYN_STACK_TOP; va += PAGE_SIZE)
+	{
+		u_int64_t pa = pmap_populate(l1, va);
+		if (pa == 0)
+		{
+			kfree(buf);
+			return (0);
+		}
+		memcpy((void *)(uintptr_t)(pa & ~0xFFFUL), buf + (va - (DYN_STACK_TOP - size)), PAGE_SIZE);
+	}
+	kfree(buf);
+	return (usp);
 #undef UVA
+}
+
+/**
+ * elf64_src_t reader for a file opened with the kernel fopen(): seek + fread.
+ */
+static int file_src_read(elf64_src_t *src, u_int64_t off, void *dst, u_int64_t len)
+{
+	fileDescriptor_t *fd = (fileDescriptor_t *)src->ctx;
+
+	if (off > src->size || len > src->size - off)
+		return (-1);
+	fd->offset = (off_t)off;
+	return (fread(dst, 1, (size_t)len, fd) == (size_t)len) ? 0 : -1;
+}
+
+/**
+ * Open @path as a file-backed ELF source, so even a program far larger than
+ * any kernel buffer (clang is ~64 MB) loads page by page.
+ *
+ * @return the open descriptor (close it with fclose when done), or NULL.
+ */
+static fileDescriptor_t *open_elf_src(const char *path, elf64_src_t *src)
+{
+	fileDescriptor_t *fd = fopen(path, "r");
+
+	if (fd == NULL)
+		return (NULL);
+	if (fd->size == 0)
+	{
+		fclose(fd);
+		return (NULL);
+	}
+	src->read = file_src_read;
+	src->mem = NULL;
+	src->size = fd->size;
+	src->ctx = fd;
+	return (fd);
 }
 
 /**
@@ -332,7 +403,7 @@ static u_int64_t build_dyn_stack(uintptr_t phys_page,
  *
  * @return 0 on success, -1 on failure.
  */
-static int load_dynamic(const void *image,
+static int load_dynamic(elf64_src_t *src,
                         u_int64_t *l1,
                         char **argv,
                         int argc,
@@ -341,29 +412,64 @@ static int load_dynamic(const void *image,
                         u_int64_t *out_entry,
                         u_int64_t *out_usp)
 {
-	const Elf64_Ehdr *eh = (const Elf64_Ehdr *)image;
+	Elf64_Ehdr ehdr;
+	const Elf64_Ehdr *eh = &ehdr;
 	elf64_load_info_t mi;
-	u_int64_t main_base = (eh->e_type == ET_DYN) ? DYN_MAIN_BASE : 0;
-	u_int64_t start_entry, interp_base = 0;
+	u_int64_t main_base, start_entry, interp_base = 0;
 
-	if (elf64_load_at(image, l1, main_base, &mi) != 0)
+	if (src->read(src, 0, &ehdr, sizeof(ehdr)) != 0)
+		return (-1);
+	main_base = (eh->e_type == ET_DYN) ? DYN_MAIN_BASE : 0;
+
+	/* An ET_EXEC loads at its link address.  Below DYN_MAIN_BASE is the kernel's
+	 * shared identity map (L1 0..3): mapping there would scribble on kernel
+	 * tables for every process, so refuse it (classic 0x400000-linked binaries
+	 * need relinking as PIE — tcc is built with CONFIG_TCC_PIE for this). */
+	if (eh->e_type == ET_EXEC)
+	{
+		Elf64_Phdr ph;
+		int i;
+		for (i = 0; i < eh->e_phnum; i++)
+		{
+			if (src->read(src, eh->e_phoff + (u_int64_t)i * sizeof(ph), &ph, sizeof(ph)) != 0)
+				return (-1);
+			if (ph.p_type == PT_LOAD && ph.p_vaddr < DYN_MAIN_BASE)
+			{
+				kprintf("exec: ET_EXEC segment at %x:%x is below the user region\n",
+				        (unsigned)(ph.p_vaddr >> 32),
+				        (unsigned)ph.p_vaddr);
+				return (-1);
+			}
+		}
+	}
+
+	if (elf64_load_src(src, l1, main_base, &mi) != 0)
 		return (-1);
 	start_entry = mi.entry;
 
 	if (mi.interp_off != 0)
 	{
-		const char *interp = (const char *)image + mi.interp_off;
 		elf64_load_info_t ii;
-		char *ibuf;
+		char *interp, *ibuf;
 		int isz;
 
+		if (mi.interp_sz == 0 || mi.interp_sz > 256 || (interp = (char *)kmalloc(mi.interp_sz + 1)) == NULL)
+			return (-1);
+		if (src->read(src, mi.interp_off, interp, mi.interp_sz) != 0)
+		{
+			kfree(interp);
+			return (-1);
+		}
+		interp[mi.interp_sz] = '\0';
 		kprintf("dyn: interp = %s\n", interp);
 		ibuf = read_elf_file(interp, &isz);
 		if (ibuf == NULL)
 		{
 			kprintf("dyn: cannot load interp %s\n", interp);
+			kfree(interp);
 			return (-1);
 		}
+		kfree(interp);
 		interp_base = DYN_INTERP_BASE;
 		if (elf64_load_at(ibuf, l1, interp_base, &ii) != 0)
 		{
@@ -374,22 +480,19 @@ static int load_dynamic(const void *image,
 		start_entry = ii.entry; /* enter the dynamic linker, not the main exe */
 	}
 
-	/* Map a multi-page stack; the auxv/argv vector lives in the top page. */
+	/* The stack: reserve it demand-zero, leaving page 0 of the block unmapped as
+	 * the overflow guard; build_dyn_stack backs the top pages it writes. */
 	{
-		uintptr_t top_frame = 0;
 		int i;
-		for (i = 0; i < DYN_STACK_PAGES; i++)
+
+		for (i = 1; i < DYN_STACK_PAGES; i++)
+			pmap_reserve_user_page(l1, DYN_STACK_VA + (u_int64_t)i * PAGE_SIZE, 0);
+		*out_usp = build_dyn_stack(l1, argv, argc, envp, envc, &mi, interp_base);
+		if (*out_usp == 0)
 		{
-			uintptr_t f = vmm_find_free_page(sysID);
-			if (f == 0)
-				return (-1);
-			memset((void *)f, 0, PAGE_SIZE);
-			pmap_map_user_page(l1, DYN_STACK_VA + (u_int64_t)i * PAGE_SIZE, (u_int64_t)f, 0);
-			if (i == DYN_STACK_PAGES - 1)
-				top_frame = f;
+			kprintf("exec: argument list too long or out of memory\n");
+			return (-1);
 		}
-		*out_usp =
-		    build_dyn_stack(top_frame, DYN_STACK_TOP - PAGE_SIZE, argv, argc, envp, envc, &mi, interp_base);
 	}
 
 	*out_entry = start_entry;
@@ -404,6 +507,7 @@ static int load_dynamic(const void *image,
  */
 static kTask_t *spawn_dynamic(const char *path)
 {
+	elf64_src_t src;
 	char *buf;
 	int sz;
 	u_int64_t *l1, entry, usp;
@@ -420,7 +524,8 @@ static kTask_t *spawn_dynamic(const char *path)
 
 	l1 = pmap_create_user_space();
 	argv[0] = (char *)path;
-	if (load_dynamic(buf, l1, argv, 1, NULL, 0, &entry, &usp) != 0)
+	elf64_src_mem(&src, buf, (u_int64_t)sz);
+	if (load_dynamic(&src, l1, argv, 1, NULL, 0, &entry, &usp) != 0)
 	{
 		kfree(buf);
 		kprintf("dyn: %s failed to load\n", path);
@@ -537,23 +642,54 @@ static int copy_user_strvec(char *const *uvec, char **kvec, int max)
  *
  * @return -1 on any failure to load (on success it does not return).
  */
+/**
+ * Free the kernel copies of an exec argument vector (but not @keep, a string on
+ * the caller's stack), then the vector itself.
+ */
+static void free_strvec(char **vec, int n, const char *keep)
+{
+	int i;
+
+	if (vec == NULL)
+		return;
+	for (i = 0; i < n; i++)
+		if (vec[i] != keep)
+			kfree(vec[i]);
+	kfree(vec);
+}
+
 int aarch64_exec_replace(const char *path, char *const *uargv, char *const *uenvp)
 {
-	char *buf;
-	int sz, argc, envc, i;
+	elf64_src_t src;
+	fileDescriptor_t *efd;
+	int argc, envc;
 	u_int64_t *l1, entry, usp, kstack_top, old_ttbr0;
 	char namebuf[256];
-	char *kargv[MAXARG], *kenvp[MAXARG];
+	char **kargv, **kenvp;
 
-	buf = read_elf_file(path, &sz);
-	if (buf == NULL)
+	/* Read the program from its file page by page (not into one kernel buffer:
+	 * a compiler binary is tens of MB). */
+	efd = open_elf_src(path, &src);
+	if (efd == NULL)
 	{
 		kprintf("execve: %s not loadable\n", path);
 		return (-1);
 	}
 
 	/* Copy name + argv + envp out of the old address space now — they are user
-	 * pointers there and the old AS is unmapped the instant we switch TTBR0. */
+	 * pointers there and the old AS is unmapped the instant we switch TTBR0.  The
+	 * vectors live on the heap: MAXARG entries would not fit on a kernel stack. */
+	kargv = (char **)kmalloc(sizeof(char *) * MAXARG);
+	kenvp = (char **)kmalloc(sizeof(char *) * MAXARG);
+	if (kargv == NULL || kenvp == NULL)
+	{
+		if (kargv != NULL)
+			kfree(kargv);
+		if (kenvp != NULL)
+			kfree(kenvp);
+		fclose(efd);
+		return (-1);
+	}
 	strncpy(namebuf, path, sizeof(namebuf) - 1);
 	namebuf[sizeof(namebuf) - 1] = '\0';
 	argc = copy_user_strvec(uargv, kargv, MAXARG);
@@ -564,30 +700,31 @@ int aarch64_exec_replace(const char *path, char *const *uargv, char *const *uenv
 		argc = 1;
 	}
 
-	/* Task name (basename of path) + cmdline (argv joined) — MI helper shared
-	 * with i386 sys_exec.  Done here while kargv[] is still live (it is freed
-	 * below once load_dynamic has copied it onto the new user stack). */
-	exec_set_name_cmdline(_current, namebuf, kargv, argc);
-
 	l1 = pmap_create_user_space();
-	if (load_dynamic(buf, l1, kargv, argc, kenvp, envc, &entry, &usp) != 0)
+	if (load_dynamic(&src, l1, kargv, argc, kenvp, envc, &entry, &usp) != 0)
 	{
-		kfree(buf);
+		fclose(efd);
+		pmap_free_user_space(l1); /* never became active */
+		free_strvec(kargv, argc, namebuf);
+		free_strvec(kenvp, envc, NULL);
 		kprintf("execve: %s failed to load\n", path);
 		return (-1);
 	}
-	kfree(buf);
+	fclose(efd);
+
+	/* Task name (basename of path) + cmdline (argv joined) + exe path — only now
+	 * that the exec cannot fail, so a failed exec leaves the caller untouched. */
+	exec_set_name_cmdline(_current, namebuf, kargv, argc);
+
 	/* The argv/envp strings are now copied onto the new user stack; free the
 	 * kernel temporaries (but not namebuf, which is on our stack). */
-	for (i = 0; i < argc; i++)
-		if (kargv[i] != namebuf)
-			kfree(kargv[i]);
-	for (i = 0; i < envc; i++)
-		kfree(kenvp[i]);
+	free_strvec(kargv, argc, namebuf);
+	free_strvec(kenvp, envc, NULL);
 
 	/* Repoint the current task at the new image, then make it live.  (name +
 	 * cmdline were already set by exec_set_name_cmdline above.) */
 	old_ttbr0 = _current->md.md_ttbr0;
+	aarch64_shmap_release_all(_current, (u_int64_t *)(uintptr_t)old_ttbr0); /* the old image's shared maps */
 	_current->md.md_ttbr0 = (u_int64_t)(uintptr_t)l1;
 	_current->md.md_entry = entry;
 	_current->md.md_usp = usp;
@@ -600,6 +737,17 @@ int aarch64_exec_replace(const char *path, char *const *uargv, char *const *uenv
 	 * frames — free_page is MMIO/COW-safe).  Without this every exec leaked the
 	 * whole old address space. */
 	pmap_free_user_space((u_int64_t *)(uintptr_t)old_ttbr0);
+
+	/* POSIX: exec resets every CAUGHT signal to SIG_DFL — the handler addresses
+	 * pointed into the image just freed (a shell's SIGCHLD handler would otherwise
+	 * be "called" in the new program when its first child exits).  SIG_IGN stays
+	 * ignored; the mask and pending set are kept.  Mirrors i386_exec.c. */
+	{
+		size_t si;
+		for (si = 0; si < sizeof(_current->td.sigact) / sizeof(_current->td.sigact[0]); si++)
+			if ((void *)_current->td.sigact[si].sa_handler != (void *)0x1 /* SIG_IGN */)
+				memset(&_current->td.sigact[si], 0, sizeof(_current->td.sigact[si]));
+	}
 
 	kstack_top = (u_int64_t)(uintptr_t)((u_int8_t *)_current->kernelStack + INITIAL_KSTACK_SIZE);
 	aarch64_exec_to_el0(entry, usp, kstack_top); /* does not return */
@@ -698,6 +846,7 @@ static kTask_t *find_stopped_child(int want_pid)
 #define WAIT4_WUNTRACED 2 /* POSIX WUNTRACED — also report stopped children */
 int aarch64_wait4(int want_pid, int *status, int options)
 {
+	aarch64_reap_dead_tasks(); /* free children reaped by earlier waits */
 	for (;;)
 	{
 		int have_child = 0;
@@ -708,7 +857,7 @@ int aarch64_wait4(int want_pid, int *status, int options)
 			 * wait4 but passes only x0 — x1 (status) is garbage; only write a
 			 * pointer that is in the user VA range. */
 			if (status != NULL && (uintptr_t)status >= 0x100000000UL)
-				*status = 0; /* exit code not yet propagated; report 0 */
+				*status = child->exit_status; /* W_EXITED(code) or the killing signal */
 			return ((int)child->id);
 		}
 
@@ -749,7 +898,7 @@ int aarch64_wait4(int want_pid, int *status, int options)
 			 * wait4 but passes only x0 — x1 (status) is garbage; only write a
 			 * pointer that is in the user VA range. */
 			if (status != NULL && (uintptr_t)status >= 0x100000000UL)
-				*status = 0;
+				*status = child->exit_status;
 			return ((int)child->id);
 		}
 		sched_yield();

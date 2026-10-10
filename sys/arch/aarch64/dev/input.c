@@ -149,6 +149,14 @@ static void cook_key(u_int16_t code, u_int32_t value)
 		return;
 	}
 
+	/* Super / Meta (Linux KEY_LEFTMETA 125, KEY_RIGHTMETA 126): the compositor
+	 * uses it to open the launcher. */
+	if (code == 125 || code == 126)
+	{
+		kbd_push(KEY_SUPER, (u_int8_t)(value != 0));
+		return;
+	}
+
 	switch (code)
 	{
 		case KEY_KP_UP:

@@ -308,6 +308,7 @@ void vmm_page_fault(struct trapframe *frame, uintptr_t cr2)
 					signal_check(frame);
 					return;
 				}
+				_current->exit_status = 11; /* SIGSEGV for wait() */
 				endTask(_current->id);
 				return;
 			}
@@ -330,6 +331,7 @@ void vmm_page_fault(struct trapframe *frame, uintptr_t cr2)
 				}
 				kprintf("pageFault: OOM (lazy anon PD) at 0x%X pid %i\n", mem_addr, _current->id);
 				spinUnlock(&g_page_fault_spin_lock);
+				_current->exit_status = 11; /* SIGSEGV for wait() */
 				endTask(_current->id);
 				return;
 			}
@@ -343,6 +345,7 @@ void vmm_page_fault(struct trapframe *frame, uintptr_t cr2)
 			signal_check(frame);
 			return;
 		}
+		_current->exit_status = 11; /* SIGSEGV for wait() */
 		endTask(_current->id);
 		return;
 	}
@@ -361,6 +364,7 @@ void vmm_page_fault(struct trapframe *frame, uintptr_t cr2)
 		{
 			kprintf("vmm_page_fault: out of virtual pages during COW at 0x%X\n", mem_addr);
 			spinUnlock(&g_page_fault_spin_lock);
+			_current->exit_status = 11; /* SIGSEGV for wait() */
 			endTask(_current->id);
 			return;
 		}
@@ -386,6 +390,7 @@ void vmm_page_fault(struct trapframe *frame, uintptr_t cr2)
 		{
 			kprintf("pageFault: OOM during swap-in at 0x%X pid %i\n", mem_addr, _current->id);
 			spinUnlock(&g_page_fault_spin_lock);
+			_current->exit_status = 11; /* SIGSEGV for wait() */
 			endTask(_current->id);
 			return;
 		}
@@ -400,6 +405,7 @@ void vmm_page_fault(struct trapframe *frame, uintptr_t cr2)
 			asm volatile("invlpg (%0)" : : "r"(mem_addr & 0xFFFFF000) : "memory");
 			free_page(new_page);
 			spinUnlock(&g_page_fault_spin_lock);
+			_current->exit_status = 11; /* SIGSEGV for wait() */
 			endTask(_current->id);
 			return;
 		}
@@ -417,6 +423,7 @@ void vmm_page_fault(struct trapframe *frame, uintptr_t cr2)
 			return;
 		}
 		die_if_kernel("SEGFAULT", frame, 0xC);
+		_current->exit_status = 11; /* SIGSEGV for wait() */
 		endTask(_current->id);
 		return;
 	}
@@ -427,6 +434,7 @@ void vmm_page_fault(struct trapframe *frame, uintptr_t cr2)
 		{
 			kprintf("pageFault: OOM at 0x%X pid %i\n", mem_addr, _current->id);
 			spinUnlock(&g_page_fault_spin_lock);
+			_current->exit_status = 11; /* SIGSEGV for wait() */
 			endTask(_current->id);
 			return;
 		}
@@ -481,6 +489,7 @@ void vmm_page_fault(struct trapframe *frame, uintptr_t cr2)
 						signal_check(frame);
 						return;
 					}
+					_current->exit_status = 11; /* SIGSEGV for wait() */
 					endTask(_current->id);
 					return;
 				}
@@ -503,6 +512,7 @@ void vmm_page_fault(struct trapframe *frame, uintptr_t cr2)
 			return;
 		}
 		die_if_kernel("SEGFAULT", frame, 0xC);
+		_current->exit_status = 11; /* SIGSEGV for wait() */
 		endTask(_current->id);
 		return;
 	}

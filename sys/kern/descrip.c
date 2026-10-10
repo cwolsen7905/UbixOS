@@ -424,11 +424,14 @@ int sys_ioctl(struct thread *td, struct sys_ioctl_args *args)
 
 	/*
 	 * on_tty: fd is a tty when it has no underlying fileDescriptor_t (raw
-	 * tty fd inherited from parent), was opened via /dev/tty (FD_TYPE_TTY),
-	 * or is a specific vty (FD_TYPE_TTYV).
+	 * tty fd inherited from parent) and is not a pipe/socket/directory (those
+	 * have none either — counting them made isatty() true for a pipe, so `ls |`
+	 * printed columns), was opened via /dev/tty (FD_TYPE_TTY), or is a specific
+	 * vty (FD_TYPE_TTYV).
 	 */
-	int on_tty = (tty_fp != NULL &&
-	              (tty_fp->fd == NULL || tty_fp->fd_type == FD_TYPE_TTY || tty_fp->fd_type == FD_TYPE_TTYV)) &&
+	int on_tty = (tty_fp != NULL && ((tty_fp->fd == NULL && tty_fp->fd_type != FD_TYPE_PIPE &&
+	                                  tty_fp->fd_type != FD_TYPE_SOCKET && tty_fp->fd_type != FD_TYPE_DIR) ||
+	                                 tty_fp->fd_type == FD_TYPE_TTY || tty_fp->fd_type == FD_TYPE_TTYV)) &&
 	             term != NULL;
 
 	switch (args->com)

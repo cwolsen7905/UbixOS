@@ -81,6 +81,10 @@ struct fileSystem {
     int (*vfsReadDir)(kDIR_t *, struct kdirent *); /* read next entry */
     int (*vfsCloseDir)(kDIR_t *);                  /* close directory */
     int (*vfsClose)(void *);                        /* close open file (may be NULL) */
+    /* rename @from to @to, both mount-relative; second arg is vfs_mountPoint* (may be NULL) */
+    int (*vfsRename)(void *, const char *, const char *);
+    /* set an open file's length (fileDescriptor_t *, new length) (may be NULL) */
+    int (*vfsTruncate)(void *, off_t);
 };
 
 struct inode_operations {
@@ -105,6 +109,7 @@ struct inode_operations {
 int vfs_init();
 int vfsRegisterFS(struct fileSystem);
 struct fileSystem* vfs_findFS(int);
+int vfs_sync_all(void);
 
 struct super_operations {
     void (*read_inode)(struct inode*);

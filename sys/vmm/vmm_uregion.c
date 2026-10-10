@@ -22,22 +22,25 @@
 #define UREGION_PAGE_MASK ((uintptr_t)PAGE_SIZE - 1)
 
 /**
- * Allocate one zero-filled frame and map it read-write data at @va.
+ * Allocate one zero-filled frame and map it read-write at @va (executable if
+ * asked), replacing any reservation there.
  *
  * @return 0 on success, -1 if no free frame was available.
  */
-static int map_one_anon_page(u_int64_t *aspace_root, uintptr_t va)
+static int map_one_anon_page(u_int64_t *aspace_root, uintptr_t va, int executable)
 {
 	uintptr_t frame = vmm_find_free_page(sysID);
 
 	if (frame == 0)
 		return -1;
-	memset((void *)frame, 0, PAGE_SIZE); /* anonymous pages read as zero */
-	md_map_user_page(aspace_root, (u_int64_t)va, (u_int64_t)frame, 0 /* data, not executable */);
+	memset((void *)frame, 0, PAGE_SIZE);                          /* anonymous pages read as zero */
+	md_reserve_user_page(aspace_root, (u_int64_t)va, executable); /* releases an old mapping */
+	md_map_user_page(aspace_root, (u_int64_t)va, (u_int64_t)frame, executable);
 	return 0;
 }
 
-uintptr_t vmm_uregion_mmap_anon(u_int64_t *aspace_root, uintptr_t *next, size_t len, int fixed, uintptr_t fixed_addr)
+uintptr_t vmm_uregion_mmap_anon(
+    u_int64_t *aspace_root, uintptr_t *next, size_t len, int fixed, uintptr_t fixed_addr, int lazy, int executable)
 {
 	uintptr_t va, npages, i;
 
@@ -55,7 +58,9 @@ uintptr_t vmm_uregion_mmap_anon(u_int64_t *aspace_root, uintptr_t *next, size_t 
 
 	for (i = 0; i < npages; i++)
 	{
-		if (map_one_anon_page(aspace_root, va + i * PAGE_SIZE) != 0)
+		if (lazy)
+			md_reserve_user_page(aspace_root, (u_int64_t)(va + i * PAGE_SIZE), executable);
+		else if (map_one_anon_page(aspace_root, va + i * PAGE_SIZE, executable) != 0)
 			return 0;
 	}
 
@@ -64,6 +69,14 @@ uintptr_t vmm_uregion_mmap_anon(u_int64_t *aspace_root, uintptr_t *next, size_t 
 	if (!fixed)
 		*next = va + npages * PAGE_SIZE;
 	return va;
+}
+
+void vmm_uregion_munmap(u_int64_t *aspace_root, uintptr_t va, size_t len)
+{
+	if (aspace_root == 0 || len == 0)
+		return;
+	md_unmap_user_range(
+	    aspace_root, (u_int64_t)(va & ~UREGION_PAGE_MASK), (u_int64_t)len + (va & UREGION_PAGE_MASK));
 }
 
 uintptr_t vmm_uregion_brk(u_int64_t *aspace_root, uintptr_t *cur, uintptr_t newbrk)
@@ -76,11 +89,10 @@ uintptr_t vmm_uregion_brk(u_int64_t *aspace_root, uintptr_t *cur, uintptr_t newb
 	if (newbrk <= *cur) /* query or shrink request: report the current break */
 		return *cur;
 
+	/* Reserve (demand-zero) the pages the new break covers; the first touch
+	 * backs each one, so a big sbrk() costs nothing until it is used. */
 	for (va = (*cur + UREGION_PAGE_MASK) & ~UREGION_PAGE_MASK; va < newbrk; va += PAGE_SIZE)
-	{
-		if (map_one_anon_page(aspace_root, va) != 0)
-			return *cur; /* OOM: leave the break where it was */
-	}
+		md_reserve_user_page(aspace_root, (u_int64_t)va, 0);
 	*cur = newbrk;
 	return newbrk;
 }

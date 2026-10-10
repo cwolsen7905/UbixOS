@@ -28,14 +28,28 @@
  * advanced past the new region.  Models the anonymous-mmap surface mallocng
  * needs (MAP_ANON private; MAP_FIXED honoured for its reserve/guard pages).
  *
+ * With @lazy the pages are only reserved (demand-zero: backed on first touch,
+ * so a large malloc arena or thread stack costs nothing until used); without
+ * it they are backed immediately — for callers that fill the frames through
+ * their physical alias right away (file-backed mmap).  Any existing mapping in
+ * the range is released first (MAP_FIXED replace semantics).
+ *
  * @param next  in/out bump cursor for non-fixed mappings; ignored when @fixed.
+ * @param executable  non-zero to make the pages EL0-executable (PROT_EXEC).
  * @return the region base VA, or 0 on allocation failure.
  */
-uintptr_t vmm_uregion_mmap_anon(u_int64_t *aspace_root, uintptr_t *next, size_t len, int fixed, uintptr_t fixed_addr);
+uintptr_t vmm_uregion_mmap_anon(
+    u_int64_t *aspace_root, uintptr_t *next, size_t len, int fixed, uintptr_t fixed_addr, int lazy, int executable);
 
 /**
- * Grow the program break in @aspace_root from *@cur up to @newbrk, mapping any
- * newly required pages (zero-filled, read-write).  Never shrinks; a request at
+ * munmap(2): release [@va, @va+@len) in @aspace_root (frames freed, reservations
+ * dropped).  The VA range itself is not recycled by the bump allocator.
+ */
+void vmm_uregion_munmap(u_int64_t *aspace_root, uintptr_t va, size_t len);
+
+/**
+ * Grow the program break in @aspace_root from *@cur up to @newbrk, reserving any
+ * newly required pages (demand-zero, read-write).  Never shrinks; a request at
  * or below the current break just reports it (Linux brk return semantics: the
  * resulting break is returned, which musl's mallocng glue treats as success).
  *

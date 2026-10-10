@@ -76,6 +76,15 @@ static int64_t psci_call(u_int64_t fn, u_int64_t a0, u_int64_t a1, u_int64_t a2)
 }
 
 /**
+ * Power the machine off (off != 0) or reset it, via PSCI SYSTEM_OFF (0x84000008)
+ * / SYSTEM_RESET (0x84000009).  Does not return on success.
+ */
+void psci_system_power(int off)
+{
+	(void)psci_call(off ? 0x84000008u : 0x84000009u, 0, 0, 0);
+}
+
+/**
  * C entry for an application processor (reached from apentry.S with the MMU off).
  * Enable the MMU on the shared kernel page tables, install this CPU's vectors +
  * per-CPU block, then prove liveness by bumping our heartbeat before parking.

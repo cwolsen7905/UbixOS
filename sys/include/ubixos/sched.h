@@ -67,6 +67,7 @@ typedef struct taskStruct {
     pidType id;
     char name[256];
     char cmdline[1024];
+    char exe_path[256]; /* absolute path of the running executable (/proc/self/exe) */
     struct taskStruct *prev;
     struct taskStruct *next;
     struct md_proc md;
@@ -93,6 +94,8 @@ typedef struct taskStruct {
     tty_term *ct_tty;   /* controlling terminal — set by TIOCSCTTY, cleared by setsid() */
     u_int32_t children; // Hack for WAIT
     u_int32_t last_exit; // Hack For WAIT
+    int exit_status;     /* wait(2) status word: exit code << 8, or the killing signal */
+    u_int32_t reap_tick; /* aarch64 reaper: sysTicks when dequeued for freeing */
     struct taskStruct *parent;
     char username[256];
     u_int32_t *kernelStack;
@@ -229,6 +232,9 @@ kTask_t *schedFindTask(u_int32_t id);
  * (call AFTER the arch address-space copy — see the function comment). */
 void fork_copy_fdtable(kTask_t *child, struct thread *ptd);
 void proc_fork_inherit_context(kTask_t *child);
+
+/* proc_exit_cleanup: callout stop, close fds (last of tgid), reparent children to init. */
+void proc_exit_cleanup(kTask_t *t, int last_of_group);
 void proc_fork_signal_init(kTask_t *child, struct thread *ptd);
 
 /*

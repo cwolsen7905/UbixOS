@@ -41,7 +41,7 @@ void virtio_gpu_flush(void);
 /* pmap mappers (sys/arch/aarch64/vmm/pmap.c). */
 int pmap_map_user_page(u_int64_t *l1, u_int64_t va, u_int64_t pa, int executable);
 int pmap_map_user_page_wired(u_int64_t *l1, u_int64_t va, u_int64_t pa); /* RW, fork-shared, never freed */
-u_int64_t pmap_extract(u_int64_t *l1, u_int64_t va);
+u_int64_t pmap_populate(u_int64_t *l1, u_int64_t va);
 
 /*
  * Fixed user VA window for the mapped framebuffer.  Block 12 (0x300000000) is
@@ -198,7 +198,7 @@ int sys_shareregion(struct thread *td, struct sys_shareregion_args *args)
 	n = (args->size + PAGE_SIZE - 1) / PAGE_SIZE;
 	for (i = 0; i < n; i++)
 	{
-		u_int64_t pa = pmap_extract(src_l1, base + i * PAGE_SIZE);
+		u_int64_t pa = pmap_populate(src_l1, base + i * PAGE_SIZE); /* backs an untouched buffer page */
 		if (pa == 0)
 		{
 			td->td_retval[0] = -1;

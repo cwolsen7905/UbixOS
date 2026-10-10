@@ -16,6 +16,11 @@
 #include <sys/pipe.h>
 #include <lib/kmalloc.h>
 #include <string.h>
+#include <ubixos/sched_internal.h> /* taskList — orphan reparenting */
+#include <ubixos/wait.h>           /* save_flags/cli/restore_flags */
+#include <ubixos/callout.h>        /* callout_stop */
+#include <sys/sysproto_posix.h>    /* sys_close */
+#include <machine/signal.h>        /* SIGCHLD */
 
 /**
  * Duplicate the parent thread's open-file table into a freshly-created child
@@ -111,6 +116,12 @@ void proc_fork_inherit_context(kTask_t *child)
 
 	child->uid = _current->uid;
 	child->gid = _current->gid;
+
+	/* Same program until it execs: inherit its name, command line and path
+	 * (ps/procfs showed a forked child with an empty name). */
+	memcpy(child->name, _current->name, sizeof(child->name));
+	memcpy(child->cmdline, _current->cmdline, sizeof(child->cmdline));
+	memcpy(child->exe_path, _current->exe_path, sizeof(child->exe_path));
 }
 
 /**
@@ -130,4 +141,61 @@ void proc_fork_signal_init(kTask_t *child, struct thread *ptd)
 	memset(child->td.sig_extra, 0, sizeof(child->td.sig_extra));
 	memcpy(child->td.sigact, ptd->sigact, sizeof(child->td.sigact));
 	memcpy(&child->td.sigmask, &ptd->sigmask, sizeof(child->td.sigmask));
+}
+
+/**
+ * Exit-time cleanup shared by every architecture's endTask(), run by the dying
+ * task @t (== _current) on its own kernel stack.
+ *
+ * - Cancels its timed-sleep callout, which lives inside the task struct the
+ *   reaper is about to free (a killed sleeper would leave it on the callout list).
+ * - When @t is the last task of its thread group: closes every open descriptor,
+ *   so pipe writer counts drop (readers see EOF) and file structs are released.
+ *   Earlier threads only drop their slots — siblings share the o_files objects.
+ * - Hands its children to init (pid 1): once @t is reaped its struct is freed,
+ *   and the scheduler dereferences a child's ->parent when that child exits.
+ *
+ * @param last_of_group  non-zero if no other task of @t's tgid is alive.
+ */
+void proc_exit_cleanup(kTask_t *t, int last_of_group)
+{
+	kTask_t *init, *c;
+	u_int32_t flags;
+	int fd;
+
+	callout_stop(&t->sleep_callout);
+
+	for (fd = 0; fd < O_FILES; fd++)
+	{
+		if (t->td.o_files[fd] == NULL)
+			continue;
+		if (last_of_group)
+		{
+			struct sys_close_args ca;
+			ca.fd = fd;
+			sys_close(&t->td, &ca);
+		}
+		t->td.o_files[fd] = NULL;
+	}
+
+	init = schedFindTask(1);
+	if (init == t)
+		init = NULL;
+	save_flags(flags);
+	cli();
+	for (c = taskList; c != NULL; c = c->next)
+	{
+		if (c->parent != t || c == t)
+			continue;
+		c->parent = init;
+		c->ppid = (init != NULL) ? init->id : 0;
+		if (init != NULL)
+		{
+			init->children++;
+			/* An already-exited orphan needs init to reap it. */
+			if (c->state == ZOMBIE || c->state == DEAD)
+				init->td.sig_pending |= (1u << (SIGCHLD - 1));
+		}
+	}
+	restore_flags(flags);
 }

@@ -51,6 +51,33 @@ typedef struct elf64_load_info
  */
 int elf64_load_at(const void *image, u_int64_t *aspace_root, u_int64_t load_base, elf64_load_info_t *info);
 
+/**
+ * Where an ELF image's bytes come from: an in-memory copy, or (for large
+ * executables) the file itself, read on demand so the kernel never needs a
+ * buffer the size of the program.  @read copies @len bytes at file offset @off
+ * into @dst and returns 0, or -1 on a short read.
+ */
+typedef struct elf64_src
+{
+	int (*read)(struct elf64_src *src, u_int64_t off, void *dst, u_int64_t len);
+	const void *mem; /* memory-backed source: the image */
+	u_int64_t size;  /* image/file size in bytes */
+	void *ctx;       /* file-backed source: the caller's file handle */
+} elf64_src_t;
+
+/**
+ * Initialise @src to read from the in-memory @image of @size bytes.
+ */
+void elf64_src_mem(elf64_src_t *src, const void *image, u_int64_t size);
+
+/**
+ * elf64_load_at() for any source: reads the headers, then each PT_LOAD page's
+ * bytes straight into its frame.
+ *
+ * @return 0 on success; -1 on an invalid image, a read error or mapping failure.
+ */
+int elf64_load_src(elf64_src_t *src, u_int64_t *aspace_root, u_int64_t load_base, elf64_load_info_t *info);
+
 /* ---- machine-dependent hooks (implemented per 64-bit arch) ---- */
 
 /**
@@ -58,6 +85,18 @@ int elf64_load_at(const void *image, u_int64_t *aspace_root, u_int64_t load_base
  * @param executable non-zero for code (EL0/ring-3 executable), zero for data.
  */
 void md_map_user_page(u_int64_t *aspace_root, u_int64_t va, u_int64_t pa, int executable);
+
+/**
+ * Reserve user page @va in @aspace_root as demand-zero (backed on first touch),
+ * replacing any existing mapping there.
+ * @param executable non-zero for an EL0/ring-3 executable page.
+ */
+void md_reserve_user_page(u_int64_t *aspace_root, u_int64_t va, int executable);
+
+/**
+ * Remove the user mappings in [@va, @va+@len) and release their frames.
+ */
+void md_unmap_user_range(u_int64_t *aspace_root, u_int64_t va, u_int64_t len);
 
 /**
  * Synchronize the I-cache for [@addr, @addr+@len) after writing code there.

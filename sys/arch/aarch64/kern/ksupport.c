@@ -29,9 +29,16 @@
 #include <ubixos/vitals.h>
 #include <ubixos/callout.h>
 #include <sys/shutdown.h>
-#include <mpi/mpi.h>     /* mpi_destroyProcessMboxes — free a task's mailboxes on exit */
-#include <sys/descrip.h> /* g_device_find — bus-device lookup hook (ubx_device_find shim) */
-#include <sys/bus.h>     /* struct ubx_device */
+#include <mpi/mpi.h>               /* mpi_destroyProcessMboxes — free a task's mailboxes on exit */
+#include <sys/descrip.h>           /* g_device_find — bus-device lookup hook (ubx_device_find shim) */
+#include <sys/bus.h>               /* struct ubx_device */
+#include <sys/thread.h>            /* O_FILES */
+#include <sys/sysproto_posix.h>    /* sys_close — close a dying task's descriptors */
+#include <ubixos/tty.h>            /* tty_hangup_by_owner */
+#include <lib/kmalloc.h>           /* kfree — reap a dead task */
+#include <ubixos/wait.h>           /* save_flags/cli/restore_flags */
+#include <ubixos/sched_internal.h> /* taskList — reparent orphans */
+#include <aarch64/pcpu.h>          /* g_pcpu — is a dead task still on some CPU? */
 
 /* systemVitals is now the real generic vitals node (sys/kern/vitals.c),
  * allocated by vitals_init() during kmain bring-up. */
@@ -145,14 +152,12 @@ int spinTryLock(spinLock_t lock)
 /* krandom_stir is now the real CSPRNG (sys/kern/random.c). */
 
 /**
- * Shut down / reboot the machine — bring-up: just halt.
+ * Shut down / reboot the machine (PSCI, via machine_power in sys/kern/reboot.c).
  */
 int sys_shutdown(shutdownCMD_t cmd)
 {
-	(void)cmd;
-	kprintf("sys_shutdown: halting.\n");
-	for (;;)
-		__asm__ volatile("wfi");
+	kprintf("sys_shutdown: %s.\n", cmd == HALT ? "powering off" : "rebooting");
+	machine_power(cmd == HALT);
 	return 0;
 }
 
@@ -180,18 +185,106 @@ void __assert(const char *func, const char *file, int line, const char *expr)
 }
 
 /**
- * Terminate a task — bring-up: mark it ZOMBIE (the generic reap path then
- * transitions it to DEAD).  The full address-space teardown is not ported.
+ * Terminate the current task: the aarch64 port of sys/kern/endtask.c.
+ *
+ * Runs on the dying task's own kernel stack while its address space is still
+ * active.  Wakes a pthread_join()er (CLONE_CHILD_CLEARTID), and — when this is
+ * the last task of its thread group — closes every open descriptor (dropping
+ * pipe writer counts so readers see EOF) and flags the address space for the
+ * reaper (aarch64_reap_dead_tasks) to free once the task is off-CPU.  Then
+ * frees its MPI mailboxes, hands the terminal back and becomes a ZOMBIE for the
+ * parent's wait().  @pid is ignored: every caller ends _current.
  */
 void endTask(pidType pid)
 {
 	(void)pid;
-	if (_current != 0)
+	if (_current == 0)
+		return;
+
+	/* CLONE_CHILD_CLEARTID: zero the user word and wake a pthread_join()er
+	 * while this thread's address space is still mapped. */
+	if (_current->clear_tid != NULL)
 	{
-		/* Free the task's MPI mailboxes so their names/pids do not leak — a leaked
-		 * mailbox blocks a relaunched owner (e.g. a respawned authd/login) from
-		 * recreating it. */
-		mpi_destroyProcessMboxes(_current->id);
-		_current->state = ZOMBIE;
+		*_current->clear_tid = 0;
+		sched_wakeup_chan(_current->clear_tid);
+		_current->clear_tid = NULL;
 	}
+
+	{
+		int last = (sched_tgid_others_alive(_current->tgid, _current->id) == 0);
+
+		_current->reap_free_as = last ? 1 : 0; /* siblings still use a shared space */
+		/* Flush MAP_SHARED file mappings while the address space is still live. */
+		if (last)
+			aarch64_shmap_release_all(_current, (u_int64_t *)(uintptr_t)_current->md.md_ttbr0);
+		/* Close descriptors, stop the sleep callout, hand children to init —
+		 * shared with i386 (kern_fork.c). */
+		proc_exit_cleanup(_current, last);
+	}
+
+	/* Free the task's MPI mailboxes so their names/pids do not leak — a leaked
+	 * mailbox blocks a relaunched owner (e.g. a respawned authd/login) from
+	 * recreating it. */
+	mpi_destroyProcessMboxes(_current->id);
+
+	if (_current->term != NULL && _current->term->owner == _current->id && _current->parent != NULL)
+		_current->term->owner = _current->parent->id;
+	tty_hangup_by_owner(_current->id);
+
+	_current->state = ZOMBIE;
+}
+
+/**
+ * Free the tasks wait() (or the scheduler, for orphans) has queued for deletion:
+ * their user address space (unless a thread sibling still shares it), kernel
+ * stack and task struct.
+ *
+ * Called from wait4 — process context, where the yielding VMM/heap locks the
+ * frees take are safe (not from an idle task or the timer IRQ).  A task is only
+ * freed once it is surely off every CPU (see the test below), since wait() can
+ * collect a still-running ZOMBIE.
+ */
+void aarch64_reap_dead_tasks(void)
+{
+	static kTask_t *g_reap_pending; /* dequeued, waiting until surely off-CPU */
+	static struct spinLock g_reap_lock = SPIN_LOCK_INITIALIZER;
+	kTask_t *t, **pp;
+	u_int32_t now = systemVitals->sysTicks;
+
+	/* Several CPUs' idle loops (and wait4) call this; one reaper at a time, and
+	 * a busy reaper is simply skipped (the next caller picks the work up). */
+	if (spinTryLock(&g_reap_lock) != 0)
+		return;
+
+	while ((t = sched_getDelTask()) != NULL)
+	{
+		t->reap_tick = now;
+		t->next = g_reap_pending;
+		g_reap_pending = t;
+	}
+
+	/* wait() may collect a child that is still a ZOMBIE — possibly still
+	 * finishing endTask on another CPU.  Free it only once no CPU has it as
+	 * current and two ticks have passed (every CPU has rescheduled since). */
+	for (pp = &g_reap_pending; (t = *pp) != NULL;)
+	{
+		int i, busy = (now - t->reap_tick) < 2;
+
+		for (i = 0; i < MAXCPU && !busy; i++)
+			if (g_pcpu[i].current == t)
+				busy = 1;
+		if (busy)
+		{
+			pp = &t->next;
+			continue;
+		}
+		*pp = t->next;
+		if (t->reap_free_as && t->md.md_ttbr0 != 0 &&
+		    t->md.md_ttbr0 != (u_int64_t)(uintptr_t)aarch64_kernel_l1())
+			pmap_free_user_space((u_int64_t *)(uintptr_t)t->md.md_ttbr0);
+		if (t->kernelStack != NULL)
+			kfree(t->kernelStack);
+		kfree(t);
+	}
+	spinUnlock(&g_reap_lock);
 }

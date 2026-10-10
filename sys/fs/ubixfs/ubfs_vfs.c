@@ -400,6 +400,8 @@ static int ubfs_vfs_read(fileDescriptor_t *fd, char *data, off_t offset, long si
 	if (fd == 0 || fd->res == 0)
 		return (-1);
 	f = (struct ubfs_file *)fd->res;
+	if (size < 0)
+		return (-1);
 	return ((int)ubfs_fs_read(&f->m->fs, f->obj, (uint64_t)offset, data, (uint64_t)size));
 }
 
@@ -583,6 +585,58 @@ static int ubfs_vfs_unlink(char *path, void *vmp)
 }
 
 /**
+ * vfsRename: move @from to @to (both mount-relative) within the pool and commit.
+ *
+ * @return 0 on success, -1 on failure.
+ */
+static int ubfs_vfs_rename(void *vmp, const char *from, const char *to)
+{
+	struct vfs_mountPoint *mp = (struct vfs_mountPoint *)vmp;
+	struct ubfs_mount *m;
+	char fbuf[1024];
+
+	if (mp == 0 || mp->fsInfo == 0)
+		return (-1);
+	m = (struct ubfs_mount *)mp->fsInfo;
+	if (!m->writable)
+		return (-1);
+	/* pool_relative may hand back a static buffer: copy the first result. */
+	strncpy(fbuf, pool_relative(mp, (char *)from), sizeof(fbuf) - 1);
+	fbuf[sizeof(fbuf) - 1] = '\0';
+	ubfs_touch_clock(m);
+	if (ubfs_fs_rename(&m->fs, fbuf, pool_relative(mp, (char *)to)) < 0)
+		return (-1);
+	return (ubfs_commit(m));
+}
+
+/**
+ * vfsTruncate: set the open file's length.  Growing writes a zero byte at the
+ * new end (the gap reads as zeros); shrinking is not supported by the core yet.
+ *
+ * @return 0 on success, -1 on failure (including a shrink request).
+ */
+static int ubfs_vfs_truncate(fileDescriptor_t *fd, off_t length)
+{
+	struct ubfs_file *f;
+	ubfs_inode_t in;
+	char zero = 0;
+
+	if (fd == 0 || fd->res == 0)
+		return (-1);
+	f = (struct ubfs_file *)fd->res;
+	if (!f->m->writable || ubfs_fs_getattr(&f->m->fs, f->obj, &in) < 0)
+		return (-1);
+	if ((uint64_t)length == in.size)
+		return (0);
+	if ((uint64_t)length < in.size)
+		return (-1);
+	ubfs_touch_clock(f->m);
+	if (ubfs_fs_write(&f->m->fs, f->obj, (uint64_t)length - 1, &zero, 1) < 0)
+		return (-1);
+	return (ubfs_commit(f->m));
+}
+
+/**
  * vfsSync: commit the most-recently mounted pool (the hook takes no mount arg).
  * Mutations already commit eagerly, so this is a belt-and-braces flush.
  *
@@ -681,6 +735,8 @@ int ubfs_vfs_init(void)
 	    (void *)ubfs_vfs_readdir,  /* vfsReadDir */
 	    (void *)ubfs_vfs_closedir, /* vfsCloseDir */
 	    (void *)ubfs_vfs_close,    /* vfsClose */
+	    (void *)ubfs_vfs_rename,   /* vfsRename */
+	    (void *)ubfs_vfs_truncate, /* vfsTruncate */
 	};
 
 	if (vfsRegisterFS(fs) != 0)

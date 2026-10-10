@@ -31,12 +31,21 @@
 
 #include <sys/types.h>
 
-typedef enum {
-    HALT,
-    REBOOT
+typedef enum
+{
+	HALT,
+	REBOOT
 } shutdownCMD_t;
 
 int sys_shutdown(shutdownCMD_t);
+
+/* reboot(2) howto bits (FreeBSD values). */
+#define RB_HALT 0x08
+#define RB_POWEROFF 0x4000
+
+struct thread;
+int sys_reboot(struct thread *td, void *uap);
+void machine_power(int off);
 
 /*
  * Deferred-reboot countdown deadline, in scheduler ticks (0 = inactive).  Armed

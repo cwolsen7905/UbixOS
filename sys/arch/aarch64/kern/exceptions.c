@@ -115,6 +115,15 @@ void aarch64_exception(u_int64_t kind, void *frame)
 			return;
 		}
 
+		/* A translation fault (FSC 0b0001LL, levels 0-3) on a page mmap/brk/the
+		 * stack only reserved: back it with a zeroed frame and retry. */
+		if ((ec == ESR_EC_DABT_LOW || ec == ESR_EC_IABT_LOW) && _current != 0 && _current->md.md_ttbr0 != 0 &&
+		    (esr & 0x3CUL) == 0x04)
+		{
+			if (pmap_lazy_fault((u_int64_t *)(uintptr_t)_current->md.md_ttbr0, READ_SYSREG(far_el1)) == 0)
+				return;
+		}
+
 		/* A write that took a data-abort *permission* fault may be a copy-on-write
 		 * page shared by fork — give this writer a private copy and resume, rather
 		 * than killing it.  ISS: DFSC[5:0] == 0b0011LL is a permission fault (levels
@@ -143,11 +152,15 @@ void aarch64_exception(u_int64_t kind, void *frame)
 		if ((ec == ESR_EC_DABT_LOW || ec == ESR_EC_IABT_LOW) && _current != 0)
 		{
 			u_int64_t far = READ_SYSREG(far_el1);
-			kprintf("EL0 fault: pid=%d (%s) SIGSEGV at 0x%lx (esr=0x%lx)\n",
+			kprintf("EL0 fault: pid=%d (%s) SIGSEGV at 0x%lx (esr=0x%lx) pc=%x:%x lr=%x:%x\n",
 			        _current->id,
 			        _current->name,
 			        far,
-			        esr);
+			        esr,
+			        (unsigned)(tf->tf_elr >> 32),
+			        (unsigned)tf->tf_elr,
+			        (unsigned)(gpr[30] >> 32),
+			        (unsigned)gpr[30]);
 			_current->td.frame = tf;
 			signal_post_fault(SIGSEGV, (void *)(uintptr_t)far, SEGV_MAPERR);
 			signal_check(tf);
@@ -177,6 +190,15 @@ void aarch64_exception(u_int64_t kind, void *frame)
 		{
 			if (pmap_cow_fault((u_int64_t *)(uintptr_t)_current->md.md_ttbr0, far, _current->id) == 0)
 				return; /* ERET and retry the kernel store on the private copy */
+		}
+
+		/* A syscall touching a user buffer nobody has used yet (a fresh malloc
+		 * arena handed to read(), say) hits a reserved demand-zero page: back it
+		 * and retry the kernel access. */
+		if (ec == 0x25 && (dfsc & 0x3C) == 0x04)
+		{
+			if (pmap_lazy_fault((u_int64_t *)(uintptr_t)_current->md.md_ttbr0, far) == 0)
+				return;
 		}
 	}
 
@@ -222,6 +244,7 @@ void aarch64_exception(u_int64_t kind, void *frame)
 			kprintf("  -> terminating offending user task pid=%d (%s); OS continues\n",
 			        _current->id,
 			        _current->name);
+			_current->exit_status = 11; /* W_SIGNALED(SIGSEGV) */
 			endTask(_current->id);
 			sched_yield();
 			/* not reached — sched_yield switches to another task */

@@ -14,6 +14,7 @@
 #include <ubixos/sched.h>
 #include <ubixos/exec.h>
 #include <string.h>
+#include <lib/kprintf.h> /* snprintf */
 
 /**
  * Set a task's display name and command line from the executable @path and its
@@ -39,6 +40,18 @@ void exec_set_name_cmdline(kTask_t *t, const char *path, char **argv, int argc)
 			base = p + 1;
 	strncpy(t->name, base, sizeof(t->name) - 1);
 	t->name[sizeof(t->name) - 1] = '\0';
+
+	/* /proc/self/exe: the absolute path (programs such as clang find their
+	 * installation — headers, linker — relative to it). */
+	if (path[0] == '/')
+		snprintf(t->exe_path, sizeof(t->exe_path), "%s", path);
+	else
+		snprintf(t->exe_path,
+		         sizeof(t->exe_path),
+		         "%s%s%s",
+		         t->oInfo.cwd,
+		         (t->oInfo.cwd[0] != '\0' && t->oInfo.cwd[strlen(t->oInfo.cwd) - 1] == '/') ? "" : "/",
+		         (path[0] == '.' && path[1] == '/') ? path + 2 : path);
 
 	for (j = 0; j < argc && argv != NULL && argv[j] != NULL && pos < sizeof(t->cmdline) - 1; j++)
 	{
