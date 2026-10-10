@@ -30,7 +30,8 @@ FD_DEVICE = /dev/md0
 .if !defined(SRCTOP)
 SRCTOP != cd "${.CURDIR}" && git rev-parse --show-toplevel 2>/dev/null | tr -d '\n'
 .if empty(SRCTOP)
-SRCTOP = ${.CURDIR}
+# No git (e.g. building /usr/src on uBixOS): walk up to the tree root.
+SRCTOP != d="${.CURDIR}"; while [ "$$d" != / ] && [ ! -f "$$d/share/mk/ubix.platform.mk" ]; do d=$$(dirname "$$d"); done; echo "$$d"
 .endif
 .export SRCTOP
 .endif
@@ -43,3 +44,4 @@ OBJ_DIR ?= ${SRCTOP}/build/${_ARCH}
 
 .include "${UBIX_MK}/ubix.platform.mk"
 .include "${UBIX_MK}/ubix.target.${_ARCH}.mk"
+.include "${UBIX_MK}/ubix.toolchain.mk"

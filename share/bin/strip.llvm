@@ -1,0 +1,6 @@
+#!/bin/sh
+# strip -> llvm-objcopy --strip-all, one file at a time (no symlinks for llvm-strip)
+for f in "$@"; do
+	case "$f" in -*) continue ;; esac
+	/bin/objcopy --strip-all "$f" || exit 1
+done

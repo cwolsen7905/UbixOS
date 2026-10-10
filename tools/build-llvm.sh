@@ -211,7 +211,7 @@ stage_cross() {
 		-DCLANG_DEFAULT_RTLIB=compiler-rt -DCLANG_DEFAULT_UNWINDLIB=libunwind \
 		-DCLANG_DEFAULT_CXX_STDLIB=libc++ -DCLANG_DEFAULT_LINKER=lld \
 		-DLLD_BUILD_TOOLS=ON
-	ninja -C "$B" -j$JOBS clang lld
+	ninja -C "$B" -j$JOBS clang lld llvm-ar llvm-nm llvm-objcopy
 	"$HOSTLLVM/bin/llvm-strip" -o "$TOP/out-clang" "$B/bin/clang-20" 2>/dev/null ||
 		"$HOSTLLVM/bin/llvm-strip" -o "$TOP/out-clang" "$B/bin/clang"
 	"$HOSTLLVM/bin/llvm-strip" -o "$TOP/out-lld" "$B/bin/lld"
@@ -229,6 +229,11 @@ stage_dist() {
 	mkdir -p "$D/bin" "$D/lib/clang/$V/lib" "$D/usr/lib" "$D/usr/include"
 	cp "$TOP/out-clang" "$D/bin/clang"
 	cp "$TOP/out-lld" "$D/bin/ld.lld"
+	# binutils for native builds: ar / nm / objcopy (ranlib and strip are
+	# wrapper scripts in share/bin — the root filesystem has no symlinks).
+	for t in ar nm objcopy; do
+		"$HOSTLLVM/bin/llvm-strip" -o "$D/bin/$t" "$TOP/build-cross/bin/llvm-$t"
+	done
 	cp -R "$TOP/build-cross/lib/clang/$V/include" "$D/lib/clang/$V/"
 	# Headers for other targets / offload runtimes are dead weight here.
 	rm -rf "$D/lib/clang/$V/include/"*_wrappers "$D/lib/clang/$V/include/openmp_wrappers"

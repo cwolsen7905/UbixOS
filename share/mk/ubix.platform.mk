@@ -37,6 +37,13 @@ CROSS_PREFIX ?=
 CROSS_M32    ?=
 GNU_MAKE     ?= make
 .  endif
+.elif ${UNAME_S} == "UBIX"
+# Building on uBixOS itself: native tools, no cross prefix (ubix.toolchain.mk).
+UBIX_NATIVE  = 1
+CROSS_PREFIX ?=
+CROSS_M32    ?=
+GNU_MAKE     ?= gmake
+.export UBIX_NATIVE
 .else
 # FreeBSD and other BSDs: assumes native i386 host toolchain.
 # On FreeBSD x86_64 you would need to set CROSS_M32=-m32 manually.
@@ -47,7 +54,11 @@ GNU_MAKE     ?= gmake
 
 # Only compute LIBGCC once — child makes inherit it via the environment.
 .if !defined(LIBGCC)
+.if defined(UBIX_NATIVE)
+LIBGCC != cc -print-libgcc-file-name 2>/dev/null
+.else
 LIBGCC != ${CROSS_PREFIX}gcc ${CROSS_M32} -print-libgcc-file-name 2>/dev/null
+.endif
 .endif
 
 # Per-arch musl/link knobs for the world build (mirrors ubix.musl.vars.mk, for

@@ -1,14 +1,15 @@
 # Host-platform + per-arch knobs (CROSS_PREFIX, CROSS_M32, MUSL_ARCH, ...).
 .include "${UBIX_MK}/ubix.platform.mk"
+.include "${UBIX_MK}/ubix.toolchain.mk"
 
-CC=${CROSS_PREFIX}gcc
-CXX=${CROSS_PREFIX}g++
-AS=${CROSS_PREFIX}as
-AR=${CROSS_PREFIX}ar
-LD=${CROSS_PREFIX}ld
-NM=${CROSS_PREFIX}nm
-OBJCOPY=${CROSS_PREFIX}objcopy
-RANLIB=${CROSS_PREFIX}ranlib
+CC=${UBIX_CC}
+CXX=${UBIX_CXX}
+AS=${UBIX_AS}
+AR=${UBIX_AR}
+LD=${UBIX_LD}
+NM=${UBIX_NM}
+OBJCOPY=${UBIX_OBJCOPY}
+RANLIB=${UBIX_RANLIB}
 
 CFLAGS = ${CROSS_M32} -nostdlib -nostdinc -fno-builtin -Wno-unused-command-line-argument -fPIC -MMD -MP
 

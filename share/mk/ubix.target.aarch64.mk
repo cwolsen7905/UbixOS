@@ -22,12 +22,16 @@ _UBIX_TARGET_MK = 1
 # platform.mk already set.  macOS: `brew install aarch64-elf-gcc
 # aarch64-elf-binutils`.  Override CROSS_PREFIX on the command line for a
 # different toolchain (e.g. aarch64-linux-gnu-).
+.if !defined(UBIX_NATIVE)
 CROSS_PREFIX = aarch64-elf-
 CROSS_M32    =
+.endif
 
 # Recompute libgcc for the aarch64 compiler (platform.mk computed it for the
 # x86 prefix, which is wrong here).
+.if !defined(UBIX_NATIVE)
 LIBGCC != ${CROSS_PREFIX}gcc -print-libgcc-file-name 2>/dev/null
+.endif
 
 # ARMv8-A.  -mgeneral-regs-only: the kernel must not touch the FP/NEON (SIMD)
 # register file (it would require enabling/saving FPSIMD state in the trap path

@@ -294,6 +294,33 @@ if [ -x "${UBFS:-}" ] && [ -n "${POOL_LBA:-}" ]; then
 		# cc / c++ wrapper scripts (no symlinks on the root filesystem).
 		"${UBFS}" cp share/bin/cc.clang "${WPOOL}:/bin/cc" >/dev/null
 		"${UBFS}" cp share/bin/c++.clang "${WPOOL}:/bin/c++" >/dev/null
+		"${UBFS}" cp share/bin/ranlib.llvm "${WPOOL}:/bin/ranlib" >/dev/null
+		"${UBFS}" cp share/bin/strip.llvm "${WPOOL}:/bin/strip" >/dev/null
+		# The source tree in /usr/src (tracked + new non-ignored files), so the
+		# tree can be built inside uBixOS, plus a bootstrap libc: musl's
+		# headers, crt objects and libraries from this cross build, under
+		# /usr/src/build/aarch64 where the Makefiles look for them (musl's own
+		# build needs GNU make, which uBixOS does not have yet).
+		_src=$(mktemp -d -t ubixsrc)
+		if git ls-files -co --exclude-standard -z | tar -cf - --null -T - | tar -xf - -C "${_src}" 2>/dev/null; then
+			_b="${_src}/build/aarch64"
+			mkdir -p "${_b}/obj/musl/lib" "${_b}/obj/musl/obj" "${_b}/lib" "${_b}/bin" "${_b}/libexec" \
+			    "${_b}/boot" "${_b}/obj/bin" "${_b}/obj/lib" "${_b}/obj/libexec" "${_b}/obj/sys"
+			cp -R "${BUILD}/obj/musl/obj/include" "${_b}/obj/musl/obj/"
+			cp "${BUILD}/obj/musl/lib/"* "${_b}/obj/musl/lib/"
+			cp "${BUILD}/lib/libc.so" "${BUILD}/lib/libc.a" "${BUILD}/lib/musl.a" "${_b}/lib/"
+			"${UBFS}" mkdir "${WPOOL}" /usr/src >/dev/null 2>&1 || true
+			for _d in "${_src}"/* "${_src}"/.[!.]*; do
+				if [ -d "${_d}" ]; then
+					"${UBFS}" cpr "${_d}" "${WPOOL}:/usr/src/$(basename "${_d}")" >/dev/null 2>&1 ||
+						echo "mkimage-arm: WARNING: /usr/src/$(basename "${_d}") incomplete"
+				elif [ -f "${_d}" ]; then
+					"${UBFS}" cp "${_d}" "${WPOOL}:/usr/src/$(basename "${_d}")" >/dev/null 2>&1 || true
+				fi
+			done
+			echo "mkimage-arm: installed /usr/src ($(du -sm "${_src}" | cut -f1) MB) with a bootstrap musl"
+		fi
+		rm -rf "${_src}"
 		echo "mkimage-arm: installed LLVM clang + lld from ${LLVM_DIST} (/bin, /lib/clang, /usr/lib, /usr/include/c++) and cc/c++"
 	fi
 	_mib=$(du -m "${MIRROR}" 2>/dev/null | tail -1 | cut -f1)

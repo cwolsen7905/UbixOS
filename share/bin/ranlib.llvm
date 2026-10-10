@@ -1,0 +1,3 @@
+#!/bin/sh
+# ranlib -> llvm-ar's symbol-table update (no symlinks for llvm-ranlib)
+exec /bin/ar s "$@"
