@@ -147,9 +147,17 @@ void endTask(pidType pid)
 	tty_hangup_by_owner(_current->id);
 
 	sched_zombie(_current);
-	sched_yield();
-	while (1)
+
+	/* Switch away for good.  sched_yield() returns without switching when another
+	 * CPU holds the scheduler lock (sched_common's trylock bail), so retry until it
+	 * takes — a zombie is never re-dispatched, so the loop ends on the first real
+	 * switch.  The old tail fell into machine_idle(): an exit from a syscall runs
+	 * with IF=0 (SYSCALL masks it), so the CPU hlt'ed with interrupts off forever.
+	 * On the BSP that stopped the timer and froze the system (2-CPU x86_64 hang
+	 * after a command exited). */
+	for (;;)
 	{
-		machine_idle();
+		sched_yield();
+		__asm__ __volatile__("pause");
 	}
 }

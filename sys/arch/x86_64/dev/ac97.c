@@ -42,9 +42,9 @@
 #define NAM_RESET 0x00
 #define NAM_MASTER_VOL 0x02
 #define NAM_PCM_VOL 0x18
-#define NAM_EXT_AUDIO 0x28
+#define NAM_EXT_AUDIO 0x2A /* extended audio status/control (0x28 is the read-only ID) */
 #define NAM_EXT_VRA 0x0001
-#define NAM_PCM_RATE 0x2A
+#define NAM_PCM_RATE 0x2C /* PCM front DAC rate */
 
 /* NABM (bus-master) register offsets — relative to BAR1.  PCM-out base = 0x10. */
 #define NABM_PO_BASE 0x10
@@ -283,9 +283,13 @@ static void ac97_feed(void)
 
 	/* If the engine has played past our write head (or hasn't started), restart
 	 * queuing one buffer ahead of where it is now. */
-	if (ahead == 0 || ahead > AC97_FILL_WINDOW)
+	if (ahead == 0 || ahead > AC97_FILL_WINDOW + 1)
 		g_head = (u8)((civ + 1) & (AC97_BDL_ENTRIES - 1));
 
+	/* The head may reach AC97_FILL_WINDOW + 1 ahead of CIV (it points past the
+	 * last filled buffer), which the snap test above allows.  The old test
+	 * snapped at WINDOW + 1, so the next write rewound the head over buffers
+	 * still queued and moved LVI backwards: most audio was overwritten. */
 	while ((g_ring_wr - g_ring_rd) > 0 && (u8)((g_head - civ) & (AC97_BDL_ENTRIES - 1)) <= AC97_FILL_WINDOW)
 	{
 		if (fill_from_ring(g_buf[g_head]) == 0)

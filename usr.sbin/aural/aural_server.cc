@@ -142,6 +142,24 @@ int AuralServer::run()
 		 */
 		for (int i = 0; i < AURAL_FEED_BURST; i++)
 		{
+			/* Audio mixed on an earlier pass that the driver has not taken yet goes
+			 * first: mixing consumes the client rings, so dropping it loses sound
+			 * (playback stopped after ~1 s on virtio-sound; on AC97, which accepts
+			 * part of a period when its ring is nearly full, the tail of every
+			 * period was lost). */
+			if (pending_bytes_ > 0)
+			{
+				int w = sink_.write_period((const char *)period_ + pending_off_, (unsigned)pending_bytes_);
+				if (w <= 0)
+					break; /* still full — retry next wake */
+				pending_off_ += w;
+				pending_bytes_ -= w;
+				if (pending_bytes_ > 0)
+					break;
+				pending_off_ = 0;
+				continue;
+			}
+
 			uint32_t ready = 0; /* max readable among PRIMED streams */
 			Stream *sl = reg_.slots();
 			for (unsigned k = 0; k < StreamRegistry::slot_count(); k++)
@@ -162,8 +180,15 @@ int AuralServer::run()
 				break;
 
 			mixer_.mix(reg_, period_, frames);
-			if (sink_.write_period(period_, frames * FRAME_BYTES) <= 0)
-				break; /* driver ring full */
+			int want = (int)(frames * FRAME_BYTES);
+			int w = sink_.write_period(period_, (unsigned)want);
+			if (w < want)
+			{
+				/* Driver ring full (or took only part): keep the rest for next wake. */
+				pending_off_ = w > 0 ? w : 0;
+				pending_bytes_ = want - pending_off_;
+				break;
+			}
 		}
 
 		/*

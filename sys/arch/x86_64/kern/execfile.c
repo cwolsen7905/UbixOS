@@ -603,6 +603,13 @@ int sys_execve(struct thread *td, struct sys_execve_args *uap)
 	_current->md.md_fsbase = 0;
 	__asm__ __volatile__("wrmsr" : : "c"(0xC0000100u), "a"(0u), "d"(0u));
 
+	/* A new image starts from the default FP state, not the old image's (the
+	 * state is live in the registers; switch_to saves it from there). */
+	{
+		u32 mxcsr = 0x1F80;
+		__asm__ __volatile__("fninit; ldmxcsr %0" : : "m"(mxcsr));
+	}
+
 	/* Install the new image's demand-fault VMA tree (backing the lazy PT_LOAD pages),
 	 * releasing the old image's VMAs + their backing file fds.  Empty for an
 	 * eager-loaded (dr==1) image.  Done before the CR3 switch — vm_map_free only

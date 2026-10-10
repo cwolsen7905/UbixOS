@@ -15,9 +15,11 @@
 #include <sys/sysproto_posix.h>
 #include <sys/sysproto.h>      /* sys_disk_query_args (native ABI) */
 #include <dev/disk.h>          /* disk_query — block-device enumeration syscall 68 */
+#include <fs/ubixfs/ubfs_vfs.h> /* ubfs_vfs_query — native pool-query syscall 67 */
 #include <vmm/vmm.h>           /* vmm_find_free_page, PAGE_SIZE */
 #include <lib/kmalloc.h>       /* sysID */
 #include <string.h>            /* memset */
+#include <sys/errno.h>         /* EINVAL (getcwd) */
 #include <x86_64/vmm_layout.h> /* MMAP_BASE, BRK_BASE (single source of truth) */
 #include <sys/descrip.h>       /* getfd, struct file (file-backed mmap) */
 #include <fs/vfs/file.h>       /* fileDescriptor_t, fread (file-backed mmap) */
@@ -270,6 +272,54 @@ static int nanosleep_never(void *arg)
 {
 	(void)arg;
 	return 0;
+}
+
+/**
+ * Native syscall 67 — fill the user buffer with mounted UbixFS pool records
+ * (ubpool / ubfs / Disk Utility).  Was a -1 stub on x86_64; mirrors aarch64.
+ */
+int sys_ubfs_query(struct thread *td, struct sys_ubfs_query_args *uap)
+{
+	td->td_retval[0] = ubfs_vfs_query(uap->buf, (int)uap->max);
+	return (0);
+}
+
+/* Copy the task's cwd (default "/") into a user buffer; td_retval[0] = 0 or
+ * -EINVAL.  Sibling of aarch64's copy_cwd. */
+static void copy_cwd(struct thread *td, char *buf, u_int32_t size)
+{
+	const char *cwd = (_current != 0 && _current->oInfo.cwd[0] != '\0') ? _current->oInfo.cwd : "/";
+	if (buf == 0 || size == 0)
+	{
+		td->td_retval[0] = -EINVAL;
+		return;
+	}
+	strncpy(buf, cwd, (size_t)size - 1);
+	buf[size - 1] = '\0';
+	td->td_retval[0] = 0;
+}
+
+/** Native getvfscwd: the cwd into @buf (0 on success). */
+int sys_getvfscwd(struct thread *td, struct sys_getvfscwd_args *uap)
+{
+	copy_cwd(td, uap->buf, uap->size);
+	return (0);
+}
+
+/**
+ * POSIX __getcwd(2) (FreeBSD 326).  Returns the path length including the NUL
+ * (musl's getcwd treats 0 as ENOENT).  This was a -1 stub on x86_64, so every
+ * getcwd failed: pwd printed "No such file or directory" and tcsh started with
+ * "Trying to start from /home/root".  Mirrors aarch64's syscall_md.c.
+ */
+int sys_getcwd(struct thread *td, struct sys_getcwd_args *uap)
+{
+	const char *cwd = (_current != 0 && _current->oInfo.cwd[0] != '\0') ? _current->oInfo.cwd : "/";
+
+	copy_cwd(td, (char *)uap->buf, uap->size);
+	if (td->td_retval[0] == 0)
+		td->td_retval[0] = (int)(strlen(cwd) + 1);
+	return (0);
 }
 
 /**

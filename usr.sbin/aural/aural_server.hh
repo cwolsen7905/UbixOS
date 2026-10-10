@@ -73,6 +73,8 @@ class AuralServer
 	StreamRegistry reg_;
 	Mixer mixer_;
 	int16_t period_[PERIOD_SAMPLES];
+	int pending_off_ = 0;   /* byte offset of the unsent part of period_ */
+	int pending_bytes_ = 0; /* mixed audio in period_ the driver has not accepted yet */
 	int reap_ctr_ = 0;
 };
 
