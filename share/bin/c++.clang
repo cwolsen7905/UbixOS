@@ -1,0 +1,3 @@
+#!/bin/sh
+# c++ -> clang in C++ mode (the root filesystem has no symlinks for clang++)
+exec /bin/clang --driver-mode=g++ "$@"

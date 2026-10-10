@@ -1,0 +1,14 @@
+dash 0.5.12 (https://git.kernel.org/pub/scm/utils/dash/dash.git/snapshot/dash-0.5.12.tar.gz,
+sha256 0d632f6b945058d84809cac7805326775bd60cb4a316907d0bd4228ff7107154)
+
+The uBixOS /bin/sh.  Upstream sources unmodified.  Generated on the host and
+committed (the tree is built without autotools):
+  token.h token_vars.h   sh mktokens
+  builtins.c builtins.h  cc -E builtins.def.in | sh mkbuiltins
+  nodes.c nodes.h        mknodes nodetypes nodes.c.pat
+  syntax.c syntax.h      mksyntax
+  init.c                 mkinit <the dash C sources>
+  config.h               written by hand from configure.ac's checks (musl)
+  signames.c             written by hand (musl signal numbers) — upstream's
+                         mksignames.c is GPL and is not vendored
+Generator sources are omitted.

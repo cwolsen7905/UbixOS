@@ -1,0 +1,9 @@
+bmake 20260912 (https://www.crufty.net/ftp/pub/sjg/bmake-20260912.tar.gz,
+sha256 b6bd32964cbe451be2838822c9d200b7c7e76a2a5947c03feb71dc6bd72988bd)
+
+Vendored unmodified except config.h, generated on the host by a cross
+configure against the UbixOS musl sysroot:
+  configure --host=aarch64-unknown-linux-musl --prefix=/usr \
+    --with-default-sys-path=/usr/share/mk --without-filemon
+with HAVE_VFORK undefined.  MACHINE/MACHINE_ARCH/MAKE_VERSION come from
+bin/bmake/Makefile.  Not included: configure machinery, unit tests.

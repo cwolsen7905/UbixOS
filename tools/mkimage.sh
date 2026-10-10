@@ -224,6 +224,11 @@ cp -R contrib/musl/include/. "$STAGE/usr/include/"
 for o in crt1.o crti.o crtn.o libm.a libpthread.a libdl.a librt.a libutil.a libxnet.a libcrypt.a libresolv.a; do
     [ -f "$BUILD/obj/musl/lib/$o" ] && cp "$BUILD/obj/musl/lib/$o" "$STAGE/usr/lib/$o"
 done
+# cc wrapper script for tcc (the root filesystem has no symlinks).
+[ -f "$BUILD/bin/tcc" ] && cp share/bin/cc.tcc "$STAGE/bin/cc"
+# bmake's mk library (its built-in default .MAKE search path).
+mkdir -p "$STAGE/usr/share/mk"
+cp -R contrib/bmake/mk/. "$STAGE/usr/share/mk/"
 # Same smoke test as the aarch64 image: tcc -run /usr/share/examples/hello.c
 mkdir -p "$STAGE/usr/share/examples"
 printf '#include <stdio.h>\n\nint main(void)\n{\n\tprintf("Hello from tcc on uBixOS!\\n");\n\treturn 0;\n}\n' \

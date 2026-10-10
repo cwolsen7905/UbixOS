@@ -1,0 +1,3 @@
+#!/bin/sh
+# cc -> clang (aarch64 images with the native LLVM toolchain)
+exec /bin/clang "$@"

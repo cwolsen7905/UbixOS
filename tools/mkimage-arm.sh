@@ -239,7 +239,10 @@ if [ -f "${BUILD}/bin/tcc" ] && [ -f "${BUILD}/lib/tcc/libtcc1.a" ]; then
 	printf '#include <stdio.h>\n\nint main(void)\n{\n\tprintf("Hello from tcc on uBixOS!\\n");\n\treturn 0;\n}\n' >/tmp/ubix_hello.c
 	mcopy -o -i "${IMG}@@1M" /tmp/ubix_hello.c ::/usr/share/examples/hello.c
 	rm -f /tmp/ubix_hello.c
-	echo "mkimage-arm: installed tcc toolchain (/usr/include, /usr/lib crt, /lib/tcc)"
+	# bmake's mk library (its built-in default .MAKE search path).
+	mmd -i "${IMG}@@1M" ::/usr/share/mk 2>/dev/null || true
+	mcopy -s -o -i "${IMG}@@1M" contrib/bmake/mk/* ::/usr/share/mk/
+	echo "mkimage-arm: installed tcc toolchain (/usr/include, /usr/lib crt, /lib/tcc) and /usr/share/mk"
 fi
 
 # UbixFS pool (plan K2/K3): stage a small file-backed (loopback) pool as
@@ -288,7 +291,10 @@ if [ -x "${UBFS:-}" ] && [ -n "${POOL_LBA:-}" ]; then
 			"${UBFS}" cpr "${_d}" "${WPOOL}:/$(basename "${_d}")" >/dev/null 2>&1 ||
 				echo "mkimage-arm: WARNING: installing LLVM $(basename "${_d}") failed (pool too small?)"
 		done
-		echo "mkimage-arm: installed LLVM clang + lld from ${LLVM_DIST} (/bin, /lib/clang, /usr/lib, /usr/include/c++)"
+		# cc / c++ wrapper scripts (no symlinks on the root filesystem).
+		"${UBFS}" cp share/bin/cc.clang "${WPOOL}:/bin/cc" >/dev/null
+		"${UBFS}" cp share/bin/c++.clang "${WPOOL}:/bin/c++" >/dev/null
+		echo "mkimage-arm: installed LLVM clang + lld from ${LLVM_DIST} (/bin, /lib/clang, /usr/lib, /usr/include/c++) and cc/c++"
 	fi
 	_mib=$(du -m "${MIRROR}" 2>/dev/null | tail -1 | cut -f1)
 	dd if="${WPOOL}" of="${IMG}" bs=512 seek="${POOL_LBA}" conv=notrunc 2>/dev/null
