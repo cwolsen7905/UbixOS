@@ -202,12 +202,12 @@ static int raw_read(void *ctx, uint64_t blk, void *buf)
 {
 	struct ubx_device *dev = (struct ubx_device *)ctx;
 	u_int32_t base = (u_int32_t)blk * UBFS_SECTORS_PER_BLOCK;
-	u_int32_t s;
 
-	for (s = 0; s < UBFS_SECTORS_PER_BLOCK; s++)
-		if (bcache_read(dev, base + s, (u_int8_t *)buf + s * 512) != 0)
-			return (-1);
-	return (0);
+	/* One request for the whole block, not eight single-sector bcache lookups
+	 * (each a linear scan of the sector cache plus a device round trip).  The
+	 * sector cache adds nothing here — the core caches its metadata blocks —
+	 * and raw_write is write-through, so the device is always current. */
+	return (dev->dev_blk_ops->read(dev, base, UBFS_SECTORS_PER_BLOCK, buf) == 0 ? 0 : -1);
 }
 
 /**

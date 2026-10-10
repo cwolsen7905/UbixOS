@@ -38,6 +38,16 @@
 
 #include <machine/cpu.h>
 
+/* Low-water mark for vmm_find_free_page: no frame below it is free.  Keeps the
+ * allocator first-fit (early i386 boot relies on getting the lowest frames)
+ * without rescanning the in-use prefix of the map on every call. */
+static u_int32_t g_free_hint;
+#define FREE_HINT_LOWER(idx) \
+	do \
+	{ \
+		if ((u_int32_t)(idx) < g_free_hint) \
+			g_free_hint = (u_int32_t)(idx); \
+	} while (0)
 static u_int32_t g_free_pages = 0;
 static struct spinLock g_vmm_spin_lock = SPIN_LOCK_INITIALIZER;
 
@@ -101,6 +111,7 @@ void vmm_mem_mark_available(u_int32_t first_page, u_int32_t last_page)
 		if (vmmMemoryMap[i].status != memAvail)
 		{
 			vmmMemoryMap[i].status = memAvail;
+			FREE_HINT_LOWER(i);
 			g_free_pages++;
 		}
 	}
@@ -142,7 +153,10 @@ uintptr_t vmm_find_free_page(pidType pid)
 retry:
 	spinLock(&g_vmm_spin_lock);
 
-	for (i = 0; i < numPages; i++)
+	/* First-fit from the low-water mark (scanning from frame 0 made every
+	 * allocation O(frames in use): loading a 64 MB program rescanned the
+	 * in-use prefix 16k times). */
+	for (i = g_free_hint; i < numPages; i++)
 	{
 
 		/*
@@ -151,6 +165,7 @@ retry:
 		 */
 		if ((vmmMemoryMap[i].status == memAvail) && (vmmMemoryMap[i].cowCounter == 0))
 		{
+			g_free_hint = i + 1;
 			vmmMemoryMap[i].status = memNotavail;
 			vmmMemoryMap[i].pid = pid;
 			g_free_pages--;
@@ -272,6 +287,7 @@ int free_page(uintptr_t page_addr)
 	{
 		/* Set Page As Avail So It Can Be Used Again */
 		vmmMemoryMap[page_index].status = memAvail;
+		FREE_HINT_LOWER(page_index);
 		vmmMemoryMap[page_index].cowCounter = 0;
 		vmmMemoryMap[page_index].pid = -2;
 		g_free_pages++;
@@ -332,6 +348,7 @@ int adjust_cow_counter(uintptr_t base_addr, int adjustment)
 		vmmMemoryMap[vmm_memory_map_index].cowCounter = 0;
 		vmmMemoryMap[vmm_memory_map_index].pid = vmmID;
 		vmmMemoryMap[vmm_memory_map_index].status = memAvail;
+		FREE_HINT_LOWER(vmm_memory_map_index);
 		g_free_pages++;
 		systemVitals->freePages = g_free_pages;
 	}
@@ -403,6 +420,7 @@ void vmm_free_process_pages(pidType pid)
 		if (vmmMemoryMap[i].pid == pid && vmmMemoryMap[i].cowCounter == 0)
 		{
 			vmmMemoryMap[i].status = memAvail;
+			FREE_HINT_LOWER(i);
 			vmmMemoryMap[i].pid = vmmID;
 			g_free_pages++;
 			systemVitals->freePages = g_free_pages;

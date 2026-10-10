@@ -6,8 +6,8 @@
  *
  * Portable C implementations of the handful of libc-style routines the kernel
  * core uses (the i386 port supplies these as hand-written assembly in
- * arch/i386).  Byte-at-a-time and simple — correctness over speed for bring-up;
- * an optimised SIMD-free version can replace them later.
+ * arch/i386).  memset/memcpy work a word at a time (they are on the page
+ * zero/copy hot path); the rest are simple byte loops.
  */
 
 #include <sys/types.h>
@@ -18,12 +18,52 @@
  * in this arch file (whose basename would otherwise collide with sys/lib's). */
 char const hex2ascii_data[] = "0123456789abcdefghijklmnopqrstuvwxyz";
 
+/* The bodies below are plain loops; stop GCC from "recognising" them as
+ * memset/memcpy and compiling them into calls to themselves. */
+#define NO_LOOP_TO_CALL __attribute__((optimize("no-tree-loop-distribute-patterns")))
+
 /**
  * Fill @n bytes at @dst with byte @c.
+ *
+ * Word-at-a-time (64 bytes per iteration once aligned): the kernel zeroes
+ * every page it hands out, so this is on the hot path of exec, fork, mmap
+ * and the page-fault handler.  The kernel is -mgeneral-regs-only, so no SIMD.
  */
-void *memset(void *dst, int c, size_t n)
+NO_LOOP_TO_CALL void *memset(void *dst, int c, size_t n)
 {
 	u_int8_t *p = (u_int8_t *)dst;
+	u_int64_t v = (u_int8_t)c;
+
+	v |= v << 8;
+	v |= v << 16;
+	v |= v << 32;
+	while (n > 0 && ((uintptr_t)p & 7) != 0)
+	{
+		*p++ = (u_int8_t)c;
+		n--;
+	}
+	{
+		u_int64_t *w = (u_int64_t *)p;
+		while (n >= 64)
+		{
+			w[0] = v;
+			w[1] = v;
+			w[2] = v;
+			w[3] = v;
+			w[4] = v;
+			w[5] = v;
+			w[6] = v;
+			w[7] = v;
+			w += 8;
+			n -= 64;
+		}
+		while (n >= 8)
+		{
+			*w++ = v;
+			n -= 8;
+		}
+		p = (u_int8_t *)w;
+	}
 	while (n-- > 0)
 		*p++ = (u_int8_t)c;
 	return dst;
@@ -31,11 +71,50 @@ void *memset(void *dst, int c, size_t n)
 
 /**
  * Copy @n bytes from @src to @dst (non-overlapping).
+ *
+ * Word-at-a-time when both pointers share 8-byte alignment (the common case:
+ * page frames, file blocks, kmalloc buffers); byte-at-a-time otherwise.
  */
-void *memcpy(void *dst, const void *src, size_t n)
+NO_LOOP_TO_CALL void *memcpy(void *dst, const void *src, size_t n)
 {
 	u_int8_t *d = (u_int8_t *)dst;
 	const u_int8_t *s = (const u_int8_t *)src;
+
+	if ((((uintptr_t)d ^ (uintptr_t)s) & 7) == 0)
+	{
+		while (n > 0 && ((uintptr_t)d & 7) != 0)
+		{
+			*d++ = *s++;
+			n--;
+		}
+		{
+			u_int64_t *wd = (u_int64_t *)d;
+			const u_int64_t *ws = (const u_int64_t *)s;
+			while (n >= 64)
+			{
+				u_int64_t a = ws[0], b = ws[1], c2 = ws[2], e = ws[3];
+				u_int64_t f = ws[4], g = ws[5], h = ws[6], k = ws[7];
+				wd[0] = a;
+				wd[1] = b;
+				wd[2] = c2;
+				wd[3] = e;
+				wd[4] = f;
+				wd[5] = g;
+				wd[6] = h;
+				wd[7] = k;
+				wd += 8;
+				ws += 8;
+				n -= 64;
+			}
+			while (n >= 8)
+			{
+				*wd++ = *ws++;
+				n -= 8;
+			}
+			d = (u_int8_t *)wd;
+			s = (const u_int8_t *)ws;
+		}
+	}
 	while (n-- > 0)
 		*d++ = *s++;
 	return dst;

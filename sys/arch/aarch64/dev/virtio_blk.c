@@ -169,52 +169,85 @@ static void *virtio_blk_device_find(int major, int minor)
 }
 
 /**
- * Read @count sectors starting at @lba into @buf via virtio-blk, one sector per
- * request (polling the used ring).  Matches struct ubx_blk_ops::read.
+ * Issue one read request: @count sectors from @lba into the DMA-able (identity-
+ * mapped, physically contiguous) buffer @dma, polling the used ring.
+ *
+ * @return 0 on success, -1 on a device error.
+ */
+static int virtio_blk_read_req(u_int32_t lba, u_int32_t count, void *dma)
+{
+	g_hdr->type = VIRTIO_BLK_T_IN;
+	g_hdr->reserved = 0;
+	g_hdr->sector = (u_int64_t)lba;
+	*g_status = 0xFF;
+
+	/* Three-descriptor chain: header (R) -> data (W) -> status (W). */
+	g_desc[0].addr = (u_int64_t)(uintptr_t)g_hdr;
+	g_desc[0].len = sizeof(struct virtio_blk_req);
+	g_desc[0].flags = VIRTQ_DESC_F_NEXT;
+	g_desc[0].next = 1;
+	g_desc[1].addr = (u_int64_t)(uintptr_t)dma;
+	g_desc[1].len = count * 512;
+	g_desc[1].flags = VIRTQ_DESC_F_NEXT | VIRTQ_DESC_F_WRITE;
+	g_desc[1].next = 2;
+	g_desc[2].addr = (u_int64_t)(uintptr_t)g_status;
+	g_desc[2].len = 1;
+	g_desc[2].flags = VIRTQ_DESC_F_WRITE;
+	g_desc[2].next = 0;
+
+	g_avail->ring[g_avail->idx % QSIZE] = 0; /* head descriptor index */
+	dsb();
+	g_avail->idx++;
+	dsb();
+	mmio_wr(VMMIO_QUEUE_NOTIFY, 0);
+
+	while (g_used->idx == g_last_used)
+		dsb(); /* poll for completion */
+	g_last_used++;
+	dsb();
+
+	return (*g_status == VIRTIO_BLK_S_OK) ? 0 : -1;
+}
+
+/**
+ * Read @count sectors starting at @lba into @buf via virtio-blk.  Matches
+ * struct ubx_blk_ops::read.
+ *
+ * Kernel buffers live in the identity map (VA == PA, contiguous), so the device
+ * writes them directly, up to 64 KB per request — a 4 KB filesystem block used
+ * to be eight separate requests through a 512-byte bounce buffer.  Anything
+ * outside the identity map still goes through the bounce buffer sector by
+ * sector.
  *
  * @return 0 on success, -1 on a device error.
  */
 static int virtio_blk_read(struct ubx_device *dev, u_int32_t lba, u_int32_t count, void *buf)
 {
+	u_int8_t *p = (u_int8_t *)buf;
+
 	(void)dev;
 	if (!g_ready)
 		return (-1);
 
+	if ((uintptr_t)buf + (u_int64_t)count * 512 <= 0x100000000UL)
+	{
+		while (count > 0)
+		{
+			u_int32_t n = count > 128 ? 128 : count;
+			if (virtio_blk_read_req(lba, n, p) != 0)
+				return (-1);
+			lba += n;
+			count -= n;
+			p += (u_int64_t)n * 512;
+		}
+		return (0);
+	}
+
 	for (u_int32_t i = 0; i < count; i++)
 	{
-		g_hdr->type = VIRTIO_BLK_T_IN;
-		g_hdr->reserved = 0;
-		g_hdr->sector = (u_int64_t)lba + i;
-		*g_status = 0xFF;
-
-		/* Three-descriptor chain: header (R) -> data (W) -> status (W). */
-		g_desc[0].addr = (u_int64_t)(uintptr_t)g_hdr;
-		g_desc[0].len = sizeof(struct virtio_blk_req);
-		g_desc[0].flags = VIRTQ_DESC_F_NEXT;
-		g_desc[0].next = 1;
-		g_desc[1].addr = (u_int64_t)(uintptr_t)g_data;
-		g_desc[1].len = 512;
-		g_desc[1].flags = VIRTQ_DESC_F_NEXT | VIRTQ_DESC_F_WRITE;
-		g_desc[1].next = 2;
-		g_desc[2].addr = (u_int64_t)(uintptr_t)g_status;
-		g_desc[2].len = 1;
-		g_desc[2].flags = VIRTQ_DESC_F_WRITE;
-		g_desc[2].next = 0;
-
-		g_avail->ring[g_avail->idx % QSIZE] = 0; /* head descriptor index */
-		dsb();
-		g_avail->idx++;
-		dsb();
-		mmio_wr(VMMIO_QUEUE_NOTIFY, 0);
-
-		while (g_used->idx == g_last_used)
-			dsb(); /* poll for completion */
-		g_last_used++;
-		dsb();
-
-		if (*g_status != VIRTIO_BLK_S_OK)
+		if (virtio_blk_read_req(lba + i, 1, g_data) != 0)
 			return (-1);
-		memcpy((u_int8_t *)buf + (u_int64_t)i * 512, g_data, 512);
+		memcpy(p + (u_int64_t)i * 512, g_data, 512);
 	}
 	return (0);
 }

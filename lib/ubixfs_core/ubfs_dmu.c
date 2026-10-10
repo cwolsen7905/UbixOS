@@ -11,6 +11,7 @@
  */
 #include "ubfs_dmu.h"
 #include "fletcher.h"
+#include <stdlib.h>
 #include <string.h>
 
 #define BS UBFS_BLOCK_SIZE
@@ -53,20 +54,78 @@ static int blk_write_cow(ubfs_pool_t *pool, const void *buf, uint8_t type, uint8
 	return 0;
 }
 
+/*
+ * Metadata block cache.  Every logical read walks the block tree from its root,
+ * so without a cache each 4 KB of file data cost a disk read + checksum per
+ * tree level, plus the object-table walk: loading a 64 MB program was ~100k
+ * disk reads.  Indirect, dnode and other metadata blocks are cached here
+ * (plain file data is not — it is read once and would just evict them).
+ *
+ * Copy-on-write makes the cache coherent by construction: a block is never
+ * rewritten in place, and the key includes the checksum the parent's block
+ * pointer carries, so a reused address with new contents simply misses.  The
+ * core has no locking, so a hit re-verifies the checksum of what it copied out
+ * and falls back to the disk on any mismatch (a racing refill of the slot).
+ */
+#define MCACHE_SLOTS 256 /* 1 MB */
+#define MCACHE_HASH(off) ((uint32_t)((off) * 2654435761u) % MCACHE_SLOTS)
+
+struct mcache_slot
+{
+	const ubfs_pool_t *pool;
+	uint64_t off;
+	uint64_t ck0;
+	uint8_t data[BS];
+};
+/* Allocated on first use, not static: on i386 the kernel image must fit in its
+ * 4 MB identity map, and a 1 MB BSS array pushed it past the end. */
+static struct mcache_slot *g_mcache;
+
+static int bp_cacheable(const ubfs_blkptr_t *bp)
+{
+	return bp->level > 0 || (bp->type != UBFS_OT_PLAIN_FILE && bp->type != UBFS_OT_VOL);
+}
+
 static int blk_read_verify(ubfs_pool_t *pool, const ubfs_blkptr_t *bp, void *buf)
 {
 	uint64_t ck[4];
+	struct mcache_slot *sl = 0;
 
 	if (bp_is_hole(bp))
 	{
 		memset(buf, 0, BS);
 		return 0;
 	}
+	if (g_mcache == 0)
+	{
+		g_mcache = (struct mcache_slot *)malloc(sizeof(*g_mcache) * MCACHE_SLOTS);
+		if (g_mcache != 0)
+			memset(g_mcache, 0, sizeof(*g_mcache) * MCACHE_SLOTS);
+	}
+	if (g_mcache != 0 && bp_cacheable(bp))
+	{
+		sl = &g_mcache[MCACHE_HASH(bp->dva.offset)];
+		if (sl->pool == pool && sl->off == bp->dva.offset && sl->ck0 == bp->checksum[0])
+		{
+			memcpy(buf, sl->data, BS);
+			ubfs_fletcher4(buf, BS, ck);
+			if (memcmp(ck, bp->checksum, sizeof(ck)) == 0)
+				return 0;
+		}
+	}
 	if (ubfs_read_block(pool, bp->dva.offset, buf) < 0)
 		return -1;
 	ubfs_fletcher4(buf, BS, ck);
 	if (memcmp(ck, bp->checksum, sizeof(ck)) != 0)
 		return -2; /* checksum mismatch — corruption */
+	if (sl != 0)
+	{
+		sl->pool = 0; /* invalidate while refilling */
+		memcpy(sl->data, buf, BS);
+		sl->off = bp->dva.offset;
+		sl->ck0 = bp->checksum[0];
+		sl->pool = pool;
+	}
 	return 0;
 }
 
@@ -74,13 +133,13 @@ static int blk_read_verify(ubfs_pool_t *pool, const ubfs_blkptr_t *bp, void *buf
 
 /* Recursively CoW logical block `blkid` of the subtree rooted at *bp.
  * `height` is the indirection height of the block *bp points at (0 = data). */
-static int tree_cow(ubfs_pool_t *pool, ubfs_blkptr_t *bp, int height, uint64_t blkid, uint8_t data_type,
-                    const void *data)
+static int tree_cow(
+    ubfs_pool_t *pool, ubfs_blkptr_t *bp, int height, uint64_t blkid, uint8_t data_type, const void *data)
 {
-	uint8_t        ind[BS];
+	uint8_t ind[BS];
 	ubfs_blkptr_t *slots;
-	ubfs_blkptr_t  nbp;
-	uint32_t       idx;
+	ubfs_blkptr_t nbp;
+	uint32_t idx;
 
 	if (height == 0)
 	{
@@ -110,7 +169,7 @@ static int tree_cow(ubfs_pool_t *pool, ubfs_blkptr_t *bp, int height, uint64_t b
 /* Grow the dnode's tree so it can address `blkid` (adds indirect levels on top). */
 static int tree_grow(ubfs_pool_t *pool, ubfs_dnode_t *dn, uint64_t blkid)
 {
-	int      need_h = 0;
+	int need_h = 0;
 	uint64_t cap = 1; /* FANOUT^0 = 1 (height 0 addresses only blkid 0) */
 
 	while (cap <= blkid)
@@ -120,7 +179,7 @@ static int tree_grow(ubfs_pool_t *pool, ubfs_dnode_t *dn, uint64_t blkid)
 	}
 	while (dn->nlevels < need_h + 1)
 	{
-		uint8_t       ind[BS];
+		uint8_t ind[BS];
 		ubfs_blkptr_t nbp;
 
 		memset(ind, 0, BS);
@@ -136,8 +195,8 @@ static int tree_grow(ubfs_pool_t *pool, ubfs_dnode_t *dn, uint64_t blkid)
 static int tree_read(ubfs_pool_t *pool, const ubfs_dnode_t *dn, uint64_t blkid, void *out)
 {
 	ubfs_blkptr_t bp = dn->blkptr[0];
-	int           height = dn->nlevels - 1;
-	uint8_t       ind[BS];
+	int height = dn->nlevels - 1;
+	uint8_t ind[BS];
 
 	while (height > 0)
 	{
@@ -193,7 +252,7 @@ void ubfs_dmu_objset_create(ubfs_pool_t *pool, uint64_t ostype, ubfs_dmu_os_t *o
 
 int ubfs_dmu_objset_open(ubfs_pool_t *pool, const ubfs_blkptr_t *bp, ubfs_dmu_os_t *os)
 {
-	uint8_t       block[BS];
+	uint8_t block[BS];
 	ubfs_objset_t od;
 
 	if (blk_read_verify(pool, bp, block) < 0)
@@ -209,7 +268,7 @@ int ubfs_dmu_objset_open(ubfs_pool_t *pool, const ubfs_blkptr_t *bp, ubfs_dmu_os
 
 int ubfs_dmu_objset_sync(ubfs_dmu_os_t *os, ubfs_blkptr_t *bp_out)
 {
-	uint8_t       block[BS];
+	uint8_t block[BS];
 	ubfs_objset_t od;
 
 	memset(&od, 0, sizeof(od));
@@ -226,7 +285,7 @@ int ubfs_dmu_dnode_get(ubfs_dmu_os_t *os, uint64_t obj, ubfs_dnode_t *dn)
 {
 	uint64_t mblk = (obj * UBFS_DNODE_SIZE) / BS;
 	uint32_t moff = (uint32_t)((obj * UBFS_DNODE_SIZE) % BS);
-	uint8_t  block[BS];
+	uint8_t block[BS];
 
 	if (tree_read(os->pool, &os->metadnode, mblk, block) < 0)
 		return -1;
@@ -238,7 +297,7 @@ int ubfs_dmu_dnode_put(ubfs_dmu_os_t *os, uint64_t obj, const ubfs_dnode_t *dn)
 {
 	uint64_t mblk = (obj * UBFS_DNODE_SIZE) / BS;
 	uint32_t moff = (uint32_t)((obj * UBFS_DNODE_SIZE) % BS);
-	uint8_t  block[BS];
+	uint8_t block[BS];
 
 	if (tree_read(os->pool, &os->metadnode, mblk, block) < 0)
 		return -1;
@@ -248,7 +307,7 @@ int ubfs_dmu_dnode_put(ubfs_dmu_os_t *os, uint64_t obj, const ubfs_dnode_t *dn)
 
 uint64_t ubfs_dmu_object_alloc(ubfs_dmu_os_t *os, uint8_t otype, uint8_t bonustype)
 {
-	uint64_t     obj = os->next_object++;
+	uint64_t obj = os->next_object++;
 	ubfs_dnode_t dn;
 
 	init_dnode(&dn, otype, bonustype);
@@ -262,7 +321,7 @@ uint64_t ubfs_dmu_object_alloc(ubfs_dmu_os_t *os, uint8_t otype, uint8_t bonusty
 int ubfs_dmu_write(ubfs_dmu_os_t *os, uint64_t obj, uint64_t off, const void *buf, uint64_t len)
 {
 	const uint8_t *src = (const uint8_t *)buf;
-	ubfs_dnode_t   dn;
+	ubfs_dnode_t dn;
 
 	if (ubfs_dmu_dnode_get(os, obj, &dn) < 0)
 		return -1;
@@ -272,7 +331,7 @@ int ubfs_dmu_write(ubfs_dmu_os_t *os, uint64_t obj, uint64_t off, const void *bu
 		uint64_t blkid = off / BS;
 		uint32_t boff = (uint32_t)(off % BS);
 		uint64_t chunk = BS - boff;
-		uint8_t  block[BS];
+		uint8_t block[BS];
 
 		if (chunk > len)
 			chunk = len;
@@ -302,7 +361,7 @@ int ubfs_dmu_write(ubfs_dmu_os_t *os, uint64_t obj, uint64_t off, const void *bu
 
 int ubfs_dmu_read(ubfs_dmu_os_t *os, uint64_t obj, uint64_t off, void *buf, uint64_t len)
 {
-	uint8_t     *dst = (uint8_t *)buf;
+	uint8_t *dst = (uint8_t *)buf;
 	ubfs_dnode_t dn;
 
 	if (ubfs_dmu_dnode_get(os, obj, &dn) < 0)
@@ -313,7 +372,7 @@ int ubfs_dmu_read(ubfs_dmu_os_t *os, uint64_t obj, uint64_t off, void *buf, uint
 		uint64_t blkid = off / BS;
 		uint32_t boff = (uint32_t)(off % BS);
 		uint64_t chunk = BS - boff;
-		uint8_t  block[BS];
+		uint8_t block[BS];
 
 		if (chunk > len)
 			chunk = len;
