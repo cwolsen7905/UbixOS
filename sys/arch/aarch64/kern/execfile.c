@@ -9,6 +9,7 @@
  */
 #include "bringup.h"
 #include <ubixos/sched.h>
+#include <vmm/vmm_shmap.h>        /* vmm_shmap_exit (exec) */
 #include <ubixos/exec.h>           /* exec_set_name_cmdline (MI exec helper) */
 #include <ubixos/signal.h>         /* signal_exec_reset — reset caught handlers on exec */
 #include <ubixos/sched_internal.h> /* taskList, pid_hash_remove */
@@ -675,6 +676,8 @@ int aarch64_exec_replace(const char *path, char *const *uargv, char *const *uenv
 	char interp[256], iarg[256];
 	char *vec[MAXARG + 1];
 
+	/* The old image's MAP_SHARED writes reach their files before it is replaced. */
+	vmm_shmap_exit(_current->id);
 	if (exec_script_argv(path, uargv, vec, MAXARG + 1, interp, sizeof(interp), iarg, sizeof(iarg)) > 0)
 		return (aarch64_exec_replace_elf(interp, vec, uenvp));
 	return (aarch64_exec_replace_elf(path, uargv, uenvp));

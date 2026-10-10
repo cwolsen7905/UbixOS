@@ -11,6 +11,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <sys/wait.h>
+#include <sys/mman.h>
 
 static int g_fail;
 
@@ -104,6 +105,55 @@ int main(void)
 		waitpid(pid, &st, 0);
 		check("#! script runs interpreter", strcmp(buf, "hello /tmp/vfstest.sh arg1\n") == 0);
 		check("#! script exit status 0", WIFEXITED(st) && WEXITSTATUS(st) == 0);
+	}
+
+	/* MAP_SHARED + PROT_WRITE file mappings reach the file on munmap, msync and
+	 * exit (ld.lld writes its output this way). */
+	{
+		static const char *how[3] = {"munmap", "msync", "exit"};
+		int k;
+
+		for (k = 0; k < 3; k++)
+		{
+			char path[64], got[16];
+			char *m;
+			pid_t pid;
+			int st;
+
+			snprintf(path, sizeof(path), "/tmp/vfstest.map%d", k);
+			unlink(path);
+			fd = open(path, O_RDWR | O_CREAT | O_TRUNC, 0644);
+			memset(buf, '.', sizeof(buf));
+			for (n = 0; n < 128; n++) /* 8 KB of '.' */
+				write(fd, buf, sizeof(buf));
+			pid = (k == 2) ? fork() : 0;
+			if (pid == 0)
+			{
+				m = mmap(NULL, 8192, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+				if (m != MAP_FAILED)
+				{
+					memcpy(m + 5000, "mapped!", 7);
+					if (k == 0)
+						munmap(m, 8192);
+					else if (k == 1)
+						msync(m, 8192, MS_SYNC);
+				}
+				if (k == 2)
+					_exit(0); /* no munmap: exit must flush */
+			}
+			else
+			{
+				waitpid(pid, &st, 0);
+			}
+			close(fd);
+			fd = open(path, O_RDONLY);
+			lseek(fd, 5000, SEEK_SET);
+			memset(got, 0, sizeof(got));
+			read(fd, got, 7);
+			close(fd);
+			snprintf(buf, sizeof(buf), "MAP_SHARED write-back on %s", how[k]);
+			check(buf, memcmp(got, "mapped!", 7) == 0);
+		}
 	}
 
 	printf("vfstest: %s\n", g_fail ? "FAILED" : "all passed");

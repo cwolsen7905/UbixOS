@@ -29,6 +29,7 @@
 #include <ubixos/vitals.h>
 #include <ubixos/callout.h>
 #include <sys/shutdown.h>
+#include <vmm/vmm_shmap.h>       /* vmm_shmap_exit */
 #include <mpi/mpi.h>            /* mpi_destroyProcessMboxes — free a task's mailboxes on exit */
 #include <sys/descrip.h>        /* g_device_find — bus-device lookup hook (ubx_device_find shim) */
 #include <sys/bus.h>            /* struct ubx_device */
@@ -247,6 +248,7 @@ void endTask(pidType pid)
 
 				if (l1 != 0 && l1 != aarch64_kernel_l1())
 				{
+					vmm_shmap_exit(_current->id); /* flush MAP_SHARED writes before the AS goes */
 					vm_map_free(&_current->vm_map);
 					pmap_switch(aarch64_kernel_l1());
 					pmap_free_user_space(l1);

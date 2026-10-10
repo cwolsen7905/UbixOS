@@ -20,6 +20,7 @@
 #include <lib/kmalloc.h>       /* sysID */
 #include <string.h>            /* memset */
 #include <sys/errno.h>         /* EINVAL (getcwd) */
+#include <vmm/vmm_shmap.h>     /* MAP_SHARED write-back */
 #include <x86_64/vmm_layout.h> /* MMAP_BASE, BRK_BASE (single source of truth) */
 #include <sys/descrip.h>       /* getfd, struct file (file-backed mmap) */
 #include <fs/vfs/file.h>       /* fileDescriptor_t, fread (file-backed mmap) */
@@ -164,6 +165,11 @@ u64 x86_64_user_mmap(u64 addr, u64 len, u64 prot, u64 flags, u64 fd, u64 off)
 			return 0;
 		if (map_file(base, npages, fp->fd, off * PAGE_SIZE, writable) != 0)
 			return 0;
+		/* MAP_SHARED (0x01) + PROT_WRITE: the pages are private copies, so record
+		 * the mapping for write-back on munmap/msync/exit (ld.lld's mmap'd output
+		 * was otherwise never written).  Mirrors aarch64. */
+		if ((flags & 0x01) && writable && fp->fd->fileName[0] != '\0')
+			vmm_shmap_register(_current->id, (uintptr_t)base, (size_t)len, (off_t)(off * PAGE_SIZE), fp->fd->fileName);
 	}
 	else if (map_anon(base, npages) != 0)
 	{
@@ -206,11 +212,12 @@ u64 x86_64_user_brk(u64 newbrk)
 	return cur;
 }
 
-/* munmap/madvise/msync: the bump allocator does not reclaim yet, so these are
- * accepted as no-ops (musl tolerates this for its arena lifetime). */
+/* munmap/madvise/msync: the bump allocator does not reclaim frames yet (musl
+ * tolerates this for its arena lifetime), but munmap and msync write MAP_SHARED
+ * writable file mappings back to their files. */
 int sys_munmap(struct thread *td, struct sys_munmap_args *uap)
 {
-	(void)uap;
+	vmm_shmap_unmap(_current->id, (uintptr_t)uap->addr, (size_t)uap->len);
 	td->td_retval[0] = 0;
 	return (0);
 }
@@ -224,7 +231,7 @@ int sys_madvise(struct thread *td, struct sys_madvise_args *uap)
 
 int sys_msync(struct thread *td, struct sys_msync_args *uap)
 {
-	(void)uap;
+	vmm_shmap_sync(_current->id, (uintptr_t)uap->addr, (size_t)uap->len);
 	td->td_retval[0] = 0;
 	return (0);
 }

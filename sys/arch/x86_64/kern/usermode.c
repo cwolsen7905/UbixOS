@@ -604,6 +604,33 @@ void *md_phys_to_virt(u64 phys)
 	return P2V(phys);
 }
 
+/** Kernel-readable pointer to the current task's page at user @va (vmm_shmap). */
+void *md_user_page_kva(uintptr_t va)
+{
+	u64 *t;
+	u64 e;
+
+	if (_current == 0 || _current->md.md_cr3 == 0)
+		return (NULL);
+	t = (u64 *)P2V(_current->md.md_cr3);
+	e = t[(va >> 39) & 0x1FF];
+	if ((e & PTE_P) == 0)
+		return (NULL);
+	t = (u64 *)P2V(e & PTE_ADDR_MASK);
+	e = t[(va >> 30) & 0x1FF];
+	if ((e & PTE_P) == 0 || (e & PTE_PS))
+		return (NULL);
+	t = (u64 *)P2V(e & PTE_ADDR_MASK);
+	e = t[(va >> 21) & 0x1FF];
+	if ((e & PTE_P) == 0 || (e & PTE_PS))
+		return (NULL);
+	t = (u64 *)P2V(e & PTE_ADDR_MASK);
+	e = t[(va >> 12) & 0x1FF];
+	if ((e & PTE_P) == 0)
+		return (NULL);
+	return ((u8 *)P2V(e & PTE_ADDR_MASK) + (va & 0xFFF));
+}
+
 /* True when @fd is a bare console placeholder (no fd table entry, or an
  * FD_TYPE_TTY slot with no underlying descriptor) — the only fds the bring-up
  * serial write path may take.  Same test as aarch64's SYS_WRITE routing. */

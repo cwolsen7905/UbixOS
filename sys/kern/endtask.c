@@ -36,6 +36,7 @@
 #include <vmm/vmm.h>
 #include <vmm/paging.h>
 #include <vmm/vm_map.h>
+#include <vmm/vmm_shmap.h>
 #include <lib/kprintf.h>
 #include <isa/8259.h>
 #include <sys/descrip.h>
@@ -124,6 +125,7 @@ void endTask(pidType pid)
 		 * those fds (fatal over a build that forks hundreds of clang invocations).
 		 * Same last-thread-of-group guard as the AS free below — an rfork(RFMEM)
 		 * sibling still sharing the address space keeps the leader's VMAs alive. */
+		vmm_shmap_exit(_current->id); /* flush MAP_SHARED writes before the AS goes */
 		vm_map_free(&_current->vm_map);
 
 		_current->reap_free_as = 1;

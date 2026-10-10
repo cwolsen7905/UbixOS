@@ -25,6 +25,7 @@
 #include <fs/vfs/file.h>       /* fopen/fread/fclose */
 #include <x86_64/vmm_layout.h> /* DYN_MAIN_BASE/DYN_INTERP_BASE/DYN_STACK_* */
 #include <ubixos/exec.h>       /* exec_set_name_cmdline (MI, shared with i386/aarch64) */
+#include <vmm/vmm_shmap.h>     /* vmm_shmap_exit (exec) */
 #include <ubixos/signal.h>     /* signal_exec_reset — reset caught handlers on exec */
 #include <sys/errno.h>         /* ENOENT / ENOEXEC — proper execve failure codes */
 #include <string.h>
@@ -454,6 +455,8 @@ int sys_execve(struct thread *td, struct sys_execve_args *uap)
 	char interp[256], iarg[256];
 	char *vec[MAXARG + 1];
 
+	/* The old image's MAP_SHARED writes reach their files before it is replaced. */
+	vmm_shmap_exit(_current->id);
 	if (uap->fname != NULL &&
 	    exec_script_argv(uap->fname, uap->argv, vec, MAXARG + 1, interp, sizeof(interp), iarg, sizeof(iarg)) > 0)
 	{
