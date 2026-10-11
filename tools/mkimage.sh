@@ -54,7 +54,8 @@ rm -f "${IMG}"
 # Blocks materialize only where the later steps actually write (MBR, FAT, pool),
 # so the empty pool tail stays a hole — far less IO than zeroing the whole image.
 # (Sparse files require APFS; HFS+ would silently allocate the full size.)
-dd if=/dev/zero of="${IMG}" bs=1m count=0 seek=${SIZE_MB} 2>/dev/null
+# bs is spelled in bytes: BSD dd accepts "1m", GNU dd does not (it wants "1M").
+dd if=/dev/zero of="${IMG}" bs=1048576 count=0 seek=${SIZE_MB}
 
 # ── MBR partition table: FAT32 (0x0C) + swap (0x82) + UbixFS pool (0x9C) ──────
 # Identical scheme to the legacy i386 image (frozen on releng/2) so the kernel's
@@ -123,7 +124,7 @@ fi
 # STAGE mirrors the on-disk root layout exactly; `ubfs cpr` copies each top-level
 # dir into the pool in one mount/commit cycle.  cpr skips symlinks, so the musl
 # dynamic linker is installed as a real second copy (not a symlink).
-STAGE=$(mktemp -d -t ubixstage)
+STAGE=$(mktemp -d "${TMPDIR:-/tmp}/ubixstage.XXXXXX")
 mkdir -p "${STAGE}"/bin "${STAGE}"/lib "${STAGE}"/sbin \
          "${STAGE}"/usr/bin "${STAGE}"/usr/sbin "${STAGE}"/usr/lib "${STAGE}"/usr/tests \
          "${STAGE}"/etc "${STAGE}"/etc/init.d "${STAGE}"/etc/dropbear \
@@ -319,7 +320,7 @@ if [ "${PROFILE}" = desktop ]; then
 
 	# ubistry registry seed.  Regenerate from its single source of truth
 	# (tools/makereg.c); tools/ubistry.db is a build artifact (not tracked).
-	_makereg="$(mktemp -t ubxmakereg.XXXXXX)" && cc -o "$_makereg" tools/makereg.c \
+	_makereg="$(mktemp "${TMPDIR:-/tmp}/ubxmakereg.XXXXXX")" && cc -o "$_makereg" tools/makereg.c \
 		&& ( cd tools && "$_makereg" >/dev/null ) && rm -f "$_makereg"
 	[ -f tools/ubistry.db ] && cp tools/ubistry.db "${STAGE}/var/db/ubistry.db" || true
 
@@ -348,7 +349,7 @@ fi # end desktop-profile assets
 #    it into the raw pool partition (type 0x9C).  The kernel mounts this as / via
 #    the virtio-blk MBR partition device + the bcache raw vdev — the same path
 #    proven on i386.  The host `ubfs` is the same portable core. ───────────────
-if ( cd tools/ubixfs && bmake ubfs ) >/dev/null 2>&1 && [ -x tools/ubixfs/ubfs ]; then
+if ( cd tools/ubixfs && bmake ubfs ) && [ -x tools/ubixfs/ubfs ]; then
 	UBFS=tools/ubixfs/ubfs
 	# Author the pool DIRECTLY inside its partition via ubfs's '@<offset>' suffix —
 	# no temp pool file, no multi-GB dd splice.  ubfs writes only the real metadata
@@ -358,7 +359,12 @@ if ( cd tools/ubixfs && bmake ubfs ) >/dev/null 2>&1 && [ -x tools/ubixfs/ubfs ]
 	echo "mkimage: building UbixFS pool root (${POOL_FS_MB} MB) in place at LBA ${POOL_LBA} (byte ${POOL_OFF})"
 	"${UBFS}" mkpool "${IMG}@${POOL_OFF}" "${POOL_FS_MB}M" >/dev/null
 	for _d in "${STAGE}"/*; do
-		[ -d "${_d}" ] && "${UBFS}" cpr "${_d}" "${IMG}@${POOL_OFF}:/$(basename "${_d}")" >/dev/null 2>&1
+		[ -d "${_d}" ] || continue
+		if ! "${UBFS}" cpr "${_d}" "${IMG}@${POOL_OFF}:/$(basename "${_d}")" >/dev/null; then
+			echo "mkimage: ERROR — ubfs cpr of ${_d} failed" >&2
+			rm -rf "${STAGE}"
+			exit 1
+		fi
 	done
 	# Guarantee the world-writable scratch dirs exist even though they are empty
 	# (cpr of an empty staging dir may no-op) — clang writes its intermediate .o to
