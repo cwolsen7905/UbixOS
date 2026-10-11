@@ -405,9 +405,9 @@ static int procfs_build_fd_entry(kTask_t *t, int fdno, char *buf, int bufsz)
 /**
  * Map a VFS type to the filesystem name shown in /proc/mounts.
  */
-static const char *procfs_fstype_name(int vfsType)
+static const char *procfs_fstype_name(int vfs_type)
 {
-	switch (vfsType)
+	switch (vfs_type)
 	{
 		case VFS_TYPE_FAT:
 			return "fat";
@@ -1139,10 +1139,11 @@ static int procfs_readdir(kDIR_t *dir, struct kdirent *ent)
 	if (s->type == PDIR_ROOT)
 	{
 		/* Phases 0..N-1: emit global synthetic files, one per readdir call */
-		static const char *const procfs_root_files[] = {"mounts", "meminfo", "stat", "uptime", "lwip", "sched"};
-		if (s->root_phase < (int)(sizeof(procfs_root_files) / sizeof(procfs_root_files[0])))
+		static const char *const g_procfs_root_files[] = {
+		    "mounts", "meminfo", "stat", "uptime", "lwip", "sched"};
+		if (s->root_phase < (int)(sizeof(g_procfs_root_files) / sizeof(g_procfs_root_files[0])))
 		{
-			strncpy(ent->d_name, procfs_root_files[s->root_phase], sizeof(ent->d_name) - 1);
+			strncpy(ent->d_name, g_procfs_root_files[s->root_phase], sizeof(ent->d_name) - 1);
 			ent->d_name[sizeof(ent->d_name) - 1] = '\0';
 			ent->d_ino = 0;
 			ent->d_type = KDT_REG;
