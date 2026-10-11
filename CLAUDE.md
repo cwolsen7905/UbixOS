@@ -34,6 +34,7 @@ and `docs/design/cross-arch-plan.md`.
 | Native ABI + FreeBSD-compatible POSIX layer; adding a syscall | [docs/standards/abi-and-syscalls.md](docs/standards/abi-and-syscalls.md) |
 | aarch64 + x86_64 parity; MI/MD split | [docs/standards/arch-parity.md](docs/standards/arch-parity.md) |
 | Review checklist | [docs/standards/review-checklist.md](docs/standards/review-checklist.md) |
+| Work matrix (status of all work) | [docs/standards/work-matrix.md](docs/standards/work-matrix.md), [docs/WORK.md](docs/WORK.md) |
 | Definition of done | [docs/standards/definition-of-done.md](docs/standards/definition-of-done.md) |
 | Naming, headers, formatting detail | [STYLE.md](STYLE.md) |
 | Contribution workflow, doc-sync table | [CONTRIBUTING.md](CONTRIBUTING.md) |
@@ -74,10 +75,15 @@ bmake run-debug-x86_64 TARGET=x86_64 # headless x86_64
 bmake clean
 ```
 
-- **Concurrent sessions:** whole-tree builds from two sessions corrupt shared
-  `contrib/` state. Serialise with
-  `tools/buildlock.sh with "<who>" bmake world image` (see `AGENTS-COORD.md` when present).
-  Per-directory `bmake -C <dir>` builds don't need the lock.
+- **Concurrent sessions:** coordination happens through Shepherd lanes;
+  Shepherd is the single source of truth. An agent working outside Shepherd
+  registers with `shepherd lane open` instead of keeping a coordination file.
+  Whole-tree builds still corrupt shared `contrib/` state when run from two
+  sessions, so serialise them with
+  `tools/buildlock.sh with "<who>" bmake world image`. Per-directory
+  `bmake -C <dir>` builds don't need the lock. Work status lives in
+  [docs/WORK.md](docs/WORK.md) (format: [work-matrix.md](docs/standards/work-matrix.md));
+  every lane updates its row in its PR.
 - **Board builds** (e.g. Raspberry Pi 3): the world is built once per arch and
   shared; only the kernel/image are board-specific —
   `bmake kernel-rpi3`, `bmake image-rpi3` (output under

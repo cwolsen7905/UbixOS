@@ -13,6 +13,7 @@ review where it cannot (`review-checklist.md`).
 | [arch-parity.md](arch-parity.md) | aarch64 + x86_64 must both stay green; MI/MD split |
 | [review-checklist.md](review-checklist.md) | What a reviewer (or the author, before asking) checks |
 | [definition-of-done.md](definition-of-done.md) | When a change may be called finished |
+| [work-matrix.md](work-matrix.md) | Format and rules for `docs/WORK.md`, the committed work matrix every lane updates |
 | [../../STYLE.md](../../STYLE.md) | Naming and formatting detail (supplements `coding.md`) |
 
 ## Precedence
