@@ -94,8 +94,8 @@ struct musl_ksigaction
  * boot-time daemons permanently when no job-control shell exists to
  * send SIGCONT.  Re-add once a full job-control shell is wired up. */
 #define SIGSTOP_MASK                                                                                                   \
-	((1u << (SIGTSTP - 1)) | /* 20 — Ctrl+Z */                                                                     \
-	 (1u << (SIGSTOP - 1)))  /* 19 — unconditional stop */
+	((1u << (SIGTSTP - 1)) | /* 20 - Ctrl+Z */                                                                     \
+	 (1u << (SIGSTOP - 1)))  /* 19 - unconditional stop */
 
 /**
  * signal_interrupts_wait - does a pending, unblocked signal end a blocking wait?
@@ -1014,6 +1014,18 @@ void signal_ast_check(void)
 }
 
 /**
+ * sigsuspend's wake predicate (runs under the scheduler lock).
+ *
+ * @return nonzero if an unblocked signal is pending for the thread @arg.
+ */
+static int sigsuspend_ready(void *arg)
+{
+	struct thread *td = (struct thread *)arg;
+
+	return ((td->sig_pending & ~td->sigmask.__bits[0]) != 0);
+}
+
+/**
  * sys_sigsuspend - atomically replace the current signal mask and wait
  * @td: thread state for the calling task
  * @args: syscall arguments containing the new signal mask
@@ -1025,14 +1037,6 @@ void signal_ast_check(void)
  *
  * FreeBSD slot 179; musl rt_sigsuspend also uses 179.
  */
-/* sigsuspend's wake predicate (runs under the scheduler lock). */
-static int sigsuspend_ready(void *arg)
-{
-	struct thread *td = (struct thread *)arg;
-
-	return ((td->sig_pending & ~td->sigmask.__bits[0]) != 0);
-}
-
 int sys_sigsuspend(struct thread *td, struct sys_sigsuspend_args *args)
 {
 	if (args->sigmask == NULL)

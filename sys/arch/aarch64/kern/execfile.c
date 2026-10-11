@@ -9,7 +9,7 @@
  */
 #include "bringup.h"
 #include <ubixos/sched.h>
-#include <vmm/vmm_shmap.h>        /* vmm_shmap_exit (exec) */
+#include <vmm/vmm_shmap.h>         /* vmm_shmap_exit (exec) */
 #include <ubixos/exec.h>           /* exec_set_name_cmdline (MI exec helper) */
 #include <ubixos/signal.h>         /* signal_exec_reset — reset caught handlers on exec */
 #include <ubixos/sched_internal.h> /* taskList, pid_hash_remove */

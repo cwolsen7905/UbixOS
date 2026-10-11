@@ -402,11 +402,13 @@ void rq_enqueue_locked(kTask_t *t)
 	if (t->state == ZOMBIE || t->state == DEAD)
 		return;
 
-	/* Choose the home run queue and record it so a remote dequeue (a waker on
+#if CONFIG_SCHED_PERCPU
+	/*
+	 * Choose the home run queue and record it so a remote dequeue (a waker on
 	 * another CPU) finds the right queue.  First enqueue picks the least-loaded
 	 * online CPU; thereafter the task keeps that home (cache affinity).  With
-	 * CONFIG_SCHED_PERCPU 0 every task lives on cpu 0 / g_rq[0]. */
-#if CONFIG_SCHED_PERCPU
+	 * CONFIG_SCHED_PERCPU 0 every task lives on cpu 0 / g_rq[0].
+	 */
 	if (t->rq_cpu == RQ_CPU_UNSET)
 		t->rq_cpu = sched_select_cpu();
 #else
@@ -942,8 +944,12 @@ void sched_reparent_children(kTask_t *dying)
 	restore_flags(flags);
 }
 
-/* sched_wait_child predicate (under schedulerSpinLock): a child of @arg has
- * exited or stopped, or a signal is pending for it. */
+/**
+ * sched_wait_child predicate (under schedulerSpinLock): a child of @arg has
+ * exited or stopped, or a signal is pending for it.
+ *
+ * @return 1 if the waiting task should wake, 0 otherwise.
+ */
 static int wait_child_ready(void *arg)
 {
 	kTask_t *self = (kTask_t *)arg, *t;
@@ -951,7 +957,8 @@ static int wait_child_ready(void *arg)
 	if (signal_interrupts_wait(&self->td))
 		return (1);
 	for (t = taskList; t != NULL; t = t->next)
-		if (t->parent == self && (t->state == ZOMBIE || t->state == DEAD || (t->state == STOPPED && t->t_stopped_sig)))
+		if (t->parent == self &&
+		    (t->state == ZOMBIE || t->state == DEAD || (t->state == STOPPED && t->t_stopped_sig)))
 			return (1);
 	return (0);
 }
