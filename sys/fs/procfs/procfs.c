@@ -129,6 +129,25 @@ procfs_isdigits(const char *s)
  * Content builders — write text into buf; return byte count.
  * --------------------------------------------------------------------- */
 
+/**
+ * Clamp a snprintf() return value to the bytes actually stored.
+ *
+ * snprintf() returns the length the output would have had; when it was
+ * truncated that exceeds the buffer, so callers accumulating into buf must
+ * clamp before using it as a length or offset.
+ *
+ * @param n      snprintf() return value
+ * @param bufsz  Size of the buffer snprintf() wrote into (including the NUL)
+ * @return Bytes stored, excluding the NUL; 0 if n < 0 or bufsz <= 0.
+ */
+static int
+procfs_stored(int n, int bufsz)
+{
+	if (n < 0 || bufsz <= 0)
+		return 0;
+	return (n < bufsz) ? n : bufsz - 1;
+}
+
 static const char *
 procfs_state_name(tState s)
 {
@@ -148,8 +167,7 @@ procfs_state_name(tState s)
 static int
 procfs_build_status(kTask_t *t, char *buf, int bufsz)
 {
-	(void)bufsz;
-	return sprintf(buf,
+	return procfs_stored(snprintf(buf, bufsz,
 	    "Name:\t%s\nPid:\t%u\nPPid:\t%u\nPGrp:\t%u\nSid:\t%u\n"
 	    "State:\t%s\n"
 	    "Uid:\t%u\t%u\n"
@@ -164,7 +182,7 @@ procfs_build_status(kTask_t *t, char *buf, int bufsz)
 	    (unsigned)t->uid,  (unsigned)t->euid,
 	    (unsigned)t->gid,  (unsigned)t->egid,
 	    (unsigned)t->on_cpu, (unsigned)t->rq_cpu, (unsigned)t->priority,
-	    (unsigned)t->quantum, t->wait_chan);
+	    (unsigned)t->quantum, t->wait_chan), bufsz);
 }
 
 static int
@@ -208,7 +226,7 @@ procfs_build_stat(kTask_t *t, char *buf, int bufsz)
 	 * Rendered 32-bit (wraps only after months of CPU time); userland forms
 	 * ratios against /proc/stat, which is HZ-independent.
 	 */
-	return sprintf(buf,
+	return procfs_stored(snprintf(buf, bufsz,
 	    "%u (%s) %c %u %u %u 0 -1 0 "
 	    "0 0 0 0 %u 0 0 0 "
 	    "0 0 1 0 0 %lu %lu\n",
@@ -216,7 +234,8 @@ procfs_build_stat(kTask_t *t, char *buf, int bufsz)
 	    (unsigned)t->ppid, (unsigned)t->pgrp, (unsigned)t->sid,
 	    (unsigned)t->run_ticks,                       /* utime := run_ticks */
 	    ctob(t->td.vm_tsize) + ctob(t->td.vm_dsize),  /* vsize approx */
-	    ctob(t->td.vm_tsize) + ctob(t->td.vm_dsize));  /* rss approx */
+	    ctob(t->td.vm_tsize) + ctob(t->td.vm_dsize)),  /* rss approx */
+	    bufsz);
 }
 
 /**
@@ -254,9 +273,8 @@ procfs_build_statm(kTask_t *t, char *buf, int bufsz)
 	if (resident == 0)
 		resident = size;       /* i386: no page walk yet — approximate by size    */
 
-	(void)bufsz;
 	/* size resident shared text lib data dt */
-	return sprintf(buf, "%lu %lu 0 %lu 0 %lu 0\n", size, resident, text, data);
+	return procfs_stored(snprintf(buf, bufsz, "%lu %lu 0 %lu 0 %lu 0\n", size, resident, text, data), bufsz);
 }
 
 static int
@@ -266,8 +284,6 @@ procfs_build_maps(kTask_t *t, char *buf, int bufsz)
 	unsigned long text_start, text_end;
 	unsigned long data_start, data_end;
 	unsigned long stack_top, stack_bot;
-
-	(void)bufsz;
 
 	text_start = (unsigned long)t->td.vm_taddr;
 	text_end   = text_start + (unsigned long)ctob(t->td.vm_tsize);
@@ -280,18 +296,18 @@ procfs_build_maps(kTask_t *t, char *buf, int bufsz)
 	stack_bot = stack_top - 0x20000u;  /* 128 KB */
 
 	if (text_start != 0u && text_end > text_start)
-		len += sprintf(buf + len,
+		len += procfs_stored(snprintf(buf + len, bufsz - len,
 		    "%08lx-%08lx r-xp 00000000 00:00 0\n",
-		    text_start, text_end);
+		    text_start, text_end), bufsz - len);
 
 	if (data_start != 0u && data_end > data_start)
-		len += sprintf(buf + len,
+		len += procfs_stored(snprintf(buf + len, bufsz - len,
 		    "%08lx-%08lx rw-p 00000000 00:00 0\n",
-		    data_start, data_end);
+		    data_start, data_end), bufsz - len);
 
-	len += sprintf(buf + len,
+	len += procfs_stored(snprintf(buf + len, bufsz - len,
 	    "%08lx-%08lx rwxp 00000000 00:00 0                          [stack]\n",
-	    stack_bot, stack_top);
+	    stack_bot, stack_top), bufsz - len);
 
 	return len;
 }
@@ -301,7 +317,6 @@ procfs_build_fd_entry(kTask_t *t, int fdno, char *buf, int bufsz)
 {
 	struct file *fp;
 	const char *type_str;
-	(void)bufsz;
 
 	if (fdno < 0 || fdno >= O_FILES)
 		return -1;
@@ -319,10 +334,10 @@ procfs_build_fd_entry(kTask_t *t, int fdno, char *buf, int bufsz)
 	}
 
 	if (fp->fd != NULL && fp->fd->fileName[0] != '\0')
-		return sprintf(buf, "fd:\t%d\ntype:\t%s\nname:\t%s\n",
-		    fdno, type_str, fp->fd->fileName);
+		return procfs_stored(snprintf(buf, bufsz, "fd:\t%d\ntype:\t%s\nname:\t%s\n",
+		    fdno, type_str, fp->fd->fileName), bufsz);
 
-	return sprintf(buf, "fd:\t%d\ntype:\t%s\n", fdno, type_str);
+	return procfs_stored(snprintf(buf, bufsz, "fd:\t%d\ntype:\t%s\n", fdno, type_str), bufsz);
 }
 
 static const char *
@@ -389,12 +404,12 @@ procfs_build_kstack(kTask_t *t, char *buf, int bufsz)
 	int n = 0, i, k;
 
 	if (t->on_cpu && t != _current)
-		return sprintf(buf, "running\n");
+		return procfs_stored(snprintf(buf, bufsz, "running\n"), bufsz);
 	k = md_task_kstack(t, pcs, 16);
 	for (i = 0; i < k && n < bufsz - 24; i++)
-		n += sprintf(buf + n, "0x%lx\n", (unsigned long)pcs[i]);
+		n += procfs_stored(snprintf(buf + n, bufsz - n, "0x%lx\n", (unsigned long)pcs[i]), bufsz - n);
 	if (k == 0)
-		n = sprintf(buf, "unavailable\n");
+		n = procfs_stored(snprintf(buf, bufsz, "unavailable\n"), bufsz);
 	return n;
 }
 
@@ -420,12 +435,14 @@ procfs_build_sched(char *buf, int bufsz)
 		{
 			extern volatile u_int32_t g_sched_stat[][6];
 			volatile u_int32_t *st = g_sched_stat[c];
-			n += sprintf(buf + n, "cpu%u: current %d %s  ready_mask=0x%x nr=%u\n", c,
+			n += procfs_stored(snprintf(buf + n, bufsz - n,
+			    "cpu%u: current %d %s  ready_mask=0x%x nr=%u\n", c,
 			    cur ? (int)cur->id : -1, cur ? cur->name : "-",
-			    (unsigned)rq->ready_mask, (unsigned)rq->nr_running);
-			n += sprintf(buf + n, "  ends: busy=%u rt=%u slice=%u empty=%u saving=%u switch=%u\n",
+			    (unsigned)rq->ready_mask, (unsigned)rq->nr_running), bufsz - n);
+			n += procfs_stored(snprintf(buf + n, bufsz - n,
+			    "  ends: busy=%u rt=%u slice=%u empty=%u saving=%u switch=%u\n",
 			    (unsigned)st[0], (unsigned)st[1], (unsigned)st[2], (unsigned)st[3],
-			    (unsigned)st[4], (unsigned)st[5]);
+			    (unsigned)st[4], (unsigned)st[5]), bufsz - n);
 		}
 		for (pri = SCHED_PRIORITIES - 1; pri >= 0 && n < bufsz - 160; pri--) {
 			kTask_t *h = rq->bucket[pri], *t = h;
@@ -434,8 +451,9 @@ procfs_build_sched(char *buf, int bufsz)
 			if (h == NULL)
 				continue;
 			do {
-				n += sprintf(buf + n, "  p%d: %d %s st=%d oncpu=%u\n", pri, (int)t->id,
-				    t->name, (int)t->state, (unsigned)t->on_cpu);
+				n += procfs_stored(snprintf(buf + n, bufsz - n,
+				    "  p%d: %d %s st=%d oncpu=%u\n", pri, (int)t->id,
+				    t->name, (int)t->state, (unsigned)t->on_cpu), bufsz - n);
 				t = t->rq_next;
 			} while (t != NULL && t != h && ++k < 32 && n < bufsz - 160);
 		}
@@ -446,8 +464,7 @@ procfs_build_sched(char *buf, int bufsz)
 static int
 procfs_build_sched(char *buf, int bufsz)
 {
-	(void)bufsz;
-	return sprintf(buf, "unsupported\n");
+	return procfs_stored(snprintf(buf, bufsz, "unsupported\n"), bufsz);
 }
 #endif
 
@@ -1007,7 +1024,7 @@ procfs_readdir(kDIR_t *dir, struct kdirent *ent)
 		if (!s->cursor)
 			return -1;
 
-		sprintf(ent->d_name, "%u", (unsigned)s->cursor->id);
+		snprintf(ent->d_name, sizeof(ent->d_name), "%u", (unsigned)s->cursor->id);
 		ent->d_ino  = s->cursor->id;
 		ent->d_type = KDT_DIR;
 		s->cursor   = s->cursor->next;
@@ -1037,7 +1054,7 @@ procfs_readdir(kDIR_t *dir, struct kdirent *ent)
 			s->subidx++;
 		if (s->subidx >= O_FILES)
 			return -1;
-		sprintf(ent->d_name, "%d", s->subidx);
+		snprintf(ent->d_name, sizeof(ent->d_name), "%d", s->subidx);
 		ent->d_ino  = s->pid * 1000u + (u_int32_t)s->subidx;
 		ent->d_type = KDT_REG;
 		s->subidx++;
