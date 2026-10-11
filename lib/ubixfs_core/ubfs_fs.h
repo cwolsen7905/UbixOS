@@ -72,5 +72,9 @@ int ubfs_fs_readdir(ubfs_fs_t *fs, uint64_t dirobj, ubfs_dir_cb cb, void *arg);
 
 /** Remove a file/symlink/empty-dir entry from its parent. */
 int ubfs_fs_unlink(ubfs_fs_t *fs, const char *path);
+/* unlink split in two, for open-but-unlinked files: drop the directory entry
+ * (returning the object), and later free the object on last close. */
+int ubfs_fs_unlink_entry(ubfs_fs_t *fs, const char *path, uint64_t *obj_out);
+int ubfs_fs_free_object(ubfs_fs_t *fs, uint64_t obj);
 
 #endif /* _UBIXFS_FS_H */

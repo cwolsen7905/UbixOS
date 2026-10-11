@@ -277,6 +277,43 @@ int ubfs_fs_readdir(ubfs_fs_t *fs, uint64_t dirobj, ubfs_dir_cb cb, void *arg)
 	return ubfs_dir_foreach(fs->os, dirobj, cb, arg);
 }
 
+/**
+ * Remove @path's directory entry without freeing the object; return the object
+ * in *@obj_out.  A kernel keeps an open-but-unlinked file alive this way and
+ * frees it (ubfs_fs_free_object) on last close.  Directories must be empty.
+ */
+int ubfs_fs_unlink_entry(ubfs_fs_t *fs, const char *path, uint64_t *obj_out)
+{
+	char pbuf[1024];
+	const char *leaf = split_parent(path, pbuf, sizeof(pbuf));
+	uint64_t pobj, obj;
+	ubfs_inode_t in;
+
+	if (ubfs_fs_lookup(fs, pbuf, &pobj) < 0)
+		return -1;
+	if (ubfs_dir_lookup(fs->os, pobj, leaf, &obj, NULL) < 0)
+		return -2;
+	if (inode_get(fs, obj, &in) < 0)
+		return -3;
+	if ((in.mode & UBFS_S_IFMT) == UBFS_S_IFDIR)
+	{
+		uint64_t n = 0;
+		if (ubfs_dir_count(fs->os, obj, &n) < 0 || n != 0)
+			return -4; /* directory not empty */
+	}
+	if (ubfs_dir_remove(fs->os, pobj, leaf) < 0)
+		return -5;
+	if (obj_out != NULL)
+		*obj_out = obj;
+	return 0;
+}
+
+/** Reclaim an object's dnode and data blocks (after its last reference). */
+int ubfs_fs_free_object(ubfs_fs_t *fs, uint64_t obj)
+{
+	return ubfs_dmu_object_free(fs->os, obj);
+}
+
 int ubfs_fs_unlink(ubfs_fs_t *fs, const char *path)
 {
 	char pbuf[1024];
