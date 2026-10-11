@@ -104,8 +104,8 @@ struct procfs_dir_state
 
 /* Per-pid entries; "fd" (the last) is a directory, the rest regular files. */
 static const char *procfs_pid_files[] = {"status", "cmdline", "stat", "statm", "maps", "kstack", "fd"};
-#define PROCFS_PID_NFILES 6 /* all six entries (was 5, which dropped "fd") */
-#define PROCFS_PID_FD_IDX 5 /* index of "fd" — the DIR entry (was 4 == "maps") */
+#define PROCFS_PID_NFILES ((int)(sizeof(procfs_pid_files) / sizeof(procfs_pid_files[0])))
+#define PROCFS_PID_FD_IDX (PROCFS_PID_NFILES - 1) /* "fd" is last: the one DIR entry */
 
 /* -----------------------------------------------------------------------
  * Path helpers
