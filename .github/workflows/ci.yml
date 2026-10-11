@@ -67,7 +67,11 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends \
             bmake binutils gcc gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu \
+            clang-18 lld-18 llvm-18 \
             mtools qemu-utils python3
+          # TOOLCHAIN defaults to clang: the makefiles call bare clang, ld.lld
+          # and llvm-{ar,nm,objcopy,ranlib}; Ubuntu only ships them versioned.
+          echo /usr/lib/llvm-18/bin >> "$GITHUB_PATH"
 
       - name: Kernel (${{ matrix.arch }})
         # Linux has no *-elf- triplets; use the distro cross compilers.  The
@@ -129,7 +133,9 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends \
             bmake binutils gcc gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu \
+            clang-18 lld-18 llvm-18 \
             mtools qemu-utils qemu-system-arm qemu-system-x86 python3
+          echo /usr/lib/llvm-18/bin >> "$GITHUB_PATH"
 
       - name: Build kernel, world and image
         run: |
