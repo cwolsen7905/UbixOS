@@ -14,6 +14,8 @@
 #include <sys/mman.h>
 #include <dirent.h>
 #include <sys/stat.h>
+#include <sys/times.h>
+#include <errno.h>
 
 static int g_fail;
 
@@ -197,6 +199,37 @@ int main(void)
 		memset(buf, 0, sizeof(buf));
 		check("read after unlink", read(u, buf, 10) == 10 && strcmp(buf, "still here") == 0);
 		close(u);
+	}
+
+	/* Calls whose musl numbers used to be Linux's and landed on unrelated
+	 * FreeBSD slots (pwrite64 181 was setgid, fadvise64_64 272 getdents,
+	 * times 43 getegid; getppid's slot pointed at getpid). */
+	{
+		gid_t g0 = getgid();
+		int p = open("/tmp/vfstest.pw", O_RDWR | O_CREAT | O_TRUNC, 0644);
+		pid_t me = getpid(), pid;
+		struct tms t;
+		int st;
+
+		check("open pwrite file", p >= 0);
+		check("write base", write(p, "aaaaaaaa", 8) == 8);
+		check("pwrite at offset 2", pwrite(p, "XY", 2, 2) == 2);
+		check("pwrite leaves the offset", lseek(p, 0, SEEK_CUR) == 8);
+		check("pwrite leaves the gid", getgid() == g0);
+		memset(buf, 0, sizeof(buf));
+		check("pwrite data in place", pread(p, buf, 8, 0) == 8 && strcmp(buf, "aaXYaaaa") == 0);
+		check("posix_fadvise ok", posix_fadvise(p, 0, 0, POSIX_FADV_SEQUENTIAL) == 0);
+		check("posix_fadvise bad fd", posix_fadvise(-1, 0, 0, POSIX_FADV_NORMAL) == EBADF);
+		close(p);
+		unlink("/tmp/vfstest.pw");
+
+		pid = fork();
+		if (pid == 0)
+			_exit(getppid() == me ? 0 : 1);
+		st = -1;
+		check("getppid is the parent", waitpid(pid, &st, 0) == pid && WIFEXITED(st) && WEXITSTATUS(st) == 0);
+		check("times() returns uptime ticks", times(&t) != (clock_t)-1 && times(&t) > 0);
+		check("times() leaves the gid", getgid() == g0);
 	}
 
 	printf("vfstest: %s\n", g_fail ? "FAILED" : "all passed");

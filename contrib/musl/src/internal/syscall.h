@@ -395,8 +395,10 @@ static inline long __alt_socketcall(int sys, int sock, int cp, syscall_arg_t a, 
 #define __sys_pause() __syscall(SYS_pause)
 #define __sys_pause_cp() __syscall_cp(SYS_pause)
 #else
-#define __sys_pause() __syscall(SYS_ppoll, 0, 0, 0, 0)
-#define __sys_pause_cp() __syscall_cp(SYS_ppoll, 0, 0, 0, 0)
+/* UbixOS: FreeBSD has no pause(2), and SYS_ppoll here is still a Linux number;
+ * wait for a signal with an empty-mask sigsuspend instead (as FreeBSD libc). */
+#define __sys_pause() __syscall(SYS_rt_sigsuspend, &(unsigned long){0}, 8)
+#define __sys_pause_cp() __syscall_cp(SYS_rt_sigsuspend, &(unsigned long){0}, 8)
 #endif
 
 #define sys_pause() __syscall_ret(__sys_pause())

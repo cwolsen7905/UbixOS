@@ -1,3 +1,8 @@
+/* UbixOS: a syscall number with this bit set has no UbixOS equivalent; fail it
+ * with -ENOSYS here instead of trapping (bits/syscall.h.in).  n is a constant at
+ * nearly every call site, so the check folds away. */
+#define __UBIX_ENOSYS 0x40000
+
 #define __SYSCALL_LL_E(x) (x)
 #define __SYSCALL_LL_O(x) (x)
 
@@ -9,6 +14,7 @@
 
 static inline long __syscall0(long n)
 {
+	if (n & __UBIX_ENOSYS) return -38; /* ENOSYS: see bits/syscall.h.in */
 	register long x8 __asm__("x8") = n;
 	register long x0 __asm__("x0");
 	__asm_syscall("r"(x8));
@@ -16,6 +22,7 @@ static inline long __syscall0(long n)
 
 static inline long __syscall1(long n, long a)
 {
+	if (n & __UBIX_ENOSYS) return -38; /* ENOSYS: see bits/syscall.h.in */
 	register long x8 __asm__("x8") = n;
 	register long x0 __asm__("x0") = a;
 	__asm_syscall("r"(x8), "0"(x0));
@@ -23,6 +30,7 @@ static inline long __syscall1(long n, long a)
 
 static inline long __syscall2(long n, long a, long b)
 {
+	if (n & __UBIX_ENOSYS) return -38; /* ENOSYS: see bits/syscall.h.in */
 	register long x8 __asm__("x8") = n;
 	register long x0 __asm__("x0") = a;
 	register long x1 __asm__("x1") = b;
@@ -31,6 +39,7 @@ static inline long __syscall2(long n, long a, long b)
 
 static inline long __syscall3(long n, long a, long b, long c)
 {
+	if (n & __UBIX_ENOSYS) return -38; /* ENOSYS: see bits/syscall.h.in */
 	register long x8 __asm__("x8") = n;
 	register long x0 __asm__("x0") = a;
 	register long x1 __asm__("x1") = b;
@@ -40,6 +49,7 @@ static inline long __syscall3(long n, long a, long b, long c)
 
 static inline long __syscall4(long n, long a, long b, long c, long d)
 {
+	if (n & __UBIX_ENOSYS) return -38; /* ENOSYS: see bits/syscall.h.in */
 	register long x8 __asm__("x8") = n;
 	register long x0 __asm__("x0") = a;
 	register long x1 __asm__("x1") = b;
@@ -50,6 +60,7 @@ static inline long __syscall4(long n, long a, long b, long c, long d)
 
 static inline long __syscall5(long n, long a, long b, long c, long d, long e)
 {
+	if (n & __UBIX_ENOSYS) return -38; /* ENOSYS: see bits/syscall.h.in */
 	register long x8 __asm__("x8") = n;
 	register long x0 __asm__("x0") = a;
 	register long x1 __asm__("x1") = b;
@@ -61,6 +72,7 @@ static inline long __syscall5(long n, long a, long b, long c, long d, long e)
 
 static inline long __syscall6(long n, long a, long b, long c, long d, long e, long f)
 {
+	if (n & __UBIX_ENOSYS) return -38; /* ENOSYS: see bits/syscall.h.in */
 	register long x8 __asm__("x8") = n;
 	register long x0 __asm__("x0") = a;
 	register long x1 __asm__("x1") = b;

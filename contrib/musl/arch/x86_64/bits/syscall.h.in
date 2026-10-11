@@ -890,3 +890,177 @@
  * is a raw pty, the slave is /dev/pts/N (see sys/posix/vfs_calls.c); musl's
  * posix_openpt()/openpty() call it instead of opening Linux's /dev/ptmx. */
 #define __NR_posix_openpt	504
+
+/* ---------------------------------------------------------------------------
+ * UbixOS: close the Linux-number leaks (musl-syscall audit, 2026-10-11).
+ * This table is Linux i386's with UbixOS overrides; any name not overridden
+ * sends a Linux number to the FreeBSD-numbered POSIX table and lands on an
+ * unrelated call (pwrite64 181 was setgid).  Three fixes:
+ *  - remap to the FreeBSD slot where FreeBSD has the call;
+ *  - __UBIX_ENOSYS stub (0x40000 | Linux nr) where it does not: syscall_arch.h
+ *    returns -ENOSYS without trapping, and musl takes its fallback path;
+ *  - #undef socketcall/pause so musl uses the direct calls (SysV IPC is stubbed
+ *    rather than remapped: uBix IPC is MPI, and FreeBSD __semctl/shmctl args differ).
+ * ------------------------------------------------------------------------- */
+#undef  __NR_pwrite64
+#define __NR_pwrite64	476
+#undef  __NR_fadvise64_64
+#define __NR_fadvise64_64	531
+#undef  __NR_mkdirat
+#define __NR_mkdirat	496
+#undef  __NR_mknodat
+#define __NR_mknodat	559
+#undef  __NR_fchownat
+#define __NR_fchownat	491
+#undef  __NR_futimesat
+#define __NR_futimesat	494
+#undef  __NR_unlinkat
+#define __NR_unlinkat	503
+#undef  __NR_preadv
+#define __NR_preadv	289
+#undef  __NR_pwritev
+#define __NR_pwritev	290
+#undef  __NR_sethostname
+#define __NR_sethostname	(0x40000|74)
+#undef  __NR_setdomainname
+#define __NR_setdomainname	(0x40000|121)
+#undef  __NR_adjtimex
+#define __NR_adjtimex	(0x40000|124)
+#undef  __NR_clock_adjtime
+#define __NR_clock_adjtime	(0x40000|343)
+#undef  __NR_init_module
+#define __NR_init_module	(0x40000|128)
+#undef  __NR_finit_module
+#define __NR_finit_module	(0x40000|350)
+#undef  __NR_delete_module
+#define __NR_delete_module	(0x40000|129)
+#undef  __NR_personality
+#define __NR_personality	(0x40000|136)
+#undef  __NR_setxattr
+#define __NR_setxattr	(0x40000|226)
+#undef  __NR_lsetxattr
+#define __NR_lsetxattr	(0x40000|227)
+#undef  __NR_fsetxattr
+#define __NR_fsetxattr	(0x40000|228)
+#undef  __NR_getxattr
+#define __NR_getxattr	(0x40000|229)
+#undef  __NR_lgetxattr
+#define __NR_lgetxattr	(0x40000|230)
+#undef  __NR_fgetxattr
+#define __NR_fgetxattr	(0x40000|231)
+#undef  __NR_listxattr
+#define __NR_listxattr	(0x40000|232)
+#undef  __NR_llistxattr
+#define __NR_llistxattr	(0x40000|233)
+#undef  __NR_flistxattr
+#define __NR_flistxattr	(0x40000|234)
+#undef  __NR_removexattr
+#define __NR_removexattr	(0x40000|235)
+#undef  __NR_lremovexattr
+#define __NR_lremovexattr	(0x40000|236)
+#undef  __NR_fremovexattr
+#define __NR_fremovexattr	(0x40000|237)
+#undef  __NR_epoll_create
+#define __NR_epoll_create	(0x40000|254)
+#undef  __NR_epoll_create1
+#define __NR_epoll_create1	(0x40000|329)
+#undef  __NR_epoll_ctl
+#define __NR_epoll_ctl	(0x40000|255)
+#undef  __NR_epoll_wait
+#define __NR_epoll_wait	(0x40000|256)
+#undef  __NR_epoll_pwait
+#define __NR_epoll_pwait	(0x40000|319)
+#undef  __NR_epoll_pwait2
+#define __NR_epoll_pwait2	(0x40000|441)
+#undef  __NR_timerfd_create
+#define __NR_timerfd_create	(0x40000|322)
+#undef  __NR_mremap
+#define __NR_mremap	(0x40000|163)
+#undef  __NR_sched_getaffinity
+#define __NR_sched_getaffinity	(0x40000|242)
+#undef  __NR_sched_setaffinity
+#define __NR_sched_setaffinity	(0x40000|241)
+#undef  __NR_pwritev2
+#define __NR_pwritev2	(0x40000|379)
+#undef  __NR_preadv2
+#define __NR_preadv2	(0x40000|378)
+#undef  __NR_faccessat2
+#define __NR_faccessat2	(0x40000|1025)
+#undef  __NR_sysinfo
+#define __NR_sysinfo	(0x40000|116)
+#undef  __NR_reboot
+#define __NR_reboot	(0x40000|88)
+#undef  __NR_times
+#define __NR_times	(0x40000|43)
+#undef  __NR_semget
+#define __NR_semget	(0x40000|393)
+#undef  __NR_semctl
+#define __NR_semctl	(0x40000|394)
+#undef  __NR_msgget
+#define __NR_msgget	(0x40000|399)
+#undef  __NR_msgsnd
+#define __NR_msgsnd	(0x40000|400)
+#undef  __NR_msgrcv
+#define __NR_msgrcv	(0x40000|401)
+#undef  __NR_msgctl
+#define __NR_msgctl	(0x40000|402)
+#undef  __NR_shmat
+#define __NR_shmat	(0x40000|397)
+#undef  __NR_shmdt
+#define __NR_shmdt	(0x40000|398)
+#undef  __NR_shmget
+#define __NR_shmget	(0x40000|395)
+#undef  __NR_shmctl
+#define __NR_shmctl	(0x40000|396)
+#undef  __NR_ipc
+#define __NR_ipc	(0x40000|117)
+#undef  __NR_clock_adjtime64
+#define __NR_clock_adjtime64	(0x40000|405)
+#undef  __NR_clock_getres_time32
+#define __NR_clock_getres_time32	(0x40000|7)
+#undef  __NR_clock_getres_time64
+#define __NR_clock_getres_time64	(0x40000|406)
+#undef  __NR_clock_nanosleep_time32
+#define __NR_clock_nanosleep_time32	(0x40000|8)
+#undef  __NR_clock_settime32
+#define __NR_clock_settime32	(0x40000|5)
+#undef  __NR_clock_settime64
+#define __NR_clock_settime64	(0x40000|404)
+#undef  __NR_futex_time64
+#define __NR_futex_time64	(0x40000|422)
+#undef  __NR_mq_timedreceive_time64
+#define __NR_mq_timedreceive_time64	(0x40000|419)
+#undef  __NR_mq_timedsend_time64
+#define __NR_mq_timedsend_time64	(0x40000|418)
+#undef  __NR_ppoll_time64
+#define __NR_ppoll_time64	(0x40000|414)
+#undef  __NR_pselect6_time64
+#define __NR_pselect6_time64	(0x40000|413)
+#undef  __NR_recvmmsg_time64
+#define __NR_recvmmsg_time64	(0x40000|417)
+#undef  __NR_rt_sigtimedwait_time64
+#define __NR_rt_sigtimedwait_time64	(0x40000|421)
+#undef  __NR_sched_rr_get_interval_time64
+#define __NR_sched_rr_get_interval_time64	(0x40000|423)
+#undef  __NR_semtimedop_time64
+#define __NR_semtimedop_time64	(0x40000|420)
+#undef  __NR_timer_gettime32
+#define __NR_timer_gettime32	(0x40000|2)
+#undef  __NR_timer_gettime64
+#define __NR_timer_gettime64	(0x40000|408)
+#undef  __NR_timer_settime32
+#define __NR_timer_settime32	(0x40000|1)
+#undef  __NR_timer_settime64
+#define __NR_timer_settime64	(0x40000|409)
+#undef  __NR_timerfd_gettime32
+#define __NR_timerfd_gettime32	(0x40000|326)
+#undef  __NR_timerfd_gettime64
+#define __NR_timerfd_gettime64	(0x40000|410)
+#undef  __NR_timerfd_settime32
+#define __NR_timerfd_settime32	(0x40000|325)
+#undef  __NR_timerfd_settime64
+#define __NR_timerfd_settime64	(0x40000|411)
+#undef  __NR_utimensat_time64
+#define __NR_utimensat_time64	(0x40000|412)
+#undef  __NR_socketcall
+#undef  __NR_pause
