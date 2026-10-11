@@ -1650,8 +1650,9 @@ static unsigned vgetopt32(char **argv, const char *applet_opts, va_list ap)
 		char  letter;
 		char  takes_arg;
 		char  is_star;
+		char  is_num;
 		void *target;
-	} opts[16];
+	} opts[32];
 	int nopts = 0;
 	const char *p = applet_opts;
 
@@ -1667,14 +1668,16 @@ static unsigned vgetopt32(char **argv, const char *applet_opts, va_list ap)
 		p++;
 	}
 
-	while (*p && nopts < 16) {
+	while (*p && nopts < 32) {
 		opts[nopts].letter    = *p++;
 		opts[nopts].takes_arg = 0;
 		opts[nopts].is_star   = 0;
+		opts[nopts].is_num    = 0;
 		opts[nopts].target    = NULL;
 		while (*p == ':' || *p == '*' || *p == '+') {
 			if (*p == ':') opts[nopts].takes_arg = 1;
 			if (*p == '*') opts[nopts].is_star   = 1;
+			if (*p == '+') opts[nopts].is_num    = 1; /* "x:+" -> int* target */
 			p++;
 		}
 		nopts++;
@@ -1691,7 +1694,7 @@ static unsigned vgetopt32(char **argv, const char *applet_opts, va_list ap)
 	 * shell alias `rm='rm -i'` made `rm -f` prompt anyway (the -f could
 	 * never override the alias's -i).  Rules are ':'-separated; anything
 	 * not of the "x-y..." shape is ignored. */
-	unsigned clears[16] = { 0 };
+	unsigned clears[32] = { 0 };
 	if (has_modifiers && *p == '\0') {
 		const char *m = p + 1;
 		while (*m) {
@@ -1699,12 +1702,15 @@ static unsigned vgetopt32(char **argv, const char *applet_opts, va_list ap)
 			for (int i = 0; i < nopts; i++)
 				if (opts[i].letter == *m) { owner = i; break; }
 			m++;
-			while (*m == '-' && m[1]) {
+			if (*m == '-' && m[1]) {
+				/* "C-AB": every letter up to the next rule clears */
 				m++;
-				for (int i = 0; i < nopts; i++)
-					if (opts[i].letter == *m && owner >= 0)
-						clears[owner] |= (1u << i);
-				m++;
+				while (*m && *m != ':') {
+					for (int i = 0; i < nopts; i++)
+						if (opts[i].letter == *m && owner >= 0)
+							clears[owner] |= (1u << i);
+					m++;
+				}
 			}
 			while (*m && *m != ':')
 				m++; /* skip any rule syntax we don't implement */
@@ -1753,6 +1759,8 @@ static unsigned vgetopt32(char **argv, const char *applet_opts, va_list ap)
 					node->data = xstrdup(val);
 					node->link = *head;
 					*head = node;
+				} else if (opts[found].target && opts[found].is_num) {
+					*(int *)opts[found].target = xatoi_positive(val);
 				} else if (opts[found].target) {
 					*(char **)opts[found].target = xstrdup(val);
 				}
