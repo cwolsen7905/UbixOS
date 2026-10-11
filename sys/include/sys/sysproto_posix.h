@@ -1639,6 +1639,46 @@ int sys_sendto(struct thread *td, struct sys_sendto_args *);
 
 int sys_pread(struct thread *td, struct sys_pread_args *);
 
+struct sys_pwrite_args
+{
+	char fd_l_[PADL_(int)];
+	int fd;
+	char fd_r_[PADR_(int)];
+
+	char buf_l_[PADL_(const void *)];
+	const void *buf;
+	char buf_r_[PADR_(const void *)];
+
+	char nbyte_l_[PADL_(u_int64_t)];
+	u_int64_t nbyte;
+	char nbyte_r_[PADR_(u_int64_t)];
+
+	char offset_l_[PADL_(off_t)];
+	off_t offset;
+	char offset_r_[PADR_(off_t)];
+};
+int sys_pwrite(struct thread *td, struct sys_pwrite_args *);
+
+struct sys_posix_fadvise_args
+{
+	char fd_l_[PADL_(int)];
+	int fd;
+	char fd_r_[PADR_(int)];
+
+	char offset_l_[PADL_(off_t)];
+	off_t offset;
+	char offset_r_[PADR_(off_t)];
+
+	char len_l_[PADL_(off_t)];
+	off_t len;
+	char len_r_[PADR_(off_t)];
+
+	char advice_l_[PADL_(int)];
+	int advice;
+	char advice_r_[PADR_(int)];
+};
+int sys_posix_fadvise(struct thread *td, struct sys_posix_fadvise_args *);
+
 struct sys_uname_args
 {
 	char buf_l_[PADL_(void *)];

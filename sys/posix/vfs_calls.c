@@ -48,6 +48,7 @@
 #include <lib/kmalloc.h>
 #include <sys/klog.h>
 #include <fs/vfs/file.h>
+#include <ubixos/uaccess.h>
 #include <fs/vfs/mount.h>
 #include <fs/devfs/devfs.h> /* devfs_resolve — device path -> (major, minor) for block mounts */
 
@@ -479,6 +480,105 @@ int sys_pread(struct thread *td, struct sys_pread_args *args)
 		td->td_retval[0] = -1;
 	}
 	return (0);
+}
+
+/* Bytes sys_pwrite bounces through the kernel per copyin. */
+#define PWRITE_CHUNK 4096
+
+/**
+ * sys_pwrite - write to a regular file at an explicit offset (FreeBSD slot 476)
+ * @td: thread state for the calling task
+ * @args: fd, user buffer, byte count and file offset
+ *
+ * Positional: the descriptor's own offset is left as it was, and O_APPEND is
+ * not applied (FreeBSD semantics).  The user buffer is copied in a page at a
+ * time.  Pipes, sockets and terminals have no offset: ESPIPE.
+ *
+ * @return 0; td_retval[0] is the bytes written, or -EBADF, -ESPIPE, -EINVAL
+ *         (negative offset), -EFAULT (bad buffer) or -ENOMEM.
+ */
+int sys_pwrite(struct thread *td, struct sys_pwrite_args *args)
+{
+	struct file *fd = NULL;
+	fileDescriptor_t *fp;
+	u_int8_t *kbuf;
+	u_int64_t done = 0;
+	off_t saved;
+	int err = 0;
+
+	getfd(td, &fd, args->fd);
+	if (fd == NULL)
+		err = -EBADF;
+	else if (fd->fd == NULL || fd->fd_type == 3)
+		err = -ESPIPE;
+	else if (args->offset < 0)
+		err = -EINVAL;
+	if (err != 0)
+	{
+		td->td_retval[0] = err;
+		return (-err);
+	}
+
+	kbuf = kmalloc(PWRITE_CHUNK);
+	if (kbuf == NULL)
+	{
+		td->td_retval[0] = -ENOMEM;
+		return (ENOMEM);
+	}
+
+	fp = fd->fd;
+	saved = fp->offset;
+	while (done < args->nbyte)
+	{
+		u_int64_t chunk = args->nbyte - done;
+		int n;
+
+		if (chunk > PWRITE_CHUNK)
+			chunk = PWRITE_CHUNK;
+		err = copyin((const u_int8_t *)args->buf + done, kbuf, (unsigned long)chunk);
+		if (err != 0)
+			break;
+		fp->offset = args->offset + (off_t)done;
+		n = fwrite(kbuf, 1, (int)chunk, fp);
+		if (n <= 0)
+			break;
+		done += (u_int64_t)n;
+		if ((u_int64_t)n < chunk)
+			break;
+	}
+	fp->offset = saved;
+	kfree(kbuf);
+
+	/* A fault after some bytes went out reports the partial count. */
+	td->td_retval[0] = (done > 0 || err == 0) ? (int)done : err;
+	return (td->td_retval[0] < 0 ? -td->td_retval[0] : 0);
+}
+
+/**
+ * sys_posix_fadvise - accept an access-pattern hint (FreeBSD slot 531)
+ * @td: thread state for the calling task
+ * @args: fd, range and advice
+ *
+ * There is no page cache to steer yet, so a valid hint is accepted and
+ * ignored.  The arguments are still checked the way FreeBSD does.
+ *
+ * @return 0; td_retval[0] is 0, -EBADF, -ESPIPE (pipe, socket or terminal)
+ *         or -EINVAL (negative length/offset or unknown advice).
+ */
+int sys_posix_fadvise(struct thread *td, struct sys_posix_fadvise_args *args)
+{
+	struct file *fd = NULL;
+	int err = 0;
+
+	getfd(td, &fd, args->fd);
+	if (fd == NULL)
+		err = -EBADF;
+	else if (fd->fd == NULL || fd->fd_type == 3)
+		err = -ESPIPE;
+	else if (args->offset < 0 || args->len < 0 || args->advice < 0 || args->advice > 5)
+		err = -EINVAL; /* POSIX_FADV_NORMAL (0) .. POSIX_FADV_NOREUSE (5) */
+	td->td_retval[0] = err;
+	return (-err);
 }
 
 int sys_write(struct thread *td, struct sys_write_args *uap)

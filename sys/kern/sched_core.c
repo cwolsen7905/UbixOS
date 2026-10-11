@@ -931,6 +931,7 @@ void sched_reparent_children(kTask_t *dying)
 		if (t == dying || t->parent != dying || t->tgid == dying->tgid)
 			continue;
 		t->parent = init;
+		t->ppid = (init != NULL) ? init->id : 0; /* getppid() of an orphan is init */
 		if (dying->children > 0)
 			dying->children--;
 		if (init != NULL)
