@@ -79,7 +79,7 @@ struct syscall_entry systemCalls_posix[] = {
     {0, "sync", sys_invalid, SYSCALL_NOTIMP},                                                                   // 36 - sync
     {ARG_COUNT(sys_kill_args), "kill", (sys_call_t *)sys_kill, SYSCALL_VALID},                                  // 37 - kill
     {0, "No Call", sys_invalid, SYSCALL_INVALID},                                                               // 38
-    {ARG_COUNT(sys_getppid_args), "getppid", sys_getppid, SYSCALL_VALID},                                       // 39 - getppid
+    {ARG_COUNT(sys_getppid_args), "getppid", (sys_call_t *)sys_getppid, SYSCALL_VALID},                          // 39 - getppid
     {0, "No Call", sys_invalid, SYSCALL_INVALID},                                                               // 40
     {ARG_COUNT(sys_dup_args), "dup", sys_dup, SYSCALL_VALID},                                                   // 41 - dup
     {ARG_COUNT(pipe_args), "pipe", (sys_call_t *)pipe, SYSCALL_VALID},                                          // 42 - pipe

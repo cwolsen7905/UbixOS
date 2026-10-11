@@ -8,6 +8,7 @@
 
 #include <errno.h>
 #include <signal.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
@@ -49,7 +50,8 @@ static void on_usr2(int sig)
 	stack_t q, n;
 
 	(void)sig;
-	g_alt_on = (&here >= g_altstack && &here < g_altstack + sizeof(g_altstack));
+	g_alt_on = ((uintptr_t)&here >= (uintptr_t)g_altstack &&
+	            (uintptr_t)&here < (uintptr_t)g_altstack + sizeof(g_altstack));
 	g_alt_flags = (sigaltstack(NULL, &q) == 0) ? q.ss_flags : -1;
 	memset(&n, 0, sizeof(n));
 	n.ss_sp = g_altstack;

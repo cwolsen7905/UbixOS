@@ -56,9 +56,9 @@ static int uaccess_copy(uintptr_t uaddr, void *kbuf, unsigned long len, int to_u
 		if (kva == NULL)
 			return (-EFAULT);
 		if (to_user)
-			memcpy(kva, k, chunk);
+			memcpy(kva, k, (size_t)chunk); /* chunk <= PAGE_SIZE */
 		else
-			memcpy(k, kva, chunk);
+			memcpy(k, kva, (size_t)chunk);
 		uaddr += chunk;
 		k += chunk;
 		len -= chunk;
