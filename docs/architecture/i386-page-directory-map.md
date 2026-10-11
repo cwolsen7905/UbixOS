@@ -1,5 +1,13 @@
 # i386 Page Directory Map
 
+> **HISTORICAL — i386 / `releng/2` only.** master is 64-bit only (aarch64 is the
+> default, x86_64 the abstraction anchor); the 32-bit i386 port is frozen on the
+> `releng/2` branch and this map does **not** describe master. For the live layouts
+> see [vmm.md](vmm.md) (aarch64 TTBR0/TTBR1 and x86_64 PML4 layouts,
+> `sys/include/{aarch64,x86_64}/vmm_layout.h`). The file keeps its name so existing
+> links keep working. Some paths referenced below (`sys/arch/i386/`, `ldscript.i386`,
+> `sys/init/main.c`) exist only on `releng/2`.
+
 The i386 MMU uses a two-level page table. The top-level **page directory**
 has 1024 entries (PDEs), each covering 4 MB of virtual address space. This
 document maps every PDE index to its virtual range and purpose.
@@ -81,7 +89,7 @@ separate virtual mapping for the page tables.
 
 ## GDT Selectors
 
-[sys/init/main.c](../../sys/init/main.c) `ubixGDT`:
+`sys/init/main.c` (`releng/2`) `ubixGDT`:
 `0x08` kcode · `0x10` kdata · `0x18` LDT · `0x20` kernel TSS · `0x28/0x2B` ucode ·
 `0x30/0x33` udata · `0x38`/`0x40` (now-dead TSS descriptors) · `0x48` SMP private ·
 `0x50` user-gs/stack · `0x58` **`SEL_PCPU`** (per-CPU `%gs` base = `&g_pcpu[cpuid]`,
