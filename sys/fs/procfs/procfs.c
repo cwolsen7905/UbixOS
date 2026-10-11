@@ -84,6 +84,9 @@
 #define PFILE_SCHED 12      /* /proc/sched — per-CPU current task + run queues */
 #define PFILE_KSTACK 13     /* /proc/<pid>/kstack — kernel return addresses (procstat -k) */
 
+/* Per-pid entries; "fd" (the last) is a directory, the rest regular files. */
+static const char *g_procfs_pid_files[] = {"status", "cmdline", "stat", "statm", "maps", "kstack", "fd"};
+
 /* lwIP counter snapshot, defined in the net stack (sys/net/net/sys_arch.c);
  * net is always linked into the kernel. */
 extern int lwip_stats_format(char *buf, int bufsz);
@@ -106,6 +109,9 @@ struct procfs_dir_state
  * Path helpers
  * --------------------------------------------------------------------- */
 
+/**
+ * Parse leading decimal digits of s (no sign, no overflow check).
+ */
 static int procfs_atoi(const char *s)
 {
 	int n = 0;
@@ -114,6 +120,9 @@ static int procfs_atoi(const char *s)
 	return n;
 }
 
+/**
+ * Return non-zero if s is a non-empty string of decimal digits.
+ */
 static int procfs_isdigits(const char *s)
 {
 	if (!*s)
@@ -146,6 +155,9 @@ static int procfs_stored(int n, int bufsz)
 	return (n < bufsz) ? n : bufsz - 1;
 }
 
+/**
+ * Map a task state to its /proc/<pid>/status name.
+ */
 static const char *procfs_state_name(tState s)
 {
 	switch (s)
@@ -171,6 +183,9 @@ static const char *procfs_state_name(tState s)
 	}
 }
 
+/**
+ * Build /proc/<pid>/status into buf (bufsz bytes); returns bytes stored.
+ */
 static int procfs_build_status(kTask_t *t, char *buf, int bufsz)
 {
 	return procfs_stored(snprintf(buf,
@@ -198,6 +213,9 @@ static int procfs_build_status(kTask_t *t, char *buf, int bufsz)
 	                     bufsz);
 }
 
+/**
+ * Build /proc/<pid>/cmdline into buf (bufsz bytes); returns bytes stored.
+ */
 static int procfs_build_cmdline(kTask_t *t, char *buf, int bufsz)
 {
 	const char *src = t->cmdline[0] ? t->cmdline : t->name;
@@ -212,10 +230,12 @@ static int procfs_build_cmdline(kTask_t *t, char *buf, int bufsz)
 	return len + 1;
 }
 
+/**
+ * Build /proc/<pid>/stat into buf (bufsz bytes); returns bytes stored.
+ */
 static int procfs_build_stat(kTask_t *t, char *buf, int bufsz)
 {
 	char state;
-	(void)bufsz;
 
 	switch (t->state)
 	{
@@ -305,6 +325,9 @@ static int procfs_build_statm(kTask_t *t, char *buf, int bufsz)
 	return procfs_stored(snprintf(buf, bufsz, "%lu %lu 0 %lu 0 %lu 0\n", size, resident, text, data), bufsz);
 }
 
+/**
+ * Build /proc/<pid>/maps into buf (bufsz bytes); returns bytes stored.
+ */
 static int procfs_build_maps(kTask_t *t, char *buf, int bufsz)
 {
 	int len = 0;
@@ -342,6 +365,9 @@ static int procfs_build_maps(kTask_t *t, char *buf, int bufsz)
 	return len;
 }
 
+/**
+ * Build /proc/<pid>/fd/<fdno> into buf (bufsz bytes); returns bytes stored, -1 if fdno is not open.
+ */
 static int procfs_build_fd_entry(kTask_t *t, int fdno, char *buf, int bufsz)
 {
 	struct file *fp;
@@ -376,6 +402,9 @@ static int procfs_build_fd_entry(kTask_t *t, int fdno, char *buf, int bufsz)
 	return procfs_stored(snprintf(buf, bufsz, "fd:\t%d\ntype:\t%s\n", fdno, type_str), bufsz);
 }
 
+/**
+ * Map a VFS type to the filesystem name shown in /proc/mounts.
+ */
 static const char *procfs_fstype_name(int vfsType)
 {
 	switch (vfsType)
@@ -393,6 +422,9 @@ static const char *procfs_fstype_name(int vfsType)
 	}
 }
 
+/**
+ * Build /proc/mounts into buf (bufsz bytes); returns bytes stored.
+ */
 static int procfs_build_mounts(char *buf, int bufsz)
 {
 	struct vfs_mountPoint *mp;
@@ -457,6 +489,9 @@ static int procfs_build_kstack(kTask_t *t, char *buf, int bufsz)
  * lock, for debugging stalls (a READY task nobody runs).
  */
 #if defined(__aarch64__) || defined(__x86_64__)
+/**
+ * Build /proc/sched into buf (bufsz bytes); returns bytes stored.
+ */
 static int procfs_build_sched(char *buf, int bufsz)
 {
 	int n = 0;
@@ -518,6 +553,9 @@ static int procfs_build_sched(char *buf, int bufsz)
 	return n;
 }
 #else
+/**
+ * Build /proc/sched into buf (bufsz bytes); returns bytes stored.
+ */
 static int procfs_build_sched(char *buf, int bufsz)
 {
 	return procfs_stored(snprintf(buf, bufsz, "unsupported\n"), bufsz);
@@ -619,6 +657,9 @@ static int procfs_build_uptime(char *buf, int bufsz)
  * vfsInitFS
  * --------------------------------------------------------------------- */
 
+/**
+ * VFS init hook: procfs has no per-mount state.
+ */
 static int procfs_initialize(struct vfs_mountPoint *mp)
 {
 	mp->fsInfo = NULL;
@@ -629,6 +670,9 @@ static int procfs_initialize(struct vfs_mountPoint *mp)
  * vfsOpenFile
  * --------------------------------------------------------------------- */
 
+/**
+ * VFS open hook: resolve a /proc path to a PFILE_* type in fd->start.
+ */
 static int procfs_open(char *file, fileDescriptor_t *fd)
 {
 	char path[256];
@@ -844,6 +888,9 @@ static int procfs_open(char *file, fileDescriptor_t *fd)
  * vfsRead — regenerate content on each read so it reflects current state.
  * --------------------------------------------------------------------- */
 
+/**
+ * VFS read hook: regenerate the file's content and copy out [offset, offset + size).
+ */
 static int procfs_read(fileDescriptor_t *fd, char *data, off_t offset, long size)
 {
 	char tmp[512];
@@ -985,6 +1032,9 @@ static int procfs_read(fileDescriptor_t *fd, char *data, off_t offset, long size
  * vfsOpenDir
  * --------------------------------------------------------------------- */
 
+/**
+ * VFS opendir hook: allocate enumeration state for /proc, /proc/<pid> or /proc/<pid>/fd.
+ */
 static int procfs_opendir(const char *path, kDIR_t *dir)
 {
 	struct procfs_dir_state *s;
@@ -1072,11 +1122,12 @@ static int procfs_opendir(const char *path, kDIR_t *dir)
  * vfsReadDir
  * --------------------------------------------------------------------- */
 
-/* Per-pid entries; "fd" (the last) is a directory, the rest regular files. */
-static const char *procfs_pid_files[] = {"status", "cmdline", "stat", "statm", "maps", "kstack", "fd"};
 #define PROCFS_PID_NFILES 6 /* all six entries (was 5, which dropped "fd") */
 #define PROCFS_PID_FD_IDX 5 /* index of "fd" — the DIR entry (was 4 == "maps") */
 
+/**
+ * VFS readdir hook: fill ent with the next entry; returns -1 at the end.
+ */
 static int procfs_readdir(kDIR_t *dir, struct kdirent *ent)
 {
 	struct procfs_dir_state *s = (struct procfs_dir_state *)dir->dirHandle;
@@ -1118,7 +1169,7 @@ static int procfs_readdir(kDIR_t *dir, struct kdirent *ent)
 	{
 		if (s->subidx >= PROCFS_PID_NFILES)
 			return -1;
-		strncpy(ent->d_name, procfs_pid_files[s->subidx], sizeof(ent->d_name) - 1);
+		strncpy(ent->d_name, g_procfs_pid_files[s->subidx], sizeof(ent->d_name) - 1);
 		ent->d_name[sizeof(ent->d_name) - 1] = '\0';
 		ent->d_ino = s->pid * 10u + (u_int32_t)s->subidx;
 		ent->d_type = (s->subidx == PROCFS_PID_FD_IDX) ? KDT_DIR : KDT_REG;
@@ -1151,6 +1202,9 @@ static int procfs_readdir(kDIR_t *dir, struct kdirent *ent)
  * vfsCloseDir
  * --------------------------------------------------------------------- */
 
+/**
+ * VFS closedir hook: free the enumeration state.
+ */
 static int procfs_closedir(kDIR_t *dir)
 {
 	if (dir->dirHandle)
@@ -1165,6 +1219,9 @@ static int procfs_closedir(kDIR_t *dir)
  * procfs_init — register filesystem
  * --------------------------------------------------------------------- */
 
+/**
+ * Register the procfs filesystem with the VFS.
+ */
 int procfs_init(void)
 {
 	struct fileSystem procFS = {
