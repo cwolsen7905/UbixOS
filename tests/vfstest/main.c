@@ -4,6 +4,9 @@
  * vfstest — checks VFS edge cases: zero-length read, O_APPEND on every write,
  * ".." in paths and faccessat.  Prints one PASS/FAIL line per check and exits
  * non-zero if any check failed.
+ *
+ * "vfstest --long N" and "vfstest --many N" are the re-exec targets of the
+ * execve argument checks: they exit 0 if their argv arrived intact.
  */
 
 #include <fcntl.h>
@@ -17,6 +20,7 @@
 #include <sys/times.h>
 #include <sys/statvfs.h>
 #include <errno.h>
+#include <stdlib.h>
 
 static int g_fail;
 
@@ -27,12 +31,130 @@ static void check(const char *what, int ok)
 		g_fail = 1;
 }
 
-int main(void)
+/**
+ * Re-exec target: verify the argv the parent built in check_execve_args.
+ *
+ * @return 0 if it arrived intact.
+ */
+static int argv_target(int argc, char **argv)
+{
+	int n = atoi(argv[2]), i;
+	char want[16];
+
+	if (strcmp(argv[1], "--long") == 0)
+		return (argc == 4 && (int)strlen(argv[3]) == n && argv[3][n - 1] == 'Z') ? 0 : 1;
+	if (argc != n + 3)
+		return (1);
+	for (i = 0; i < n; i++)
+	{
+		snprintf(want, sizeof(want), "a%d", i);
+		if (strcmp(argv[3 + i], want) != 0)
+			return (1);
+	}
+	return (0);
+}
+
+/**
+ * Fork, execve @path with @av in the child, and wait.
+ *
+ * @return the child's exit status, or 100 + errno if execve itself failed.
+ */
+static int run_exec(const char *path, char **av)
+{
+	char *ev[] = {"VFSTEST=1", NULL};
+	pid_t pid;
+	int st = -1;
+
+	pid = fork();
+	if (pid == 0)
+	{
+		execve(path, av, ev);
+		_exit(100 + errno);
+	}
+	waitpid(pid, &st, 0);
+	return WIFEXITED(st) ? WEXITSTATUS(st) : -1;
+}
+
+/**
+ * execve passes long and numerous arguments whole, and refuses an oversized
+ * or unreadable argv with an error instead of truncating it.
+ */
+static void check_execve_args(const char *self)
+{
+	enum
+	{
+		LONG_ARG = 20000,
+		MANY_ARGS = 1000,
+		TOO_BIG = 200 * 1024
+	};
+	char **av = malloc((MANY_ARGS + 4) * sizeof(char *));
+	char *big = malloc(TOO_BIG + 1);
+	char num[16];
+	int i;
+
+	if (av == NULL || big == NULL)
+	{
+		check("execve test buffers", 0);
+		return;
+	}
+	memset(big, 'x', TOO_BIG);
+
+	big[LONG_ARG - 1] = 'Z';
+	big[LONG_ARG] = '\0';
+	snprintf(num, sizeof(num), "%d", LONG_ARG);
+	av[0] = (char *)self;
+	av[1] = "--long";
+	av[2] = num;
+	av[3] = big;
+	av[4] = NULL;
+	check("execve passes a 20000-byte argument whole", run_exec(self, av) == 0);
+
+	snprintf(num, sizeof(num), "%d", MANY_ARGS);
+	av[1] = "--many";
+	for (i = 0; i < MANY_ARGS; i++)
+	{
+		av[3 + i] = malloc(16);
+		snprintf(av[3 + i], 16, "a%d", i);
+	}
+	av[3 + MANY_ARGS] = NULL;
+	check("execve passes 1000 arguments", run_exec(self, av) == 0);
+	for (i = 0; i < MANY_ARGS; i++)
+		free(av[3 + i]);
+
+	memset(big, 'x', TOO_BIG);
+	big[TOO_BIG] = '\0';
+	av[1] = big;
+	av[2] = NULL;
+	check("execve over ARG_MAX -> E2BIG", run_exec(self, av) == 100 + E2BIG);
+	check("execve bad argv -> EFAULT", run_exec(self, (char **)8) == 100 + EFAULT);
+
+	free(big);
+	free(av);
+}
+
+/**
+ * Run every check, or act as the execve re-exec target (see argv_target).
+ *
+ * @return 0 if every check passed.
+ */
+int main(int argc, char **argv)
 {
 	char buf[64];
 	char cwd[256];
 	int fd, a, b;
 	ssize_t n;
+
+	if (argc >= 3 && (strcmp(argv[1], "--long") == 0 || strcmp(argv[1], "--many") == 0))
+		return (argv_target(argc, argv));
+	/* Started by check_execve_args without a target mode: an execve that should
+	 * have failed ran.  Report it rather than rerunning every check (and
+	 * re-execing again, forever). */
+	if (getenv("VFSTEST") != NULL)
+	{
+		printf("FAIL: unexpected re-exec, argc %d argv[1] %.16s\n", argc, argc > 1 ? argv[1] : "(none)");
+		fflush(stdout);
+		return (99);
+	}
 
 	/* read(fd, buf, 0) reads nothing and leaves the buffer alone. */
 	fd = open("/etc/passwd", O_RDONLY);
@@ -249,6 +371,8 @@ int main(void)
 		check("fstatvfs", f >= 0 && fstatvfs(f, &v) == 0 && v.f_bsize == 4096);
 		close(f);
 	}
+
+	check_execve_args(argv[0][0] == '/' ? argv[0] : "/usr/tests/vfstest");
 
 	printf("vfstest: %s\n", g_fail ? "FAILED" : "all passed");
 	return g_fail;

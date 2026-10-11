@@ -39,7 +39,7 @@ Every lane updates its row in the same PR; rows are never deleted.
 | W-030 | kernel | Kernel size_t is typedef int (32-bit, signed) on the 64-bit kernels | todo | - | - | sys/include/sys/types.h. Shared structs using size_t have the wrong layout; lengths truncate above 2 GB. Found via sigaltstack (W-028) |
 | W-031 | vmm | x86_64 MI code used the i386 vmm_layout.h (user space ended at 3 GB) | done | - | #16 | <machine/vmm_layout.h> now resolves to x86_64/vmm_layout.h |
 | W-032 | self-host | /usr/src/lib builds inside UbixOS (C libraries) | doing | - | #16 | Makefile fixes in W-028 PR (_ARCH default, -L${MUSL_LIB}). aarch64: every C library links except libbearssl and libcss (blocked by W-033); C++ (objgfx) waits for clang++/libc++ in-OS |
-| W-033 | kernel | execve silently truncates arguments: each argv/env string is cut at 4096 bytes and entries past 256 are dropped | todo | - | - | Both arches, copy_user_strvec in sys/arch/*/kern/execfile.c. bmake's `sh -c` link line for libbearssl/libcss (~15 KB) loses its -o, so ld writes a.out and exits 0. Should fail E2BIG past the arg region, not truncate |
+| W-033 | kernel | execve silently truncated arguments: each argv/env string cut at 4096 bytes, entries past 256 dropped | done | - | TBD | Both arches now copy argv/envp in whole (exec_args in sys/kern/kern_exec.c) up to EXEC_ARG_MAX (128 KB, = ARG_MAX) and fail E2BIG/EFAULT beyond it. bmake's 15 KB `sh -c` link lines for libbearssl/libcss lost their -o, so ld wrote a.out and exited 0 |
 | W-034 | ubixfs | New files on aarch64 show an mtime from boot time, not the current time | todo | - | - | Seen during the W-032 build (ls -l showed 20:24 for files written at 23:26); not investigated |
 
 ## Notes

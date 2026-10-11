@@ -41,13 +41,36 @@ int sys_exec(struct thread *, char *, char **, char **);
  * and cmdline (argv joined) on exec.  Shared by the per-arch exec paths. */
 void exec_set_name_cmdline(kTask_t *t, const char *path, char **argv, int argc);
 
-/* "#!" scripts (sys/kern/kern_exec.c): if @path starts with "#!", fill @vec
- * (@max slots, NULL-terminated) with the interpreter's argv — interpreter, its
- * optional single argument, @path, then @argv[1..] — and return its argc;
- * return 0 for anything that is not a script.  @argv may be user pointers
- * (readable in the caller's address space).  @interp/@iarg receive the
- * interpreter path and argument. */
-int exec_script_argv(const char *path, char *const *argv, char **vec, int max, char *interp, size_t isz,
-                     char *iarg, size_t asz);
+/* Upper bound on an execve's argv + envp: the strings, their vector slots and
+ * the fixed part of the stack vector.  The loaders reserve this much of the new
+ * stack for it.  Equal to musl's ARG_MAX. */
+#define EXEC_ARG_MAX (128 * 1024)
+/* Fixed part of the stack vector: argc, two NULL terminators, 8 auxv pairs,
+ * AT_RANDOM and alignment slack. */
+#define EXEC_ARG_FIXED (48 + 19 * 8)
+/* Longest executable path execve accepts (PATH_MAX). */
+#define EXEC_PATH_MAX 1024
+/* String area: the arguments, the path and a "#!" interpreter + argument. */
+#define EXEC_ARG_BUF (EXEC_ARG_MAX + 3 * EXEC_PATH_MAX)
+
+/* An execve's path, argv and envp, copied into the kernel (sys/kern/kern_exec.c). */
+struct exec_args
+{
+	char *path;  /* program to load */
+	char **argv; /* argc entries, NULL-terminated */
+	int argc;
+	char **envp; /* envc entries, NULL-terminated */
+	int envc;
+	char *buf;          /* string area (EXEC_ARG_BUF bytes) */
+	unsigned long used; /* bytes of buf in use */
+	unsigned long room; /* EXEC_ARG_MAX budget left */
+	char **vec;         /* backing for argv and envp */
+};
+
+/* Copy path/argv/envp out of the caller: 0, or -EFAULT/-E2BIG/-ENAMETOOLONG/-ENOMEM. */
+int exec_args_copyin(struct exec_args *ea, const char *upath, char *const *uargv, char *const *uenvp);
+/* Rewrite @ea for a "#!" script: 1 rewritten, 0 not a script, -E2BIG. */
+int exec_args_script(struct exec_args *ea);
+void exec_args_free(struct exec_args *ea);
 
 #endif /* END _UBIXOS_EXEC_H */
