@@ -26,7 +26,8 @@ _ARCH = aarch64
 .endif
 .endif
 .if ${_ARCH} == "aarch64" || ${_ARCH} == "x86_64"
-SUBDIRS = init login shell cp ls cat echo ln date mkdir mv rm sleep pwd expr ed tcsh true false
+SUBDIRS = init login shell cp ls cat echo ln date mkdir mv rm sleep pwd expr ed tcsh true false \
+          clear ps test
 .else
 SUBDIRS = init login shell cp ls cat ed tcsh
 .endif
