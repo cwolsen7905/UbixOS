@@ -89,7 +89,7 @@ the substrate Clang/lld and the build tools run on. Corrections from v1 flagged.
 | munmap / mprotect | ✅ | `munmap` (73), `mprotect` (74) `VALID`. mprotect matters for any JIT (disable LLVM JIT/ORC to avoid exec-page churn). |
 | File-backed mmap + shared page cache | ✅ | demand-paged; shared file-page cache (aarch64 memory work). lld + Clang mmap object files and headers. |
 | fork / execve / **vfork** | ✅ | `fork` (2), `execve` (59); COW fork both arches. **vfork** fixed 2026-06-22 (musl was emitting the Linux clone syscall; now aliased to fork). The Clang **driver** + bmake fork per step. |
-| wait4 / SIGCHLD / zombies | 🟡 | `wait4` (7) `VALID`; signal Phases 1–5 complete — **but** delivering a signal to a userland *handler* after a COW fork SIGSEGVs on aarch64 (found via bmake's SIGCHLD handler; handed to `[ls/smp]`). Blocks any forking program that handles SIGCHLD. |
+| wait4 / SIGCHLD / zombies | ✅ | `wait4` (7) `VALID`. **Fixed 2026-10-10:** sigaction/sigprocmask now translate musl's ABI (8-byte sigset, Linux SA_* values — musl SA_SIGINFO was read as SA_RESETHAND), SA_SIGINFO handlers get a real siginfo, and wait() reports real exit codes on x86_64. bmake's SIGCHLD handler works on both arches. Orphans are reparented to init. |
 | rename / getdirentries / getcwd | ✅ | (128 / 196 / 326). |
 | symlink | ✅ syscall | (57) wired — but the **ubixfs pool root has no symlinks**; LLVM/CMake install steps that symlink may fail on the pool FS. |
 | chmod / getrlimit / setrlimit / sigaction | ✅ | (15 / 194 / 195 / 416). rlimits size the compiler's stacks. |
@@ -142,7 +142,7 @@ Vendor NetBSD portable `bmake` (public-domain/BSD, ships a `boot-strap`) into
 Clang lands, point it at `/bin/sh`. Milestone: `bmake` runs a real tree Makefile
 (`bin/hello/Makefile`) on-device. (See the bmake section for dependencies.)
 
-### Phase 2 — POSIX `/bin/sh` + coreutils — 🟡 sh DONE; recipe exec blocked on one kernel bug
+### Phase 2 — POSIX `/bin/sh` + coreutils — ✅ sh + bmake recipe exec work (2026-10-10)
 **`/bin/sh` DONE (2026-06-22):** ported **oksh** (portable OpenBSD ksh,
 public-domain) as `tools/ports/sh/` via `share/mk/ports.mk` — cross-builds both arches,
 runs in UbixOS, builtins **and external programs** work. (`bin/shell`/tcsh are not
@@ -156,7 +156,11 @@ porting it:
   `sys/fs/vfs/stat.c` now reports regular files executable (stopgap until the image
   tools store real `0755` / the security model lands).
 
-**🔴 Blocker — bmake recipe execution:** `bmake -r -V` parses + evaluates, but
+**✅ Resolved 2026-10-10 — bmake recipe execution.** bmake runs recipes through
+`/bin/sh` on aarch64 and x86_64 (dependencies, `||`, a failing command stops with
+"Error code" and a non-zero exit). The cause was the signal ABI mismatch between
+musl and the kernel (see the wait4/SIGCHLD row). Original report, for reference:
+`bmake -r -V` parses + evaluates, but
 running a recipe/`!=` via `/bin/sh` hits a **signal-delivery-after-COW-fork
 SIGSEGV**: bmake's `/bin/sh` child runs + exits cleanly, then the kernel
 instruction-aborts delivering `SIGCHLD` to bmake's handler. Handed to the SMP
@@ -164,8 +168,8 @@ agent (`[ls/smp]` — it's their signal/sched/COW area) with a full repro; resum
 recipe verification once fixed. (oksh's own fork+exec+wait works — it reaps via
 SIG_DFL — so it's specific to delivering to a userland *handler* after COW fork.)
 
-**Still TODO:** coreutils gap-fill — `rm`/`mv`/`test`/`[`/`sed`/`install`/`cmp`/
-`printf` (recipes that call external tools need these once the SIGCHLD bug clears).
+**Still TODO:** coreutils gap-fill — `test`/`[` binaries (oksh has them as builtins; `true`/`false` are in /bin) —
+not in the world yet (`rm`/`mv`/`sed`/`install`/`cmp`/`printf` are).
 Also the file-backed-mmap SIGABRT from Phase 1 (re-enables bmake's `HAVE_MMAP`).
 
 ### Phase 3 — Stage 0: cross-build Clang + lld for uBixOS

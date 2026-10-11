@@ -12,7 +12,15 @@
 # this dispatcher reads ${_ARCH} below without including Makefile.incl, so without
 # a default the conditionals would be "Malformed".  A top-down/cross build's
 # exported _ARCH still wins via ?=.  aarch64 default selects the common 64-bit set.
-_ARCH ?= aarch64
+# Default: the machine itself when building on-device, else aarch64.
+.if !defined(_ARCH)
+_UBIX_UNAME_S != uname -s
+.if ${_UBIX_UNAME_S} == "UBIX"
+_ARCH != uname -m
+.else
+_ARCH = aarch64
+.endif
+.endif
 SUBDIRS = taskbar term settings uname basename cut dirname env find grep head \
           less more sort sed stat tail touch tr uniq wc which cmp install diff \
           printf awk make vi nc diskutil activity files vdoom tessera cubitaire \

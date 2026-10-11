@@ -134,6 +134,27 @@ static const char *const g_exc_names[32] = {"#DE divide error",
  * C exception handler (from isr_common).  Dumps the trapframe and halts — bring-up
  * exceptions are fatal; this just makes them visible.
  */
+/* The Unix signal a ring-3 CPU exception kills its task with, for wait4's
+ * W_SIGNALED status (a shell then reports "Segmentation fault", etc.). */
+static u_int8_t x86_64_fault_signal(unsigned vector)
+{
+	switch (vector)
+	{
+	case 0:  /* #DE divide error */
+	case 16: /* #MF x87 FP */
+	case 19: /* #XM SIMD FP */
+		return 8; /* SIGFPE */
+	case 6:      /* #UD invalid opcode */
+		return 4; /* SIGILL */
+	case 17:      /* #AC alignment check */
+		return 10; /* SIGBUS */
+	case 3:      /* #BP breakpoint */
+		return 5; /* SIGTRAP */
+	default:      /* #GP, #PF, #SS, ... */
+		return 11; /* SIGSEGV */
+	}
+}
+
 void x86_64_exception(struct x86_64_trapframe *tf)
 {
 	u64 cr2;
@@ -252,6 +273,8 @@ void x86_64_exception(struct x86_64_trapframe *tf)
 	if ((tf->cs & 3) == 3)
 	{
 		serial_puts("  (ring-3 fault — terminating the task)\n");
+		if (_current != 0)
+			_current->exit_signal = x86_64_fault_signal((unsigned)tf->vector); /* wait4 W_SIGNALED */
 		endTask(_current ? _current->id : 0);
 		sched();
 		/* not reached */
@@ -266,6 +289,7 @@ void x86_64_exception(struct x86_64_trapframe *tf)
 	if (_current != 0 && _current->md.md_usp != 0)
 	{
 		serial_puts("  (ring-0 fault in a syscall — terminating the user task)\n");
+		_current->exit_signal = 11; /* SIGSEGV: a bad user pointer, as on Unix */
 		endTask(_current->id);
 		sched();
 		/* not reached */

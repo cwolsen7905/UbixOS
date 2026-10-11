@@ -38,6 +38,10 @@ _DISTFILE = ${PORT_DISTDIR}/${PORT_DISTFILE}
 # Expose the worktree to the port's rules.
 WRKSRC = ${PORT_WRKDIR}
 
+# A port Makefile defines do-build before including this file, which would make
+# do-build the default target and skip fetch/extract/patch: pin the default.
+.MAIN: build
+
 all: build
 
 fetch:

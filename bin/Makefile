@@ -16,9 +16,17 @@
 # DIRECT in-tree build (bmake -C /usr/src/bin on-device) would see it empty and
 # fail "Malformed conditional".  Default to a 64-bit arch (aarch64 and x86_64 pick
 # the same SUBDIRS; i386 is frozen) — an exported value still wins via ?=.
-_ARCH ?= aarch64
+# Default: the machine itself when building on-device, else aarch64.
+.if !defined(_ARCH)
+_UBIX_UNAME_S != uname -s
+.if ${_UBIX_UNAME_S} == "UBIX"
+_ARCH != uname -m
+.else
+_ARCH = aarch64
+.endif
+.endif
 .if ${_ARCH} == "aarch64" || ${_ARCH} == "x86_64"
-SUBDIRS = init login shell cp ls cat echo ln date mkdir mv rm sleep pwd expr ed tcsh
+SUBDIRS = init login shell cp ls cat echo ln date mkdir mv rm sleep pwd expr ed tcsh true false
 .else
 SUBDIRS = init login shell cp ls cat ed tcsh
 .endif

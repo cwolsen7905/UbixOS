@@ -527,7 +527,7 @@ struct syscall_entry systemCalls_posix[] = {
     {0, "cpuset_getid", sys_invalid, SYSCALL_NOTIMP},                                                           /* 486 - Invalid */
     {0, "cpuset_getaffinity", sys_invalid, SYSCALL_NOTIMP},                                                     /* 487 - Invalid */
     {0, "cpuset_setaffinity", sys_invalid, SYSCALL_NOTIMP},                                                     /* 488 - Invalid */
-    {0, "faccessat", sys_invalid, SYSCALL_NOTIMP},                                                              /* 489 - Invalid */
+    {ARG_COUNT(sys_faccessat_args), "faccessat", (sys_call_t *)sys_faccessat, SYSCALL_VALID},                   /* 489 */
     {0, "fchmodat", sys_invalid, SYSCALL_NOTIMP},                                                               /* 490 - Invalid */
     {0, "fchownat", (sys_call_t *)chown_noop, SYSCALL_VALID},                                                               /* 491 - fchownat (no-op) */
     {0, "fexecve", sys_invalid, SYSCALL_NOTIMP},                                                                /* 492 - Invalid */

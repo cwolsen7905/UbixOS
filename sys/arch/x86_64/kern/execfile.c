@@ -25,6 +25,7 @@
 #include <fs/vfs/file.h>       /* fopen/fread/fclose */
 #include <x86_64/vmm_layout.h> /* DYN_MAIN_BASE/DYN_INTERP_BASE/DYN_STACK_* */
 #include <ubixos/exec.h>       /* exec_set_name_cmdline (MI, shared with i386/aarch64) */
+#include <vmm/vmm_shmap.h>     /* vmm_shmap_exit (exec) */
 #include <ubixos/signal.h>     /* signal_exec_reset — reset caught handlers on exec */
 #include <sys/errno.h>         /* ENOENT / ENOEXEC — proper execve failure codes */
 #include <string.h>
@@ -440,7 +441,34 @@ static u64 build_dynamic_from_path(const char *path, u64 *out_entry, u64 *out_us
  * marshalled onto the new image's SysV stack, so the shell/apps see their real
  * arguments + environment (TERM/HOME/PATH/SHELL, login-shell argv0, …).
  */
+static int x86_64_execve_elf(struct thread *td, struct sys_execve_args *uap);
+
+/**
+ * execve: a "#!" script runs its interpreter (one level — the interpreter must
+ * be an ELF program) with the script path and the original arguments; anything
+ * else is loaded as ELF.  The interpreter argv lives on this kernel stack: the
+ * loader copies it before the point of no return, and a successful exec never
+ * comes back here.  Mirrors aarch64_exec_replace.
+ */
 int sys_execve(struct thread *td, struct sys_execve_args *uap)
+{
+	char interp[256], iarg[256];
+	char *vec[MAXARG + 1];
+
+	/* The old image's MAP_SHARED writes reach their files before it is replaced. */
+	vmm_shmap_exit(_current->id);
+	if (uap->fname != NULL &&
+	    exec_script_argv(uap->fname, uap->argv, vec, MAXARG + 1, interp, sizeof(interp), iarg, sizeof(iarg)) > 0)
+	{
+		struct sys_execve_args sa = *uap;
+		sa.fname = interp;
+		sa.argv = vec;
+		return (x86_64_execve_elf(td, &sa));
+	}
+	return (x86_64_execve_elf(td, uap));
+}
+
+static int x86_64_execve_elf(struct thread *td, struct sys_execve_args *uap)
 {
 	u64 pml4, entry = 0, usp = 0, main_base = 0;
 	char *kargv[MAXARG], *kenvp[MAXARG];
@@ -501,14 +529,54 @@ int sys_execve(struct thread *td, struct sys_execve_args *uap)
 	{
 		fileDescriptor_t *pf = fopen(namebuf, "r");
 		Elf64_Ehdr peek;
+		int too_low = 0;
 
 		if (pf != 0)
 		{
-			if (vfs_pread_locked(pf, &peek, 0, sizeof(peek)) == sizeof(peek) && peek.e_type == ET_DYN)
+			if (vfs_pread_locked(pf, &peek, 0, sizeof(peek)) == sizeof(peek))
 			{
-				main_base = DYN_MAIN_BASE;
+				if (peek.e_type == ET_DYN)
+				{
+					main_base = DYN_MAIN_BASE;
+				}
+				else if (peek.e_type == ET_EXEC)
+				{
+					/* A static ET_EXEC loads at its linked address, and the low 1 GB of
+					 * every user address space is the kernel's identity map: a segment
+					 * below EXEC_BASE would be mapped over kernel memory (lld's
+					 * default 0x200000 base crashed clang on its first instructions).
+					 * Refuse it cleanly.  Link with -Wl,--image-base=0x40000000. */
+					Elf64_Phdr ph;
+					int k;
+
+					for (k = 0; k < peek.e_phnum; k++)
+					{
+						if (vfs_pread_locked(pf, &ph, (off_t)(peek.e_phoff + (u64)k * peek.e_phentsize), sizeof(ph)) != sizeof(ph))
+							break;
+						if (ph.p_type == PT_LOAD && ph.p_vaddr < EXEC_BASE)
+						{
+							too_low = 1;
+							break;
+						}
+					}
+				}
 			}
 			fclose(pf);
+		}
+		if (too_low)
+		{
+			kprintf("execve: %s is linked below 0x%lx (the kernel's low 1 GB); relink with "
+			        "-Wl,--image-base=0x40000000\n",
+			        namebuf,
+			        (unsigned long)EXEC_BASE);
+			x86_64_free_user_space(pml4);
+			for (i = 0; i < argc; i++)
+				if (kargv[i] != namebuf)
+					kfree(kargv[i]);
+			for (i = 0; i < envc; i++)
+				kfree(kenvp[i]);
+			_current->td.td_retval[0] = -ENOEXEC;
+			return (-ENOEXEC);
 		}
 	}
 

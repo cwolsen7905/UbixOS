@@ -17,6 +17,14 @@
 .if defined(TARGET) && !empty(TARGET)
 TARGET_ARCH ?= ${TARGET}
 .endif
+# On-device (uname -s == UBIX) the default is the machine being built on, so an
+# x86_64 UbixOS does not build aarch64 objects.  Host builds are unchanged.
+_UBIX_UNAME_S != uname -s
+.if !defined(TARGET_ARCH) && !defined(_ARCH)
+.if ${_UBIX_UNAME_S} == "UBIX"
+TARGET_ARCH != uname -m
+.endif
+.endif
 TARGET_ARCH ?= aarch64
 _ARCH       ?= ${TARGET_ARCH}
 
@@ -56,6 +64,12 @@ UBIX_MK ?= ${SRCTOP}/share/mk
 .export UBIX_MK
 # Arch-homed build root: build/i386, build/aarch64, … so the two architectures'
 # objects/binaries/world never clobber each other and can build in parallel.
+# On-device the build output goes to /usr/obj/<arch> (the FreeBSD layout of
+# docs/design/usr-src-build-layout-plan.md; tools/stage-src.sh pre-seeds it with
+# musl's generated headers), not into /usr/src.
+.if defined(_UBIX_UNAME_S) && ${_UBIX_UNAME_S} == "UBIX"
+OBJ_DIR ?= /usr/obj/${_ARCH}
+.endif
 OBJ_DIR ?= ${SRCTOP}/build/${_ARCH}
 .export OBJ_DIR
 

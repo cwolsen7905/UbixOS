@@ -181,7 +181,10 @@ int fdprintf(int fd, const char *fmt, ...)
 int open_or_warn_stdin(const char *filename)
 {
 	int fd;
-	if (filename[0] == '-' && filename[1] == '\0')
+	/* The bb_msg_standard_input sentinel (matched by pointer, as upstream and
+	 * fopen_or_warn_stdin do) or a lone "-" means stdin; without the sentinel
+	 * `ls | tail` open()ed a file literally named "standard input". */
+	if (filename == bb_msg_standard_input || (filename[0] == '-' && filename[1] == '\0'))
 		return 0;
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)

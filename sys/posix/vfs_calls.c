@@ -525,6 +525,31 @@ int sys_access(struct thread *td, struct sys_access_args *args)
 	return (0);
 }
 
+/**
+ * faccessat(2) (FreeBSD 489).  Existence check like access(), for AT_FDCWD or
+ * an absolute path (the VFS resolves relative paths against the cwd).  A path
+ * relative to another directory fd is not supported: the VFS does not keep a
+ * directory fd's path.  @return 0, -ENOENT or -EINVAL.
+ */
+int sys_faccessat(struct thread *td, struct sys_faccessat_args *args)
+{
+	struct sys_access_args a;
+
+	if (args->path == NULL)
+	{
+		td->td_retval[0] = -EFAULT;
+		return (EFAULT);
+	}
+	if (args->fd != AT_FDCWD && args->path[0] != '/')
+	{
+		td->td_retval[0] = -EINVAL;
+		return (EINVAL);
+	}
+	a.path = args->path;
+	a.amode = args->amode;
+	return (sys_access(td, &a));
+}
+
 int sys_getdirentries(struct thread *td, struct sys_getdirentries_args *args)
 {
 	struct file *fd = NULL;

@@ -288,6 +288,7 @@ void aarch64_exception(u_int64_t kind, void *frame)
 			kprintf("  -> terminating offending user task pid=%d (%s); OS continues\n",
 			        _current->id,
 			        _current->name);
+			_current->exit_signal = 11; /* SIGSEGV for wait4 (W_SIGNALED) */
 			endTask(_current->id);
 			/* Loop: one sched_yield() can bail under SMP lock contention and
 			 * return — ERETing the dead task back to EL0 on torn-down tables

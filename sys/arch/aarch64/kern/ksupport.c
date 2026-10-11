@@ -29,6 +29,7 @@
 #include <ubixos/vitals.h>
 #include <ubixos/callout.h>
 #include <sys/shutdown.h>
+#include <vmm/vmm_shmap.h>       /* vmm_shmap_exit */
 #include <mpi/mpi.h>            /* mpi_destroyProcessMboxes — free a task's mailboxes on exit */
 #include <sys/descrip.h>        /* g_device_find — bus-device lookup hook (ubx_device_find shim) */
 #include <sys/bus.h>            /* struct ubx_device */
@@ -189,7 +190,11 @@ void endTask(pidType pid)
 	(void)pid;
 	if (_current != 0)
 	{
-		/* Close the task's open PIPE and SOCKET fds on exit.
+		/* Close the task's open FILE, PIPE and SOCKET fds on exit.
+		 *
+		 * FILES: shared with fork children through the descriptor's dup count
+		 * (fork_copy_fdtable), so only the last user really closes; an exited
+		 * process used to leak every file it left open.
 		 *
 		 * PIPES: a parent blocked reading this task's pipe write-end sees EOF when
 		 * the writer exits (the bmake Cmd_Exec case: fork + read child output —
@@ -219,7 +224,7 @@ void endTask(pidType pid)
 			{
 				struct file *f = (struct file *)_current->td.o_files[fd];
 
-				if (f != 0 && (f->fd_type == FD_TYPE_PIPE || f->fd_type == FD_TYPE_SOCKET))
+				if (f != 0 && (f->fd_type == FD_TYPE_PIPE || f->fd_type == FD_TYPE_SOCKET || f->fd_type == FD_TYPE_FILE))
 				{
 					struct sys_close_args ca;
 					ca.fd = fd;
@@ -243,6 +248,7 @@ void endTask(pidType pid)
 
 				if (l1 != 0 && l1 != aarch64_kernel_l1())
 				{
+					vmm_shmap_exit(_current->id); /* flush MAP_SHARED writes before the AS goes */
 					vm_map_free(&_current->vm_map);
 					pmap_switch(aarch64_kernel_l1());
 					pmap_free_user_space(l1);
@@ -255,6 +261,7 @@ void endTask(pidType pid)
 		 * mailbox blocks a relaunched owner (e.g. a respawned authd/login) from
 		 * recreating it. */
 		mpi_destroyProcessMboxes(_current->id);
+		sched_reparent_children(_current); /* orphans -> init */
 		/* Disarm a pending timed-sleep callout (see sched_zombie): a task killed
 		 * mid-sleep must not stay linked on the global callout list. */
 		{

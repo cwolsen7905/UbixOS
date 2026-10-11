@@ -484,9 +484,12 @@ int sys_ioctl(struct thread *td, struct sys_ioctl_args *args)
 	 * tty fd inherited from parent), was opened via /dev/tty (FD_TYPE_TTY),
 	 * or is a specific vty (FD_TYPE_TTYV).
 	 */
-	int on_tty = (tty_fp != NULL &&
+	int on_tty = (tty_fp != NULL && tty_fp->fd_type != FD_TYPE_PIPE && tty_fp->fd_type != FD_TYPE_SOCKET &&
+	              tty_fp->fd_type != FD_TYPE_DIR &&
 	              (tty_fp->fd == NULL || tty_fp->fd_type == FD_TYPE_TTY || tty_fp->fd_type == FD_TYPE_TTYV)) &&
 	             term != NULL;
+	/* (Pipes and sockets also have no fileDescriptor_t; they used to count as
+	 * terminals, so isatty() was true on a pipe and `ls | wc -l` got columns.) */
 
 	switch (args->com)
 	{

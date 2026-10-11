@@ -667,6 +667,14 @@
 #undef  __NR_writev
 #define __NR_writev		121
 
+/* faccessat: Linux=269/307 slot, UbixOS=489 (FreeBSD).  Left at 307 it hit
+ * FreeBSD's kldnext stub, so every faccessat() failed with ENOSYS.
+ * faccessat2 has no FreeBSD slot: point it out of range so musl falls back. */
+#undef  __NR_faccessat
+#define __NR_faccessat		489
+#undef  __NR_faccessat2
+#define __NR_faccessat2		1025
+
 /*
  * Linux-only threading primitives have no FreeBSD syscall number, so they live
  * in the UbixOS-native syscall table (int $0x81), not the FreeBSD-numbered POSIX

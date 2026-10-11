@@ -934,6 +934,25 @@ struct sys_access_args
 	char amode_r_[PADR_(int)];
 };
 
+struct sys_faccessat_args
+{
+	char fd_l_[PADL_(int)];
+	int fd;
+	char fd_r_[PADR_(int)];
+
+	char path_l_[PADL_(char *)];
+	char *path;
+	char path_r_[PADR_(char *)];
+
+	char amode_l_[PADL_(int)];
+	int amode;
+	char amode_r_[PADR_(int)];
+
+	char flag_l_[PADL_(int)];
+	int flag;
+	char flag_r_[PADR_(int)];
+};
+
 struct sys_statfs_args
 {
 	char path_l_[PADL_(char *)];
@@ -1412,6 +1431,7 @@ struct sys_getpgid_args
 int sys_getpgid(struct thread *td, struct sys_getpgid_args *);
 
 int sys_access(struct thread *td, struct sys_access_args *);
+int sys_faccessat(struct thread *td, struct sys_faccessat_args *);
 int sys_fchdir(struct thread *td, struct sys_fchdir_args *);
 
 int sys_getdirentries(struct thread *td, struct sys_getdirentries_args *);

@@ -30,6 +30,7 @@
 #include <ubixos/time.h>   /* struct timeval/timezone (kernel gettimeofday) */
 #include <ubixos/vitals.h> /* systemVitals->sysTicks (time source) */
 #include <string.h>
+#include <vmm/vmm_shmap.h> /* vmm_shmap_sync (msync) */
 
 #define ENOSYS_STUB(td)                                                                                                \
 	do                                                                                                             \
@@ -85,7 +86,8 @@ int sys_madvise(struct thread *td, struct sys_madvise_args *uap)
 
 int sys_msync(struct thread *td, struct sys_msync_args *uap)
 {
-	(void)uap;
+	/* Write MAP_SHARED writable file pages in the range back to their files. */
+	vmm_shmap_sync(_current->id, (uintptr_t)uap->addr, (size_t)uap->len);
 	OK_STUB(td);
 }
 

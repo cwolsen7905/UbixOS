@@ -896,6 +896,52 @@ void sched_wakeup(kTask_t *t)
  * wait_find_child() can collect it.  sched() transitions ZOMBIE→DEAD
  * after notifying the parent; wait_find_child() removes from taskList.
  */
+/**
+ * Hand a dying task's child processes to init (pid 1), as Unix does.  Without
+ * this an orphan kept pointing at its freed parent: its own exit later wrote
+ * last_exit and the SIGCHLD bit into that memory, and nobody ever reaped it.
+ * Threads of the dying task's own group are left alone (they are joined via
+ * clear_tid, not wait).  init is signalled if an adopted child is already dead.
+ */
+void sched_reparent_children(kTask_t *dying)
+{
+	u_int32_t flags;
+	kTask_t *init = NULL;
+	kTask_t *t;
+
+	if (dying == NULL)
+		return;
+	save_flags(flags);
+	cli();
+	spinLock(&schedulerSpinLock);
+	for (t = taskList; t != NULL; t = t->next)
+	{
+		if (t->id == 1)
+		{
+			init = t;
+			break;
+		}
+	}
+	if (init == dying)
+		init = NULL;
+	for (t = taskList; t != NULL; t = t->next)
+	{
+		if (t == dying || t->parent != dying || t->tgid == dying->tgid)
+			continue;
+		t->parent = init;
+		if (dying->children > 0)
+			dying->children--;
+		if (init != NULL)
+		{
+			init->children++;
+			if (t->state == ZOMBIE || t->state == DEAD)
+				init->td.sig_pending |= (1u << (SIGCHLD - 1));
+		}
+	}
+	spinUnlock(&schedulerSpinLock);
+	restore_flags(flags);
+}
+
 void sched_zombie(kTask_t *t)
 {
 	u_int32_t flags;

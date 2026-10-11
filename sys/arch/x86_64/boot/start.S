@@ -72,8 +72,31 @@ _start:
 	movl %eax, (pdpt_lo - KERNBASE)
 	/* pdpt_hi[510] = pd | present|write  (0xFFFFFFFF80000000 -> PDPT idx 510; same PD). */
 	movl %eax, (pdpt_hi - KERNBASE + 510*8)
-	/* pdpt_pm[0] = pd | present|write  (physmap base -> PDPT idx 0; same PD). */
-	movl %eax, (pdpt_pm - KERNBASE)
+	/* pdpt_pm[0..3] = pd_pm + i*4 KB | present|write  (physmap: 4 GB through its
+	 * own four PDs).  It used to share the 1 GB identity PD, so anything above
+	 * 1 GB — QEMU's ACPI tables near the top of a 2 GB guest, RAM itself — faulted. */
+	movl $(pd_pm - KERNBASE), %eax
+	orl $0x3, %eax
+	movl $(pdpt_pm - KERNBASE), %ebx
+	movl $4, %ecx
+2:
+	movl %eax, (%ebx)
+	addl $4096, %eax
+	addl $8, %ebx
+	loop 2b
+
+	/* pd_pm[i] = (i*2 MB) | present|write|PS  for i = 0..2047  (phys 0..4 GB). */
+	movl $(pd_pm - KERNBASE), %ebx
+	xorl %eax, %eax
+	movl $2048, %ecx
+3:
+	movl %eax, %edx
+	orl $0x83, %edx
+	movl %edx, (%ebx)
+	movl $0, 4(%ebx)
+	addl $0x200000, %eax
+	addl $8, %ebx
+	loop 3b
 
 	/* pd[i] = (i*2 MB) | present|write|PS  for i = 0..511  (maps phys 0..1 GB). */
 	movl $(pd - KERNBASE), %ebx
@@ -171,3 +194,5 @@ pdpt_pm:
 	.skip 4096
 pd:
 	.skip 4096
+pd_pm:
+	.skip 4096 * 4

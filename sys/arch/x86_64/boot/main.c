@@ -51,7 +51,7 @@ void kmain_x86_64(u32 mb_magic, u32 mb_info)
 	idt_init();
 	serial_puts("IDT installed: 256 gates, 32 CPU-exception handlers (faults now visible).\n");
 
-	x86_64_mem_init();
+	x86_64_mem_init(mb_magic, mb_info);
 
 	/* Phase 3 smoke test: the kernel heap (MI kmalloc over the MI page allocator). */
 	{

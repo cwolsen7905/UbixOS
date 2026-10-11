@@ -173,7 +173,7 @@ int virtio_blk_write(struct ubx_device *dev, u32 lba, u32 count, void *buf);
 int x86_64_virtio_blk_pool_minor(void); /* minor of the MBR UbixFS pool (0x9C), or -1 */
 
 /* vmm/vmm_machdep.c — physical page allocator setup (Phase 3). */
-void x86_64_mem_init(void);
+void x86_64_mem_init(u32 boot_magic, u32 boot_info); /* RAM from the PVH e820 map */
 
 /* irq.c — 8259 PIC + PIT timer + IRQ dispatch (Phase 4a). */
 void pic_remap(void);

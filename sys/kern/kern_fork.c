@@ -55,20 +55,14 @@ void fork_copy_fdtable(kTask_t *child, struct thread *ptd)
 		memcpy(child_f, parent_f, sizeof(struct file));
 		child->td.o_files[i] = (void *)child_f;
 
+		/* Parent and child share one open file description (POSIX: a common
+		 * offset), refcounted through the descriptor's dup count exactly as
+		 * dup()/dup2() do — fclose() only really closes the last user.  The old
+		 * deep copy shared the filesystem's private handle (fd->res) without a
+		 * count, so closing either copy freed it under the other, and the copy
+		 * itself (never on fdTable) could not be closed at all. */
 		if (parent_f->fd != 0x0)
-		{
-			child_f->fd = (fileDescriptor_t *)kmalloc(sizeof(fileDescriptor_t));
-			if (child_f->fd != 0x0)
-			{
-				memcpy(child_f->fd, parent_f->fd, sizeof(fileDescriptor_t));
-				if (parent_f->fd->buffer != 0x0)
-				{
-					child_f->fd->buffer = kmalloc(4096);
-					if (child_f->fd->buffer != 0x0)
-						memcpy(child_f->fd->buffer, parent_f->fd->buffer, 4096);
-				}
-			}
-		}
+			parent_f->fd->dup++;
 
 		/* Pipes share their pipeInfo across processes; bump the matching
 		 * refcount so neither end is freed while the child still references it. */
