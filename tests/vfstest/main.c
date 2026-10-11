@@ -15,6 +15,7 @@
 #include <dirent.h>
 #include <sys/stat.h>
 #include <sys/times.h>
+#include <sys/statvfs.h>
 #include <errno.h>
 
 static int g_fail;
@@ -230,6 +231,23 @@ int main(void)
 		check("getppid is the parent", waitpid(pid, &st, 0) == pid && WIFEXITED(st) && WEXITSTATUS(st) == 0);
 		check("times() returns uptime ticks", times(&t) != (clock_t)-1 && times(&t) > 0);
 		check("times() leaves the gid", getgid() == g0);
+	}
+
+	/* statvfs: musl used Linux's (path, size, buf) form, so the kernel wrote
+	 * its struct to address 0x78. */
+	{
+		struct statvfs v;
+		int f;
+
+		memset(&v, 0, sizeof(v));
+		check("statvfs / (directory)", statvfs("/", &v) == 0 && v.f_bsize == 4096 && v.f_namemax == 255);
+		check("statvfs file", statvfs("/etc/passwd", &v) == 0 && v.f_blocks > 0);
+		errno = 0;
+		check("statvfs missing -> ENOENT", statvfs("/etc/nope-nope", &v) == -1 && errno == ENOENT);
+		f = open("/etc/passwd", O_RDONLY);
+		memset(&v, 0, sizeof(v));
+		check("fstatvfs", f >= 0 && fstatvfs(f, &v) == 0 && v.f_bsize == 4096);
+		close(f);
 	}
 
 	printf("vfstest: %s\n", g_fail ? "FAILED" : "all passed");

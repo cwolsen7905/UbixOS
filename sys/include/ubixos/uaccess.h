@@ -14,5 +14,6 @@
 
 int copyin(const void *uaddr, void *kaddr, unsigned long len);
 int copyout(const void *kaddr, void *uaddr, unsigned long len);
+int copyinstr(const void *uaddr, char *kaddr, unsigned long maxlen);
 
 #endif /* _UBIXOS_UACCESS_H */

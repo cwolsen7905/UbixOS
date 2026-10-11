@@ -85,3 +85,33 @@ int copyout(const void *kaddr, void *uaddr, unsigned long len)
 {
 	return (uaccess_copy((uintptr_t)uaddr, (void *)(uintptr_t)kaddr, len, 1));
 }
+
+/**
+ * Copy a NUL-terminated string of at most @maxlen bytes (terminator included)
+ * from the current task's user address @uaddr into @kaddr.
+ *
+ * @return the string length (excluding the NUL) on success, -EFAULT on a bad
+ *         user range, -ENAMETOOLONG if no NUL lies within @maxlen bytes.
+ */
+int copyinstr(const void *uaddr, char *kaddr, unsigned long maxlen)
+{
+	uintptr_t ua = (uintptr_t)uaddr;
+	unsigned long i;
+
+	for (i = 0; i < maxlen; i++, ua++)
+	{
+		const char *kva;
+
+		if (!uaccess_range_ok(ua, 1))
+			return (-EFAULT);
+		kva = md_user_page_kva(ua);
+		if (kva == NULL)
+			return (-EFAULT);
+		kaddr[i] = *kva;
+		if (kaddr[i] == '\0')
+			return ((int)i);
+	}
+	if (maxlen > 0)
+		kaddr[maxlen - 1] = '\0';
+	return (-ENAMETOOLONG);
+}
