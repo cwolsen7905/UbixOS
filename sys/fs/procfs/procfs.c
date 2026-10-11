@@ -60,6 +60,11 @@
 #include <vmm/vm_map.h> /* VMA tree — /proc/<pid>/statm size */
 #include <lib/rbtree.h>
 #include <string.h>
+#if defined(__aarch64__)
+#include <aarch64/pcpu.h> /* g_pcpu[] — /proc/sched */
+#elif defined(__x86_64__)
+#include <x86_64/pcpu.h>
+#endif
 
 #define PROCFS_TYPE  VFS_TYPE_PROCFS
 
@@ -76,6 +81,8 @@
 #define PFILE_STATM    9   /* /proc/<pid>/statm — memory sizes in pages */
 #define PFILE_UPTIME   10  /* /proc/uptime — seconds since boot, idle seconds */
 #define PFILE_LWIP     11  /* /proc/lwip — lwIP stats + tcpip liveness (lwip-audit) */
+#define PFILE_SCHED    12  /* /proc/sched — per-CPU current task + run queues */
+#define PFILE_KSTACK   13  /* /proc/<pid>/kstack — kernel return addresses (procstat -k) */
 
 /* lwIP counter snapshot, defined in the net stack (sys/net/net/sys_arch.c);
  * net is always linked into the kernel. */
@@ -146,7 +153,8 @@ procfs_build_status(kTask_t *t, char *buf, int bufsz)
 	    "Name:\t%s\nPid:\t%u\nPPid:\t%u\nPGrp:\t%u\nSid:\t%u\n"
 	    "State:\t%s\n"
 	    "Uid:\t%u\t%u\n"
-	    "Gid:\t%u\t%u\n",
+	    "Gid:\t%u\t%u\n"
+	    "Sched:\toncpu=%u rq=%u pri=%u quantum=%u chan=%p\n",
 	    t->name,
 	    (unsigned)t->id,
 	    (unsigned)t->ppid,
@@ -154,7 +162,9 @@ procfs_build_status(kTask_t *t, char *buf, int bufsz)
 	    (unsigned)t->sid,
 	    procfs_state_name(t->state),
 	    (unsigned)t->uid,  (unsigned)t->euid,
-	    (unsigned)t->gid,  (unsigned)t->egid);
+	    (unsigned)t->gid,  (unsigned)t->egid,
+	    (unsigned)t->on_cpu, (unsigned)t->rq_cpu, (unsigned)t->priority,
+	    (unsigned)t->quantum, t->wait_chan);
 }
 
 static int
@@ -366,6 +376,82 @@ procfs_build_mounts(char *buf, int bufsz)
 }
 
 /**
+ * Build /proc/<pid>/kstack — the kernel return addresses of a task that is not
+ * on a CPU, innermost first, one hex address per line (symbolize on the host
+ * with llvm-symbolizer --obj=build/<arch>/boot/kernel).  The uBix analogue of
+ * FreeBSD's procstat -k, for finding where a stuck task waits.  A running task
+ * prints "running"; its stack is changing under us.
+ */
+static int
+procfs_build_kstack(kTask_t *t, char *buf, int bufsz)
+{
+	uintptr_t pcs[16];
+	int n = 0, i, k;
+
+	if (t->on_cpu && t != _current)
+		return sprintf(buf, "running\n");
+	k = md_task_kstack(t, pcs, 16);
+	for (i = 0; i < k && n < bufsz - 24; i++)
+		n += sprintf(buf + n, "0x%lx\n", (unsigned long)pcs[i]);
+	if (k == 0)
+		n = sprintf(buf, "unavailable\n");
+	return n;
+}
+
+/**
+ * Build /proc/sched — for each online CPU: the running task, then every task on
+ * its run queue (pid name state on_cpu).  A snapshot taken without the scheduler
+ * lock, for debugging stalls (a READY task nobody runs).
+ */
+#if defined(__aarch64__) || defined(__x86_64__)
+static int
+procfs_build_sched(char *buf, int bufsz)
+{
+	int n = 0;
+	unsigned c;
+
+	for (c = 0; c < MAXCPU && n < bufsz - 160; c++) {
+		struct runqueue *rq = &g_rq[c];
+		kTask_t *cur = g_pcpu[c].current;
+		int pri;
+
+		if (c > 0 && !rq->online)
+			continue;
+		{
+			extern volatile u_int32_t g_sched_stat[][6];
+			volatile u_int32_t *st = g_sched_stat[c];
+			n += sprintf(buf + n, "cpu%u: current %d %s  ready_mask=0x%x nr=%u\n", c,
+			    cur ? (int)cur->id : -1, cur ? cur->name : "-",
+			    (unsigned)rq->ready_mask, (unsigned)rq->nr_running);
+			n += sprintf(buf + n, "  ends: busy=%u rt=%u slice=%u empty=%u saving=%u switch=%u\n",
+			    (unsigned)st[0], (unsigned)st[1], (unsigned)st[2], (unsigned)st[3],
+			    (unsigned)st[4], (unsigned)st[5]);
+		}
+		for (pri = SCHED_PRIORITIES - 1; pri >= 0 && n < bufsz - 160; pri--) {
+			kTask_t *h = rq->bucket[pri], *t = h;
+			int k = 0;
+
+			if (h == NULL)
+				continue;
+			do {
+				n += sprintf(buf + n, "  p%d: %d %s st=%d oncpu=%u\n", pri, (int)t->id,
+				    t->name, (int)t->state, (unsigned)t->on_cpu);
+				t = t->rq_next;
+			} while (t != NULL && t != h && ++k < 32 && n < bufsz - 160);
+		}
+	}
+	return n;
+}
+#else
+static int
+procfs_build_sched(char *buf, int bufsz)
+{
+	(void)bufsz;
+	return sprintf(buf, "unsupported\n");
+}
+#endif
+
+/**
  * Build /proc/meminfo — total and free physical RAM, in a Linux-ish format.
  * `numPages` is the number of managed physical pages; `systemVitals->freePages`
  * is the live free count.  Each page is PAGE_SIZE bytes.
@@ -555,6 +641,16 @@ procfs_open(char *file, fileDescriptor_t *fd)
 		return 1;
 	}
 
+	/* Global files: /proc/sched */
+	if (strcmp(pidstr, "sched") == 0 && *rest == '\0') {
+		char tmp2[2048];
+		int  mlen = procfs_build_sched(tmp2, sizeof(tmp2));
+		fd->ino   = 0;
+		fd->start = PFILE_SCHED;
+		fd->size  = (u_int32_t)mlen;
+		return 1;
+	}
+
 	/* Global files: /proc/uptime */
 	if (strcmp(pidstr, "uptime") == 0 && *rest == '\0') {
 		char tmp2[64];
@@ -607,6 +703,14 @@ procfs_open(char *file, fileDescriptor_t *fd)
 		len = procfs_build_maps(t, tmp, sizeof(tmp));
 		fd->ino   = pid;
 		fd->start = PFILE_MAPS;
+		fd->size  = (u_int32_t)len;
+		return 1;
+	}
+
+	if (strcmp(rest, "kstack") == 0) {
+		len = procfs_build_kstack(t, tmp, sizeof(tmp));
+		fd->ino   = pid;
+		fd->start = PFILE_KSTACK;
 		fd->size  = (u_int32_t)len;
 		return 1;
 	}
@@ -665,6 +769,19 @@ procfs_read(fileDescriptor_t *fd, char *data, off_t offset, long size)
 	if (fd->start == PFILE_MOUNTS) {
 		char     mtmp[1024];
 		int      mlen = procfs_build_mounts(mtmp, sizeof(mtmp));
+		long     mn;
+		if (offset >= (long)mlen)
+			return 0;
+		mn = (long)mlen - offset;
+		if (mn > size)
+			mn = size;
+		memcpy(data, mtmp + offset, mn);
+		return (int)mn;
+	}
+
+	if (fd->start == PFILE_SCHED) {
+		char     mtmp[2048];
+		int      mlen = procfs_build_sched(mtmp, sizeof(mtmp));
 		long     mn;
 		if (offset >= (long)mlen)
 			return 0;
@@ -746,6 +863,9 @@ procfs_read(fileDescriptor_t *fd, char *data, off_t offset, long size)
 		break;
 	case PFILE_STATM:
 		len = procfs_build_statm(t, tmp, sizeof(tmp));
+		break;
+	case PFILE_KSTACK:
+		len = procfs_build_kstack(t, tmp, sizeof(tmp));
 		break;
 	case PFILE_FD_ENTRY:
 		len = procfs_build_fd_entry(t, (int)fd->resid, tmp, sizeof(tmp));
@@ -852,7 +972,7 @@ procfs_opendir(const char *path, kDIR_t *dir)
 
 /* Per-pid entries; "fd" (the last) is a directory, the rest regular files. */
 static const char *procfs_pid_files[] = {
-	"status", "cmdline", "stat", "statm", "maps", "fd"
+	"status", "cmdline", "stat", "statm", "maps", "kstack", "fd"
 };
 #define PROCFS_PID_NFILES  6  /* all six entries (was 5, which dropped "fd") */
 #define PROCFS_PID_FD_IDX  5  /* index of "fd" — the DIR entry (was 4 == "maps") */
@@ -868,7 +988,7 @@ procfs_readdir(kDIR_t *dir, struct kdirent *ent)
 	/* ── Root: global files first, then live task dirs ── */
 	if (s->type == PDIR_ROOT) {
 		/* Phases 0..N-1: emit global synthetic files, one per readdir call */
-		static const char *const procfs_root_files[] = { "mounts", "meminfo", "stat", "uptime", "lwip" };
+		static const char *const procfs_root_files[] = { "mounts", "meminfo", "stat", "uptime", "lwip", "sched" };
 		if (s->root_phase < (int)(sizeof(procfs_root_files) / sizeof(procfs_root_files[0]))) {
 			strncpy(ent->d_name, procfs_root_files[s->root_phase], sizeof(ent->d_name) - 1);
 			ent->d_name[sizeof(ent->d_name) - 1] = '\0';

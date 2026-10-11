@@ -154,3 +154,20 @@ void md_sched_pre_switch(kTask_t *t)
 {
 	(void)t;
 }
+
+/**
+ * Kernel return address of a switched-out task (for /proc/<pid>/kstack).  The
+ * x86_64 kernel is built without frame pointers, so only the switch site is
+ * known: the return address above the six callee-saved registers cpu_switch.S
+ * pushed.  @return the number of addresses stored in @pcs (0 or 1).
+ */
+int md_task_kstack(kTask_t *t, uintptr_t *pcs, int max)
+{
+	u64 *ctx = (u64 *)(uintptr_t)t->md.md_kstack;
+	uintptr_t lo = (uintptr_t)t->kernelStack, hi = lo + KSTACK_SIZE;
+
+	if (ctx == NULL || (uintptr_t)ctx < lo || (uintptr_t)ctx + 7 * 8 > hi || max <= 0)
+		return (0);
+	pcs[0] = (uintptr_t)ctx[6];
+	return (1);
+}
