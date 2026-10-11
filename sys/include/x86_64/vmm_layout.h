@@ -24,7 +24,12 @@
  *
  * PAGE_SIZE must be in scope (via <vmm/vmm.h>) wherever the *_TOP macros expand.
  */
-#define EXEC_BASE 0x040000000UL       /* lowest user VA: a static ET_EXEC must load at or above this */
+#define EXEC_BASE 0x040000000UL /* lowest user VA: a static ET_EXEC must load at or above this */
+
+/* User VA bounds for copyin/copyout: below EXEC_BASE is the kernel's shared
+ * identity map; the top of the lower canonical half ends user space. */
+#define VMM_USER_START EXEC_BASE
+#define VMM_USER_END 0x00007FFFFFFFFFFFUL
 #define DYN_MAIN_BASE 0x100000000UL   /* PIE main exe load base */
 #define DYN_INTERP_BASE 0x140000000UL /* dynamic linker load base */
 
@@ -34,6 +39,7 @@
 #define DYN_STACK_VA 0x180000000UL
 #define DYN_STACK_PAGES 64
 #define DYN_STACK_TOP (DYN_STACK_VA + (u_int64_t)DYN_STACK_PAGES * PAGE_SIZE)
+#define STACK_ADDR 0x18003FFFFUL /* last byte of the initial user stack (DYN_STACK_TOP - 1) */
 
 /* brk and anonymous mmap regions (clear of the load/stack blocks above). */
 #define BRK_BASE 0x1C0000000UL
