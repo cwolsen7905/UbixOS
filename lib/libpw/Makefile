@@ -56,7 +56,7 @@ ${OBJ_DIR}/lib/libpw.so: $(OBJS)
 	@mkdir -p ${OBJ_DIR}/lib
 	$(LD) -m ${ARCH_LDEMUL} -shared -soname libpw.so \
 		${OBJS:S|^|${OBJDIR}/|} \
-		-L${OBJ_DIR}/lib -lbearssl -lc \
+		-L${OBJ_DIR}/lib -L${MUSL_LIB} -lbearssl -lc \
 		-o ${OBJ_DIR}/lib/libpw.so
 
 clean:

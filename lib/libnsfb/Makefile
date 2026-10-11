@@ -51,7 +51,7 @@ OBJS   = cursor.o dump.o libnsfb.o palette.o surface.o ram.o ubix.o \
 all: ${OBJ_DIR}/lib/libnsfb.so
 ${OBJ_DIR}/lib/libnsfb.so: $(OBJS)
 	@mkdir -p ${OBJ_DIR}/lib
-	$(LD) -m ${ARCH_LDEMUL} -shared -soname libnsfb.so ${OBJS:S|^|${OBJDIR}/|} -L${OBJ_DIR}/lib -lc -o ${OBJ_DIR}/lib/libnsfb.so
+	$(LD) -m ${ARCH_LDEMUL} -shared -soname libnsfb.so ${OBJS:S|^|${OBJDIR}/|} -L${OBJ_DIR}/lib -L${MUSL_LIB} -lc -o ${OBJ_DIR}/lib/libnsfb.so
 
 clean:
 	$(REMOVE) ${OBJDIR} ${OBJ_DIR}/lib/libnsfb.so

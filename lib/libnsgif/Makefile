@@ -34,7 +34,7 @@ OBJS   = libnsgif.o lzw.o
 all: ${OBJ_DIR}/lib/libnsgif.so
 ${OBJ_DIR}/lib/libnsgif.so: $(OBJS)
 	@mkdir -p ${OBJ_DIR}/lib
-	$(LD) -m ${ARCH_LDEMUL} -shared -soname libnsgif.so ${OBJS:S|^|${OBJDIR}/|} -L${OBJ_DIR}/lib -lc -o ${OBJ_DIR}/lib/libnsgif.so
+	$(LD) -m ${ARCH_LDEMUL} -shared -soname libnsgif.so ${OBJS:S|^|${OBJDIR}/|} -L${OBJ_DIR}/lib -L${MUSL_LIB} -lc -o ${OBJ_DIR}/lib/libnsgif.so
 clean:
 	$(REMOVE) ${OBJDIR} ${OBJ_DIR}/lib/libnsgif.so
 .for _d in ${OBJS:.o=.d}

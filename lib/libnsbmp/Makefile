@@ -34,7 +34,7 @@ OBJS   = libnsbmp.o
 all: ${OBJ_DIR}/lib/libnsbmp.so
 ${OBJ_DIR}/lib/libnsbmp.so: $(OBJS)
 	@mkdir -p ${OBJ_DIR}/lib
-	$(LD) -m ${ARCH_LDEMUL} -shared -soname libnsbmp.so ${OBJS:S|^|${OBJDIR}/|} -L${OBJ_DIR}/lib -lc -o ${OBJ_DIR}/lib/libnsbmp.so
+	$(LD) -m ${ARCH_LDEMUL} -shared -soname libnsbmp.so ${OBJS:S|^|${OBJDIR}/|} -L${OBJ_DIR}/lib -L${MUSL_LIB} -lc -o ${OBJ_DIR}/lib/libnsbmp.so
 clean:
 	$(REMOVE) ${OBJDIR} ${OBJ_DIR}/lib/libnsbmp.so
 .for _d in ${OBJS:.o=.d}

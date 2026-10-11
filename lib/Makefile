@@ -11,6 +11,16 @@
 # i386-only build flags and stay i386-only until their Makefiles are
 # de-hardcoded.  crt.a is an x86_64-elf libgcc shim (real aarch64 libgcc is
 # complete) and is not on the bin/ link line, so it is omitted.
+# Default _ARCH for a DIRECT in-tree build (bmake -C /usr/src/lib on-device), as in
+# bin/Makefile: this dispatcher does not include Makefile.incl.
+.if !defined(_ARCH)
+_UBIX_UNAME_S != uname -s
+.if ${_UBIX_UNAME_S} == "UBIX"
+_ARCH != uname -m
+.else
+_ARCH = aarch64
+.endif
+.endif
 .if ${_ARCH} == "aarch64"
 all: ubix_api-code objgfx-code libaudio-code libbearssl-code libpw-code libhttp-code zlib-code \
      libwapcaplet-code libparserutils-code libcss-code libhubbub-code libdom-code \

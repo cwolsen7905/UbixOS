@@ -34,7 +34,7 @@ OBJS   = base64.o time.o unistd.o
 all: ${OBJ_DIR}/lib/libnsutils.so
 ${OBJ_DIR}/lib/libnsutils.so: $(OBJS)
 	@mkdir -p ${OBJ_DIR}/lib
-	$(LD) -m ${ARCH_LDEMUL} -shared -soname libnsutils.so ${OBJS:S|^|${OBJDIR}/|} -L${OBJ_DIR}/lib -lc -o ${OBJ_DIR}/lib/libnsutils.so
+	$(LD) -m ${ARCH_LDEMUL} -shared -soname libnsutils.so ${OBJS:S|^|${OBJDIR}/|} -L${OBJ_DIR}/lib -L${MUSL_LIB} -lc -o ${OBJ_DIR}/lib/libnsutils.so
 clean:
 	$(REMOVE) ${OBJDIR} ${OBJ_DIR}/lib/libnsutils.so
 .for _d in ${OBJS:.o=.d}

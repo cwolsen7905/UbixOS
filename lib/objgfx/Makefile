@@ -39,7 +39,7 @@ ${OBJ_DIR}/lib/libobjgfx.so: $(OBJS)
 	@mkdir -p ${OBJ_DIR}/lib
 	$(LD) -m ${ARCH_LDEMUL} -shared -soname libobjgfx.so \
 		${OBJS:S|^|${OBJDIR}/|} \
-		-L${OBJ_DIR}/lib -lc \
+		-L${OBJ_DIR}/lib -L${MUSL_LIB} -lc \
 		-o ${OBJ_DIR}/lib/libobjgfx.so
 
 clean: clean-so
