@@ -53,4 +53,12 @@ struct pipeInfo {
     int reader_pid;  /* PID of task blocked in pipe read (0 = none) */
 };
 
+/*
+ * Pipe state is shared between processes running on different CPUs; every
+ * read, write, open-count change and free goes under one lock (vfs_calls.c).
+ * @end is the struct file's pipe_end tag (PIPE_END_READ / PIPE_END_WRITE).
+ */
+void pipe_ref_end(struct pipeInfo *pi, int end);     /* fork/dup: one more holder of @end */
+int pipe_release_end(struct pipeInfo *pi, int end);  /* close: drop @end; frees + returns 1 at zero */
+
 #endif /* END _SYS_PIPE_H */

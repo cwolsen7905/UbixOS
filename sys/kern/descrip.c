@@ -268,27 +268,10 @@ static int close_fdslot(struct thread *td, int fd)
 		case FD_TYPE_PIPE:
 			if (f->data != NULL)
 			{
-				struct pipeInfo *pi = (struct pipeInfo *)f->data;
-				/* Use the struct file's pipe_end tag rather than comparing fd
-				 * numbers — dup2/fork copies keep the same tag but get new
-				 * fd slots, so the original rFD/wFD numbers stop matching. */
-				if (f->pipe_end == PIPE_END_READ)
-					pi->rfdCNT--;
-				else if (f->pipe_end == PIPE_END_WRITE)
-					pi->wfdCNT--;
-				if (pi->rfdCNT <= 0 && pi->wfdCNT <= 0)
-				{
-					struct pipeBuf *pbuf = pi->headPB;
-					while (pbuf != NULL)
-					{
-						struct pipeBuf *next = pbuf->next;
-						kfree(pbuf->buffer);
-						kfree(pbuf);
-						pbuf = next;
-					}
-					kfree(pi);
+				/* pipe_end tag, not fd numbers: dup2/fork copies keep the tag
+				 * but get new fd slots.  Locked + freed at zero in one place. */
+				if (pipe_release_end((struct pipeInfo *)f->data, f->pipe_end))
 					f->data = NULL;
-				}
 			}
 			return fdestroy(td, f, fd);
 
@@ -331,10 +314,7 @@ static int duplicate_descriptor(struct thread *td, int from, int to)
 	if (fp->fd_type == FD_TYPE_PIPE && fp->data != NULL)
 	{
 		struct pipeInfo *pi = (struct pipeInfo *)fp->data;
-		if (fp->pipe_end == PIPE_END_READ)
-			pi->rfdCNT++;
-		else if (fp->pipe_end == PIPE_END_WRITE)
-			pi->wfdCNT++;
+		pipe_ref_end(pi, fp->pipe_end);
 	}
 
 	/* posix_openpt master: dropbear dup2()s the master onto the channel fds, so
@@ -725,6 +705,23 @@ int sys_ioctl(struct thread *td, struct sys_ioctl_args *args)
 	}
 }
 
+/*
+ * select/poll scan their fds, then wait for something to change.  Most fd types
+ * here (pipes, ptys, sockets) do not wake a poller, so sleep one scheduler tick
+ * between scans: ~10 ms latency instead of a busy sched_yield loop that kept
+ * every waiting server runnable and stole CPU from real work.
+ */
+static int fd_poll_never(void *arg)
+{
+	(void)arg;
+	return (0);
+}
+static char g_fd_poll_chan;
+static void fd_poll_nap(void)
+{
+	sched_wait_event_timeout(&g_fd_poll_chan, fd_poll_never, NULL, 1);
+}
+
 int sys_select(struct thread *td, struct sys_select_args *args)
 {
 	int i, j, nd, total;
@@ -953,7 +950,7 @@ int sys_select(struct thread *td, struct sys_select_args *args)
 		if (args->tv != NULL && TICKS_AFTER(systemVitals->sysTicks, deadline))
 			break;
 
-		sched_yield();
+		fd_poll_nap(); /* sleep a tick between scans (was a busy yield) */
 	}
 
 	td->td_retval[0] = total;
@@ -1103,7 +1100,7 @@ int sys_poll(struct thread *td, struct sys_poll_args *args)
 		if (args->timeout > 0 && TICKS_AFTER(systemVitals->sysTicks, deadline))
 			break;
 
-		sched_yield();
+		fd_poll_nap(); /* sleep a tick between scans (was a busy yield) */
 	}
 
 	td->td_retval[0] = total;

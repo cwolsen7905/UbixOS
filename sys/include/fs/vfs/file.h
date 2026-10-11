@@ -91,20 +91,25 @@ typedef struct userFileDescriptorStruct
 	u_int32_t fdSize;
 } userFileDescriptor;
 
-/* Kernel-side directory handle used by vfs_opendir/readdir/closedir */
-typedef struct kDIR
-{
-	struct vfs_mountPoint *mp;
-	void *dirHandle; /* filesystem-specific state (e.g. FL_DIR* for FAT) */
-} kDIR_t;
-
-/* Userland-visible dirent / DIR passed through syscalls */
 struct kdirent
 {
 	u_int32_t d_ino;
 	u_int8_t d_type;
 	char d_name[256];
 };
+
+/* Kernel-side directory handle used by vfs_opendir/readdir/closedir */
+typedef struct kDIR
+{
+	struct vfs_mountPoint *mp;
+	void *dirHandle; /* filesystem-specific state (e.g. FL_DIR* for FAT) */
+	/* getdirentries pushback: an entry already read from the filesystem that
+	 * did not fit in the caller's buffer, returned first on the next call. */
+	int has_pending;
+	struct kdirent pending;
+} kDIR_t;
+
+/* Userland-visible dirent / DIR passed through syscalls */
 #define KDT_REG 8
 #define KDT_DIR 4
 
