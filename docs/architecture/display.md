@@ -17,17 +17,17 @@ GPU-accelerated compositing open without changing the protocol.
 ```
   ┌──────────────────────────────────────────────────────────┐
   │  Kernel                                                  │
-  │  sys/kernel/fb.c                                         │
-  │    sys_mapfb      – maps VESA framebuffer into views     │
+  │  sys/kern/fb.c                                           │
+  │    sys_mapfb      – maps the framebuffer into views      │
   │    sys_shareregion– shares a vmm region into a client    │
   │    sys_getmouse   – drains mouse ring buffer (syscall 44)│
   │    sys_getkbd     – drains kbd ring buffer  (syscall 46) │
-  │  sys/isa/atkbd.c  – ISR fills kbd_ring[]                 │
-  │  sys/isa/mouse.c  – ISR fills mouse ring                 │
+  │  sys/arch/<arch>/dev/input.c – cooks raw input events    │
+  │    (aarch64: virtio-input; x86_64: 8042 PS/2, polled)    │
   └───────────────────────────┬──────────────────────────────┘
                               │ syscalls / shared memory
   ┌───────────────────────────▼──────────────────────────────┐
-  │  bin/views  (compositor — C++)                           │
+  │  usr.sbin/views  (compositor — C++)                      │
   │                                                          │
   │  • Owns the physical framebuffer (via sys_mapfb)         │
   │  • Maintains Window list: id, x/y/w/h, shm, mbox         │
@@ -41,7 +41,7 @@ GPU-accelerated compositing open without changing the protocol.
   └──────┬────────────────────────────────┬──────────────────┘
          │ MPI                            │ MPI
   ┌──────▼──────────┐           ┌─────────▼────────────────┐
-  │  bin/taskbar    │           │  bin/term  (and others)  │
+  │  usr.bin/taskbar│           │  usr.bin/term (and others)│
   │  (C++)          │           │  (C++)                   │
   │                 │           │                          │
   │  DISPLAY_CLAIM  │           │  DISPLAY_CLAIM           │
@@ -235,11 +235,13 @@ Focus is set by left-click on a window (`focused_win` in WindowManager).
 
 ---
 
-## Native syscall slots (UbixOS ABI — `int $0x81`)
+## Native syscall slots (uBixOS native ABI)
+
+Native table `systemCalls[]`; see [syscalls.md](syscalls.md) for how each arch reaches it.
 
 | Slot | Name | Purpose |
 |------|------|---------|
-| 43 | `sys_mapfb` | Map VESA framebuffer into caller's address space |
+| 43 | `sys_mapfb` | Map the framebuffer into caller's address space (x86_64: Bochs std-VGA LFB; aarch64: virtio-gpu buffer; i386 history: VESA LFB) |
 | 44 | `sys_getmouse` | Drain one event from mouse ring |
 | 45 | `sys_shareregion` | Share a vmm region into another process |
 | 46 | `sys_getkbd` | Drain one event from keyboard ring |
@@ -248,8 +250,8 @@ Focus is set by left-click on a window (`focused_win` in WindowManager).
 
 ## Adding a new GUI application
 
-1. Create `bin/myapp/` with a `Makefile` — copy `bin/taskbar/Makefile` as a template.
-2. Add `myapp` to `SUBDIRS` in `bin/Makefile`.
+1. Create `usr.bin/myapp/` with a `Makefile` — copy `usr.bin/taskbar/Makefile` as a template.
+2. Add `myapp` to `SUBDIRS` in `usr.bin/Makefile`.
 3. In your source: create the MPI mailbox, send `DISPLAY_QUERY` to get screen
    dimensions, send `DISPLAY_CLAIM`, draw into `shm_base` with `ogSurface`,
    send `DISPLAY_FLIP` to show it.
@@ -257,5 +259,6 @@ Focus is set by left-click on a window (`focused_win` in WindowManager).
 5. Send `DISPLAY_RELEASE` on exit.
 
 ```sh
-bmake world && bmake image && bmake run
+bmake kernel world image && bmake run-aarch64                     # aarch64 (default)
+bmake kernel world image TARGET=x86_64 && bmake run-x86_64 TARGET=x86_64   # x86_64
 ```
