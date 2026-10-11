@@ -66,47 +66,47 @@
 #include <x86_64/pcpu.h>
 #endif
 
-#define PROCFS_TYPE  VFS_TYPE_PROCFS
+#define PROCFS_TYPE VFS_TYPE_PROCFS
 
 /* fd->start values identifying the file type */
-#define PFILE_DIR      0
-#define PFILE_STATUS   1
-#define PFILE_CMDLINE  2
-#define PFILE_STAT     3
-#define PFILE_MAPS     4
-#define PFILE_FD_ENTRY 5   /* individual /proc/N/fd/M */
-#define PFILE_MOUNTS   6   /* /proc/mounts — global mount table */
-#define PFILE_MEMINFO  7   /* /proc/meminfo — global memory stats */
+#define PFILE_DIR 0
+#define PFILE_STATUS 1
+#define PFILE_CMDLINE 2
+#define PFILE_STAT 3
+#define PFILE_MAPS 4
+#define PFILE_FD_ENTRY 5    /* individual /proc/N/fd/M */
+#define PFILE_MOUNTS 6      /* /proc/mounts — global mount table */
+#define PFILE_MEMINFO 7     /* /proc/meminfo — global memory stats */
 #define PFILE_STAT_GLOBAL 8 /* /proc/stat — per-CPU busy/idle tick counters */
-#define PFILE_STATM    9   /* /proc/<pid>/statm — memory sizes in pages */
-#define PFILE_UPTIME   10  /* /proc/uptime — seconds since boot, idle seconds */
-#define PFILE_LWIP     11  /* /proc/lwip — lwIP stats + tcpip liveness (lwip-audit) */
-#define PFILE_SCHED    12  /* /proc/sched — per-CPU current task + run queues */
-#define PFILE_KSTACK   13  /* /proc/<pid>/kstack — kernel return addresses (procstat -k) */
+#define PFILE_STATM 9       /* /proc/<pid>/statm — memory sizes in pages */
+#define PFILE_UPTIME 10     /* /proc/uptime — seconds since boot, idle seconds */
+#define PFILE_LWIP 11       /* /proc/lwip — lwIP stats + tcpip liveness (lwip-audit) */
+#define PFILE_SCHED 12      /* /proc/sched — per-CPU current task + run queues */
+#define PFILE_KSTACK 13     /* /proc/<pid>/kstack — kernel return addresses (procstat -k) */
 
 /* lwIP counter snapshot, defined in the net stack (sys/net/net/sys_arch.c);
  * net is always linked into the kernel. */
 extern int lwip_stats_format(char *buf, int bufsz);
 
 /* procfs_dir_state.type values */
-#define PDIR_ROOT  0
-#define PDIR_PID   1
-#define PDIR_FD    2   /* /proc/N/fd/ directory */
+#define PDIR_ROOT 0
+#define PDIR_PID 1
+#define PDIR_FD 2 /* /proc/N/fd/ directory */
 
-struct procfs_dir_state {
-	int      type;
-	kTask_t *cursor;  /* PDIR_ROOT: next task to return */
-	int      subidx;  /* PDIR_PID: file index; PDIR_FD: o_files scan position */
+struct procfs_dir_state
+{
+	int type;
+	kTask_t *cursor; /* PDIR_ROOT: next task to return */
+	int subidx;      /* PDIR_PID: file index; PDIR_FD: o_files scan position */
 	u_int32_t pid;
-	int      root_phase; /* PDIR_ROOT: 0=global files, 1=pid dirs */
+	int root_phase; /* PDIR_ROOT: 0=global files, 1=pid dirs */
 };
 
 /* -----------------------------------------------------------------------
  * Path helpers
  * --------------------------------------------------------------------- */
 
-static int
-procfs_atoi(const char *s)
+static int procfs_atoi(const char *s)
 {
 	int n = 0;
 	while (*s >= '0' && *s <= '9')
@@ -114,8 +114,7 @@ procfs_atoi(const char *s)
 	return n;
 }
 
-static int
-procfs_isdigits(const char *s)
+static int procfs_isdigits(const char *s)
 {
 	if (!*s)
 		return 0;
@@ -140,53 +139,66 @@ procfs_isdigits(const char *s)
  * @param bufsz  Size of the buffer snprintf() wrote into (including the NUL)
  * @return Bytes stored, excluding the NUL; 0 if n < 0 or bufsz <= 0.
  */
-static int
-procfs_stored(int n, int bufsz)
+static int procfs_stored(int n, int bufsz)
 {
 	if (n < 0 || bufsz <= 0)
 		return 0;
 	return (n < bufsz) ? n : bufsz - 1;
 }
 
-static const char *
-procfs_state_name(tState s)
+static const char *procfs_state_name(tState s)
 {
-	switch (s) {
-	case NEW:             return "new";
-	case READY:           return "ready";
-	case RUNNING:         return "running";
-	case IDLE:            return "idle";
-	case WAIT:            return "wait";
-	case UNINTERRUPTIBLE: return "uninterruptible";
-	case INTERRUPTIBLE:   return "interruptible";
-	case DEAD:            return "dead";
-	default:              return "unknown";
+	switch (s)
+	{
+		case NEW:
+			return "new";
+		case READY:
+			return "ready";
+		case RUNNING:
+			return "running";
+		case IDLE:
+			return "idle";
+		case WAIT:
+			return "wait";
+		case UNINTERRUPTIBLE:
+			return "uninterruptible";
+		case INTERRUPTIBLE:
+			return "interruptible";
+		case DEAD:
+			return "dead";
+		default:
+			return "unknown";
 	}
 }
 
-static int
-procfs_build_status(kTask_t *t, char *buf, int bufsz)
+static int procfs_build_status(kTask_t *t, char *buf, int bufsz)
 {
-	return procfs_stored(snprintf(buf, bufsz,
-	    "Name:\t%s\nPid:\t%u\nPPid:\t%u\nPGrp:\t%u\nSid:\t%u\n"
-	    "State:\t%s\n"
-	    "Uid:\t%u\t%u\n"
-	    "Gid:\t%u\t%u\n"
-	    "Sched:\toncpu=%u rq=%u pri=%u quantum=%u chan=%p\n",
-	    t->name,
-	    (unsigned)t->id,
-	    (unsigned)t->ppid,
-	    (unsigned)t->pgrp,
-	    (unsigned)t->sid,
-	    procfs_state_name(t->state),
-	    (unsigned)t->uid,  (unsigned)t->euid,
-	    (unsigned)t->gid,  (unsigned)t->egid,
-	    (unsigned)t->on_cpu, (unsigned)t->rq_cpu, (unsigned)t->priority,
-	    (unsigned)t->quantum, t->wait_chan), bufsz);
+	return procfs_stored(snprintf(buf,
+	                              bufsz,
+	                              "Name:\t%s\nPid:\t%u\nPPid:\t%u\nPGrp:\t%u\nSid:\t%u\n"
+	                              "State:\t%s\n"
+	                              "Uid:\t%u\t%u\n"
+	                              "Gid:\t%u\t%u\n"
+	                              "Sched:\toncpu=%u rq=%u pri=%u quantum=%u chan=%p\n",
+	                              t->name,
+	                              (unsigned)t->id,
+	                              (unsigned)t->ppid,
+	                              (unsigned)t->pgrp,
+	                              (unsigned)t->sid,
+	                              procfs_state_name(t->state),
+	                              (unsigned)t->uid,
+	                              (unsigned)t->euid,
+	                              (unsigned)t->gid,
+	                              (unsigned)t->egid,
+	                              (unsigned)t->on_cpu,
+	                              (unsigned)t->rq_cpu,
+	                              (unsigned)t->priority,
+	                              (unsigned)t->quantum,
+	                              t->wait_chan),
+	                     bufsz);
 }
 
-static int
-procfs_build_cmdline(kTask_t *t, char *buf, int bufsz)
+static int procfs_build_cmdline(kTask_t *t, char *buf, int bufsz)
 {
 	const char *src = t->cmdline[0] ? t->cmdline : t->name;
 	int len = strlen(src);
@@ -195,25 +207,37 @@ procfs_build_cmdline(kTask_t *t, char *buf, int bufsz)
 	if (len >= bufsz - 1)
 		len = bufsz - 2;
 	memcpy(buf, src, len);
-	buf[len]     = '\n';
+	buf[len] = '\n';
 	buf[len + 1] = '\0';
 	return len + 1;
 }
 
-static int
-procfs_build_stat(kTask_t *t, char *buf, int bufsz)
+static int procfs_build_stat(kTask_t *t, char *buf, int bufsz)
 {
 	char state;
 	(void)bufsz;
 
-	switch (t->state) {
-	case RUNNING:         state = 'R'; break;
-	case WAIT:
-	case UNINTERRUPTIBLE: state = 'D'; break;
-	case INTERRUPTIBLE:   state = 'S'; break;
-	case IDLE:            state = 'I'; break;
-	case DEAD:            state = 'Z'; break;
-	default:              state = 'S'; break;
+	switch (t->state)
+	{
+		case RUNNING:
+			state = 'R';
+			break;
+		case WAIT:
+		case UNINTERRUPTIBLE:
+			state = 'D';
+			break;
+		case INTERRUPTIBLE:
+			state = 'S';
+			break;
+		case IDLE:
+			state = 'I';
+			break;
+		case DEAD:
+			state = 'Z';
+			break;
+		default:
+			state = 'S';
+			break;
 	}
 
 	/*
@@ -226,16 +250,21 @@ procfs_build_stat(kTask_t *t, char *buf, int bufsz)
 	 * Rendered 32-bit (wraps only after months of CPU time); userland forms
 	 * ratios against /proc/stat, which is HZ-independent.
 	 */
-	return procfs_stored(snprintf(buf, bufsz,
-	    "%u (%s) %c %u %u %u 0 -1 0 "
-	    "0 0 0 0 %u 0 0 0 "
-	    "0 0 1 0 0 %lu %lu\n",
-	    (unsigned)t->id, t->name, state,
-	    (unsigned)t->ppid, (unsigned)t->pgrp, (unsigned)t->sid,
-	    (unsigned)t->run_ticks,                       /* utime := run_ticks */
-	    ctob(t->td.vm_tsize) + ctob(t->td.vm_dsize),  /* vsize approx */
-	    ctob(t->td.vm_tsize) + ctob(t->td.vm_dsize)),  /* rss approx */
-	    bufsz);
+	return procfs_stored(snprintf(buf,
+	                              bufsz,
+	                              "%u (%s) %c %u %u %u 0 -1 0 "
+	                              "0 0 0 0 %u 0 0 0 "
+	                              "0 0 1 0 0 %lu %lu\n",
+	                              (unsigned)t->id,
+	                              t->name,
+	                              state,
+	                              (unsigned)t->ppid,
+	                              (unsigned)t->pgrp,
+	                              (unsigned)t->sid,
+	                              (unsigned)t->run_ticks,                       /* utime := run_ticks */
+	                              ctob(t->td.vm_tsize) + ctob(t->td.vm_dsize),  /* vsize approx */
+	                              ctob(t->td.vm_tsize) + ctob(t->td.vm_dsize)), /* rss approx */
+	                     bufsz);
 }
 
 /**
@@ -249,11 +278,10 @@ procfs_build_stat(kTask_t *t, char *buf, int bufsz)
  * per-arch, cross-address-space page-table walk (a later accuracy pass), so this
  * is an over-estimate.  text/data come from the exec'd extents; the rest zero.
  */
-static int
-procfs_build_statm(kTask_t *t, char *buf, int bufsz)
+static int procfs_build_statm(kTask_t *t, char *buf, int bufsz)
 {
-	unsigned long text = (unsigned long)t->td.vm_tsize; /* pages */
-	unsigned long data = (unsigned long)t->td.vm_dsize; /* pages */
+	unsigned long text = (unsigned long)t->td.vm_tsize;           /* pages */
+	unsigned long data = (unsigned long)t->td.vm_dsize;           /* pages */
 	unsigned long resident = (unsigned long)md_resident_pages(t); /* real RSS where supported */
 	unsigned long size = 0;
 	struct rb_node *n;
@@ -267,18 +295,17 @@ procfs_build_statm(kTask_t *t, char *buf, int bufsz)
 		size += (unsigned long)((e->vm_end - e->vm_start) / PAGE_SIZE);
 	}
 	if (size == 0)
-		size = resident;       /* aarch64: no VMA tree — use the resident walk    */
+		size = resident; /* aarch64: no VMA tree — use the resident walk    */
 	if (size == 0)
-		size = text + data;    /* kernel thread / no info — fall back to extents  */
+		size = text + data; /* kernel thread / no info — fall back to extents  */
 	if (resident == 0)
-		resident = size;       /* i386: no page walk yet — approximate by size    */
+		resident = size; /* i386: no page walk yet — approximate by size    */
 
 	/* size resident shared text lib data dt */
 	return procfs_stored(snprintf(buf, bufsz, "%lu %lu 0 %lu 0 %lu 0\n", size, resident, text, data), bufsz);
 }
 
-static int
-procfs_build_maps(kTask_t *t, char *buf, int bufsz)
+static int procfs_build_maps(kTask_t *t, char *buf, int bufsz)
 {
 	int len = 0;
 	unsigned long text_start, text_end;
@@ -286,34 +313,36 @@ procfs_build_maps(kTask_t *t, char *buf, int bufsz)
 	unsigned long stack_top, stack_bot;
 
 	text_start = (unsigned long)t->td.vm_taddr;
-	text_end   = text_start + (unsigned long)ctob(t->td.vm_tsize);
+	text_end = text_start + (unsigned long)ctob(t->td.vm_tsize);
 	data_start = (unsigned long)t->td.vm_daddr;
-	data_end   = data_start + (unsigned long)ctob(t->td.vm_dsize);
+	data_end = data_start + (unsigned long)ctob(t->td.vm_dsize);
 
 	/* Stack grows down from STACK_ADDR (0xBFFFFFFF).
 	 * Show a conservative 128 KB window around the current esp. */
 	stack_top = ((unsigned long)STACK_ADDR + 1u);
-	stack_bot = stack_top - 0x20000u;  /* 128 KB */
+	stack_bot = stack_top - 0x20000u; /* 128 KB */
 
 	if (text_start != 0u && text_end > text_start)
-		len += procfs_stored(snprintf(buf + len, bufsz - len,
-		    "%08lx-%08lx r-xp 00000000 00:00 0\n",
-		    text_start, text_end), bufsz - len);
+		len += procfs_stored(
+		    snprintf(buf + len, bufsz - len, "%08lx-%08lx r-xp 00000000 00:00 0\n", text_start, text_end),
+		    bufsz - len);
 
 	if (data_start != 0u && data_end > data_start)
-		len += procfs_stored(snprintf(buf + len, bufsz - len,
-		    "%08lx-%08lx rw-p 00000000 00:00 0\n",
-		    data_start, data_end), bufsz - len);
+		len += procfs_stored(
+		    snprintf(buf + len, bufsz - len, "%08lx-%08lx rw-p 00000000 00:00 0\n", data_start, data_end),
+		    bufsz - len);
 
-	len += procfs_stored(snprintf(buf + len, bufsz - len,
-	    "%08lx-%08lx rwxp 00000000 00:00 0                          [stack]\n",
-	    stack_bot, stack_top), bufsz - len);
+	len += procfs_stored(snprintf(buf + len,
+	                              bufsz - len,
+	                              "%08lx-%08lx rwxp 00000000 00:00 0                          [stack]\n",
+	                              stack_bot,
+	                              stack_top),
+	                     bufsz - len);
 
 	return len;
 }
 
-static int
-procfs_build_fd_entry(kTask_t *t, int fdno, char *buf, int bufsz)
+static int procfs_build_fd_entry(kTask_t *t, int fdno, char *buf, int bufsz)
 {
 	struct file *fp;
 	const char *type_str;
@@ -324,36 +353,47 @@ procfs_build_fd_entry(kTask_t *t, int fdno, char *buf, int bufsz)
 	if (fp == NULL)
 		return -1;
 
-	switch (fp->fd_type) {
-	case FD_TYPE_TTY:  type_str = "tty";  break;
-	case FD_TYPE_TTYV: type_str = "ttyv"; break;
-	case 3:            type_str = "pipe"; break;
-	default:
-		type_str = (fp->fd != NULL) ? "file" : "special";
-		break;
+	switch (fp->fd_type)
+	{
+		case FD_TYPE_TTY:
+			type_str = "tty";
+			break;
+		case FD_TYPE_TTYV:
+			type_str = "ttyv";
+			break;
+		case 3:
+			type_str = "pipe";
+			break;
+		default:
+			type_str = (fp->fd != NULL) ? "file" : "special";
+			break;
 	}
 
 	if (fp->fd != NULL && fp->fd->fileName[0] != '\0')
-		return procfs_stored(snprintf(buf, bufsz, "fd:\t%d\ntype:\t%s\nname:\t%s\n",
-		    fdno, type_str, fp->fd->fileName), bufsz);
+		return procfs_stored(
+		    snprintf(buf, bufsz, "fd:\t%d\ntype:\t%s\nname:\t%s\n", fdno, type_str, fp->fd->fileName), bufsz);
 
 	return procfs_stored(snprintf(buf, bufsz, "fd:\t%d\ntype:\t%s\n", fdno, type_str), bufsz);
 }
 
-static const char *
-procfs_fstype_name(int vfsType)
+static const char *procfs_fstype_name(int vfsType)
 {
-	switch (vfsType) {
-	case VFS_TYPE_FAT:    return "fat";
-	case VFS_TYPE_DEVFS:  return "devfs";
-	case VFS_TYPE_PROCFS: return "procfs";
-	case VFS_TYPE_UFS:    return "ufs";
-	default:              return "unknown";
+	switch (vfsType)
+	{
+		case VFS_TYPE_FAT:
+			return "fat";
+		case VFS_TYPE_DEVFS:
+			return "devfs";
+		case VFS_TYPE_PROCFS:
+			return "procfs";
+		case VFS_TYPE_UFS:
+			return "ufs";
+		default:
+			return "unknown";
 	}
 }
 
-static int
-procfs_build_mounts(char *buf, int bufsz)
+static int procfs_build_mounts(char *buf, int bufsz)
 {
 	struct vfs_mountPoint *mp;
 	int len = 0;
@@ -361,11 +401,12 @@ procfs_build_mounts(char *buf, int bufsz)
 	if (!systemVitals)
 		return 0;
 
-	for (mp = systemVitals->mountPoints; mp != NULL; mp = mp->next) {
+	for (mp = systemVitals->mountPoints; mp != NULL; mp = mp->next)
+	{
 		const char *fsname = "unknown";
-		const char *perms  = (mp->perms == 'r') ? "ro" : "rw";
-		char        dev[48];
-		int         vfstype = mp->fs ? mp->fs->vfsType : -1;
+		const char *perms = (mp->perms == 'r') ? "ro" : "rw";
+		char dev[48];
+		int vfstype = mp->fs ? mp->fs->vfsType : -1;
 
 		if (mp->fs)
 			fsname = procfs_fstype_name(vfstype);
@@ -379,9 +420,7 @@ procfs_build_mounts(char *buf, int bufsz)
 		else
 			snprintf(dev, sizeof(dev), "none");
 
-		len += snprintf(buf + len, bufsz - len,
-		    "%s %s %s %s 0 0\n",
-		    dev, mp->mountPoint, fsname, perms);
+		len += snprintf(buf + len, bufsz - len, "%s %s %s %s 0 0\n", dev, mp->mountPoint, fsname, perms);
 
 		if (len >= bufsz - 1)
 			break;
@@ -397,8 +436,7 @@ procfs_build_mounts(char *buf, int bufsz)
  * FreeBSD's procstat -k, for finding where a stuck task waits.  A running task
  * prints "running"; its stack is changing under us.
  */
-static int
-procfs_build_kstack(kTask_t *t, char *buf, int bufsz)
+static int procfs_build_kstack(kTask_t *t, char *buf, int bufsz)
 {
 	uintptr_t pcs[16];
 	int n = 0, i, k;
@@ -419,13 +457,13 @@ procfs_build_kstack(kTask_t *t, char *buf, int bufsz)
  * lock, for debugging stalls (a READY task nobody runs).
  */
 #if defined(__aarch64__) || defined(__x86_64__)
-static int
-procfs_build_sched(char *buf, int bufsz)
+static int procfs_build_sched(char *buf, int bufsz)
 {
 	int n = 0;
 	unsigned c;
 
-	for (c = 0; c < MAXCPU && n < bufsz - 160; c++) {
+	for (c = 0; c < MAXCPU && n < bufsz - 160; c++)
+	{
 		struct runqueue *rq = &g_rq[c];
 		kTask_t *cur = g_pcpu[c].current;
 		int pri;
@@ -435,25 +473,44 @@ procfs_build_sched(char *buf, int bufsz)
 		{
 			extern volatile u_int32_t g_sched_stat[][6];
 			volatile u_int32_t *st = g_sched_stat[c];
-			n += procfs_stored(snprintf(buf + n, bufsz - n,
-			    "cpu%u: current %d %s  ready_mask=0x%x nr=%u\n", c,
-			    cur ? (int)cur->id : -1, cur ? cur->name : "-",
-			    (unsigned)rq->ready_mask, (unsigned)rq->nr_running), bufsz - n);
-			n += procfs_stored(snprintf(buf + n, bufsz - n,
-			    "  ends: busy=%u rt=%u slice=%u empty=%u saving=%u switch=%u\n",
-			    (unsigned)st[0], (unsigned)st[1], (unsigned)st[2], (unsigned)st[3],
-			    (unsigned)st[4], (unsigned)st[5]), bufsz - n);
+			n += procfs_stored(snprintf(buf + n,
+			                            bufsz - n,
+			                            "cpu%u: current %d %s  ready_mask=0x%x nr=%u\n",
+			                            c,
+			                            cur ? (int)cur->id : -1,
+			                            cur ? cur->name : "-",
+			                            (unsigned)rq->ready_mask,
+			                            (unsigned)rq->nr_running),
+			                   bufsz - n);
+			n += procfs_stored(snprintf(buf + n,
+			                            bufsz - n,
+			                            "  ends: busy=%u rt=%u slice=%u empty=%u saving=%u switch=%u\n",
+			                            (unsigned)st[0],
+			                            (unsigned)st[1],
+			                            (unsigned)st[2],
+			                            (unsigned)st[3],
+			                            (unsigned)st[4],
+			                            (unsigned)st[5]),
+			                   bufsz - n);
 		}
-		for (pri = SCHED_PRIORITIES - 1; pri >= 0 && n < bufsz - 160; pri--) {
+		for (pri = SCHED_PRIORITIES - 1; pri >= 0 && n < bufsz - 160; pri--)
+		{
 			kTask_t *h = rq->bucket[pri], *t = h;
 			int k = 0;
 
 			if (h == NULL)
 				continue;
-			do {
-				n += procfs_stored(snprintf(buf + n, bufsz - n,
-				    "  p%d: %d %s st=%d oncpu=%u\n", pri, (int)t->id,
-				    t->name, (int)t->state, (unsigned)t->on_cpu), bufsz - n);
+			do
+			{
+				n += procfs_stored(snprintf(buf + n,
+				                            bufsz - n,
+				                            "  p%d: %d %s st=%d oncpu=%u\n",
+				                            pri,
+				                            (int)t->id,
+				                            t->name,
+				                            (int)t->state,
+				                            (unsigned)t->on_cpu),
+				                   bufsz - n);
 				t = t->rq_next;
 			} while (t != NULL && t != h && ++k < 32 && n < bufsz - 160);
 		}
@@ -461,8 +518,7 @@ procfs_build_sched(char *buf, int bufsz)
 	return n;
 }
 #else
-static int
-procfs_build_sched(char *buf, int bufsz)
+static int procfs_build_sched(char *buf, int bufsz)
 {
 	return procfs_stored(snprintf(buf, bufsz, "unsupported\n"), bufsz);
 }
@@ -473,28 +529,29 @@ procfs_build_sched(char *buf, int bufsz)
  * `numPages` is the number of managed physical pages; `systemVitals->freePages`
  * is the live free count.  Each page is PAGE_SIZE bytes.
  */
-static int
-procfs_build_meminfo(char *buf, int bufsz)
+static int procfs_build_meminfo(char *buf, int bufsz)
 {
 	u_int32_t total_pages = numPages;
-	u_int32_t free_pages  = systemVitals ? systemVitals->freePages : 0;
+	u_int32_t free_pages = systemVitals ? systemVitals->freePages : 0;
 	u_int32_t kb_per_page = PAGE_SIZE / 1024u;
 
-	return snprintf(buf, bufsz,
-	    "MemTotal: %8u kB\n"
-	    "MemFree:  %8u kB\n"
-	    "MemUsed:  %8u kB\n"
-	    "PageSize: %8u bytes\n"
-	    "Pages:    total %u free %u\n"
-	    "FileCache: %u pages\n"
-	    "OrphanPages: %u\n",
-	    total_pages * kb_per_page,
-	    free_pages * kb_per_page,
-	    (total_pages - free_pages) * kb_per_page,
-	    (u_int32_t)PAGE_SIZE,
-	    total_pages, free_pages,
-	    vm_filecache_page_count(),
-	    vmm_audit_orphan_pages());
+	return snprintf(buf,
+	                bufsz,
+	                "MemTotal: %8u kB\n"
+	                "MemFree:  %8u kB\n"
+	                "MemUsed:  %8u kB\n"
+	                "PageSize: %8u bytes\n"
+	                "Pages:    total %u free %u\n"
+	                "FileCache: %u pages\n"
+	                "OrphanPages: %u\n",
+	                total_pages * kb_per_page,
+	                free_pages * kb_per_page,
+	                (total_pages - free_pages) * kb_per_page,
+	                (u_int32_t)PAGE_SIZE,
+	                total_pages,
+	                free_pages,
+	                vm_filecache_page_count(),
+	                vmm_audit_orphan_pages());
 }
 
 /**
@@ -507,8 +564,7 @@ procfs_build_meminfo(char *buf, int bufsz)
  * per-CPU lines.  Ticks are raw timer ticks — userland takes the
  * busy/(busy+idle) ratio, which is HZ-independent.
  */
-static int
-procfs_build_stat_global(char *buf, int bufsz)
+static int procfs_build_stat_global(char *buf, int bufsz)
 {
 	unsigned ncpu = sched_cpu_acct_count();
 	unsigned total_busy = (unsigned)sched_cpu_busy_ticks();
@@ -538,8 +594,7 @@ procfs_build_stat_global(char *buf, int bufsz)
  * is needed in this MI file.  Centisecond fixed point — the kernel printf has no
  * %f.
  */
-static int
-procfs_build_uptime(char *buf, int bufsz)
+static int procfs_build_uptime(char *buf, int bufsz)
 {
 	u_int64_t sec = 0, nsec = 0;
 	u_int64_t busy = sched_cpu_busy_ticks();
@@ -548,20 +603,23 @@ procfs_build_uptime(char *buf, int bufsz)
 	u_int64_t up_cs, idle_cs;
 
 	md_uptime(&sec, &nsec);
-	up_cs = sec * 100u + nsec / 10000000u;            /* centiseconds since boot */
+	up_cs = sec * 100u + nsec / 10000000u; /* centiseconds since boot */
 	idle_cs = (total != 0) ? (up_cs * idle / total) : up_cs;
 
-	return snprintf(buf, bufsz, "%u.%02u %u.%02u\n",
-	    (unsigned)(up_cs / 100u), (unsigned)(up_cs % 100u),
-	    (unsigned)(idle_cs / 100u), (unsigned)(idle_cs % 100u));
+	return snprintf(buf,
+	                bufsz,
+	                "%u.%02u %u.%02u\n",
+	                (unsigned)(up_cs / 100u),
+	                (unsigned)(up_cs % 100u),
+	                (unsigned)(idle_cs / 100u),
+	                (unsigned)(idle_cs % 100u));
 }
 
 /* -----------------------------------------------------------------------
  * vfsInitFS
  * --------------------------------------------------------------------- */
 
-static int
-procfs_initialize(struct vfs_mountPoint *mp)
+static int procfs_initialize(struct vfs_mountPoint *mp)
 {
 	mp->fsInfo = NULL;
 	return 1;
@@ -571,19 +629,18 @@ procfs_initialize(struct vfs_mountPoint *mp)
  * vfsOpenFile
  * --------------------------------------------------------------------- */
 
-static int
-procfs_open(char *file, fileDescriptor_t *fd)
+static int procfs_open(char *file, fileDescriptor_t *fd)
 {
-	char      path[256];
-	char     *p;
-	char      pidstr[32];
-	char     *slash;
-	int       plen;
+	char path[256];
+	char *p;
+	char pidstr[32];
+	char *slash;
+	int plen;
 	const char *rest;
-	u_int32_t  pid;
-	kTask_t  *t;
-	char      tmp[512];
-	int       len;
+	u_int32_t pid;
+	kTask_t *t;
+	char tmp[512];
+	int len;
 
 	strncpy(path, file, sizeof(path) - 1);
 	path[sizeof(path) - 1] = '\0';
@@ -605,76 +662,85 @@ procfs_open(char *file, fileDescriptor_t *fd)
 	/* Split leading PID component from optional rest */
 	for (slash = p; *slash && *slash != '/'; slash++)
 		;
-	if (*slash == '/') {
+	if (*slash == '/')
+	{
 		plen = (int)(slash - p);
 		if (plen >= (int)sizeof(pidstr))
 			return 0;
 		memcpy(pidstr, p, plen);
 		pidstr[plen] = '\0';
 		rest = slash + 1;
-	} else {
+	}
+	else
+	{
 		strncpy(pidstr, p, sizeof(pidstr) - 1);
 		pidstr[sizeof(pidstr) - 1] = '\0';
 		rest = "";
 	}
 
 	/* Global files: /proc/mounts */
-	if (strcmp(pidstr, "mounts") == 0 && *rest == '\0') {
+	if (strcmp(pidstr, "mounts") == 0 && *rest == '\0')
+	{
 		char tmp2[1024];
-		int  mlen = procfs_build_mounts(tmp2, sizeof(tmp2));
-		fd->ino   = 0;
+		int mlen = procfs_build_mounts(tmp2, sizeof(tmp2));
+		fd->ino = 0;
 		fd->start = PFILE_MOUNTS;
-		fd->size  = (u_int32_t)mlen;
+		fd->size = (u_int32_t)mlen;
 		return 1;
 	}
 
 	/* Global files: /proc/meminfo */
-	if (strcmp(pidstr, "meminfo") == 0 && *rest == '\0') {
+	if (strcmp(pidstr, "meminfo") == 0 && *rest == '\0')
+	{
 		char tmp2[256];
-		int  mlen = procfs_build_meminfo(tmp2, sizeof(tmp2));
-		fd->ino   = 0;
+		int mlen = procfs_build_meminfo(tmp2, sizeof(tmp2));
+		fd->ino = 0;
 		fd->start = PFILE_MEMINFO;
-		fd->size  = (u_int32_t)mlen;
+		fd->size = (u_int32_t)mlen;
 		return 1;
 	}
 
 	/* Global files: /proc/stat */
-	if (strcmp(pidstr, "stat") == 0 && *rest == '\0') {
+	if (strcmp(pidstr, "stat") == 0 && *rest == '\0')
+	{
 		char tmp2[512]; /* aggregate + up to CPU_ENUM_MAX per-core lines */
-		int  mlen = procfs_build_stat_global(tmp2, sizeof(tmp2));
-		fd->ino   = 0;
+		int mlen = procfs_build_stat_global(tmp2, sizeof(tmp2));
+		fd->ino = 0;
 		fd->start = PFILE_STAT_GLOBAL;
-		fd->size  = (u_int32_t)mlen;
+		fd->size = (u_int32_t)mlen;
 		return 1;
 	}
 
 	/* Global files: /proc/lwip — lwIP stats + tcpip_thread liveness */
-	if (strcmp(pidstr, "lwip") == 0 && *rest == '\0') {
+	if (strcmp(pidstr, "lwip") == 0 && *rest == '\0')
+	{
 		char tmp2[2048];
-		int  mlen = lwip_stats_format(tmp2, sizeof(tmp2));
-		fd->ino   = 0;
+		int mlen = lwip_stats_format(tmp2, sizeof(tmp2));
+		fd->ino = 0;
 		fd->start = PFILE_LWIP;
-		fd->size  = (u_int32_t)mlen;
+		fd->size = (u_int32_t)mlen;
 		return 1;
 	}
 
 	/* Global files: /proc/sched */
-	if (strcmp(pidstr, "sched") == 0 && *rest == '\0') {
+	if (strcmp(pidstr, "sched") == 0 && *rest == '\0')
+	{
 		char tmp2[2048];
-		int  mlen = procfs_build_sched(tmp2, sizeof(tmp2));
-		fd->ino   = 0;
+		int mlen = procfs_build_sched(tmp2, sizeof(tmp2));
+		fd->ino = 0;
 		fd->start = PFILE_SCHED;
-		fd->size  = (u_int32_t)mlen;
+		fd->size = (u_int32_t)mlen;
 		return 1;
 	}
 
 	/* Global files: /proc/uptime */
-	if (strcmp(pidstr, "uptime") == 0 && *rest == '\0') {
+	if (strcmp(pidstr, "uptime") == 0 && *rest == '\0')
+	{
 		char tmp2[64];
-		int  mlen = procfs_build_uptime(tmp2, sizeof(tmp2));
-		fd->ino   = 0;
+		int mlen = procfs_build_uptime(tmp2, sizeof(tmp2));
+		fd->ino = 0;
 		fd->start = PFILE_UPTIME;
-		fd->size  = (u_int32_t)mlen;
+		fd->size = (u_int32_t)mlen;
 		return 1;
 	}
 
@@ -682,7 +748,7 @@ procfs_open(char *file, fileDescriptor_t *fd)
 		return 0;
 
 	pid = (u_int32_t)procfs_atoi(pidstr);
-	t   = schedFindTask(pid);
+	t = schedFindTask(pid);
 
 	/* /N or /N/ — PID directory: reject as a file open (see root note above);
 	 * existence is validated by procfs_opendir() when it is listed. */
@@ -692,51 +758,57 @@ procfs_open(char *file, fileDescriptor_t *fd)
 	if (!t)
 		return 0;
 
-	if (strcmp(rest, "status") == 0) {
+	if (strcmp(rest, "status") == 0)
+	{
 		len = procfs_build_status(t, tmp, sizeof(tmp));
-		fd->ino   = pid;
+		fd->ino = pid;
 		fd->start = PFILE_STATUS;
-		fd->size  = (u_int32_t)len;
+		fd->size = (u_int32_t)len;
 		return 1;
 	}
 
-	if (strcmp(rest, "cmdline") == 0) {
+	if (strcmp(rest, "cmdline") == 0)
+	{
 		len = procfs_build_cmdline(t, tmp, sizeof(tmp));
-		fd->ino   = pid;
+		fd->ino = pid;
 		fd->start = PFILE_CMDLINE;
-		fd->size  = (u_int32_t)len;
+		fd->size = (u_int32_t)len;
 		return 1;
 	}
 
-	if (strcmp(rest, "stat") == 0) {
+	if (strcmp(rest, "stat") == 0)
+	{
 		len = procfs_build_stat(t, tmp, sizeof(tmp));
-		fd->ino   = pid;
+		fd->ino = pid;
 		fd->start = PFILE_STAT;
-		fd->size  = (u_int32_t)len;
+		fd->size = (u_int32_t)len;
 		return 1;
 	}
 
-	if (strcmp(rest, "maps") == 0) {
+	if (strcmp(rest, "maps") == 0)
+	{
 		len = procfs_build_maps(t, tmp, sizeof(tmp));
-		fd->ino   = pid;
+		fd->ino = pid;
 		fd->start = PFILE_MAPS;
-		fd->size  = (u_int32_t)len;
+		fd->size = (u_int32_t)len;
 		return 1;
 	}
 
-	if (strcmp(rest, "kstack") == 0) {
+	if (strcmp(rest, "kstack") == 0)
+	{
 		len = procfs_build_kstack(t, tmp, sizeof(tmp));
-		fd->ino   = pid;
+		fd->ino = pid;
 		fd->start = PFILE_KSTACK;
-		fd->size  = (u_int32_t)len;
+		fd->size = (u_int32_t)len;
 		return 1;
 	}
 
-	if (strcmp(rest, "statm") == 0) {
+	if (strcmp(rest, "statm") == 0)
+	{
 		len = procfs_build_statm(t, tmp, sizeof(tmp));
-		fd->ino   = pid;
+		fd->ino = pid;
 		fd->start = PFILE_STATM;
-		fd->size  = (u_int32_t)len;
+		fd->size = (u_int32_t)len;
 		return 1;
 	}
 
@@ -746,10 +818,11 @@ procfs_open(char *file, fileDescriptor_t *fd)
 		return 0;
 
 	/* /N/fd/M — individual fd entry */
-	if (strncmp(rest, "fd/", 3) == 0) {
+	if (strncmp(rest, "fd/", 3) == 0)
+	{
 		const char *fdstr = rest + 3;
 		char tmp2[512];
-		int  flen;
+		int flen;
 
 		if (!procfs_isdigits(fdstr))
 			return 0;
@@ -757,10 +830,10 @@ procfs_open(char *file, fileDescriptor_t *fd)
 		flen = procfs_build_fd_entry(t, fdno, tmp2, sizeof(tmp2));
 		if (flen < 0)
 			return 0;
-		fd->ino   = pid;
+		fd->ino = pid;
 		fd->start = PFILE_FD_ENTRY;
 		fd->resid = (u_int32_t)fdno;
-		fd->size  = (u_int32_t)flen;
+		fd->size = (u_int32_t)flen;
 		return 1;
 	}
 
@@ -771,22 +844,22 @@ procfs_open(char *file, fileDescriptor_t *fd)
  * vfsRead — regenerate content on each read so it reflects current state.
  * --------------------------------------------------------------------- */
 
-static int
-procfs_read(fileDescriptor_t *fd, char *data, off_t offset, long size)
+static int procfs_read(fileDescriptor_t *fd, char *data, off_t offset, long size)
 {
-	char     tmp[512];
-	int      len;
-	long     n;
+	char tmp[512];
+	int len;
+	long n;
 	kTask_t *t;
 
 	if (fd->start == PFILE_DIR)
 		return 0;
 
 	/* Global files don't belong to a task */
-	if (fd->start == PFILE_MOUNTS) {
-		char     mtmp[1024];
-		int      mlen = procfs_build_mounts(mtmp, sizeof(mtmp));
-		long     mn;
+	if (fd->start == PFILE_MOUNTS)
+	{
+		char mtmp[1024];
+		int mlen = procfs_build_mounts(mtmp, sizeof(mtmp));
+		long mn;
 		if (offset >= (long)mlen)
 			return 0;
 		mn = (long)mlen - offset;
@@ -796,10 +869,11 @@ procfs_read(fileDescriptor_t *fd, char *data, off_t offset, long size)
 		return (int)mn;
 	}
 
-	if (fd->start == PFILE_SCHED) {
-		char     mtmp[2048];
-		int      mlen = procfs_build_sched(mtmp, sizeof(mtmp));
-		long     mn;
+	if (fd->start == PFILE_SCHED)
+	{
+		char mtmp[2048];
+		int mlen = procfs_build_sched(mtmp, sizeof(mtmp));
+		long mn;
 		if (offset >= (long)mlen)
 			return 0;
 		mn = (long)mlen - offset;
@@ -809,10 +883,11 @@ procfs_read(fileDescriptor_t *fd, char *data, off_t offset, long size)
 		return (int)mn;
 	}
 
-	if (fd->start == PFILE_MEMINFO) {
-		char     mtmp[256];
-		int      mlen = procfs_build_meminfo(mtmp, sizeof(mtmp));
-		long     mn;
+	if (fd->start == PFILE_MEMINFO)
+	{
+		char mtmp[256];
+		int mlen = procfs_build_meminfo(mtmp, sizeof(mtmp));
+		long mn;
 		if (offset >= (long)mlen)
 			return 0;
 		mn = (long)mlen - offset;
@@ -822,10 +897,11 @@ procfs_read(fileDescriptor_t *fd, char *data, off_t offset, long size)
 		return (int)mn;
 	}
 
-	if (fd->start == PFILE_STAT_GLOBAL) {
-		char     mtmp[512]; /* aggregate + up to CPU_ENUM_MAX per-core lines */
-		int      mlen = procfs_build_stat_global(mtmp, sizeof(mtmp));
-		long     mn;
+	if (fd->start == PFILE_STAT_GLOBAL)
+	{
+		char mtmp[512]; /* aggregate + up to CPU_ENUM_MAX per-core lines */
+		int mlen = procfs_build_stat_global(mtmp, sizeof(mtmp));
+		long mn;
 		if (offset >= (long)mlen)
 			return 0;
 		mn = (long)mlen - offset;
@@ -835,10 +911,11 @@ procfs_read(fileDescriptor_t *fd, char *data, off_t offset, long size)
 		return (int)mn;
 	}
 
-	if (fd->start == PFILE_LWIP) {
-		char     mtmp[2048];
-		int      mlen = lwip_stats_format(mtmp, sizeof(mtmp));
-		long     mn;
+	if (fd->start == PFILE_LWIP)
+	{
+		char mtmp[2048];
+		int mlen = lwip_stats_format(mtmp, sizeof(mtmp));
+		long mn;
 		if (offset >= (long)mlen)
 			return 0;
 		mn = (long)mlen - offset;
@@ -848,10 +925,11 @@ procfs_read(fileDescriptor_t *fd, char *data, off_t offset, long size)
 		return (int)mn;
 	}
 
-	if (fd->start == PFILE_UPTIME) {
-		char     mtmp[64];
-		int      mlen = procfs_build_uptime(mtmp, sizeof(mtmp));
-		long     mn;
+	if (fd->start == PFILE_UPTIME)
+	{
+		char mtmp[64];
+		int mlen = procfs_build_uptime(mtmp, sizeof(mtmp));
+		long mn;
 		if (offset >= (long)mlen)
 			return 0;
 		mn = (long)mlen - offset;
@@ -865,32 +943,33 @@ procfs_read(fileDescriptor_t *fd, char *data, off_t offset, long size)
 	if (!t)
 		return -1;
 
-	switch (fd->start) {
-	case PFILE_STATUS:
-		len = procfs_build_status(t, tmp, sizeof(tmp));
-		break;
-	case PFILE_CMDLINE:
-		len = procfs_build_cmdline(t, tmp, sizeof(tmp));
-		break;
-	case PFILE_STAT:
-		len = procfs_build_stat(t, tmp, sizeof(tmp));
-		break;
-	case PFILE_MAPS:
-		len = procfs_build_maps(t, tmp, sizeof(tmp));
-		break;
-	case PFILE_STATM:
-		len = procfs_build_statm(t, tmp, sizeof(tmp));
-		break;
-	case PFILE_KSTACK:
-		len = procfs_build_kstack(t, tmp, sizeof(tmp));
-		break;
-	case PFILE_FD_ENTRY:
-		len = procfs_build_fd_entry(t, (int)fd->resid, tmp, sizeof(tmp));
-		if (len < 0)
+	switch (fd->start)
+	{
+		case PFILE_STATUS:
+			len = procfs_build_status(t, tmp, sizeof(tmp));
+			break;
+		case PFILE_CMDLINE:
+			len = procfs_build_cmdline(t, tmp, sizeof(tmp));
+			break;
+		case PFILE_STAT:
+			len = procfs_build_stat(t, tmp, sizeof(tmp));
+			break;
+		case PFILE_MAPS:
+			len = procfs_build_maps(t, tmp, sizeof(tmp));
+			break;
+		case PFILE_STATM:
+			len = procfs_build_statm(t, tmp, sizeof(tmp));
+			break;
+		case PFILE_KSTACK:
+			len = procfs_build_kstack(t, tmp, sizeof(tmp));
+			break;
+		case PFILE_FD_ENTRY:
+			len = procfs_build_fd_entry(t, (int)fd->resid, tmp, sizeof(tmp));
+			if (len < 0)
+				return -1;
+			break;
+		default:
 			return -1;
-		break;
-	default:
-		return -1;
 	}
 
 	if (offset >= (long)len)
@@ -906,13 +985,12 @@ procfs_read(fileDescriptor_t *fd, char *data, off_t offset, long size)
  * vfsOpenDir
  * --------------------------------------------------------------------- */
 
-static int
-procfs_opendir(const char *path, kDIR_t *dir)
+static int procfs_opendir(const char *path, kDIR_t *dir)
 {
 	struct procfs_dir_state *s;
-	char     p[256];
-	char    *q;
-	int      l;
+	char p[256];
+	char *q;
+	int l;
 	u_int32_t pid;
 	kTask_t *t;
 
@@ -933,8 +1011,9 @@ procfs_opendir(const char *path, kDIR_t *dir)
 		q[l - 1] = '\0';
 
 	/* Root directory */
-	if (*q == '\0') {
-		s->type   = PDIR_ROOT;
+	if (*q == '\0')
+	{
+		s->type = PDIR_ROOT;
 		s->cursor = taskList;
 		dir->dirHandle = s;
 		return 1;
@@ -943,18 +1022,22 @@ procfs_opendir(const char *path, kDIR_t *dir)
 	/* Check for "N/fd" pattern (fd sub-directory) */
 	{
 		char *sl = q;
-		while (*sl && *sl != '/') sl++;
-		if (*sl == '/') {
+		while (*sl && *sl != '/')
+			sl++;
+		if (*sl == '/')
+		{
 			*sl = '\0';
-			if (procfs_isdigits(q) && strcmp(sl + 1, "fd") == 0) {
+			if (procfs_isdigits(q) && strcmp(sl + 1, "fd") == 0)
+			{
 				pid = (u_int32_t)procfs_atoi(q);
-				t   = schedFindTask(pid);
-				if (!t) {
+				t = schedFindTask(pid);
+				if (!t)
+				{
 					kfree(s);
 					return 0;
 				}
-				s->type   = PDIR_FD;
-				s->pid    = pid;
+				s->type = PDIR_FD;
+				s->pid = pid;
 				s->subidx = 0;
 				dir->dirHandle = s;
 				return 1;
@@ -965,15 +1048,17 @@ procfs_opendir(const char *path, kDIR_t *dir)
 	}
 
 	/* "N" — per-pid directory */
-	if (procfs_isdigits(q)) {
+	if (procfs_isdigits(q))
+	{
 		pid = (u_int32_t)procfs_atoi(q);
-		t   = schedFindTask(pid);
-		if (!t) {
+		t = schedFindTask(pid);
+		if (!t)
+		{
 			kfree(s);
 			return 0;
 		}
-		s->type   = PDIR_PID;
-		s->pid    = pid;
+		s->type = PDIR_PID;
+		s->pid = pid;
 		s->subidx = 0;
 		dir->dirHandle = s;
 		return 1;
@@ -988,14 +1073,11 @@ procfs_opendir(const char *path, kDIR_t *dir)
  * --------------------------------------------------------------------- */
 
 /* Per-pid entries; "fd" (the last) is a directory, the rest regular files. */
-static const char *procfs_pid_files[] = {
-	"status", "cmdline", "stat", "statm", "maps", "kstack", "fd"
-};
-#define PROCFS_PID_NFILES  6  /* all six entries (was 5, which dropped "fd") */
-#define PROCFS_PID_FD_IDX  5  /* index of "fd" — the DIR entry (was 4 == "maps") */
+static const char *procfs_pid_files[] = {"status", "cmdline", "stat", "statm", "maps", "kstack", "fd"};
+#define PROCFS_PID_NFILES 6 /* all six entries (was 5, which dropped "fd") */
+#define PROCFS_PID_FD_IDX 5 /* index of "fd" — the DIR entry (was 4 == "maps") */
 
-static int
-procfs_readdir(kDIR_t *dir, struct kdirent *ent)
+static int procfs_readdir(kDIR_t *dir, struct kdirent *ent)
 {
 	struct procfs_dir_state *s = (struct procfs_dir_state *)dir->dirHandle;
 
@@ -1003,49 +1085,50 @@ procfs_readdir(kDIR_t *dir, struct kdirent *ent)
 		return -1;
 
 	/* ── Root: global files first, then live task dirs ── */
-	if (s->type == PDIR_ROOT) {
+	if (s->type == PDIR_ROOT)
+	{
 		/* Phases 0..N-1: emit global synthetic files, one per readdir call */
-		static const char *const procfs_root_files[] = { "mounts", "meminfo", "stat", "uptime", "lwip", "sched" };
-		if (s->root_phase < (int)(sizeof(procfs_root_files) / sizeof(procfs_root_files[0]))) {
+		static const char *const procfs_root_files[] = {"mounts", "meminfo", "stat", "uptime", "lwip", "sched"};
+		if (s->root_phase < (int)(sizeof(procfs_root_files) / sizeof(procfs_root_files[0])))
+		{
 			strncpy(ent->d_name, procfs_root_files[s->root_phase], sizeof(ent->d_name) - 1);
 			ent->d_name[sizeof(ent->d_name) - 1] = '\0';
-			ent->d_ino  = 0;
+			ent->d_ino = 0;
 			ent->d_type = KDT_REG;
 			s->root_phase++;
 			return 0;
 		}
 
 		/* Final phase: per-pid directories */
-		while (s->cursor &&
-		    (s->cursor->state == DEAD ||
-		     s->cursor->state == PLACEHOLDER))
+		while (s->cursor && (s->cursor->state == DEAD || s->cursor->state == PLACEHOLDER))
 			s->cursor = s->cursor->next;
 
 		if (!s->cursor)
 			return -1;
 
 		snprintf(ent->d_name, sizeof(ent->d_name), "%u", (unsigned)s->cursor->id);
-		ent->d_ino  = s->cursor->id;
+		ent->d_ino = s->cursor->id;
 		ent->d_type = KDT_DIR;
-		s->cursor   = s->cursor->next;
+		s->cursor = s->cursor->next;
 		return 0;
 	}
 
 	/* ── Per-pid: enumerate status/cmdline/stat/maps/fd ── */
-	if (s->type == PDIR_PID) {
+	if (s->type == PDIR_PID)
+	{
 		if (s->subidx >= PROCFS_PID_NFILES)
 			return -1;
-		strncpy(ent->d_name, procfs_pid_files[s->subidx],
-		    sizeof(ent->d_name) - 1);
+		strncpy(ent->d_name, procfs_pid_files[s->subidx], sizeof(ent->d_name) - 1);
 		ent->d_name[sizeof(ent->d_name) - 1] = '\0';
-		ent->d_ino  = s->pid * 10u + (u_int32_t)s->subidx;
+		ent->d_ino = s->pid * 10u + (u_int32_t)s->subidx;
 		ent->d_type = (s->subidx == PROCFS_PID_FD_IDX) ? KDT_DIR : KDT_REG;
 		s->subidx++;
 		return 0;
 	}
 
 	/* ── fd/: enumerate open file descriptors ── */
-	if (s->type == PDIR_FD) {
+	if (s->type == PDIR_FD)
+	{
 		kTask_t *t = schedFindTask(s->pid);
 		if (!t)
 			return -1;
@@ -1055,7 +1138,7 @@ procfs_readdir(kDIR_t *dir, struct kdirent *ent)
 		if (s->subidx >= O_FILES)
 			return -1;
 		snprintf(ent->d_name, sizeof(ent->d_name), "%d", s->subidx);
-		ent->d_ino  = s->pid * 1000u + (u_int32_t)s->subidx;
+		ent->d_ino = s->pid * 1000u + (u_int32_t)s->subidx;
 		ent->d_type = KDT_REG;
 		s->subidx++;
 		return 0;
@@ -1068,10 +1151,10 @@ procfs_readdir(kDIR_t *dir, struct kdirent *ent)
  * vfsCloseDir
  * --------------------------------------------------------------------- */
 
-static int
-procfs_closedir(kDIR_t *dir)
+static int procfs_closedir(kDIR_t *dir)
 {
-	if (dir->dirHandle) {
+	if (dir->dirHandle)
+	{
 		kfree(dir->dirHandle);
 		dir->dirHandle = NULL;
 	}
@@ -1082,27 +1165,27 @@ procfs_closedir(kDIR_t *dir)
  * procfs_init — register filesystem
  * --------------------------------------------------------------------- */
 
-int
-procfs_init(void)
+int procfs_init(void)
 {
 	struct fileSystem procFS = {
-		NULL,                         /* prev       */
-		NULL,                         /* next       */
-		(void *)procfs_initialize,    /* vfsInitFS  */
-		(void *)procfs_read,          /* vfsRead    */
-		NULL,                         /* vfsWrite   */
-		(void *)procfs_open,          /* vfsOpenFile */
-		NULL,                         /* vfsUnlink  */
-		NULL,                         /* vfsMakeDir */
-		NULL,                         /* vfsRemDir  */
-		NULL,                         /* vfsSync    */
-		PROCFS_TYPE,                  /* vfsType    */
-		(void *)procfs_opendir,       /* vfsOpenDir */
-		(void *)procfs_readdir,       /* vfsReadDir */
-		(void *)procfs_closedir,      /* vfsCloseDir */
+	    NULL,                      /* prev       */
+	    NULL,                      /* next       */
+	    (void *)procfs_initialize, /* vfsInitFS  */
+	    (void *)procfs_read,       /* vfsRead    */
+	    NULL,                      /* vfsWrite   */
+	    (void *)procfs_open,       /* vfsOpenFile */
+	    NULL,                      /* vfsUnlink  */
+	    NULL,                      /* vfsMakeDir */
+	    NULL,                      /* vfsRemDir  */
+	    NULL,                      /* vfsSync    */
+	    PROCFS_TYPE,               /* vfsType    */
+	    (void *)procfs_opendir,    /* vfsOpenDir */
+	    (void *)procfs_readdir,    /* vfsReadDir */
+	    (void *)procfs_closedir,   /* vfsCloseDir */
 	};
 
-	if (vfsRegisterFS(procFS) != 0) {
+	if (vfsRegisterFS(procFS) != 0)
+	{
 		klog(KLOG_ERR, "procfs: failed to register filesystem");
 		return 1;
 	}
