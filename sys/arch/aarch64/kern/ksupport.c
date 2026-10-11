@@ -190,6 +190,19 @@ void endTask(pidType pid)
 	(void)pid;
 	if (_current != 0)
 	{
+		/* CLONE_CHILD_CLEARTID: zero the user word and futex-wake its waiter
+		 * (musl's pthread_join, and the thread-list lock held across a thread's
+		 * exit), while the — possibly shared — address space is still mapped.
+		 * aarch64 never did this; it went unnoticed while exiting threads
+		 * crashed in __unmapself first, then ld.lld's main thread waited
+		 * forever for a worker that had exited.  Same as sys/kern/endtask.c. */
+		if (_current->clear_tid != NULL)
+		{
+			*_current->clear_tid = 0;
+			sched_wakeup_chan(_current->clear_tid);
+			_current->clear_tid = NULL;
+		}
+
 		/* Close the task's open FILE, PIPE and SOCKET fds on exit.
 		 *
 		 * FILES: shared with fork children through the descriptor's dup count
@@ -262,17 +275,10 @@ void endTask(pidType pid)
 		 * recreating it. */
 		mpi_destroyProcessMboxes(_current->id);
 		sched_reparent_children(_current); /* orphans -> init */
-		/* Disarm a pending timed-sleep callout (see sched_zombie): a task killed
-		 * mid-sleep must not stay linked on the global callout list. */
-		{
-			extern struct spinLock schedulerSpinLock;
-			u_int64_t daif;
-			__asm__ volatile("mrs %0, daif; msr daifset, #2" : "=r"(daif) : : "memory");
-			spinLock(&schedulerSpinLock);
-			callout_stop(&_current->sleep_callout);
-			spinUnlock(&schedulerSpinLock);
-			__asm__ volatile("msr daif, %0" : : "r"(daif) : "memory");
-		}
-		_current->state = ZOMBIE;
+		/* ZOMBIE through the shared helper, as sys/kern/endtask.c does: under the
+		 * scheduler lock it takes the task off any run queue (a stale entry was
+		 * how an exited thread kept being re-dispatched) and disarms a pending
+		 * timed-sleep callout. */
+		sched_zombie(_current);
 	}
 }

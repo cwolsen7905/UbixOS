@@ -728,7 +728,6 @@ static kTask_t *wait_find_child(int want_pid, int options, int *wstatus)
 
 int sys_wait4(struct thread *td, struct sys_wait4_args *args)
 {
-#define SIG_PENDING_UNBLOCKED_W(td) ((td)->sig_pending & ~(td)->sigmask.__bits[0])
 	kTask_t *child;
 	int wstatus = 0;
 
@@ -786,13 +785,10 @@ int sys_wait4(struct thread *td, struct sys_wait4_args *args)
 	}
 
 	/*
-	 * Blocking wait: check → sleep → re-check → yield.
-	 *
-	 * The re-check immediately after sched_sleep handles a lost-wakeup
-	 * race: if the child went ZOMBIE between our "not ready" check and
-	 * sched_sleep, the ZOMBIE handler in sched() tried to wake us while
-	 * we were still RUNNING (no-op), then sched_sleep dequeued us.  The
-	 * re-check sees the now-DEAD/ZOMBIE child and avoids sleeping forever.
+	 * Blocking wait: scan for a finished child, else sleep in sched_wait_child()
+	 * until one exits/stops or a signal arrives.  Its predicate runs under the
+	 * scheduler lock (the same lock the ZOMBIE handler takes), so an exit that
+	 * lands between the scan and the sleep is not lost.
 	 */
 	for (;;)
 	{
@@ -800,31 +796,19 @@ int sys_wait4(struct thread *td, struct sys_wait4_args *args)
 		if (child != NULL)
 			break;
 
-		if (SIG_PENDING_UNBLOCKED_W(td))
+		if (signal_interrupts_wait(td))
 		{
 			td->td_retval[0] = -EINTR;
 			return (EINTR);
 		}
 
-		sched_sleep(_current, WAIT);
-
-		/* Re-check to catch lost-wakeup. */
-		child = wait_find_child(args->pid, args->options, &wstatus);
-		if (child != NULL)
-		{
-			sched_wakeup(_current);
-			break;
-		}
-
-		sched_yield();
-		sched_wakeup(_current);
+		sched_wait_child(); /* the predicate re-checks under the scheduler lock: no lost wakeup */
 	}
 
 	if (args->status)
 		*args->status = wstatus;
 	td->td_retval[0] = (int)child->id;
 	return (0);
-#undef SIG_PENDING_UNBLOCKED_W
 }
 
 int sys_sysarch(struct thread *td, struct sys_sysarch_args *args)

@@ -97,6 +97,39 @@ struct musl_ksigaction
 	((1u << (SIGTSTP - 1)) | /* 20 — Ctrl+Z */                                                                     \
 	 (1u << (SIGSTOP - 1)))  /* 19 — unconditional stop */
 
+/**
+ * signal_interrupts_wait - does a pending, unblocked signal end a blocking wait?
+ *
+ * Only a signal that will actually do something: one with a user handler, or
+ * whose default action terminates or stops the process.  A default-ignored
+ * signal (SIGCHLD, SIGWINCH, SIGURG) or an explicitly ignored one must not:
+ * every child exit posts SIGCHLD to the parent, so waitpid() returned EINTR
+ * instead of reaping the very child it was waiting for.
+ */
+int signal_interrupts_wait(struct thread *td)
+{
+	u_int32_t pend = td->sig_pending & ~td->sigmask.__bits[0];
+	int sig;
+
+	for (sig = 1; pend != 0 && sig <= 31; sig++)
+	{
+		u_int32_t bit = 1u << (sig - 1);
+		void (*h)(int);
+
+		if (!(pend & bit))
+			continue;
+		pend &= ~bit;
+		h = td->sigact[sig].sa_handler;
+		if (h == SIG_IGN)
+			continue;
+		if (h != SIG_DFL)
+			return (1);
+		if (bit & (SIGTERM_MASK | SIGSTOP_MASK))
+			return (1);
+	}
+	return (0);
+}
+
 /* Pending stop signals cleared by SIGCONT. */
 #define SIGPENDSTOP_MASK ((1u << (SIGTSTP - 1)) | (1u << (SIGSTOP - 1)) | (1u << (SIGTTIN - 1)) | (1u << (SIGTTOU - 1)))
 
@@ -992,6 +1025,14 @@ void signal_ast_check(void)
  *
  * FreeBSD slot 179; musl rt_sigsuspend also uses 179.
  */
+/* sigsuspend's wake predicate (runs under the scheduler lock). */
+static int sigsuspend_ready(void *arg)
+{
+	struct thread *td = (struct thread *)arg;
+
+	return ((td->sig_pending & ~td->sigmask.__bits[0]) != 0);
+}
+
 int sys_sigsuspend(struct thread *td, struct sys_sigsuspend_args *args)
 {
 	if (args->sigmask == NULL)
@@ -1013,9 +1054,14 @@ int sys_sigsuspend(struct thread *td, struct sys_sigsuspend_args *args)
 	memcpy(&td->sigmask, args->sigmask, MUSL_SIGSET_BYTES); /* musl's 8-byte set */
 	td->sigmask.__bits[0] &= ~(1u << (SIGKILL - 1));
 
-	/* Spin (yielding) until an unblocked signal arrives. */
+	/* Sleep until an unblocked signal arrives.  This was a sched_yield loop,
+	 * and job-control shells (tcsh) wait for their foreground job here — so a
+	 * shell waiting on a long build stayed runnable and competed with it for
+	 * the CPU.  A child's exit makes the parent READY (sched_common's ZOMBIE
+	 * handling), ending the sleep at once; other signals are noticed within the
+	 * 100 ms timeout. */
 	while ((td->sig_pending & ~td->sigmask.__bits[0]) == 0)
-		sched_yield();
+		sched_wait_event_timeout(&td->sig_pending, sigsuspend_ready, td, 10);
 
 	/*
 	 * Do NOT restore td->sigmask here.  We leave the pause mask installed so

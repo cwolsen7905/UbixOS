@@ -63,6 +63,7 @@
 #define SIG_PENDING_UNBLOCKED(td) ((td)->sig_pending & ~(td)->sigmask.__bits[0])
 
 static tty_term *terms = 0x0;
+static int tty_read_ready(void *arg); /* pty reader wake predicate (defined with tty_inject) */
 #if defined(__i386__)
 tty_term *tty_foreground = 0x0;
 #endif
@@ -296,7 +297,9 @@ static int tty_fo_read(struct file *fp, struct thread *td, void *vbuf, size_t nb
 			}
 			else
 			{
-				sched_yield();
+				/* Sleep until tty_inject (or a hang-up) wakes us; the 100 ms
+				 * timeout re-checks for a signal that arrives without a wakeup. */
+				sched_wait_event_timeout(&t->stdinSize, tty_read_ready, t, 10);
 			}
 		}
 		td->td_retval[0] = x;
@@ -1103,7 +1106,34 @@ tty_term *tty_find(u_int16_t tty)
  * PS/2 keyboard, COM1 serial, or future telnet socket.  Echo and editing
  * (backspace, Ctrl-U, newline coalescing) are applied here.
  */
+static void tty_inject_one(tty_term *tty, char ch);
+
+/*
+ * A reader waiting on a pty (tty_fo_read, FD_TYPE_TTYV) sleeps on &t->stdinSize
+ * until input, EOF, a hang-up or a signal; this is its predicate.  Runs under
+ * the scheduler lock, so it only reads fields.
+ */
+static int tty_read_ready(void *arg)
+{
+	tty_term *t = (tty_term *)arg;
+
+	return (t->stdinSize > 0 || t->t_eof || !t->t_inuse || SIG_PENDING_UNBLOCKED(&_current->td));
+}
+
+/**
+ * Feed one input byte through the line discipline, then wake any reader
+ * sleeping on this terminal.  (Readers used to spin in sched_yield: every idle
+ * shell burned CPU and starved real work — an on-device build sharing a core
+ * with two idle terminal shells ran at a crawl.)
+ */
 void tty_inject(tty_term *tty, char ch)
+{
+	tty_inject_one(tty, ch);
+	if (tty != NULL)
+		sched_wakeup_chan(&tty->stdinSize);
+}
+
+static void tty_inject_one(tty_term *tty, char ch)
 {
 	char echo_buf[2];
 	int i;
@@ -1394,6 +1424,7 @@ void pty_free(int slot)
 	 * outlive the terminal it was started in.  Must run before t_pgrp is cleared. */
 	signal_post_tty(&terms[slot], SIGHUP);
 	terms[slot].t_inuse = 0;
+	sched_wakeup_chan(&terms[slot].stdinSize); /* a reader sleeping on it sees the hang-up */
 	terms[slot].t_pgrp = 0;
 	terms[slot].owner = 0;
 }

@@ -13,6 +13,21 @@
 #include <sys/descrip.h>
 #include <ubixos/sched.h> /* sched_yield */
 
+/* The serial console has no RX interrupt wired: poll it, but sleep a couple of
+ * ticks between polls instead of sched_yield().  A yield loop kept the console
+ * shell permanently runnable, burning its CPU and starving real work sharing
+ * that core (an on-device build crawled).  20 ms is imperceptible for typing. */
+static int console_never(void *arg)
+{
+	(void)arg;
+	return (0);
+}
+static char g_console_nap_chan;
+static void console_nap(void)
+{
+	sched_wait_event_timeout(&g_console_nap_chan, console_never, 0, 2);
+}
+
 /**
  * Write @nbyte bytes to the console (COM1).  '\n' maps to CRLF (serial_putc
  * already does this, but the raw byte path here must too).
@@ -55,7 +70,7 @@ static int console_fo_read(struct file *fp, struct thread *td, void *buf, size_t
 		int c = serial_getc();
 		if (c < 0)
 		{
-			sched_yield();
+			console_nap();
 			continue;
 		}
 		if (c == '\r')
@@ -105,7 +120,7 @@ static int console_getchar_hook(void)
 {
 	int c;
 	while ((c = serial_getc()) < 0)
-		sched_yield();
+		console_nap();
 	return (c);
 }
 
