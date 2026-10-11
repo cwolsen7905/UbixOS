@@ -1,27 +1,53 @@
-# UbixOS clang-tidy configuration
-# Enforces naming conventions from STYLE.md.
-# Run via: tools/mcr.sh [file...]
+# uBixOS clang-tidy configuration.
 #
-# NOTE: naming checks are warnings only during migration — existing code
-# violates them intentionally. New code must be clean.
+# Naming rules come from STYLE.md; the bug/safety profile from
+# docs/standards/coding.md (SEI CERT C subset + bugprone + analyzer).
+#
+# Run via tools/mcr.sh [file...] or tools/check/run.sh clang-tidy.  The gate
+# applies findings on lines a change added only, so the legacy tree does not
+# block; naming checks stay warnings during migration.  Do not add `-Wno-*`
+# style suppressions here to quieten new code — fix the code.
+#
+# Rationale for the exclusions below:
+#   bugprone-easily-swappable-parameters  noise on every (ptr, len) API
+#   bugprone-reserved-identifier,
+#   cert-dcl37-c, cert-dcl51-cpp           kernel/libc must define __ names
+#   bugprone-assignment-in-if-condition    idiomatic style(9) (`if ((error = f()))`)
+#   cert-err33-c                           flags every ignored printf/memset result
+#   cert-msc32-c, cert-msc51-cpp           PRNG seeding: not a kernel concern
+#   clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling
+#                                          covered by the banned-api gate instead
+#   clang-analyzer-optin.performance.Padding  structs are ABI-fixed, not tuned
 
-# Broad but practical baseline: naming + bugprone checks + clang-analyzer
 Checks: >
   readability-identifier-naming,
-  readability-inconsistent-newlines,
+  readability-misleading-indentation,
   bugprone-*,
   -bugprone-easily-swappable-parameters,
+  -bugprone-reserved-identifier,
+  -bugprone-assignment-in-if-condition,
+  cert-*,
+  -cert-dcl37-c,
+  -cert-dcl51-cpp,
+  -cert-err33-c,
+  -cert-msc32-c,
+  -cert-msc51-cpp,
   clang-analyzer-*,
   -clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling,
+  -clang-analyzer-optin.performance.Padding,
   misc-redundant-expression,
   misc-use-internal-linkage,
+  misc-unused-parameters,
+  misc-static-assert,
   -clang-diagnostic-*
 
-# Keep warnings permissive by default; consider tightening for new code
+# Findings are surfaced as warnings; the gate decides what blocks (added lines).
 WarningsAsErrors: ''
 
-# Analyze headers as well so issues in included headers are reported
-HeaderFilterRegex: '.*'
+# First-party headers only, matched against the include path as written
+# (tools/check passes relative -Isys/include).  Keeps contrib/ and the host
+# SDK out of the report.
+HeaderFilterRegex: '^(sys|include|lib|bin|sbin|usr\.bin|usr\.sbin|libexec|tests)/'
 
 CheckOptions:
 
