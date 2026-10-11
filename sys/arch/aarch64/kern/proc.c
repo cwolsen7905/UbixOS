@@ -454,3 +454,33 @@ u_int32_t execThread(void (*tproc)(void), u_int32_t stack, char *arg, const char
 	sched_ready(t);
 	return (t->id);
 }
+
+/**
+ * Kernel return addresses of a switched-out task, innermost first (for
+ * /proc/<pid>/kstack).  The saved context (md_kstack) holds x29/x30 at slots
+ * 10/11; from there follow the frame-pointer chain, staying inside the task's
+ * kernel stack.  @return the number of addresses stored in @pcs.
+ */
+int md_task_kstack(kTask_t *t, uintptr_t *pcs, int max)
+{
+	u_int64_t *ctx = (u_int64_t *)(uintptr_t)t->md.md_kstack;
+	uintptr_t lo = (uintptr_t)t->kernelStack, hi = lo + KSTACK_SIZE;
+	uintptr_t fp;
+	int n = 0;
+
+	if (ctx == NULL || (uintptr_t)ctx < lo || (uintptr_t)ctx >= hi || max <= 0)
+		return (0);
+	pcs[n++] = (uintptr_t)ctx[LR_SLOT];
+	fp = (uintptr_t)ctx[LR_SLOT - 1];
+	while (n < max && fp >= lo && fp + 16 <= hi && (fp & 7) == 0)
+	{
+		uintptr_t *f = (uintptr_t *)fp;
+		if (f[1] == 0)
+			break;
+		pcs[n++] = f[1];
+		if (f[0] <= fp) /* frames grow up the stack; stop on a loop */
+			break;
+		fp = f[0];
+	}
+	return (n);
+}

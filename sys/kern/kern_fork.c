@@ -68,11 +68,7 @@ void fork_copy_fdtable(kTask_t *child, struct thread *ptd)
 		 * refcount so neither end is freed while the child still references it. */
 		if (parent_f->fd_type == FD_TYPE_PIPE && parent_f->data != 0x0)
 		{
-			struct pipeInfo *pi = (struct pipeInfo *)parent_f->data;
-			if (parent_f->pipe_end == PIPE_END_READ)
-				pi->rfdCNT++;
-			else if (parent_f->pipe_end == PIPE_END_WRITE)
-				pi->wfdCNT++;
+			pipe_ref_end((struct pipeInfo *)parent_f->data, parent_f->pipe_end);
 		}
 
 		/* lwIP sockets are a single global table; the child now aliases the

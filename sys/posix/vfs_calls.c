@@ -41,6 +41,7 @@
 #include <sys/pipe.h>
 #include <sys/errno.h>
 #include <sys/fcntl.h>
+#include <ubixos/spinlock.h> /* g_pipe_lock */
 #include <string.h>
 #include <fs/ufs/ufs.h>
 #include <lib/kprintf.h>
@@ -150,6 +151,68 @@ int sys_openat(struct thread *td, struct sys_openat_args *args)
 	return (kern_openat(td, args->fd, args->path, args->flag, (int)args->mode));
 }
 
+/*
+ * One lock for all pipe state.  Pipes were unlocked: with two CPUs, a writer
+ * appending (bmake's output) while the reader consumed (grep) let the buffer
+ * count and the buffer list disagree, and the reader dereferenced a NULL list
+ * head in the kernel (grep killed mid-build).  Critical sections are short and
+ * never sleep; spinLock is the kernel's yielding lock.
+ */
+static struct spinLock g_pipe_lock = SPIN_LOCK_INITIALIZER;
+
+/* EAGAIN as user programs see it.  The POSIX layer returns errno values straight
+ * to musl, which uses the Linux numbering (EAGAIN 11); <sys/errno.h> here is the
+ * FreeBSD set (EAGAIN 35, which musl reads as EDEADLK).  Most common errnos agree
+ * between the two; EAGAIN does not. */
+#define UBIX_USER_EAGAIN 11
+
+void pipe_ref_end(struct pipeInfo *pi, int end)
+{
+	spinLock(&g_pipe_lock);
+	if (end == PIPE_END_READ)
+		pi->rfdCNT++;
+	else if (end == PIPE_END_WRITE)
+		pi->wfdCNT++;
+	spinUnlock(&g_pipe_lock);
+}
+
+int pipe_release_end(struct pipeInfo *pi, int end)
+{
+	struct pipeBuf *pbuf = NULL;
+	int dead;
+
+	spinLock(&g_pipe_lock);
+	if (end == PIPE_END_READ)
+		pi->rfdCNT--;
+	else if (end == PIPE_END_WRITE)
+		pi->wfdCNT--;
+	dead = (pi->rfdCNT <= 0 && pi->wfdCNT <= 0);
+	if (dead)
+	{
+		pbuf = pi->headPB;
+		pi->headPB = pi->tailPB = NULL;
+	}
+	spinUnlock(&g_pipe_lock);
+
+	if (!dead)
+	{
+		/* Last writer gone: a reader sleeping on the pipe sees EOF now rather
+		 * than at its timeout. */
+		if (end == PIPE_END_WRITE)
+			sched_wakeup_chan(pi);
+		return (0);
+	}
+	while (pbuf != NULL)
+	{
+		struct pipeBuf *next = pbuf->next;
+		kfree(pbuf->buffer);
+		kfree(pbuf);
+		pbuf = next;
+	}
+	kfree(pi);
+	return (1);
+}
+
 int sys_close(struct thread *td, struct sys_close_args *args)
 {
 	struct file *fd = 0x0;
@@ -189,29 +252,17 @@ int sys_close(struct thread *td, struct sys_close_args *args)
 				break;
 			case 3:
 				p_fd = fd->data;
-				/* Use the pipe_end tag — fd numbers diverge from
-				 * pi->rFD/wFD after dup2/fork. */
-				if (fd->pipe_end == PIPE_END_READ)
-					p_fd->rfdCNT--;
-				else if (fd->pipe_end == PIPE_END_WRITE)
-					p_fd->wfdCNT--;
-
-				if (fdestroy(td, fd, args->fd) != 0)
 				{
-					klog(KLOG_ERR, "sys_close: fdestroy failed for pipe fd %d", args->fd);
-				}
+					/* Use the pipe_end tag — fd numbers diverge from
+					 * pi->rFD/wFD after dup2/fork. */
+					int end = fd->pipe_end;
 
-				if (p_fd->rfdCNT <= 0 && p_fd->wfdCNT <= 0)
-				{
-					struct pipeBuf *pbuf = p_fd->headPB;
-					while (pbuf != NULL)
+					if (fdestroy(td, fd, args->fd) != 0)
 					{
-						struct pipeBuf *next = pbuf->next;
-						kfree(pbuf->buffer);
-						kfree(pbuf);
-						pbuf = next;
+						klog(KLOG_ERR, "sys_close: fdestroy failed for pipe fd %d", args->fd);
 					}
-					kfree(p_fd);
+					if (p_fd != NULL)
+						pipe_release_end(p_fd, end);
 				}
 
 				td->td_retval[0] = 0;
@@ -272,10 +323,13 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 		p_fd = fd->data;
 		if (fd->f_flag & O_NONBLOCK)
 		{
-			/* Non-blocking: return 0 immediately if no data */
+			/* Non-blocking and empty: EAGAIN while a writer remains, 0 (EOF)
+			 * only once every writer is gone — as on FreeBSD.  Returning 0 for
+			 * "nothing yet" read as EOF: bmake -j's job-token pipe reported
+			 * "eof on job pipe!" and every sub-make quit. */
 			if (p_fd->bCNT == 0)
 			{
-				td->td_retval[0] = 0;
+				td->td_retval[0] = (p_fd->wfdCNT > 0) ? -UBIX_USER_EAGAIN : 0;
 				return (0);
 			}
 		}
@@ -308,6 +362,16 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 			}
 			p_fd->reader_pid = 0;
 		}
+		spinLock(&g_pipe_lock);
+		if (p_fd->headPB == NULL)
+		{
+			/* Raced with another reader of the same pipe (bmake -j: every
+			 * sub-make reads the shared token pipe): the data went to them.
+			 * Nothing to read yet, not EOF. */
+			spinUnlock(&g_pipe_lock);
+			td->td_retval[0] = -UBIX_USER_EAGAIN;
+			return (0);
+		}
 		{
 			/* Min of requested and what's available in the head buffer.
 			 * (size_t subtraction wraps when requested < available, so
@@ -325,9 +389,17 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 				{
 					p_fd->tailPB = NULL;
 				}
+				p_fd->bCNT--;
+			}
+			else
+			{
+				rp_fd = NULL;
+			}
+			spinUnlock(&g_pipe_lock);
+			if (rp_fd != NULL)
+			{
 				kfree(rp_fd->buffer);
 				kfree(rp_fd);
-				p_fd->bCNT--;
 			}
 
 			td->td_retval[0] = nbytes;
@@ -436,6 +508,7 @@ int sys_write(struct thread *td, struct sys_write_args *uap)
 
 		p_buf->nbytes = uap->nbyte;
 
+		spinLock(&g_pipe_lock);
 		if (p_fd->tailPB)
 		{
 			p_fd->tailPB->next = p_buf;
@@ -449,6 +522,7 @@ int sys_write(struct thread *td, struct sys_write_args *uap)
 		}
 
 		p_fd->bCNT++;
+		spinUnlock(&g_pipe_lock);
 
 		/* Wake the reader sleeping in sched_wait_event_timeout(p_fd, …) above, then
 		 * give it an I/O priority boost so it runs before CPU-bound tasks. */
@@ -571,7 +645,15 @@ int sys_getdirentries(struct thread *td, struct sys_getdirentries_args *args)
 
 	while (remaining > 0)
 	{
-		if (vfs_readdir((kDIR_t *)fd->data, &kent) != 0)
+		kDIR_t *kd = (kDIR_t *)fd->data;
+
+		/* An entry left over from the previous call (it did not fit) comes first. */
+		if (kd->has_pending)
+		{
+			kent = kd->pending;
+			kd->has_pending = 0;
+		}
+		else if (vfs_readdir(kd, &kent) != 0)
 		{
 			break;
 		}
@@ -594,6 +676,16 @@ int sys_getdirentries(struct thread *td, struct sys_getdirentries_args *args)
 
 		if (reclen > remaining)
 		{
+			/* Keep it for the next call.  It used to be dropped: every listing
+			 * bigger than one buffer silently lost the entry at the boundary
+			 * (bmake never saw tcsh's tc.func.c, so the in-OS build failed). */
+			kd->pending = kent;
+			kd->has_pending = 1;
+			if (total == 0)
+			{
+				td->td_retval[0] = -EINVAL; /* buffer too small for even one entry */
+				return (EINVAL);
+			}
 			break;
 		}
 

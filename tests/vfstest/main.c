@@ -12,6 +12,8 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <sys/mman.h>
+#include <dirent.h>
+#include <sys/stat.h>
 
 static int g_fail;
 
@@ -154,6 +156,46 @@ int main(void)
 			snprintf(buf, sizeof(buf), "MAP_SHARED write-back on %s", how[k]);
 			check(buf, memcmp(got, "mapped!", 7) == 0);
 		}
+	}
+
+	/* readdir returns every entry of a directory bigger than one getdents
+	 * buffer (an entry at the buffer boundary used to be dropped). */
+	{
+		DIR *dp;
+		struct dirent *de;
+		int i, seen = 0;
+		char path[64];
+
+		mkdir("/tmp/vfstest.dir", 0755);
+		for (i = 0; i < 300; i++)
+		{
+			snprintf(path, sizeof(path), "/tmp/vfstest.dir/entry-with-a-longish-name-%03d.c", i);
+			fd = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			if (fd >= 0)
+				close(fd);
+		}
+		dp = opendir("/tmp/vfstest.dir");
+		while (dp != NULL && (de = readdir(dp)) != NULL)
+			if (de->d_name[0] != '.')
+				seen++;
+		if (dp != NULL)
+			closedir(dp);
+		printf("  readdir saw %d of 300\n", seen);
+		check("readdir returns every entry of a large directory", seen == 300);
+	}
+
+	/* An unlinked file stays usable through an open fd until the last close
+	 * (mkstemp + unlink: bmake -j job scripts, compiler temporaries). */
+	{
+		int u = open("/tmp/vfstest.unl", O_RDWR | O_CREAT | O_TRUNC, 0644);
+		check("open scratch file", u >= 0);
+		check("unlink while open", unlink("/tmp/vfstest.unl") == 0);
+		check("gone from the directory", access("/tmp/vfstest.unl", F_OK) != 0);
+		check("write after unlink", write(u, "still here", 10) == 10);
+		lseek(u, 0, SEEK_SET);
+		memset(buf, 0, sizeof(buf));
+		check("read after unlink", read(u, buf, 10) == 10 && strcmp(buf, "still here") == 0);
+		close(u);
 	}
 
 	printf("vfstest: %s\n", g_fail ? "FAILED" : "all passed");

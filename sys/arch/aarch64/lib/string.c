@@ -18,12 +18,37 @@
  * in this arch file (whose basename would otherwise collide with sys/lib's). */
 char const hex2ascii_data[] = "0123456789abcdefghijklmnopqrstuvwxyz";
 
+
+/*
+ * Word-at-a-time memset/memcpy.  These were byte loops, and the kernel clears
+ * and copies a lot of memory (every new process page, every exec of a 100 MB
+ * clang, every pipe buffer) — an 8x cut in loop iterations.  Plain C: the kernel
+ * is built -ffreestanding -fno-builtin, so the compiler cannot turn these loops
+ * back into calls to themselves.  Unaligned heads/tails go a byte at a time.
+ */
+
 /**
  * Fill @n bytes at @dst with byte @c.
  */
 void *memset(void *dst, int c, size_t n)
 {
 	u_int8_t *p = (u_int8_t *)dst;
+	u_int64_t w = (u_int8_t)c;
+
+	while (n > 0 && ((uintptr_t)p & 7) != 0)
+	{
+		*p++ = (u_int8_t)c;
+		n--;
+	}
+	w |= w << 8;
+	w |= w << 16;
+	w |= w << 32;
+	while (n >= 8)
+	{
+		*(u_int64_t *)p = w;
+		p += 8;
+		n -= 8;
+	}
 	while (n-- > 0)
 		*p++ = (u_int8_t)c;
 	return dst;
@@ -36,6 +61,23 @@ void *memcpy(void *dst, const void *src, size_t n)
 {
 	u_int8_t *d = (u_int8_t *)dst;
 	const u_int8_t *s = (const u_int8_t *)src;
+
+	/* Word copies only when both pointers can be 8-aligned together. */
+	if ((((uintptr_t)d ^ (uintptr_t)s) & 7) == 0)
+	{
+		while (n > 0 && ((uintptr_t)d & 7) != 0)
+		{
+			*d++ = *s++;
+			n--;
+		}
+		while (n >= 8)
+		{
+			*(u_int64_t *)d = *(const u_int64_t *)s;
+			d += 8;
+			s += 8;
+			n -= 8;
+		}
+	}
 	while (n-- > 0)
 		*d++ = *s++;
 	return dst;

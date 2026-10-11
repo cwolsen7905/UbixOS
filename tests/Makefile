@@ -25,6 +25,11 @@ SUBDIRS += clonetest tlstest futextest pthreadtest condtest detachtest vmtest \
            nsfbtest rndtest pwtest ssltest hello
 .endif
 
+# The per-directory targets below are defined before "all"; keep "all" the
+# default so a bare `bmake` builds every subdirectory (on-device it built only
+# the first one — the host world always names "all" explicitly).
+.MAIN: all
+
 .PHONY: all clean ${SUBDIRS}
 
 .for _dir in ${SUBDIRS}

@@ -989,23 +989,16 @@ int aarch64_wait4(int want_pid, int *status, int options)
 		if (options & WAIT4_WNOHANG)
 			return (0);
 
-		/* Block until a child exits.  Re-check after sleeping (the reaper may
-		 * have flagged the child between our scan and the sleep). */
-		sched_sleep(_current, WAIT);
-		child = find_and_reap_child(want_pid, &have_child);
-		if (child != NULL)
-		{
-			sched_wakeup(_current);
-			/* Guard against pidStatus(pid) (ubix_api), which shares SVC #7 with
-			 * wait4 but passes only x0 — x1 (status) is garbage; only write a
-			 * pointer that is in the user VA range. */
-			if (status != NULL && (uintptr_t)status >= 0x100000000UL)
-				*status = child->exit_signal ? (int)(child->exit_signal & 0x7f)       /* W_SIGNALED */
-				                             : (int)((child->exit_code & 0xff) << 8); /* W_EXITED */
-			return ((int)child->id);
-		}
-		sched_yield();
-		sched_wakeup(_current);
+		/* No finished child: a signal that will act (handler or a terminating
+		 * default) ends the wait with EINTR.  Checked only AFTER the scan, so a
+		 * child that already exited is always reaped first, as on Unix. */
+		if (signal_interrupts_wait(&_current->td))
+			return (-EINTR);
+
+		/* Sleep until a child exits/stops or such a signal arrives (the
+		 * predicate re-checks under the scheduler lock: no lost wakeup), then
+		 * re-scan. */
+		sched_wait_child();
 	}
 }
 

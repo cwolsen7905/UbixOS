@@ -144,6 +144,16 @@ void sched_resume_unlock(void)
  *                 With preheld=1 the caller owns IRQ state, so this never restores
  *                 flags; with preheld=0 behaviour is byte-for-byte the old sched().
  */
+/*
+ * Per-CPU counts of how each sched_common() call ended, shown in /proc/sched:
+ * 0 lock busy (trylock bail), 1 realtime current keeps the CPU, 2 slice left,
+ * 3 nothing runnable, 4 picked task still saving on another CPU (requeued) or
+ * already exited (dropped),
+ * 5 switched.  Cheap, and the first thing to look at when a READY task never runs.
+ */
+volatile u_int32_t g_sched_stat[SCHED_MAX_CPUS][6];
+#define SCHED_STAT(k) (g_sched_stat[curcpu()->cpuid][(k)]++)
+
 static void sched_common(int preheld)
 {
 	kTask_t *prev = 0x0;
@@ -194,6 +204,7 @@ static void sched_common(int preheld)
 		if (spinTryLock(&schedulerSpinLock))
 		{
 			restore_flags(flags);
+			SCHED_STAT(0);
 			return;
 		}
 	}
@@ -284,7 +295,17 @@ static void sched_common(int preheld)
 				if (delTask->parent->state != DEAD && delTask->parent->state != ZOMBIE)
 				{
 					delTask->parent->td.sig_pending |= (1u << (SIGCHLD - 1));
-					if (delTask->parent->state != READY)
+					/* Wake the parent only if it is asleep.  This used to make ANY
+					 * non-READY parent READY and enqueue it — including one that was
+					 * RUNNING on another CPU.  A multi-threaded program (ld.lld) whose
+					 * worker exited just before the main thread then had its main
+					 * thread on a run queue while it ran; when it exited, the
+					 * dispatcher picked the queued zombie, marked it RUNNING and
+					 * returned it to its exit loop, forever — and its parent (clang,
+					 * then bmake) waited forever.  A running parent sees the SIGCHLD
+					 * and the exited child on its next wait. */
+					if (delTask->parent->state == WAIT || delTask->parent->state == INTERRUPTIBLE ||
+					    delTask->parent->state == UNINTERRUPTIBLE)
 					{
 						delTask->parent->state = READY;
 						rq_enqueue_locked(delTask->parent);
@@ -356,6 +377,7 @@ static void sched_common(int preheld)
 			spinUnlock(&schedulerSpinLock);
 			if (!preheld)
 				restore_flags(flags);
+			SCHED_STAT(1);
 			return;
 		}
 
@@ -367,6 +389,7 @@ static void sched_common(int preheld)
 			spinUnlock(&schedulerSpinLock);
 			if (!preheld)
 				restore_flags(flags);
+			SCHED_STAT(2);
 			return;
 		}
 
@@ -409,6 +432,7 @@ static void sched_common(int preheld)
 			spinUnlock(&schedulerSpinLock);
 			if (!preheld)
 				restore_flags(flags);
+			SCHED_STAT(3);
 			return;
 		}
 	}
@@ -421,6 +445,18 @@ static void sched_common(int preheld)
 		/* Dequeue (removes next and rotates head to next->rq_next). */
 		rq_dequeue_locked(next);
 
+		/* Never run a task that has exited: a stale queue entry for a ZOMBIE/DEAD
+		 * task would resurrect it as RUNNING.  Drop the entry and sit this pass
+		 * out (the next pass picks the real next task). */
+		if (next->state == ZOMBIE || next->state == DEAD)
+		{
+			SCHED_STAT(4);
+			spinUnlock(&schedulerSpinLock);
+			if (!preheld)
+				restore_flags(flags);
+			return;
+		}
+
 		/* Defence in depth: never load a context whose save is still in flight
 		 * on another CPU (a migrated task caught mid-switch).  Put it back and
 		 * sit this tick out — its on_cpu clears within microseconds. */
@@ -431,6 +467,7 @@ static void sched_common(int preheld)
 			spinUnlock(&schedulerSpinLock);
 			if (!preheld)
 				restore_flags(flags);
+			SCHED_STAT(4);
 			return;
 		}
 	}
@@ -488,6 +525,7 @@ static void sched_common(int preheld)
 	 * on_cpu via sched_resume_unlock.
 	 */
 	spinUnlock(&schedulerSpinLock);
+	SCHED_STAT(5);
 	if (prev != _current)
 		switch_to(prev, _current);
 #else

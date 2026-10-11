@@ -14,6 +14,21 @@
 #include <ubixos/tty.h>    /* tty_term, tty_find, tty_inject, TTY_TYPE_SERIAL */
 #include <ubixos/errno.h>  /* EINTR */
 
+/* The serial console has no RX interrupt wired: poll it, but sleep a couple of
+ * ticks between polls instead of sched_yield().  A yield loop kept the console
+ * shell permanently runnable, burning its CPU and starving real work sharing
+ * that core (an on-device build crawled).  20 ms is imperceptible for typing. */
+static int console_never(void *arg)
+{
+	(void)arg;
+	return (0);
+}
+static char g_console_nap_chan;
+static void console_nap(void)
+{
+	sched_wait_event_timeout(&g_console_nap_chan, console_never, 0, 2);
+}
+
 /* A signal is pending + not masked → a blocking read should return EINTR. */
 #define SIG_PENDING_UNBLOCKED(td) ((td)->sig_pending & ~(td)->sigmask.__bits[0])
 
@@ -74,7 +89,7 @@ static int console_fo_read(struct file *fp, struct thread *td, void *buf, size_t
 			int c = uart_getc();
 			if (c < 0)
 			{
-				sched_yield();
+				console_nap();
 				continue;
 			}
 			if (c == '\r')
@@ -127,7 +142,7 @@ static int console_fo_read(struct file *fp, struct thread *td, void *buf, size_t
 				td->td_retval[0] = -EINTR;
 				return (EINTR);
 			}
-			sched_yield();
+			console_nap();
 		}
 	}
 	td->td_retval[0] = x;
@@ -156,7 +171,7 @@ static int console_getchar_hook(void)
 {
 	int c;
 	while ((c = uart_getc()) < 0)
-		sched_yield();
+		console_nap();
 	return (c);
 }
 

@@ -32,6 +32,11 @@ SUBDIRS = init login shell cp ls cat echo ln date mkdir mv rm sleep pwd expr ed 
 SUBDIRS = init login shell cp ls cat ed tcsh
 .endif
 
+# The per-directory targets below are defined before "all"; keep "all" the
+# default so a bare `bmake` builds every subdirectory (on-device it built only
+# the first one — the host world always names "all" explicitly).
+.MAIN: all
+
 .PHONY: all clean ${SUBDIRS}
 
 .for _dir in ${SUBDIRS}

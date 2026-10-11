@@ -107,6 +107,92 @@ struct ubfs_file
 	uint64_t obj;
 };
 
+/*
+ * Open-object table: how many handles each object has, and whether its last
+ * name was unlinked while open.  POSIX keeps an unlinked file usable until its
+ * last close (mkstemp + unlink scratch files: bmake -j job scripts, compiler
+ * temporaries); UbixFS used to free it at unlink, so writes through the still-
+ * open fd failed and bmake retried forever.  Guarded by the UbixFS lock, like
+ * every entry point here.
+ */
+struct ubfs_openobj
+{
+	struct ubfs_mount *m;
+	uint64_t obj;
+	int count;
+	int orphan; /* unlinked while open: free on last close */
+	struct ubfs_openobj *next;
+};
+static struct ubfs_openobj *g_openobjs;
+static int ubfs_commit(struct ubfs_mount *m); /* below: sync the txg */
+
+static struct ubfs_openobj *openobj_find(struct ubfs_mount *m, uint64_t obj)
+{
+	struct ubfs_openobj *o;
+
+	for (o = g_openobjs; o != NULL; o = o->next)
+		if (o->m == m && o->obj == obj)
+			return (o);
+	return (NULL);
+}
+
+static void openobj_ref(struct ubfs_mount *m, uint64_t obj)
+{
+	struct ubfs_openobj *o = openobj_find(m, obj);
+
+	if (o == NULL)
+	{
+		o = (struct ubfs_openobj *)kmalloc(sizeof(*o));
+		if (o == NULL)
+			return; /* untracked: an unlink then frees it at once, as before */
+		o->m = m;
+		o->obj = obj;
+		o->count = 0;
+		o->orphan = 0;
+		o->next = g_openobjs;
+		g_openobjs = o;
+	}
+	o->count++;
+}
+
+/* Drop one handle; on the last one free an orphaned object. */
+static void openobj_unref(struct ubfs_mount *m, uint64_t obj)
+{
+	struct ubfs_openobj **pp, *o;
+
+	for (pp = &g_openobjs; (o = *pp) != NULL; pp = &o->next)
+	{
+		if (o->m != m || o->obj != obj)
+			continue;
+		if (--o->count > 0)
+			return;
+		*pp = o->next;
+		if (o->orphan && m->writable)
+		{
+			ubfs_fs_free_object(&m->fs, obj);
+			ubfs_commit(m);
+		}
+		kfree(o);
+		return;
+	}
+}
+
+/* Unlink @path: drop the name now, and free the object now or at last close. */
+static int ubfs_unlink_path(struct ubfs_mount *m, const char *path)
+{
+	uint64_t obj;
+	struct ubfs_openobj *o;
+
+	if (ubfs_fs_unlink_entry(&m->fs, path, &obj) < 0)
+		return (-1);
+	o = openobj_find(m, obj);
+	if (o != NULL && o->count > 0)
+		o->orphan = 1;
+	else
+		ubfs_fs_free_object(&m->fs, obj);
+	return (0);
+}
+
 /* Per-opendir streaming cursor, stored in kDIR_t::dirHandle.
  *
  * readdir STREAMS the on-disk directory one slot per call instead of
@@ -522,7 +608,7 @@ static int ubfs_vfs_open_locked(const char *path, fileDescriptor_t *fd)
 	{
 		/* Exists + "w" (truncate): the core has no truncate primitive, so drop
 		 * and recreate — matches how the host `ubfs cp` overwrites. */
-		ubfs_fs_unlink(&m->fs, path);
+		ubfs_unlink_path(m, path); /* an open copy keeps the old contents */
 		if (ubfs_fs_create(&m->fs, path, 0644, 0, 0, &obj) < 0)
 			return (0);
 		ubfs_commit(m);
@@ -537,6 +623,7 @@ static int ubfs_vfs_open_locked(const char *path, fileDescriptor_t *fd)
 		return (0);
 	f->m = m;
 	f->obj = obj;
+	openobj_ref(m, obj);
 
 	fd->res = f;
 	fd->ino = (u_int32_t)obj;
@@ -655,7 +742,11 @@ static int ubfs_vfs_write(fileDescriptor_t *fd, char *data, off_t offset, long s
 static int ubfs_vfs_close_locked(void *res)
 {
 	if (res != 0)
+	{
+		struct ubfs_file *f = (struct ubfs_file *)res;
+		openobj_unref(f->m, f->obj); /* frees an unlinked file on last close */
 		kfree(res);
+	}
 	return (0);
 }
 
@@ -865,7 +956,7 @@ static int ubfs_vfs_unlink_locked(char *path, void *vmp)
 	if (!m->writable)
 		return (-1);
 
-	if (ubfs_fs_unlink(&m->fs, pool_relative(mp, path)) < 0)
+	if (ubfs_unlink_path(m, pool_relative(mp, path)) < 0)
 		return (-1);
 	return (ubfs_commit(m));
 }

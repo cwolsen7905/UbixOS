@@ -198,20 +198,20 @@ int strncmp(const char *a, const char *b, unsigned long n)
 
 /* --- freestanding mem ops (the compiler emits calls to these) ----------------- */
 
+/* rep stosb / rep movsb: on every x86-64 CPU since Ivy Bridge (ERMSB) these are
+ * the fastest general-purpose fill/copy, and they are a single instruction —
+ * nothing for the compiler to turn back into a call.  These were byte loops. */
 void *memset(void *dst, int c, unsigned long n)
 {
-	unsigned char *p = (unsigned char *)dst;
-	while (n-- != 0)
-		*p++ = (unsigned char)c;
+	void *d = dst;
+	__asm__ __volatile__("rep stosb" : "+D"(d), "+c"(n) : "a"(c) : "memory");
 	return dst;
 }
 
 void *memcpy(void *dst, const void *src, unsigned long n)
 {
-	unsigned char *d = (unsigned char *)dst;
-	const unsigned char *s = (const unsigned char *)src;
-	while (n-- != 0)
-		*d++ = *s++;
+	void *d = dst;
+	__asm__ __volatile__("rep movsb" : "+D"(d), "+S"(src), "+c"(n) : : "memory");
 	return dst;
 }
 

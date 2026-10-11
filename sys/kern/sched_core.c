@@ -942,6 +942,35 @@ void sched_reparent_children(kTask_t *dying)
 	restore_flags(flags);
 }
 
+/* sched_wait_child predicate (under schedulerSpinLock): a child of @arg has
+ * exited or stopped, or a signal is pending for it. */
+static int wait_child_ready(void *arg)
+{
+	kTask_t *self = (kTask_t *)arg, *t;
+
+	if (signal_interrupts_wait(&self->td))
+		return (1);
+	for (t = taskList; t != NULL; t = t->next)
+		if (t->parent == self && (t->state == ZOMBIE || t->state == DEAD || (t->state == STOPPED && t->t_stopped_sig)))
+			return (1);
+	return (0);
+}
+
+/**
+ * Sleep until a child of the calling task exits or stops, a signal arrives, or
+ * 100 ms pass (the caller re-scans either way).  wait4 used to sched_sleep +
+ * sched_yield + sched_wakeup itself: when the yield bailed on a contended
+ * scheduler lock the parent spun runnable — a shell waiting on a long build
+ * competed with the build for the CPU.  The exit path (sched_common's ZOMBIE
+ * handling) makes the parent READY, which ends this sleep early.
+ */
+void sched_wait_child(void)
+{
+	if (_current == NULL)
+		return;
+	(void)sched_wait_event_timeout(&_current->children, wait_child_ready, _current, 10);
+}
+
 void sched_zombie(kTask_t *t)
 {
 	u_int32_t flags;

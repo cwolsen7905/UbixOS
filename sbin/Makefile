@@ -4,6 +4,11 @@
 # utilities live here (fdisk, disklabel, mount, the ubixfs pool tools, …).  Add a
 # directory name to SUBDIRS to include it in the build and clean targets.
 SUBDIRS = fdisk disklabel format mount ubpool ubfs ubdisk ping reboot
+# The per-directory targets below are defined before "all"; keep "all" the
+# default so a bare `bmake` builds every subdirectory (on-device it built only
+# the first one — the host world always names "all" explicitly).
+.MAIN: all
+
 .PHONY: all clean ${SUBDIRS}
 
 .for _dir in ${SUBDIRS}
