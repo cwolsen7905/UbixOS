@@ -4,31 +4,40 @@
 
 ## Code Style
 
-See **[STYLE.md](STYLE.md)** — it is the single source of truth for
-formatting, naming conventions, and incremental migration rules.
-Tools (`.clang-format`, `.clang-tidy`, `tools/mcr.sh`) derive from it.
+The engineering rules live in **[docs/standards/](docs/standards/README.md)**:
+language rules (`coding.md`), kernel rules (`kernel-rules.md`), the ABI and
+syscall rules (`abi-and-syscalls.md`), architecture parity (`arch-parity.md`),
+the review checklist and the definition of done. **[STYLE.md](STYLE.md)** is
+the source of truth for naming, header guards and formatting. Tools
+(`.clang-format`, `.clang-tidy`, `tools/check/`) derive from them.
 
 Quick reference:
 
 ```sh
 clang-format -i sys/vmm/paging.c   # reformat one file in place
-tools/mcr.sh                        # lint changed files vs HEAD
-tools/mcr.sh --fix                  # auto-apply clang-format fixes
+tools/check/run.sh                 # run the gates on files changed vs master
+tools/mcr.sh --fix                 # apply clang-format to changed files, then gate
+tools/check/run.sh --list          # every gate and its tier
 ```
 
 ---
 
 ## Build and Test
 
-Before pushing, verify the full build passes:
+Before pushing, verify **both** 64-bit architectures build and boot, and the
+gates pass (see [definition-of-done.md](docs/standards/definition-of-done.md)):
 
 ```sh
-bmake clean && bmake && bmake image
-bmake run   # boot to login prompt in QEMU, confirm no panic in serial.log
+tools/check/run.sh --tier ci          # fast gates + header/warnings/tidy/cppcheck
+tools/buildlock.sh with "<who>" bmake kernel world image TARGET=aarch64
+tools/buildlock.sh with "<who>" bmake kernel world TARGET=x86_64
+bmake run-debug-aarch64               # boot to login, confirm no panic on serial
+bmake run-debug-x86_64 TARGET=x86_64
 ```
 
-For kernel-only changes: `bmake kernel && bmake kernel-to-image && bmake run`.  
-For world-only changes: `bmake world && bmake install-world && bmake run`.
+Kernel-only changes: `bmake kernel TARGET=<arch>` then `bmake kernel-to-image`.
+`bmake image` is preferred over `install-world` (the latter rsyncs the source
+tree and is slow). i386 is frozen on `releng/2`; do not build or fix it here.
 
 ---
 
@@ -42,6 +51,9 @@ subsystem: short one-line summary (≤72 chars)
 Optional body explaining *why*, not *what* — the diff explains what.
 Reference files and line numbers for non-obvious changes.
 ```
+
+No `Co-authored-by:` or tool-attribution trailers. For a bug fix, say how it was
+reproduced and on which architectures it was verified.
 
 Examples:
 ```
@@ -69,7 +81,8 @@ in sync.
 | New third-party component in `contrib/` | `ARCHITECTURE.md` — add to Third-Party Components |
 | VMM internals changed | `docs/architecture/vmm.md` |
 | Scheduler or task-switch changed | `docs/architecture/task-switching.md` |
-| Page directory layout changed | `docs/architecture/i386-page-directory-map.md` |
+| Page-table / address-space layout changed | `docs/architecture/vmm.md` (and the arch's section; `i386-page-directory-map.md` is legacy i386) |
+| Engineering rule added or changed | `docs/standards/*` and, if automatable, a gate in `tools/check/` + its self-test |
 | Version bump | `sys/include/ubixos/version.h` + `CHANGELOG.md` (see checklist below) |
 | Build system change | `BUILDING.md` |
 | New debug define added | `DEBUG.md` — add to the defines table |
@@ -103,8 +116,10 @@ by the code, update the doc.
 
 ## Pull Request Checklist
 
-- [ ] `bmake clean && bmake && bmake image` succeeds
-- [ ] Boots to login prompt in QEMU with no panic in `serial.log`
+- [ ] `bmake kernel world` succeeds for **both** `TARGET=aarch64` and `TARGET=x86_64`
+- [ ] Both boot to the login prompt in QEMU with no panic on the serial console
+- [ ] `tools/check/run.sh` passes (no new findings; baselines not raised)
+- [ ] `docs/standards/review-checklist.md` walked, deviations explained in the PR
 - [ ] Relevant documentation updated in the same commit (see table above)
 - [ ] `CHANGELOG.md` [Unreleased] section updated
 - [ ] `clang-format` applied to all touched files (`tools/mcr.sh --fix`)
@@ -115,12 +130,22 @@ by the code, update the doc.
 
 ## Adding a New Syscall
 
-1. Pick the table: POSIX (`int 0x80`, `syscalls_posix.c`) or native (`int 0x81`, `syscalls.c`). POSIX numbers follow the FreeBSD i386 ABI.
+The full rules are in [docs/standards/abi-and-syscalls.md](docs/standards/abi-and-syscalls.md).
+In short:
+
+1. Pick the table: the FreeBSD-numbered POSIX table (`sys/posix/syscalls_posix.c`)
+   only for calls FreeBSD defines, at FreeBSD's number; everything else goes in
+   the native table (`sys/kern/syscalls.c`), append-only.
 2. Add an `args` struct to `sys/include/sys/sysproto_posix.h` or `sys/include/sys/sysproto.h`.
-3. Implement the handler (usually in `sys/kernel/gen_calls.c` or a subsystem file).
-4. Register it in the table — replace `SYSCALL_NOTIMP` at the chosen slot with `{ ARG_COUNT(...), "name", (sys_call_t *)handler, SYSCALL_VALID }`.
-5. Add a userland wrapper in `lib/libc/sys/` using the inline-asm `int $0x80`/`int $0x81` pattern.
-6. Update `SYSCALLS.md` with a new row in the correct table.
+3. Implement a machine-independent handler in a subsystem file (e.g.
+   `sys/posix/`), validating and copying every user pointer; return negative errno.
+4. Register it — replace the `SYSCALL_NOTIMP`/invalid slot with
+   `{ ARG_COUNT(...), "name", (sys_call_t *)handler, SYSCALL_VALID }`.
+5. Add a userland wrapper (`lib/libc/sys/` or `lib/ubix_api/`) and confirm the
+   number matches. Do not add per-arch pre-dispatch `case`s.
+6. Test on aarch64 **and** x86_64 (success, error and bad-pointer paths);
+   `tools/check/run.sh syscall-table` must stay clean.
+7. Update `CHANGELOG.md` `[Unreleased]` (and the syscall reference).
 
 ---
 
@@ -130,8 +155,9 @@ See [docs/drivers/writing-a-driver.md](docs/drivers/writing-a-driver.md) for
 the full guide. After adding:
 
 - Add the file and device to the appropriate table in `ARCHITECTURE.md`.
-- Register the driver's init function in the `kmain` subsystem init sequence
-  (`sys/init/main.c`) and add it to the boot sequence list in `ARCHITECTURE.md`.
+- Register the driver through the device model as described in the guide
+  (do not hard-code addresses; discover via PCI/DTB/ACPI), and make sure it is
+  built for **every arch that has the bus** — aarch64 and x86_64 differ here.
 
 ---
 
@@ -143,8 +169,9 @@ the corresponding source, you own the doc update:
 | Doc file | Owned by |
 |----------|----------|
 | `docs/architecture/vmm.md` | `sys/vmm/` changes |
-| `docs/architecture/task-switching.md` | `sys/arch/i386/sched.c`, `fork.c`, `timer.S` changes |
-| `docs/architecture/i386-page-directory-map.md` | `sys/vmm/` layout changes |
+| `docs/architecture/task-switching.md` | `sys/arch/*/kern` context-switch, `fork`, scheduler changes |
+| `docs/architecture/i386-page-directory-map.md` | legacy i386 only (frozen on `releng/2`) |
+| `docs/standards/*` | engineering rules; changes need the person's approval |
 | `docs/design/fbcon.md` | framebuffer console implementation |
 | `docs/drivers/writing-a-driver.md` | `sys/include/sys/device.h` API changes |
 | `docs/reference/external-specs.md` | new external specifications added |

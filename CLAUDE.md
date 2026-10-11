@@ -1,339 +1,236 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+Guidance for Claude Code (and any other AI agent or human) working in this
+repository. This file is an **index**: facts about the system live here in
+brief; the *rules* live in [`docs/standards/`](docs/standards/README.md) and
+are enforced by `tools/check/`. Read the standards that touch your task before
+you edit.
 
 ## What This Is
 
-uBixOS is a hobby/research operating system written in C and C++ (plus assembly), developed since 2002. It began as an x86 (i386) OS — booting via GRUB2/multiboot on bare metal or QEMU with a FAT32 root — and is now **64-bit-only on master**: **AArch64 (arm64)** is the **default and primary forward target** (heading for Raspberry Pi / Orange Pi), with **x86_64** as the second supported architecture. **32-bit i386 is frozen**: as of 2026-06-20 it is no longer maintained on master and lives on only for compatibility in the **`releng/2`** branch (the last 2.x line).
+uBixOS is a hobby/research operating system in C, C++ and assembly, developed
+since 2002. **master is 64-bit only: AArch64 (arm64) is the default and primary
+forward target (QEMU `virt`, heading for Raspberry Pi / Orange Pi); x86_64 is
+the second supported architecture and the abstraction anchor** — the diverse
+reference that keeps the machine-independent / machine-dependent split honest.
+**32-bit i386 is frozen**: it is not maintained on master and lives only in
+the **`releng/2`** branch (fixes go there; do not spend effort keeping i386
+green here).
 
-**Product identity — read before making any architecture decision:** uBixOS is *console-first, graphical-optional, one tree, profile-driven, MMU-class only*. The kernel and base system are display-agnostic; the graphical stack (`views` compositor + `objGFX`) is a userland *layer*, not the foundation. "IoT" and "desktop" are the same MMU-class hardware running different userland profiles; MCU-class (no-MMU) and locked phone hardware are out of scope. See **`docs/design/console-and-arch-convergence-plan.md`** for the full identity + the current console/arch-convergence plan, and `docs/design/cross-arch-plan.md` for the arm64 roadmap.
+**Product identity:** *console-first, graphical-optional, one tree,
+profile-driven, MMU-class only.* The kernel and base system are
+display-agnostic; the graphical stack (`views` compositor + `objGFX`) is a
+userland layer, not the foundation. MCU-class (no-MMU) and locked phone
+hardware are out of scope. See `docs/design/console-and-arch-convergence-plan.md`
+and `docs/design/cross-arch-plan.md`.
 
-**Always build and keep BOTH 64-bit architectures green** — never break x86_64 while advancing aarch64 (or vice versa). **aarch64 is the default/primary target; x86_64 is the abstraction anchor** (the reference that keeps the MI/MD split honest — the role i386 used to play, now that PC-style x86_64 and virtio aarch64 are the two diverse arches). Build each with `bmake kernel world TARGET=aarch64` and `bmake kernel world TARGET=x86_64`. **i386 is frozen on `releng/2` and is NOT maintained on master** — do not spend effort keeping i386 green here, and do not let i386 constraints block 64-bit work. (32-bit fixes go to `releng/2`.)
+## The Rules (read these)
+
+| Topic | Document |
+|-------|----------|
+| Index, precedence, legacy/ratchet policy | [docs/standards/README.md](docs/standards/README.md) |
+| C/C++/asm language rules, banned APIs, errors, docs | [docs/standards/coding.md](docs/standards/coding.md) |
+| Kernel rules: locking, allocation, user pointers, stacks, MMIO, no FP | [docs/standards/kernel-rules.md](docs/standards/kernel-rules.md) |
+| Native ABI + FreeBSD-compatible POSIX layer; adding a syscall | [docs/standards/abi-and-syscalls.md](docs/standards/abi-and-syscalls.md) |
+| aarch64 + x86_64 parity; MI/MD split | [docs/standards/arch-parity.md](docs/standards/arch-parity.md) |
+| Review checklist | [docs/standards/review-checklist.md](docs/standards/review-checklist.md) |
+| Definition of done | [docs/standards/definition-of-done.md](docs/standards/definition-of-done.md) |
+| Naming, headers, formatting detail | [STYLE.md](STYLE.md) |
+| Contribution workflow, doc-sync table | [CONTRIBUTING.md](CONTRIBUTING.md) |
+| Source tree + subsystem architecture | [ARCHITECTURE.md](ARCHITECTURE.md), `docs/architecture/` |
+
+**Non-negotiables (details in the documents above):**
+
+1. Keep **both** 64-bit arches green: build and boot aarch64 *and* x86_64
+   before calling anything done. An arch-specific fix is checked on the other
+   arch (P-1, P-4).
+2. Every user pointer/length is untrusted: validate and copy it (K-40..K-44).
+3. Every new function has a Doxygen block; every touched file is
+   `clang-format`ted; new file-scope data is `static`, `g_`-prefixed and at the
+   top of the file (C-15, C-40).
+4. No FP/SIMD, VLAs, recursion or large stack buffers in the kernel
+   (K-1, K-10). Never `-Wno-*` a warning away.
+5. Syscalls: native ABI first; FreeBSD slots are fixed and never squatted;
+   errors are negative errno (A-1..A-12).
+6. Run `tools/check/run.sh` (or `tools/mcr.sh`) before committing. Do not
+   commit until the person confirms the change works. Never push to master.
 
 ## Build System
 
-The project uses **BSD make (`bmake`)**. On macOS use `bmake`; on FreeBSD `make` is already bmake. GNU make will not work — the Makefiles use BSD-specific syntax (`.CURDIR`, `.if`/`.else`, `!=` shell assignment).
-
-> **Multiple agents/sessions sharing this repo?** A concurrent `bmake world`/`image` from two sessions corrupts the shared tree (`contrib/` reconfig races). Serialise whole-tree builds with the lock: `tools/buildlock.sh with "<who>" bmake world image` (auto acquire+release), or `tools/buildlock.sh acquire/release/status`. See **`AGENTS-COORD.md`** for the convention + status board. Per-directory `bmake -C <dir>` builds are isolated and don't need the lock.
-
-### Common targets
-
-Build output is **arch-homed** under `build/${ARCH}/` (e.g. `build/i386/`,
-`build/aarch64/`) so the two architectures never clobber each other. Select the
-target with `TARGET=` (alias for `TARGET_ARCH=`). **The default is now aarch64**
-(the primary forward target); build i386 explicitly with `TARGET=i386`, or
-`export TARGET=i386` for a whole shell session.
+The project uses **BSD make (`bmake`)** — GNU make will not work (`.CURDIR`,
+`.if`, `!=`). Build output is arch-homed under `build/${ARCH}/`; select the
+target with `TARGET=` (alias for `TARGET_ARCH=`). **Default is aarch64.**
 
 ```sh
-bmake                  # kernel + world (default, aarch64) → build/aarch64/
-bmake kernel           # kernel only → build/aarch64/boot/kernel
-bmake world            # userland only → build/aarch64/{bin,sbin,usr/bin,usr/sbin,usr/tests,lib,libexec}/
-bmake image            # fresh bootable disk image (ubixos-arm.img via mkimage.sh)
-bmake run-aarch64      # launch QEMU virt (graphical, virtio-gpu, HVF on Apple Silicon)
-bmake run-debug-aarch64 # headless QEMU virt, serial to serial.log
-
-# x86_64 (the abstraction anchor — keep it green) — TARGET=x86_64 on every command
-bmake kernel world TARGET=x86_64  # → build/x86_64/
-bmake run-x86_64 TARGET=x86_64    # launch QEMU (std-VGA desktop, TCG on Apple Silicon)
-
-# i386 is FROZEN on releng/2 (not maintained on master); build only if specifically
-# working that legacy branch: bmake kernel world TARGET=i386  # → build/i386/
-
-bmake clean            # clean all build artifacts
+bmake kernel world TARGET=aarch64   # → build/aarch64/   (default arch)
+bmake kernel world TARGET=x86_64    # → build/x86_64/    (keep green too)
+bmake kernel                         # kernel only → build/aarch64/boot/kernel
+bmake world                          # userland only
+bmake image                          # fresh bootable image via tools/mkimage.sh
+bmake run-aarch64                    # QEMU virt (graphical, HVF on Apple Silicon)
+bmake run-debug-aarch64              # headless, serial only
+bmake run-x86_64 TARGET=x86_64       # QEMU std-VGA desktop (TCG on Apple Silicon)
+bmake run-debug-x86_64 TARGET=x86_64 # headless x86_64
+bmake clean
 ```
 
-#### Board builds (ARCH + BOARD)
+- **Concurrent sessions:** whole-tree builds from two sessions corrupt shared
+  `contrib/` state. Serialise with
+  `tools/buildlock.sh with "<who>" bmake world image` (see `AGENTS-COORD.md` when present).
+  Per-directory `bmake -C <dir>` builds don't need the lock.
+- **Board builds** (e.g. Raspberry Pi 3): the world is built once per arch and
+  shared; only the kernel/image are board-specific —
+  `bmake kernel-rpi3`, `bmake image-rpi3` (output under
+  `build/aarch64/boards/rpi3/`). See `docs/design/raspberry-pi-3b-bringup.md`.
+- **Image workflow:** `bmake image` builds a clean image; `bmake stage-src`
+  (after `image`) stages the FreeBSD-style `/usr/src` → `/usr/obj` tree for
+  on-device builds. Prefer `bmake image` over `install-world` (slow rsync).
+  See `docs/design/usr-src-build-layout-plan.md`.
+- **macOS prerequisites:** `brew install bmake qemu mtools aarch64-elf-gcc
+  x86_64-elf-gcc`; NetSurf additionally needs `bison` ≥ 3 and `libpng`
+  (`tools/build-netsurf.sh` finds the keg-only bison).
+- **Dependency tracking:** `-MMD -MP`; editing a header recompiles dependents.
 
-A specific **board** (e.g. the Raspberry Pi 3) is *not* a separate arch — it is
-aarch64 with a byte-identical world. Only the **kernel** differs (board `#ifdef`s +
-a board link address). So boards nest under the arch: the world is built once
-per-arch and **shared**, and only the board kernel + image are board-specific.
+See `BUILDING.md` for the long form.
 
-```sh
-bmake world TARGET=aarch64   # the shared aarch64 world (build/aarch64/, board-independent)
-bmake kernel-rpi3            # the Pi 3 kernel  → build/aarch64/boards/rpi3/boot/kernel8.img
-bmake image-rpi3             # fetch Pi firmware + build a dd-able microSD image
-                             #   → build/aarch64/boards/rpi3/rpi3-sd.img
-```
+### Compile flags that matter
 
-The board build reuses the shared world **in place** via symlinks (no copy → no
-race with a concurrent world rebuild); only the kernel objects (compiled
-`-DBOARD_RPI3`) and the flat `kernel8.img` (linked at `0x80000`) are board-specific.
-Flash the image with `dd` (see `docs/design/raspberry-pi-3b-bringup.md`). New boards
-follow the same pattern under `build/${ARCH}/boards/${BOARD}/`.
+Kernel objects are freestanding (`-ffreestanding -nostdinc -fno-builtin
+-fno-pic`), include path `sys/include` (+ `sys/arch/<arch>`) only, and carry
+the per-arch ISA flags from `share/mk/ubix.target.<arch>.mk`: x86_64
+`-mno-sse -mno-sse2 -mno-mmx -mno-3dnow -mno-red-zone -mcmodel=large`;
+aarch64 `-march=armv8-a -mgeneral-regs-only`. A narrow set of bug classes is
+promoted to errors (`WERROR_BUGCLASSES` in the top `Makefile`:
+implicit-function-declaration, int↔pointer casts, return-type).
 
-### Disk image workflow
+## Source Tree
 
-```sh
-bmake mount-image      # mount ubixos.img FAT32 partition at /Volumes/UBIXOS
-bmake unmount-image    # unmount it
+Two independent halves: **kernel** (`sys/`) and **world** (userland). Programs
+live where the FreeBSD/macOS hierarchy puts them; a program's tree decides its
+install path (`Makefile.incl` sets `BINDIR`).
 
-bmake install-kernel   # mount → copy kernel → unmount
-bmake install-world    # mount → copy world + source tree → unmount
-bmake install          # install-world + install-kernel
+| Tree | Install path | Holds |
+|------|--------------|-------|
+| `sys/` | — | Kernel. `sys/arch/{aarch64,x86_64}` = machine-dependent minimum (`kern/ vmm/ dev/ lib/ net/ board/ bringup/`); everything else is machine-independent |
+| `bin/` | `/bin` | `init` (PID 1), `login`, `shell`, `tcsh`, core commands |
+| `sbin/` | `/sbin` | Disk/FS/system admin |
+| `usr.bin/` | `/usr/bin` | User commands + GUI apps |
+| `usr.sbin/` | `/usr/sbin` | Daemons: `views` (compositor), `vlogin`, `authd`, `logd`, … |
+| `tests/` | `/usr/tests` | Test/dev harnesses |
+| `lib/`, `libexec/` | `/lib`, … | libc (musl + FreeBSD-derived), `ubix`, `ubix_api`, `objgfx`; musl's runtime linker |
+| `contrib/` | — | Third-party (lwIP, jemalloc, musl, BearSSL, TCC, NetSurf, …). **Not modified**, not checked |
 
-bmake kernel-to-image  # fast path: mcopy kernel into existing image (no mount)
-```
+`/bin/init`, `/bin/sh` and `/lib` (`PT_INTERP`) are hard-coded. When a program
+exec'd by absolute path moves, update `etc/init.d/*`, `tools/makereg.c` seeds
+and any `"/bin/…"` literal (e.g. `CONSOLE_DESKTOP` in `bin/init/main.c`).
 
-`bmake image` always builds a clean image from scratch via `tools/mkimage.sh` — use it for releases or first-time setup. `install-kernel` / `install-world` are faster incremental updates to an existing image.
-
-The disk image (`ubixos.img`) can be mounted on macOS with `bmake mount-image` or directly via `hdiutil attach -imagekey diskimage-class=CRawDiskImage ubixos.img`. The FAT32 volume appears at `/Volumes/UBIXOS`.
-
-### Installed layout on the disk image
-
-| Path | Contents | Staged by |
-|------|----------|-----------|
-| `/bin`, `/lib`, `/usr/bin`, `/usr/sbin`, `/usr/lib` | Compiled world binaries and libraries | `bmake image` |
-| `/usr/bin/{clang,ld.lld,llvm-*}` + `/usr/lib/clang/18/include` | Stage-0 self-hosting toolchain (when `build/${ARCH}/usr` is populated) | `bmake image` |
-| `/boot/kernel/kernel`, `/boot/grub/` | Kernel binary + GRUB config | `bmake image` |
-| `/etc/` | System config (`userdb`, `fstab`, `motd`) | `bmake image` |
-| `/usr/src/` | Full source tree (kernel + world, no `build/`/`.git`/image artifacts) | **`bmake stage-src`** |
-| `/usr/obj/${ARCH}/` | On-device build output (`OBJ_DIR` target) | **`bmake stage-src`** |
-| `/usr/share/mk/` | Installed bmake macros (FreeBSD convention) | **`bmake stage-src`** |
-
-`bmake image` builds the bootable world pool. The FreeBSD-style **`/usr/src` → `/usr/obj`** source tree is a **separate** step — `bmake stage-src` (after `bmake image`) — so `bmake` can rebuild the system on-device. See `docs/design/usr-src-build-layout-plan.md`.
-
-### macOS prerequisites
-
-```sh
-brew install x86_64-elf-binutils x86_64-elf-gcc bmake qemu mtools i686-elf-grub
-```
-
-The NetSurf browser build (Step 4 of `bmake world`) additionally needs a host
-**`bison` ≥ 3** (Apple's `/usr/bin/bison` 2.3 is too old for nsgenbind's
-parser) and host **`libpng`** (for NetSurf's `convert_image` resource tool):
-
-```sh
-brew install bison libpng
-```
-
-`tools/build-netsurf.sh` auto-detects the keg-only brew bison
-(`/opt/homebrew/opt/bison`) and resolves libpng via `pkg-config`.
-
-The Makefile auto-detects Darwin and sets `CROSS_PREFIX=x86_64-elf-` with `CROSS_M32=-m32` so all compilations target i386. On FreeBSD the prefix is empty and the host toolchain is used directly.
-
-> **Note**: The project uses `x86_64-elf-gcc -m32` (not `i386-elf-gcc`) because the Homebrew `i386-elf-gcc` formula is not maintained. All kernel and world CFLAGS include `-mno-sse -mno-sse2 -mno-mmx -mno-3dnow` because the kernel never sets `CR4.OSFXSR`; executing XMM instructions triggers `#UD`.
-
-### Dependency tracking
-
-All component Makefiles use `-MMD -MP` (via the `.incl` files) and include generated `.d` files via `.for`/`.sinclude`. Editing a header automatically recompiles dependent `.c` files on the next `bmake`.
-
-## Source Tree Architecture
-
-The build is split into two independent halves: **kernel** (`sys/`) and **world** (userland).
-
-### Kernel (`sys/`)
-
-Each subsystem is its own directory with its own Makefile. `sys/Makefile` orchestrates them in order, producing `.o` files that are all linked together by `sys/compile/Makefile` using `sys/compile/ldscript.i386`.
-
-Key subsystems and what they own:
-
-| Directory | Owns |
-|-----------|------|
-| `sys/init/` | Bootstrap (`start.S` — entry point, GDT setup, multiboot detection) and `main.c` (`kmain`) |
-| `sys/arch/i386/` | CPU: interrupts, syscall dispatch (`sys_call.S`/`sys_call_posix.S`), fork, scheduler, SMP AP trampoline |
-| `sys/vmm/` | Virtual memory: paging, COW page fault handler, address space create/copy |
-| `sys/kernel/` | Core services: scheduler, ELF loader, execve, signals, pipes, semaphores, TTY, sysctl, shutdown |
-| `sys/fs/vfs/` | VFS layer — all filesystem calls route through here |
-| `sys/fs/{ubixfs,ubixfsv2,ufs,fat,devfs}/` | Concrete filesystem drivers |
-| `sys/mpi/` | Message-passing IPC (mailbox system used by init and drivers) |
-| `sys/net/` | lwIP 2.0.3 integration; `net/netif/` bridges kernel NICs to lwIP |
-| `sys/isa/` | ISA drivers: PIC (8259), PIT, AT keyboard, floppy, NE2000, RS-232, mouse |
-| `sys/pci/` | PCI enumeration + IDE hard disk + Lance (PCNET) NIC |
-| `sys/sde/` | Software display environment (C++ graphics layer) |
-| `sys/lib/` | Kernel-internal library: `kprintf`, `kmalloc`, `vsprintf`, string ops |
-
-**Kernel headers live in `sys/include/`** — this is the only include path (`-I`) passed to kernel compilation. Userland headers (`include/`) are never visible to kernel code.
-
-**Linker script** (`sys/compile/ldscript.i386`): loads kernel at physical/virtual address `0x300000` (3 MB). The first 4 MB of physical RAM is identity-mapped (PD[0], all 1024 PT entries). Physical layout: ISA/VGA/BIOS at `0x0–0xFFFFF`, page bitmap at `0x101000+` (1 MB for 256 MB RAM), kernel at `0x300000`. `vmm_memMapInit` places the bitmap at `page_align(_end)` — RAM-size-independent. Free pages begin immediately after the bitmap; the first 1 MB and kernel+bitmap pages are reserved. The kernel virtual memory layout is lower 4 MB identity-mapped, 4 MB–3 GB per-process, top 1 GB kernel-only.
-
-### Userland (`bin/`, `sbin/`, `usr.bin/`, `usr.sbin/`, `tests/`, `lib/`, `libexec/`)
-
-Built separately from the kernel with different flags. Libraries build first, then `libexec/`, then the program trees. All output goes into `build/${ARCH}/`.
-
-The program trees follow the **FreeBSD/macOS filesystem hierarchy** — a program's source tree decides where it installs. Each tree has a `Makefile` (its `SUBDIRS`) and a `Makefile.incl` that sets `BINDIR`; the shared `share/mk/ubix.musl*.prog.mk` then emits the binary to `${OBJ_DIR}/${BINDIR}/` and `mkimage.sh` stages it at the same path:
-
-| Source tree | `BINDIR` / install path | Holds |
-|-------------|-------------------------|-------|
-| `bin/` | `/bin` | Essential commands needed early by kernel/shell: `init`, `login`, `shell`, `tcsh`, `ls`, `cat`, `cp`, `mv`, `rm`, `mkdir`, `ln`, `echo`, `date`, `ed`, `expr`, `pwd`, `sleep` |
-| `sbin/` | `/sbin` | Disk/FS/system admin: `fdisk`, `disklabel`, `format`, `mount`, `ubpool`, `ubfs`, `ubdisk`, `ping` |
-| `usr.bin/` | `/usr/bin` | Bulk user commands + GUI apps: `grep`, `sed`, `awk`, `find`, `vi`, `make`, `nc`, …, `vdoom`, `tessera`, `cubitaire`, `files`, `diskutil`, `activity`, `taskbar`, `term`, `settings` |
-| `usr.sbin/` | `/usr/sbin` | Daemons + services: `views` (compositor), `vlogin`, `authd`, `logd`, `automountd`, `ubistry`, `aural`, `netcfg`, `dropbear` (sshd) |
-| `tests/` | `/usr/tests` | Test/dev harnesses (not shipped apps): `syscheck`, `filetest`, `pipetest`, `selfhostck`, `ttytest`, `udptest`, `fbtest`, … |
-
-To home a new program, drop its directory in the right tree and add it to that tree's `SUBDIRS`. `/bin/init` and `/bin/sh` are hardcoded (kernel/bmake), and `/lib` is pinned by `PT_INTERP`, so those don't move. **When a program that is exec'd by absolute path moves, update the path** — `etc/init.d/*` units, `tools/makereg.c` start-menu seeds, and any `"/bin/…"` literal in code (e.g. `CONSOLE_DESKTOP` in `bin/init/main.c`).
-
-- `lib/libc/` — FreeBSD-derived POSIX C library (primary libc)
-- `lib/ubix/` — OS-specific startup code (static initializers, `crt1`)
-- `lib/ubix_api/` — UbixOS-native API (`ubix_getcwd` etc.); header at `include/api/ubix.h`
-- `libexec/` — the active runtime linker is musl's (`/lib/ld-musl-${ARCH}.so.1`); libraries are at `/lib/`. (The older native `libexec/ld`, which used `sys:/lib/`, is superseded.)
-- `bin/init/` — PID 1; uses MPI mailboxes, spawns `login`
+**Kernel headers** live in `sys/include/` — the only include path for kernel
+code; userland headers (`include/`) are never visible to it. Subsystem map:
+`sys/arch/<arch>/{boot,kern}` (bootstrap, entry), `sys/kern` (core, scheduler, exec),
+`sys/posix` (POSIX syscall layer, signals, tty, pipes), `sys/vmm`, `sys/fs/*`
+(VFS + drivers), `sys/mpi`, `sys/net` (lwIP), `sys/dev`, `sys/usb`, `sys/lib`
+(`kprintf`, `kmalloc`, string). Details: `ARCHITECTURE.md`.
 
 ### Display stack
 
-Two-layer graphical system modelled after macOS WindowServer + Core Graphics:
-
 | Layer | Component | Role |
 |-------|-----------|------|
-| Compositor | `bin/views/` (C++) | Owns the VESA framebuffer via `sys_mapfb()`. Manages windows, server-side decorations, Z-order, drag, close. Composites shared-memory buffers to screen. |
-| App rendering | `lib/objgfx/` (C++) | Surface drawing API (`ogSurface`, `ogScalableFont` (TrueType); `ogBitFont` is legacy). Apps render into their shared-memory window buffer using this library. |
+| Compositor | `usr.sbin/views/` (C++) | Sole owner of the framebuffer (`sys_mapfb()`); windows, decorations, Z-order; composites shared-memory buffers |
+| App rendering | `lib/objgfx/` (C++) | `ogSurface`, `ogScalableFont` (TrueType; `ogBitFont` is legacy) |
 
-**Rules:**
-- `views` is the only process that calls `sys_mapfb()`. All other processes get a `vmm_share_region` buffer.
-- Apps draw with `objGFX` (`ogSurface`/`ogScalableFont`; `ogBitFont` is legacy). No app writes to the framebuffer directly.
-- MPI carries only signals (`DISPLAY_CLAIM`, `DISPLAY_FLIP`, `DISPLAY_RELEASE`), never drawing commands.
-- objGFX headers live in `include/objgfx/`. Apps include with `<objgfx/objgfx.h>` and pass `-I../../include` (not `-I../../lib/objgfx`).
+Only `views` maps the framebuffer; apps draw into their `vmm_share_region`
+buffer with objGFX; MPI carries signals (`DISPLAY_CLAIM/FLIP/RELEASE`), never
+pixels. Headers: `include/objgfx/`, `include/views/display_proto.h`. Design:
+`docs/design/display-plan.md`. Refresh `docs/apps/*` when `display_proto`,
+objGFX or `hello` change.
 
-Display protocol header: `include/views/display_proto.h`. Design document: `docs/design/display-plan.md`.
+## Architectural Constraints (summary)
 
-### Third-party (`contrib/`)
-
-lwIP 2.0.3, jemalloc, gdtoa (float↔ASCII), TCC (Tiny C Compiler), tzcode, NetBSD test suite. These are integrated into the kernel or world build but are not modified.
-
-## Key Architectural Constraints
-
-**Kernel entry point**: `sys/init/start.S` (`_start`) detects multiboot magic (`0x2BADB002` in `%eax`) and extracts boot device info before calling `vmm_init()` then `kmain()`. Any change to the boot protocol must update both the assembly entry and `get_bootargs`.
-
-**Syscall paths**: There are two syscall tables — native (`syscalls.c` / `sys_call.S`, `int $0x81`) and POSIX (`syscalls_posix.c` / `sys_call_posix.S`, `int $0x80`). New syscalls must be added to the correct table. POSIX syscall numbers follow the FreeBSD ABI layout. The UbixOS-native API (`lib/ubix_api/`) uses `int $0x81`.
-
-**VFS paths**: Fully POSIX. Mount points are POSIX paths (`/` root FAT32, `/dev` devfs, `/proc` procfs); the `sys:/` mountpoint prefix is gone. `_current->oInfo.cwd` is a plain POSIX path (new processes start at `/`). `sys_getcwd` (POSIX) and `sys_getvfscwd` (native slot 41) now both return that cwd verbatim — the old strip-vs-full distinction is vestigial. The shell uses `ubix_getcwd()` from `lib/ubix_api/` for its prompt.
-
-**IPC**: The kernel uses a custom MPI (message-passing) system, not System V IPC. `init` and most system processes communicate via MPI mailboxes. Pipes and semaphores are also available.
-
-**VFS dispatch**: All filesystem calls go through `sys/fs/vfs/`. Each filesystem driver registers a set of function pointers. Do not call filesystem driver functions directly from outside the VFS layer.
-
-**Memory allocation**: Use `kmalloc`/`kfree` (in `sys/lib/kmalloc.c`) inside the kernel. Userland uses the FreeBSD libc allocator.
-
-## VS Code Integration
-
-`.vscode/c_cpp_properties.json` provides two IntelliSense configurations:
-- **Kernel** — `sys/include/**`, `x86_64-elf-gcc` (no `-nostdinc` in IntelliSense args so GCC built-in headers like `stdint.h` are found)
-- **World** — `include/**`, musl and libcxx contrib headers
-
-Both configs reference `compile_commands.json` via `"compileCommands"`. When that file exists (generated by `bear`), IntelliSense uses the exact per-file flags from the build and the fallback paths are ignored.
-
-**Generating `compile_commands.json` (do once after any major Makefile change):**
-```sh
-python3 tools/gen-compile-commands.py --world
-```
-This walks the program trees (`sys/`, `bin/`, `sbin/`, `usr.bin/`, `usr.sbin/`, `tests/`, `lib/`, `libexec/`) and emits one entry per source file with the correct per-subsystem flags. The resulting `compile_commands.json` in the repo root gives IntelliSense perfect per-file include paths and defines. **It is a generated artifact and is gitignored, not committed** — it goes stale whenever the source tree or Makefiles change, so regenerate it locally after such changes rather than versioning a snapshot.
-
-Note: `bear` (Build EAR) does not work reliably on macOS with SIP enabled because `DYLD_INSERT_LIBRARIES` is blocked for sub-processes launched by bmake. The generator script above is the reliable alternative.
-
-On Intel Macs the compiler path is `/usr/local/bin/x86_64-elf-gcc` — update `c_cpp_properties.json` if IntelliSense shows spurious errors.
-
-Build tasks (`Ctrl+Shift+B`): Build Kernel, Build World, Build All, Create Disk Image, Run QEMU. The debug launch config connects `x86_64-elf-gdb` to QEMU's GDB stub on `localhost:1234`.
+- **Syscalls:** two shared tables — native (`sys/kern/syscalls.c`) and the
+  FreeBSD-numbered POSIX table (`sys/posix/syscalls_posix.c`). Per-arch entry
+  code only decodes registers. Rules: [abi-and-syscalls.md](docs/standards/abi-and-syscalls.md).
+- **VFS:** fully POSIX paths (`/`, `/dev`, `/proc`); `_current->oInfo.cwd` is a
+  plain POSIX path. All filesystem calls go through `sys/fs/vfs/`; never call
+  a driver directly from outside it.
+- **IPC:** custom MPI mailboxes (not SysV IPC); pipes and semaphores exist too.
+- **Memory:** `kmalloc`/`kfree` in the kernel; the libc allocator in userland.
+- **Dynamic linking:** musl's `/lib/ld-musl-${ARCH}.so.1`.
 
 ## Code Style and Tooling
 
-Coding style is **FreeBSD `style(9)`**: 8-space hard tabs, Allman braces, 120-column limit (see `.clang-format`), pointer aligned to variable name (`int *foo`). Style is enforced by `.clang-format` at the repo root.
+Coding style is FreeBSD `style(9)`: 8-column hard tabs, Allman braces,
+**120 columns** (`.clang-format` is authoritative), `int *foo`. Naming and
+header-guard rules: [STYLE.md](STYLE.md). Apply formatting **per file as you
+touch it** — never reformat the whole tree (it breaks `git blame`).
 
-Apply **file-by-file as files are touched** — do not reformat the whole tree at once (breaks `git blame`).
-
-```sh
-clang-format -i sys/vmm/paging.c   # reformat one file in place
-```
-
-**`tools/mcr.sh`** — Machine Code Review: runs clang-format + clang-tidy against changed files.
-
-```sh
-tools/mcr.sh                  # check files changed vs HEAD (default)
-tools/mcr.sh --staged         # check staged files only
-tools/mcr.sh --fix            # auto-apply clang-format fixes
-tools/mcr.sh sys/vmm/paging.c # check specific file(s)
-tools/mcr.sh --format-only    # skip clang-tidy (faster)
-```
-
-Requires: `brew install clang-format` (already in PATH) and `brew install llvm` (clang-tidy at `/opt/homebrew/opt/llvm/bin/clang-tidy`).
-
-### Mandatory rules for all new code
-
-**Every new function or method must have a Doxygen doc block** immediately above its definition using this format:
+Every new function or method needs a Doxygen block:
 
 ```c
 /**
- * Brief one-line description of what the function does.
+ * Brief one-line description.
  *
- * Longer explanation if the behaviour is non-obvious — constraints,
- * side-effects, locking requirements, etc.  Omit if the brief line
- * is sufficient.
+ * Longer explanation only if constraints/locking/side-effects are non-obvious.
  *
- * @param foo  Only when range, ownership, or in/out direction is non-obvious.
- * @return 0 on success, -errno on failure.  (omit for void functions)
+ * @param foo  Only when range, ownership, or direction is non-obvious.
+ * @return 0 on success, -errno on failure.  (omit for void)
  */
 ```
 
-- The brief line is **required** for every new function — no exceptions.
-- Expand to multiple paragraphs only when the WHY or constraints are non-obvious.
-- Use `@param` **selectively** — only when the parameter's valid range, ownership, or in/out direction is not obvious from its name and type. Do not list every parameter mechanically (`@param foo the foo value` adds no information).
-- Always include `@return` for non-void functions.
-- C++ methods follow the same format; use `/** */` not `//`.
+File-scope variables not in the public API are `static`; all `static` data
+sits at the top of the file after the `#include`s; dead file-scope variables
+are removed. Identifiers: functions/variables `lower_case`, globals/statics
+`g_` prefix, typedefs `_t`, enum values `UPPER_CASE`, macros `UPPER_CASE`.
+Update the copyright end year when touching a file.
 
-**File-scope variable rules:**
+### The gate suite
 
-- File-scope variables that are not part of the public API **must be `static`** — enforced by `misc-use-internal-linkage` in `.clang-tidy`.
-- All `static` data definitions must appear **at the top of the source file**, after `#include`s and before any function definitions. Do not scatter them between functions.
-- Dead file-scope variables (no callers in the translation unit and no declaration in any header) must be removed, not left for later.
+```sh
+tools/check/run.sh                 # fast gates on files changed vs master
+tools/check/run.sh --tier ci       # + header/warnings/tidy/cppcheck/build/boot
+tools/check/run.sh --all           # whole tree, baselined
+tools/check/run.sh --list          # what exists and which tier
+tools/check/selftest.sh            # prove the gates catch what they claim
+tools/mcr.sh [--fix] [file...]     # thin front end for format+gates
+```
 
-**Formatting and linting are mandatory on every touched file:**
+Gates (`format`, `banned-api`, `doxygen-docs`, `file-scope-static`,
+`syscall-table`, `header-selfcontained`, `warnings`, `clang-tidy`, `cppcheck`,
+`build`, `boot-smoke`) judge **added lines** or ratchet against
+`tools/check/baselines/`; legacy findings do not block, new ones do. CI
+(`.github/workflows/ci.yml`) runs the same entry point. Never raise a baseline
+to get green.
 
-1. Run `clang-format -i <file>` on every `.c`, `.cc`, `.cpp`, `.h` file you write or modify.
-2. Run `tools/mcr.sh <file>` (clang-format + clang-tidy) before committing. Fix all errors; warnings in existing code may be left but must not be introduced by new code.
-3. Naming conventions enforced by `.clang-tidy`: functions and variables `lower_case`, global/static variables `g_` prefix, typedefs `_t` suffix, enum values `UPPER_CASE`, macros `UPPER_CASE`.
+## IntelliSense
+
+`python3 tools/gen-compile-commands.py --world` regenerates the (gitignored)
+`compile_commands.json`; regenerate after major Makefile or tree changes.
+`bear` does not work reliably on macOS with SIP.
 
 ## Versioning
 
-The single source of truth for the OS version is **`sys/include/ubixos/version.h`**. Edit only that file to bump the version — everything else derives from it automatically.
-
-### Version bump checklist
-
-1. Edit `UBIXOS_VERSION_MAJOR`, `MINOR`, `PATCH`, and `TAG` in [sys/include/ubixos/version.h](sys/include/ubixos/version.h).
-2. Add a dated release section to `CHANGELOG.md` (rename `[Unreleased]` → `[X.Y.Z-TAG] - YYYY-MM-DD`, add a fresh empty `[Unreleased]` above it, update the footer diff links).
-3. Rebuild: `bmake kernel world image`
-4. Commit: `git add sys/include/ubixos/version.h CHANGELOG.md && git commit -m "Release X.Y.Z-TAG"`
-5. Tag: `git tag -a vX.Y.Z-TAG -m "Release X.Y.Z-TAG" && git push && git push --tags`
+Single source of truth: `sys/include/ubixos/version.h`. To release: edit
+`UBIXOS_VERSION_{MAJOR,MINOR,PATCH,TAG}`, roll `CHANGELOG.md` `[Unreleased]` →
+`[X.Y.Z-TAG] - YYYY-MM-DD` (fresh empty `[Unreleased]` + footer links),
+`bmake kernel world image`, commit, `git tag -a vX.Y.Z-TAG`. Full checklist:
+`CONTRIBUTING.md`.
 
 ## Current State
 
-### i386
-
-The system boots to a login prompt under QEMU:
-
-1. GRUB2 (i686-elf-grub) loads the kernel via multiboot from a FAT32 disk image.
-2. Kernel mounts the FAT32 partition at `/` using the IDE + FAT driver stack.
-3. `init` (PID 1) execs, forks `login`, which prompts for username/password.
-4. Default credentials: `root` / `user` (from `tools/userdb`).
-5. Shell prompt shows the POSIX cwd (e.g. `uBixCube@/bin/#`).
-
-The i386 build also runs the full graphical desktop (`views` + `vlogin` + GUI terminal + apps).
-
-### aarch64 (primary forward target)
-
-Boots on QEMU `virt` (HVF on Apple Silicon) to a full **graphical desktop** matching the i386 GUI:
-
-- Kernel → virtio-blk FAT32 root → `init` → `views` compositor → graphical login (`vlogin`) → themed desktop (per-user wallpaper + taskbar, settings via `ubistry`).
-- Working GUI **terminal** running tcsh, with POSIX signals + tty job control (Ctrl-C / SIGWINCH) over a pty/VT100 line discipline.
-- **vDoom** runs (windowed). Sockets/lwIP (DHCP), mmap/fork/execve, and musl dynamic linking are all functional.
-- Cooperative scheduling, EL0 via a 100 Hz timer; LP64. musl emits FreeBSD syscall numbers.
-- **Still bring-up**: a hand-rolled syscall `switch` (falls through to the shared table) and a `sys/arch/aarch64/bringup/` dir holding demos + the real exec path. The convergence backlog (unify syscall dispatch, factor fork/exec, graduate `bringup/`, console rework) is tracked in `docs/design/console-and-arch-convergence-plan.md`.
-- Build/run: `bmake kernel world TARGET=aarch64`; image via `tools/mkimage.sh` (or `bmake image-arm`); `bmake run-aarch64 TARGET=aarch64` (graphical, virtio-gpu) or `bmake run-debug-aarch64 TARGET=aarch64` (serial-only, `-nographic`). HVF "Assertion failed: (isv)" means a real bad-pointer store — debug under `-accel tcg` to get the faulting address.
-
-**Key lessons learned (i386)**:
-- Use `x86_64-elf-gcc -m32` — the `i386-elf-gcc` Homebrew formula is unmaintained.
-- All code must be compiled with `-mno-sse -mno-sse2 -mno-mmx -mno-3dnow`. GCC can silently emit XMM instructions for struct copies which trigger `#UD` fault 6.
-- `kprintf` outputs to both VGA and COM1 serial. Run `bmake run` and check `serial.log` for kernel debug output.
-- The FAT library treats the partition-relative sector 0 as BPB; `hdRead` adds `parOffset` (LBA 2048) transparently — do not double-add the offset.
-- `/etc/userdb` must exist on the image for `login` to authenticate. `tools/mkimage.sh` copies `tools/userdb` there automatically.
-- TCC-compiled binaries require R_386_GOT32X relocation support (patched in `contrib/tcc/tccelf.c`).
-- **MMIO pages in the VMM**: Physical addresses at or above `numPages * PAGE_SIZE` (≥ 256 MB with the default QEMU `-m 256` config) are MMIO — framebuffer, PCI BARs, etc. These frames have no entry in `vmmMemoryMap`. Three rules follow from this:
-  1. `copyvirtualspace.c` — when COW-marking pages during `fork`, check `(phys >> 12) >= numPages` and share MMIO PTEs as-is without touching the COW counter.
-  2. `vmm_cleanVirtualSpace` (paging.c) — when freeing the user address space during `execve`, skip `freePage` for MMIO pages (`(phys >> 12) >= numPages`); just clear the PTE.
-  3. `freePage` (vmm_memory.c) — has an explicit bounds check; returns `-1` for out-of-range frame indices as a safety net for any caller that passes an MMIO address.
-  Failure to guard these paths causes `freePage` to compute a `vmmMemoryMap` index in the billions, accesses memory at `0xC0800000 + huge_offset` which is unmapped, and triple-faults the kernel.
-- **Kernel PD desync after fork**: `vmm_copyVirtualSpace` re-syncs kernel PD entries (indices 770–1015) from the parent **after** all `vmm_getFreeKernelPage`/`vmm_getFreePage` allocations, just before filling the PT_BASE_ADDR self-map page. This is critical — those allocation calls may expand the parent's kernel page directory into new PD indices; copying the entries early and then allocating more leaves the child with stale (zero) PD entries for newly-expanded kernel ranges.
-- **Kernel load address and the 640 KB hole**: The kernel was moved from `0x20000` to `0x300000`. At `0x20000` the kernel BSS (text+data+bss ≈ 600 KB) extended past `0xA0000` into the VGA/BIOS hole where there is no RAM — lwIP's static heap and pool arrays landed in VGA address space, causing `mem_free: legal memory` assertion failures. Loading at `0x300000` puts the kernel above the page bitmap (`0x101000–0x201FFF`) and well within the identity-mapped first 4 MB. The identity map was extended from 256 to 1024 PT entries (full 4 MB) to cover the new load address.
-- **lwIP memory sizing**: `MEM_SIZE` (the `mem_malloc` heap) = 32768 bytes; `PBUF_POOL_SIZE` = 64 pbufs at 1514 bytes each. `TCP_MSS` = 1460, `TCP_WND`/`TCP_SND_BUF` = 8×MSS. `MEMP_NUM_TCP_SEG` = 64. `MEM_ALIGNMENT` = 1 (lwIP default). Do not reduce these to paper over a kernel-size issue; fix the load address instead.
-- **procfs `off_t` ABI**: `vfsRead` function pointer declares `off_t` (64-bit on i386) for the offset parameter. Any `procfs_read` implementation must also use `off_t` for offset — using `long` (32-bit) misaligns the `size` argument on the stack so every read returns 0 bytes.
-- **`sprintf` null-terminator**: `kvprintf` (the internal formatting engine) never writes `'\0'`. `sprintf` must append `buf[i] = '\0'` after calling `kvprintf`. Without this, single-digit procfs entries read as two digits.
-- **Task naming**: `kTask_t` has `name[256]` and `cmdline[1024]`. All task-creation paths (`execFile`, `sys_exec`, `execThread`) populate these. `execThread` takes a `const char *name` parameter. Early kernel threads (PID 1–4) are named explicitly in `sched_init` and `main.c`.
-- **Socket syscalls**: `connect` (98), `bind` (104), `listen` (106), `accept` (30) are wired in `syscalls_posix.c`. Implementations in `sys/net/net/sys_arch.c` use `posix_to_lwip_addr`/`lwip_to_posix_addr` to convert between Linux-style sockaddr (no `sin_len`) and BSD-style (has `sin_len` at byte 0). Userland data must be copied to kernel buffers before passing to lwIP because tcpip_thread has no user mappings.
+- **aarch64 (primary):** boots on QEMU `virt` (HVF on Apple Silicon) to a full
+  graphical desktop — kernel → virtio-blk FAT32 root → `init` → `views` →
+  `vlogin` → themed desktop; GUI terminal running tcsh with POSIX signals and
+  tty job control; sockets/lwIP (DHCP); mmap/fork/execve; musl dynamic linking;
+  vDoom. Cooperative scheduling, EL0 via a 100 Hz timer, LP64, musl emits
+  FreeBSD syscall numbers. **Still bring-up:** a hand-rolled syscall `switch`
+  ahead of the shared table and `sys/arch/aarch64/bringup/` (demos + the real
+  exec path). The convergence backlog is in
+  `docs/design/console-and-arch-convergence-plan.md`. HVF
+  "Assertion failed: (isv)" means a real bad-pointer store — rerun with
+  `-accel tcg` to get the faulting address.
+- **x86_64:** second supported arch; builds with `bmake kernel world
+  TARGET=x86_64`, boots under QEMU via `run-x86_64`/`run-debug-x86_64`
+  (`-kernel` injection + virtio-blk). Keep it green.
+- **i386:** frozen on `releng/2`. Historical lessons are preserved in
+  [docs/standards/legacy-i386-lessons.md](docs/standards/legacy-i386-lessons.md).
+- Default credentials in a built image: `root` / `user` (from `tools/userdb`,
+  copied to `/etc/userdb` by `tools/mkimage.sh`).
