@@ -22,9 +22,13 @@ Mount points are themselves POSIX paths. At boot:
 
 | Mount point | Driver | Source |
 |-------------|--------|--------|
-| `/` | FAT32 (root, disk image) | `vfs_mount(major, minor, 0, 0xFA, "/", "rw")` in [main.c](../../sys/init/main.c) |
+| `/` | UbixFS pool on the virtio-blk (or SD) partition if it mounts and holds `/lib/libc.so`; otherwise the FAT32 partition (`vtblk0s1`) | `vfs_mount(1, minor, 0, VFS_TYPE_UBIXFS \| VFS_TYPE_FAT, "/", …)` in `kmain_aarch64` ([boot.c](../../sys/arch/aarch64/kern/boot.c)) and `kmain_x86_64` ([main.c](../../sys/arch/x86_64/boot/main.c)) |
 | `/dev` | devfs | [sys/fs/devfs/](../../sys/fs/devfs/) |
-| `/proc` | procfs | [sys/fs/procfs/](../../sys/fs/procfs/) |
+| `/proc` | procfs | [sys/fs/procfs/](../../sys/fs/procfs/) — mounted in the x86_64 boot path; **TODO: verify** the aarch64 mount |
+| `/boot` | FAT32 boot partition | aarch64, only when the pool is the root |
+| `/pool` | UbixFS loopback pool | aarch64, only when FAT is the root and `/pool.img` exists |
+
+(On i386, `releng/2`, the root was always the FAT32 disk image mounted from `sys/init/main.c`.)
 
 `vfs_findMount(path)` ([mount.c](../../sys/fs/vfs/mount.c)) resolves a path to its
 filesystem by **longest-matching mount prefix**, matched on whole path
@@ -41,16 +45,18 @@ POSIX `mp->mountPoint`.
 ## Current Working Directory
 
 `_current->oInfo.cwd` holds a plain **POSIX absolute path** (no mountpoint
-prefix). A new process starts at `/` (`sprintf(oInfo.cwd, "/")` in
-[i386_exec.c](../../sys/arch/i386/i386_exec.c)).
+prefix). A process with an empty `cwd` is treated as being at `/` (the native/POSIX getcwd
+handlers fall back to `"/"`). The i386 exec path that set `cwd` explicitly
+(`sys/arch/i386/i386_exec.c`) exists only on `releng/2`. **TODO: verify** where the
+64-bit exec path initialises `oInfo.cwd`.
 
 Two syscalls return the cwd, both now returning the POSIX path verbatim from
 `oInfo.cwd`:
 
 | Syscall | Slot / table | Notes |
 |---------|--------------|-------|
-| `sys_getcwd` | POSIX (`int $0x80`, #326) | libc `getcwd()` |
-| `sys_getvfscwd` | native (`int $0x81`, slot 41) | `ubix_getcwd()` in `lib/ubix_api/` |
+| `sys_getcwd` | POSIX table, #326 | libc `getcwd()` |
+| `sys_getvfscwd` | native table, slot 41 (`NATIVE_GETCWD`, handled inline on both 64-bit arches) | `ubix_getcwd()` in `lib/ubix_api/` |
 
 > **Legacy note:** the two syscalls existed to distinguish a POSIX-stripped path
 > (`/bin/`) from a full mountpoint-prefixed path (`sys:/bin/`). Since cwd no

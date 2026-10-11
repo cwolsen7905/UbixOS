@@ -3,7 +3,7 @@
 **Source:** `sys/mpi/`
 **Kernel header:** `sys/include/mpi/mpi.h`
 **Userland header:** `include/sys/mpi.h`
-**Syscall table:** native (`int 0x81` on i386, `svc` native path on aarch64), slots 50–53
+**Syscall table:** native table `systemCalls[]`, slots 50–53 (plus 69, `mpiWaitMessage`); reached via the `0x8000` native flag on aarch64 `svc` and on x86_64 `syscall`, or `int $0x81` on x86_64 — see [syscalls.md](syscalls.md)
 
 > **Status:** This document describes MPI **as built** on branch
 > `wip/aarch64-port` (verified against `sys/mpi/system.c` June 2026). It is a
@@ -198,20 +198,25 @@ MPI is accessed from userland via the **native syscall table**, slots 50–53.
 The mechanism differs per architecture but the slot numbers and semantics are
 identical:
 
-| Slot | Name | i386 handler | aarch64 handler |
-|------|------|--------------|-----------------|
+| Slot | Name | Table handler | Direct case (aarch64 `aarch64_syscall`, x86_64 `x86_64_native_syscall`) |
+|------|------|---------------|-----------------|
 | 50 | `mpiCreateMbox`  | `sys_mpiCreateMbox`  | `NATIVE_MPI_CREATE`  |
 | 51 | `mpiDestroyMbox` | `sys_mpiDestroyMbox` | `NATIVE_MPI_DESTROY` |
 | 52 | `mpiPostMessage` | `sys_mpiPostMessage` | `NATIVE_MPI_POST`    |
 | 53 | `mpiFetchMessage`| `sys_mpiFetchMessage`| `NATIVE_MPI_FETCH`   |
+| 69 | `mpiWaitMessage` | `sys_mpiWaitMessage` | `NATIVE_MPI_WAIT` (x86_64 case; **TODO: verify** the aarch64 path) |
 
-- **i386** registers the four `sys_mpi*` thunks in `sys/kern/syscalls.c` (the
-  native `int 0x81` table). The thunks live in `sys/mpi/mpi_syscalls.c` and
-  simply place the return value in `td->td_retval[0]`.
+- The shared native table registers the `sys_mpi*` thunks in `sys/kern/syscalls.c`;
+  they live in `sys/mpi/mpi_syscalls.c` and simply place the return value in
+  `td->td_retval[0]`.
 - **aarch64** dispatches the same slots from a hand-rolled `switch` in
   `sys/arch/aarch64/kern/syscall.c`, calling the `mpi_*` functions directly.
   The syscall runs in the caller's address space with IRQs masked, so the user
   `name`/`msg` pointers are valid without a copyin.
+- **x86_64** does the same in `x86_64_native_syscall()`
+  (`sys/arch/x86_64/kern/usermode.c`); the syscall runs under the caller's CR3, so
+  the pointers are directly valid.
+- *History:* i386 (`releng/2`) reached these through `int $0x81`.
 
 > **Dead code:** `sys/mpi/message.c` defines an older set of `sysMpi*` wrappers
 > (`sysMpiCreateMbox`, `sysMpiPostMessage`, …) with different signatures. These
@@ -269,11 +274,11 @@ These mailboxes are created at boot by the named processes:
 | Mailbox name | Created by | Purpose |
 |--------------|-----------|---------|
 | `"init"`     | `bin/init/main.c`              | PID 1 command mailbox |
-| `"system"`   | `sys/arch/*/…/systemtask.c`    | Kernel system task (V86/BIOS, etc.) |
+| `"system"`   | i386 system task (`releng/2`) | Kernel system task for V86/BIOS calls — i386 history; **TODO: verify** no 64-bit kernel creates it |
 | `"ubixfs"`   | `sys/fs/ubixfs/thread.c`       | UbixFS background thread |
-| `"ubistry"`  | `bin/ubistry/message.c`        | Key-value registry service |
-| `AUTHD_MBOX` | `bin/authd/main.c`             | Authentication service |
-| `AUTOMOUNTD_MBOX` | `bin/automountd/main.c`   | Storage arrive/depart events |
+| `"ubistry"`  | `usr.sbin/ubistry/`            | Key-value registry service |
+| `AUTHD_MBOX` | `usr.sbin/authd/main.c`        | Authentication service |
+| `AUTOMOUNTD_MBOX` | `usr.sbin/automountd/`    | Storage arrive/depart events |
 
 GUI clients (`views`, `vlogin`, `login`, `muffin`, `hello`, `vdoom`, …) create
 private per-instance mailboxes for replies and display events.

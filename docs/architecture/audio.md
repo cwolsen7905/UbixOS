@@ -2,12 +2,16 @@
 
 > **Status (2026-06-10): target design — partially built.**
 > The kernel `/dev/audio` device and the `libaudio` client library exist and
-> work **single-stream** today (AC97 on i386, virtio-sound on aarch64). The
+> work **single-stream** today (AC97 on x86_64, virtio-sound on aarch64; AC97 was also the i386 device on `releng/2`). The
 > **`aural` mixer server** that lets multiple apps play at once is **not built
 > yet** — Phases 1–4 in `docs/design/sound-server.md`. This document describes
 > the model the implementation builds toward and the rules app authors should
 > follow; sections describing `aural` itself are the spec until those phases
 > land. The `/dev/audio` contract and `libaudio` API below are real today.
+>
+> **TODO: verify:** `usr.sbin/aural/` (mixer, stream registry, audio sink) now exists in the
+> tree, so this status banner may be out of date; it was not re-audited in the
+> 64-bit architecture refresh.
 
 ## Design principle
 
@@ -50,7 +54,7 @@ change.
   ┌───────────────────────────────────────────────────────────────┐
   │  Kernel — the /dev/audio contract (same on both arches)        │
   │                                                               │
-  │  i386:     sys/pci/ac97.c          → /dev/audio (major 20)    │
+  │  x86_64:   sys/arch/x86_64/dev/ac97.c → /dev/audio (major 20) │
   │  aarch64:  sys/arch/aarch64/dev/virtio_sound.c → /dev/audio   │
   │                                                               │
   │    dev_char_write  – queue one period of PCM for playback     │
@@ -220,8 +224,8 @@ the server.
   `docs/apps/writing-an-aural-app.md` (to be written alongside Phase 1).
 
 ```sh
-bmake world && bmake image && bmake run        # i386
-bmake world image-arm TARGET=aarch64 && bmake run-aarch64 TARGET=aarch64
+bmake kernel world image && bmake run-aarch64                                # aarch64
+bmake kernel world image TARGET=x86_64 && bmake run-x86_64 TARGET=x86_64    # x86_64
 ```
 
 ---
