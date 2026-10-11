@@ -142,7 +142,7 @@ jobs:
         run: |
           case "${{ matrix.arch }}" in
             aarch64) prefix=aarch64-linux-gnu- ;;
-            x86_64)  prefix= ;;
+            x86_64)  prefix=x86_64-linux-gnu- ;;   # tools/build-netsurf.sh defaults an empty prefix to x86_64-elf-
           esac
           bmake kernel world image TARGET=${{ matrix.arch }} CROSS_PREFIX="$prefix"
 
