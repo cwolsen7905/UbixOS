@@ -1,8 +1,13 @@
 # UbixOS Coding Style Guide
 
-This is the single source of truth for code style in UbixOS. Tools derive
-from it: `.clang-format` enforces formatting, `.clang-tidy` enforces naming.
-`CONTRIBUTING.md` references this document rather than duplicating it.
+This is the single source of truth for **naming, headers and formatting** in
+uBixOS. Tools derive from it: `.clang-format` enforces formatting,
+`.clang-tidy` enforces naming. Language, safety and kernel rules are in
+[`docs/standards/`](docs/standards/README.md) (start with `coding.md`);
+`CONTRIBUTING.md` references both rather than duplicating them.
+
+Where this file and `.clang-format` disagree, **`.clang-format` wins** — it is
+what the `format` gate runs.
 
 Enforcement is incremental — new code must follow these rules; existing code
 is renamed as files are touched, or in dedicated per-subsystem cleanup commits.
@@ -17,7 +22,7 @@ Enforced by `.clang-format`. Run `clang-format -i <file>` or
 - **Indentation**: 8-space hard tabs, never spaces.
 - **Braces**: Allman style — opening brace on its own line for functions;
   same line for control flow (`if`, `for`, `while`, `do`).
-- **Line length**: 80 columns.
+- **Line length**: 120 columns (`ColumnLimit` in `.clang-format`).
 - **Pointers**: aligned to the variable name — `int *foo`, not `int* foo`.
 - **Spaces**: one space after keywords (`if (`, `for (`), no space for
   function calls (`foo(`).
@@ -162,7 +167,8 @@ uint8_t        *buf;
 
 ### Macros and `#define` Constants
 
-`ALL_CAPS_SNAKE_CASE` always, for both constants and function-like macros:
+`ALL_CAPS_SNAKE_CASE` always, for both constants and function-like macros
+(the addresses below are illustrative i386 values, not current layouts):
 
 ```c
 #define PAGE_SIZE               4096
@@ -212,22 +218,29 @@ The closing `#endif` must carry a comment repeating the guard name.
 
 ## Comments
 
-- Default to **no comments**. Well-named identifiers are self-documenting.
+- Inside function bodies, default to **no comments**. Well-named identifiers
+  are self-documenting.
 - Add a comment only when the **why** is non-obvious: a hardware quirk, a
   subtle invariant, a workaround for a specific bug, or behavior that would
   surprise a reader.
 - Never explain what the code does — the code does that.
 - Never reference the task, PR, or caller in a comment — that belongs in the
   commit message.
-- One short line maximum. No multi-line block comments for implementation
-  details.
+- Delete commented-out code.
 
-Function header comments are only written for public API functions in headers,
-not for internal `static` helpers:
+**Every new or substantially changed function — `static` helpers included —
+has a Doxygen block** immediately above its definition (format in `CLAUDE.md`
+and `docs/standards/coding.md` C-40). This replaces the older guidance that
+only public API functions in headers were documented; the `doxygen-docs` gate
+enforces it on functions added in a diff.
 
 ```c
-/* Returns the first free physical page frame, or 0 on exhaustion. */
-uint32_t vmm_find_free_page(void);
+/**
+ * Return the first free physical page frame.
+ *
+ * @return the frame number, or 0 on exhaustion.
+ */
+uint64_t vmm_find_free_page(void);
 ```
 
 ---
@@ -237,9 +250,12 @@ uint32_t vmm_find_free_page(void);
 Prefer fixed-width types from `<sys/types.h>`:
 
 ```c
-uint8_t, uint16_t, uint32_t   /* unsigned */
-int8_t,  int16_t,  int32_t    /* signed   */
+uint8_t, uint16_t, uint32_t, uint64_t   /* unsigned */
+int8_t,  int16_t,  int32_t,  int64_t    /* signed   */
 ```
+
+Pointers and sizes use `uintptr_t`, `size_t`, `ptrdiff_t` — the tree is LP64;
+never assume `long` or a pointer is 32 bits (coding.md C-12).
 
 Avoid `uInt8`, `uInt16`, `uInt32` (legacy UbixOS aliases) in new code.
 Replace them as files are touched.
@@ -264,7 +280,7 @@ Migration priority order (highest impact / most-read code first):
 1. `sys/include/` — headers propagate naming everywhere
 2. `sys/vmm/`
 3. `sys/kernel/`
-4. `sys/arch/i386/`
+4. `sys/arch/aarch64/`, `sys/arch/x86_64/`
 5. `sys/fs/vfs/`
 6. `lib/libc/`
 7. Remaining `sys/` subsystems
@@ -278,8 +294,9 @@ Migration priority order (highest impact / most-read code first):
 # Format a single file in place
 clang-format -i sys/vmm/paging.c
 
-# Check naming + style on files changed vs HEAD
+# Run the gate suite (format, banned APIs, Doxygen, statics, tidy) on changed files
 tools/mcr.sh
+tools/check/run.sh            # the same gates, directly
 
 # Auto-apply clang-format fixes
 tools/mcr.sh --fix

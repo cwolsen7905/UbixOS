@@ -2,6 +2,15 @@
 
 This document describes the internal design of the UbixOS kernel, userland, and build system.
 
+> **Status of this document.** master is **64-bit only**: AArch64 (primary) and
+> x86_64. Sections tagged **[i386]** below describe the 32-bit kernel, which is
+> frozen on the `releng/2` branch; they are kept as history and as the
+> description of subsystems that were not rewritten. For the current
+> architecture-neutral rules see [`docs/standards/`](docs/standards/README.md),
+> and for the per-arch plan `docs/design/cross-arch-plan.md` and
+> `docs/design/console-and-arch-convergence-plan.md`. Where this file and the
+> code disagree, the code wins — please fix the document.
+
 ---
 
 ## Table of Contents
@@ -26,9 +35,18 @@ This document describes the internal design of the UbixOS kernel, userland, and 
 
 ## Overview
 
-UbixOS is a monolithic kernel targeting x86 (i386) in 32-bit protected mode. It runs in a single privilege boundary (ring 0) with a clear ring 3 user space enforced through the GDT. The kernel is compiled as a position-independent bare-metal binary linked by `sys/compile/ldscript.i386`.
+UbixOS is a monolithic kernel for 64-bit MMU-class machines. The kernel runs
+privileged (EL1 on AArch64, ring 0 on x86_64) with user space unprivileged
+(EL0 / ring 3) in separate address spaces. **AArch64 is the default and primary
+target** (QEMU `virt`, heading for Raspberry Pi / Orange Pi); **x86_64** is the
+second supported architecture and the abstraction anchor that keeps the
+machine-independent / machine-dependent split honest. Each arch has its own
+linker script (`sys/compile/ldscript.<arch>`). 32-bit i386 is frozen on
+`releng/2`. `sys/arch/armv6/` is an old experiment that is not built.
 
-Secondary architecture support for ARMv6 exists under `sys/arch/armv6/` and `sys/boot/arm/` but is not production-ready.
+The two 64-bit kernels are assembled from the same machine-independent
+subsystems below plus the minimum in `sys/arch/<arch>/`
+(`kern/ vmm/ dev/ lib/ net/ board/ bringup/`).
 
 ---
 
@@ -37,12 +55,12 @@ Secondary architecture support for ARMv6 exists under `sys/arch/armv6/` and `sys
 ```
 sys/
 ├── arch/
-│   ├── i386/       - x86 CPU, interrupts, syscall dispatch, fork, scheduler, SMP AP boot
-│   └── armv6/      - ARMv6 support (experimental)
-├── init/
-│   ├── start.S     - Assembly bootstrap (segments, initial stack, multiboot detection)
-│   └── main.c      - C entry point; GDT setup and subsystem initialization table
-├── kernel/         - Core kernel: scheduler, ELF loader, exec, signals, TTY, pipes, SMP
+│   ├── aarch64/    - AArch64 (primary): boot, exceptions, context switch, MMU, syscall glue, devices, boards
+│   ├── x86_64/     - x86_64 (anchor): boot, IDT/IRQ, context switch, MMU, syscall glue, SMP, devices
+│   └── armv6/      - ARMv6 experiment (not built)
+├── init/           - [i386] bootstrap (`start.S`, `main.c`); the 64-bit ports use sys/arch/<arch>/{boot,kern}
+├── kern/, posix/   - Core kernel: scheduler, ELF loader, exec, syscall tables; POSIX layer, signals, TTY, pipes
+│                     (older text below calls this directory `kernel/`)
 ├── vmm/            - Virtual memory manager (paging, COW, address space management)
 ├── fs/
 │   ├── vfs/        - Virtual filesystem layer
@@ -61,13 +79,17 @@ sys/
 ├── sys/            - Core system services (DMA, IDT, I/O ports, video)
 ├── include/        - All kernel-internal headers
 └── compile/
-    ├── ldscript.i386  - Linker script for final kernel binary
+    ├── ldscript.<arch> - Per-arch linker script for the final kernel binary
     └── kernel         - Final linked kernel output
 ```
 
 ---
 
 ## Boot Sequence
+
+> **[i386]** The detailed sequence below is the 32-bit multiboot/GRUB path. The 64-bit
+> kernels boot via QEMU `-kernel` injection or U-Boot (`booti`) and per-arch
+> `start.S`/`boot.c`; see `sys/arch/*/kern/` and the cross-arch plan.
 
 ### x86 Startup
 
@@ -111,13 +133,15 @@ sys/
 
 5. After init, `kmain` mounts the FAT32 boot partition at `/` using the multiboot `boot_device` field, then `execFile("/bin/init")` launches PID 1.
 
-### SMP Application Processor Startup
+### SMP Application Processor Startup **[i386]**
 
 APs are brought up via the trampoline in `sys/arch/i386/ap-boot.S`. The BSP writes the trampoline to physical address `0x000000`, signals the AP via the LAPIC, and the AP enters protected mode. Spinlock synchronization in `sys/kernel/smp.c` serializes the AP initialization sequence.
 
 ---
 
 ## Memory Management (VMM)
+
+> **[i386]** except "64-bit address spaces & demand paging" below, which is current.
 
 Source: `sys/vmm/`
 
@@ -170,12 +194,12 @@ The arch fault handlers (`sys/arch/aarch64/kern/exceptions.c`; x86_64 `idt.c` �
 
 ## Process Model
 
-Source: `sys/kernel/`, `sys/arch/i386/`
+Source: `sys/kern/`, `sys/posix/`, `sys/arch/<arch>/kern/`
 
 - **Scheduler:** O(1) preemptive scheduler driven by PIT interrupts routed through the scheduler TSS (`sched.c`). Tasks are assigned a QoS class (`SCHED_CLASS_RT`, `INTERACTIVE`, `NORMAL`, `BATCH`) which maps to a priority band in the run-queue bitmap. I/O completion boosts priority transiently; CPU-bound tasks decay one band over time; starved tasks are aged upward after `AGING_THRESHOLD` ticks.
 - **Task lifecycle:** `READY → RUNNING → BLOCKED/STOPPED → ZOMBIE → (reaped)`. A dying task transitions to `ZOMBIE`, signals the parent with `SIGCHLD`, and is reaped by the parent's `wait4` call. `STOPPED` tasks are suspended by `SIGSTOP` and resumed by `SIGCONT`.
 - **Forking:** `fork.c` calls `vmmCopyVirtualSpace()` then duplicates the kernel task structure.
-- **ELF execution:** `elf.c` + `execve.c` parse and load standard i386 ELF binaries, set up the initial stack and entry point, then switch to ring 3.
+- **ELF execution:** `elf.c` + `execve.c` parse and load ELF binaries for the running arch (ELF64 on both 64-bit ports), set up the initial stack and entry point, then switch to ring 3.
 - **Signals:** `signal.c` / `kern_sig.c` implement POSIX signal delivery (`sigaction`, `sigprocmask`, `sigpending`, `sigsuspend`). `SA_RESTART` and `SA_SIGINFO` flags are honoured. Default actions are enforced for `SIGSTOP`, `SIGCONT`, `SIGKILL`, `SIGTTIN`, `SIGCHLD`, etc.
 - **Threading:** `ubthread.c` provides user-level thread support.
 - **SMP:** `smp.c` coordinates multi-processor scheduling.
@@ -483,7 +507,7 @@ Userland is built separately from the kernel. All binaries link against **musl l
 
 ### Runtime Linker (`libexec/`)
 
-The runtime dynamic linker is musl's (`/lib/ld-musl-i386.so.1`, the `PT_INTERP` of userland binaries). Shared libraries are installed at `/lib/` on the UbixOS volume. (The older native `libexec/ld` — which used `sys:/lib/` — is superseded.)
+The runtime dynamic linker is musl's (`/lib/ld-musl-${ARCH}.so.1`, the `PT_INTERP` of userland binaries). Shared libraries are installed at `/lib/` on the UbixOS volume. (The older native `libexec/ld` — which used `sys:/lib/` — is superseded.)
 
 ---
 
