@@ -337,10 +337,18 @@ struct sys_umask_args
 
 struct sys_utimensat_args
 {
-	char fd_l_[PADL_(int)];        int fd;        char fd_r_[PADR_(int)];
-	char path_l_[PADL_(char *)];   char *path;    char path_r_[PADR_(char *)];
-	char times_l_[PADL_(void *)];  void *times;   char times_r_[PADR_(void *)];
-	char flag_l_[PADL_(int)];      int flag;      char flag_r_[PADR_(int)];
+	char fd_l_[PADL_(int)];
+	int fd;
+	char fd_r_[PADR_(int)];
+	char path_l_[PADL_(char *)];
+	char *path;
+	char path_r_[PADR_(char *)];
+	char times_l_[PADL_(void *)];
+	void *times;
+	char times_r_[PADR_(void *)];
+	char flag_l_[PADL_(int)];
+	int flag;
+	char flag_r_[PADR_(int)];
 };
 
 struct sys_sysctl_args
@@ -1418,6 +1426,18 @@ int sys_setpgrp(struct thread *td, struct sys_setpgid_args *);
 int sys_sigprocmask(struct thread *td, struct sys_sigprocmask_args *);
 int sys_sigaction(struct thread *td, struct sys_sigaction_args *);
 int sys_sigreturn(struct thread *td, struct sys_sigreturn_args *);
+
+struct sys_sigaltstack_args
+{
+	char ss_l_[PADL_(const void *)];
+	const void *ss; /* musl stack_t */
+	char ss_r_[PADR_(const void *)];
+
+	char oss_l_[PADL_(void *)];
+	void *oss;
+	char oss_r_[PADR_(void *)];
+};
+int sys_sigaltstack(struct thread *td, struct sys_sigaltstack_args *);
 
 int sys_getpgrp(struct thread *td, struct sys_getpgrp_args *);
 int sys_setpgid(struct thread *td, struct sys_setpgid_args *);

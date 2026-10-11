@@ -36,7 +36,9 @@
 int sys_setitimer(struct thread *td, struct setitimer_args *uap);
 int sys_getitimer(struct thread *td, struct setitimer_args *uap);
 
-/* System Calls List */
+/* System Calls List: hand-aligned, one slot per line, index comment checked by
+ * the syscall-table gate. */
+// clang-format off
 struct syscall_entry systemCalls_posix[] = {
     {0, "No Call", sys_invalid, SYSCALL_VALID},                                                                 /* 0 */
     {ARG_COUNT(sys_exit_args), "exit", (sys_call_t *)sys_exit, SYSCALL_VALID},                                  /* 1 */
@@ -91,7 +93,7 @@ struct syscall_entry systemCalls_posix[] = {
     {ARG_COUNT(sys_setlogin_args), "setlogin", sys_setlogin, SYSCALL_NOTIMP},                                   /* 50 */
     {0, "acct", sys_invalid, SYSCALL_NOTIMP},                                                                   /* 51 */
     {0, "No Call", sys_invalid, SYSCALL_INVALID},                                                               /* 52 */
-    {0, "sigaltstack", sys_invalid, SYSCALL_NOTIMP},                                                            /* 53 */
+    {ARG_COUNT(sys_sigaltstack_args), "sigaltstack", (sys_call_t *)sys_sigaltstack, SYSCALL_VALID},             /* 53 */
     {ARG_COUNT(sys_ioctl_args), "ioctl", sys_ioctl, SYSCALL_VALID},                                             // 54 - ioctl
     {1, "reboot", (sys_call_t *)sys_reboot, SYSCALL_VALID},                            // 55 - reboot
     {0, "revoke", sys_invalid, SYSCALL_NOTIMP},                                                                 // 56 - revoke
@@ -624,5 +626,6 @@ struct syscall_entry systemCalls_posix[] = {
     {0, "kqueuex", sys_invalid, SYSCALL_NOTIMP},                                                               /* 583 - Invalid */
     {2, "membarrier", (sys_call_t *)sys_membarrier, SYSCALL_VALID},                                            /* 584 - membarrier (UP no-op) */
 };
+// clang-format on
 
 int totalCalls_posix = sizeof(systemCalls_posix) / sizeof(struct syscall_entry);
