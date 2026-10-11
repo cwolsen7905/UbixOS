@@ -1122,8 +1122,8 @@ static int procfs_opendir(const char *path, kDIR_t *dir)
  * vfsReadDir
  * --------------------------------------------------------------------- */
 
-#define PROCFS_PID_NFILES 6 /* all six entries (was 5, which dropped "fd") */
-#define PROCFS_PID_FD_IDX 5 /* index of "fd" — the DIR entry (was 4 == "maps") */
+#define PROCFS_PID_NFILES ((int)(sizeof(g_procfs_pid_files) / sizeof(g_procfs_pid_files[0])))
+#define PROCFS_PID_FD_IDX (PROCFS_PID_NFILES - 1) /* "fd" is last: the one DIR entry */
 
 /**
  * VFS readdir hook: fill ent with the next entry; returns -1 at the end.
