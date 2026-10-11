@@ -34,23 +34,24 @@
 
 int pipe(struct thread *, struct pipe_args *);
 
-struct pipeBuf {
-    struct pipeBuf *next;
-    char *buffer;
-    size_t nbytes;
-    off_t offset;
-
+struct pipeBuf
+{
+	struct pipeBuf *next;
+	char *buffer;
+	size_t nbytes;
+	off_t offset;
 };
 
-struct pipeInfo {
-    int rFD;
-    int rfdCNT;
-    int wFD;
-    int wfdCNT;
-    int bCNT;
-    struct pipeBuf *headPB;
-    struct pipeBuf *tailPB;
-    int reader_pid;  /* PID of task blocked in pipe read (0 = none) */
+struct pipeInfo
+{
+	int rFD;
+	int rfdCNT;
+	int wFD;
+	int wfdCNT;
+	int bCNT;
+	struct pipeBuf *headPB;
+	struct pipeBuf *tailPB;
+	int reader_pid; /* PID of task blocked in pipe read (0 = none) */
 };
 
 /*
@@ -58,7 +59,7 @@ struct pipeInfo {
  * read, write, open-count change and free goes under one lock (vfs_calls.c).
  * @end is the struct file's pipe_end tag (PIPE_END_READ / PIPE_END_WRITE).
  */
-void pipe_ref_end(struct pipeInfo *pi, int end);     /* fork/dup: one more holder of @end */
-int pipe_release_end(struct pipeInfo *pi, int end);  /* close: drop @end; frees + returns 1 at zero */
+void pipe_ref_end(struct pipeInfo *pi, int end);    /* fork/dup: one more holder of @end */
+int pipe_release_end(struct pipeInfo *pi, int end); /* close: drop @end; frees + returns 1 at zero */
 
 #endif /* END _SYS_PIPE_H */

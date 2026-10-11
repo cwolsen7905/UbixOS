@@ -29,7 +29,7 @@
 #include <ubixos/vitals.h>
 #include <ubixos/callout.h>
 #include <sys/shutdown.h>
-#include <vmm/vmm_shmap.h>       /* vmm_shmap_exit */
+#include <vmm/vmm_shmap.h>      /* vmm_shmap_exit */
 #include <mpi/mpi.h>            /* mpi_destroyProcessMboxes — free a task's mailboxes on exit */
 #include <sys/descrip.h>        /* g_device_find — bus-device lookup hook (ubx_device_find shim) */
 #include <sys/bus.h>            /* struct ubx_device */
@@ -237,7 +237,8 @@ void endTask(pidType pid)
 			{
 				struct file *f = (struct file *)_current->td.o_files[fd];
 
-				if (f != 0 && (f->fd_type == FD_TYPE_PIPE || f->fd_type == FD_TYPE_SOCKET || f->fd_type == FD_TYPE_FILE))
+				if (f != 0 && (f->fd_type == FD_TYPE_PIPE || f->fd_type == FD_TYPE_SOCKET ||
+				               f->fd_type == FD_TYPE_FILE))
 				{
 					struct sys_close_args ca;
 					ca.fd = fd;

@@ -50,6 +50,16 @@
 #include <fs/vfs/file.h>
 #include <fs/vfs/mount.h>
 #include <fs/devfs/devfs.h> /* devfs_resolve — device path -> (major, minor) for block mounts */
+
+/*
+ * One lock for all pipe state.  Pipes were unlocked: with two CPUs, a writer
+ * appending (bmake's output) while the reader consumed (grep) let the buffer
+ * count and the buffer list disagree, and the reader dereferenced a NULL list
+ * head in the kernel (grep killed mid-build).  Critical sections are short and
+ * never sleep; spinLock is the kernel's yielding lock.
+ */
+static struct spinLock g_pipe_lock = SPIN_LOCK_INITIALIZER;
+
 /* fat_filelib.h removed — use VFS unlink() for file removal */
 
 /* Socket read/write/close moved to the socket fileops (sys/net/net/sys_arch.c);
@@ -151,21 +161,16 @@ int sys_openat(struct thread *td, struct sys_openat_args *args)
 	return (kern_openat(td, args->fd, args->path, args->flag, (int)args->mode));
 }
 
-/*
- * One lock for all pipe state.  Pipes were unlocked: with two CPUs, a writer
- * appending (bmake's output) while the reader consumed (grep) let the buffer
- * count and the buffer list disagree, and the reader dereferenced a NULL list
- * head in the kernel (grep killed mid-build).  Critical sections are short and
- * never sleep; spinLock is the kernel's yielding lock.
- */
-static struct spinLock g_pipe_lock = SPIN_LOCK_INITIALIZER;
-
 /* EAGAIN as user programs see it.  The POSIX layer returns errno values straight
  * to musl, which uses the Linux numbering (EAGAIN 11); <sys/errno.h> here is the
  * FreeBSD set (EAGAIN 35, which musl reads as EDEADLK).  Most common errnos agree
  * between the two; EAGAIN does not. */
 #define UBIX_USER_EAGAIN 11
 
+/**
+ * Record one more holder (fork/dup) of pipe end @end (PIPE_END_READ or
+ * PIPE_END_WRITE) of @pi, under g_pipe_lock.
+ */
 void pipe_ref_end(struct pipeInfo *pi, int end)
 {
 	spinLock(&g_pipe_lock);
@@ -176,6 +181,13 @@ void pipe_ref_end(struct pipeInfo *pi, int end)
 	spinUnlock(&g_pipe_lock);
 }
 
+/**
+ * Drop one holder of pipe end @end of @pi (close).  Losing the last writer wakes
+ * a sleeping reader so it sees EOF; when both ends reach zero the pipe and its
+ * buffers are freed.
+ *
+ * @return 1 if @pi was freed (caller must not touch it), 0 otherwise.
+ */
 int pipe_release_end(struct pipeInfo *pi, int end)
 {
 	struct pipeBuf *pbuf = NULL;
@@ -224,9 +236,8 @@ int sys_close(struct thread *td, struct sys_close_args *args)
 	if (fd != NULL && fd->f_ops != NULL && fd->f_ops->close != NULL)
 		return (fd->f_ops->close(fd, td, args->fd));
 
-	// kprintf("[sC:%i:0x%X:0x%X]", args->fd, fd, fd->fd);
-
 #ifdef DEBUG_VFS_CALLS
+	// kprintf("[sC:%i:0x%X:0x%X]", args->fd, fd, fd->fd);
 	kprintf("[sC::0x%X:0x%X]", args->fd, fd, fd->fd);
 #endif
 

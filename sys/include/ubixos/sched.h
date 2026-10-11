@@ -220,18 +220,18 @@ extern "C"
 
 	/* Scheduler state-transition API — always use these instead of direct
 	 * task->state assignments.  Phase 2 will add run-queue management here. */
-	void sched_ready(kTask_t *t);                  /* READY  — task is runnable        */
-	void sched_dead(kTask_t *t);                   /* DEAD   — task has exited          */
-	void sched_sleep(kTask_t *t, tState s);        /* WAIT / UNINTERRUPTIBLE — blocked  */
-	void sched_wakeup(kTask_t *t);                 /* RUNNING — unblocked, back to work */
-	void sched_stop(kTask_t *t, int sig);          /* STOPPED — suspended by signal     */
+	void sched_ready(kTask_t *t);                 /* READY  — task is runnable        */
+	void sched_dead(kTask_t *t);                  /* DEAD   — task has exited          */
+	void sched_sleep(kTask_t *t, tState s);       /* WAIT / UNINTERRUPTIBLE — blocked  */
+	void sched_wakeup(kTask_t *t);                /* RUNNING — unblocked, back to work */
+	void sched_stop(kTask_t *t, int sig);         /* STOPPED — suspended by signal     */
 	void sched_reparent_children(kTask_t *dying); /* orphans -> init (pid 1) at exit */
-	void sched_wait_child(void);
+	void sched_wait_child(void);                  /* wait4: sleep until a child exits/stops or a signal */
 	int md_task_kstack(kTask_t *t, uintptr_t *pcs, int max); /* arch: saved kernel return addresses */
-	int signal_interrupts_wait(struct thread *td);   /* sys/posix/signal.c */                   /* wait4: sleep until a child exits/stops or a signal */
-	void sched_zombie(kTask_t *t);                 /* ZOMBIE  — exited, awaiting wait() */
-	void sched_io_wakeup(kTask_t *t);              /* I/O done: boost +4, re-enqueue    */
-	void sched_pi_boost(kTask_t *t, u_int8_t pri); /* PI: raise t to pri if higher      */
+	int signal_interrupts_wait(struct thread *td);           /* sys/posix/signal.c */
+	void sched_zombie(kTask_t *t);                           /* ZOMBIE  — exited, awaiting wait() */
+	void sched_io_wakeup(kTask_t *t);                        /* I/O done: boost +4, re-enqueue    */
+	void sched_pi_boost(kTask_t *t, u_int8_t pri);           /* PI: raise t to pri if higher      */
 
 	/*
 	 * Wait-channel sleep/wakeup (replaces sched_yield() busy-wait loops).

@@ -18,7 +18,6 @@
  * in this arch file (whose basename would otherwise collide with sys/lib's). */
 char const hex2ascii_data[] = "0123456789abcdefghijklmnopqrstuvwxyz";
 
-
 /*
  * Word-at-a-time memset/memcpy.  These were byte loops, and the kernel clears
  * and copies a lot of memory (every new process page, every exec of a 100 MB

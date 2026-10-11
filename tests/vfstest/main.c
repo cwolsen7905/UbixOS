@@ -62,7 +62,8 @@ int main(void)
 	/* ".." folds against the previous component. */
 	check("chdir /usr/bin", chdir("/usr/bin") == 0);
 	check("chdir ..", chdir("..") == 0);
-	check("getcwd is /usr", getcwd(cwd, sizeof(cwd)) != NULL && (strcmp(cwd, "/usr") == 0 || strcmp(cwd, "/usr/") == 0));
+	check("getcwd is /usr",
+	      getcwd(cwd, sizeof(cwd)) != NULL && (strcmp(cwd, "/usr") == 0 || strcmp(cwd, "/usr/") == 0));
 	fd = open("../etc/passwd", O_RDONLY);
 	check("open ../etc/passwd from /usr", fd >= 0);
 	if (fd >= 0)
