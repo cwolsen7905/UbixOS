@@ -22,10 +22,15 @@
 #include <errno.h>
 #include <stdlib.h>
 #include <poll.h>
+#include <pthread.h>
 #include <signal.h>
 #include <sys/select.h>
 
+#define NMAPS 64
+#define MAPSZ 8192
+
 static int g_fail;
+static char *g_maps[2][NMAPS]; /* check_thread_mmap: each thread's regions */
 
 static void check(const char *what, int ok)
 {
@@ -147,6 +152,58 @@ static void check_poll_pipes(void)
 	close(p[0]);
 	close(p[1]);
 	close(q[0]);
+}
+
+/**
+ * mmap NMAPS regions for slot @arg and fill each with the slot's pattern byte.
+ * @return NULL.
+ */
+static void *mapper(void *arg)
+{
+	int slot = (int)(long)arg;
+	int i;
+
+	for (i = 0; i < NMAPS; i++)
+	{
+		char *m = mmap(NULL, MAPSZ, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANON, -1, 0);
+
+		g_maps[slot][i] = (m == MAP_FAILED) ? NULL : m;
+		if (m != MAP_FAILED)
+			memset(m, 'A' + slot, MAPSZ);
+	}
+	return NULL;
+}
+
+/**
+ * Two threads mmap concurrently; every region must be distinct and intact.
+ * @return 1 on success.
+ */
+static int check_thread_mmap(void)
+{
+	pthread_t t;
+	int s, i, j, k;
+
+	if (pthread_create(&t, NULL, mapper, (void *)1L) != 0)
+		return 0;
+	mapper((void *)0L);
+	pthread_join(t, NULL);
+
+	for (s = 0; s < 2; s++)
+		for (i = 0; i < NMAPS; i++)
+		{
+			if (g_maps[s][i] == NULL)
+				return 0;
+			for (k = 0; k < MAPSZ; k += 512)
+				if (g_maps[s][i][k] != 'A' + s)
+					return 0;
+			for (j = 0; j < NMAPS; j++) /* no overlap with the other thread's maps */
+			{
+				char *o = g_maps[1 - s][j];
+				if (o != NULL && o < g_maps[s][i] + MAPSZ && g_maps[s][i] < o + MAPSZ)
+					return 0;
+			}
+		}
+	return 1;
 }
 
 /**
@@ -447,6 +504,7 @@ int main(int argc, char **argv)
 	}
 
 	check_poll_pipes();
+	check("two threads' mmaps are distinct and intact", check_thread_mmap());
 	check_execve_args(argv[0][0] == '/' ? argv[0] : "/usr/tests/vfstest");
 
 	printf("vfstest: %s\n", g_fail ? "FAILED" : "all passed");
