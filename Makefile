@@ -321,29 +321,40 @@ AARCH64_KERNEL_OBJS = \
 	${UBIXFS_KERN_SRCS:T:R:@_o@${OBJ_DIR}/obj/sys/${_o}.o@} \
 	${AARCH64_EMBED_OBJS:@_o@${OBJ_DIR}/obj/sys/${_o}@}
 
-kernel-aarch64:
+# One bmake target per kernel object, so `bmake -j N kernel` compiles them in
+# parallel (the recipe's old shell for-loops ran one compile at a time).  Each is
+# .PHONY: kbuild-cc.sh still decides whether the object is stale from its -MMD
+# .d file, so an unchanged tree recompiles nothing.  Guarded by _ARCH because
+# both arches name their objects ${OBJ_DIR}/obj/sys/<basename>.o.
+.if ${_ARCH} == "aarch64"
+AARCH64_COMPILE_OBJS =
+.for f in ${AARCH64_ARCH_ASM_SRCS}
+AARCH64_COMPILE_OBJS += ${OBJ_DIR}/obj/sys/${f:T:R}.o
+${OBJ_DIR}/obj/sys/${f:T:R}.o: .PHONY kernel-objdir
+	@sh ${CURDIR}/tools/kbuild-cc.sh "${KERN_CC} [asm] " ${.TARGET} ${CURDIR}/${f} ${KERN_CC} ${KERN_CCFLAGS} ${AARCH64_KCFLAGS}
+.endfor
+.for f in ${AARCH64_ARCH_C_SRCS}
+AARCH64_COMPILE_OBJS += ${OBJ_DIR}/obj/sys/${f:T:R}.o
+${OBJ_DIR}/obj/sys/${f:T:R}.o: .PHONY kernel-objdir
+	@sh ${CURDIR}/tools/kbuild-cc.sh "${KERN_CC} [c]   " ${.TARGET} ${CURDIR}/${f} ${KERN_CC} ${KERN_CCFLAGS} ${AARCH64_KCFLAGS} -std=c99
+.endfor
+.for f in ${AARCH64_GENERIC_SRCS}
+AARCH64_COMPILE_OBJS += ${OBJ_DIR}/obj/sys/${f:T:R}.o
+${OBJ_DIR}/obj/sys/${f:T:R}.o: .PHONY kernel-objdir
+	@sh ${CURDIR}/tools/kbuild-cc.sh "${KERN_CC} [gen] " ${.TARGET} ${CURDIR}/${f} ${KERN_CC} ${KERN_CCFLAGS} ${AARCH64_KCFLAGS} -std=c99
+.endfor
+.for f in ${UBIXFS_KERN_SRCS}
+AARCH64_COMPILE_OBJS += ${OBJ_DIR}/obj/sys/${f:T:R}.o
+${OBJ_DIR}/obj/sys/${f:T:R}.o: .PHONY kernel-objdir
+	@sh ${CURDIR}/tools/kbuild-cc.sh "${KERN_CC} [ubfs]" ${.TARGET} ${CURDIR}/${f} ${KERN_CC} ${KERN_CCFLAGS} ${AARCH64_KCFLAGS} ${UBIXFS_KERN_INCS} -std=c99
+.endfor
+.endif
+
+kernel-objdir: .PHONY
 	@mkdir -p ${OBJ_DIR}/boot ${OBJ_DIR}/obj/sys
-	@# Arch sources come from the explicit AARCH64_ARCH_{ASM,C}_SRCS lists (above), not
-	@# a recipe-time `find`: the on-device shell's command substitution returns empty,
-	@# so a find-based sweep silently dropped the whole arch tree.  Object names use
-	@# ${f##*/}/${b%.o} expansion, not `basename` — on-device busybox `basename PATH
-	@# SUFFIX` returns empty for a multi-component PATH (collapsing every object onto `.o`).
-	@for f in ${AARCH64_ARCH_ASM_SRCS}; do \
-	    b=$${f##*/}; o=${OBJ_DIR}/obj/sys/$${b%.S}.o; \
-	    sh ${CURDIR}/tools/kbuild-cc.sh "${KERN_CC} [asm] " $$o ${CURDIR}/$$f ${KERN_CC} ${KERN_CCFLAGS} ${AARCH64_KCFLAGS} || exit 1; \
-	done
-	@for f in ${AARCH64_ARCH_C_SRCS}; do \
-	    b=$${f##*/}; o=${OBJ_DIR}/obj/sys/$${b%.c}.o; \
-	    sh ${CURDIR}/tools/kbuild-cc.sh "${KERN_CC} [c]   " $$o ${CURDIR}/$$f ${KERN_CC} ${KERN_CCFLAGS} ${AARCH64_KCFLAGS} -std=c99 || exit 1; \
-	done
-	@for f in ${AARCH64_GENERIC_SRCS}; do \
-	    b=$${f##*/}; o=${OBJ_DIR}/obj/sys/$${b%.c}.o; \
-	    sh ${CURDIR}/tools/kbuild-cc.sh "${KERN_CC} [gen] " $$o ${CURDIR}/$$f ${KERN_CC} ${KERN_CCFLAGS} ${AARCH64_KCFLAGS} -std=c99 || exit 1; \
-	done
-	@for f in ${UBIXFS_KERN_SRCS}; do \
-	    b=$${f##*/}; o=${OBJ_DIR}/obj/sys/$${b%.c}.o; \
-	    sh ${CURDIR}/tools/kbuild-cc.sh "${KERN_CC} [ubfs]" $$o ${CURDIR}/$$f ${KERN_CC} ${KERN_CCFLAGS} ${AARCH64_KCFLAGS} ${UBIXFS_KERN_INCS} -std=c99 || exit 1; \
-	done
+
+kernel-aarch64: ${AARCH64_COMPILE_OBJS}
+	@mkdir -p ${OBJ_DIR}/boot ${OBJ_DIR}/obj/sys
 	@echo "${KERN_USER_CC} [user] tools/aarch64-user/hello.c -> hello.elf (embedded)"
 	@${KERN_USER_CC} -march=armv8-a -mgeneral-regs-only -static -nostdlib -nostartfiles \
 	    -ffreestanding -fno-pic -fno-pie -O2 -Wl,-Ttext=0x100000000 -e _start \
@@ -548,25 +559,76 @@ X86_64_GENERIC_SRCS = \
 	sys/fs/fat/fat_sector.c \
 	sys/fs/fat/fat_vfs.c
 
-kernel-x86_64:
+# x86_64 arch sources, listed explicitly (not a recipe-time `find`, which comes
+# back empty under the in-OS shell — see AARCH64_ARCH_C_SRCS).
+# NOTE: a NEW file under sys/arch/x86_64 MUST be added here.
+X86_64_ARCH_ASM_SRCS = \
+	sys/arch/x86_64/boot/ap_trampoline.S \
+	sys/arch/x86_64/boot/start.S \
+	sys/arch/x86_64/kern/cpu_switch.S \
+	sys/arch/x86_64/kern/isr.S \
+	sys/arch/x86_64/kern/syscall_entry.S \
+	sys/arch/x86_64/kern/userdemo.S \
+	sys/arch/x86_64/kern/userentry.S
+
+X86_64_ARCH_C_SRCS = \
+	sys/arch/x86_64/boot/main.c \
+	sys/arch/x86_64/dev/ac97.c \
+	sys/arch/x86_64/dev/console_tty.c \
+	sys/arch/x86_64/dev/display.c \
+	sys/arch/x86_64/dev/input.c \
+	sys/arch/x86_64/dev/pci.c \
+	sys/arch/x86_64/dev/pty.c \
+	sys/arch/x86_64/dev/vga_fb.c \
+	sys/arch/x86_64/dev/virtio_blk.c \
+	sys/arch/x86_64/dev/virtio_net.c \
+	sys/arch/x86_64/kern/console.c \
+	sys/arch/x86_64/kern/ctxtest.c \
+	sys/arch/x86_64/kern/elfdemo.c \
+	sys/arch/x86_64/kern/execfile.c \
+	sys/arch/x86_64/kern/fork.c \
+	sys/arch/x86_64/kern/idt.c \
+	sys/arch/x86_64/kern/irq.c \
+	sys/arch/x86_64/kern/ksupport.c \
+	sys/arch/x86_64/kern/madt.c \
+	sys/arch/x86_64/kern/pcpu.c \
+	sys/arch/x86_64/kern/proc.c \
+	sys/arch/x86_64/kern/scheddemo.c \
+	sys/arch/x86_64/kern/smp.c \
+	sys/arch/x86_64/kern/syscall_md.c \
+	sys/arch/x86_64/kern/syscall_stubs.c \
+	sys/arch/x86_64/kern/usermode.c \
+	sys/arch/x86_64/net/virtio_netif.c \
+	sys/arch/x86_64/vmm/resident.c \
+	sys/arch/x86_64/vmm/vmm_machdep.c
+
+# Explicit link list (not an obj/sys/*.o glob, which the in-OS shell truncates
+# on a large directory and which would also pick up stale objects).
+X86_64_KERNEL_OBJS = \
+	${X86_64_ARCH_ASM_SRCS:T:R:@_o@${OBJ_DIR}/obj/sys/${_o}.o@} \
+	${X86_64_ARCH_C_SRCS:T:R:@_o@${OBJ_DIR}/obj/sys/${_o}.o@} \
+	${X86_64_GENERIC_SRCS:T:R:@_o@${OBJ_DIR}/obj/sys/${_o}.o@} \
+	${UBIXFS_KERN_SRCS:T:R:@_o@${OBJ_DIR}/obj/sys/${_o}.o@}
+
+# Per-object targets for `bmake -j` (see AARCH64_COMPILE_OBJS).
+.if ${_ARCH} == "x86_64"
+.for f in ${X86_64_ARCH_ASM_SRCS}
+${OBJ_DIR}/obj/sys/${f:T:R}.o: .PHONY kernel-objdir
+	@sh ${CURDIR}/tools/kbuild-cc.sh "${CROSS_PREFIX}gcc [asm] " ${.TARGET} ${CURDIR}/${f} ${CROSS_PREFIX}gcc ${X86_64_KCFLAGS}
+.endfor
+.for f in ${X86_64_ARCH_C_SRCS} ${X86_64_GENERIC_SRCS}
+${OBJ_DIR}/obj/sys/${f:T:R}.o: .PHONY kernel-objdir
+	@sh ${CURDIR}/tools/kbuild-cc.sh "${CROSS_PREFIX}gcc [c]   " ${.TARGET} ${CURDIR}/${f} ${CROSS_PREFIX}gcc ${X86_64_KCFLAGS} -std=c99
+.endfor
+.for f in ${UBIXFS_KERN_SRCS}
+${OBJ_DIR}/obj/sys/${f:T:R}.o: .PHONY kernel-objdir
+	@sh ${CURDIR}/tools/kbuild-cc.sh "${CROSS_PREFIX}gcc [ubfs]" ${.TARGET} ${CURDIR}/${f} ${CROSS_PREFIX}gcc ${X86_64_KCFLAGS} ${UBIXFS_KERN_INCS} -std=c99
+.endfor
+.endif
+
+kernel-x86_64: ${X86_64_KERNEL_OBJS}
 	@mkdir -p ${OBJ_DIR}/boot ${OBJ_DIR}/obj/sys
-	@for f in `find ${CURDIR}/sys/arch/x86_64 -name '*.S'`; do \
-	    b=$${f##*/}; o=${OBJ_DIR}/obj/sys/$${b%.S}.o; \
-	    sh ${CURDIR}/tools/kbuild-cc.sh "${CROSS_PREFIX}gcc [asm] " $$o $$f ${CROSS_PREFIX}gcc ${X86_64_KCFLAGS} || exit 1; \
-	done
-	@for f in `find ${CURDIR}/sys/arch/x86_64 -name '*.c'`; do \
-	    b=$${f##*/}; o=${OBJ_DIR}/obj/sys/$${b%.c}.o; \
-	    sh ${CURDIR}/tools/kbuild-cc.sh "${CROSS_PREFIX}gcc [c]   " $$o $$f ${CROSS_PREFIX}gcc ${X86_64_KCFLAGS} -std=c99 || exit 1; \
-	done
-	@for f in ${X86_64_GENERIC_SRCS}; do \
-	    b=$${f##*/}; o=${OBJ_DIR}/obj/sys/$${b%.c}.o; \
-	    sh ${CURDIR}/tools/kbuild-cc.sh "${CROSS_PREFIX}gcc [gen] " $$o ${CURDIR}/$$f ${CROSS_PREFIX}gcc ${X86_64_KCFLAGS} -std=c99 || exit 1; \
-	done
-	@for f in ${UBIXFS_KERN_SRCS}; do \
-	    b=$${f##*/}; o=${OBJ_DIR}/obj/sys/$${b%.c}.o; \
-	    sh ${CURDIR}/tools/kbuild-cc.sh "${CROSS_PREFIX}gcc [ubfs]" $$o ${CURDIR}/$$f ${CROSS_PREFIX}gcc ${X86_64_KCFLAGS} ${UBIXFS_KERN_INCS} -std=c99 || exit 1; \
-	done
-	${CROSS_PREFIX}ld -T ${CURDIR}/sys/compile/ldscript.x86_64 -o ${OBJ_DIR}/boot/kernel ${OBJ_DIR}/obj/sys/*.o
+	${CROSS_PREFIX}ld -T ${CURDIR}/sys/compile/ldscript.x86_64 -o ${OBJ_DIR}/boot/kernel ${X86_64_KERNEL_OBJS}
 	@echo "x86_64 bring-up kernel linked: ${OBJ_DIR}/boot/kernel"
 
 # Graphical x86_64 run: a std-VGA window (the desktop framebuffer views draws
