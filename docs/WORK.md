@@ -13,7 +13,7 @@ Every lane updates its row in the same PR; rows are never deleted.
 | W-004 | standards | Engineering standards, C-world gate suite (tools/check) and CI rewrite | done | - | #7 | Merged 2026-10-11 |
 | W-005 | identity | Add identity direction document (proposal) | done | - | #8 | docs/design/identity.md; the ideas themselves are separate rows |
 | W-006 | docs | Bring architecture docs and DEBUG.md up to date for 64-bit master | done | - | #9 | ARCHITECTURE.md itself still needs its 64-bit rewrite (separate row) |
-| W-007 | self-host | Self-hosting: rebuild world and kernel inside UbixOS with Clang/LLVM + lld | doing | - | - | Plan: docs/design/self-hosting-plan.md. /usr/src/bin builds in-OS on aarch64 (#10). aarch64: the kernel builds in-OS (bmake -j4, 4 vCPUs) and the self-built kernel boots and passes sigtest/vfstest (with W-033, W-035). x86_64 in-OS not yet |
+| W-007 | self-host | Self-hosting: rebuild world and kernel inside UbixOS with Clang/LLVM + lld | doing | - | - | Plan: docs/design/self-hosting-plan.md. /usr/src/bin builds in-OS on aarch64 (#10). aarch64: the kernel builds in-OS (bmake -j4, 4 vCPUs) and the self-built kernel boots and passes sigtest/vfstest (with W-033, W-035). x86_64 kernel now builds with clang/lld (#18); in-OS x86_64 build compiles all objects, link not yet confirmed |
 | W-008 | self-host | x86_64 /usr/src/bin build inside UbixOS | todo | - | - | Follow-up from #10; slow under TCG |
 | W-009 | kernel | errno translation at the POSIX boundary (FreeBSD errno numbers vs musl Linux values: EAGAIN, ELOOP, ENAMETOOLONG, ...) | todo | - | - | Follow-up from #10 |
 | W-010 | userland | Add tee to the world | todo | - | - | Follow-up from #10 |
@@ -42,6 +42,10 @@ Every lane updates its row in the same PR; rows are never deleted.
 | W-033 | kernel | execve silently truncated arguments: each argv/env string cut at 4096 bytes, entries past 256 dropped | done | - | #17 | Both arches now copy argv/envp in whole (exec_args in sys/kern/kern_exec.c) up to EXEC_ARG_MAX (128 KB, = ARG_MAX) and fail E2BIG/EFAULT beyond it. bmake's 15 KB `sh -c` link lines for libbearssl/libcss lost their -o, so ld wrote a.out and exited 0 |
 | W-034 | ubixfs | New files on aarch64 show an mtime from boot time, not the current time | todo | - | - | Seen during the W-032 build (ls -l showed 20:24 for files written at 23:26); not investigated |
 | W-035 | self-host | Parallel kernel builds: one bmake target per kernel object so -j works | done | - | #18 | x86_64 kernel recipe also moved off recipe-time find and the obj/sys/*.o link glob (both break under the in-OS shell) |
+| W-036 | self-host | Block I/O: 4 MB hashed buffer cache, multi-sector UbixFS block I/O, batched virtio-blk on both arches | done | - | TBD | aarch64 in-OS clean kernel build -j4: ~32 min -> 9.6 min |
+| W-037 | kernel | poll/select ignored pipes and signals, so bmake -j waited its 5 s poll timeout about twice per job | done | - | TBD | 20 trivial jobs: -j1 204 s -> 2 s, -j4 52 s -> 3 s |
+| W-038 | kernel | setitimer/getitimer are stubs (no SIGALRM ever fires) | todo | - | - | sys/posix/gen_calls.c; found writing the W-037 tests |
+| W-039 | vfs | Global VFS lock + uncached path lookups serialise parallel compiles (open/readlink/close dominate) | todo | - | - | In-OS -j4 compiles of different files run no faster than sequential. Needs a name/lookup cache and/or a decoded-block cache in UbixFS; plan first |
 
 ## Notes
 
