@@ -28,6 +28,7 @@
 
 #ifndef _SYS_TYPES_H_
 #define _SYS_TYPES_H_
+/* clang-format off */
 
 #include <sys/_null.h>
 #include <sys/_types.h>
@@ -68,7 +69,7 @@ typedef int pidType;
 typedef long register_t;
 
 typedef int pid_t;
-typedef int size_t; /* standard */
+typedef unsigned long size_t; /* standard; pointer width (LP64) */
 
 #ifndef NOBOOL
 #ifndef __cplusplus
@@ -186,4 +187,5 @@ typedef __mode_t mode_t; /* permissions */
 #define _MODE_T_DECLARED
 #endif
 
+/* clang-format on */
 #endif /* END _SYS_TYPES_H */

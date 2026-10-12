@@ -1125,7 +1125,8 @@ int sys_poll(struct thread *td, struct sys_poll_args *args)
 		for (i = 0; i < nfds; i++)
 		{
 			int kfd = args->fds[i].fd;
-			short ev = args->fds[i].events;
+			int ev = args->fds[i].events;
+			int re = 0;
 			struct file *f = (kfd >= 0 && kfd < MAX_FILES) ? td->o_files[kfd] : NULL;
 
 			if (f == NULL)
@@ -1137,19 +1138,20 @@ int sys_poll(struct thread *td, struct sys_poll_args *args)
 				if (f->pipe_end == PIPE_END_READ)
 				{
 					if (pi->bCNT > 0)
-						args->fds[i].revents |= ev & (POLLIN | POLLRDNORM);
+						re |= ev & (POLLIN | POLLRDNORM);
 					if (pi->wfdCNT <= 0)
-						args->fds[i].revents |= POLLHUP | (ev & (POLLIN | POLLRDNORM));
+						re |= POLLHUP | (ev & (POLLIN | POLLRDNORM));
 				}
 				else
 				{
-					args->fds[i].revents |= ev & (POLLOUT | POLLWRNORM);
+					re |= ev & (POLLOUT | POLLWRNORM);
 					if (pi->rfdCNT <= 0)
-						args->fds[i].revents |= POLLHUP;
+						re |= POLLHUP;
 				}
 			}
 			else if (f->fd_type == FD_TYPE_FILE || f->fd_type == FD_TYPE_DIR)
-				args->fds[i].revents |= ev & (POLLIN | POLLRDNORM | POLLOUT | POLLWRNORM);
+				re = ev & (POLLIN | POLLRDNORM | POLLOUT | POLLWRNORM);
+			args->fds[i].revents = (short)(args->fds[i].revents | re);
 		}
 
 		/* poll() returns the number of fds with events, not the event count. */

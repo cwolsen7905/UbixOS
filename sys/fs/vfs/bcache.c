@@ -182,7 +182,7 @@ int bcache_read_multi(struct ubx_device *dev, u_int32_t lba, u_int32_t count, vo
 			int idx = slot_find(dev, lba + i);
 
 			g_slots[idx].ref = 1;
-			memcpy(out + i * BCACHE_SEC_BYTES, g_slots[idx].data, BCACHE_SEC_BYTES);
+			memcpy(out + (size_t)i * BCACHE_SEC_BYTES, g_slots[idx].data, BCACHE_SEC_BYTES);
 		}
 		bcache_release();
 		return (0);
@@ -194,7 +194,7 @@ int bcache_read_multi(struct ubx_device *dev, u_int32_t lba, u_int32_t count, vo
 		return (-1);
 	}
 	for (i = 0; i < count; i++)
-		slot_store(dev, lba + i, out + i * BCACHE_SEC_BYTES);
+		slot_store(dev, lba + i, out + (size_t)i * BCACHE_SEC_BYTES);
 	bcache_release();
 	return (0);
 }
@@ -227,7 +227,7 @@ int bcache_write_multi(struct ubx_device *dev, u_int32_t lba, u_int32_t count, c
 
 		if (idx >= 0)
 		{
-			memcpy(g_slots[idx].data, in + i * BCACHE_SEC_BYTES, BCACHE_SEC_BYTES);
+			memcpy(g_slots[idx].data, in + (size_t)i * BCACHE_SEC_BYTES, BCACHE_SEC_BYTES);
 			g_slots[idx].ref = 1;
 		}
 	}

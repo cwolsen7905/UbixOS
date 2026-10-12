@@ -164,7 +164,7 @@ static int blk_request(u64 lba, u32 n, int write)
 	g_desc[1].len = n * 512;
 	g_desc[1].flags = write ? VIRTQ_DESC_F_NEXT : (VIRTQ_DESC_F_NEXT | VIRTQ_DESC_F_WRITE);
 	g_desc[1].next = 2;
-	g_desc[2].addr = V2P((void *)g_status);
+	g_desc[2].addr = V2P((uintptr_t)g_status);
 	g_desc[2].len = 1;
 	g_desc[2].flags = VIRTQ_DESC_F_WRITE;
 	g_desc[2].next = 0;
@@ -322,11 +322,11 @@ int virtio_blk_init(void)
 		return -1;
 	memset(P2V(dma), 0, PAGE_SIZE);
 	g_hdr = (struct virtio_blk_req *)P2V(dma);
-	g_status = (volatile u8 *)P2V(dma) + 64;
+	g_status = (volatile u8 *)g_hdr + 64;
 	dma = vmm_find_free_pages_contig(BLK_BATCH_PAGES, sysID);
 	if (dma == 0)
 		return -1;
-	g_batch = (u8 *)P2V(dma);
+	g_batch = P2V(dma);
 
 	g_ready = 1;
 	serial_puts("virtio-blk: ready (I/O base ");

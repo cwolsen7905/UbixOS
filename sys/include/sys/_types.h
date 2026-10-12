@@ -28,6 +28,7 @@
 
 #ifndef _SYS__TYPES_H_
 #define _SYS__TYPES_H_
+/* clang-format off */
 
 #include <machine/ansi.h>
 
@@ -48,7 +49,7 @@ typedef unsigned long       __clock_t;
 
 /* stat / filesystem types */
 typedef __uint32_t          __ino_t;      /* inode number */
-typedef __int32_t           __ssize_t;
+typedef long                __ssize_t; /* LP64 */ // NOLINT(readability-identifier-naming)
 typedef __uint32_t          __dev_t;      /* device number */
 typedef __uint16_t          __mode_t;     /* file permissions */
 typedef __uint16_t          __nlink_t;    /* link count */
@@ -91,4 +92,5 @@ typedef __uint_least16_t    __char16_t;
 typedef __uint_least32_t    __char32_t;
 #endif
 
+/* clang-format on */
 #endif /* _SYS__TYPES_H_ */

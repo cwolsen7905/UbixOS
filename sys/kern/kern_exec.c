@@ -106,7 +106,7 @@ static int exec_args_count(char *const *uvec, int max)
 	{
 		const char *up;
 
-		if (copyin(&uvec[n], &up, sizeof(up)) != 0)
+		if (copyin((const void *)&uvec[n], (void *)&up, sizeof(up)) != 0)
 			return (-EFAULT);
 		if (up == NULL)
 			return (n);
@@ -130,7 +130,7 @@ static int exec_args_copyvec(struct exec_args *ea, char *const *uvec, int n, cha
 	{
 		const char *up;
 
-		if (copyin(&uvec[i], &up, sizeof(up)) != 0)
+		if (copyin((const void *)&uvec[i], (void *)&up, sizeof(up)) != 0)
 			return (-EFAULT);
 		if (up == NULL)
 			break;
@@ -168,7 +168,8 @@ int exec_args_copyin(struct exec_args *ea, const char *upath, char *const *uargv
 
 	ea->buf = kmalloc(EXEC_ARG_BUF);
 	/* Two spare slots ahead of argv take a "#!" interpreter and its argument. */
-	ea->vec = kmalloc((u_int32_t)((2 + (unsigned long)argc + 1 + 1 + (unsigned long)envc + 1) * sizeof(char *)));
+	ea->vec =
+	    (char **)kmalloc((u_int32_t)((2 + (unsigned long)argc + 1 + 1 + (unsigned long)envc + 1) * sizeof(char *)));
 	if (ea->buf == NULL || ea->vec == NULL)
 	{
 		exec_args_free(ea);
@@ -228,7 +229,7 @@ void exec_args_free(struct exec_args *ea)
 	if (ea->buf != NULL)
 		kfree(ea->buf);
 	if (ea->vec != NULL)
-		kfree(ea->vec);
+		kfree((void *)ea->vec);
 	memset(ea, 0, sizeof(*ea));
 }
 
