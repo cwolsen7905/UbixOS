@@ -35,7 +35,7 @@ OBJS   = adler32.o crc32.o deflate.o infback.o inffast.o inflate.o inftrees.o tr
 all: ${OBJ_DIR}/lib/libz.so
 ${OBJ_DIR}/lib/libz.so: $(OBJS)
 	@mkdir -p ${OBJ_DIR}/lib
-	$(LD) -m ${ARCH_LDEMUL} -shared -soname libz.so ${OBJS:S|^|${OBJDIR}/|} -L${OBJ_DIR}/lib -lc -o ${OBJ_DIR}/lib/libz.so
+	$(LD) -m ${ARCH_LDEMUL} -shared -soname libz.so ${OBJS:S|^|${OBJDIR}/|} -L${OBJ_DIR}/lib -L${MUSL_LIB} -lc -o ${OBJ_DIR}/lib/libz.so
 clean:
 	$(REMOVE) ${OBJDIR} ${OBJ_DIR}/lib/libz.so
 .for _d in ${OBJS:.o=.d}

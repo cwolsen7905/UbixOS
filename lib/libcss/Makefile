@@ -68,7 +68,7 @@ ${OBJ_DIR}/lib/libcss.so: ${OBJS:S|^|${OBJDIR}/|}
 	@mkdir -p ${OBJ_DIR}/lib
 	$(LD) -m ${ARCH_LDEMUL} -shared -soname libcss.so \
 		${OBJS:S|^|${OBJDIR}/|} \
-		-L${OBJ_DIR}/lib -lparserutils -lwapcaplet -lc \
+		-L${OBJ_DIR}/lib -L${MUSL_LIB} -lparserutils -lwapcaplet -lc \
 		-o ${OBJ_DIR}/lib/libcss.so
 
 clean:

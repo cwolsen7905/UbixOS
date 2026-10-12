@@ -337,10 +337,18 @@ struct sys_umask_args
 
 struct sys_utimensat_args
 {
-	char fd_l_[PADL_(int)];        int fd;        char fd_r_[PADR_(int)];
-	char path_l_[PADL_(char *)];   char *path;    char path_r_[PADR_(char *)];
-	char times_l_[PADL_(void *)];  void *times;   char times_r_[PADR_(void *)];
-	char flag_l_[PADL_(int)];      int flag;      char flag_r_[PADR_(int)];
+	char fd_l_[PADL_(int)];
+	int fd;
+	char fd_r_[PADR_(int)];
+	char path_l_[PADL_(char *)];
+	char *path;
+	char path_r_[PADR_(char *)];
+	char times_l_[PADL_(void *)];
+	void *times;
+	char times_r_[PADR_(void *)];
+	char flag_l_[PADL_(int)];
+	int flag;
+	char flag_r_[PADR_(int)];
 };
 
 struct sys_sysctl_args
@@ -1419,6 +1427,18 @@ int sys_sigprocmask(struct thread *td, struct sys_sigprocmask_args *);
 int sys_sigaction(struct thread *td, struct sys_sigaction_args *);
 int sys_sigreturn(struct thread *td, struct sys_sigreturn_args *);
 
+struct sys_sigaltstack_args
+{
+	char ss_l_[PADL_(const void *)];
+	const void *ss; /* musl stack_t */
+	char ss_r_[PADR_(const void *)];
+
+	char oss_l_[PADL_(void *)];
+	void *oss;
+	char oss_r_[PADR_(void *)];
+};
+int sys_sigaltstack(struct thread *td, struct sys_sigaltstack_args *);
+
 int sys_getpgrp(struct thread *td, struct sys_getpgrp_args *);
 int sys_setpgid(struct thread *td, struct sys_setpgid_args *);
 
@@ -1618,6 +1638,46 @@ int sys_gettimeofday(struct thread *td, struct sys_gettimeofday_args *);
 int sys_sendto(struct thread *td, struct sys_sendto_args *);
 
 int sys_pread(struct thread *td, struct sys_pread_args *);
+
+struct sys_pwrite_args
+{
+	char fd_l_[PADL_(int)];
+	int fd;
+	char fd_r_[PADR_(int)];
+
+	char buf_l_[PADL_(const void *)];
+	const void *buf;
+	char buf_r_[PADR_(const void *)];
+
+	char nbyte_l_[PADL_(u_int64_t)];
+	u_int64_t nbyte;
+	char nbyte_r_[PADR_(u_int64_t)];
+
+	char offset_l_[PADL_(off_t)];
+	off_t offset;
+	char offset_r_[PADR_(off_t)];
+};
+int sys_pwrite(struct thread *td, struct sys_pwrite_args *);
+
+struct sys_posix_fadvise_args
+{
+	char fd_l_[PADL_(int)];
+	int fd;
+	char fd_r_[PADR_(int)];
+
+	char offset_l_[PADL_(off_t)];
+	off_t offset;
+	char offset_r_[PADR_(off_t)];
+
+	char len_l_[PADL_(off_t)];
+	off_t len;
+	char len_r_[PADR_(off_t)];
+
+	char advice_l_[PADL_(int)];
+	int advice;
+	char advice_r_[PADR_(int)];
+};
+int sys_posix_fadvise(struct thread *td, struct sys_posix_fadvise_args *);
 
 struct sys_uname_args
 {

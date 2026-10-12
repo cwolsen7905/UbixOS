@@ -6,16 +6,24 @@
  * if any check failed.
  */
 
+#include <errno.h>
 #include <signal.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
+#include <sys/mman.h>
 #include <sys/wait.h>
 
 static volatile int g_hits;
 static volatile int g_signo;
 
 static int g_fail;
+
+static char g_altstack[65536];
+static volatile int g_alt_on;    /* handler's frame was inside g_altstack */
+static volatile int g_alt_flags; /* ss_flags sigaltstack reported inside the handler */
+static volatile int g_alt_eperm; /* changing the stack while on it failed with EPERM */
 
 static void check(const char *what, int ok)
 {
@@ -30,6 +38,103 @@ static void on_usr1(int sig, siginfo_t *si, void *ctx)
 	(void)ctx;
 	g_hits++;
 	g_signo = si ? si->si_signo : -1;
+}
+
+/**
+ * SIGUSR2 handler for the sigaltstack checks: records whether it runs on
+ * g_altstack, what sigaltstack reports from inside it, and that the stack
+ * cannot be changed while in use.
+ */
+static void on_usr2(int sig)
+{
+	char here;
+	stack_t q, n;
+
+	(void)sig;
+	g_alt_on = ((uintptr_t)&here >= (uintptr_t)g_altstack &&
+	            (uintptr_t)&here < (uintptr_t)g_altstack + sizeof(g_altstack));
+	g_alt_flags = (sigaltstack(NULL, &q) == 0) ? q.ss_flags : -1;
+	memset(&n, 0, sizeof(n));
+	n.ss_sp = g_altstack;
+	n.ss_size = sizeof(g_altstack);
+	g_alt_eperm = (sigaltstack(&n, NULL) == -1 && errno == EPERM);
+}
+
+/**
+ * sigaltstack: initial state, error paths, delivery on the alternate stack only
+ * with SA_ONSTACK, inheritance across fork, and disabling.
+ */
+static void check_sigaltstack(void)
+{
+	struct sigaction sa;
+	stack_t ss, o;
+	pid_t pid;
+	int st;
+
+	memset(&o, 0, sizeof(o));
+	check("sigaltstack initially disabled", sigaltstack(NULL, &o) == 0 && (o.ss_flags & SS_DISABLE));
+	errno = 0;
+	check("sigaltstack bad oss -> EFAULT", sigaltstack(NULL, (stack_t *)8) == -1 && errno == EFAULT);
+	memset(&ss, 0, sizeof(ss));
+	ss.ss_sp = g_altstack;
+	ss.ss_size = 512;
+	errno = 0;
+	check("sigaltstack tiny -> ENOMEM", sigaltstack(&ss, NULL) == -1 && errno == ENOMEM);
+
+	ss.ss_size = sizeof(g_altstack);
+	check("sigaltstack set", sigaltstack(&ss, NULL) == 0);
+	memset(&o, 0, sizeof(o));
+	check("sigaltstack query",
+	      sigaltstack(NULL, &o) == 0 && o.ss_sp == g_altstack && o.ss_size == sizeof(g_altstack) &&
+	          o.ss_flags == 0);
+
+	memset(&sa, 0, sizeof(sa));
+	sa.sa_handler = on_usr2;
+	sigemptyset(&sa.sa_mask);
+	sigaction(SIGUSR2, &sa, NULL);
+	g_alt_on = -1;
+	raise(SIGUSR2);
+	check("no SA_ONSTACK: normal stack", g_alt_on == 0);
+
+	sa.sa_flags = SA_ONSTACK;
+	sigaction(SIGUSR2, &sa, NULL);
+	g_alt_on = -1;
+	raise(SIGUSR2);
+	check("SA_ONSTACK: alternate stack", g_alt_on == 1);
+	check("SS_ONSTACK reported in handler", g_alt_flags == SS_ONSTACK);
+	check("change while on it -> EPERM", g_alt_eperm == 1);
+	memset(&o, 0, sizeof(o));
+	check("off the stack after return", sigaltstack(NULL, &o) == 0 && o.ss_flags == 0);
+
+	pid = fork();
+	if (pid == 0)
+	{
+		memset(&o, 0, sizeof(o));
+		_exit(sigaltstack(NULL, &o) == 0 && o.ss_sp == g_altstack ? 0 : 1);
+	}
+	st = -1;
+	check("fork inherits sigaltstack", waitpid(pid, &st, 0) == pid && WIFEXITED(st) && WEXITSTATUS(st) == 0);
+
+	memset(&ss, 0, sizeof(ss));
+	ss.ss_flags = SS_DISABLE;
+	check("sigaltstack disable", sigaltstack(&ss, NULL) == 0);
+	memset(&o, 0, sizeof(o));
+	check("disabled after disable", sigaltstack(NULL, &o) == 0 && (o.ss_flags & SS_DISABLE));
+
+	/* The kernel's copyout faults in a page the process never touched (a
+	 * fresh anonymous mapping), rather than failing with EFAULT. */
+	{
+		char *m = mmap(NULL, 4 * 4096, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANON, -1, 0);
+		stack_t *fresh = (stack_t *)(m + 2 * 4096);
+
+		check("sigaltstack into an untouched page",
+		      m != MAP_FAILED && sigaltstack(NULL, fresh) == 0 && (fresh->ss_flags & SS_DISABLE));
+		if (m != MAP_FAILED)
+			munmap(m, 4 * 4096);
+	}
+	sa.sa_handler = SIG_DFL;
+	sa.sa_flags = 0;
+	sigaction(SIGUSR2, &sa, NULL);
 }
 
 int main(void)
@@ -94,6 +199,8 @@ int main(void)
 	st = -1;
 	check("waitpid faulting child", waitpid(pid, &st, 0) == pid);
 	check("WIFSIGNALED && SIGSEGV", WIFSIGNALED(st) && WTERMSIG(st) == SIGSEGV);
+
+	check_sigaltstack();
 
 	printf("sigtest: %s\n", g_fail ? "FAILED" : "all passed");
 	return g_fail;

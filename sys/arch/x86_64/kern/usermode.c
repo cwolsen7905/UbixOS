@@ -26,6 +26,7 @@
 #include <fs/vfs/file.h>     /* fopen/fread/fclose, fileDescriptor_t (bring-up open/read) */
 #include <sys/thread.h>      /* O_FILES, td.o_files[] */
 #include <sys/descrip.h>     /* struct file, FD_TYPE_* (console write routing) */
+#include <vmm/vmm_shmap.h>   /* md_user_page_kva, md_user_aspace_root */
 #include <ubixos/syscalls.h> /* systemCalls_posix, totalCalls_posix, struct syscall_entry */
 
 #define KCODE_SEL 0x08
@@ -165,7 +166,7 @@ void x86_64_ap_load_gdt_tss(u32 cpuid)
 	__asm__ __volatile__("mov %%cr0, %0" : "=r"(cr));
 	cr &= ~(u64)0x4;        /* clear EM (no FPU emulation) */
 	cr &= ~(u64)0x60000000; /* clear CD|NW: the AP comes out of INIT with caches disabled */
-	cr |= 0x2;       /* set MP */
+	cr |= 0x2;              /* set MP */
 	__asm__ __volatile__("mov %0, %%cr0" : : "r"(cr));
 	__asm__ __volatile__("fninit");
 	x86_64_syscall_init(); /* EFER.SCE + STAR + LSTAR + SFMASK (per-CPU MSRs) */
@@ -602,6 +603,18 @@ void md_sync_icache(uintptr_t addr, u64 len)
 void *md_phys_to_virt(u64 phys)
 {
 	return P2V(phys);
+}
+
+/**
+ * The current task's PML4, as vmm_demand_fault takes it.
+ *
+ * @return the PML4 (physical), or NULL if the task has no user address space.
+ */
+u_int64_t *md_user_aspace_root(void)
+{
+	if (_current == 0)
+		return (NULL);
+	return ((u_int64_t *)(uintptr_t)_current->md.md_cr3);
 }
 
 /** Kernel-readable pointer to the current task's page at user @va (vmm_shmap). */

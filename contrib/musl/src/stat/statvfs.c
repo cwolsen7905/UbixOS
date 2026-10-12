@@ -1,25 +1,59 @@
 #include <sys/statvfs.h>
 #include <sys/statfs.h>
+#include <stdint.h>
 #include "syscall.h"
+
+/* UbixOS: the kernel's statfs/fstatfs are FreeBSD's (slots 396/397: path or fd,
+ * buf) and fill FreeBSD's struct statfs (MNAMELEN 88).  musl's callers expect
+ * Linux's struct statfs, so take FreeBSD's and convert.  (Linux's 3-argument
+ * statfs64 form put the buffer size where the kernel expects the buffer.) */
+struct ubix_kstatfs {
+	uint32_t f_version, f_type;
+	uint64_t f_flags, f_bsize, f_iosize, f_blocks, f_bfree;
+	int64_t f_bavail;
+	uint64_t f_files;
+	int64_t f_ffree;
+	uint64_t f_syncwrites, f_asyncwrites, f_syncreads, f_asyncreads, f_spare[10];
+	uint32_t f_namemax, f_owner;
+	int32_t f_fsid[2];
+	char f_charspare[80], f_fstypename[16], f_mntfromname[88], f_mntonname[88];
+};
+
+#define UBIX_MNT_RDONLY 0x1
+#define UBIX_MNT_NOSUID 0x8
+
+static void from_kstatfs(struct statfs *out, const struct ubix_kstatfs *k)
+{
+	*out = (struct statfs){0};
+	out->f_type = k->f_type;
+	out->f_bsize = k->f_bsize;
+	out->f_frsize = k->f_bsize;
+	out->f_blocks = k->f_blocks;
+	out->f_bfree = k->f_bfree;
+	out->f_bavail = k->f_bavail < 0 ? 0 : k->f_bavail;
+	out->f_files = k->f_files;
+	out->f_ffree = k->f_ffree < 0 ? 0 : k->f_ffree;
+	out->f_fsid.__val[0] = k->f_fsid[0];
+	out->f_fsid.__val[1] = k->f_fsid[1];
+	out->f_namelen = k->f_namemax;
+	out->f_flags = ((k->f_flags & UBIX_MNT_RDONLY) ? ST_RDONLY : 0)
+	             | ((k->f_flags & UBIX_MNT_NOSUID) ? ST_NOSUID : 0);
+}
 
 static int __statfs(const char *path, struct statfs *buf)
 {
-	*buf = (struct statfs){0};
-#ifdef SYS_statfs64
-	return syscall(SYS_statfs64, path, sizeof *buf, buf);
-#else
-	return syscall(SYS_statfs, path, buf);
-#endif
+	struct ubix_kstatfs k;
+	int r = syscall(SYS_statfs64, path, &k);
+	if (!r) from_kstatfs(buf, &k);
+	return r;
 }
 
 static int __fstatfs(int fd, struct statfs *buf)
 {
-	*buf = (struct statfs){0};
-#ifdef SYS_fstatfs64
-	return syscall(SYS_fstatfs64, fd, sizeof *buf, buf);
-#else
-	return syscall(SYS_fstatfs, fd, buf);
-#endif
+	struct ubix_kstatfs k;
+	int r = syscall(SYS_fstatfs64, fd, &k);
+	if (!r) from_kstatfs(buf, &k);
+	return r;
 }
 
 weak_alias(__statfs, statfs);

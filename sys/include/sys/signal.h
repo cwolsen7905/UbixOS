@@ -31,103 +31,128 @@
 
 #include <sys/types.h>
 
-#define _SIG_WORDS      4
-#define _SIG_MAXSIG     128
-#define _SIG_IDX(sig)   ((sig) - 1)
-#define _SIG_WORD(sig)  (_SIG_IDX(sig) >> 5)
-#define _SIG_BIT(sig)   (1 << (_SIG_IDX(sig) & 31))
+#define _SIG_WORDS 4
+#define _SIG_MAXSIG 128
+#define _SIG_IDX(sig) ((sig) - 1)
+#define _SIG_WORD(sig) (_SIG_IDX(sig) >> 5)
+#define _SIG_BIT(sig) (1 << (_SIG_IDX(sig) & 31))
 #define _SIG_VALID(sig) ((sig) <= _SIG_MAXSIG && (sig) > 0)
 
 // Flags for sigprocmask:
-#define SIG_BLOCK       1       /* block specified signal set */
-#define SIG_UNBLOCK     2       /* unblock specified signal set */
-#define SIG_SETMASK     3       /* set specified signal set */
+#define SIG_BLOCK 1   /* block specified signal set */
+#define SIG_UNBLOCK 2 /* unblock specified signal set */
+#define SIG_SETMASK 3 /* set specified signal set */
 
-union sigval {
-        /* Members as suggested by Annex C of POSIX 1003.1b. */
-        int     sival_int;
-        void    *sival_ptr;
-        /* 6.0 compatibility */
-        int     sigval_int;
-        void    *sigval_ptr;
+union sigval
+{
+	/* Members as suggested by Annex C of POSIX 1003.1b. */
+	int sival_int;
+	void *sival_ptr;
+	/* 6.0 compatibility */
+	int sigval_int;
+	void *sigval_ptr;
 };
 
-typedef struct __siginfo {
-        int     si_signo;               /* signal number */
-        int     si_errno;               /* errno association */
-        /*
-         * Cause of signal, one of the SI_ macros or signal-specific
-         * values, i.e. one of the FPE_... values for SIGFPE.  This
-         * value is equivalent to the second argument to an old-style
-         * FreeBSD signal handler.
-         */
-        int     si_code;                /* signal code */
-        __pid_t si_pid;                 /* sending process */
-        __uid_t si_uid;                 /* sender's ruid */
-        int     si_status;              /* exit value */
-        void    *si_addr;               /* faulting instruction */
-        union sigval si_value;          /* signal value */
-        union   {
-                struct {
-                        int     _trapno;/* machine specific trap code */
-                } _fault;
-                struct {
-                        int     _timerid;
-                        int     _overrun;
-                } _timer;
-                struct {
-                        int     _mqd;
-                } _mesgq;
-                struct {
-                        long    _band;          /* band event for SIGPOLL */
-                } _poll;                        /* was this ever used ? */
-                struct {
-                        long    __spare1__;
-                        int     __spare2__[7];
-                } __spare__;
-        } _reason;
+typedef struct __siginfo
+{
+	int si_signo; /* signal number */
+	int si_errno; /* errno association */
+	/*
+	 * Cause of signal, one of the SI_ macros or signal-specific
+	 * values, i.e. one of the FPE_... values for SIGFPE.  This
+	 * value is equivalent to the second argument to an old-style
+	 * FreeBSD signal handler.
+	 */
+	int si_code;           /* signal code */
+	__pid_t si_pid;        /* sending process */
+	__uid_t si_uid;        /* sender's ruid */
+	int si_status;         /* exit value */
+	void *si_addr;         /* faulting instruction */
+	union sigval si_value; /* signal value */
+	union
+	{
+		struct
+		{
+			int _trapno; /* machine specific trap code */
+		} _fault;
+		struct
+		{
+			int _timerid;
+			int _overrun;
+		} _timer;
+		struct
+		{
+			int _mqd;
+		} _mesgq;
+		struct
+		{
+			long _band; /* band event for SIGPOLL */
+		} _poll;            /* was this ever used ? */
+		struct
+		{
+			long __spare1__;
+			int __spare2__[7];
+		} __spare__;
+	} _reason;
 } siginfo_t;
 
-
 // Signal vector "template" used in sigaction call.
-struct sigaction {
-        union {
-                void    (*__sa_handler)(int);
-                void    (*__sa_sigaction)(int, struct __siginfo *, void *);
-        } __sigaction_u;                /* signal handler */
-        int     sa_flags;               /* see signal options below */
-        sigset_t sa_mask;               /* signal mask to apply */
+struct sigaction
+{
+	union
+	{
+		void (*__sa_handler)(int);
+		void (*__sa_sigaction)(int, struct __siginfo *, void *);
+	} __sigaction_u;  /* signal handler */
+	int sa_flags;     /* see signal options below */
+	sigset_t sa_mask; /* signal mask to apply */
 };
 
-#define sa_handler      __sigaction_u.__sa_handler
-#define sa_sigaction    __sigaction_u.__sa_sigaction
+#define sa_handler __sigaction_u.__sa_handler
+#define sa_sigaction __sigaction_u.__sa_sigaction
 
 /* sa_flags values (FreeBSD-compatible) */
-#define SA_ONSTACK      0x0001  /* deliver on alternate signal stack */
-#define SA_RESTART      0x0002  /* restart syscall on signal return */
-#define SA_RESETHAND    0x0004  /* reset to SIG_DFL after delivery */
-#define SA_NOCLDSTOP    0x0008  /* no SIGCHLD when child stops */
-#define SA_NODEFER      0x0010  /* don't mask signal during handler */
-#define SA_NOCLDWAIT    0x0020  /* no zombies on child death */
-#define SA_SIGINFO      0x0040  /* handler gets siginfo_t arg */
+#define SA_ONSTACK 0x0001   /* deliver on alternate signal stack */
+#define SA_RESTART 0x0002   /* restart syscall on signal return */
+#define SA_RESETHAND 0x0004 /* reset to SIG_DFL after delivery */
+#define SA_NOCLDSTOP 0x0008 /* no SIGCHLD when child stops */
+#define SA_NODEFER 0x0010   /* don't mask signal during handler */
+#define SA_NOCLDWAIT 0x0020 /* no zombies on child death */
+#define SA_SIGINFO 0x0040   /* handler gets siginfo_t arg */
+
+/*
+ * Alternate signal stack (sigaltstack(2)), kept per thread in FreeBSD's layout
+ * and flag values.  musl passes Linux's stack_t (ss_sp, ss_flags, ss_size; Linux
+ * SS_DISABLE = 2); sys_sigaltstack translates at the boundary.
+ */
+struct ubx_sigaltstack
+{
+	u_int64_t ss_sp;   /* stack base (lowest address) */
+	u_int64_t ss_size; /* bytes */
+	int ss_flags;      /* SS_DISABLE when no stack is set */
+};
+
+#define SS_ONSTACK 0x0001 /* currently running on the alternate stack */
+#define SS_DISABLE 0x0004 /* alternate stack disabled */
+#define MINSIGSTKSZ 2048  /* smallest stack sigaltstack accepts (musl checks its own, larger, value first) */
 
 /* si_code values — match musl/Linux so musl-compiled programs compare correctly */
-#define SI_USER         0       /* kill() or raise() */
-#define SI_KERNEL       128     /* kernel-generated (musl value; FreeBSD uses 0x10000) */
-#define SI_QUEUE        (-1)    /* sigqueue() */
-#define SI_TIMER        (-2)    /* timer expiry */
-#define SI_TKILL        (-6)    /* tkill / tgkill */
+#define SI_USER 0     /* kill() or raise() */
+#define SI_KERNEL 128 /* kernel-generated (musl value; FreeBSD uses 0x10000) */
+#define SI_QUEUE (-1) /* sigqueue() */
+#define SI_TIMER (-2) /* timer expiry */
+#define SI_TKILL (-6) /* tkill / tgkill */
 
 /* si_code values for SIGSEGV */
-#define SEGV_MAPERR     1       /* address not mapped */
-#define SEGV_ACCERR     2       /* invalid permissions for mapped object */
+#define SEGV_MAPERR 1 /* address not mapped */
+#define SEGV_ACCERR 2 /* invalid permissions for mapped object */
 
 /* si_code values for SIGBUS */
-#define BUS_ADRALN      1       /* invalid address alignment */
+#define BUS_ADRALN 1 /* invalid address alignment */
 
 /* SIG_DFL / SIG_IGN — stored in sa_handler */
-#define SIG_DFL         ((void (*)(int))0)
-#define SIG_IGN         ((void (*)(int))1)
-#define SIG_ERR         ((void (*)(int))-1)
+#define SIG_DFL ((void (*)(int))0)
+#define SIG_IGN ((void (*)(int))1)
+#define SIG_ERR ((void (*)(int)) - 1)
 
 #endif /* END _SYS_SIGNAL_H */

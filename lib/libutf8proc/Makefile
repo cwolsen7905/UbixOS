@@ -35,7 +35,7 @@ OBJS   = utf8proc.o
 all: ${OBJ_DIR}/lib/libutf8proc.so
 ${OBJ_DIR}/lib/libutf8proc.so: $(OBJS)
 	@mkdir -p ${OBJ_DIR}/lib
-	$(LD) -m ${ARCH_LDEMUL} -shared -soname libutf8proc.so ${OBJS:S|^|${OBJDIR}/|} -L${OBJ_DIR}/lib -lc -o ${OBJ_DIR}/lib/libutf8proc.so
+	$(LD) -m ${ARCH_LDEMUL} -shared -soname libutf8proc.so ${OBJS:S|^|${OBJDIR}/|} -L${OBJ_DIR}/lib -L${MUSL_LIB} -lc -o ${OBJ_DIR}/lib/libutf8proc.so
 clean:
 	$(REMOVE) ${OBJDIR} ${OBJ_DIR}/lib/libutf8proc.so
 .for _d in ${OBJS:.o=.d}

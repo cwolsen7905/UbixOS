@@ -73,6 +73,24 @@ static struct spinLock g_ubfs_lock = SPIN_LOCK_INITIALIZER;
 static void *volatile g_ubfs_owner; /* task holding g_ubfs_lock, NULL if free */
 static int g_ubfs_depth;            /* recursion depth of the owner */
 
+/*
+ * Open-object table: how many handles each object has, and whether its last
+ * name was unlinked while open.  POSIX keeps an unlinked file usable until its
+ * last close (mkstemp + unlink scratch files: bmake -j job scripts, compiler
+ * temporaries); UbixFS used to free it at unlink, so writes through the still-
+ * open fd failed and bmake retried forever.  Guarded by the UbixFS lock, like
+ * every entry point here.
+ */
+struct ubfs_openobj
+{
+	struct ubfs_mount *m;
+	uint64_t obj;
+	int count;
+	int orphan; /* unlinked while open: free on last close */
+	struct ubfs_openobj *next;
+};
+static struct ubfs_openobj *g_openobjs;
+
 /** Take the UbixFS lock (recursive for the holding task). */
 static void ubfs_lock(void)
 {
@@ -107,25 +125,13 @@ struct ubfs_file
 	uint64_t obj;
 };
 
-/*
- * Open-object table: how many handles each object has, and whether its last
- * name was unlinked while open.  POSIX keeps an unlinked file usable until its
- * last close (mkstemp + unlink scratch files: bmake -j job scripts, compiler
- * temporaries); UbixFS used to free it at unlink, so writes through the still-
- * open fd failed and bmake retried forever.  Guarded by the UbixFS lock, like
- * every entry point here.
- */
-struct ubfs_openobj
-{
-	struct ubfs_mount *m;
-	uint64_t obj;
-	int count;
-	int orphan; /* unlinked while open: free on last close */
-	struct ubfs_openobj *next;
-};
-static struct ubfs_openobj *g_openobjs;
 static int ubfs_commit(struct ubfs_mount *m); /* below: sync the txg */
 
+/**
+ * Look up the open-object entry for (@m, @obj).  Caller holds the UbixFS lock.
+ *
+ * @return the entry, or NULL if the object has no tracked open handles.
+ */
 static struct ubfs_openobj *openobj_find(struct ubfs_mount *m, uint64_t obj)
 {
 	struct ubfs_openobj *o;
@@ -136,6 +142,10 @@ static struct ubfs_openobj *openobj_find(struct ubfs_mount *m, uint64_t obj)
 	return (NULL);
 }
 
+/**
+ * Record one more open handle on (@m, @obj), creating its entry if needed.
+ * On allocation failure the object is simply left untracked.
+ */
 static void openobj_ref(struct ubfs_mount *m, uint64_t obj)
 {
 	struct ubfs_openobj *o = openobj_find(m, obj);
@@ -155,7 +165,10 @@ static void openobj_ref(struct ubfs_mount *m, uint64_t obj)
 	o->count++;
 }
 
-/* Drop one handle; on the last one free an orphaned object. */
+/**
+ * Drop one open handle on (@m, @obj); on the last one free the object if it was
+ * unlinked while open (orphaned) and commit.
+ */
 static void openobj_unref(struct ubfs_mount *m, uint64_t obj)
 {
 	struct ubfs_openobj **pp, *o;
@@ -177,7 +190,12 @@ static void openobj_unref(struct ubfs_mount *m, uint64_t obj)
 	}
 }
 
-/* Unlink @path: drop the name now, and free the object now or at last close. */
+/**
+ * Unlink @path: drop the name now, and free the object now or, if it is still
+ * open, mark it orphaned so the last close frees it.
+ *
+ * @return 0 on success, -1 if the name could not be removed.
+ */
 static int ubfs_unlink_path(struct ubfs_mount *m, const char *path)
 {
 	uint64_t obj;

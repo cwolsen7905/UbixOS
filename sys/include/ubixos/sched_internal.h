@@ -76,6 +76,9 @@ struct runqueue
 };
 extern struct runqueue g_rq[SCHED_MAX_CPUS];
 
+/* Per-CPU counts of how each sched_common() call ended (sched_dispatch.c); shown in /proc/sched. */
+extern volatile u_int32_t g_sched_stat[SCHED_MAX_CPUS][6];
+
 /* Sentinel t->rq_cpu meaning "no home queue chosen yet": rq_enqueue_locked picks the
  * least-loaded online CPU on first enqueue (v2 load distribution).  Set at task creation. */
 #define RQ_CPU_UNSET 0xFFFFFFFFu

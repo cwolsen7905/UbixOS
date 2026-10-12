@@ -148,6 +148,7 @@ AARCH64_GENERIC_SRCS = \
 	sys/vmm/vm_filecache.c \
 	sys/vmm/vm_map.c \
 	sys/vmm/vmm_shmap.c \
+	sys/vmm/vmm_uaccess.c \
 	sys/vmm/vmm_demand.c \
 	sys/kern/elf64_load.c \
 	sys/kern/elf64_demand.c \
@@ -523,6 +524,7 @@ X86_64_GENERIC_SRCS = \
 	sys/vmm/vm_filecache.c \
 	sys/vmm/vm_map.c \
 	sys/vmm/vmm_shmap.c \
+	sys/vmm/vmm_uaccess.c \
 	sys/vmm/vmm_demand.c \
 	sys/lib/rbtree.c \
 	sys/fs/vfs/stat.c \

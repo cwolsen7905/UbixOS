@@ -47,7 +47,7 @@ all: ${OBJ_DIR}/lib/libhubbub.so
 ${OBJ_DIR}/lib/libhubbub.so: $(OBJS)
 	@mkdir -p ${OBJ_DIR}/lib
 	$(LD) -m ${ARCH_LDEMUL} -shared -soname libhubbub.so ${OBJS:S|^|${OBJDIR}/|} \
-		-L${OBJ_DIR}/lib -lparserutils -lc -o ${OBJ_DIR}/lib/libhubbub.so
+		-L${OBJ_DIR}/lib -L${MUSL_LIB} -lparserutils -lc -o ${OBJ_DIR}/lib/libhubbub.so
 
 clean:
 	$(REMOVE) ${OBJDIR} ${OBJ_DIR}/lib/libhubbub.so

@@ -36,7 +36,9 @@
 int sys_setitimer(struct thread *td, struct setitimer_args *uap);
 int sys_getitimer(struct thread *td, struct setitimer_args *uap);
 
-/* System Calls List */
+/* System Calls List: hand-aligned, one slot per line, index comment checked by
+ * the syscall-table gate. */
+// clang-format off
 struct syscall_entry systemCalls_posix[] = {
     {0, "No Call", sys_invalid, SYSCALL_VALID},                                                                 /* 0 */
     {ARG_COUNT(sys_exit_args), "exit", (sys_call_t *)sys_exit, SYSCALL_VALID},                                  /* 1 */
@@ -77,7 +79,7 @@ struct syscall_entry systemCalls_posix[] = {
     {0, "sync", sys_invalid, SYSCALL_NOTIMP},                                                                   // 36 - sync
     {ARG_COUNT(sys_kill_args), "kill", (sys_call_t *)sys_kill, SYSCALL_VALID},                                  // 37 - kill
     {0, "No Call", sys_invalid, SYSCALL_INVALID},                                                               // 38
-    {ARG_COUNT(sys_getppid_args), "getpid", sys_getpid, SYSCALL_VALID},                                         // 39 - getppid
+    {ARG_COUNT(sys_getppid_args), "getppid", (sys_call_t *)sys_getppid, SYSCALL_VALID},                          // 39 - getppid
     {0, "No Call", sys_invalid, SYSCALL_INVALID},                                                               // 40
     {ARG_COUNT(sys_dup_args), "dup", sys_dup, SYSCALL_VALID},                                                   // 41 - dup
     {ARG_COUNT(pipe_args), "pipe", (sys_call_t *)pipe, SYSCALL_VALID},                                          // 42 - pipe
@@ -91,7 +93,7 @@ struct syscall_entry systemCalls_posix[] = {
     {ARG_COUNT(sys_setlogin_args), "setlogin", sys_setlogin, SYSCALL_NOTIMP},                                   /* 50 */
     {0, "acct", sys_invalid, SYSCALL_NOTIMP},                                                                   /* 51 */
     {0, "No Call", sys_invalid, SYSCALL_INVALID},                                                               /* 52 */
-    {0, "sigaltstack", sys_invalid, SYSCALL_NOTIMP},                                                            /* 53 */
+    {ARG_COUNT(sys_sigaltstack_args), "sigaltstack", (sys_call_t *)sys_sigaltstack, SYSCALL_VALID},             /* 53 */
     {ARG_COUNT(sys_ioctl_args), "ioctl", sys_ioctl, SYSCALL_VALID},                                             // 54 - ioctl
     {1, "reboot", (sys_call_t *)sys_reboot, SYSCALL_VALID},                            // 55 - reboot
     {0, "revoke", sys_invalid, SYSCALL_NOTIMP},                                                                 // 56 - revoke
@@ -514,7 +516,7 @@ struct syscall_entry systemCalls_posix[] = {
     {0, "sctp_generic_sendmsg_iov", sys_invalid, SYSCALL_NOTIMP},                                               /* 473 - Invalid */
     {0, "sctp_generic_recvmsg", sys_invalid, SYSCALL_NOTIMP},                                                   /* 474 - Invalid */
     {ARG_COUNT(sys_pread_args), "pread", sys_pread, SYSCALL_VALID},                                             // 475 - pread
-    {0, "pwrite", sys_invalid, SYSCALL_NOTIMP},                                                                 /* 476 - Invalid */
+    {ARG_COUNT(sys_pwrite_args), "pwrite", (sys_call_t *)sys_pwrite, SYSCALL_VALID},                            /* 476 */
     {ARG_COUNT(sys_mmap_args), "mmap2", (sys_call_t *)sys_mmap2, SYSCALL_VALID},                                /* 477 - sys_mmap2 (offset in pages, musl i386) */
     {ARG_COUNT(sys_lseek_args), "lseek", (sys_call_t *)sys_lseek, SYSCALL_VALID},                               /* 478 - sys_lseek */
     {0, "truncate", sys_invalid, SYSCALL_NOTIMP},                                                               /* 479 - Invalid */
@@ -569,7 +571,7 @@ struct syscall_entry systemCalls_posix[] = {
     {0, "rctl_add_rule", sys_invalid, SYSCALL_NOTIMP},                                                          /* 528 - Invalid */
     {0, "rctl_remove_rule", sys_invalid, SYSCALL_NOTIMP},                                                       /* 529 - Invalid */
     {0, "posix_fallocate", sys_invalid, SYSCALL_NOTIMP},                                                        /* 530 - Invalid */
-    {0, "posix_fadvise", sys_invalid, SYSCALL_NOTIMP},                                                          /* 531 - Invalid */
+    {ARG_COUNT(sys_posix_fadvise_args), "posix_fadvise", (sys_call_t *)sys_posix_fadvise, SYSCALL_VALID},       /* 531 */
     {0, "wait6", sys_invalid, SYSCALL_NOTIMP},                                                                  /* 532 - Invalid */
     {0, "cap_rights_limit", sys_invalid, SYSCALL_NOTIMP},                                                       /* 533 - Invalid */
     {0, "cap_ioctls_limit", sys_invalid, SYSCALL_NOTIMP},                                                       /* 534 - Invalid */
@@ -624,5 +626,6 @@ struct syscall_entry systemCalls_posix[] = {
     {0, "kqueuex", sys_invalid, SYSCALL_NOTIMP},                                                               /* 583 - Invalid */
     {2, "membarrier", (sys_call_t *)sys_membarrier, SYSCALL_VALID},                                            /* 584 - membarrier (UP no-op) */
 };
+// clang-format on
 
 int totalCalls_posix = sizeof(systemCalls_posix) / sizeof(struct syscall_entry);

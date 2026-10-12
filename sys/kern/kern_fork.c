@@ -126,7 +126,8 @@ void proc_fork_inherit_context(kTask_t *child)
 /**
  * Initialise a forked @child's signal-delivery state from the parent thread
  * @ptd: POSIX requires the child start with no pending signals, but it inherits
- * the parent's signal dispositions (sigact) and signal mask.
+ * the parent's signal dispositions (sigact) and signal mask, and (for a fork,
+ * not a new thread) its alternate signal stack.
  *
  * MUST be called AFTER the arch's address-space copy: on i386 the COW walk can
  * transiently double-map the physical page backing sig_pending (kernel heap and
@@ -140,4 +141,10 @@ void proc_fork_signal_init(kTask_t *child, struct thread *ptd)
 	memset(child->td.sig_extra, 0, sizeof(child->td.sig_extra));
 	memcpy(child->td.sigact, ptd->sigact, sizeof(child->td.sigact));
 	memcpy(&child->td.sigmask, &ptd->sigmask, sizeof(child->td.sigmask));
+	/* A forked process keeps the alternate signal stack (same address space
+	 * copy); a new thread in the caller's group starts without one (POSIX). */
+	if (child->tgid != _current->tgid)
+		child->td.td_sigstk = ptd->td_sigstk;
+	else
+		memset(&child->td.td_sigstk, 0, sizeof(child->td.td_sigstk));
 }

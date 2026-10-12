@@ -1108,10 +1108,12 @@ tty_term *tty_find(u_int16_t tty)
  */
 static void tty_inject_one(tty_term *tty, char ch);
 
-/*
+/**
  * A reader waiting on a pty (tty_fo_read, FD_TYPE_TTYV) sleeps on &t->stdinSize
  * until input, EOF, a hang-up or a signal; this is its predicate.  Runs under
  * the scheduler lock, so it only reads fields.
+ *
+ * @return nonzero if the reader of terminal @arg should wake.
  */
 static int tty_read_ready(void *arg)
 {
@@ -1133,6 +1135,15 @@ void tty_inject(tty_term *tty, char ch)
 		sched_wakeup_chan(&tty->stdinSize);
 }
 
+/**
+ * Push one ASCII character through the TTY line discipline (no reader wakeup;
+ * tty_inject() does that).
+ *
+ * This is the single input entry point regardless of the physical source:
+ * PS/2 keyboard, COM1 serial, or future telnet socket.  Echo and editing
+ * (backspace, Ctrl-U, newline coalescing), flow control and signal characters
+ * are applied here.  A NULL @tty is ignored.
+ */
 static void tty_inject_one(tty_term *tty, char ch)
 {
 	char echo_buf[2];

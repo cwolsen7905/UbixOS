@@ -34,32 +34,35 @@
 #include <sys/signal.h>
 #include <sys/resource.h>
 
-//#define O_FILES 64
+// #define O_FILES 64
 #define O_FILES 512
 
-struct thread {
-    int td_retval[2];
-    void *o_files[O_FILES];
-    u_long vm_daddr;
-    u_long vm_dsize;
-    u_long vm_taddr;
-    u_long vm_tsize;
-    struct trapframe *frame;
-    int abi;
-    sigset_t sigmask;
-    struct  sigaction sigact[128];
-    struct rlimit rlim[RLIM_NLIMITS];
-    volatile u_int32_t sig_pending; /* bitmask of pending signals (bit N-1 = signal N) */
-    sigset_t  td_oldsigmask;       /* mask saved by sigsuspend; restored via sigreturn */
-    u_int32_t  td_pflags;           /* TDP_* flags */
-#define TDP_OLDMASK  0x00000001u   /* td_oldsigmask is valid; use it in save_sigcontext */
+struct thread
+{
+	int td_retval[2];
+	void *o_files[O_FILES];
+	u_long vm_daddr;
+	u_long vm_dsize;
+	u_long vm_taddr;
+	u_long vm_tsize;
+	struct trapframe *frame;
+	int abi;
+	sigset_t sigmask;
+	struct sigaction sigact[128];
+	struct rlimit rlim[RLIM_NLIMITS];
+	volatile u_int32_t sig_pending;   /* bitmask of pending signals (bit N-1 = signal N) */
+	sigset_t td_oldsigmask;           /* mask saved by sigsuspend; restored via sigreturn */
+	u_int32_t td_pflags;              /* TDP_* flags */
+#define TDP_OLDMASK 0x00000001u           /* td_oldsigmask is valid; use it in save_sigcontext */
+	struct ubx_sigaltstack td_sigstk; /* sigaltstack(2); ss_flags SS_DISABLE when unset */
 
-    /* Per-signal metadata for siginfo_t population (indexed by signal N-1). */
-    u_int8_t sig_code[32];          /* SI_USER, SI_KERNEL, SEGV_MAPERR, etc. */
-    union {
-        int   si_pid;              /* kill: sender pid (SI_USER) */
-        void *si_addr;             /* fault: fault address (SIGSEGV/SIGBUS) */
-    } sig_extra[32];
+	/* Per-signal metadata for siginfo_t population (indexed by signal N-1). */
+	u_int8_t sig_code[32]; /* SI_USER, SI_KERNEL, SEGV_MAPERR, etc. */
+	union
+	{
+		int si_pid;    /* kill: sender pid (SI_USER) */
+		void *si_addr; /* fault: fault address (SIGSEGV/SIGBUS) */
+	} sig_extra[32];
 };
 
 #endif /* END _SYS_THREAD_H */

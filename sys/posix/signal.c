@@ -36,6 +36,7 @@
 #include <ubixos/sched_internal.h>
 #include <ubixos/endtask.h>
 #include <ubixos/tty.h>
+#include <ubixos/uaccess.h>
 #include <machine/signal.h>
 #include <lib/kprintf.h>
 #include <string.h>
@@ -70,6 +71,20 @@ struct musl_ksigaction
 /* Bytes of a user sigset musl passes (its _NSIG/8). */
 #define MUSL_SIGSET_BYTES 8
 
+/* musl's (Linux) stack_t for sigaltstack, identical on aarch64 and x86_64, and
+ * its ss_flags values.  The kernel keeps struct ubx_sigaltstack (FreeBSD order
+ * and values) in the thread.  Fixed-width members: musl is LP64. */
+struct musl_stack
+{
+	u_int64_t ss_sp;
+	int ss_flags;
+	u_int64_t ss_size; /* fixed width: the kernel's size_t is a 32-bit int */
+};
+_Static_assert(sizeof(struct musl_stack) == 24, "musl LP64 stack_t is 24 bytes");
+
+#define MUSL_SS_ONSTACK 1
+#define MUSL_SS_DISABLE 2
+
 /* -----------------------------------------------------------------------
  * Signals with SIG_DFL action = terminate the process.
  * Bit N-1 represents signal N (same encoding as sig_pending).
@@ -94,8 +109,8 @@ struct musl_ksigaction
  * boot-time daemons permanently when no job-control shell exists to
  * send SIGCONT.  Re-add once a full job-control shell is wired up. */
 #define SIGSTOP_MASK                                                                                                   \
-	((1u << (SIGTSTP - 1)) | /* 20 — Ctrl+Z */                                                                     \
-	 (1u << (SIGSTOP - 1)))  /* 19 — unconditional stop */
+	((1u << (SIGTSTP - 1)) | /* 20 - Ctrl+Z */                                                                     \
+	 (1u << (SIGSTOP - 1)))  /* 19 - unconditional stop */
 
 /**
  * signal_interrupts_wait - does a pending, unblocked signal end a blocking wait?
@@ -434,9 +449,46 @@ void signal_check(struct trapframe *frame)
  * why a fork+wait program faulted at __restore_rt only when launched from the
  * job-control shell, not from init (which leaves SIGCHLD at SIG_DFL).
  */
+/**
+ * Whether @td has a usable alternate signal stack.
+ *
+ * @return 1 if one is set and enabled, 0 otherwise.
+ */
+static int sigstk_enabled(const struct thread *td)
+{
+	return (td->td_sigstk.ss_size != 0 && (td->td_sigstk.ss_flags & SS_DISABLE) == 0);
+}
+
+/**
+ * Whether user stack pointer @sp is inside @td's alternate signal stack.
+ *
+ * @return 1 if it is, 0 otherwise.
+ */
+static int sigstk_on(const struct thread *td, u_int64_t sp)
+{
+	return (sigstk_enabled(td) && sp - td->td_sigstk.ss_sp < td->td_sigstk.ss_size);
+}
+
+/**
+ * Pick the stack a handler for @sa runs on: the top of the alternate stack when
+ * the action has SA_ONSTACK, one is set, and the thread is not already on it;
+ * otherwise the interrupted stack pointer @sp.
+ *
+ * @return the stack pointer to build the signal frame below.
+ */
+static u_int64_t signal_handler_sp(const struct thread *td, const struct sigaction *sa, u_int64_t sp)
+{
+	if ((sa->sa_flags & SA_ONSTACK) && sigstk_enabled(td) && !sigstk_on(td, sp))
+		return (td->td_sigstk.ss_sp + td->td_sigstk.ss_size);
+	return (sp);
+}
+
 void signal_exec_reset(struct thread *td)
 {
 	int sig;
+
+	/* The alternate stack belonged to the old image. */
+	memset(&td->td_sigstk, 0, sizeof(td->td_sigstk));
 
 	for (sig = 1; sig < (int)(sizeof(td->sigact) / sizeof(td->sigact[0])); sig++)
 	{
@@ -679,8 +731,9 @@ void signal_deliver_frame(int sig, struct sigaction *sa, struct trapframe *frame
 {
 	/* SA_SIGINFO: a real siginfo above the frame (the handler used to get NULL,
 	 * so si->si_signo faulted). */
-	u_int64_t si = (sa->sa_flags & SA_SIGINFO) ? signal_push_siginfo(frame->tf_sp, sig) : 0;
-	u_int64_t top = si ? si : frame->tf_sp;
+	u_int64_t base = signal_handler_sp(td, sa, frame->tf_sp);
+	u_int64_t si = (sa->sa_flags & SA_SIGINFO) ? signal_push_siginfo(base, sig) : 0;
+	u_int64_t top = si ? si : base;
 	u_int64_t new_sp = (top - (u_int64_t)sizeof(struct ubx_sigframe)) & ~(u_int64_t)15;
 	struct ubx_sigframe *fp = (struct ubx_sigframe *)(uintptr_t)new_sp;
 	struct ubx_sigcontext *sc = &fp->sf_sc;
@@ -763,8 +816,10 @@ int sys_sigreturn(struct thread *td, struct sys_sigreturn_args *args)
 void signal_deliver_frame(int sig, struct sigaction *sa, struct trapframe *frame, struct thread *td)
 {
 	/* Skip the SysV 128-byte red zone below RSP: a leaf function may keep live
-	 * data there, which the frame would otherwise overwrite. */
-	u_int64_t below = frame->tf_rsp - 128;
+	 * data there, which the frame would otherwise overwrite.  A fresh alternate
+	 * stack has no red zone to protect. */
+	u_int64_t base = signal_handler_sp(td, sa, frame->tf_rsp);
+	u_int64_t below = (base == frame->tf_rsp) ? frame->tf_rsp - 128 : base;
 	u_int64_t si = (sa->sa_flags & SA_SIGINFO) ? signal_push_siginfo(below, sig) : 0;
 	u_int64_t top = si ? si : below;
 	u_int64_t sc_addr = (top - (u_int64_t)sizeof(struct ubx_sigcontext)) & ~(u_int64_t)15;
@@ -1014,6 +1069,18 @@ void signal_ast_check(void)
 }
 
 /**
+ * sigsuspend's wake predicate (runs under the scheduler lock).
+ *
+ * @return nonzero if an unblocked signal is pending for the thread @arg.
+ */
+static int sigsuspend_ready(void *arg)
+{
+	struct thread *td = (struct thread *)arg;
+
+	return ((td->sig_pending & ~td->sigmask.__bits[0]) != 0);
+}
+
+/**
  * sys_sigsuspend - atomically replace the current signal mask and wait
  * @td: thread state for the calling task
  * @args: syscall arguments containing the new signal mask
@@ -1025,14 +1092,6 @@ void signal_ast_check(void)
  *
  * FreeBSD slot 179; musl rt_sigsuspend also uses 179.
  */
-/* sigsuspend's wake predicate (runs under the scheduler lock). */
-static int sigsuspend_ready(void *arg)
-{
-	struct thread *td = (struct thread *)arg;
-
-	return ((td->sig_pending & ~td->sigmask.__bits[0]) != 0);
-}
-
 int sys_sigsuspend(struct thread *td, struct sys_sigsuspend_args *args)
 {
 	if (args->sigmask == NULL)
@@ -1171,4 +1230,80 @@ int sys_sigaction(struct thread *td, struct sys_sigaction_args *args)
 		td->td_retval[0] = 0;
 	}
 	return (0);
+}
+
+/**
+ * The calling thread's user stack pointer at syscall entry.
+ *
+ * @return the saved user SP, 0 if there is no trap frame.
+ */
+static u_int64_t signal_user_sp(const struct thread *td)
+{
+	if (td->frame == NULL)
+		return (0);
+#if defined(__aarch64__)
+	return (td->frame->tf_sp);
+#elif defined(__x86_64__)
+	return (td->frame->tf_rsp);
+#else
+	return (td->frame->tf_esp);
+#endif
+}
+
+/**
+ * sys_sigaltstack - set and/or query the calling thread's alternate signal stack
+ * @td: thread state for the calling task
+ * @args: new stack (musl stack_t, may be NULL) and where to return the old one
+ *
+ * FreeBSD semantics with musl's stack_t at the boundary.  The old setting is
+ * reported (SS_ONSTACK while a handler runs on it, SS_DISABLE when none is
+ * set) before the new one is applied.  The stack's memory is not validated:
+ * a bad one faults at delivery, as on FreeBSD.
+ *
+ * @return 0; td_retval[0] is 0, or -EFAULT (bad pointer), -EPERM (changing it
+ *         while running on it), -EINVAL (unknown flag) or -ENOMEM (smaller
+ *         than MINSIGSTKSZ).
+ */
+int sys_sigaltstack(struct thread *td, struct sys_sigaltstack_args *args)
+{
+	struct musl_stack nss;
+	int onstack = sigstk_on(td, signal_user_sp(td));
+	int err = 0;
+
+	if (args->ss != NULL)
+	{
+		err = copyin(args->ss, &nss, sizeof(nss));
+		if (err == 0 && onstack)
+			err = -EPERM;
+		else if (err == 0 && (nss.ss_flags & ~MUSL_SS_DISABLE) != 0)
+			err = -EINVAL;
+		else if (err == 0 && !(nss.ss_flags & MUSL_SS_DISABLE) && nss.ss_size < MINSIGSTKSZ)
+			err = -ENOMEM;
+	}
+
+	if (err == 0 && args->oss != NULL)
+	{
+		struct musl_stack oss;
+
+		memset(&oss, 0, sizeof(oss));
+		oss.ss_sp = td->td_sigstk.ss_sp;
+		oss.ss_size = td->td_sigstk.ss_size;
+		oss.ss_flags = onstack ? MUSL_SS_ONSTACK : (sigstk_enabled(td) ? 0 : MUSL_SS_DISABLE);
+		err = copyout(&oss, args->oss, sizeof(oss));
+	}
+
+	if (err == 0 && args->ss != NULL)
+	{
+		memset(&td->td_sigstk, 0, sizeof(td->td_sigstk));
+		if (nss.ss_flags & MUSL_SS_DISABLE)
+			td->td_sigstk.ss_flags = SS_DISABLE;
+		else
+		{
+			td->td_sigstk.ss_sp = nss.ss_sp;
+			td->td_sigstk.ss_size = nss.ss_size;
+		}
+	}
+
+	td->td_retval[0] = err;
+	return (-err);
 }

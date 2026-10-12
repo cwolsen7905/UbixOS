@@ -22,6 +22,7 @@ long __syscall_cp_c(syscall_arg_t nr,
                     syscall_arg_t u, syscall_arg_t v, syscall_arg_t w,
                     syscall_arg_t x, syscall_arg_t y, syscall_arg_t z)
 {
+	if (nr & __UBIX_ENOSYS) return -ENOSYS; /* UbixOS stub: never trap */
 	pthread_t self;
 	long r;
 	int st;

@@ -17,7 +17,7 @@ Every lane updates its row in the same PR; rows are never deleted.
 | W-008 | self-host | x86_64 /usr/src/bin build inside UbixOS | todo | - | - | Follow-up from #10; slow under TCG |
 | W-009 | kernel | errno translation at the POSIX boundary (FreeBSD errno numbers vs musl Linux values: EAGAIN, ELOOP, ENAMETOOLONG, ...) | todo | - | - | Follow-up from #10 |
 | W-010 | userland | Add tee to the world | todo | - | - | Follow-up from #10 |
-| W-011 | kernel | getppid (POSIX slot 39) is wired to sys_getpid; wire it to sys_getppid | todo | - | - | sys/posix/syscalls_posix.c slot 39; sys_getppid exists in gen_calls.c |
+| W-011 | kernel | getppid (POSIX slot 39) is wired to sys_getpid; wire it to sys_getppid | done | - | #16 | Also: reparenting an orphan now updates its ppid |
 | W-012 | kernel | Fix syscall table name typos: wiat4, cgdur, feek | todo | - | - | sys/posix/syscalls_posix.c slots 7, 12, 294; names only |
 | W-013 | docs | Create SYSCALLS.md or remove the references to it | todo | - | - | Referenced by README.md, CONTRIBUTING.md; docs/README.md notes the file is absent. Which of create/remove is a decision |
 | W-014 | vmm | Fix stale comment in vmm_layout.h and plan the aarch64 higher-half kernel | todo | - | - | sys/include/aarch64/vmm_layout.h says TTBR1 = kernel but the kernel runs in TTBR0 today; plan: docs/design/aarch64-higher-half-plan.md |
@@ -34,6 +34,13 @@ Every lane updates its row in the same PR; rows are never deleted.
 | W-025 | vmm | aarch64 exec leaks old user pages (no pmap_free_user_space) | todo | - | - | From docs/design/backlog-roadmap.md; status unclear, not re-verified |
 | W-026 | console | fbcon on-screen text console and image profiles (convergence plan phases 3.5 and 4) | todo | - | - | docs/design/console-and-arch-convergence-plan.md, fbcon.md; status unclear |
 | W-027 | kernel | Legacy i386-era backlog in TODO.md and BUGS.md (VFS, VMM, ld.so, sched, MPI) | todo | - | - | Many items name i386 paths that may no longer exist on master; triage into individual rows before working; status unclear |
+| W-028 | kernel | Syscall ABI audit fixes: musl Linux numbers leaking into the FreeBSD table (pwrite was setgid, statfs wrote to 0x78, ...), sigaltstack, pwrite, posix_fadvise, copyin/copyout | done | - | #16 | 22 dangerous leaks closed; 71 Linux-only calls fail ENOSYS in musl without trapping. sigtest/vfstest pass on x86_64 and aarch64 |
+| W-029 | kernel | Move the six calls the kernel serves at Linux numbers (poll 168, rt_sigsuspend 179, tkill 238, gettid 224, set_tid_address 258, statx 383) to FreeBSD or native slots | todo | - | - | Keep the old slots answering while statically linked binaries (clang/lld) still use them. From the W-028 audit |
+| W-030 | kernel | Kernel size_t is typedef int (32-bit, signed) on the 64-bit kernels | todo | - | - | sys/include/sys/types.h. Shared structs using size_t have the wrong layout; lengths truncate above 2 GB. Found via sigaltstack (W-028) |
+| W-031 | vmm | x86_64 MI code used the i386 vmm_layout.h (user space ended at 3 GB) | done | - | #16 | <machine/vmm_layout.h> now resolves to x86_64/vmm_layout.h |
+| W-032 | self-host | /usr/src/lib builds inside UbixOS (C libraries) | doing | - | #16 | Makefile fixes in W-028 PR (_ARCH default, -L${MUSL_LIB}). aarch64: every C library links except libbearssl and libcss (blocked by W-033); C++ (objgfx) waits for clang++/libc++ in-OS |
+| W-033 | kernel | execve silently truncates arguments: each argv/env string is cut at 4096 bytes and entries past 256 are dropped | todo | - | - | Both arches, copy_user_strvec in sys/arch/*/kern/execfile.c. bmake's `sh -c` link line for libbearssl/libcss (~15 KB) loses its -o, so ld writes a.out and exits 0. Should fail E2BIG past the arg region, not truncate |
+| W-034 | ubixfs | New files on aarch64 show an mtime from boot time, not the current time | todo | - | - | Seen during the W-032 build (ls -l showed 20:24 for files written at 23:26); not investigated |
 
 ## Notes
 

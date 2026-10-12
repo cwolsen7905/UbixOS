@@ -50,7 +50,7 @@ all: ${OBJ_DIR}/lib/libdom.so
 ${OBJ_DIR}/lib/libdom.so: $(OBJS)
 	@mkdir -p ${OBJ_DIR}/lib
 	$(LD) -m ${ARCH_LDEMUL} -shared -soname libdom.so ${OBJS:S|^|${OBJDIR}/|} \
-		-L${OBJ_DIR}/lib -lhubbub -lparserutils -lwapcaplet -lc -o ${OBJ_DIR}/lib/libdom.so
+		-L${OBJ_DIR}/lib -L${MUSL_LIB} -lhubbub -lparserutils -lwapcaplet -lc -o ${OBJ_DIR}/lib/libdom.so
 
 clean:
 	$(REMOVE) ${OBJDIR} ${OBJ_DIR}/lib/libdom.so

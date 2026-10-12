@@ -7,14 +7,16 @@ cd "$CHECK_ROOT" || exit 2
 TIDY="${CLANG_TIDY:-$(command -v clang-tidy || ls /opt/homebrew/opt/llvm/bin/clang-tidy 2>/dev/null)}"
 [ -n "$TIDY" ] && [ -x "$TIDY" ] || { echo "clang-tidy not installed"; exit $CHECK_SKIP; }
 tmp="$(mktemp)"; map="$(mktemp)"; trap 'rm -f "$tmp" "$tmp.out" "$map"' EXIT
-a="${CHECK_ARCHES%% *}"
-case "$a" in aarch64) tgt="--target=aarch64-none-elf -mgeneral-regs-only" ;; *) tgt="--target=x86_64-none-elf -mno-sse -mno-red-zone" ;; esac
+a0="${CHECK_ARCHES%% *}"
 # path:line for every added line of every changed file (headers included).
 for f in $CHECK_FILES; do
 	added_lines "$f" | cut -d: -f1 | sed "s|^|$f:|"
 done >"$map"
 for f in $CHECK_FILES; do
 	case "$f" in sys/*.c | sys/*/*.c | sys/*/*/*.c | sys/*/*/*/*.c) ;; *) continue ;; esac
+	# Arch-specific code is analysed for its own arch; MI code for the first one.
+	case "$f" in sys/arch/aarch64/*) a=aarch64 ;; sys/arch/x86_64/*) a=x86_64 ;; *) a="$a0" ;; esac
+	case "$a" in aarch64) tgt="--target=aarch64-none-elf -mgeneral-regs-only" ;; *) tgt="--target=x86_64-none-elf -mno-sse -mno-red-zone" ;; esac
 	# shellcheck disable=SC2086
 	"$TIDY" --quiet "$f" -- $tgt -ffreestanding -nostdinc -Isys/include -Isys/arch/"$a" -D__KERNEL__ 2>/dev/null |
 		sed "s|^$CHECK_ROOT/||" >"$tmp"

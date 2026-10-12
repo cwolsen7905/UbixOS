@@ -56,6 +56,9 @@
 static int close_fdslot(struct thread *td, int fd);
 static int duplicate_descriptor(struct thread *td, int from, int to);
 
+/* Wait channel for fd_poll_nap(); only its address matters. */
+static char g_fd_poll_chan;
+
 /* (lwip_select is no longer called directly — see the g_socket_select hook.) */
 struct timeval;
 struct fd_set;
@@ -705,18 +708,26 @@ int sys_ioctl(struct thread *td, struct sys_ioctl_args *args)
 	}
 }
 
-/*
- * select/poll scan their fds, then wait for something to change.  Most fd types
- * here (pipes, ptys, sockets) do not wake a poller, so sleep one scheduler tick
- * between scans: ~10 ms latency instead of a busy sched_yield loop that kept
- * every waiting server runnable and stole CPU from real work.
+/**
+ * Wake predicate for the select/poll nap that never fires, so the nap always
+ * runs to its timeout.
+ *
+ * @return 0 (never ready).
  */
 static int fd_poll_never(void *arg)
 {
 	(void)arg;
 	return (0);
 }
-static char g_fd_poll_chan;
+
+/**
+ * Sleep one scheduler tick between select/poll scans.
+ *
+ * select/poll scan their fds, then wait for something to change.  Most fd types
+ * here (pipes, ptys, sockets) do not wake a poller, so sleep one scheduler tick
+ * between scans: ~10 ms latency instead of a busy sched_yield loop that kept
+ * every waiting server runnable and stole CPU from real work.
+ */
 static void fd_poll_nap(void)
 {
 	sched_wait_event_timeout(&g_fd_poll_chan, fd_poll_never, NULL, 1);

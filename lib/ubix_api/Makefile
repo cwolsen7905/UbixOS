@@ -55,7 +55,7 @@ lib.so: $(OBJS_SO)
 	@mkdir -p ${OBJ_DIR}/lib
 	$(LD) -m ${MUSL_LDEMULATION} -shared -soname libubix_api.so \
 		${OBJS_SO:S|^|${OBJDIR}/|} \
-		-L${OBJ_DIR}/lib -lc \
+		-L${OBJ_DIR}/lib -L${MUSL_LIB} -lc \
 		-o ${OBJ_DIR}/lib/$(OUTPUT)
 
 

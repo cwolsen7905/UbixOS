@@ -2,6 +2,9 @@
 # 'lib' options
 
 .include "${UBIX_MK}/ubix.platform.mk"
+# MUSL_LIB: where libc.so lives — ${OBJ_DIR}/obj/musl/lib on the host, /lib
+# on-device (UBIX_NATIVE), where the build tree has no musl of its own.
+.include "${UBIX_MK}/ubix.musl.vars.mk"
 
 # Toolchain (CC/CXX/AS/AR/LD/NM/OBJCOPY/RANLIB) + TC_NOSTDINC/TC_STDFLAG come
 # from ubix.toolchain.mk (set + exported by Makefile.incl).

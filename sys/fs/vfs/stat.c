@@ -35,6 +35,9 @@
 #include <lib/kprintf.h>
 #include <sys/descrip.h>
 #include <string.h>
+#include <ubixos/uaccess.h>
+#include <lib/kmalloc.h>
+#include <fs/vfs/mount.h>
 
 /**
  * Report regular files as executable.
@@ -306,122 +309,119 @@ int sys_fstatat(struct thread *td, struct sys_fstatat_args *args)
 	return (error);
 }
 
-int sys_fstatfs(struct thread *td, struct sys_fstatfs_args *args)
+/* Longest path sys_statfs accepts from userland, terminator included. */
+#define STATFS_PATH_MAX 1024
+
+/**
+ * Fill @sf with what UbixOS reports for any mounted filesystem.  There is no
+ * per-mount accounting yet, so the sizes are fixed placeholders (large and
+ * mostly free, so space checks pass) under the FreeBSD statfs layout.
+ */
+static void statfs_fill(struct statfs *sf)
 {
-	int error = 0;
-
-	struct file *fd = 0x0;
-
-	getfd(td, &fd, args->fd);
-
-	if (fd == 0)
-	{
-		error = -1;
-	}
-	else
-	{
-		/*
-		 args->buf->st_dev = 0xDEADBEEF;
-		 args->buf->st_ino = fd->fd->ino;
-		 args->buf->st_mode = fd->fd->inode.u.ufs2_i.di_mode;
-		 args->buf->st_nlink = fd->fd->inode.u.ufs2_i.di_nlink;
-		 args->buf->st_uid = fd->fd->inode.u.ufs2_i.di_uid;
-		 args->buf->st_gid = fd->fd->inode.u.ufs2_i.di_gid;
-		 args->buf->st_rdev = 0xBEEFDEAD;
-		 args->buf->st_size = fd->fd->inode.u.ufs2_i.di_size;
-		 args->buf->st_atime = fd->fd->inode.u.ufs2_i.di_atime;
-		 args->buf->st_mtime = fd->fd->inode.u.ufs2_i.di_mtime;
-		 args->buf->st_ctime = fd->fd->inode.u.ufs2_i.di_ctime;
-		 //MrOlsen kprintf("LSTAT(%i)=st_ino 0x%X, st_mode=0x%X, st_uid %i, st_gid %i, st_size=0x%X", error,
-		 args->buf->st_ino, args->buf->st_mode, args->buf->st_uid, args->buf->st_gid, args->buf->st_size);
-		 //fclose(fd);
-		 */
-
-		args->buf->f_version = 0x20030518;
-		args->buf->f_type = 0x35;
-		args->buf->f_flags = 0x1000;
-		args->buf->f_bsize = 0x1000;
-		args->buf->f_iosize = 0x8000;
-		args->buf->f_blocks = 0x7bf9d;
-		args->buf->f_bfree = 0x73c0c;
-		args->buf->f_bavail = 0x69d5c;
-		args->buf->f_files = 0x3fffe;
-		args->buf->f_ffree = 0x3d3f0;
-		args->buf->f_syncwrites = 0x75232;
-		args->buf->f_asyncwrites = 0x2b804;
-		args->buf->f_syncreads = 0x2edea;
-		args->buf->f_asyncreads = 0x6182;
-		args->buf->f_namemax = 0xFF;
-		args->buf->f_owner = 0x0;
-		args->buf->f_fsid.val[0] = 0x5A31F4F0;
-		args->buf->f_fsid.val[1] = 0x65E7C98F;
-		// args->buf->f_charspare= {""};
-		sprintf(args->buf->f_fstypename, "ufs");
-		sprintf(args->buf->f_mntfromname, "/dev/ada0s1a");
-		sprintf(args->buf->f_mntonname, "/");
-	}
-
-	td->td_retval[0] = error;
-	return (error);
+	memset(sf, 0, sizeof(*sf));
+	sf->f_version = 0x20030518; /* STATFS_VERSION */
+	sf->f_type = 0x35;
+	sf->f_bsize = 4096;
+	sf->f_iosize = 32768;
+	sf->f_blocks = 0x7bf9d;
+	sf->f_bfree = 0x73c0c;
+	sf->f_bavail = 0x69d5c;
+	sf->f_files = 0x3fffe;
+	sf->f_ffree = 0x3d3f0;
+	sf->f_namemax = 255;
+	sf->f_fsid.val[0] = 0x5A31F4F0;
+	sf->f_fsid.val[1] = 0x65E7C98F;
+	strncpy(sf->f_fstypename, "ubixfs", sizeof(sf->f_fstypename) - 1);
+	strncpy(sf->f_mntfromname, "ubixfs", sizeof(sf->f_mntfromname) - 1);
+	strncpy(sf->f_mntonname, "/", sizeof(sf->f_mntonname) - 1);
 }
 
+/**
+ * Fill a struct statfs and copy it out to the user address @ubuf.  The struct
+ * is ~500 bytes, so it lives on the heap (kernel-rules K-10).
+ *
+ * @return 0, -ENOMEM or -EFAULT.
+ */
+static int statfs_copyout(struct statfs *ubuf)
+{
+	struct statfs *sf = kmalloc(sizeof(*sf));
+	int err;
+
+	if (sf == NULL)
+		return (-ENOMEM);
+	statfs_fill(sf);
+	err = copyout(sf, ubuf, sizeof(*sf));
+	kfree(sf);
+	return (err);
+}
+
+/**
+ * sys_fstatfs - filesystem statistics for an open descriptor (FreeBSD 397)
+ * @td: thread state for the calling task
+ * @args: fd and the user's struct statfs
+ *
+ * @return 0; td_retval[0] is 0, -EBADF, -ENOMEM or -EFAULT.
+ */
+int sys_fstatfs(struct thread *td, struct sys_fstatfs_args *args)
+{
+	struct file *fd = NULL;
+	int err;
+
+	getfd(td, &fd, args->fd);
+	err = (fd == NULL) ? -EBADF : statfs_copyout(args->buf);
+	td->td_retval[0] = err;
+	return (-err);
+}
+
+/**
+ * sys_statfs - filesystem statistics for a path (FreeBSD 396)
+ * @td: thread state for the calling task
+ * @args: path (file or directory) and the user's struct statfs
+ *
+ * @return 0; td_retval[0] is 0, -ENOENT, -ENAMETOOLONG, -ENOMEM or -EFAULT.
+ */
 int sys_statfs(struct thread *td, struct sys_statfs_args *args)
 {
-	int error = 0;
-	fileDescriptor_t *fd = 0x0;
+	char *path = kmalloc(STATFS_PATH_MAX);
+	fileDescriptor_t *fp;
+	kDIR_t *dir;
+	int err;
 
-	fd = fopen(args->path, "rb");
-
-	if (fd == 0)
+	if (path == NULL)
 	{
-		error = -1;
+		td->td_retval[0] = -ENOMEM;
+		return (ENOMEM);
+	}
+
+	err = copyinstr(args->path, path, STATFS_PATH_MAX);
+	if (err < 0)
+	{
+		/* Re-express in this file's errno numbering: the kernel's two errno
+		 * headers disagree on values above EAGAIN. */
+		err = (err == -EFAULT) ? -EFAULT : -ENAMETOOLONG;
 	}
 	else
 	{
-		/*
-		 args->buf->st_dev = 0xDEADBEEF;
-		 args->buf->st_ino = fd->fd->ino;
-		 args->buf->st_mode = fd->fd->inode.u.ufs2_i.di_mode;
-		 args->buf->st_nlink = fd->fd->inode.u.ufs2_i.di_nlink;
-		 args->buf->st_uid = fd->fd->inode.u.ufs2_i.di_uid;
-		 args->buf->st_gid = fd->fd->inode.u.ufs2_i.di_gid;
-		 args->buf->st_rdev = 0xBEEFDEAD;
-		 args->buf->st_size = fd->fd->inode.u.ufs2_i.di_size;
-		 args->buf->st_atime = fd->fd->inode.u.ufs2_i.di_atime;
-		 args->buf->st_mtime = fd->fd->inode.u.ufs2_i.di_mtime;
-		 args->buf->st_ctime = fd->fd->inode.u.ufs2_i.di_ctime;
-		 //MrOlsen kprintf("LSTAT(%i)=st_ino 0x%X, st_mode=0x%X, st_uid %i, st_gid %i, st_size=0x%X", error,
-		 args->buf->st_ino, args->buf->st_mode, args->buf->st_uid, args->buf->st_gid, args->buf->st_size);
-		 //fclose(fd);
-		 */
-
-		// kprintf("sFS: %s", args->path);
-		args->buf->f_version = 0x20030518;
-		args->buf->f_type = 0x35;
-		args->buf->f_flags = 0x1000;
-		args->buf->f_bsize = 0x1000;
-		args->buf->f_iosize = 0x8000;
-		args->buf->f_blocks = 0x7bf9d;
-		args->buf->f_bfree = 0x73c0c;
-		args->buf->f_bavail = 0x69d5c;
-		args->buf->f_files = 0x3fffe;
-		args->buf->f_ffree = 0x3d3f0;
-		args->buf->f_syncwrites = 0x75232;
-		args->buf->f_asyncwrites = 0x2b804;
-		args->buf->f_syncreads = 0x2edea;
-		args->buf->f_asyncreads = 0x6182;
-		args->buf->f_namemax = 0xFF;
-		args->buf->f_owner = 0x0;
-		args->buf->f_fsid.val[0] = 0x5A31F4F0;
-		args->buf->f_fsid.val[1] = 0x65E7C98F;
-		// args->buf->f_charspare= {""};
-		sprintf(args->buf->f_fstypename, "ufs");
-		sprintf(args->buf->f_mntfromname, "/dev/ada0s1a");
-		sprintf(args->buf->f_mntonname, "/");
+		err = -ENOENT;
+		fp = fopen(path, "r");
+		if (fp != NULL)
+		{
+			fclose(fp);
+			err = 0;
+		}
+		else if ((dir = vfs_opendir(path)) != NULL)
+		{
+			vfs_closedir(dir);
+			err = 0;
+		}
 	}
+	kfree(path);
 
-	td->td_retval[0] = error;
-	return (error);
+	if (err == 0)
+		err = statfs_copyout(args->buf);
+	td->td_retval[0] = err;
+	return (-err);
 }
 
 /* Return stat of path do not follow if link return stat of link */

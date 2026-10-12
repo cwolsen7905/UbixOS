@@ -13,16 +13,29 @@
 #include <sys/descrip.h>
 #include <ubixos/sched.h> /* sched_yield */
 
-/* The serial console has no RX interrupt wired: poll it, but sleep a couple of
- * ticks between polls instead of sched_yield().  A yield loop kept the console
- * shell permanently runnable, burning its CPU and starving real work sharing
- * that core (an on-device build crawled).  20 ms is imperceptible for typing. */
+/* Wait channel for console_nap(); only its address matters. */
+static char g_console_nap_chan;
+
+/**
+ * Wake predicate for the console poll nap that never fires, so the nap always
+ * runs to its timeout.
+ *
+ * @return 0 (never ready).
+ */
 static int console_never(void *arg)
 {
 	(void)arg;
 	return (0);
 }
-static char g_console_nap_chan;
+
+/**
+ * Sleep ~2 ticks between serial console polls.
+ *
+ * The serial console has no RX interrupt wired: poll it, but sleep a couple of
+ * ticks between polls instead of sched_yield().  A yield loop kept the console
+ * shell permanently runnable, burning its CPU and starving real work sharing
+ * that core (an on-device build crawled).  20 ms is imperceptible for typing.
+ */
 static void console_nap(void)
 {
 	sched_wait_event_timeout(&g_console_nap_chan, console_never, 0, 2);
