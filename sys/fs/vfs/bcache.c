@@ -32,172 +32,231 @@
 #include <ubixos/sched.h>
 #include <string.h>
 
-#define BCACHE_SEC_BYTES	512
-
-/*
- * bcache has its own spinlock, independent of the per-mount fat lock.
- * This allows two volumes (sys: and USB:) to perform FAT metadata reads
- * concurrently.  The lock is held across the device I/O on a miss so that
- * the shared _prefetch_buf is not raced; the miss path is uncommon after
- * the first access to each FAT/directory sector.
- */
-static volatile int		_bcache_lock;
-static u_int8_t			_prefetch_buf[BCACHE_PREFETCH_SECS * BCACHE_SEC_BYTES];
-
-static void
-bcache_acquire(void)
+/** One cached sector. */
+struct bcache_slot
 {
-	while (__sync_lock_test_and_set(&_bcache_lock, 1))
+	struct ubx_device *dev;
+	u_int32_t lba;
+	int32_t next; /* next slot in this hash bucket, -1 = end */
+	u_int8_t valid;
+	u_int8_t ref; /* clock second-chance bit */
+	u_int8_t data[BCACHE_SEC_BYTES];
+};
+
+/* Guards the slot table and buckets; held across the device read on a miss. */
+static volatile int g_bcache_lock;
+static struct bcache_slot g_slots[BCACHE_SLOTS];
+static int32_t g_bucket[BCACHE_HASH]; /* first slot per bucket, -1 = empty */
+static int g_clock_hand;
+
+/** Take the cache lock, yielding while another CPU holds it. */
+static void bcache_acquire(void)
+{
+	while (__sync_lock_test_and_set(&g_bcache_lock, 1))
 		sched_yield();
 }
 
-static void
-bcache_release(void)
+/** Release the cache lock. */
+static void bcache_release(void)
 {
-	__sync_lock_release(&_bcache_lock);
+	__sync_lock_release(&g_bcache_lock);
 }
 
-/* ------------------------------------------------------------------ */
-/* Slot table                                                          */
-/* ------------------------------------------------------------------ */
-
-struct bcache_slot {
-	struct ubx_device	*dev;
-	u_int32_t		 lba;
-	u_int8_t			 valid;
-	u_int8_t			 ref;		/* clock second-chance bit */
-	u_int8_t			 data[BCACHE_SEC_BYTES];
-};
-
-static struct bcache_slot	_slots[BCACHE_SLOTS];
-static int			_clock_hand;
-
-/* ------------------------------------------------------------------ */
-/* Internal helpers (called with _bcache_lock held)                    */
-/* ------------------------------------------------------------------ */
-
-static int
-slot_find(struct ubx_device *dev, u_int32_t lba)
+/** @return the hash bucket for (@dev, @lba). */
+static u_int32_t bcache_hash(struct ubx_device *dev, u_int32_t lba)
 {
-	int	i;
+	return ((lba ^ (u_int32_t)((uintptr_t)dev >> 4) * 0x9E3779B1u) & (BCACHE_HASH - 1));
+}
 
-	for (i = 0; i < BCACHE_SLOTS; i++) {
-		if (_slots[i].valid && _slots[i].dev == dev &&
-		    _slots[i].lba == lba)
+/** @return the slot caching (@dev, @lba), or -1. */
+static int slot_find(struct ubx_device *dev, u_int32_t lba)
+{
+	int32_t i;
+
+	for (i = g_bucket[bcache_hash(dev, lba)]; i >= 0; i = g_slots[i].next)
+		if (g_slots[i].dev == dev && g_slots[i].lba == lba)
 			return (i);
-	}
 	return (-1);
 }
 
-/* Clock eviction: return index of a slot safe to reuse. */
-static int
-slot_evict(void)
+/** Remove valid slot @idx from its hash bucket and mark it invalid. */
+static void slot_unlink(int idx)
 {
-	int	tries;
+	int32_t *pp = &g_bucket[bcache_hash(g_slots[idx].dev, g_slots[idx].lba)];
 
-	for (tries = 0; tries < BCACHE_SLOTS * 2; tries++) {
-		struct bcache_slot *s = &_slots[_clock_hand];
-		if (!s->valid || !s->ref) {
-			int victim = _clock_hand;
-			_clock_hand = (_clock_hand + 1) % BCACHE_SLOTS;
-			s->valid = 0;
+	while (*pp >= 0)
+	{
+		if (*pp == idx)
+		{
+			*pp = g_slots[idx].next;
+			break;
+		}
+		pp = &g_slots[*pp].next;
+	}
+	g_slots[idx].valid = 0;
+}
+
+/** Clock eviction. @return a free slot index (unlinked, invalid). */
+static int slot_evict(void)
+{
+	int tries, victim;
+
+	for (tries = 0; tries < BCACHE_SLOTS * 2; tries++)
+	{
+		struct bcache_slot *s = &g_slots[g_clock_hand];
+
+		victim = g_clock_hand;
+		g_clock_hand = (g_clock_hand + 1) % BCACHE_SLOTS;
+		if (!s->valid)
+			return (victim);
+		if (!s->ref)
+		{
+			slot_unlink(victim);
 			return (victim);
 		}
 		s->ref = 0;
-		_clock_hand = (_clock_hand + 1) % BCACHE_SLOTS;
 	}
-	/* All slots referenced — force-evict current position. */
+	victim = g_clock_hand; /* every slot referenced: take the next one */
+	g_clock_hand = (g_clock_hand + 1) % BCACHE_SLOTS;
+	if (g_slots[victim].valid)
+		slot_unlink(victim);
+	return (victim);
+}
+
+/** Cache @data as sector (@dev, @lba), replacing any older copy. */
+static void slot_store(struct ubx_device *dev, u_int32_t lba, const void *data)
+{
+	int idx = slot_find(dev, lba);
+
+	if (idx < 0)
 	{
-		int victim = _clock_hand;
-		_slots[victim].valid = 0;
-		_clock_hand = (_clock_hand + 1) % BCACHE_SLOTS;
-		return (victim);
+		u_int32_t h = bcache_hash(dev, lba);
+
+		idx = slot_evict();
+		g_slots[idx].dev = dev;
+		g_slots[idx].lba = lba;
+		g_slots[idx].valid = 1;
+		g_slots[idx].next = g_bucket[h];
+		g_bucket[h] = idx;
 	}
+	g_slots[idx].ref = 1;
+	memcpy(g_slots[idx].data, data, BCACHE_SEC_BYTES);
 }
 
-/* ------------------------------------------------------------------ */
-/* Public API                                                          */
-/* ------------------------------------------------------------------ */
-
-void
-bcache_init(void)
+/**
+ * Reset the cache to empty.
+ */
+void bcache_init(void)
 {
-	memset(_slots, 0, sizeof(_slots));
-	_clock_hand  = 0;
-	_bcache_lock = 0;
+	int i;
+
+	memset(g_slots, 0, sizeof(g_slots));
+	for (i = 0; i < BCACHE_HASH; i++)
+		g_bucket[i] = -1;
+	g_clock_hand = 0;
+	g_bcache_lock = 0;
 }
 
-int
-bcache_read(struct ubx_device *dev, u_int32_t lba, void *buf)
+/**
+ * Read @count sectors starting at @lba of @dev into @buf.
+ *
+ * If every sector is cached they are copied out; otherwise the whole run is read
+ * from the device in one call (write-through keeps the device current, so cached
+ * and device copies agree) and every sector of it is cached.
+ *
+ * @return 0 on success, -1 on a device error.
+ */
+int bcache_read_multi(struct ubx_device *dev, u_int32_t lba, u_int32_t count, void *buf)
 {
-	int	 idx;
+	u_int8_t *out = buf;
+	u_int32_t i;
 
 	bcache_acquire();
+	for (i = 0; i < count; i++)
+		if (slot_find(dev, lba + i) < 0)
+			break;
+	if (i == count)
+	{
+		for (i = 0; i < count; i++)
+		{
+			int idx = slot_find(dev, lba + i);
 
-	idx = slot_find(dev, lba);
-	if (idx >= 0) {
-		_slots[idx].ref = 1;
-		memcpy(buf, _slots[idx].data, BCACHE_SEC_BYTES);
+			g_slots[idx].ref = 1;
+			memcpy(out + i * BCACHE_SEC_BYTES, g_slots[idx].data, BCACHE_SEC_BYTES);
+		}
 		bcache_release();
 		return (0);
 	}
 
-	/*
-	 * Cache miss.  Read one sector into the slot.  A single-sector policy
-	 * is safe for all device types (USB bulk transfers stall on multi-sector
-	 * reads if the UHCI driver's timeout is tight).  The 256-slot table
-	 * provides caching across FAT-chain walks without thrashing.
-	 */
-	if (dev->dev_blk_ops->read(dev, lba, 1, _prefetch_buf) != 0) {
+	if (dev->dev_blk_ops->read(dev, lba, count, out) != 0)
+	{
 		bcache_release();
 		return (-1);
 	}
-
-	/* n == 1: store the single sector that was read. */
-	idx = slot_find(dev, lba);
-	if (idx >= 0) {
-		_slots[idx].ref = 1;
-		memcpy(_slots[idx].data, _prefetch_buf, BCACHE_SEC_BYTES);
-	} else {
-		idx = slot_evict();
-		_slots[idx].dev   = dev;
-		_slots[idx].lba   = lba;
-		_slots[idx].valid = 1;
-		_slots[idx].ref   = 1;
-		memcpy(_slots[idx].data, _prefetch_buf, BCACHE_SEC_BYTES);
-	}
-	memcpy(buf, _slots[idx].data, BCACHE_SEC_BYTES);
+	for (i = 0; i < count; i++)
+		slot_store(dev, lba + i, out + i * BCACHE_SEC_BYTES);
 	bcache_release();
 	return (0);
 }
 
-int
-bcache_write(struct ubx_device *dev, u_int32_t lba, const void *buf)
+/**
+ * Read sector @lba of @dev into @buf (512 bytes).
+ *
+ * @return 0 on success, -1 on a device error.
+ */
+int bcache_read(struct ubx_device *dev, u_int32_t lba, void *buf)
 {
-	int	idx;
-	int	r;
+	return (bcache_read_multi(dev, lba, 1, buf));
+}
+
+/**
+ * Write @count sectors from @buf at @lba of @dev: refresh any cached copies, then
+ * write the run through to the device in one call.
+ *
+ * @return 0 on success, -1 on a device error.
+ */
+int bcache_write_multi(struct ubx_device *dev, u_int32_t lba, u_int32_t count, const void *buf)
+{
+	const u_int8_t *in = buf;
+	u_int32_t i;
 
 	bcache_acquire();
-	idx = slot_find(dev, lba);
-	if (idx >= 0) {
-		memcpy(_slots[idx].data, buf, BCACHE_SEC_BYTES);
-		_slots[idx].ref = 1;
+	for (i = 0; i < count; i++)
+	{
+		int idx = slot_find(dev, lba + i);
+
+		if (idx >= 0)
+		{
+			memcpy(g_slots[idx].data, in + i * BCACHE_SEC_BYTES, BCACHE_SEC_BYTES);
+			g_slots[idx].ref = 1;
+		}
 	}
 	bcache_release();
 
-	/* Write-through: flush to device outside the cache lock. */
-	r = dev->dev_blk_ops->write(dev, lba, 1, (void *)(uintptr_t)buf);
-	return (r);
+	/* Write-through: flush to the device outside the cache lock. */
+	return (dev->dev_blk_ops->write(dev, lba, count, (void *)(uintptr_t)buf));
 }
 
-void
-bcache_invalidate(struct ubx_device *dev)
+/**
+ * Write 512 bytes from @buf to sector @lba of @dev (write-through).
+ *
+ * @return 0 on success, -1 on a device error.
+ */
+int bcache_write(struct ubx_device *dev, u_int32_t lba, const void *buf)
 {
-	int	i;
+	return (bcache_write_multi(dev, lba, 1, buf));
+}
+
+/**
+ * Drop every cached sector of @dev (on unmount).
+ */
+void bcache_invalidate(struct ubx_device *dev)
+{
+	int i;
 
 	bcache_acquire();
 	for (i = 0; i < BCACHE_SLOTS; i++)
-		if (_slots[i].valid && _slots[i].dev == dev)
-			_slots[i].valid = 0;
+		if (g_slots[i].valid && g_slots[i].dev == dev)
+			slot_unlink(i);
 	bcache_release();
 }

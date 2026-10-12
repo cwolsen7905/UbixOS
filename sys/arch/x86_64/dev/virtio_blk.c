@@ -97,7 +97,12 @@ static struct virtq_desc *g_desc;
 static struct virtq_avail *g_avail;
 static struct virtq_used *g_used;
 static struct virtio_blk_req *g_hdr;
-static u8 *g_data;            /* 512-byte DMA bounce buffer */
+/* Batch bounce buffer: one request moves up to BLK_BATCH_SECS sectors, instead of
+ * one request (one VM exit, and under TCG a full device emulation pass) per
+ * sector.  Physically contiguous, so a single descriptor covers it. */
+#define BLK_BATCH_SECS 128 /* 64 KB */
+#define BLK_BATCH_PAGES ((BLK_BATCH_SECS * 512) / PAGE_SIZE)
+static u8 *g_batch;
 static volatile u8 *g_status; /* 1-byte status */
 
 static struct ubx_device g_blk_dev;  /* whole-disk block device (vtblk0) */
@@ -138,7 +143,40 @@ static int submit_and_wait(void)
 	return (*g_status == VIRTIO_BLK_S_OK) ? 0 : -1;
 }
 
-/** Read @count sectors at @lba into @buf (one request each).  @return 0/-1. */
+/**
+ * Stage one request of @n sectors at @lba in g_desc[0..2], submit it and wait.
+ * @write selects VIRTIO_BLK_T_OUT (g_batch is device-readable) or T_IN.
+ *
+ * @return 0 on VIRTIO_BLK_S_OK, -1 otherwise.
+ */
+static int blk_request(u64 lba, u32 n, int write)
+{
+	g_hdr->type = write ? VIRTIO_BLK_T_OUT : VIRTIO_BLK_T_IN;
+	g_hdr->reserved = 0;
+	g_hdr->sector = lba;
+	*g_status = 0xFF;
+
+	g_desc[0].addr = V2P(g_hdr);
+	g_desc[0].len = sizeof(struct virtio_blk_req);
+	g_desc[0].flags = VIRTQ_DESC_F_NEXT;
+	g_desc[0].next = 1;
+	g_desc[1].addr = V2P(g_batch);
+	g_desc[1].len = n * 512;
+	g_desc[1].flags = write ? VIRTQ_DESC_F_NEXT : (VIRTQ_DESC_F_NEXT | VIRTQ_DESC_F_WRITE);
+	g_desc[1].next = 2;
+	g_desc[2].addr = V2P((void *)g_status);
+	g_desc[2].len = 1;
+	g_desc[2].flags = VIRTQ_DESC_F_WRITE;
+	g_desc[2].next = 0;
+
+	return (submit_and_wait());
+}
+
+/**
+ * Read @count sectors at @lba into @buf, up to BLK_BATCH_SECS per request.
+ *
+ * @return 0, or -1 on a device error.
+ */
 int virtio_blk_read(struct ubx_device *dev, u32 lba, u32 count, void *buf)
 {
 	(void)dev;
@@ -146,38 +184,28 @@ int virtio_blk_read(struct ubx_device *dev, u32 lba, u32 count, void *buf)
 		return -1;
 
 	spinLock(&g_blk_lock);
-	for (u32 i = 0; i < count; i++)
+	for (u32 off = 0; off < count;)
 	{
-		g_hdr->type = VIRTIO_BLK_T_IN;
-		g_hdr->reserved = 0;
-		g_hdr->sector = (u64)lba + i;
-		*g_status = 0xFF;
-
-		g_desc[0].addr = V2P(g_hdr);
-		g_desc[0].len = sizeof(struct virtio_blk_req);
-		g_desc[0].flags = VIRTQ_DESC_F_NEXT;
-		g_desc[0].next = 1;
-		g_desc[1].addr = V2P(g_data);
-		g_desc[1].len = 512;
-		g_desc[1].flags = VIRTQ_DESC_F_NEXT | VIRTQ_DESC_F_WRITE;
-		g_desc[1].next = 2;
-		g_desc[2].addr = V2P((void *)g_status);
-		g_desc[2].len = 1;
-		g_desc[2].flags = VIRTQ_DESC_F_WRITE;
-		g_desc[2].next = 0;
-
-		if (submit_and_wait() != 0)
+		u32 n = count - off;
+		if (n > BLK_BATCH_SECS)
+			n = BLK_BATCH_SECS;
+		if (blk_request((u64)lba + off, n, 0) != 0)
 		{
 			spinUnlock(&g_blk_lock);
 			return -1;
 		}
-		memcpy((u8 *)buf + (u64)i * 512, g_data, 512);
+		memcpy((u8 *)buf + (u64)off * 512, g_batch, (u64)n * 512);
+		off += n;
 	}
 	spinUnlock(&g_blk_lock);
 	return 0;
 }
 
-/** Write @count sectors at @lba from @buf (one request each).  @return 0/-1. */
+/**
+ * Write @count sectors at @lba from @buf, up to BLK_BATCH_SECS per request.
+ *
+ * @return 0, or -1 on a device error.
+ */
 int virtio_blk_write(struct ubx_device *dev, u32 lba, u32 count, void *buf)
 {
 	(void)dev;
@@ -185,32 +213,18 @@ int virtio_blk_write(struct ubx_device *dev, u32 lba, u32 count, void *buf)
 		return -1;
 
 	spinLock(&g_blk_lock);
-	for (u32 i = 0; i < count; i++)
+	for (u32 off = 0; off < count;)
 	{
-		memcpy(g_data, (const u8 *)buf + (u64)i * 512, 512);
-		g_hdr->type = VIRTIO_BLK_T_OUT;
-		g_hdr->reserved = 0;
-		g_hdr->sector = (u64)lba + i;
-		*g_status = 0xFF;
-
-		g_desc[0].addr = V2P(g_hdr);
-		g_desc[0].len = sizeof(struct virtio_blk_req);
-		g_desc[0].flags = VIRTQ_DESC_F_NEXT;
-		g_desc[0].next = 1;
-		g_desc[1].addr = V2P(g_data);
-		g_desc[1].len = 512;
-		g_desc[1].flags = VIRTQ_DESC_F_NEXT; /* device-readable */
-		g_desc[1].next = 2;
-		g_desc[2].addr = V2P((void *)g_status);
-		g_desc[2].len = 1;
-		g_desc[2].flags = VIRTQ_DESC_F_WRITE;
-		g_desc[2].next = 0;
-
-		if (submit_and_wait() != 0)
+		u32 n = count - off;
+		if (n > BLK_BATCH_SECS)
+			n = BLK_BATCH_SECS;
+		memcpy(g_batch, (const u8 *)buf + (u64)off * 512, (u64)n * 512);
+		if (blk_request((u64)lba + off, n, 1) != 0)
 		{
 			spinUnlock(&g_blk_lock);
 			return -1;
 		}
+		off += n;
 	}
 	spinUnlock(&g_blk_lock);
 	return 0;
@@ -300,16 +314,19 @@ int virtio_blk_init(void)
 	outl((u16)(g_io + VPCI_QUEUE_PFN), (u32)(vring / VRING_ALIGN));
 	outb((u16)(g_io + VPCI_STATUS), VSTAT_ACKNOWLEDGE | VSTAT_DRIVER | VSTAT_DRIVER_OK);
 
-	/* DMA buffers (one page carved into header + 512-byte data + status).  Physical
-	 * page; the descriptors below hand the device V2P(...) of these, while the CPU
-	 * fills them through the physmap (P2V). */
+	/* DMA buffers: one page carved into the request header + status, and a
+	 * contiguous run for the batch buffer.  Physical pages; the descriptors hand
+	 * the device V2P(...) of these, while the CPU fills them through the physmap. */
 	dma = vmm_find_free_pages_contig(1, sysID);
 	if (dma == 0)
 		return -1;
 	memset(P2V(dma), 0, PAGE_SIZE);
 	g_hdr = (struct virtio_blk_req *)P2V(dma);
-	g_data = (u8 *)P2V(dma) + 64;
-	g_status = (volatile u8 *)P2V(dma) + 64 + 512;
+	g_status = (volatile u8 *)P2V(dma) + 64;
+	dma = vmm_find_free_pages_contig(BLK_BATCH_PAGES, sysID);
+	if (dma == 0)
+		return -1;
+	g_batch = (u8 *)P2V(dma);
 
 	g_ready = 1;
 	serial_puts("virtio-blk: ready (I/O base ");
