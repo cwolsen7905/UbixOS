@@ -7,9 +7,12 @@
  */
 
 #include <errno.h>
+#include <pthread.h>
+#include <setjmp.h>
 #include <signal.h>
 #include <stdint.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 #include <sys/mman.h>
@@ -19,6 +22,8 @@ static volatile int g_hits;
 static volatile int g_signo;
 
 static int g_fail;
+static sigjmp_buf g_segv_jmp; /* check_fault_signals: handler escape */
+static volatile int *g_null;  /* a NULL the compiler cannot prove */
 
 static char g_altstack[65536];
 static volatile int g_alt_on;    /* handler's frame was inside g_altstack */
@@ -137,6 +142,129 @@ static void check_sigaltstack(void)
 	sigaction(SIGUSR2, &sa, NULL);
 }
 
+/** Thread body: wait forever (the process must still end). */
+static void *park(void *arg)
+{
+	(void)arg;
+	for (;;)
+		pause();
+	return NULL;
+}
+
+/** Thread body: exit the whole process with status 5. */
+static void *exit5(void *arg)
+{
+	(void)arg;
+	usleep(100000);
+	exit(5);
+	return NULL;
+}
+
+/** Thread body: fault. */
+static void *crash(void *arg)
+{
+	(void)arg;
+	usleep(100000);
+	return (void *)(intptr_t)*g_null;
+}
+
+/** SIGSEGV handler: jump back out of the fault. */
+static void on_segv(int sig)
+{
+	(void)sig;
+	siglongjmp(g_segv_jmp, 1);
+}
+
+/**
+ * Run @body in a forked child and wait up to 10 s for it.
+ *
+ * @return its wait status, or -1 if it had to be killed (a hang).
+ */
+static int run_child(void (*body)(void))
+{
+	pid_t pid = fork();
+	int st = 0, i;
+
+	if (pid == 0)
+	{
+		body();
+		_exit(99);
+	}
+	for (i = 0; i < 100; i++)
+	{
+		if (waitpid(pid, &st, WNOHANG) == pid)
+			return st;
+		usleep(100000);
+	}
+	kill(pid, SIGKILL);
+	waitpid(pid, &st, 0);
+	return -1;
+}
+
+/** Child: a worker calls exit(5) while main is stuck in pthread_join. */
+static void body_thread_exit(void)
+{
+	pthread_t a, b;
+
+	pthread_create(&a, NULL, park, NULL);
+	pthread_create(&b, NULL, exit5, NULL);
+	pthread_join(a, NULL);
+}
+
+/** Child: a worker faults while main is stuck in pthread_join. */
+static void body_thread_crash(void)
+{
+	pthread_t a, b;
+
+	pthread_create(&a, NULL, park, NULL);
+	pthread_create(&b, NULL, crash, NULL);
+	pthread_join(a, NULL);
+}
+
+/** Child: fault with SIGSEGV blocked. */
+static void body_blocked_fault(void)
+{
+	sigset_t m;
+
+	sigemptyset(&m);
+	sigaddset(&m, SIGSEGV);
+	sigprocmask(SIG_BLOCK, &m, NULL);
+	(void)*g_null;
+}
+
+/**
+ * Fault signals and process-wide exit: a handler catches SIGSEGV; a worker's
+ * exit() or crash ends every thread (the process does not hang); a fault with
+ * SIGSEGV blocked kills the process instead of refaulting forever.
+ */
+static void check_fault_signals(void)
+{
+	struct sigaction sa;
+	int st;
+
+	memset(&sa, 0, sizeof(sa));
+	sa.sa_handler = on_segv;
+	sigaction(SIGSEGV, &sa, NULL);
+	if (sigsetjmp(g_segv_jmp, 1) == 0)
+	{
+		(void)*g_null;
+		check("SIGSEGV handler runs", 0);
+	}
+	else
+		check("SIGSEGV handler runs", 1);
+	sa.sa_handler = SIG_DFL;
+	sigaction(SIGSEGV, &sa, NULL);
+
+	st = run_child(body_thread_exit);
+	if (!(st != -1 && WIFEXITED(st) && WEXITSTATUS(st) == 5))
+		printf("  wait status 0x%x\n", st);
+	check("worker exit(5) ends the process with 5", st != -1 && WIFEXITED(st) && WEXITSTATUS(st) == 5);
+	st = run_child(body_thread_crash);
+	check("worker crash ends the process (SIGSEGV)", st != -1 && WIFSIGNALED(st) && WTERMSIG(st) == SIGSEGV);
+	st = run_child(body_blocked_fault);
+	check("fault with SIGSEGV blocked -> SIGSEGV", st != -1 && WIFSIGNALED(st) && WTERMSIG(st) == SIGSEGV);
+}
+
 int main(void)
 {
 	struct sigaction sa, old;
@@ -201,6 +329,7 @@ int main(void)
 	check("WIFSIGNALED && SIGSEGV", WIFSIGNALED(st) && WTERMSIG(st) == SIGSEGV);
 
 	check_sigaltstack();
+	check_fault_signals();
 
 	printf("sigtest: %s\n", g_fail ? "FAILED" : "all passed");
 	return g_fail;

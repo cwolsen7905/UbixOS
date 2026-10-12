@@ -24,13 +24,16 @@
 #include <sys/pipe.h>
 #include <lib/kmalloc.h>
 #include <string.h>
-#include <vmm/vm_map.h> /* vm_map_copy — inherit the demand-fault VMA tree on fork */
+#include <vmm/vm_map.h>     /* vm_map_copy — inherit the demand-fault VMA tree on fork */
+#include <ubixos/uaccess.h> /* copyout — rfork CLONE_PARENT_SETTID */
 
-#define FRAME_SLOTS 12     /* x19-x28, x29(fp), x30(lr) — must match context.S */
-#define LR_SLOT 11         /* x30 (lr) is the 12th slot */
-#define KSTACK_SIZE 65536  /* 64 KB; matches schedNewTask kmalloc + INITIAL_KSTACK_SIZE */
-#define TRAPFRAME_SIZE 288 /* must match KERNEL_ENTRY in vectors.S */
-#define TF_SLOT_SP_EL0 34  /* sp_el0 at offset 272 in the trapframe */
+#define FRAME_SLOTS 12                        /* x19-x28, x29(fp), x30(lr) — must match context.S */
+#define LR_SLOT 11                            /* x30 (lr) is the 12th slot */
+#define KSTACK_SIZE 65536                     /* 64 KB; matches schedNewTask kmalloc + INITIAL_KSTACK_SIZE */
+#define TRAPFRAME_SIZE 288                    /* must match KERNEL_ENTRY in vectors.S */
+#define TF_SLOT_SP_EL0 34                     /* sp_el0 at offset 272 in the trapframe */
+#define RFORK_CLONE_PARENT_SETTID 0x00100000  /* musl clone flag: store the tid at ptid */
+#define RFORK_CLONE_CHILD_CLEARTID 0x00200000 /* musl clone flag: zero + wake ctid at exit */
 
 /**
  * Initialise a freshly-allocated task's md state.  The software-context fields
@@ -422,6 +425,23 @@ int aarch64_rfork(u_int64_t *parent_tf)
 	for (i = 0; i < (int)FRAME_SLOTS; i++)
 		ctx[i] = 0;
 	ctx[LR_SLOT] = (u_int64_t)(uintptr_t)ret_from_fork;
+
+	/* CLONE_PARENT_SETTID: store the new tid at ptid before the thread can run.
+	 * musl's pthread_create passes &new->tid; left 0, every thread's tid was 0
+	 * and musl's exit() lock (prev == tid -> recursive exit) crashed any thread
+	 * that called exit().  Shared address space, so the caller's view is it. */
+	/* CLONE_CHILD_CLEARTID: endTask zeroes ctid and futex-wakes it when the thread
+	 * exits — musl releases its thread-list lock (taken across pthread_exit) and
+	 * wakes pthread_join this way. */
+	if (parent_tf[0] & RFORK_CLONE_CHILD_CLEARTID)
+		child->clear_tid = (int *)(uintptr_t)parent_tf[4];
+
+	if ((parent_tf[0] & RFORK_CLONE_PARENT_SETTID) && parent_tf[2] != 0)
+	{
+		int tid = (int)child->id;
+
+		(void)copyout(&tid, (void *)(uintptr_t)parent_tf[2], sizeof(tid));
+	}
 
 	child->md.md_kstack = (u_int64_t)(uintptr_t)ctx;
 	sched_ready(child);

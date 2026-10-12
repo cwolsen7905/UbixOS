@@ -15,6 +15,7 @@
 #include <ubixos/endtask.h>     /* endTask */
 #include <sys/trap.h>           /* struct trapframe */
 #include <machine/signal.h>     /* X86_64_SIGTRAMP_RETADDR, struct ubx_sigcontext */
+#include <ubixos/signal.h>      /* signal_fault_deliver */
 #include <sys/sysproto_posix.h> /* struct sys_sigreturn_args, sys_sigreturn */
 #include <vmm/vm_map.h>         /* vmm_demand_fault — lazy PT_LOAD / mmap page faulting */
 
@@ -140,18 +141,18 @@ static u_int8_t x86_64_fault_signal(unsigned vector)
 {
 	switch (vector)
 	{
-	case 0:  /* #DE divide error */
-	case 16: /* #MF x87 FP */
-	case 19: /* #XM SIMD FP */
-		return 8; /* SIGFPE */
-	case 6:      /* #UD invalid opcode */
-		return 4; /* SIGILL */
-	case 17:      /* #AC alignment check */
-		return 10; /* SIGBUS */
-	case 3:      /* #BP breakpoint */
-		return 5; /* SIGTRAP */
-	default:      /* #GP, #PF, #SS, ... */
-		return 11; /* SIGSEGV */
+		case 0:            /* #DE divide error */
+		case 16:           /* #MF x87 FP */
+		case 19:           /* #XM SIMD FP */
+			return 8;  /* SIGFPE */
+		case 6:            /* #UD invalid opcode */
+			return 4;  /* SIGILL */
+		case 17:           /* #AC alignment check */
+			return 10; /* SIGBUS */
+		case 3:            /* #BP breakpoint */
+			return 5;  /* SIGTRAP */
+		default:           /* #GP, #PF, #SS, ... */
+			return 11; /* SIGSEGV */
 	}
 }
 
@@ -272,10 +273,19 @@ void x86_64_exception(struct x86_64_trapframe *tf)
 	 * buggy app can't take down the OS (the x86_64 analog of aarch64's EL0->kill). */
 	if ((tf->cs & 3) == 3)
 	{
-		serial_puts("  (ring-3 fault — terminating the task)\n");
+		/* Raise the signal with Unix semantics, as aarch64 does: a handler
+		 * catches it; otherwise the whole process (every thread) ends. */
 		if (_current != 0)
-			_current->exit_signal = x86_64_fault_signal((unsigned)tf->vector); /* wait4 W_SIGNALED */
-		endTask(_current ? _current->id : 0);
+		{
+			int sig = x86_64_fault_signal((unsigned)tf->vector);
+			void *addr = (tf->vector == 14) ? (void *)(uintptr_t)cr2 : (void *)(uintptr_t)tf->rip;
+			int code = (tf->vector == 14 && (tf->error & 1)) ? SEGV_ACCERR : SEGV_MAPERR;
+
+			serial_puts("  (ring-3 fault — raising the signal)\n");
+			signal_fault_deliver((struct trapframe *)tf, sig, addr, code);
+			return; /* IRETQ into the handler frame signal_check built */
+		}
+		endTask(0);
 		sched();
 		/* not reached */
 	}

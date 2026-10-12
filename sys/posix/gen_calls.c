@@ -422,7 +422,10 @@ static int futex_wait_cond(void *arg)
 {
 	struct futex_wait_ctx *c = (struct futex_wait_ctx *)arg;
 
-	return (*c->uaddr != c->val);
+	/* Also stop for a fatal signal (a sibling's exit_group or crash): the waiter
+	 * returns to user mode, where signal_check ends it.  A spurious futex wakeup
+	 * is allowed. */
+	return (*c->uaddr != c->val || signal_fatal_pending(&_current->td));
 }
 
 /**
@@ -626,6 +629,7 @@ int sys_readv(struct thread *td, struct sys_readv_args *uap)
 int sys_exit_group(struct thread *td, struct sys_exit_group_args *uap)
 {
 	_current->exit_code = (u_int32_t)(uap->status & 0xff); /* saved for wait4 (W_EXITED) */
+	signal_kill_group(_current->exit_code, 0);             /* every thread of the process */
 	endTask(_current->id);
 	return (0);
 }
@@ -1197,9 +1201,16 @@ int sys_uname(struct thread *td, struct sys_uname_args *args)
 	return (0);
 }
 
-/* set_tid_address(2) — Linux 258. Store tidptr; return current TID (PID). */
+/**
+ * set_tid_address(2) — Linux 258.  Record @uap->tidptr as the word the kernel
+ * zeroes and futex-wakes when this thread exits (musl passes its thread-list
+ * lock), and return the caller's TID.
+ *
+ * @return 0; the TID in td_retval[0].
+ */
 int sys_set_tid_address(struct thread *td, struct sys_set_tid_address_args *uap)
 {
+	_current->clear_tid = uap->tidptr;
 	td->td_retval[0] = _current->id;
 	return (0);
 }

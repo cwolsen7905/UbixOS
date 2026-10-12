@@ -15,9 +15,10 @@
 #include "../x86_64.h"
 #include <ubixos/sched.h>
 #include <sys/thread.h>
-#include <vmm/vmm.h>     /* vmm_find_free_page, PAGE_SIZE */
-#include <vmm/vm_map.h>  /* vm_map_copy — inherit the demand-fault VMA tree */
-#include <lib/kmalloc.h> /* sysID */
+#include <vmm/vmm.h>        /* vmm_find_free_page, PAGE_SIZE */
+#include <vmm/vm_map.h>     /* vm_map_copy — inherit the demand-fault VMA tree */
+#include <lib/kmalloc.h>    /* sysID */
+#include <ubixos/uaccess.h> /* copyout — rfork CLONE_PARENT_SETTID */
 #include <string.h>
 
 #define PTE_P 0x1
@@ -28,7 +29,9 @@
 #define PTE_COW 0x400    /* available bit 10: copy-on-write (frame shared read-only) */
 #define PTE_SHARED 0x800 /* available bit 11: shared file-cache page (vm_filecache-owned) */
 #define PTE_ADDR_MASK (~0xFFFUL)
-#define FRAME_SLOTS 7 /* 6 callee-saved + return address (matches cpu_switch.S) */
+#define FRAME_SLOTS 7                         /* 6 callee-saved + return address (matches cpu_switch.S) */
+#define RFORK_CLONE_PARENT_SETTID 0x00100000  /* musl clone flag: store the tid at ptid */
+#define RFORK_CLONE_CHILD_CLEARTID 0x00200000 /* musl clone flag: zero + wake ctid at exit */
 
 extern void ret_from_fork(void);
 extern void x86_64_map_user_page_wired(uintptr_t pml4_phys, u64 va, u64 phys);
@@ -301,6 +304,23 @@ long x86_64_rfork(struct x86_64_trapframe *parent_tf)
 	for (i = 0; i < FRAME_SLOTS; i++)
 		ctx[i] = 0;
 	ctx[FRAME_SLOTS - 1] = (u64)(uintptr_t)ret_from_fork;
+
+	/* CLONE_PARENT_SETTID: store the new tid at ptid before the thread can run.
+	 * musl's pthread_create passes &new->tid; left 0, every thread's tid was 0
+	 * and musl's exit() lock (prev == tid -> recursive exit) crashed any thread
+	 * that called exit().  Shared address space, so the caller's view is it. */
+	/* CLONE_CHILD_CLEARTID: endTask zeroes ctid and futex-wakes it when the thread
+	 * exits — musl releases its thread-list lock (taken across pthread_exit) and
+	 * wakes pthread_join this way. */
+	if (parent_tf->rdi & RFORK_CLONE_CHILD_CLEARTID)
+		child->clear_tid = (int *)(uintptr_t)parent_tf->r10;
+
+	if ((parent_tf->rdi & RFORK_CLONE_PARENT_SETTID) && parent_tf->rdx != 0)
+	{
+		int tid = (int)child->id;
+
+		(void)copyout(&tid, (void *)(uintptr_t)parent_tf->rdx, sizeof(tid));
+	}
 
 	child->md.md_kstack = (u64)(uintptr_t)ctx;
 	sched_ready(child);
