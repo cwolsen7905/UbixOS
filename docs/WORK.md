@@ -13,7 +13,7 @@ Every lane updates its row in the same PR; rows are never deleted.
 | W-004 | standards | Engineering standards, C-world gate suite (tools/check) and CI rewrite | done | - | #7 | Merged 2026-10-11 |
 | W-005 | identity | Add identity direction document (proposal) | done | - | #8 | docs/design/identity.md; the ideas themselves are separate rows |
 | W-006 | docs | Bring architecture docs and DEBUG.md up to date for 64-bit master | done | - | #9 | ARCHITECTURE.md itself still needs its 64-bit rewrite (separate row) |
-| W-007 | self-host | Self-hosting: rebuild world and kernel inside UbixOS with Clang/LLVM + lld | doing | - | - | Plan: docs/design/self-hosting-plan.md. /usr/src/bin builds in-OS on aarch64 (#10); kernel, other trees and x86_64 not yet |
+| W-007 | self-host | Self-hosting: rebuild world and kernel inside UbixOS with Clang/LLVM + lld | doing | - | - | Plan: docs/design/self-hosting-plan.md. /usr/src/bin builds in-OS on aarch64 (#10). aarch64: the kernel builds in-OS (bmake -j4, 4 vCPUs) and the self-built kernel boots and passes sigtest/vfstest (with W-033, W-035). x86_64 in-OS not yet |
 | W-008 | self-host | x86_64 /usr/src/bin build inside UbixOS | todo | - | - | Follow-up from #10; slow under TCG |
 | W-009 | kernel | errno translation at the POSIX boundary (FreeBSD errno numbers vs musl Linux values: EAGAIN, ELOOP, ENAMETOOLONG, ...) | todo | - | - | Follow-up from #10 |
 | W-010 | userland | Add tee to the world | todo | - | - | Follow-up from #10 |
@@ -35,12 +35,13 @@ Every lane updates its row in the same PR; rows are never deleted.
 | W-026 | console | fbcon on-screen text console and image profiles (convergence plan phases 3.5 and 4) | todo | - | - | docs/design/console-and-arch-convergence-plan.md, fbcon.md; status unclear |
 | W-027 | kernel | Legacy i386-era backlog in TODO.md and BUGS.md (VFS, VMM, ld.so, sched, MPI) | todo | - | - | Many items name i386 paths that may no longer exist on master; triage into individual rows before working; status unclear |
 | W-028 | kernel | Syscall ABI audit fixes: musl Linux numbers leaking into the FreeBSD table (pwrite was setgid, statfs wrote to 0x78, ...), sigaltstack, pwrite, posix_fadvise, copyin/copyout | done | - | #16 | 22 dangerous leaks closed; 71 Linux-only calls fail ENOSYS in musl without trapping. sigtest/vfstest pass on x86_64 and aarch64 |
-| W-029 | kernel | Move the six calls the kernel serves at Linux numbers (poll 168, rt_sigsuspend 179, tkill 238, gettid 224, set_tid_address 258, statx 383) to FreeBSD or native slots | todo | - | - | Keep the old slots answering while statically linked binaries (clang/lld) still use them. From the W-028 audit |
+| W-029 | kernel | Move the six calls the kernel serves at Linux numbers (poll 168, rt_sigsuspend 179, tkill 238, gettid 224, set_tid_address 258, statx 383) to FreeBSD or native slots | todo | - | - | Keep the old slots answering while statically linked binaries (clang/lld) still use them. From the W-028 audit. The in-OS clang (static, old musl) also calls 242, logged as ffclock_setestimate (Linux i386 sched_getaffinity) |
 | W-030 | kernel | Kernel size_t is typedef int (32-bit, signed) on the 64-bit kernels | todo | - | - | sys/include/sys/types.h. Shared structs using size_t have the wrong layout; lengths truncate above 2 GB. Found via sigaltstack (W-028) |
 | W-031 | vmm | x86_64 MI code used the i386 vmm_layout.h (user space ended at 3 GB) | done | - | #16 | <machine/vmm_layout.h> now resolves to x86_64/vmm_layout.h |
 | W-032 | self-host | /usr/src/lib builds inside UbixOS (C libraries) | doing | - | #16 | Makefile fixes in W-028 PR (_ARCH default, -L${MUSL_LIB}). aarch64: every C library links except libbearssl and libcss (blocked by W-033); C++ (objgfx) waits for clang++/libc++ in-OS |
 | W-033 | kernel | execve silently truncated arguments: each argv/env string cut at 4096 bytes, entries past 256 dropped | done | - | #17 | Both arches now copy argv/envp in whole (exec_args in sys/kern/kern_exec.c) up to EXEC_ARG_MAX (128 KB, = ARG_MAX) and fail E2BIG/EFAULT beyond it. bmake's 15 KB `sh -c` link lines for libbearssl/libcss lost their -o, so ld wrote a.out and exited 0 |
 | W-034 | ubixfs | New files on aarch64 show an mtime from boot time, not the current time | todo | - | - | Seen during the W-032 build (ls -l showed 20:24 for files written at 23:26); not investigated |
+| W-035 | self-host | Parallel kernel builds: one bmake target per kernel object so -j works | done | - | TBD | x86_64 kernel recipe also moved off recipe-time find and the obj/sys/*.o link glob (both break under the in-OS shell) |
 
 ## Notes
 
