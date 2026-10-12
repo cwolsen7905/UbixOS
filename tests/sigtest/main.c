@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
+#include <sys/mman.h>
 #include <sys/wait.h>
 
 static volatile int g_hits;
@@ -119,6 +120,18 @@ static void check_sigaltstack(void)
 	check("sigaltstack disable", sigaltstack(&ss, NULL) == 0);
 	memset(&o, 0, sizeof(o));
 	check("disabled after disable", sigaltstack(NULL, &o) == 0 && (o.ss_flags & SS_DISABLE));
+
+	/* The kernel's copyout faults in a page the process never touched (a
+	 * fresh anonymous mapping), rather than failing with EFAULT. */
+	{
+		char *m = mmap(NULL, 4 * 4096, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANON, -1, 0);
+		stack_t *fresh = (stack_t *)(m + 2 * 4096);
+
+		check("sigaltstack into an untouched page",
+		      m != MAP_FAILED && sigaltstack(NULL, fresh) == 0 && (fresh->ss_flags & SS_DISABLE));
+		if (m != MAP_FAILED)
+			munmap(m, 4 * 4096);
+	}
 	sa.sa_handler = SIG_DFL;
 	sa.sa_flags = 0;
 	sigaction(SIGUSR2, &sa, NULL);

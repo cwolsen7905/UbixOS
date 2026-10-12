@@ -23,5 +23,8 @@ void vmm_shmap_exit(pidType pid);
 /* Arch: kernel-readable pointer to the current task's page at user @va, or
  * NULL if it is not mapped. */
 void *md_user_page_kva(uintptr_t va);
+/* Arch: the current task's address-space root (aarch64 L1 / x86_64 PML4), as
+ * vmm_demand_fault takes it, or NULL if it has none. */
+u_int64_t *md_user_aspace_root(void);
 
 #endif /* _VMM_VMM_SHMAP_H_ */

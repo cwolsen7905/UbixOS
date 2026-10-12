@@ -6,7 +6,9 @@
  * A user range is accepted only if it lies inside [VMM_USER_START,
  * VMM_USER_END] and every page of it is mapped in the current task.  Bytes move
  * through each page's kernel alias (md_user_page_kva), so a bad pointer is an
- * -EFAULT return, never a kernel fault.  Page permissions are not checked: a
+ * -EFAULT return, never a kernel fault.  A page of a valid mapping that is not
+ * yet present (demand-paged text/data, untouched anonymous memory) is faulted
+ * in first, as the trap handler would.  Page permissions are not checked: a
  * copyout to a read-only user page succeeds (no copy-on-write exists, so no
  * other task can see it).
  */
@@ -16,6 +18,7 @@
 #include <ubixos/uaccess.h>
 #include <vmm/vmm.h>
 #include <vmm/vmm_shmap.h>
+#include <vmm/vm_map.h> /* vmm_demand_fault */
 #include <string.h>
 
 /**
@@ -30,6 +33,25 @@ static int uaccess_range_ok(uintptr_t uaddr, unsigned long len)
 	if (uaddr < VMM_USER_START || uaddr > VMM_USER_END)
 		return (0);
 	return (len - 1 <= VMM_USER_END - uaddr);
+}
+
+/**
+ * Kernel alias of the current task's user page at @ua, faulting it in first if
+ * it belongs to a mapping but is not present yet.
+ *
+ * @return the kernel pointer for @ua, or NULL if no mapping covers it.
+ */
+static void *uaccess_page_kva(uintptr_t ua)
+{
+	void *kva = md_user_page_kva(ua);
+	u_int64_t *root;
+
+	if (kva != NULL)
+		return (kva);
+	root = md_user_aspace_root();
+	if (root == NULL || vmm_demand_fault(root, ua) != 0)
+		return (NULL);
+	return (md_user_page_kva(ua));
 }
 
 /**
@@ -52,7 +74,7 @@ static int uaccess_copy(uintptr_t uaddr, void *kbuf, unsigned long len, int to_u
 
 		if (chunk > len)
 			chunk = len;
-		kva = md_user_page_kva(uaddr);
+		kva = uaccess_page_kva(uaddr);
 		if (kva == NULL)
 			return (-EFAULT);
 		if (to_user)
@@ -104,7 +126,7 @@ int copyinstr(const void *uaddr, char *kaddr, unsigned long maxlen)
 
 		if (!uaccess_range_ok(ua, 1))
 			return (-EFAULT);
-		kva = md_user_page_kva(ua);
+		kva = uaccess_page_kva(ua);
 		if (kva == NULL)
 			return (-EFAULT);
 		kaddr[i] = *kva;

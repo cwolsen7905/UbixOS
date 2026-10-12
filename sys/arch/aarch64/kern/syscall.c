@@ -31,7 +31,7 @@
 #include <sys/elf_load.h>       /* md_sync_icache (file-backed/exec mmap) */
 #include <fs/vfs/file.h>        /* fread (file-backed mmap) */
 #include <ubixos/spinlock.h>
-#include <vmm/vmm_shmap.h>       /* MAP_SHARED write-back registry */
+#include <vmm/vmm_shmap.h> /* MAP_SHARED write-back registry */
 
 /* Generic table-driven dispatch engine (sys/kern/syscall_dispatch.c). */
 register_t ksyscall_dispatch(
@@ -200,6 +200,18 @@ void *md_user_page_kva(uintptr_t va)
 }
 
 /**
+ * The current task's TTBR0 root, as vmm_demand_fault takes it.
+ *
+ * @return the L1 table, or NULL if the task has no user address space.
+ */
+u_int64_t *md_user_aspace_root(void)
+{
+	if (_current == 0)
+		return (NULL);
+	return ((u_int64_t *)(uintptr_t)_current->md.md_ttbr0);
+}
+
+/**
  * mmap(addr, len, prot, flags, fd, off): private mapping, anonymous or
  * file-backed.  Arch glue around the generic policy (vmm_uregion_mmap_anon):
  * owns the VA-layout choice (where this address space's mmap region starts) and
@@ -332,10 +344,10 @@ static u_int64_t sc_mmap(u_int64_t addr, u_int64_t len, u_int64_t prot, u_int64_
 			 * read-only, and anonymous mappings are deliberately NOT tracked. */
 			if ((flags & 0x01) && (prot & 0x2) && fp->fd->fileName[0] != '\0')
 				vmm_shmap_register(_current->id,
-				               (uintptr_t)va,
-				               (size_t)len,
-				               (off_t)(off * PAGE_SIZE),
-				               fp->fd->fileName);
+				                   (uintptr_t)va,
+				                   (size_t)len,
+				                   (off_t)(off * PAGE_SIZE),
+				                   fp->fd->fileName);
 
 			return (u_int64_t)va;
 		}
