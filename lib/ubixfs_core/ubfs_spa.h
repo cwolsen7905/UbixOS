@@ -95,6 +95,12 @@ void ubfs_free_run(ubfs_pool_t *p, uint64_t blk, uint64_t n);
 
 /* ── low-level block I/O (used by upper layers: DMU etc.) ───────────────────*/
 int ubfs_read_block(ubfs_pool_t *p, uint64_t blk, void *buf);
+
+/* Verified-block cache (copy-on-write makes it coherent without invalidation):
+ * ubfs_bc_get copies the block @bp names into @buf and returns 1 on a hit;
+ * ubfs_bc_put records a 4 KiB block that has just passed its checksum. */
+int ubfs_bc_get(ubfs_pool_t *p, const ubfs_blkptr_t *bp, void *buf);
+void ubfs_bc_put(ubfs_pool_t *p, const ubfs_blkptr_t *bp, const void *buf);
 int ubfs_write_block(ubfs_pool_t *p, uint64_t blk, const void *buf);
 
 #endif /* _UBIXFS_SPA_H */
