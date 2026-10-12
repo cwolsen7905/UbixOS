@@ -48,7 +48,7 @@ Every lane updates its row in the same PR; rows are never deleted.
 | W-039 | vfs | Global VFS lock + uncached path lookups serialise parallel compiles (open/readlink/close dominate) | todo | - | - | In-OS -j4 compiles of different files run no faster than sequential. Needs a name/lookup cache and/or a decoded-block cache in UbixFS; plan first |
 | W-040 | kernel | x86_64 threads each kept a private mmap/brk cursor, so threads mapped over each other (ld.lld crashed in parallelFor) | done | - | #20 | Shared cursor on the thread-group leader under a lock, as aarch64 |
 | W-041 | kernel | Fatal signals and exit() end only the calling thread; x86_64 faults never deliver SIGSEGV; threads had tid 0 and no CLONE_CHILD_CLEARTID | done | - | #22 | Group kill on exit_group / fatal signal (both arches), SIGKILL unblockable, faults via signal_fault_deliver, rfork sets ptid + ctid, set_tid_address records its pointer |
-| W-042 | kernel | Kernel size_t/ssize_t were 32-bit on the 64-bit kernels (i386 leftover); clang-tidy findings from #17-#20 failed CI analyze | done | - | - | size_t = unsigned long, ssize_t = long (LP64); type-table headers marked clang-format off; poll builds revents in an int; explicit casts for multilevel pointers and widening |
+| W-042 | kernel | Kernel size_t/ssize_t were 32-bit on the 64-bit kernels (i386 leftover); clang-tidy findings from #17-#20 failed CI analyze | done | - | #25 | size_t = unsigned long, ssize_t = long (LP64); type-table headers marked clang-format off; poll builds revents in an int; explicit casts for multilevel pointers and widening |
 
 ## Notes
 
