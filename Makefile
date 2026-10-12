@@ -669,50 +669,24 @@ run-debug-x86_64:
 	  -device virtio-net-pci,netdev=n0,disable-modern=true \
 	  -audiodev coreaudio,id=snd0 -device AC97,audiodev=snd0
 
-# musl libc per-arch knobs (64-bit only on master).  aarch64 uses the stock SVC
-# ABI; x86_64 the SysV amd64 ABI.  Both build with the FreeBSD syscall numbers
-# (arch/<arch>/bits/syscall.h.in) + the real libgcc.  Userland (unlike the kernel)
-# needs FP/SIMD — musl's math uses double/float (the kernel enables EL0 FP access
-# on aarch64 so these run at EL0).  (i386's -m32/libgcc32 knobs live on releng/2.)
-.if ${_ARCH} == "aarch64"
-MUSL_USER_CFLAGS = -march=armv8-a -ffreestanding -fno-stack-protector
-MUSL_LIBCC       = ${LIBGCC}
-MUSL_LDEMULATION = aarch64elf
-.elif ${_ARCH} == "x86_64"
-# Userland keeps SSE (the SysV amd64 ABI returns floats in XMM + musl's code uses
-# it) — unlike the kernel's -mno-sse.  Real libgcc, no -m32 shim.
-MUSL_USER_CFLAGS = -ffreestanding -fno-stack-protector
-MUSL_LIBCC       = ${LIBGCC}
-MUSL_LDEMULATION = elf_x86_64
-.else
+# musl libc: per-arch flags live in contrib/musl/Makefile.bsd.  Both arches build
+# with the FreeBSD syscall numbers (arch/<arch>/bits/syscall.h.in).  (i386 is on
+# releng/2.)
+.if ${_ARCH} != "aarch64" && ${_ARCH} != "x86_64"
 .error Unsupported TARGET '${_ARCH}' on master — only aarch64 + x86_64 (i386 is on releng/2).
 .endif
 
 musl-libc:
 	@mkdir -p ${OBJ_DIR}/obj/musl ${OBJ_DIR}/lib
-	@if [ ! -f ${OBJ_DIR}/obj/musl/config.mak ]; then \
-		echo "Configuring musl libc for ${_ARCH}..."; \
-		cd ${OBJ_DIR}/obj/musl && ${CURDIR}/contrib/musl/configure \
-			--srcdir=${CURDIR}/contrib/musl \
-			--target=${_ARCH}-ubixos \
-			--enable-shared \
-			--enable-static \
-			CC="${CROSS_PREFIX}gcc ${MUSL_USER_CFLAGS}" \
-			CROSS_COMPILE=${CROSS_PREFIX} \
-			LIBCC="" \
-			CFLAGS="${MUSL_USER_CFLAGS}"; \
+	@# contrib/musl/Makefile.bsd: bmake build of musl (no configure, no GNU make),
+	@# so the C library also builds inside UbixOS.  Objects built by another
+	@# toolchain (or by the old configure + GNU make build) are thrown away first.
+	@if [ "`cat ${OBJ_DIR}/obj/musl/.toolchain 2>/dev/null`" != "${TOOLCHAIN}" ]; then \
+		echo "musl: fresh ${TOOLCHAIN} build"; \
+		rm -rf ${OBJ_DIR}/obj/musl/obj ${OBJ_DIR}/obj/musl/lib ${OBJ_DIR}/obj/musl/config.mak; \
+		echo ${TOOLCHAIN} > ${OBJ_DIR}/obj/musl/.toolchain; \
 	fi
-	@if [ "${_ARCH}" != "aarch64" ] && [ "${_ARCH}" != "x86_64" ]; then \
-		${CROSS_PREFIX}gcc ${CROSS_M32} -mno-sse -mno-sse2 -mno-mmx -mno-3dnow \
-		    -ffreestanding -fno-pie -fno-pic -nostdinc -std=c99 -O2 \
-		    -c ${CURDIR}/tools/libgcc32.c -o ${OBJ_DIR}/obj/musl/libgcc32.o && \
-		${CROSS_PREFIX}ar rcs ${OBJ_DIR}/lib/libgcc32.a ${OBJ_DIR}/obj/musl/libgcc32.o; \
-	fi
-	${GNU_MAKE} -C ${OBJ_DIR}/obj/musl -f ${CURDIR}/contrib/musl/Makefile \
-	    srcdir=${CURDIR}/contrib/musl ARCH=${_ARCH} \
-	    LD=${CROSS_PREFIX}ld \
-	    LDEMULATION=${MUSL_LDEMULATION} \
-	    LIBCC=${MUSL_LIBCC}
+	cd ${OBJ_DIR}/obj/musl && ${MAKE} -f ${CURDIR}/contrib/musl/Makefile.bsd TARGET=${_ARCH} all
 	cp ${OBJ_DIR}/obj/musl/lib/libc.a ${OBJ_DIR}/lib/musl.a
 	cp ${OBJ_DIR}/obj/musl/lib/libc.a ${OBJ_DIR}/lib/libc.a
 	cp ${OBJ_DIR}/obj/musl/lib/libc.so ${OBJ_DIR}/lib/libc.so
@@ -1127,9 +1101,7 @@ clean:
 	(cd libexec;${WMAKE} clean)
 	(cd contrib/libcxxabi;${MAKE} clean)
 	(cd contrib/libcxx;${MAKE} clean)
-	@if [ -f ${OBJ_DIR}/obj/musl/Makefile ]; then \
-		${GNU_MAKE} -C ${OBJ_DIR}/obj/musl clean; \
-	fi
+	rm -rf ${OBJ_DIR}/obj/musl
 	rm -rf ${OBJ_DIR}/obj/lib
 	rm -rf contrib/netsurf/build contrib/netsurf-nsgenbind/build-* \
 	    ${OBJ_DIR}/netsurf-pc ${OBJ_DIR}/netsurf-tools ${OBJ_DIR}/netsurf-build.log \
