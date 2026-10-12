@@ -44,6 +44,32 @@ struct ubfs_pool
 	uint64_t *defer;    /* block numbers freed this txg, pending release */
 	uint64_t defer_n;   /* pending count */
 	uint64_t defer_cap; /* allocated capacity of defer[] */
+
+	struct ubfs_bc *bc; /* verified-block cache (ubfs_bc_get/put), allocated on first use */
+};
+
+/* ── verified-block cache ───────────────────────────────────────────────────
+ * Checksum-verified 4 KiB blocks, keyed by the block pointer that names them:
+ * address + birth txg + the full 256-bit checksum.  The pool is copy-on-write,
+ * so a block pointer always names the same bytes and an entry can never go
+ * stale; a freed and reused block comes back under a new txg and checksum, so
+ * it is a different key.  No invalidation is needed.  4-way set-associative,
+ * second-chance replacement.  Not locked: callers hold the pool's lock. */
+#define UBFS_BC_SETS 256
+#define UBFS_BC_WAYS 4
+
+struct ubfs_bc_ent
+{
+	uint64_t off, txg;
+	uint64_t ck[4];
+	uint8_t valid, ref;
+	uint8_t data[UBFS_BLOCK_SIZE];
+};
+
+struct ubfs_bc
+{
+	struct ubfs_bc_ent ent[UBFS_BC_SETS][UBFS_BC_WAYS];
+	uint8_t hand[UBFS_BC_SETS];
 };
 
 /* ── uberblock ring geometry ────────────────────────────────────────────────*/
@@ -112,7 +138,7 @@ static void bitmap_put(ubfs_pool_t *p, uint64_t blk, int val)
 	if (val)
 		p->bitmap[blk / 8] |= (uint8_t)(1u << (blk % 8));
 	else
-		p->bitmap[blk / 8] &= (uint8_t)~(1u << (blk % 8));
+		p->bitmap[blk / 8] &= (uint8_t)(~(1u << (blk % 8)));
 }
 
 static int bitmap_flush(ubfs_pool_t *p)
@@ -314,7 +340,73 @@ void ubfs_pool_close(ubfs_pool_t *p)
 		write_uberblock(p, p->txg + 1, &p->ub.rootbp);
 	free(p->defer);
 	free(p->bitmap);
+	free(p->bc);
 	free(p);
+}
+
+/** @return the cache set for block address @off. */
+static unsigned bc_set(uint64_t off)
+{
+	return (unsigned)((off * 0x9E3779B97F4A7C15ULL) >> 56) % UBFS_BC_SETS;
+}
+
+/**
+ * Copy the cached, already-verified block named by @bp into @buf.
+ *
+ * @return 1 on a hit, 0 on a miss.
+ */
+int ubfs_bc_get(ubfs_pool_t *p, const ubfs_blkptr_t *bp, void *buf)
+{
+	struct ubfs_bc_ent *set;
+	int w;
+
+	if (p->bc == NULL)
+		return 0;
+	set = p->bc->ent[bc_set(bp->dva.offset)];
+	for (w = 0; w < UBFS_BC_WAYS; w++)
+		if (set[w].valid && set[w].off == bp->dva.offset && set[w].txg == bp->birth_txg &&
+		    memcmp(set[w].ck, bp->checksum, sizeof(set[w].ck)) == 0)
+		{
+			set[w].ref = 1;
+			memcpy(buf, set[w].data, UBFS_BLOCK_SIZE);
+			return 1;
+		}
+	return 0;
+}
+
+/**
+ * Remember @buf as the verified contents of the 4 KiB block named by @bp.  A
+ * failed allocation just leaves the cache off.
+ */
+void ubfs_bc_put(ubfs_pool_t *p, const ubfs_blkptr_t *bp, const void *buf)
+{
+	struct ubfs_bc_ent *set;
+	unsigned s;
+	int w;
+
+	if (p->bc == NULL)
+	{
+		p->bc = (struct ubfs_bc *)malloc(sizeof(*p->bc));
+		if (p->bc == NULL)
+			return;
+		memset(p->bc, 0, sizeof(*p->bc));
+	}
+	s = bc_set(bp->dva.offset);
+	set = p->bc->ent[s];
+	for (;;) /* second chance: skip (and clear) recently used ways */
+	{
+		w = p->bc->hand[s];
+		p->bc->hand[s] = (uint8_t)((w + 1) % UBFS_BC_WAYS);
+		if (!set[w].valid || !set[w].ref)
+			break;
+		set[w].ref = 0;
+	}
+	set[w].off = bp->dva.offset;
+	set[w].txg = bp->birth_txg;
+	memcpy(set[w].ck, bp->checksum, sizeof(set[w].ck));
+	memcpy(set[w].data, buf, UBFS_BLOCK_SIZE);
+	set[w].ref = 1;
+	set[w].valid = 1;
 }
 
 int ubfs_pool_set_incompat(ubfs_pool_t *p, uint64_t bits)

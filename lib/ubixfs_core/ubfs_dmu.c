@@ -81,11 +81,14 @@ static int blk_read_verify(ubfs_pool_t *pool, const ubfs_blkptr_t *bp, void *buf
 		memset(buf, 0, BS);
 		return 0;
 	}
+	if (ubfs_bc_get(pool, bp, buf))
+		return 0; /* verified when it was cached */
 	if (ubfs_read_block(pool, bp->dva.offset, buf) < 0)
 		return -1;
 	ubfs_fletcher4(buf, BS, ck);
 	if (memcmp(ck, bp->checksum, sizeof(ck)) != 0)
 		return -2; /* checksum mismatch — corruption */
+	ubfs_bc_put(pool, bp, buf);
 	return 0;
 }
 
@@ -136,12 +139,19 @@ static int leaf_read_verify(ubfs_pool_t *pool, const ubfs_blkptr_t *bp, uint8_t 
 		return 0;
 	}
 	nblk = leaf_nblocks(bp->psize);
+	/* Single-block records (dnode, directory, small-file blocks) go through the
+	 * verified-block cache; larger data records are read straight through. */
+	if (nblk == 1 && ubfs_bc_get(pool, bp, buf))
+		goto verified;
 	for (uint64_t i = 0; i < nblk; i++)
 		if (ubfs_read_block(pool, bp->dva.offset + i, buf + i * BS) < 0)
 			return -1;
 	ubfs_fletcher4(buf, nblk * BS, ck);
 	if (memcmp(ck, bp->checksum, sizeof(ck)) != 0)
 		return -2; /* checksum mismatch — corruption */
+	if (nblk == 1)
+		ubfs_bc_put(pool, bp, buf);
+verified:
 	if (bp->lsize < cap)
 		memset(buf + bp->lsize, 0, cap - bp->lsize); /* zero tail for the caller */
 	return (int)bp->lsize;
