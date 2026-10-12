@@ -199,7 +199,7 @@ u64 x86_64_user_mmap(u64 addr, u64 len, u64 prot, u64 flags, u64 fd, u64 off)
 		 * was otherwise never written).  Mirrors aarch64. */
 		if ((flags & 0x01) && writable && fp->fd->fileName[0] != '\0')
 			vmm_shmap_register(
-			    _current->id, (uintptr_t)base, (size_t)len, (off_t)(off * PAGE_SIZE), fp->fd->fileName);
+			    _current->id, (uintptr_t)base, (size_t)len, (off_t)off * PAGE_SIZE, fp->fd->fileName);
 	}
 	else if (map_anon(base, npages) != 0)
 	{
