@@ -77,12 +77,16 @@ static struct spinLock g_pipe_lock = SPIN_LOCK_INITIALIZER;
 	((1u << (SIGCHLD - 1)) | (1u << (SIGCONT - 1)) | (1u << (SIGURG - 1)) | (1u << (SIGWINCH - 1)) |               \
 	 (1u << (SIGIO - 1)))
 
-/* Pending, unblocked signals that would actually be DELIVERED — caught by a
+/**
+ * Pending, unblocked signals that would actually be DELIVERED — caught by a
  * handler, or default-terminate/stop.  Excludes ignored signals (SIG_IGN, or
  * SIG_DFL of a default-ignore signal) so they can't interrupt blocking I/O.
  * This is the disposition-aware replacement for SIG_PENDING_UNBLOCKED in the
- * EINTR decision of a blocking syscall. */
-static u_int32_t sig_deliverable_pending(struct thread *td)
+ * EINTR decision of a blocking syscall (read, poll, select).
+ *
+ * @return the mask of such signals; 0 if none.
+ */
+u_int32_t sig_deliverable_pending(struct thread *td)
 {
 	u_int32_t unblocked = td->sig_pending & ~td->sigmask.__bits[0];
 	int sig;

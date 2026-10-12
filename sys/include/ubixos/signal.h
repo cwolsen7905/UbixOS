@@ -164,6 +164,9 @@ void signal_check(struct trapframe *frame);
  */
 void signal_deliver_frame(int sig, struct sigaction *sa, struct trapframe *frame, struct thread *td);
 void signal_exec_reset(struct thread *td); /* execve: reset caught handlers to SIG_DFL (POSIX) */
+/* Pending, unblocked signals that would be delivered (not ignored): the EINTR test
+ * for a blocking syscall (sys/posix/vfs_calls.c). */
+u_int32_t sig_deliverable_pending(struct thread *td);
 
 /* Non-zero if @td has a pending, unblocked default-terminate signal — an
  * in-kernel blocking wait consults this to abort and let the process die

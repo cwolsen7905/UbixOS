@@ -21,6 +21,9 @@
 #include <sys/statvfs.h>
 #include <errno.h>
 #include <stdlib.h>
+#include <poll.h>
+#include <signal.h>
+#include <sys/select.h>
 
 static int g_fail;
 
@@ -73,6 +76,77 @@ static int run_exec(const char *path, char **av)
 	}
 	waitpid(pid, &st, 0);
 	return WIFEXITED(st) ? WEXITSTATUS(st) : -1;
+}
+
+/** SIGUSR1 handler for the poll-interrupt check: only has to exist. */
+static void on_usr1(int sig)
+{
+	(void)sig;
+}
+
+/**
+ * poll/select on pipes: readiness from data and EOF, timeouts, the ready-fd
+ * count, and EINTR from a caught signal (bmake -j depends on all of these).
+ */
+static void check_poll_pipes(void)
+{
+	struct pollfd pf[2];
+	struct sigaction sa;
+	pid_t pid;
+	fd_set rs;
+	struct timeval tv;
+	int p[2], q[2], r;
+
+	if (pipe(p) != 0 || pipe(q) != 0)
+	{
+		check("poll test pipes", 0);
+		return;
+	}
+	pf[0].fd = p[0];
+	pf[0].events = POLLIN;
+	check("poll empty pipe times out", poll(pf, 1, 50) == 0 && pf[0].revents == 0);
+
+	write(p[1], "x", 1);
+	check("poll pipe with data -> POLLIN", poll(pf, 1, 1000) == 1 && (pf[0].revents & POLLIN));
+
+	pf[1].fd = p[1];
+	pf[1].events = POLLOUT;
+	check("poll counts ready fds", poll(pf, 2, 1000) == 2 && (pf[1].revents & POLLOUT));
+
+	close(q[1]);
+	pf[0].fd = q[0];
+	check("poll pipe at EOF -> POLLHUP", poll(pf, 1, 1000) == 1 && (pf[0].revents & POLLHUP));
+
+	FD_ZERO(&rs);
+	FD_SET(q[0], &rs);
+	tv.tv_sec = 1;
+	tv.tv_usec = 0;
+	check("select pipe at EOF", select(q[0] + 1, &rs, NULL, NULL, &tv) == 1 && FD_ISSET(q[0], &rs));
+
+	/* A caught signal ends an infinite wait with EINTR: a child signals us
+	 * (setitimer is still a stub, so no SIGALRM). */
+	memset(&sa, 0, sizeof(sa));
+	sa.sa_handler = on_usr1;
+	sigaction(SIGUSR1, &sa, NULL);
+	read(p[0], &r, 1); /* drain: the pipe is empty again */
+	pf[0].fd = p[0];
+	pid = fork();
+	if (pid == 0)
+	{
+		usleep(200000);
+		kill(getppid(), SIGUSR1);
+		_exit(0);
+	}
+	errno = 0;
+	r = poll(pf, 1, 5000);
+	check("poll interrupted by a signal -> EINTR", r == -1 && errno == EINTR);
+	waitpid(pid, NULL, 0);
+	sa.sa_handler = SIG_DFL;
+	sigaction(SIGUSR1, &sa, NULL);
+
+	close(p[0]);
+	close(p[1]);
+	close(q[0]);
 }
 
 /**
@@ -372,6 +446,7 @@ int main(int argc, char **argv)
 		close(f);
 	}
 
+	check_poll_pipes();
 	check_execve_args(argv[0][0] == '/' ? argv[0] : "/usr/tests/vfstest");
 
 	printf("vfstest: %s\n", g_fail ? "FAILED" : "all passed");
