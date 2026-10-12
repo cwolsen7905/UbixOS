@@ -167,6 +167,12 @@ void signal_exec_reset(struct thread *td); /* execve: reset caught handlers to S
 /* Pending, unblocked signals that would be delivered (not ignored): the EINTR test
  * for a blocking syscall (sys/posix/vfs_calls.c). */
 u_int32_t sig_deliverable_pending(struct thread *td);
+/* End the thread group: exit_group (@sig 0, status @code) or fatal signal @sig. */
+void signal_kill_group(u_int32_t code, int sig);
+/* Default fatal action for @sig: end the group, then this thread.  No return. */
+void signal_terminate(int sig);
+/* Deliver a synchronous fault signal from a user trap, or end the process. */
+void signal_fault_deliver(struct trapframe *tf, int sig, void *addr, int code);
 
 /* Non-zero if @td has a pending, unblocked default-terminate signal — an
  * in-kernel blocking wait consults this to abort and let the process die

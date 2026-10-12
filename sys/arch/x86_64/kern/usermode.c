@@ -21,6 +21,7 @@
 #include <string.h>
 #include <sys/errno.h>       /* EINVAL (prlimit64) */
 #include <ubixos/sched.h>    /* _current, sched(), kTask_t */
+#include <ubixos/signal.h>   /* signal_kill_group */
 #include <ubixos/endtask.h>  /* endTask */
 #include <x86_64/pcpu.h>     /* curcpu() — per-CPU kernel RSP for the syscall entry */
 #include <fs/vfs/file.h>     /* fopen/fread/fclose, fileDescriptor_t (bring-up open/read) */
@@ -841,6 +842,7 @@ void x86_64_native_syscall(struct x86_64_trapframe *tf)
 			/* musl's exit() ends here: record the status, or wait() reports 0
 			 * for every child (`false`, a failed compile, ... all "succeed"). */
 			_current->exit_code = (u_int32_t)(args[0] & 0xff); /* wait4 W_EXITED */
+			signal_kill_group((u_int32_t)args[0], 0);          /* exit(): every thread */
 			endTask(_current->id);
 			sched();
 			return; /* unreachable */

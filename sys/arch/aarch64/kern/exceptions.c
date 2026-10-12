@@ -204,10 +204,8 @@ void aarch64_exception(u_int64_t kind, void *frame)
 			        far,
 			        tf->tf_elr,
 			        esr);
-			_current->td.frame = tf;
-			signal_post_fault(SIGSEGV, (void *)(uintptr_t)far, SEGV_MAPERR);
-			signal_check(tf);
-			return; /* ERET into the handler, or the task was terminated */
+			signal_fault_deliver(tf, SIGSEGV, (void *)(uintptr_t)far, SEGV_MAPERR);
+			return; /* ERET into the handler (otherwise the process was ended) */
 		}
 
 		/* Any other EL0 sync cause (undef, …) falls through to the dump. */

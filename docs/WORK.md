@@ -47,7 +47,7 @@ Every lane updates its row in the same PR; rows are never deleted.
 | W-038 | kernel | setitimer/getitimer are stubs (no SIGALRM ever fires) | todo | - | - | sys/posix/gen_calls.c; found writing the W-037 tests |
 | W-039 | vfs | Global VFS lock + uncached path lookups serialise parallel compiles (open/readlink/close dominate) | todo | - | - | In-OS -j4 compiles of different files run no faster than sequential. Needs a name/lookup cache and/or a decoded-block cache in UbixFS; plan first |
 | W-040 | kernel | x86_64 threads each kept a private mmap/brk cursor, so threads mapped over each other (ld.lld crashed in parallelFor) | done | - | #20 | Shared cursor on the thread-group leader under a lock, as aarch64 |
-| W-041 | kernel | x86_64 user faults end only the faulting thread and never deliver SIGSEGV (no handler, thread group lingers) | todo | - | - | aarch64 delivers SIGSEGV; sys/arch/x86_64/kern/idt.c. A crashed multi-threaded ld.lld left bmake waiting forever |
+| W-041 | kernel | Fatal signals and exit() end only the calling thread; x86_64 faults never deliver SIGSEGV; threads had tid 0 and no CLONE_CHILD_CLEARTID | done | - | #22 | Group kill on exit_group / fatal signal (both arches), SIGKILL unblockable, faults via signal_fault_deliver, rfork sets ptid + ctid, set_tid_address records its pointer |
 
 ## Notes
 

@@ -856,6 +856,31 @@ void sched_ready(kTask_t *t)
 	restore_flags(flags);
 }
 
+/**
+ * Wake @t out of a sched_wait_event sleep so it re-tests its wait condition (and,
+ * for a signal-aware wait, sees a newly posted fatal signal).  Only a task that is
+ * actually asleep is touched: a RUNNING task must never be put on a run queue (it
+ * would be dispatched twice), and a READY one is already queued.
+ */
+void sched_wake_task(kTask_t *t)
+{
+	u_int32_t flags;
+
+	if (t == NULL)
+		return;
+	save_flags(flags);
+	cli();
+	spinLock(&schedulerSpinLock);
+	if (t->state == WAIT || t->state == INTERRUPTIBLE)
+	{
+		t->wait_chan = NULL;
+		t->state = READY;
+		rq_enqueue_locked(t);
+	}
+	spinUnlock(&schedulerSpinLock);
+	restore_flags(flags);
+}
+
 void sched_dead(kTask_t *t)
 {
 	u_int32_t flags;

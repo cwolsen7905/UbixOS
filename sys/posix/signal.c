@@ -346,6 +346,105 @@ void signal_post_pgrp(pid_t pgrp, int sig)
 }
 
 /**
+ * End every other thread of the current task's thread group.
+ *
+ * Each sibling is marked as part of a group exit carrying the group's status
+ * (@code for exit_group, else killed by @sig), posted SIGKILL, and woken if it
+ * sleeps; it terminates at its next signal check.  POSIX: exit() and a fatal
+ * signal end the whole process, not just the calling thread.
+ *
+ * @param code exit status for exit_group (used when @sig is 0)
+ * @param sig  terminating signal, or 0 for a normal exit_group
+ */
+void signal_kill_group(u_int32_t code, int sig)
+{
+	pidType gid, ids[64];
+	kTask_t *t;
+	u_int32_t flags;
+	int i, n, more;
+
+	if (_current == NULL)
+		return;
+	gid = (_current->tgid != 0) ? _current->tgid : _current->id;
+	do
+	{
+		n = 0;
+		more = 0;
+		save_flags(flags);
+		cli();
+		spinLock(&schedulerSpinLock);
+		for (t = taskList; t != NULL; t = t->next)
+		{
+			if (t == _current || t->state == ZOMBIE || t->state == DEAD || t->group_exit)
+				continue;
+			if (((t->tgid != 0) ? t->tgid : t->id) != gid)
+				continue;
+			if (n == (int)(sizeof(ids) / sizeof(ids[0])))
+			{
+				more = 1;
+				break;
+			}
+			t->group_exit = 1;
+			t->exit_code = code & 0xff;
+			t->exit_signal = (u_int8_t)(sig & 0x7f);
+			ids[n++] = t->id;
+		}
+		spinUnlock(&schedulerSpinLock);
+		restore_flags(flags);
+
+		for (i = 0; i < n; i++)
+		{
+			signal_post(ids[i], SIGKILL);
+			sched_wake_task(schedFindTask(ids[i]));
+		}
+	} while (more);
+}
+
+/**
+ * Terminate the current process because of signal @sig (default action of a
+ * fatal signal, SIGKILL, or an undeliverable fault): end the thread group, then
+ * this thread.  A thread ended by a sibling's group exit keeps the status the
+ * sibling recorded.  Does not return.
+ */
+void signal_terminate(int sig)
+{
+	if (!_current->group_exit)
+	{
+		kprintf("signal: SIG_DFL terminate sig=%d pid=%d name=%s\n", sig, _current->id, _current->name);
+		_current->exit_signal = (u_int8_t)(sig & 0x7f); /* wait4 W_SIGNALED */
+		signal_kill_group(0, sig);
+	}
+	endTask(_current->id);
+	/* Loop: a single sched_yield() can bail under SMP lock contention and
+	 * return — resuming the dead task on torn-down page tables (see aarch64
+	 * do_exit).  Retry until it switches. */
+	for (;;)
+		sched_yield();
+}
+
+/**
+ * Raise synchronous fault signal @sig (SIGSEGV, SIGBUS, SIGILL, SIGFPE) for the
+ * current task from a user-mode trap with frame @tf.  A caught, unblocked
+ * signal is delivered to its handler; a default, ignored or blocked one ends the
+ * process (returning to the faulting instruction would only fault again).
+ * Returns only when a handler frame has been set up in @tf.
+ *
+ * @param addr  faulting address for si_addr
+ * @param code  si_code (SEGV_MAPERR, SEGV_ACCERR, ...)
+ */
+void signal_fault_deliver(struct trapframe *tf, int sig, void *addr, int code)
+{
+	struct thread *td = &_current->td;
+	void (*h)(int) = td->sigact[sig].sa_handler;
+
+	if (h == SIG_DFL || h == SIG_IGN || (td->sigmask.__bits[0] & (1u << (sig - 1))))
+		signal_terminate(sig);
+	signal_post_fault(sig, addr, code);
+	td->frame = tf;
+	signal_check(tf);
+}
+
+/**
  * signal_check - check pending signals and deliver the highest-priority one
  * @frame: trapframe from the interrupted user context
  *
@@ -364,7 +463,8 @@ void signal_check(struct trapframe *frame)
 	(void)frame;
 
 	pending = td->sig_pending;
-	unblocked = pending & ~td->sigmask.__bits[0];
+	/* SIGKILL cannot be blocked (it is how a thread group is torn down). */
+	unblocked = pending & (~td->sigmask.__bits[0] | (1u << (SIGKILL - 1)));
 
 	if (unblocked == 0)
 		return;
@@ -388,6 +488,10 @@ void signal_check(struct trapframe *frame)
 
 		sa = &td->sigact[sig];
 
+		/* SIGKILL cannot be caught or ignored. */
+		if (sig == SIGKILL)
+			signal_terminate(sig);
+
 		if ((void *)sa->sa_handler == (void *)0x1 /* SIG_IGN */)
 		{
 			/* ignored — discard */
@@ -409,19 +513,7 @@ void signal_check(struct trapframe *frame)
 				return;
 			}
 			if ((1u << (sig - 1)) & SIGTERM_MASK)
-			{
-				kprintf("signal: SIG_DFL terminate sig=%d pid=%d name=%s\n",
-				        sig,
-				        _current->id,
-				        _current->name);
-				_current->exit_signal = (u_int8_t)(sig & 0x7f); /* wait4 W_SIGNALED */
-				endTask(_current->id);
-				/* Loop: a single sched_yield() can bail under SMP lock
-				 * contention and return — resuming the dead task on torn-down
-				 * page tables (see aarch64 do_exit).  Retry until it switches. */
-				for (;;)
-					sched_yield();
-			}
+				signal_terminate(sig);
 			return;
 		}
 
@@ -1017,7 +1109,8 @@ void signal_ast_check(void)
 
 	td = &_current->td;
 	pending = td->sig_pending;
-	unblocked = pending & ~td->sigmask.__bits[0];
+	/* SIGKILL cannot be blocked (it is how a thread group is torn down). */
+	unblocked = pending & (~td->sigmask.__bits[0] | (1u << (SIGKILL - 1)));
 	if (unblocked == 0)
 		return;
 

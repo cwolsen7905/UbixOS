@@ -108,6 +108,8 @@ extern "C"
 		u_int32_t last_exit;  // Hack For WAIT
 		u_int32_t exit_code;  /* low 8 bits of exit(2)'s code, saved at exit for wait4 (W_EXITED) */
 		u_int8_t exit_signal; /* terminating signal if killed (0 = normal exit), for wait4 (W_SIGNALED) */
+		u_int8_t group_exit; /* set when a sibling ends the thread group: exit_code/exit_signal already hold its
+		                        status */
 		struct taskStruct *parent;
 		char username[256];
 		u_int32_t *kernelStack;
@@ -221,6 +223,7 @@ extern "C"
 	/* Scheduler state-transition API — always use these instead of direct
 	 * task->state assignments.  Phase 2 will add run-queue management here. */
 	void sched_ready(kTask_t *t);                 /* READY  — task is runnable        */
+	void sched_wake_task(kTask_t *t);             /* wake @t only if it is asleep in a wait */
 	void sched_dead(kTask_t *t);                  /* DEAD   — task has exited          */
 	void sched_sleep(kTask_t *t, tState s);       /* WAIT / UNINTERRUPTIBLE — blocked  */
 	void sched_wakeup(kTask_t *t);                /* RUNNING — unblocked, back to work */

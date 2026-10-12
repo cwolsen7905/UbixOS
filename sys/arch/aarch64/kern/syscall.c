@@ -14,22 +14,23 @@
 
 #include "bringup.h"
 #include <sys/types.h>
-#include <sys/errno.h>          /* EINVAL (prlimit64) */
-#include <ubixos/sched.h>       /* _current, sched_yield */
-#include <ubixos/endtask.h>     /* endTask */
-#include <vmm/vmm.h>            /* address-space helpers */
-#include <vmm/vm_filecache.h>   /* shared file-page cache (read-only mmap sharing) */
-#include <vmm/uregion.h>        /* vmm_uregion_mmap_anon, vmm_uregion_brk */
-#include <sys/klog.h>           /* klog_read_wait — native klog_read read directly */
-#include <aarch64/vmm_layout.h> /* MMAP_BASE / BRK_BASE (user-VA layout) */
-#include <sys/sysproto_posix.h> /* sys_open/read/close/lseek + uap structs */
-#include <sys/descrip.h>        /* getfd, struct file */
-#include <mpi/mpi.h>            /* MPI mailboxes (native syscalls 50-53) */
-#include <string.h>             /* strncpy (getcwd) */
-#include <fs/vfs/stat.h>        /* struct statx (sys_statx) */
-#include <ubixos/syscalls.h>    /* systemCalls[] / systemCalls_posix[] tables */
-#include <sys/elf_load.h>       /* md_sync_icache (file-backed/exec mmap) */
-#include <fs/vfs/file.h>        /* fread (file-backed mmap) */
+#include <sys/errno.h> /* EINVAL (prlimit64) */
+#include <ubixos/sched.h>
+#include <ubixos/signal.h> /* signal_kill_group */ /* _current, sched_yield */
+#include <ubixos/endtask.h>                        /* endTask */
+#include <vmm/vmm.h>                               /* address-space helpers */
+#include <vmm/vm_filecache.h>                      /* shared file-page cache (read-only mmap sharing) */
+#include <vmm/uregion.h>                           /* vmm_uregion_mmap_anon, vmm_uregion_brk */
+#include <sys/klog.h>                              /* klog_read_wait — native klog_read read directly */
+#include <aarch64/vmm_layout.h>                    /* MMAP_BASE / BRK_BASE (user-VA layout) */
+#include <sys/sysproto_posix.h>                    /* sys_open/read/close/lseek + uap structs */
+#include <sys/descrip.h>                           /* getfd, struct file */
+#include <mpi/mpi.h>                               /* MPI mailboxes (native syscalls 50-53) */
+#include <string.h>                                /* strncpy (getcwd) */
+#include <fs/vfs/stat.h>                           /* struct statx (sys_statx) */
+#include <ubixos/syscalls.h>                       /* systemCalls[] / systemCalls_posix[] tables */
+#include <sys/elf_load.h>                          /* md_sync_icache (file-backed/exec mmap) */
+#include <fs/vfs/file.h>                           /* fread (file-backed mmap) */
 #include <ubixos/spinlock.h>
 #include <vmm/vmm_shmap.h> /* MAP_SHARED write-back registry */
 
@@ -428,6 +429,7 @@ u_int64_t aarch64_syscall(u_int64_t number, u_int64_t *args)
 		switch (n)
 		{
 			case NATIVE_EXIT_GROUP:
+				signal_kill_group((u_int32_t)args[0], 0); /* exit(): every thread */
 				do_exit(args[0]);
 				return 0; /* unreachable */
 
