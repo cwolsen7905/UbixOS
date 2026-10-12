@@ -113,51 +113,54 @@ extern "C"
 		struct taskStruct *parent;
 		char username[256];
 		u_int32_t *kernelStack;
-		struct taskStruct *hash_next; /* PID hash chain — Phase 1.5 */
-		u_int8_t quantum;             /* ticks remaining in current time slice */
-		u_int8_t priority;            /* current scheduling priority (0–31) */
-		u_int8_t base_priority;       /* QoS floor — boosts never go below this */
-		u_int8_t boost_quanta;        /* ticks remaining on temporary I/O priority boost */
-		u_int8_t on_rq;               /* 1 if currently in a run queue */
-		volatile u_int8_t on_cpu;     /* 1 from dispatch until the context save of the switch
-		                               * AWAY from this task completes (cleared with release
-		                               * semantics in sched_resume_unlock).  While set, no other
-		                               * CPU may run, migrate, or free this task: dispatching a
-		                               * half-saved context loads torn registers (the SMP build
-		                               * freeze), and reaping frees the kernel stack the final
-		                               * switch is still standing on. */
-		u_int32_t rq_cpu;             /* which CPU's run queue (g_rq index) it is on (v2) */
-		u_int32_t last_migrate_tick;  /* sysTicks of this task's last cross-core migration (v2 load
-		                               * balancer cooldown) — 0 = never migrated.  Damps ping-pong:
-		                               * a just-moved task can't be moved again for SCHED_MIGRATE_COOLDOWN
-		                               * ticks.  See sched_balance_locked(). */
-		struct taskStruct *rq_next;   /* per-priority run queue forward link */
-		struct taskStruct *rq_prev;   /* per-priority run queue backward link */
-		int t_stopped_sig;            /* signal that caused STOPPED state (0 if not stopped) */
-		void *wait_chan;              /* sleep/wakeup channel: address slept on, NULL if not blocked */
-		struct callout sleep_callout; /* timed-sleep timeout (armed by sched_wait_event_timeout) */
-		u_int32_t last_run_tick;      /* sysTicks when last dispatched (starvation aging) */
-		u_int64_t run_ticks;          /* total scheduler ticks this task has been the running thread
-		                               * (charged one per timer interrupt by sched_account_tick).
-		                               * Units are raw timer ticks; userland forms ratios (HZ-free). */
-		vm_map_t vm_map;              /* VMA red-black tree — O(log n) mmap/fault lookup */
-		pidType tgid;                 /* thread-group id (leader's pid); == id for a normal process.
-		                               * Threads created via rfork(RFMEM) share the leader's tgid and
-		                               * its address space (cr3); endTask tears the address space down
-		                               * only when the last task of a tgid exits. */
-		u_int8_t reap_free_as;        /* 1 = this task's reap frees the (shared) page tables/dir.
-		                               * Set by endTask: 1 for a normal process or the last thread of a
-		                               * tgid, 0 for a non-last thread (whose siblings still use the AS). */
-		u_int32_t tls_base;           /* per-thread userland TLS base (the %gs:0 self-pointer).
-		                               * Installed into the shared LDT[1] descriptor by set_thread_area
-		                               * and re-installed by cpu_switch on every resume: all threads in
-		                               * an address space share one LDT[1] slot, so each switch must
-		                               * restore the resuming thread's own base.  0 = no TLS (kernel
-		                               * threads, or a process before its first set_thread_area). */
-		int *clear_tid;               /* CLONE_CHILD_CLEARTID: user address the kernel zeroes and
-		                               * futex-wakes when this thread exits (endTask).  musl uses it to
-		                               * release the thread-list lock held across pthread_exit.  NULL for
-		                               * a normal process or a thread created without the flag. */
+		struct taskStruct *hash_next;  /* PID hash chain — Phase 1.5 */
+		u_int8_t quantum;              /* ticks remaining in current time slice */
+		u_int8_t priority;             /* current scheduling priority (0–31) */
+		u_int8_t base_priority;        /* QoS floor — boosts never go below this */
+		u_int8_t boost_quanta;         /* ticks remaining on temporary I/O priority boost */
+		u_int8_t on_rq;                /* 1 if currently in a run queue */
+		volatile u_int8_t on_cpu;      /* 1 from dispatch until the context save of the switch
+		                                * AWAY from this task completes (cleared with release
+		                                * semantics in sched_resume_unlock).  While set, no other
+		                                * CPU may run, migrate, or free this task: dispatching a
+		                                * half-saved context loads torn registers (the SMP build
+		                                * freeze), and reaping frees the kernel stack the final
+		                                * switch is still standing on. */
+		u_int32_t rq_cpu;              /* which CPU's run queue (g_rq index) it is on (v2) */
+		u_int32_t last_migrate_tick;   /* sysTicks of this task's last cross-core migration (v2 load
+		                                * balancer cooldown) — 0 = never migrated.  Damps ping-pong:
+		                                * a just-moved task can't be moved again for SCHED_MIGRATE_COOLDOWN
+		                                * ticks.  See sched_balance_locked(). */
+		struct taskStruct *rq_next;    /* per-priority run queue forward link */
+		struct taskStruct *rq_prev;    /* per-priority run queue backward link */
+		int t_stopped_sig;             /* signal that caused STOPPED state (0 if not stopped) */
+		void *wait_chan;               /* sleep/wakeup channel: address slept on, NULL if not blocked */
+		struct callout sleep_callout;  /* timed-sleep timeout (armed by sched_wait_event_timeout) */
+		struct callout itimer_callout; /* ITIMER_REAL: posts SIGALRM at expiry (sys_setitimer) */
+		u_int32_t itimer_interval;     /* ITIMER_REAL reload in ticks; 0 = one-shot */
+		long long itimer_cpu[2][4];    /* ITIMER_VIRTUAL/PROF: stored for getitimer, never fire */
+		u_int32_t last_run_tick;       /* sysTicks when last dispatched (starvation aging) */
+		u_int64_t run_ticks;           /* total scheduler ticks this task has been the running thread
+		                                * (charged one per timer interrupt by sched_account_tick).
+		                                * Units are raw timer ticks; userland forms ratios (HZ-free). */
+		vm_map_t vm_map;               /* VMA red-black tree — O(log n) mmap/fault lookup */
+		pidType tgid;                  /* thread-group id (leader's pid); == id for a normal process.
+		                                * Threads created via rfork(RFMEM) share the leader's tgid and
+		                                * its address space (cr3); endTask tears the address space down
+		                                * only when the last task of a tgid exits. */
+		u_int8_t reap_free_as;         /* 1 = this task's reap frees the (shared) page tables/dir.
+		                                * Set by endTask: 1 for a normal process or the last thread of a
+		                                * tgid, 0 for a non-last thread (whose siblings still use the AS). */
+		u_int32_t tls_base;            /* per-thread userland TLS base (the %gs:0 self-pointer).
+		                                * Installed into the shared LDT[1] descriptor by set_thread_area
+		                                * and re-installed by cpu_switch on every resume: all threads in
+		                                * an address space share one LDT[1] slot, so each switch must
+		                                * restore the resuming thread's own base.  0 = no TLS (kernel
+		                                * threads, or a process before its first set_thread_area). */
+		int *clear_tid;                /* CLONE_CHILD_CLEARTID: user address the kernel zeroes and
+		                                * futex-wakes when this thread exits (endTask).  musl uses it to
+		                                * release the thread-list lock held across pthread_exit.  NULL for
+		                                * a normal process or a thread created without the flag. */
 	} kTask_t;
 
 	/*
@@ -224,6 +227,7 @@ extern "C"
 	 * task->state assignments.  Phase 2 will add run-queue management here. */
 	void sched_ready(kTask_t *t);                 /* READY  — task is runnable        */
 	void sched_wake_task(kTask_t *t);             /* wake @t only if it is asleep in a wait */
+	void itimer_task_exit(kTask_t *t);            /* cancel @t's ITIMER_REAL (endTask) */
 	void sched_dead(kTask_t *t);                  /* DEAD   — task has exited          */
 	void sched_sleep(kTask_t *t, tState s);       /* WAIT / UNINTERRUPTIBLE — blocked  */
 	void sched_wakeup(kTask_t *t);                /* RUNNING — unblocked, back to work */

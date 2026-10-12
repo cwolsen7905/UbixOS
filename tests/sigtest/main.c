@@ -16,6 +16,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <sys/mman.h>
+#include <sys/time.h>
 #include <sys/wait.h>
 
 static volatile int g_hits;
@@ -24,6 +25,7 @@ static volatile int g_signo;
 static int g_fail;
 static sigjmp_buf g_segv_jmp; /* check_fault_signals: handler escape */
 static volatile int *g_null;  /* a NULL the compiler cannot prove */
+static volatile int g_alarms; /* check_itimer: SIGALRM deliveries */
 
 static char g_altstack[65536];
 static volatile int g_alt_on;    /* handler's frame was inside g_altstack */
@@ -265,6 +267,62 @@ static void check_fault_signals(void)
 	check("fault with SIGSEGV blocked -> SIGSEGV", st != -1 && WIFSIGNALED(st) && WTERMSIG(st) == SIGSEGV);
 }
 
+/** SIGALRM handler: count deliveries. */
+static void on_alarm(int sig)
+{
+	(void)sig;
+	g_alarms++;
+}
+
+/**
+ * Interval timers: a one-shot ITIMER_REAL fires once and getitimer reports the
+ * time left; an interval timer keeps firing until disarmed; alarm() works.
+ */
+static void check_itimer(void)
+{
+	struct sigaction sa;
+	struct itimerval it, cur;
+	int i;
+
+	memset(&sa, 0, sizeof(sa));
+	sa.sa_handler = on_alarm;
+	sigaction(SIGALRM, &sa, NULL);
+
+	memset(&it, 0, sizeof(it));
+	it.it_value.tv_usec = 150000;
+	g_alarms = 0;
+	check("setitimer one-shot", setitimer(ITIMER_REAL, &it, NULL) == 0);
+	check("getitimer shows time left",
+	      getitimer(ITIMER_REAL, &cur) == 0 && cur.it_value.tv_sec == 0 && cur.it_value.tv_usec > 0 &&
+	          cur.it_value.tv_usec <= 150000);
+	for (i = 0; i < 50 && g_alarms == 0; i++)
+		pause();
+	check("one-shot timer fires SIGALRM once", g_alarms == 1);
+
+	it.it_value.tv_usec = 50000;
+	it.it_interval.tv_usec = 50000;
+	g_alarms = 0;
+	setitimer(ITIMER_REAL, &it, NULL);
+	for (i = 0; i < 50 && g_alarms < 3; i++)
+		pause();
+	memset(&it, 0, sizeof(it));
+	setitimer(ITIMER_REAL, &it, &cur);
+	check("interval timer keeps firing", g_alarms >= 3 && cur.it_interval.tv_usec == 50000);
+	check("disarmed timer reads zero",
+	      getitimer(ITIMER_REAL, &cur) == 0 && cur.it_value.tv_sec == 0 && cur.it_value.tv_usec == 0);
+
+	g_alarms = 0;
+	alarm(1);
+	for (i = 0; i < 50 && g_alarms == 0; i++)
+		pause();
+	check("alarm() delivers SIGALRM", g_alarms == 1);
+
+	errno = 0;
+	check("setitimer bad which -> EINVAL", setitimer(7, &it, NULL) == -1 && errno == EINVAL);
+	sa.sa_handler = SIG_DFL;
+	sigaction(SIGALRM, &sa, NULL);
+}
+
 int main(void)
 {
 	struct sigaction sa, old;
@@ -330,6 +388,7 @@ int main(void)
 
 	check_sigaltstack();
 	check_fault_signals();
+	check_itimer();
 
 	printf("sigtest: %s\n", g_fail ? "FAILED" : "all passed");
 	return g_fail;

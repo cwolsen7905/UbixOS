@@ -196,6 +196,7 @@ void endTask(pidType pid)
 		 * aarch64 never did this; it went unnoticed while exiting threads
 		 * crashed in __unmapself first, then ld.lld's main thread waited
 		 * forever for a worker that had exited.  Same as sys/kern/endtask.c. */
+		itimer_task_exit(_current); /* no SIGALRM callout on a dead task */
 		if (_current->clear_tid != NULL)
 		{
 			*_current->clear_tid = 0;

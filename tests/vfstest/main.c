@@ -128,8 +128,7 @@ static void check_poll_pipes(void)
 	tv.tv_usec = 0;
 	check("select pipe at EOF", select(q[0] + 1, &rs, NULL, NULL, &tv) == 1 && FD_ISSET(q[0], &rs));
 
-	/* A caught signal ends an infinite wait with EINTR: a child signals us
-	 * (setitimer is still a stub, so no SIGALRM). */
+	/* A caught signal ends a wait with EINTR: a child signals us. */
 	memset(&sa, 0, sizeof(sa));
 	sa.sa_handler = on_usr1;
 	sigaction(SIGUSR1, &sa, NULL);
