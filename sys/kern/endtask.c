@@ -75,6 +75,7 @@ void endTask(pidType pid)
 	 * this thread's (shared) address space is still mapped and before any
 	 * teardown below.  The waiter is a sibling sleeping on the same address.
 	 */
+	itimer_task_exit(_current); /* no SIGALRM callout on a dead task */
 	if (_current->clear_tid != NULL)
 	{
 		*_current->clear_tid = 0;
@@ -111,7 +112,8 @@ void endTask(pidType pid)
 		{
 			struct file *f = (struct file *)_current->td.o_files[fd];
 
-			if (f != 0 && (f->fd_type == FD_TYPE_PIPE || f->fd_type == FD_TYPE_SOCKET || f->fd_type == FD_TYPE_FILE))
+			if (f != 0 &&
+			    (f->fd_type == FD_TYPE_PIPE || f->fd_type == FD_TYPE_SOCKET || f->fd_type == FD_TYPE_FILE))
 			{
 				struct sys_close_args ca;
 				ca.fd = fd;

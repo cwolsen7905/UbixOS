@@ -49,6 +49,8 @@
 #include <sys/sysproto.h>
 #include <ubixos/errno.h>
 #include <ubixos/time.h>
+#include <ubixos/uaccess.h>
+#include <ubixos/callout.h>
 #include <ubixos/vitals.h> /* systemVitals->timeStart for the wall-clock offset */
 #include <isa/pit.h>
 #include <vmm/vmm.h>
@@ -1238,24 +1240,212 @@ int sys_getrusage(struct thread *td, struct sys_getrusage_args *args)
 	return (0);
 }
 
-/*
- * setitimer(2) / getitimer(2) — FreeBSD slots 83 / 86.
- * Stub: report no previous timer; ignore the new value.  tcsh calls these to
- * set up SIGALRM-based prompt timeouts; returning success with a zeroed oitv
- * is enough for tcsh to proceed without spinning on ENOSYS.
+/* struct itimerval as 64-bit musl passes it (the kernel's time_t is 32-bit). */
+struct ubx_itimerval
+{
+	long long interval_sec, interval_usec;
+	long long value_sec, value_usec;
+};
+
+#define ITIMER_REAL 0
+#define ITIMER_VIRTUAL 1
+#define ITIMER_PROF 2
+#define USEC_PER_SEC 1000000LL
+
+/** @return @sec + @usec rounded up to whole scheduler ticks (capped). */
+static u_int32_t itimer_ticks(long long sec, long long usec)
+{
+	long long us = sec * USEC_PER_SEC + usec;
+	long long t = (us * PIT_TIMER + USEC_PER_SEC - 1) / USEC_PER_SEC;
+
+	if (t > 0x7fffffffLL)
+		t = 0x7fffffffLL;
+	return ((u_int32_t)t);
+}
+
+/** Store @ticks into @sec / @usec. */
+static void itimer_from_ticks(u_int32_t ticks, long long *sec, long long *usec)
+{
+	long long us = (long long)ticks * USEC_PER_SEC / PIT_TIMER;
+
+	*sec = us / USEC_PER_SEC;
+	*usec = us % USEC_PER_SEC;
+}
+
+/**
+ * The task that owns this process's interval timers: the thread-group leader,
+ * so a timer outlives the thread that set it.
+ *
+ * @return the leader, or _current if it is the leader (or the leader is gone).
+ */
+static kTask_t *itimer_owner(void)
+{
+	if (_current->tgid != 0 && _current->tgid != _current->id)
+	{
+		kTask_t *leader = schedFindTask(_current->tgid);
+
+		if (leader != NULL)
+			return (leader);
+	}
+	return (_current);
+}
+
+/**
+ * ITIMER_REAL expiry (callout; schedulerSpinLock held): post SIGALRM, wake the
+ * owner if it sleeps so a signal-aware wait sees it, and re-arm an interval
+ * timer.
+ */
+static void itimer_fire(void *arg)
+{
+	kTask_t *t = (kTask_t *)arg;
+
+	if (t->state == ZOMBIE || t->state == DEAD)
+		return;
+	t->td.sig_code[SIGALRM - 1] = SI_TIMER;
+	t->td.sig_pending |= (1u << (SIGALRM - 1));
+	if (t->state == WAIT || t->state == INTERRUPTIBLE)
+	{
+		t->wait_chan = NULL;
+		t->state = READY;
+		rq_enqueue_locked(t);
+	}
+	if (t->itimer_interval != 0)
+		callout_reset(&t->itimer_callout, t->itimer_interval, itimer_fire, t);
+}
+
+/** Fill @out with @owner's current ITIMER_REAL setting.  Caller holds the lock. */
+static void itimer_real_get(kTask_t *owner, struct ubx_itimerval *out)
+{
+	u_int32_t left = 0;
+
+	if (owner->itimer_callout.armed)
+	{
+		left = owner->itimer_callout.expiry - systemVitals->sysTicks;
+		if ((int32_t)left < 1)
+			left = 1;
+	}
+	itimer_from_ticks(owner->itimer_interval, &out->interval_sec, &out->interval_usec);
+	itimer_from_ticks(left, &out->value_sec, &out->value_usec);
+}
+
+/**
+ * Cancel @t's ITIMER_REAL (called from endTask) so its callout never fires on a
+ * freed task.
+ */
+void itimer_task_exit(kTask_t *t)
+{
+	u_int32_t flags;
+
+	save_flags(flags);
+	cli();
+	spinLock(&schedulerSpinLock);
+	callout_stop(&t->itimer_callout);
+	t->itimer_interval = 0;
+	spinUnlock(&schedulerSpinLock);
+	restore_flags(flags);
+}
+
+/**
+ * setitimer(2) — FreeBSD slot 83.  ITIMER_REAL posts SIGALRM when it expires
+ * (and reloads from it_interval), at scheduler-tick resolution.  ITIMER_VIRTUAL
+ * and ITIMER_PROF are stored and reported by getitimer but never fire (no
+ * per-process CPU-time accounting yet).  A NULL new value disarms, as on Linux.
+ *
+ * @return 0, or EINVAL / EFAULT.
  */
 int sys_setitimer(struct thread *td, struct setitimer_args *uap)
 {
-	if (uap->oitv != NULL)
-		memset(uap->oitv, 0, sizeof(struct itimerval));
+	struct ubx_itimerval nv, ov;
+	kTask_t *owner = itimer_owner();
+	u_int32_t flags;
+
+	memset(&nv, 0, sizeof(nv));
+	if (uap->which > ITIMER_PROF)
+	{
+		td->td_retval[0] = -EINVAL;
+		return (EINVAL);
+	}
+	if (uap->itv != NULL && copyin(uap->itv, &nv, sizeof(nv)) != 0)
+	{
+		td->td_retval[0] = -EFAULT;
+		return (EFAULT);
+	}
+	if (nv.interval_sec < 0 || nv.value_sec < 0 || nv.interval_usec < 0 || nv.interval_usec >= USEC_PER_SEC ||
+	    nv.value_usec < 0 || nv.value_usec >= USEC_PER_SEC)
+	{
+		td->td_retval[0] = -EINVAL;
+		return (EINVAL);
+	}
+
+	if (uap->which == ITIMER_REAL)
+	{
+		save_flags(flags);
+		cli();
+		spinLock(&schedulerSpinLock);
+		itimer_real_get(owner, &ov);
+		if (nv.value_sec == 0 && nv.value_usec == 0)
+		{
+			callout_stop(&owner->itimer_callout);
+			owner->itimer_interval = 0;
+		}
+		else
+		{
+			owner->itimer_interval = itimer_ticks(nv.interval_sec, nv.interval_usec);
+			callout_reset(
+			    &owner->itimer_callout, itimer_ticks(nv.value_sec, nv.value_usec), itimer_fire, owner);
+		}
+		spinUnlock(&schedulerSpinLock);
+		restore_flags(flags);
+	}
+	else
+	{
+		long long *slot = owner->itimer_cpu[uap->which - 1];
+
+		memcpy(&ov, slot, sizeof(ov));
+		memcpy(slot, &nv, sizeof(nv));
+	}
+
+	if (uap->oitv != NULL && copyout(&ov, uap->oitv, sizeof(ov)) != 0)
+	{
+		td->td_retval[0] = -EFAULT;
+		return (EFAULT);
+	}
 	td->td_retval[0] = 0;
 	return (0);
 }
 
+/**
+ * getitimer(2) — FreeBSD slot 86: the timer's reload interval and the time left.
+ *
+ * @return 0, or EINVAL / EFAULT.
+ */
 int sys_getitimer(struct thread *td, struct setitimer_args *uap)
 {
-	if (uap->itv != NULL)
-		memset(uap->itv, 0, sizeof(struct itimerval));
+	struct ubx_itimerval cur;
+	kTask_t *owner = itimer_owner();
+	u_int32_t flags;
+
+	if (uap->which > ITIMER_PROF)
+	{
+		td->td_retval[0] = -EINVAL;
+		return (EINVAL);
+	}
+	if (uap->which == ITIMER_REAL)
+	{
+		save_flags(flags);
+		cli();
+		spinLock(&schedulerSpinLock);
+		itimer_real_get(owner, &cur);
+		spinUnlock(&schedulerSpinLock);
+		restore_flags(flags);
+	}
+	else
+		memcpy(&cur, owner->itimer_cpu[uap->which - 1], sizeof(cur));
+	if (uap->itv == NULL || copyout(&cur, uap->itv, sizeof(cur)) != 0)
+	{
+		td->td_retval[0] = -EFAULT;
+		return (EFAULT);
+	}
 	td->td_retval[0] = 0;
 	return (0);
 }
