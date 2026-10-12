@@ -37,41 +37,40 @@
 /*
  * VFS block buffer cache.
  *
- * 256 fixed slots × 512 bytes = 128 KB static footprint.
- * Clock-hand eviction.  On a read miss, up to BCACHE_PREFETCH_SECS
- * contiguous sectors are fetched in a single device call and loaded
- * into consecutive cache slots, so sequential file reads hit cache
- * after the first miss per cluster.
+ * BCACHE_SLOTS fixed 512-byte slots (4 MB), found through a hash on
+ * (device, lba), with clock-hand eviction.  A multi-sector read that misses
+ * fetches the whole run in one device call; only the sectors the caller asked
+ * for are cached (no speculative read-ahead), so a write that bypasses the
+ * cache can only leave behind a sector someone already read.
  *
- * Write-through: bcache_write updates the matching slot (if present)
- * and immediately issues one device write.
+ * Write-through: bcache_write updates the matching slot (if present) and
+ * immediately writes the device.
  *
- * All operations are serialised by the caller (e.g. per-mount spinlock).
- * The cache itself contains no locks.
+ * The cache serialises itself with one internal lock, held across the device
+ * read on a miss.
  */
 
-#define BCACHE_SLOTS		256
-#define BCACHE_PREFETCH_SECS	1	/* one sector per miss — safe for all devices */
+#define BCACHE_SLOTS 8192
+#define BCACHE_HASH 4096 /* hash buckets; a power of two */
+#define BCACHE_SEC_BYTES 512
 
-void	bcache_init(void);
+void bcache_init(void);
 
-/*
- * Read sector <lba> from <dev> into <buf> (512 bytes).
- * Returns 0 on success, -1 on device error.
- */
-int	bcache_read(struct ubx_device *dev, u_int32_t lba, void *buf);
+/* Read sector @lba of @dev into @buf (512 bytes).  0, or -1 on a device error. */
+int bcache_read(struct ubx_device *dev, u_int32_t lba, void *buf);
 
-/*
- * Write 512 bytes from <buf> to sector <lba> on <dev>.
- * Updates any matching cache slot, then writes through to device.
- * Returns 0 on success, -1 on device error.
- */
-int	bcache_write(struct ubx_device *dev, u_int32_t lba, const void *buf);
+/* Read @count sectors from @lba into @buf; a miss reads the run in one device
+ * call.  0, or -1 on a device error. */
+int bcache_read_multi(struct ubx_device *dev, u_int32_t lba, u_int32_t count, void *buf);
 
-/*
- * Invalidate all cache slots belonging to <dev>.
- * Call on unmount.
- */
-void	bcache_invalidate(struct ubx_device *dev);
+/* Write 512 bytes from @buf to sector @lba: update a cached copy, then write the
+ * device.  0, or -1 on a device error. */
+int bcache_write(struct ubx_device *dev, u_int32_t lba, const void *buf);
+
+/* Write @count sectors from @buf at @lba in one device call (write-through). */
+int bcache_write_multi(struct ubx_device *dev, u_int32_t lba, u_int32_t count, const void *buf);
+
+/* Invalidate all cache slots belonging to @dev.  Call on unmount. */
+void bcache_invalidate(struct ubx_device *dev);
 
 #endif /* _VFS_BCACHE_H */

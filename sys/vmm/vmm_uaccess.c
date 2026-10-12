@@ -118,20 +118,30 @@ int copyout(const void *kaddr, void *uaddr, unsigned long len)
 int copyinstr(const void *uaddr, char *kaddr, unsigned long maxlen)
 {
 	uintptr_t ua = (uintptr_t)uaddr;
-	unsigned long i;
+	unsigned long i = 0;
 
-	for (i = 0; i < maxlen; i++, ua++)
+	/* One translation per user page, then scan that page's kernel alias. */
+	while (i < maxlen)
 	{
+		unsigned long chunk = PAGE_SIZE - (ua & (PAGE_SIZE - 1));
 		const char *kva;
+		unsigned long j;
 
 		if (!uaccess_range_ok(ua, 1))
 			return (-EFAULT);
 		kva = uaccess_page_kva(ua);
 		if (kva == NULL)
 			return (-EFAULT);
-		kaddr[i] = *kva;
-		if (kaddr[i] == '\0')
-			return ((int)i);
+		if (chunk > maxlen - i)
+			chunk = maxlen - i;
+		for (j = 0; j < chunk; j++)
+		{
+			kaddr[i] = kva[j];
+			if (kaddr[i] == '\0')
+				return ((int)i);
+			i++;
+		}
+		ua += chunk;
 	}
 	if (maxlen > 0)
 		kaddr[maxlen - 1] = '\0';

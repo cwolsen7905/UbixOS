@@ -744,8 +744,10 @@ int sys_select(struct thread *td, struct sys_select_args *args)
 	int n_tty_rd;
 	int ptm_rd_fds[MAX_FILES]; /* read fds that are posix_openpt masters (FD_TYPE_PTMASTER) */
 	int n_ptm_rd;
-	int pty_wr_fds[MAX_FILES]; /* write fds that are pty master/slave (always writable) */
+	int pty_wr_fds[MAX_FILES]; /* write fds that never block: pty, pipe, file */
 	int n_pty_wr;
+	int pipe_rd_fds[MAX_FILES]; /* read fds that are pipes or regular files */
+	int n_pipe_rd;
 	int max_lwip;
 	int has_stdin_rd;
 	struct timeval zero_tv;
@@ -760,6 +762,7 @@ int sys_select(struct thread *td, struct sys_select_args *args)
 	n_tty_rd = 0;
 	n_ptm_rd = 0;
 	n_pty_wr = 0;
+	n_pipe_rd = 0;
 
 	/* Copy and clear input sets immediately so args->in/ou become result sets. */
 	if (args->in)
@@ -798,20 +801,11 @@ int sys_select(struct thread *td, struct sys_select_args *args)
 					if (f->socket + 1 > max_lwip)
 						max_lwip = f->socket + 1;
 				}
-				else if (f && f->fd_type == FD_TYPE_PIPE)
+				else if (f && (f->fd_type == FD_TYPE_PIPE || f->fd_type == FD_TYPE_FILE))
 				{
-					/* Pipe: mark immediately ready if data available */
-					struct pipeInfo *pi = (struct pipeInfo *)f->data;
-					if (pi && pi->bCNT > 0)
-					{
-						FD_SET(i, args->in);
-						has_stdin_rd = 1; /* reuse flag to skip the poll loop */
-					}
-				}
-				else if (f && f->fd_type == FD_TYPE_FILE)
-				{
-					/* Regular file: always ready */
-					FD_SET(i, args->in);
+					/* Pipe (ready with data or at EOF) or regular file (always
+					 * ready): checked per-fd in the poll loop. */
+					pipe_rd_fds[n_pipe_rd++] = i;
 				}
 				else if (f && f->fd_type == FD_TYPE_TTYV)
 				{
@@ -849,10 +843,11 @@ int sys_select(struct thread *td, struct sys_select_args *args)
 				if (f->socket + 1 > max_lwip)
 					max_lwip = f->socket + 1;
 			}
-			else if (f && (f->fd_type == FD_TYPE_PTMASTER || f->fd_type == FD_TYPE_TTYV))
+			else if (f && (f->fd_type == FD_TYPE_PTMASTER || f->fd_type == FD_TYPE_TTYV ||
+			               f->fd_type == FD_TYPE_PIPE || f->fd_type == FD_TYPE_FILE))
 			{
-				/* pty master/slave: writes go to a bounded ring/line buffer and never
-				 * block — always writable (set + counted in the poll loop). */
+				/* pty master/slave, pipe, regular file: writes never block —
+				 * always writable (set + counted in the poll loop). */
 				pty_wr_fds[n_pty_wr++] = i;
 			}
 		}
@@ -954,12 +949,35 @@ int sys_select(struct thread *td, struct sys_select_args *args)
 			total++;
 		}
 
+		/* Pipe read fds: data or EOF (all writers gone); regular files: always. */
+		for (j = 0; j < n_pipe_rd; j++)
+		{
+			struct file *pf = td->o_files[pipe_rd_fds[j]];
+			struct pipeInfo *pi =
+			    (pf != NULL && pf->fd_type == FD_TYPE_PIPE) ? (struct pipeInfo *)pf->data : NULL;
+
+			if (pf != NULL &&
+			    (pf->fd_type == FD_TYPE_FILE || (pi != NULL && (pi->bCNT > 0 || pi->wfdCNT <= 0))))
+			{
+				if (args->in)
+					FD_SET(pipe_rd_fds[j], args->in);
+				total++;
+			}
+		}
+
 		if (total > 0)
 			break;
 
 		/* Timeout: return 0 if deadline reached */
 		if (args->tv != NULL && TICKS_AFTER(systemVitals->sysTicks, deadline))
 			break;
+
+		/* A signal to deliver interrupts the wait. */
+		if (sig_deliverable_pending(td))
+		{
+			td->td_retval[0] = -EINTR;
+			return (EINTR);
+		}
 
 		fd_poll_nap(); /* sleep a tick between scans (was a busy yield) */
 	}
@@ -1100,6 +1118,45 @@ int sys_poll(struct thread *td, struct sys_poll_args *args)
 			}
 		}
 
+		/* Pipes and plain files.  A read end is ready with data or at EOF (every
+		 * writer gone: POLLHUP, and readable — read() returns 0); writes never
+		 * block (the buffer is unbounded), so a write end is always writable.
+		 * Regular files and directories are always ready (POSIX). */
+		for (i = 0; i < nfds; i++)
+		{
+			int kfd = args->fds[i].fd;
+			short ev = args->fds[i].events;
+			struct file *f = (kfd >= 0 && kfd < MAX_FILES) ? td->o_files[kfd] : NULL;
+
+			if (f == NULL)
+				continue;
+			if (f->fd_type == FD_TYPE_PIPE && f->data != NULL)
+			{
+				struct pipeInfo *pi = (struct pipeInfo *)f->data;
+
+				if (f->pipe_end == PIPE_END_READ)
+				{
+					if (pi->bCNT > 0)
+						args->fds[i].revents |= ev & (POLLIN | POLLRDNORM);
+					if (pi->wfdCNT <= 0)
+						args->fds[i].revents |= POLLHUP | (ev & (POLLIN | POLLRDNORM));
+				}
+				else
+				{
+					args->fds[i].revents |= ev & (POLLOUT | POLLWRNORM);
+					if (pi->rfdCNT <= 0)
+						args->fds[i].revents |= POLLHUP;
+				}
+			}
+			else if (f->fd_type == FD_TYPE_FILE || f->fd_type == FD_TYPE_DIR)
+				args->fds[i].revents |= ev & (POLLIN | POLLRDNORM | POLLOUT | POLLWRNORM);
+		}
+
+		/* poll() returns the number of fds with events, not the event count. */
+		total = 0;
+		for (i = 0; i < nfds; i++)
+			if (args->fds[i].revents != 0)
+				total++;
 		if (total > 0)
 			break;
 
@@ -1110,6 +1167,13 @@ int sys_poll(struct thread *td, struct sys_poll_args *args)
 		/* positive timeout: check deadline */
 		if (args->timeout > 0 && TICKS_AFTER(systemVitals->sysTicks, deadline))
 			break;
+
+		/* A signal to deliver interrupts the wait (bmake's SIGCHLD handler). */
+		if (sig_deliverable_pending(td))
+		{
+			td->td_retval[0] = -EINTR;
+			return (EINTR);
+		}
 
 		fd_poll_nap(); /* sleep a tick between scans (was a busy yield) */
 	}

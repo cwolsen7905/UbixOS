@@ -46,7 +46,8 @@
 #define AT_ENTRY 9
 #define AT_RANDOM 25
 
-#define MAXARG 256 /* cap on argv/envp entries marshalled into a new image (clang -cc1 passes ~100) */
+/* execve's argument budget must fit the stack half build_user_stack reserves. */
+_Static_assert(EXEC_ARG_MAX <= (DYN_STACK_PAGES / 2) * PAGE_SIZE, "EXEC_ARG_MAX exceeds the exec arg region");
 
 /* Dynamic-linker image cache.  Every dynamic exec loads the same interpreter
  * (/lib/ld-musl-aarch64.so.1, ~1 MB); re-reading it off the FS for each service
@@ -285,10 +286,11 @@ static u_int64_t build_dyn_stack(uintptr_t phys_page,
 {
 	u_int8_t *page = (u_int8_t *)phys_page;
 	u_int8_t *p = page + PAGE_SIZE;
-	u_int64_t argv_uva[MAXARG], envp_uva[MAXARG], random_uva;
+	u_int8_t *s;
+	u_int64_t random_uva;
 	u_int64_t *vec;
 	int i, k = 0, nvec;
-	size_t need;
+	u_int64_t strsz = 0, need;
 #define UVA(ptr) (page_uva + (u_int64_t)((u_int8_t *)(ptr) - page))
 
 	/* The argv/env strings + the AT_RANDOM block + the argc/argv/envp/auxv vector are
@@ -297,11 +299,11 @@ static u_int64_t build_dyn_stack(uintptr_t phys_page,
 	 * size it up front and bail cleanly on overflow rather than scribbling past the
 	 * region into adjacent kernel memory (a huge environment must fail the exec). */
 	nvec = 1 + argc + 1 + envc + 1 + 16;
-	need = 16 + 32 /* AT_RANDOM + two 16-byte alignment slacks */ + (size_t)nvec * sizeof(u_int64_t);
 	for (i = 0; i < argc; i++)
-		need += strlen(argv[i]) + 1;
+		strsz += strlen(argv[i]) + 1;
 	for (i = 0; i < envc; i++)
-		need += strlen(envp[i]) + 1;
+		strsz += strlen(envp[i]) + 1;
+	need = 16 + 32 /* AT_RANDOM + two 16-byte alignment slacks */ + (u_int64_t)nvec * sizeof(u_int64_t) + strsz;
 	if (need > limit)
 	{
 		kprintf("execve: argv+env (%u bytes) exceeds the %u-byte stack arg region\n",
@@ -310,21 +312,24 @@ static u_int64_t build_dyn_stack(uintptr_t phys_page,
 		return (0);
 	}
 
-	/* argv + envp strings, then 16 random bytes for the stack canary, near top. */
+	/* argv then envp strings, packed upward into the top @strsz bytes (the vector
+	 * below re-walks them for their addresses), then 16 random bytes for the
+	 * stack canary. */
+	p -= strsz;
+	s = p;
 	for (i = 0; i < argc; i++)
 	{
-		size_t l = strlen(argv[i]) + 1;
-		p -= l;
-		memcpy(p, argv[i], l);
-		argv_uva[i] = UVA(p);
+		u_int64_t l = strlen(argv[i]) + 1;
+		memcpy(s, argv[i], l);
+		s += l;
 	}
 	for (i = 0; i < envc; i++)
 	{
-		size_t l = strlen(envp[i]) + 1;
-		p -= l;
-		memcpy(p, envp[i], l);
-		envp_uva[i] = UVA(p);
+		u_int64_t l = strlen(envp[i]) + 1;
+		memcpy(s, envp[i], l);
+		s += l;
 	}
+	s = p;
 
 	p -= 16;
 	memcpy(p, "uBixOS-aarch64!\x01", 16); /* AT_RANDOM: bring-up entropy (not a CSPRNG yet) */
@@ -340,10 +345,16 @@ static u_int64_t build_dyn_stack(uintptr_t phys_page,
 
 	vec[k++] = (u_int64_t)argc;
 	for (i = 0; i < argc; i++)
-		vec[k++] = argv_uva[i];
+	{
+		vec[k++] = UVA(s);
+		s += strlen((const char *)s) + 1;
+	}
 	vec[k++] = 0; /* argv terminator */
 	for (i = 0; i < envc; i++)
-		vec[k++] = envp_uva[i];
+	{
+		vec[k++] = UVA(s);
+		s += strlen((const char *)s) + 1;
+	}
 	vec[k++] = 0; /* envp terminator */
 	vec[k++] = AT_PHDR;
 	vec[k++] = mi->phdr_va;
@@ -618,96 +629,64 @@ void aarch64_run_dynamic_init(const char *path)
 	}
 }
 
-/**
- * Copy a NULL-terminated user vector of user strings (argv/envp) into freshly
- * kmalloc'd kernel strings.  Run in the caller's (old) address space before any
- * TTBR0 switch, so the user pointers are valid.  Caller kfrees each kvec[i].
- *
- * @return the number of entries copied (0..max).
- */
-static int copy_user_strvec(char *const *uvec, char **kvec, int max)
-{
-	int n = 0;
+static int aarch64_exec_replace_elf(struct exec_args *ea);
 
-	if (uvec == NULL)
-		return 0;
-	while (n < max && uvec[n] != NULL)
+/**
+ * execve: copy the arguments in, then load.  A "#!" script runs its interpreter
+ * (one level — the interpreter must be an ELF program) with the script path and
+ * the original arguments; anything else is loaded as ELF.
+ *
+ * @return a negative errno on failure; on success it does not return.
+ *         -E2BIG if argv + envp exceed EXEC_ARG_MAX, -EFAULT for a bad pointer.
+ */
+int aarch64_exec_replace(const char *path, char *const *uargv, char *const *uenvp)
+{
+	struct exec_args ea;
+	int r;
+
+	r = exec_args_copyin(&ea, path, uargv, uenvp);
+	if (r != 0)
+		return (r);
+	r = exec_args_script(&ea);
+	if (r < 0)
 	{
-		const char *us = uvec[n];
-		size_t len = 0;
-		char *ks;
-		while (us[len] != '\0' && len < 4096)
-			len++;
-		ks = (char *)kmalloc((u_int32_t)len + 1);
-		if (ks == NULL)
-			break;
-		memcpy(ks, us, len);
-		ks[len] = '\0';
-		kvec[n++] = ks;
+		exec_args_free(&ea);
+		return (r);
 	}
-	return n;
+	/* The old image's MAP_SHARED writes reach their files before it is replaced. */
+	vmm_shmap_exit(_current->id);
+	r = aarch64_exec_replace_elf(&ea);
+	exec_args_free(&ea);
+	return (r);
 }
 
 /**
- * execve(@path, @uargv, @uenvp): replace the *current* task's image with the ELF
- * at @path and restart it at EL0.  argv/envp are user vectors, copied to kernel
- * memory before the address-space switch and marshalled onto the new stack.
+ * execve(@ea): replace the *current* task's image with the ELF at @ea->path and
+ * restart it at EL0.  @ea holds kernel copies of the path, argv and envp
+ * (exec_args_copyin), which survive the address-space switch and are
+ * marshalled onto the new stack.
  *
  * Reads the file + builds the new image in a fresh address space (via the
  * dynamic loader, so PIE/dynamic and static both work), repoints the current
  * task, switches TTBR0, then aarch64_exec_to_el0()s into the new entry — which
- * does not return.  The old address space's user pages leak for now.
+ * does not return.  On success @ea is freed here.
  *
  * @return a negative errno on failure (on success it does not return): -ENOENT if
- *         @path does not exist, -ENOEXEC if it exists but is not a loadable image,
- *         -1 for an internal failure (e.g. arg region overflow).
+ *         the path does not exist, -ENOEXEC if it exists but is not a loadable
+ *         image, -1 for an internal failure.  @ea is then still the caller's.
  */
-static int aarch64_exec_replace_elf(const char *path, char *const *uargv, char *const *uenvp);
-
-/**
- * execve: a "#!" script runs its interpreter (one level — the interpreter must
- * be an ELF program) with the script path and the original arguments; anything
- * else is loaded as ELF.  The interpreter argv lives on this kernel stack: the
- * loader copies it before the point of no return, and a successful exec never
- * comes back here.
- */
-int aarch64_exec_replace(const char *path, char *const *uargv, char *const *uenvp)
+static int aarch64_exec_replace_elf(struct exec_args *ea)
 {
-	char interp[256], iarg[256];
-	char *vec[MAXARG + 1];
-
-	/* The old image's MAP_SHARED writes reach their files before it is replaced. */
-	vmm_shmap_exit(_current->id);
-	if (exec_script_argv(path, uargv, vec, MAXARG + 1, interp, sizeof(interp), iarg, sizeof(iarg)) > 0)
-		return (aarch64_exec_replace_elf(interp, vec, uenvp));
-	return (aarch64_exec_replace_elf(path, uargv, uenvp));
-}
-
-static int aarch64_exec_replace_elf(const char *path, char *const *uargv, char *const *uenvp)
-{
-	int argc, envc, i, dr;
+	const char *path = ea->path;
+	char **kargv = ea->argv, **kenvp = ea->envp;
+	int argc = ea->argc, envc = ea->envc, dr;
 	u_int64_t *l1, entry = 0, usp = 0, kstack_top, old_ttbr0;
-	char namebuf[256];
-	char *kargv[MAXARG], *kenvp[MAXARG];
 	elf64_load_info_t info;
 	vm_map_t newmap = VM_MAP_INIT;
 
-	/* Copy name + argv + envp out of the old address space now — they are user
-	 * pointers there and the old AS is unmapped the instant we switch TTBR0. */
-	strncpy(namebuf, path, sizeof(namebuf) - 1);
-	namebuf[sizeof(namebuf) - 1] = '\0';
-	argc = copy_user_strvec(uargv, kargv, MAXARG);
-	envc = copy_user_strvec(uenvp, kenvp, MAXARG);
-	if (argc == 0)
-	{
-		kargv[0] = namebuf; /* always pass at least argv[0] */
-		argc = 1;
-	}
-
 	/* Task name (basename of path) + cmdline (argv joined) — MI helper shared
-	 * with i386 sys_exec.  Done here while kargv[] is still live (it is freed
-	 * below once the loader has copied it onto the new user stack). */
-	exec_set_name_cmdline(_current, namebuf, kargv, argc);
+	 * with x86_64. */
+	exec_set_name_cmdline(_current, path, kargv, argc);
 
 	/* Distinguish a missing executable (-ENOENT) from an existing-but-unloadable
 	 * one (-ENOEXEC).  execve used to return a blanket -1 for every failure, which
@@ -715,7 +694,7 @@ static int aarch64_exec_replace_elf(const char *path, char *const *uargv, char *
 	 * command that does not exist reported "Operation not permitted" instead of
 	 * "No such file or directory".  Probe existence before building the new address
 	 * space (also avoids the pmap/loader work when the path is simply wrong). */
-	if (!aarch64_file_exists(namebuf))
+	if (!aarch64_file_exists(path))
 		return (-ENOENT);
 
 	l1 = pmap_create_user_space();
@@ -811,13 +790,8 @@ static int aarch64_exec_replace_elf(const char *path, char *const *uargv, char *
 		kprintf("execve: %s not loadable\n", path);
 		return (-ENOEXEC);
 	}
-	/* The argv/envp strings are now copied onto the new user stack; free the
-	 * kernel temporaries (but not namebuf, which is on our stack). */
-	for (i = 0; i < argc; i++)
-		if (kargv[i] != namebuf)
-			kfree(kargv[i]);
-	for (i = 0; i < envc; i++)
-		kfree(kenvp[i]);
+	/* The argv/envp strings are now copied onto the new user stack. */
+	exec_args_free(ea);
 
 	/* Repoint the current task at the new image, then make it live.  (name +
 	 * cmdline were already set by exec_set_name_cmdline above.) */

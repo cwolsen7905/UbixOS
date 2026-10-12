@@ -28,13 +28,16 @@ SECTIONS
 		*(.text*)
 	}
 
-	.rodata : AT(ADDR(.rodata) - KERNBASE) { *(.rodata*) }
-	.data   : AT(ADDR(.data) - KERNBASE) { *(.data*) }
+	/* .l* = clang's -mcmodel=large sections for objects over 64 KB (gcc never
+	 * emits them).  Left out, .lbss landed past _end, under the page bitmap. */
+	.rodata : AT(ADDR(.rodata) - KERNBASE) { *(.rodata*) *(.lrodata*) }
+	.data   : AT(ADDR(.data) - KERNBASE) { *(.data*) *(.ldata*) }
 
 	. = ALIGN(16);
 	__bss_start = .;
 	.bss : AT(ADDR(.bss) - KERNBASE) {
 		*(.bss*)
+		*(.lbss*)
 		*(COMMON)
 	}
 	. = ALIGN(16);

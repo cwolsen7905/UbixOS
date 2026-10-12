@@ -13,23 +13,45 @@
 #include <ubixos/sched.h>
 #include <sys/thread.h>
 #include <sys/sysproto_posix.h>
-#include <sys/sysproto.h>      /* sys_disk_query_args (native ABI) */
-#include <dev/disk.h>          /* disk_query — block-device enumeration syscall 68 */
+#include <sys/sysproto.h>       /* sys_disk_query_args (native ABI) */
+#include <dev/disk.h>           /* disk_query — block-device enumeration syscall 68 */
 #include <fs/ubixfs/ubfs_vfs.h> /* ubfs_vfs_query — native pool-query syscall 67 */
-#include <vmm/vmm.h>           /* vmm_find_free_page, PAGE_SIZE */
-#include <lib/kmalloc.h>       /* sysID */
-#include <string.h>            /* memset */
-#include <sys/errno.h>         /* EINVAL (getcwd) */
-#include <vmm/vmm_shmap.h>     /* MAP_SHARED write-back */
-#include <x86_64/vmm_layout.h> /* MMAP_BASE, BRK_BASE (single source of truth) */
-#include <sys/descrip.h>       /* getfd, struct file (file-backed mmap) */
-#include <fs/vfs/file.h>       /* fileDescriptor_t, fread (file-backed mmap) */
-#include <vmm/vm_filecache.h>  /* shared read-only file-page cache */
-#include <ubixos/vitals.h>     /* systemVitals — uptime/freePages for sys_sysinfo */
+#include <vmm/vmm.h>            /* vmm_find_free_page, PAGE_SIZE */
+#include <lib/kmalloc.h>        /* sysID */
+#include <string.h>             /* memset */
+#include <sys/errno.h>          /* EINVAL (getcwd) */
+#include <vmm/vmm_shmap.h>      /* MAP_SHARED write-back */
+#include <x86_64/vmm_layout.h>  /* MMAP_BASE, BRK_BASE (single source of truth) */
+#include <sys/descrip.h>        /* getfd, struct file (file-backed mmap) */
+#include <fs/vfs/file.h>        /* fileDescriptor_t, fread (file-backed mmap) */
+#include <vmm/vm_filecache.h>   /* shared read-only file-page cache */
+#include <ubixos/vitals.h>      /* systemVitals — uptime/freePages for sys_sysinfo */
 
 void x86_64_map_user_page_shared(u64 pml4_phys, u64 va, u64 phys);
 
 #define MSR_FS_BASE 0xC0000100
+
+/* Serialises the mmap/brk cursors of an address space shared by threads. */
+static struct spinLock g_as_region_lock = SPIN_LOCK_INITIALIZER;
+
+/**
+ * The task that owns the current address space's mmap/brk cursors: the
+ * thread-group leader, so rfork'd threads (which share the PML4) allocate from
+ * one cursor instead of each from a stale copy and overlapping each other's
+ * mappings.  Mirrors aarch64_as_owner.
+ *
+ * @return the leader, or _current when it is the leader (or the leader is gone).
+ */
+static kTask_t *x86_64_as_owner(void)
+{
+	if (_current->tgid != 0 && _current->tgid != (u_int32_t)_current->id)
+	{
+		kTask_t *leader = schedFindTask(_current->tgid);
+		if (leader != 0)
+			return (leader);
+	}
+	return (_current);
+}
 
 /**
  * Map @npages zeroed, writable, user pages at @va in the current address space.
@@ -150,9 +172,16 @@ u64 x86_64_user_mmap(u64 addr, u64 len, u64 prot, u64 flags, u64 fd, u64 off)
 	}
 	else
 	{
-		if (_current->md.md_mmap_next == 0)
-			_current->md.md_mmap_next = MMAP_BASE;
-		base = _current->md.md_mmap_next;
+		/* Reserve the range on the address space's shared cursor (the thread-group
+		 * leader's), then map it outside the lock (a file-backed map reads disk). */
+		kTask_t *owner = x86_64_as_owner();
+
+		spinLock(&g_as_region_lock);
+		if (owner->md.md_mmap_next == 0)
+			owner->md.md_mmap_next = MMAP_BASE;
+		base = owner->md.md_mmap_next;
+		owner->md.md_mmap_next = base + npages * PAGE_SIZE;
+		spinUnlock(&g_as_region_lock);
 	}
 
 	/* File-backed (MAP_ANON 0x20 clear) with a valid fd: read the file in.  A
@@ -169,15 +198,14 @@ u64 x86_64_user_mmap(u64 addr, u64 len, u64 prot, u64 flags, u64 fd, u64 off)
 		 * the mapping for write-back on munmap/msync/exit (ld.lld's mmap'd output
 		 * was otherwise never written).  Mirrors aarch64. */
 		if ((flags & 0x01) && writable && fp->fd->fileName[0] != '\0')
-			vmm_shmap_register(_current->id, (uintptr_t)base, (size_t)len, (off_t)(off * PAGE_SIZE), fp->fd->fileName);
+			vmm_shmap_register(
+			    _current->id, (uintptr_t)base, (size_t)len, (off_t)(off * PAGE_SIZE), fp->fd->fileName);
 	}
 	else if (map_anon(base, npages) != 0)
 	{
 		return 0;
 	}
 
-	if (!((flags & 0x10) && addr != 0))
-		_current->md.md_mmap_next = base + npages * PAGE_SIZE;
 	return base;
 }
 
@@ -189,18 +217,23 @@ u64 x86_64_user_mmap(u64 addr, u64 len, u64 prot, u64 flags, u64 fd, u64 off)
  */
 u64 x86_64_user_brk(u64 newbrk)
 {
+	kTask_t *owner = x86_64_as_owner(); /* threads share one break */
 	u64 cur;
 
-	if (_current->md.md_brk == 0)
-		_current->md.md_brk = BRK_BASE;
-	cur = _current->md.md_brk;
+	spinLock(&g_as_region_lock);
+	if (owner->md.md_brk == 0)
+		owner->md.md_brk = BRK_BASE;
+	cur = owner->md.md_brk;
 
 	if (newbrk > cur)
 	{
 		u64 from = (cur + PAGE_SIZE - 1) & ~(u64)(PAGE_SIZE - 1);
 		u64 to = (newbrk + PAGE_SIZE - 1) & ~(u64)(PAGE_SIZE - 1);
 		if (to > from && map_anon(from, (to - from) / PAGE_SIZE) != 0)
+		{
+			spinUnlock(&g_as_region_lock);
 			return cur; /* OOM: break unchanged */
+		}
 		cur = newbrk;
 	}
 	else if (newbrk >= BRK_BASE)
@@ -208,7 +241,8 @@ u64 x86_64_user_brk(u64 newbrk)
 		cur = newbrk; /* shrink: drop the cursor (pages kept mapped, harmless) */
 	}
 
-	_current->md.md_brk = cur;
+	owner->md.md_brk = cur;
+	spinUnlock(&g_as_region_lock);
 	return cur;
 }
 

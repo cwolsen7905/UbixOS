@@ -345,13 +345,9 @@ static int backing_write(void *ctx, uint64_t blk, const void *buf)
 static int raw_read(void *ctx, uint64_t blk, void *buf)
 {
 	struct ubx_device *dev = (struct ubx_device *)ctx;
-	u_int32_t base = (u_int32_t)blk * UBFS_SECTORS_PER_BLOCK;
-	u_int32_t s;
 
-	for (s = 0; s < UBFS_SECTORS_PER_BLOCK; s++)
-		if (bcache_read(dev, base + s, (u_int8_t *)buf + s * 512) != 0)
-			return (-1);
-	return (0);
+	/* One device request per block on a miss, not one per sector. */
+	return (bcache_read_multi(dev, (u_int32_t)blk * UBFS_SECTORS_PER_BLOCK, UBFS_SECTORS_PER_BLOCK, buf));
 }
 
 /**
@@ -362,13 +358,8 @@ static int raw_read(void *ctx, uint64_t blk, void *buf)
 static int raw_write(void *ctx, uint64_t blk, const void *buf)
 {
 	struct ubx_device *dev = (struct ubx_device *)ctx;
-	u_int32_t base = (u_int32_t)blk * UBFS_SECTORS_PER_BLOCK;
-	u_int32_t s;
 
-	for (s = 0; s < UBFS_SECTORS_PER_BLOCK; s++)
-		if (bcache_write(dev, base + s, (const u_int8_t *)buf + s * 512) != 0)
-			return (-1);
-	return (0);
+	return (bcache_write_multi(dev, (u_int32_t)blk * UBFS_SECTORS_PER_BLOCK, UBFS_SECTORS_PER_BLOCK, buf));
 }
 
 /* ── VFS operations ─────────────────────────────────────────────────────────── */

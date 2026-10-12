@@ -4,6 +4,9 @@
  * vfstest — checks VFS edge cases: zero-length read, O_APPEND on every write,
  * ".." in paths and faccessat.  Prints one PASS/FAIL line per check and exits
  * non-zero if any check failed.
+ *
+ * "vfstest --long N" and "vfstest --many N" are the re-exec targets of the
+ * execve argument checks: they exit 0 if their argv arrived intact.
  */
 
 #include <fcntl.h>
@@ -17,8 +20,17 @@
 #include <sys/times.h>
 #include <sys/statvfs.h>
 #include <errno.h>
+#include <stdlib.h>
+#include <poll.h>
+#include <pthread.h>
+#include <signal.h>
+#include <sys/select.h>
+
+#define NMAPS 64
+#define MAPSZ 8192
 
 static int g_fail;
+static char *g_maps[2][NMAPS]; /* check_thread_mmap: each thread's regions */
 
 static void check(const char *what, int ok)
 {
@@ -27,12 +39,253 @@ static void check(const char *what, int ok)
 		g_fail = 1;
 }
 
-int main(void)
+/**
+ * Re-exec target: verify the argv the parent built in check_execve_args.
+ *
+ * @return 0 if it arrived intact.
+ */
+static int argv_target(int argc, char **argv)
+{
+	int n = atoi(argv[2]), i;
+	char want[16];
+
+	if (strcmp(argv[1], "--long") == 0)
+		return (argc == 4 && (int)strlen(argv[3]) == n && argv[3][n - 1] == 'Z') ? 0 : 1;
+	if (argc != n + 3)
+		return (1);
+	for (i = 0; i < n; i++)
+	{
+		snprintf(want, sizeof(want), "a%d", i);
+		if (strcmp(argv[3 + i], want) != 0)
+			return (1);
+	}
+	return (0);
+}
+
+/**
+ * Fork, execve @path with @av in the child, and wait.
+ *
+ * @return the child's exit status, or 100 + errno if execve itself failed.
+ */
+static int run_exec(const char *path, char **av)
+{
+	char *ev[] = {"VFSTEST=1", NULL};
+	pid_t pid;
+	int st = -1;
+
+	pid = fork();
+	if (pid == 0)
+	{
+		execve(path, av, ev);
+		_exit(100 + errno);
+	}
+	waitpid(pid, &st, 0);
+	return WIFEXITED(st) ? WEXITSTATUS(st) : -1;
+}
+
+/** SIGUSR1 handler for the poll-interrupt check: only has to exist. */
+static void on_usr1(int sig)
+{
+	(void)sig;
+}
+
+/**
+ * poll/select on pipes: readiness from data and EOF, timeouts, the ready-fd
+ * count, and EINTR from a caught signal (bmake -j depends on all of these).
+ */
+static void check_poll_pipes(void)
+{
+	struct pollfd pf[2];
+	struct sigaction sa;
+	pid_t pid;
+	fd_set rs;
+	struct timeval tv;
+	int p[2], q[2], r;
+
+	if (pipe(p) != 0 || pipe(q) != 0)
+	{
+		check("poll test pipes", 0);
+		return;
+	}
+	pf[0].fd = p[0];
+	pf[0].events = POLLIN;
+	check("poll empty pipe times out", poll(pf, 1, 50) == 0 && pf[0].revents == 0);
+
+	write(p[1], "x", 1);
+	check("poll pipe with data -> POLLIN", poll(pf, 1, 1000) == 1 && (pf[0].revents & POLLIN));
+
+	pf[1].fd = p[1];
+	pf[1].events = POLLOUT;
+	check("poll counts ready fds", poll(pf, 2, 1000) == 2 && (pf[1].revents & POLLOUT));
+
+	close(q[1]);
+	pf[0].fd = q[0];
+	check("poll pipe at EOF -> POLLHUP", poll(pf, 1, 1000) == 1 && (pf[0].revents & POLLHUP));
+
+	FD_ZERO(&rs);
+	FD_SET(q[0], &rs);
+	tv.tv_sec = 1;
+	tv.tv_usec = 0;
+	check("select pipe at EOF", select(q[0] + 1, &rs, NULL, NULL, &tv) == 1 && FD_ISSET(q[0], &rs));
+
+	/* A caught signal ends an infinite wait with EINTR: a child signals us
+	 * (setitimer is still a stub, so no SIGALRM). */
+	memset(&sa, 0, sizeof(sa));
+	sa.sa_handler = on_usr1;
+	sigaction(SIGUSR1, &sa, NULL);
+	read(p[0], &r, 1); /* drain: the pipe is empty again */
+	pf[0].fd = p[0];
+	pid = fork();
+	if (pid == 0)
+	{
+		usleep(200000);
+		kill(getppid(), SIGUSR1);
+		_exit(0);
+	}
+	errno = 0;
+	r = poll(pf, 1, 5000);
+	check("poll interrupted by a signal -> EINTR", r == -1 && errno == EINTR);
+	waitpid(pid, NULL, 0);
+	sa.sa_handler = SIG_DFL;
+	sigaction(SIGUSR1, &sa, NULL);
+
+	close(p[0]);
+	close(p[1]);
+	close(q[0]);
+}
+
+/**
+ * mmap NMAPS regions for slot @arg and fill each with the slot's pattern byte.
+ * @return NULL.
+ */
+static void *mapper(void *arg)
+{
+	int slot = (int)(long)arg;
+	int i;
+
+	for (i = 0; i < NMAPS; i++)
+	{
+		char *m = mmap(NULL, MAPSZ, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANON, -1, 0);
+
+		g_maps[slot][i] = (m == MAP_FAILED) ? NULL : m;
+		if (m != MAP_FAILED)
+			memset(m, 'A' + slot, MAPSZ);
+	}
+	return NULL;
+}
+
+/**
+ * Two threads mmap concurrently; every region must be distinct and intact.
+ * @return 1 on success.
+ */
+static int check_thread_mmap(void)
+{
+	pthread_t t;
+	int s, i, j, k;
+
+	if (pthread_create(&t, NULL, mapper, (void *)1L) != 0)
+		return 0;
+	mapper((void *)0L);
+	pthread_join(t, NULL);
+
+	for (s = 0; s < 2; s++)
+		for (i = 0; i < NMAPS; i++)
+		{
+			if (g_maps[s][i] == NULL)
+				return 0;
+			for (k = 0; k < MAPSZ; k += 512)
+				if (g_maps[s][i][k] != 'A' + s)
+					return 0;
+			for (j = 0; j < NMAPS; j++) /* no overlap with the other thread's maps */
+			{
+				char *o = g_maps[1 - s][j];
+				if (o != NULL && o < g_maps[s][i] + MAPSZ && g_maps[s][i] < o + MAPSZ)
+					return 0;
+			}
+		}
+	return 1;
+}
+
+/**
+ * execve passes long and numerous arguments whole, and refuses an oversized
+ * or unreadable argv with an error instead of truncating it.
+ */
+static void check_execve_args(const char *self)
+{
+	enum
+	{
+		LONG_ARG = 20000,
+		MANY_ARGS = 1000,
+		TOO_BIG = 200 * 1024
+	};
+	char **av = malloc((MANY_ARGS + 4) * sizeof(char *));
+	char *big = malloc(TOO_BIG + 1);
+	char num[16];
+	int i;
+
+	if (av == NULL || big == NULL)
+	{
+		check("execve test buffers", 0);
+		return;
+	}
+	memset(big, 'x', TOO_BIG);
+
+	big[LONG_ARG - 1] = 'Z';
+	big[LONG_ARG] = '\0';
+	snprintf(num, sizeof(num), "%d", LONG_ARG);
+	av[0] = (char *)self;
+	av[1] = "--long";
+	av[2] = num;
+	av[3] = big;
+	av[4] = NULL;
+	check("execve passes a 20000-byte argument whole", run_exec(self, av) == 0);
+
+	snprintf(num, sizeof(num), "%d", MANY_ARGS);
+	av[1] = "--many";
+	for (i = 0; i < MANY_ARGS; i++)
+	{
+		av[3 + i] = malloc(16);
+		snprintf(av[3 + i], 16, "a%d", i);
+	}
+	av[3 + MANY_ARGS] = NULL;
+	check("execve passes 1000 arguments", run_exec(self, av) == 0);
+	for (i = 0; i < MANY_ARGS; i++)
+		free(av[3 + i]);
+
+	memset(big, 'x', TOO_BIG);
+	big[TOO_BIG] = '\0';
+	av[1] = big;
+	av[2] = NULL;
+	check("execve over ARG_MAX -> E2BIG", run_exec(self, av) == 100 + E2BIG);
+	check("execve bad argv -> EFAULT", run_exec(self, (char **)8) == 100 + EFAULT);
+
+	free(big);
+	free(av);
+}
+
+/**
+ * Run every check, or act as the execve re-exec target (see argv_target).
+ *
+ * @return 0 if every check passed.
+ */
+int main(int argc, char **argv)
 {
 	char buf[64];
 	char cwd[256];
 	int fd, a, b;
 	ssize_t n;
+
+	if (argc >= 3 && (strcmp(argv[1], "--long") == 0 || strcmp(argv[1], "--many") == 0))
+		return (argv_target(argc, argv));
+	/* Started by check_execve_args without a target mode: an execve that should
+	 * have failed ran.  Report it rather than rerunning every check (and
+	 * re-execing again, forever). */
+	if (getenv("VFSTEST") != NULL)
+	{
+		printf("FAIL: unexpected re-exec, argc %d argv[1] %.16s\n", argc, argc > 1 ? argv[1] : "(none)");
+		fflush(stdout);
+		return (99);
+	}
 
 	/* read(fd, buf, 0) reads nothing and leaves the buffer alone. */
 	fd = open("/etc/passwd", O_RDONLY);
@@ -249,6 +502,10 @@ int main(void)
 		check("fstatvfs", f >= 0 && fstatvfs(f, &v) == 0 && v.f_bsize == 4096);
 		close(f);
 	}
+
+	check_poll_pipes();
+	check("two threads' mmaps are distinct and intact", check_thread_mmap());
+	check_execve_args(argv[0][0] == '/' ? argv[0] : "/usr/tests/vfstest");
 
 	printf("vfstest: %s\n", g_fail ? "FAILED" : "all passed");
 	return g_fail;

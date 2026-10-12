@@ -278,12 +278,13 @@ static int virtio_blk_read(struct ubx_device *dev, u_int32_t lba, u_int32_t coun
 }
 
 /**
- * Write @count sectors starting at @lba from @buf via virtio-blk, one sector per
- * request (polling the used ring).  Matches struct ubx_blk_ops::write.
+ * Write @count sectors starting at @lba from @buf via virtio-blk, up to
+ * BLK_BATCH_SECS sectors per request (polling the used ring).  Matches struct
+ * ubx_blk_ops::write.
  *
- * Mirrors virtio_blk_read with a VIRTIO_BLK_T_OUT request; the data descriptor
- * is device-readable (no VIRTQ_DESC_F_WRITE), and the payload is staged through
- * the same g_data bounce buffer the read path uses.
+ * Mirrors virtio_blk_read with a VIRTIO_BLK_T_OUT request: the payload is staged
+ * through the same g_batch bounce buffer, and the data descriptor is
+ * device-readable (no VIRTQ_DESC_F_WRITE).
  *
  * @return 0 on success, -1 on a device error.
  */
@@ -294,22 +295,25 @@ static int virtio_blk_write(struct ubx_device *dev, u_int32_t lba, u_int32_t cou
 		return (-1);
 
 	spinLock(&g_blk_lock);
-	for (u_int32_t i = 0; i < count; i++)
+	for (u_int32_t off = 0; off < count;)
 	{
-		memcpy(g_data, (const u_int8_t *)buf + (u_int64_t)i * 512, 512);
+		u_int32_t n = count - off;
+		if (n > BLK_BATCH_SECS)
+			n = BLK_BATCH_SECS;
 
+		memcpy(g_batch, (const u_int8_t *)buf + (u_int64_t)off * 512, (u_int64_t)n * 512);
 		g_hdr->type = VIRTIO_BLK_T_OUT;
 		g_hdr->reserved = 0;
-		g_hdr->sector = (u_int64_t)lba + i;
+		g_hdr->sector = (u_int64_t)lba + off;
 		*g_status = 0xFF;
 
-		/* Three-descriptor chain: header (R) -> data (R) -> status (W). */
+		/* Three-descriptor chain: header (R) -> data (R, n sectors) -> status (W). */
 		g_desc[0].addr = AARCH64_PHYS_OF((uintptr_t)g_hdr);
 		g_desc[0].len = sizeof(struct virtio_blk_req);
 		g_desc[0].flags = VIRTQ_DESC_F_NEXT;
 		g_desc[0].next = 1;
-		g_desc[1].addr = AARCH64_PHYS_OF((uintptr_t)g_data);
-		g_desc[1].len = 512;
+		g_desc[1].addr = AARCH64_PHYS_OF((uintptr_t)g_batch);
+		g_desc[1].len = n * 512;
 		g_desc[1].flags = VIRTQ_DESC_F_NEXT;
 		g_desc[1].next = 2;
 		g_desc[2].addr = AARCH64_PHYS_OF((uintptr_t)g_status);
@@ -330,6 +334,7 @@ static int virtio_blk_write(struct ubx_device *dev, u_int32_t lba, u_int32_t cou
 			spinUnlock(&g_blk_lock);
 			return (-1);
 		}
+		off += n;
 	}
 	spinUnlock(&g_blk_lock);
 	return (0);
