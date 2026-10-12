@@ -41,7 +41,7 @@ Every lane updates its row in the same PR; rows are never deleted.
 | W-032 | self-host | /usr/src/lib builds inside UbixOS (C libraries) | doing | - | #16 | Makefile fixes in W-028 PR (_ARCH default, -L${MUSL_LIB}). aarch64: every C library links except libbearssl and libcss (blocked by W-033); C++ (objgfx) waits for clang++/libc++ in-OS |
 | W-033 | kernel | execve silently truncated arguments: each argv/env string cut at 4096 bytes, entries past 256 dropped | done | - | #17 | Both arches now copy argv/envp in whole (exec_args in sys/kern/kern_exec.c) up to EXEC_ARG_MAX (128 KB, = ARG_MAX) and fail E2BIG/EFAULT beyond it. bmake's 15 KB `sh -c` link lines for libbearssl/libcss lost their -o, so ld wrote a.out and exited 0 |
 | W-034 | ubixfs | New files on aarch64 show an mtime from boot time, not the current time | todo | - | - | Seen during the W-032 build (ls -l showed 20:24 for files written at 23:26); not investigated |
-| W-035 | self-host | Parallel kernel builds: one bmake target per kernel object so -j works | done | - | TBD | x86_64 kernel recipe also moved off recipe-time find and the obj/sys/*.o link glob (both break under the in-OS shell) |
+| W-035 | self-host | Parallel kernel builds: one bmake target per kernel object so -j works | done | - | #18 | x86_64 kernel recipe also moved off recipe-time find and the obj/sys/*.o link glob (both break under the in-OS shell) |
 
 ## Notes
 
