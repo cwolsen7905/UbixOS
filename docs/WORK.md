@@ -42,8 +42,8 @@ Every lane updates its row in the same PR; rows are never deleted.
 | W-033 | kernel | execve silently truncated arguments: each argv/env string cut at 4096 bytes, entries past 256 dropped | done | - | #17 | Both arches now copy argv/envp in whole (exec_args in sys/kern/kern_exec.c) up to EXEC_ARG_MAX (128 KB, = ARG_MAX) and fail E2BIG/EFAULT beyond it. bmake's 15 KB `sh -c` link lines for libbearssl/libcss lost their -o, so ld wrote a.out and exited 0 |
 | W-034 | ubixfs | New files on aarch64 show an mtime from boot time, not the current time | todo | - | - | Seen during the W-032 build (ls -l showed 20:24 for files written at 23:26); not investigated |
 | W-035 | self-host | Parallel kernel builds: one bmake target per kernel object so -j works | done | - | #18 | x86_64 kernel recipe also moved off recipe-time find and the obj/sys/*.o link glob (both break under the in-OS shell) |
-| W-036 | self-host | Block I/O: 4 MB hashed buffer cache, multi-sector UbixFS block I/O, batched virtio-blk on both arches | done | - | TBD | aarch64 in-OS clean kernel build -j4: ~32 min -> 9.6 min |
-| W-037 | kernel | poll/select ignored pipes and signals, so bmake -j waited its 5 s poll timeout about twice per job | done | - | TBD | 20 trivial jobs: -j1 204 s -> 2 s, -j4 52 s -> 3 s |
+| W-036 | self-host | Block I/O: 4 MB hashed buffer cache, multi-sector UbixFS block I/O, batched virtio-blk on both arches | done | - | #19 | aarch64 in-OS clean kernel build -j4: ~32 min -> 9.6 min |
+| W-037 | kernel | poll/select ignored pipes and signals, so bmake -j waited its 5 s poll timeout about twice per job | done | - | #19 | 20 trivial jobs: -j1 204 s -> 2 s, -j4 52 s -> 3 s |
 | W-038 | kernel | setitimer/getitimer are stubs (no SIGALRM ever fires) | todo | - | - | sys/posix/gen_calls.c; found writing the W-037 tests |
 | W-039 | vfs | Global VFS lock + uncached path lookups serialise parallel compiles (open/readlink/close dominate) | todo | - | - | In-OS -j4 compiles of different files run no faster than sequential. Needs a name/lookup cache and/or a decoded-block cache in UbixFS; plan first |
 
