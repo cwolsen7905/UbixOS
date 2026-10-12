@@ -13,7 +13,7 @@ Every lane updates its row in the same PR; rows are never deleted.
 | W-004 | standards | Engineering standards, C-world gate suite (tools/check) and CI rewrite | done | - | #7 | Merged 2026-10-11 |
 | W-005 | identity | Add identity direction document (proposal) | done | - | #8 | docs/design/identity.md; the ideas themselves are separate rows |
 | W-006 | docs | Bring architecture docs and DEBUG.md up to date for 64-bit master | done | - | #9 | ARCHITECTURE.md itself still needs its 64-bit rewrite (separate row) |
-| W-007 | self-host | Self-hosting: rebuild world and kernel inside UbixOS with Clang/LLVM + lld | doing | - | - | Plan: docs/design/self-hosting-plan.md. /usr/src/bin builds in-OS on aarch64 (#10). aarch64: the kernel builds in-OS (bmake -j4, 4 vCPUs) and the self-built kernel boots and passes sigtest/vfstest (with W-033, W-035). x86_64 kernel now builds with clang/lld (#18); in-OS x86_64 build compiles all objects, link not yet confirmed |
+| W-007 | self-host | Self-hosting: rebuild world and kernel inside UbixOS with Clang/LLVM + lld | doing | - | - | Plan: docs/design/self-hosting-plan.md. /usr/src/bin builds in-OS on aarch64 (#10). aarch64: the kernel builds in-OS (bmake -j4, 4 vCPUs) and the self-built kernel boots and passes sigtest/vfstest (with W-033, W-035). x86_64 too: the kernel builds in-OS (clang/lld, #18; thread fix W-040) and the self-built kernel boots and passes sigtest/vfstest |
 | W-008 | self-host | x86_64 /usr/src/bin build inside UbixOS | todo | - | - | Follow-up from #10; slow under TCG |
 | W-009 | kernel | errno translation at the POSIX boundary (FreeBSD errno numbers vs musl Linux values: EAGAIN, ELOOP, ENAMETOOLONG, ...) | todo | - | - | Follow-up from #10 |
 | W-010 | userland | Add tee to the world | todo | - | - | Follow-up from #10 |
@@ -46,6 +46,8 @@ Every lane updates its row in the same PR; rows are never deleted.
 | W-037 | kernel | poll/select ignored pipes and signals, so bmake -j waited its 5 s poll timeout about twice per job | done | - | #19 | 20 trivial jobs: -j1 204 s -> 2 s, -j4 52 s -> 3 s |
 | W-038 | kernel | setitimer/getitimer are stubs (no SIGALRM ever fires) | todo | - | - | sys/posix/gen_calls.c; found writing the W-037 tests |
 | W-039 | vfs | Global VFS lock + uncached path lookups serialise parallel compiles (open/readlink/close dominate) | todo | - | - | In-OS -j4 compiles of different files run no faster than sequential. Needs a name/lookup cache and/or a decoded-block cache in UbixFS; plan first |
+| W-040 | kernel | x86_64 threads each kept a private mmap/brk cursor, so threads mapped over each other (ld.lld crashed in parallelFor) | done | - | #20 | Shared cursor on the thread-group leader under a lock, as aarch64 |
+| W-041 | kernel | x86_64 user faults end only the faulting thread and never deliver SIGSEGV (no handler, thread group lingers) | todo | - | - | aarch64 delivers SIGSEGV; sys/arch/x86_64/kern/idt.c. A crashed multi-threaded ld.lld left bmake waiting forever |
 
 ## Notes
 
