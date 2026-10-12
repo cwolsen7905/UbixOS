@@ -610,25 +610,38 @@ X86_64_KERNEL_OBJS = \
 	${X86_64_GENERIC_SRCS:T:R:@_o@${OBJ_DIR}/obj/sys/${_o}.o@} \
 	${UBIXFS_KERN_SRCS:T:R:@_o@${OBJ_DIR}/obj/sys/${_o}.o@}
 
+# x86_64 kernel toolchain.  The kernel is built with the same clang + ld.lld on
+# the host and in-OS (there is no gcc inside UbixOS), as aarch64 is.
+# X86_64_KTOOLCHAIN=gnu selects the x86_64-elf- GNU cross toolchain on the host.
+.if defined(X86_64_KTOOLCHAIN) && ${X86_64_KTOOLCHAIN} == "gnu"
+X86_64_KCC      = ${CROSS_PREFIX}gcc
+X86_64_KCCFLAGS =
+X86_64_KLD      = ${CROSS_PREFIX}ld
+.else
+X86_64_KCC      = ${KERN_CC}
+X86_64_KCCFLAGS = ${KERN_CCFLAGS}
+X86_64_KLD      = ${LD}
+.endif
+
 # Per-object targets for `bmake -j` (see AARCH64_COMPILE_OBJS).
 .if ${_ARCH} == "x86_64"
 .for f in ${X86_64_ARCH_ASM_SRCS}
 ${OBJ_DIR}/obj/sys/${f:T:R}.o: .PHONY kernel-objdir
-	@sh ${CURDIR}/tools/kbuild-cc.sh "${CROSS_PREFIX}gcc [asm] " ${.TARGET} ${CURDIR}/${f} ${CROSS_PREFIX}gcc ${X86_64_KCFLAGS}
+	@sh ${CURDIR}/tools/kbuild-cc.sh "${X86_64_KCC} [asm] " ${.TARGET} ${CURDIR}/${f} ${X86_64_KCC} ${X86_64_KCCFLAGS} ${X86_64_KCFLAGS}
 .endfor
 .for f in ${X86_64_ARCH_C_SRCS} ${X86_64_GENERIC_SRCS}
 ${OBJ_DIR}/obj/sys/${f:T:R}.o: .PHONY kernel-objdir
-	@sh ${CURDIR}/tools/kbuild-cc.sh "${CROSS_PREFIX}gcc [c]   " ${.TARGET} ${CURDIR}/${f} ${CROSS_PREFIX}gcc ${X86_64_KCFLAGS} -std=c99
+	@sh ${CURDIR}/tools/kbuild-cc.sh "${X86_64_KCC} [c]   " ${.TARGET} ${CURDIR}/${f} ${X86_64_KCC} ${X86_64_KCCFLAGS} ${X86_64_KCFLAGS} -std=c99
 .endfor
 .for f in ${UBIXFS_KERN_SRCS}
 ${OBJ_DIR}/obj/sys/${f:T:R}.o: .PHONY kernel-objdir
-	@sh ${CURDIR}/tools/kbuild-cc.sh "${CROSS_PREFIX}gcc [ubfs]" ${.TARGET} ${CURDIR}/${f} ${CROSS_PREFIX}gcc ${X86_64_KCFLAGS} ${UBIXFS_KERN_INCS} -std=c99
+	@sh ${CURDIR}/tools/kbuild-cc.sh "${X86_64_KCC} [ubfs]" ${.TARGET} ${CURDIR}/${f} ${X86_64_KCC} ${X86_64_KCCFLAGS} ${X86_64_KCFLAGS} ${UBIXFS_KERN_INCS} -std=c99
 .endfor
 .endif
 
 kernel-x86_64: ${X86_64_KERNEL_OBJS}
 	@mkdir -p ${OBJ_DIR}/boot ${OBJ_DIR}/obj/sys
-	${CROSS_PREFIX}ld -T ${CURDIR}/sys/compile/ldscript.x86_64 -o ${OBJ_DIR}/boot/kernel ${X86_64_KERNEL_OBJS}
+	${X86_64_KLD} -T ${CURDIR}/sys/compile/ldscript.x86_64 -o ${OBJ_DIR}/boot/kernel ${X86_64_KERNEL_OBJS}
 	@echo "x86_64 bring-up kernel linked: ${OBJ_DIR}/boot/kernel"
 
 # Graphical x86_64 run: a std-VGA window (the desktop framebuffer views draws
