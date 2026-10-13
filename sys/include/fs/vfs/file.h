@@ -93,7 +93,7 @@ typedef struct userFileDescriptorStruct
 
 struct kdirent
 {
-	u_int32_t d_ino;
+	u_int64_t d_ino;
 	u_int8_t d_type;
 	char d_name[256];
 };

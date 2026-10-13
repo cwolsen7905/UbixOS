@@ -671,7 +671,7 @@ static int ubfs_vfs_open_locked(const char *path, fileDescriptor_t *fd)
 	 * regular file and `ls DIR` would list the dir as a single file. */
 	if (ubfs_fs_getattr(&m->fs, obj, &in) == 0)
 	{
-		fd->size = (u_int32_t)in.size;
+		fd->size = (in.size > 0xFFFFFFFFu) ? 0xFFFFFFFFu : (u_int32_t)in.size;
 		fd->inode.u.ufs2_i.di_mode = (u_int16_t)in.mode;
 		fd->inode.u.ufs2_i.di_nlink = (int16_t)in.nlink;
 		fd->inode.u.ufs2_i.di_uid = (u_int32_t)in.uid;
@@ -734,6 +734,7 @@ static int ubfs_vfs_read(fileDescriptor_t *fd, char *data, off_t offset, long si
 static int ubfs_vfs_write_locked(fileDescriptor_t *fd, char *data, off_t offset, long size)
 {
 	struct ubfs_file *f;
+	uint64_t end;
 
 	if (fd == 0 || fd->res == 0)
 		return (-1);
@@ -747,8 +748,10 @@ static int ubfs_vfs_write_locked(fileDescriptor_t *fd, char *data, off_t offset,
 	if (ubfs_commit(f->m) < 0)
 		return (-1);
 
-	if ((u_int32_t)(offset + size) > fd->size)
-		fd->size = (u_int32_t)(offset + size);
+	/* fd->size is 32-bit by VFS contract: compare in 64 bits, saturate on store. */
+	end = (uint64_t)offset + (uint64_t)size;
+	if (end > fd->size)
+		fd->size = (end > 0xFFFFFFFFu) ? 0xFFFFFFFFu : (u_int32_t)end;
 	return ((int)size);
 }
 
@@ -869,7 +872,7 @@ static int ubfs_vfs_readdir_locked(kDIR_t *dir, struct kdirent *ent)
 	if (d->dots == 0)
 	{
 		d->dots = 1;
-		ent->d_ino = (u_int32_t)d->dirobj;
+		ent->d_ino = d->dirobj;
 		ent->d_type = KDT_DIR;
 		strncpy(ent->d_name, ".", sizeof(ent->d_name) - 1);
 		ent->d_name[sizeof(ent->d_name) - 1] = '\0';
@@ -878,7 +881,7 @@ static int ubfs_vfs_readdir_locked(kDIR_t *dir, struct kdirent *ent)
 	if (d->dots == 1)
 	{
 		d->dots = 2;
-		ent->d_ino = (u_int32_t)d->parent;
+		ent->d_ino = d->parent;
 		ent->d_type = KDT_DIR;
 		strncpy(ent->d_name, "..", sizeof(ent->d_name) - 1);
 		ent->d_name[sizeof(ent->d_name) - 1] = '\0';
@@ -896,7 +899,7 @@ static int ubfs_vfs_readdir_locked(kDIR_t *dir, struct kdirent *ent)
 			return (-1);
 		if (de.obj == 0)
 			continue; /* freed slot */
-		ent->d_ino = (u_int32_t)de.obj;
+		ent->d_ino = de.obj;
 		ent->d_type = (de.type == UBFS_DT_DIR) ? KDT_DIR : KDT_REG;
 		strncpy(ent->d_name, de.name, sizeof(ent->d_name) - 1);
 		ent->d_name[sizeof(ent->d_name) - 1] = '\0';
