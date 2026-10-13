@@ -1042,8 +1042,14 @@ void sched_stop(kTask_t *t, int sig)
 	if (t->parent != NULL && t->parent->state != DEAD && t->parent->state != ZOMBIE)
 	{
 		t->parent->td.sig_pending |= (1u << (SIGCHLD - 1));
-		if (t->parent->state != READY)
+		/* Wake the parent only if it is asleep: a RUNNING parent (on another
+		 * CPU) must never be put on a run queue — it would be dispatched twice.
+		 * A running parent sees the SIGCHLD on its next return to user mode. */
+		if (t->parent->state == WAIT || t->parent->state == INTERRUPTIBLE ||
+		    t->parent->state == UNINTERRUPTIBLE)
 		{
+			t->parent->wait_chan = NULL;
+			callout_stop(&t->parent->sleep_callout);
 			t->parent->state = READY;
 			rq_enqueue_locked(t->parent);
 		}

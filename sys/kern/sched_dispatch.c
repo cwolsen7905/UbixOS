@@ -266,12 +266,18 @@ static void sched_common(int preheld)
 	t = taskList;
 	while (t != 0x0)
 	{
-		/* A task still marked on-CPU is mid-switch on another core: its kernel
-		 * stack is live until the context save completes.  Transitioning it to
-		 * DEAD here would let wait_find_child (or the DEAD branch below) free
-		 * that stack out from under the switch.  Skip it — its on_cpu clears
-		 * microseconds from now and the next tick reaps it. */
-		if (t->on_cpu && t != _current)
+		/* A task still marked on-CPU is running or mid-switch: its kernel stack
+		 * is live until the context save completes.  Transitioning it to DEAD
+		 * here would let wait_find_child (or the DEAD branch below) free that
+		 * stack out from under the switch.  Skip it — its on_cpu clears
+		 * microseconds from now and the next pass reaps it.
+		 *
+		 * This includes _current: an exiting task runs this reaper from its own
+		 * final sched() call.  Reaping it then posted SIGCHLD while it was still
+		 * on-CPU, so the parent's wait4 refused it (on_cpu set) and returned 0;
+		 * a shell that had already consumed that SIGCHLD then slept in
+		 * sigsuspend forever. */
+		if (t->on_cpu)
 		{
 			t = t->next;
 			continue;
