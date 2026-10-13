@@ -285,6 +285,44 @@ static int close_fdslot(struct thread *td, int fd)
 	}
 }
 
+/**
+ * Close every descriptor of an exiting process (endTask, last thread of its
+ * group; rfork(RFMEM) siblings share the table).
+ *
+ * Regular files, directories, pipes and tty fds go through close_fdslot, the
+ * same teardown dup2 uses: a tty fd only frees its per-process slot and never
+ * touches the shared device.  Sockets go through sys_close, whose fileops
+ * close is refcount-safe across fork.  A pty master is left alone, as before.
+ *
+ * Regular files are not tagged FD_TYPE_FILE (sys_open leaves fd_type 0), so
+ * the old exit loop, which closed only FILE, PIPE and SOCKET fds, skipped them:
+ * every process leaked each file it left open (the `> /dev/null` of every
+ * shell command) and every tty fd slot.
+ *
+ * @param td the exiting task's thread
+ */
+void fd_close_on_exit(struct thread *td)
+{
+	int fd;
+
+	for (fd = 0; fd < O_FILES; fd++)
+	{
+		struct file *f = (struct file *)td->o_files[fd];
+
+		if (f == NULL || f->fd_type == FD_TYPE_PTMASTER)
+			continue;
+		if (f->fd_type == FD_TYPE_SOCKET)
+		{
+			struct sys_close_args ca;
+
+			ca.fd = fd;
+			sys_close(td, &ca);
+		}
+		else
+			close_fdslot(td, fd);
+	}
+}
+
 static int duplicate_descriptor(struct thread *td, int from, int to)
 {
 	struct file *fp = NULL;

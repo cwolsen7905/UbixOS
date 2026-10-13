@@ -59,10 +59,6 @@ long sys_vesa_modes()
 {
 	return -1;
 }
-long vmm_clean_virtual_space()
-{
-	return -1;
-}
 
 /* mmap/mmap2/brk are intercepted by x86_64_syscall (which returns the 64-bit VA
  * directly — td_retval is 32-bit), so these table entries are unreached; present

@@ -825,11 +825,11 @@ static int aarch64_exec_replace_elf(struct exec_args *ea)
 
 /**
  * Scan the current task's children for an exited one (any if @want_pid == -1);
- * if found, collect it (splice from taskList, move to the del list, decrement
- * the child count) and return it.  Runs under schedulerSpinLock: taskList and
- * delList are shared with every CPU (fork inserts at the head, the sched()
- * reaper unlinks orphans and moves ZOMBIE->DEAD, the system task pops delList),
- * and masking IRQs only excludes this CPU.  Unlinking without the lock lost
+ * if found, collect it (splice from taskList and the pid hash, decrement the
+ * child count) and return it; the caller then owns it, reads it and frees it
+ * with sched_free_task.  Runs under schedulerSpinLock: taskList is shared with
+ * every CPU (fork inserts at the head, the sched() reaper unlinks orphans and
+ * moves ZOMBIE->DEAD), and masking IRQs only excludes this CPU.  Unlinking without the lock lost
  * concurrent updates — a forked child dropped off taskList, so its exit was
  * never reaped and its parent waited forever.
  *
@@ -869,7 +869,6 @@ static kTask_t *find_and_reap_child(int want_pid, int *have_child)
 			if (t->next != NULL)
 				t->next->prev = t->prev;
 			pid_hash_remove(t);
-			sched_addDelTask(t);
 			if (_current->children > 0)
 				_current->children--;
 			found = t;
@@ -938,10 +937,14 @@ int aarch64_wait4(int want_pid, int *status, int options)
 			/* Guard against pidStatus(pid) (ubix_api), which shares SVC #7 with
 			 * wait4 but passes only x0 — x1 (status) is garbage; only write a
 			 * pointer that is in the user VA range. */
+			int pid = (int)child->id;
+
 			if (status != NULL && (uintptr_t)status >= 0x100000000UL)
 				*status = child->exit_signal ? (int)(child->exit_signal & 0x7f)       /* W_SIGNALED */
 				                             : (int)((child->exit_code & 0xff) << 8); /* W_EXITED */
-			return ((int)child->id);
+			sched_free_task(child);
+			sched_free_deleted(); /* orphans the scheduler reaper collected */
+			return (pid);
 		}
 
 		/* WUNTRACED: report a child that stopped (Ctrl-Z / SIGSTOP) without
