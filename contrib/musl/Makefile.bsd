@@ -87,6 +87,9 @@ _ALL  != cd ${MUSL_SRC} && for d in ${_DIRS}; do \
 			[ -f "$$f" ] && echo "$$f"; \
 		done; \
 	done; true
+.if empty(_ALL)
+.error musl: no sources found under ${MUSL_SRC}/src (is contrib/musl staged in full?)
+.endif
 ARCH_SRCS := ${_ALL:M*/${ARCH}/*}
 BASE_SRCS := ${_ALL:N*/${ARCH}/*}
 .for s in ${ARCH_SRCS}
