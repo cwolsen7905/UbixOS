@@ -671,7 +671,7 @@ static int ubfs_vfs_open_locked(const char *path, fileDescriptor_t *fd)
 	 * regular file and `ls DIR` would list the dir as a single file. */
 	if (ubfs_fs_getattr(&m->fs, obj, &in) == 0)
 	{
-		fd->size = (u_int32_t)in.size;
+		fd->size = (in.size > 0xFFFFFFFFu) ? 0xFFFFFFFFu : (u_int32_t)in.size;
 		fd->inode.u.ufs2_i.di_mode = (u_int16_t)in.mode;
 		fd->inode.u.ufs2_i.di_nlink = (int16_t)in.nlink;
 		fd->inode.u.ufs2_i.di_uid = (u_int32_t)in.uid;
@@ -734,6 +734,7 @@ static int ubfs_vfs_read(fileDescriptor_t *fd, char *data, off_t offset, long si
 static int ubfs_vfs_write_locked(fileDescriptor_t *fd, char *data, off_t offset, long size)
 {
 	struct ubfs_file *f;
+	uint64_t end;
 
 	if (fd == 0 || fd->res == 0)
 		return (-1);
@@ -747,8 +748,10 @@ static int ubfs_vfs_write_locked(fileDescriptor_t *fd, char *data, off_t offset,
 	if (ubfs_commit(f->m) < 0)
 		return (-1);
 
-	if ((u_int32_t)(offset + size) > fd->size)
-		fd->size = (u_int32_t)(offset + size);
+	/* fd->size is 32-bit by VFS contract: compare in 64 bits, saturate on store. */
+	end = (uint64_t)offset + (uint64_t)size;
+	if (end > fd->size)
+		fd->size = (end > 0xFFFFFFFFu) ? 0xFFFFFFFFu : (u_int32_t)end;
 	return ((int)size);
 }
 
