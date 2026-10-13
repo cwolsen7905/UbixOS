@@ -483,12 +483,12 @@ static int ubfs_follow_symlink(struct ubfs_mount *m, uint64_t *obj, const char *
 	int ret = -1; /* falling out of the loop means a cycle */
 
 	/* One allocation for the three path buffers: a kernel stack is 8 KB. */
-	buf = (char *)kmalloc(3 * UBFS_SYMLINK_BUF);
+	buf = (char *)kmalloc((size_t)3 * UBFS_SYMLINK_BUF);
 	if (buf == 0)
 		return (-1);
 	cur = buf;
-	target = buf + UBFS_SYMLINK_BUF;
-	dir = buf + 2 * UBFS_SYMLINK_BUF;
+	target = buf + (size_t)UBFS_SYMLINK_BUF;
+	dir = buf + (size_t)2 * UBFS_SYMLINK_BUF;
 
 	snprintf(cur, UBFS_SYMLINK_BUF, "%s", path);
 	for (hops = 0; hops < 8; hops++)
