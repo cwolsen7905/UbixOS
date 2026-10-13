@@ -700,6 +700,54 @@ kTask_t *sched_getDelTask()
 	return (tmpTask);
 }
 
+/**
+ * Free a collected task: its kernel stack and the task struct.
+ *
+ * The caller must own @t outright: it is off taskList, the pid hash and every
+ * run queue, and no CPU is running on its kernel stack (on_cpu clear).  wait4
+ * collects a child that way; sched_free_deleted drains the orphans the
+ * scheduler queued on delList.  Thread siblings keep @t as their parent
+ * (sched_reparent_children skips the same tgid), so those pointers are cleared
+ * first; a task with no parent is collected by the scheduler reaper.
+ *
+ * Until this existed nothing freed a collected task (the i386 system task did,
+ * and went with i386), so every process leaked about 80 KB of kernel heap.
+ *
+ * @param t the task to free
+ */
+void sched_free_task(kTask_t *t)
+{
+	u_int32_t flags;
+	kTask_t *s;
+
+	if (t == NULL)
+		return;
+	save_flags(flags);
+	cli();
+	spinLock(&schedulerSpinLock);
+	for (s = taskList; s != NULL; s = s->next)
+		if (s->parent == t)
+			s->parent = NULL;
+	spinUnlock(&schedulerSpinLock);
+	restore_flags(flags);
+
+	if (t->kernelStack != NULL)
+		kfree(t->kernelStack);
+	kfree(t);
+}
+
+/**
+ * Free every task on delList (orphans the scheduler reaper collected).  Called
+ * by wait4 after it has collected its own child, outside the scheduler lock.
+ */
+void sched_free_deleted(void)
+{
+	kTask_t *t;
+
+	while ((t = sched_getDelTask()) != NULL)
+		sched_free_task(t);
+}
+
 kTask_t *schedFindTask(u_int32_t id)
 {
 	kTask_t *t = pid_hash[id & (SCHED_HASH_BUCKETS - 1)];

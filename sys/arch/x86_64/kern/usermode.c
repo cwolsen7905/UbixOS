@@ -67,6 +67,7 @@ static struct tss64 g_tss[MAXCPU]; /* one TSS per CPU (SMP: each CPU's own rsp0)
 /* Per-CPU ring-0 stack the CPU loads (TSS.rsp0) when an interrupt fires while
  * running ring-3 code, before a per-task kernel stack drives rsp0 (set_user_kstack). */
 static u8 g_ring0_stack[MAXCPU][16384] __attribute__((aligned(16)));
+static u64 g_kernel_pml4; /* boot PML4 (captured in x86_64_usermode_init): exiting tasks switch to it */
 
 /**
  * Write CPU @cpu's 16-byte 64-bit TSS system descriptor into its two GDT slots.
@@ -122,6 +123,10 @@ void x86_64_usermode_init(void)
 
 	/* BSP (cpu 0) loads its own TSS. */
 	__asm__ __volatile__("ltr %0" : : "r"(TSS_SEL(0)));
+
+	/* Still on the boot page tables: remember them for vmm_clean_virtual_space. */
+	__asm__ __volatile__("mov %%cr3, %0" : "=r"(g_kernel_pml4));
+	g_kernel_pml4 &= ~0xFFFUL; /* drop the PCD/PWT flag bits */
 }
 
 /**
@@ -510,6 +515,32 @@ void x86_64_free_user_space(u64 pml4_phys)
 	}
 	free_page((uintptr_t)(pml4[0] & PTE_ADDR_MASK)); /* the PDPT */
 	free_page(pml4_phys);                            /* the PML4 */
+}
+
+/**
+ * Release the exiting task's user address space (endTask, last thread of its
+ * group).  Switches this CPU to the boot PML4 first, because the space being
+ * freed is the one loaded in CR3, then frees it with x86_64_free_user_space.
+ * md_cr3 is repointed at the boot PML4 so nothing reloads or frees it again.
+ * The task must not return to ring 3 afterwards.
+ *
+ * Until this existed the function was a stub, so every exited x86_64 process
+ * leaked its whole working set and page tables.
+ *
+ * @param addr unused (the i386 start address of the user region)
+ * @return 0
+ */
+int vmm_clean_virtual_space(uintptr_t addr)
+{
+	u64 pml4 = _current->md.md_cr3 & PTE_ADDR_MASK;
+
+	(void)addr;
+	if (pml4 == 0 || g_kernel_pml4 == 0 || pml4 == g_kernel_pml4)
+		return 0;
+	__asm__ __volatile__("mov %0, %%cr3" : : "r"(g_kernel_pml4) : "memory");
+	_current->md.md_cr3 = g_kernel_pml4;
+	x86_64_free_user_space(pml4);
+	return 0;
 }
 
 /** Set the kernel stack used on the next ring3->ring0 entry: the TSS rsp0 (for

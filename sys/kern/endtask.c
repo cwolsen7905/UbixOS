@@ -99,27 +99,14 @@ void endTask(pidType pid)
 	 */
 	if (sched_tgid_others_alive(_current->tgid, _current->id) == 0)
 	{
-		/* Close the task's FILE, PIPE and SOCKET fds (same policy as aarch64's endTask).
-		 * Regular files are shared with fork children through the descriptor's
-		 * dup count (fork_copy_fdtable), so this only really closes the last user;
-		 * an exited process used to leak every file it left open.
-		 * A reader blocked on this task's pipe write end sees EOF when the writer
-		 * exits (`cmd | wc -l` hung forever without it), and a socket's lwIP
-		 * netconn is released (socket_fo_close is refcount-safe across fork).
-		 * tty/pty fds are shared devices without a refcount — left alone.
-		 * Last thread of the group only: rfork(RFMEM) siblings share the table. */
-		for (int fd = 0; fd < O_FILES; fd++)
-		{
-			struct file *f = (struct file *)_current->td.o_files[fd];
-
-			if (f != 0 &&
-			    (f->fd_type == FD_TYPE_PIPE || f->fd_type == FD_TYPE_SOCKET || f->fd_type == FD_TYPE_FILE))
-			{
-				struct sys_close_args ca;
-				ca.fd = fd;
-				sys_close(&_current->td, &ca);
-			}
-		}
+		/* Close the task's fds (fd_close_on_exit, shared with the aarch64
+		 * endTask).  Regular files are shared with fork children through the
+		 * descriptor's dup count (fork_copy_fdtable), so this only really closes
+		 * the last user.  A reader blocked on this task's pipe write end sees EOF
+		 * when the writer exits (`cmd | wc -l` hung forever without it), and a
+		 * socket's lwIP netconn is released.  Last thread of the group only:
+		 * rfork(RFMEM) siblings share the table. */
+		fd_close_on_exit(&_current->td);
 
 		/* Free the demand-fault VMA tree (+ its backing file fds) before reclaiming
 		 * the pages.  A demand-loaded image (execve) leaves file-backed VMAs holding

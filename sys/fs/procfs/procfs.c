@@ -572,7 +572,9 @@ static int procfs_build_meminfo(char *buf, int bufsz)
 	u_int32_t total_pages = numPages;
 	u_int32_t free_pages = systemVitals ? systemVitals->freePages : 0;
 	u_int32_t kb_per_page = PAGE_SIZE / 1024u;
+	u_int32_t heap_used, heap_blocks, heap_free;
 
+	kmalloc_stats(&heap_used, &heap_blocks, &heap_free);
 	return snprintf(buf,
 	                bufsz,
 	                "MemTotal: %8u kB\n"
@@ -581,7 +583,8 @@ static int procfs_build_meminfo(char *buf, int bufsz)
 	                "PageSize: %8u bytes\n"
 	                "Pages:    total %u free %u\n"
 	                "FileCache: %u pages\n"
-	                "OrphanPages: %u\n",
+	                "OrphanPages: %u\n"
+	                "KernHeap: used %u kB in %u blocks, free %u kB\n",
 	                total_pages * kb_per_page,
 	                free_pages * kb_per_page,
 	                (total_pages - free_pages) * kb_per_page,
@@ -589,7 +592,10 @@ static int procfs_build_meminfo(char *buf, int bufsz)
 	                total_pages,
 	                free_pages,
 	                vm_filecache_page_count(),
-	                vmm_audit_orphan_pages());
+	                vmm_audit_orphan_pages(),
+	                heap_used / 1024u,
+	                heap_blocks,
+	                heap_free / 1024u);
 }
 
 /**

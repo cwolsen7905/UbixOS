@@ -32,24 +32,26 @@
 #include <sys/types.h>
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
-#define sysID      -2
-#define MALLOC_ALIGN_SIZE  32
-#define MALLOC_ALIGN(size) (size + ((((size) % (MALLOC_ALIGN_SIZE)) == 0)? 0 : ((MALLOC_ALIGN_SIZE) - ((size) % (MALLOC_ALIGN_SIZE)))))
+#define sysID -2
+#define MALLOC_ALIGN_SIZE 32
+#define MALLOC_ALIGN(size)                                                                                             \
+	(size + ((((size) % (MALLOC_ALIGN_SIZE)) == 0) ? 0 : ((MALLOC_ALIGN_SIZE) - ((size) % (MALLOC_ALIGN_SIZE)))))
 
-  struct memDescriptor {
-      struct memDescriptor *prev;        //4
-      struct memDescriptor *next;        //4
-      void *baseAddr;    //4
-      u_int32_t limit;        //4
-      /*u_int8_t                status;       //1  */
-      /*char                 reserved[11]; //11 */
-  };
+	struct memDescriptor
+	{
+		struct memDescriptor *prev; // 4
+		struct memDescriptor *next; // 4
+		void *baseAddr;             // 4
+		u_int32_t limit;            // 4
+	};
 
-  void kfree(void *baseAddr);
-  void *kmalloc(u_int32_t len);
+	void kfree(void *baseAddr);
+	void *kmalloc(u_int32_t len);
+	void kmalloc_stats(u_int32_t *used, u_int32_t *blocks, u_int32_t *avail); /* /proc/meminfo */
 
 #ifdef __cplusplus
 }
