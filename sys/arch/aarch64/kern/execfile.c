@@ -826,9 +826,12 @@ static int aarch64_exec_replace_elf(struct exec_args *ea)
 /**
  * Scan the current task's children for an exited one (any if @want_pid == -1);
  * if found, collect it (splice from taskList, move to the del list, decrement
- * the child count) and return it.  Runs with IRQs masked so it is atomic with
- * respect to the timer-driven sched() reaper (which may transition a child
- * ZOMBIE->DEAD + notify us concurrently on a different scheduling quantum).
+ * the child count) and return it.  Runs under schedulerSpinLock: taskList and
+ * delList are shared with every CPU (fork inserts at the head, the sched()
+ * reaper unlinks orphans and moves ZOMBIE->DEAD, the system task pops delList),
+ * and masking IRQs only excludes this CPU.  Unlinking without the lock lost
+ * concurrent updates — a forked child dropped off taskList, so its exit was
+ * never reaped and its parent waited forever.
  *
  * @param have_child  out: set non-zero if a matching child exists at all (used
  *                    to distinguish "no such child" -> ECHILD from "not yet").
@@ -842,6 +845,7 @@ static kTask_t *find_and_reap_child(int want_pid, int *have_child)
 	*have_child = 0;
 	save_flags(flags);
 	cli();
+	spinLock(&schedulerSpinLock);
 	for (t = taskList; t != NULL; t = t->next)
 	{
 		if (t->parent != _current)
@@ -872,6 +876,7 @@ static kTask_t *find_and_reap_child(int want_pid, int *have_child)
 			break;
 		}
 	}
+	spinUnlock(&schedulerSpinLock);
 	restore_flags(flags);
 	return (found);
 }
@@ -902,6 +907,7 @@ static kTask_t *find_stopped_child(int want_pid)
 
 	save_flags(flags);
 	cli();
+	spinLock(&schedulerSpinLock);
 	for (t = taskList; t != NULL; t = t->next)
 	{
 		if (t->parent != _current)
@@ -914,6 +920,7 @@ static kTask_t *find_stopped_child(int want_pid)
 			break;
 		}
 	}
+	spinUnlock(&schedulerSpinLock);
 	restore_flags(flags);
 	return (found);
 }

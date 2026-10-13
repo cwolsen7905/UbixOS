@@ -672,22 +672,40 @@ int sys_pidStatus(struct thread *td, struct sys_pidStatus_args *args)
 #define W_EXITED(code) ((code) << 8)
 #define W_SIGNALED(sig) ((sig) & 0x7f)
 
-/*
+/**
  * Find a direct child of _current that has exited or (if WUNTRACED) stopped.
  * When a DEAD child is found it is spliced from taskList and queued for
  * freeing — the caller reads child->id before the system task reclaims it.
+ *
+ * Runs under schedulerSpinLock: taskList and delList are shared with every
+ * CPU (fork inserts at the head, the reaper unlinks orphans, the system task
+ * pops delList), and cli() only masks this CPU.  Unlinking without the lock
+ * lost concurrent updates — a forked child dropped off taskList, so its exit
+ * was never reaped and its parent waited for SIGCHLD forever.
+ *
+ * @param want_pid  pid to collect, or -1 for any child
+ * @param options   WUNTRACED to also report a stopped child
+ * @param wstatus   out: wait status of the collected child
+ * @param have_child out: non-zero if a matching child exists at all
+ * @return the collected (or stopped) child, or NULL if none is ready
  */
-static kTask_t *wait_find_child(int want_pid, int options, int *wstatus)
+static kTask_t *wait_find_child(int want_pid, int options, int *wstatus, int *have_child)
 {
-	kTask_t *t;
+	kTask_t *t, *found = NULL;
 	int untraced = options & WUNTRACED;
+	u_int32_t flags;
 
+	*have_child = 0;
+	save_flags(flags);
+	cli();
+	spinLock(&schedulerSpinLock);
 	for (t = taskList; t != NULL; t = t->next)
 	{
 		if (t->parent != _current)
 			continue;
 		if (want_pid != -1 && (int)t->id != want_pid)
 			continue;
+		*have_child = 1;
 		/*
 		 * Accept both DEAD and ZOMBIE: with two-phase exit, sched()
 		 * transitions ZOMBIE→DEAD asynchronously.  If the parent calls
@@ -719,88 +737,55 @@ static kTask_t *wait_find_child(int want_pid, int options, int *wstatus)
 			sched_addDelTask(t);
 			if (_current->children > 0)
 				_current->children--;
-			return (t);
+			found = t;
+			break;
 		}
 		if (untraced && t->state == STOPPED && t->t_stopped_sig != 0)
 		{
 			if (wstatus)
 				*wstatus = W_STOPPED(t->t_stopped_sig);
 			t->t_stopped_sig = 0;
-			return (t);
+			found = t;
+			break;
 		}
 	}
-	return (NULL);
+	spinUnlock(&schedulerSpinLock);
+	restore_flags(flags);
+	return (found);
 }
 
 int sys_wait4(struct thread *td, struct sys_wait4_args *args)
 {
 	kTask_t *child;
 	int wstatus = 0;
+	int have_child;
 
 	/*
-	 * ECHILD check.  For wait-any (pid == -1) we trust children counter
-	 * but also scan taskList for uncollected dead/zombie children whose
-	 * counter decrement may have raced.  For a specific pid we verify the
-	 * target exists and is our direct child.
+	 * Scan for a finished child; with none ready, ECHILD if no matching child
+	 * exists at all, 0 for WNOHANG, else sleep in sched_wait_child() until one
+	 * exits/stops or a signal arrives.  The ECHILD test is repeated on every
+	 * pass (a child can be reparented away while we sleep), and the sleep's
+	 * predicate runs under the scheduler lock (the same lock the ZOMBIE
+	 * handler takes), so an exit that lands between the scan and the sleep is
+	 * not lost.
 	 */
-	if (args->pid == -1)
+	for (;;)
 	{
-		if (_current->children <= 0)
-		{
-			kTask_t *t;
-			int found = 0;
-			for (t = taskList; t != NULL; t = t->next)
-			{
-				if (t->parent == _current)
-				{
-					found = 1;
-					break;
-				}
-			}
-			if (!found)
-			{
-				td->td_retval[0] = -ECHILD;
-				return (ECHILD);
-			}
-		}
-	}
-	else
-	{
-		kTask_t *t = schedFindTask((u_int32_t)args->pid);
-		if (t == NULL || t->parent != _current)
+		child = wait_find_child(args->pid, args->options, &wstatus, &have_child);
+		if (child != NULL)
+			break;
+		if (!have_child)
 		{
 			td->td_retval[0] = -ECHILD;
 			return (ECHILD);
 		}
-	}
-
-	if (args->options & WNOHANG)
-	{
-		child = wait_find_child(args->pid, args->options, &wstatus);
-		if (child == NULL)
+		if (args->options & WNOHANG)
 		{
 			td->td_retval[0] = 0;
 			if (args->status)
 				*args->status = 0;
 			return (0);
 		}
-		if (args->status)
-			*args->status = wstatus;
-		td->td_retval[0] = (int)child->id;
-		return (0);
-	}
-
-	/*
-	 * Blocking wait: scan for a finished child, else sleep in sched_wait_child()
-	 * until one exits/stops or a signal arrives.  Its predicate runs under the
-	 * scheduler lock (the same lock the ZOMBIE handler takes), so an exit that
-	 * lands between the scan and the sleep is not lost.
-	 */
-	for (;;)
-	{
-		child = wait_find_child(args->pid, args->options, &wstatus);
-		if (child != NULL)
-			break;
 
 		if (signal_interrupts_wait(td))
 		{
