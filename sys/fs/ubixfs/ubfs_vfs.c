@@ -872,7 +872,7 @@ static int ubfs_vfs_readdir_locked(kDIR_t *dir, struct kdirent *ent)
 	if (d->dots == 0)
 	{
 		d->dots = 1;
-		ent->d_ino = (u_int32_t)d->dirobj;
+		ent->d_ino = d->dirobj;
 		ent->d_type = KDT_DIR;
 		strncpy(ent->d_name, ".", sizeof(ent->d_name) - 1);
 		ent->d_name[sizeof(ent->d_name) - 1] = '\0';
@@ -881,7 +881,7 @@ static int ubfs_vfs_readdir_locked(kDIR_t *dir, struct kdirent *ent)
 	if (d->dots == 1)
 	{
 		d->dots = 2;
-		ent->d_ino = (u_int32_t)d->parent;
+		ent->d_ino = d->parent;
 		ent->d_type = KDT_DIR;
 		strncpy(ent->d_name, "..", sizeof(ent->d_name) - 1);
 		ent->d_name[sizeof(ent->d_name) - 1] = '\0';
@@ -899,7 +899,7 @@ static int ubfs_vfs_readdir_locked(kDIR_t *dir, struct kdirent *ent)
 			return (-1);
 		if (de.obj == 0)
 			continue; /* freed slot */
-		ent->d_ino = (u_int32_t)de.obj;
+		ent->d_ino = de.obj;
 		ent->d_type = (de.type == UBFS_DT_DIR) ? KDT_DIR : KDT_REG;
 		strncpy(ent->d_name, de.name, sizeof(ent->d_name) - 1);
 		ent->d_name[sizeof(ent->d_name) - 1] = '\0';
