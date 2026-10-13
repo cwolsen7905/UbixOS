@@ -264,14 +264,20 @@ static void ubfs_touch_clock(struct ubfs_mount *m)
  * Strip the mount-point prefix from @path so it is relative to the pool root.
  *
  * vfsMakeDir is handed the full path ("/pool/etc") while vfsUnlink/RemDir get an
- * already-relative one ("/etc"); stripping mp->mountPoint handles both (a path
- * that does not start with the prefix is returned unchanged).
+ * already-relative one ("/etc"); stripping mp->mountPoint handles both.  The
+ * prefix only matches on a path-component boundary: with a mount at "/pool",
+ * "/pool" and "/pool/etc" are stripped but "/poolX" is returned unchanged.  A
+ * path that does not start with the prefix, and a root mount "/", are returned
+ * unchanged.
  */
 static const char *pool_relative(struct vfs_mountPoint *mp, const char *path)
 {
 	size_t mlen = strlen(mp->mountPoint);
 
-	if (mlen > 1 && strncmp(path, mp->mountPoint, mlen) == 0)
+	while (mlen > 1 && mp->mountPoint[mlen - 1] == '/')
+		mlen--; /* tolerate a trailing slash on the mount point */
+
+	if (mlen > 1 && strncmp(path, mp->mountPoint, mlen) == 0 && (path[mlen] == '/' || path[mlen] == '\0'))
 	{
 		path += mlen;
 		if (path[0] == '\0')
@@ -455,6 +461,9 @@ static int ubfs_vfs_initfs(struct vfs_mountPoint *mp)
 	return (r);
 }
 
+/** Size of each path buffer used while following a symlink. */
+#define UBFS_SYMLINK_BUF 1024
+
 /**
  * If @obj is a symlink, resolve it to the object it ultimately points at,
  * updating @obj in place.  @path is the (pool-relative) path @obj was reached
@@ -466,47 +475,64 @@ static int ubfs_vfs_initfs(struct vfs_mountPoint *mp)
  */
 static int ubfs_follow_symlink(struct ubfs_mount *m, uint64_t *obj, const char *path)
 {
-	char cur[1024];
-	char target[1024];
+	char *cur;
+	char *target;
+	char *dir;
+	char *buf;
 	int hops;
+	int ret = -1; /* falling out of the loop means a cycle */
 
-	snprintf(cur, sizeof(cur), "%s", path);
+	/* One allocation for the three path buffers: a kernel stack is 8 KB. */
+	buf = (char *)kmalloc(3 * UBFS_SYMLINK_BUF);
+	if (buf == 0)
+		return (-1);
+	cur = buf;
+	target = buf + UBFS_SYMLINK_BUF;
+	dir = buf + 2 * UBFS_SYMLINK_BUF;
+
+	snprintf(cur, UBFS_SYMLINK_BUF, "%s", path);
 	for (hops = 0; hops < 8; hops++)
 	{
 		ubfs_inode_t in;
 		int n;
 
 		if (ubfs_fs_getattr(&m->fs, *obj, &in) < 0)
-			return (0);
+		{
+			ret = 0;
+			break;
+		}
 		if ((in.mode & UBFS_S_IFMT) != UBFS_S_IFLNK)
-			return (0); /* not (or no longer) a link: done */
+		{
+			ret = 0; /* not (or no longer) a link: done */
+			break;
+		}
 
-		n = ubfs_fs_readlink(&m->fs, *obj, target, sizeof(target) - 1);
+		n = ubfs_fs_readlink(&m->fs, *obj, target, UBFS_SYMLINK_BUF - 1);
 		if (n <= 0)
-			return (-1);
+			break;
 		target[n] = '\0';
 
 		if (target[0] == '/')
 		{
-			snprintf(cur, sizeof(cur), "%s", target); /* absolute (pool-relative) */
+			snprintf(cur, UBFS_SYMLINK_BUF, "%s", target); /* absolute (pool-relative) */
 		}
 		else
 		{
 			/* relative: resolve against the directory holding the link */
-			char dir[1024];
 			int i, slash = -1;
-			snprintf(dir, sizeof(dir), "%s", cur);
+			snprintf(dir, UBFS_SYMLINK_BUF, "%s", cur);
 			for (i = 0; dir[i] != '\0'; i++)
 				if (dir[i] == '/')
 					slash = i;
 			dir[slash + 1] = '\0'; /* keep through the final slash (or empty) */
-			snprintf(cur, sizeof(cur), "%s%s", dir, target);
+			snprintf(cur, UBFS_SYMLINK_BUF, "%s%s", dir, target);
 		}
 
 		if (ubfs_fs_lookup(&m->fs, cur, obj) < 0)
-			return (-1); /* dangling */
+			break; /* dangling */
 	}
-	return (-1); /* too many hops: a cycle */
+	kfree(buf);
+	return (ret);
 }
 
 /**
