@@ -1,6 +1,7 @@
 # TODO
 
-Planned work for UbixOS. Confirmed crash/correctness bugs are tracked in [BUGS.md](BUGS.md).
+Planned work for UbixOS. **Current work and backlog are tracked in [docs/WORK.md](docs/WORK.md)** (W-xxx rows);
+this file keeps the older itemised lists (rolled up as W-027). Confirmed crash/correctness bugs are tracked in [BUGS.md](BUGS.md).
 
 ---
 
