@@ -65,7 +65,7 @@ typedef struct fileDescriptor
 	struct fileDescriptor *prev;
 	struct fileDescriptor *next;
 	struct vfs_mountPoint *mp;
-	u_int32_t ino;
+	u_int64_t ino;
 	u_int16_t status;
 	u_int16_t mode;
 	off_t offset;

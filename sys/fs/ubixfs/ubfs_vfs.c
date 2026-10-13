@@ -661,7 +661,7 @@ static int ubfs_vfs_open_locked(const char *path, fileDescriptor_t *fd)
 	openobj_ref(m, obj);
 
 	fd->res = f;
-	fd->ino = (u_int32_t)obj;
+	fd->ino = obj;
 	fd->perms = 0x1;
 
 	/* Populate fd->inode from the on-disk attributes.  The kernel stat path
