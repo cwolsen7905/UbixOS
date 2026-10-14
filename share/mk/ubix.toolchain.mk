@@ -66,7 +66,9 @@ _LLVMBIN ?= ${_LLVM18}/
 _LDPATH  ?= --ld-path=${_LLVM18}/ld.lld
 .else
 _CLANG   ?= clang
-_CLANGXX ?= clang++
+# The in-OS LLVM ships clang only (no clang++ link: the root FS has no
+# symlinks), so select C++ mode with --driver-mode, as clang++ itself does.
+_CLANGXX ?= clang --driver-mode=g++
 _LLVMBIN ?=
 _LDPATH  ?=
 .endif
