@@ -622,6 +622,12 @@ int md_user_mapped(u64 *aspace_root, u64 va)
 	return x86_64_user_extract((uintptr_t)aspace_root, va) != 0;
 }
 
+/** @return the physmap (kernel) address of the page table at physical @phys. */
+static u64 *md_pt_virt(u64 phys)
+{
+	return (u64 *)(uintptr_t)(phys + PHYSMAP_BASE);
+}
+
 /* The PTE macros are signed ints (as every walker here uses them). */
 /* NOLINTBEGIN(bugprone-signed-bitwise) */
 /**
@@ -638,19 +644,19 @@ void md_unmap_user_page(u64 *aspace_root, u64 va) // NOLINT(misc-use-internal-li
 
 	if (pml4_phys == 0)
 		return;
-	t = (u64 *)P2V(pml4_phys);
+	t = md_pt_virt(pml4_phys);
 	e = t[(va >> 39) & 0x1FF];
 	if ((e & PTE_P) == 0)
 		return;
-	t = (u64 *)P2V(e & PTE_ADDR_MASK);
+	t = md_pt_virt(e & PTE_ADDR_MASK);
 	e = t[(va >> 30) & 0x1FF];
 	if ((e & PTE_P) == 0 || (e & PTE_PS))
 		return;
-	t = (u64 *)P2V(e & PTE_ADDR_MASK);
+	t = md_pt_virt(e & PTE_ADDR_MASK);
 	e = t[(va >> 21) & 0x1FF];
 	if ((e & PTE_P) == 0 || (e & PTE_PS))
 		return;
-	t = (u64 *)P2V(e & PTE_ADDR_MASK);
+	t = md_pt_virt(e & PTE_ADDR_MASK);
 	slot = &t[(va >> 12) & 0x1FF];
 	pte = *slot;
 	if ((pte & PTE_P) == 0)
