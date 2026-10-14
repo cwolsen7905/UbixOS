@@ -280,7 +280,7 @@ int sys_mmap(struct thread *td, struct sys_mmap_args *uap)
 		 *
 		 * If a backing fd cannot be opened, fall back to the historical EAGER
 		 * read + de-dup so the mapping still works.  File identity for the cache
-		 * is kfd->ino (the FAT start cluster — fd->start is not populated).
+		 * is kfd->ino (FAT start cluster or UBFS object id; full 64 bits).
 		 */
 		fileDescriptor_t *kfd, *backing;
 		char *tmp;

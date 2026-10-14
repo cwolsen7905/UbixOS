@@ -55,7 +55,7 @@
  * Look up the cached page for (mp, fileid, offset) and, on a hit, take one
  * reference (for a new mapping).  Returns the physical page, or 0 if absent.
  */
-u_int32_t vm_filecache_lookup_ref(void *mp, u_int32_t fileid, off_t offset);
+u_int32_t vm_filecache_lookup_ref(void *mp, u_int64_t fileid, off_t offset);
 
 /**
  * Insert a freshly read page for (mp, fileid, offset) → phys with refcount 1.
@@ -67,7 +67,7 @@ u_int32_t vm_filecache_lookup_ref(void *mp, u_int32_t fileid, off_t offset);
  * @param phys_out  on a duplicate, receives the winning entry's physical page
  *                  so the caller can map that instead; unchanged on success.
  */
-int vm_filecache_insert(void *mp, u_int32_t fileid, off_t offset, u_int32_t phys, u_int32_t *phys_out);
+int vm_filecache_insert(void *mp, u_int64_t fileid, off_t offset, u_int32_t phys, u_int32_t *phys_out);
 
 /**
  * Add one reference to the cache entry that owns physical page @phys.
