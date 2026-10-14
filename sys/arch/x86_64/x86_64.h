@@ -75,12 +75,15 @@ void serial_putc(char c);
 void serial_puts(const char *s);
 void serial_puthex(u64 v);
 void serial_putdec(u64 v);
-int serial_getc(void);     /* non-blocking COM1 read: byte, or -1 if none */
-int serial_rx_ready(void); /* non-zero if a received byte is waiting */
+int serial_getc(void);           /* non-blocking COM1 read: byte, or -1 if none */
+int serial_rx_ready(void);       /* non-zero if a received byte is waiting */
+int serial_irq(void);            /* COM1 IRQ4 handler: drain the UART into the RX ring */
+void serial_rx_irq_enable(void); /* switch COM1 receive from polling to IRQ4 */
 
 /* dev/console_tty.c — wire COM1 into the VFS console fileops (login/shell tty). */
 struct thread;
 void x86_64_console_tty_init(void);              /* install g_console_ops + tty hooks */
+void x86_64_console_rx_wake(void);               /* COM1 IRQ: wake readers waiting for input */
 int x86_64_console_setup_fds(struct thread *td); /* fds 0/1/2 -> console for a task */
 
 /* ksupport.c — register COM1 as a kconsole sink (so the real kprintf routes here). */
@@ -179,6 +182,7 @@ void x86_64_mem_init(u32 boot_magic, u32 boot_info); /* RAM from the PVH e820 ma
 void pic_remap(void);
 void pit_init(unsigned hz);
 void irq_eoi(unsigned vector);
+void irq_unmask(unsigned irq);   /* unmask one PIC line (0..15) */
 int x86_64_irq(unsigned vector); /* called from the common ISR path for vec >= 32; 1 if timer tick */
 u64 timer_ticks(void);
 

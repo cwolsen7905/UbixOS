@@ -17,29 +17,38 @@
 /* Wait channel for console_nap(); only its address matters. */
 static char g_console_nap_chan;
 
+/* 1 when the PL011 interrupt delivers input (uart_rx_irq_enable); else poll. */
+static int g_console_rx_irq;
+
 /**
- * Wake predicate for the console poll nap that never fires, so the nap always
- * runs to its timeout.
+ * Wake predicate for console_nap: input has arrived.
  *
- * @return 0 (never ready).
+ * @return non-zero if a received byte is waiting.
  */
-static int console_never(void *arg)
+static int console_rx_pending(void *arg)
 {
 	(void)arg;
-	return (0);
+	return (uart_rx_ready());
 }
 
 /**
- * Sleep ~2 ticks between serial console polls.
+ * Wait for serial input.
  *
- * The serial console has no RX interrupt wired: poll it, but sleep a couple of
- * ticks between polls instead of sched_yield().  A yield loop kept the console
- * shell permanently runnable, burning its CPU and starving real work sharing
- * that core (an on-device build crawled).  20 ms is imperceptible for typing.
+ * With the PL011 interrupt on, the IRQ queues the bytes and wakes this channel
+ * (aarch64_console_rx_wake); the 10-tick timeout only bounds how long a pending
+ * signal waits to be noticed.  A board without the interrupt polls every 2
+ * ticks: a yield loop kept the console shell permanently runnable and starved
+ * real work sharing its core.
  */
 static void console_nap(void)
 {
-	sched_wait_event_timeout(&g_console_nap_chan, console_never, 0, 2);
+	sched_wait_event_timeout(&g_console_nap_chan, console_rx_pending, 0, g_console_rx_irq ? 10 : 2);
+}
+
+/** PL011 IRQ hook: wake the tasks sleeping in console_nap for input. */
+void aarch64_console_rx_wake(void)
+{
+	sched_wakeup_chan(&g_console_nap_chan);
 }
 
 /* A signal is pending + not masked → a blocking read should return EINTR. */
@@ -207,6 +216,15 @@ void aarch64_console_init(void)
 	g_tty_getchar = console_getchar_hook;
 	g_console_stdin_ready = console_stdin_ready;
 	g_serial_putc = console_serial_putc; /* serial-echo arm of the tty line discipline */
+}
+
+/**
+ * Switch console input to the PL011 interrupt where the board has one.  Called
+ * once the interrupt controller is up (aarch64_intc_init).
+ */
+void aarch64_console_rx_irq_init(void)
+{
+	g_console_rx_irq = uart_rx_irq_enable();
 }
 
 /**

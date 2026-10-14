@@ -61,7 +61,7 @@ void pic_remap(void)
 }
 
 /** Unmask a single IRQ line (0..15) on the PIC. */
-static void pic_unmask(unsigned irq)
+void irq_unmask(unsigned irq)
 {
 	u16 port = (irq < 8) ? PIC1_DATA : PIC2_DATA;
 	u8 line = (irq < 8) ? irq : (irq - 8);
@@ -79,7 +79,7 @@ void pit_init(unsigned hz)
 	outb(PIT_CH0, (u8)(divisor & 0xFF));
 	outb(PIT_CH0, (u8)((divisor >> 8) & 0xFF));
 
-	pic_unmask(0); /* IRQ0 = the timer */
+	irq_unmask(0); /* IRQ0 = the timer */
 }
 
 /** Signal end-of-interrupt to the PIC(s) for a handled IRQ vector. */
@@ -229,6 +229,11 @@ int x86_64_irq(unsigned vector)
 		/* Charge the elapsed tick to whatever was running. */
 		sched_account_tick();
 		ticked = 1;
+	}
+	else if (vector == IRQ_BASE + 4) /* IRQ4 — COM1 */
+	{
+		if (serial_irq() > 0)
+			x86_64_console_rx_wake();
 	}
 	irq_eoi(vector);
 	return ticked;

@@ -25,6 +25,7 @@
 #define GICD(off) (*(volatile u_int32_t *)(GICD_BASE + (off)))
 #define GICC(off) (*(volatile u_int32_t *)(GICC_BASE + (off)))
 #define GICD_PRIO(intid) (*(volatile u_int8_t *)(GICD_BASE + 0x400 + (intid)))
+#define GICD_TARGET(intid) (*(volatile u_int8_t *)(GICD_BASE + 0x800 + (intid)))
 
 #define GICD_CTLR 0x000
 #define GICD_ISENABLER 0x100
@@ -85,6 +86,17 @@ static void gicv2_timer_enable(void)
 }
 
 /**
+ * Route device interrupt @intid (an SPI) to CPU 0 and enable it.  Device
+ * interrupts go to the BSP only, so their handlers never run on two CPUs at
+ * once.
+ */
+static void gicv2_irq_enable(unsigned intid)
+{
+	GICD_TARGET(intid) = 0x01;
+	gicv2_enable_intid(intid);
+}
+
+/**
  * Send the reschedule IPI (RESCHED_SGI) to a single CPU @cpu via GICD_SGIR
  * (TargetListFilter=0, CPUTargetList = 1<<cpu).  The dsb orders the run-queue
  * enqueue (done by the caller under schedulerSpinLock) before the wake.
@@ -112,8 +124,10 @@ static int gicv2_dispatch(void)
 
 	if (intid == GIC_TIMER_INTID) /* EL1 virtual (generic) timer PPI */
 		timer_tick();
-	else if (intid == RESCHED_SGI) /* SMP reschedule IPI — the wake itself is the work */
-		;                      /* fall through to EOI; the AP re-runs sched_yield after ERET */
+	else if (intid == RESCHED_SGI)       /* SMP reschedule IPI — the wake itself is the work */
+		;                            /* fall through to EOI; the AP re-runs sched_yield after ERET */
+	else if (intid == g_board->uart_irq) /* PL011 receive */
+		uart_irq();
 	else
 		kprintf("irq: unexpected intid %u\n", intid);
 
@@ -129,4 +143,5 @@ const struct aarch64_intc g_gicv2_intc = {
     .timer_enable = gicv2_timer_enable,
     .send_resched = gicv2_send_resched,
     .dispatch = gicv2_dispatch,
+    .irq_enable = gicv2_irq_enable,
 };

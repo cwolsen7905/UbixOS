@@ -16,6 +16,7 @@
 void aarch64_intc_init(void)
 {
 	g_board->intc->init();
+	aarch64_console_rx_irq_init(); /* console input by interrupt, where the board allows */
 }
 
 /**
