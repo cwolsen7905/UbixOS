@@ -55,6 +55,13 @@ fi
 # GNU make (NetSurf needs it; macOS /usr/bin/make is GNU make).
 GMAKE=make
 command -v gmake >/dev/null 2>&1 && GMAKE=gmake
+# NetSurf is a third-party application with its own GNU-make buildsystem, like
+# a port.  Inside UbixOS there is no GNU make (the base toolchain is BSD), so
+# `bmake world` there builds the base system and skips NetSurf.
+if ! "$GMAKE" --version 2>/dev/null | grep -q "GNU Make"; then
+	echo "build-netsurf: skipped: NetSurf needs GNU make, and '$GMAKE' is not GNU make"
+	exit 0
+fi
 
 # NetSurf's own buildsystem reads generic env vars (BUILD, CC, TARGET, …) and
 # folds them into its build-dir name + toolchain detection.  uBixOS's bmake

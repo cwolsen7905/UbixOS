@@ -739,7 +739,9 @@ world:
 	@echo "***************************************************************"
 	@echo "Step 4: Build NetSurf browser (nsfb)"
 	@echo "***************************************************************"
-	${MAKE} netsurf
+	@# cd back first: under -j bmake runs a target's commands in one shell, so
+	@# the cd into ${WORLD_TESTS_SRC} above would still be in effect.
+	cd ${.CURDIR}; ${MAKE} netsurf
 	@echo
 	@echo "***************************************************************"
 	@echo "World Build For ${_ARCH} Completed On `LC_ALL=C date`"
