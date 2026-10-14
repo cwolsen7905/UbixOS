@@ -20,6 +20,8 @@
 #include <sys/thread.h>  /* struct thread, O_FILES (getfd) */
 #include <sys/descrip.h> /* getfd decl + g_* hook decls */
 #include <lib/kconsole.h>
+#include <lib/kprintf.h>
+#include <stdarg.h>
 
 /* Reboot-countdown flag the scheduler tick checks (set by the kbd Ctrl-Alt-Del
  * affordance on i386; inactive here — no MI provider linked for x86_64). */
@@ -131,10 +133,23 @@ int spinTryLock(spinLock_t lock)
 
 /* --- panic / assert ----------------------------------------------------------- */
 
+/**
+ * Print a formatted panic message on the serial console and halt this CPU.
+ * Formats like the aarch64 kpanic; it used to print the format string raw.
+ *
+ * @param fmt kprintf-style format
+ */
 void kpanic(const char *fmt, ...)
 {
+	char buf[512];
+	va_list ap;
+
 	serial_puts("\nKERNEL PANIC: ");
-	serial_puts(fmt);
+	va_start(ap, fmt);
+	kvprintf(fmt, NULL, buf, 10, ap, sizeof(buf) - 1);
+	va_end(ap);
+	buf[sizeof(buf) - 1] = '\0';
+	serial_puts(buf);
 	serial_puts("\n");
 	for (;;)
 		__asm__ __volatile__("cli; hlt");

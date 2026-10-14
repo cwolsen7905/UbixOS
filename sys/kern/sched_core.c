@@ -302,6 +302,9 @@ kTask_t *schedNewTask()
 
 	memcpy(tmpTask->username, "UbixOS", 6);
 
+	if (fd_table_init(&tmpTask->td) != 0)
+		kpanic("schedNewTask: kmalloc failed allocating the fd table\n");
+
 	/* HACK */
 	for (i = 0; i < 3; i++)
 	{
@@ -686,10 +689,22 @@ int sched_addDelTask(kTask_t *tmpTask)
 	return (0x0);
 }
 
+/**
+ * Pop one task from delList.  Masks IRQs while holding schedulerSpinLock, as
+ * every other holder does: a timer tick on this CPU would otherwise enter
+ * sched() and spin on the lock this CPU already holds.  (Nothing called this
+ * on aarch64/x86_64 until wait4 began freeing tasks through
+ * sched_free_deleted.)
+ *
+ * @return the task, or NULL if delList is empty
+ */
 kTask_t *sched_getDelTask()
 {
 	kTask_t *tmpTask = 0x0;
+	u_int32_t flags;
 
+	save_flags(flags);
+	cli();
 	spinLock(&schedulerSpinLock);
 	if (delList != 0x0)
 	{
@@ -697,6 +712,7 @@ kTask_t *sched_getDelTask()
 		delList = delList->next;
 	}
 	spinUnlock(&schedulerSpinLock);
+	restore_flags(flags);
 	return (tmpTask);
 }
 
@@ -731,6 +747,7 @@ void sched_free_task(kTask_t *t)
 	spinUnlock(&schedulerSpinLock);
 	restore_flags(flags);
 
+	fd_table_free(&t->td);
 	if (t->kernelStack != NULL)
 		kfree(t->kernelStack);
 	kfree(t);

@@ -325,7 +325,7 @@ void kfree(void *baseAddr)
 		if (tmpDesc->baseAddr == baseAddr)
 		{
 			spinUnlock(&mallocSpinLock);
-			kpanic("kfree: double-free %p\n", baseAddr);
+			kpanic("kfree: double-free %p (caller %p)\n", baseAddr, __builtin_return_address(0));
 			return;
 		}
 	}
