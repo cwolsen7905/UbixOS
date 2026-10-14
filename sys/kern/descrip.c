@@ -59,6 +59,10 @@ static int duplicate_descriptor(struct thread *td, int from, int to);
 /* Wait channel for fd_poll_nap(); only its address matters. */
 static char g_fd_poll_chan;
 
+/* What a task's o_files points at once endTask has released its table: an
+ * empty table, so a late reader (procfs on a zombie) sees no open files. */
+static void *g_fd_table_none[O_FILES];
+
 /* (lwip_select is no longer called directly — see the g_socket_select hook.) */
 struct timeval;
 struct fd_set;
@@ -328,10 +332,6 @@ void fd_close_on_exit(struct thread *td)
 	}
 }
 
-/* What a task's o_files points at once endTask has released its table: an
- * empty table, so a late reader (procfs on a zombie) sees no open files. */
-static void *fd_table_none[O_FILES];
-
 /**
  * Give a new task a fresh, empty fd table with one reference.
  *
@@ -393,7 +393,7 @@ void fd_table_exit(struct thread *td)
 		kfree(fdt);
 	}
 	td->td_fdt = NULL;
-	td->o_files = fd_table_none;
+	td->o_files = g_fd_table_none;
 }
 
 /**
@@ -412,7 +412,7 @@ void fd_table_free(struct thread *td)
 	if (__atomic_sub_fetch(&fdt->refs, 1, __ATOMIC_ACQ_REL) == 0)
 		kfree(fdt);
 	td->td_fdt = NULL;
-	td->o_files = fd_table_none;
+	td->o_files = g_fd_table_none;
 }
 
 static int duplicate_descriptor(struct thread *td, int from, int to)
