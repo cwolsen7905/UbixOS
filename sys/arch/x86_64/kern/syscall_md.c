@@ -91,7 +91,7 @@ static int map_file(u64 va, u64 npages, fileDescriptor_t *fd, u64 file_off, int 
 	 * (data) pages stay private.  Mirrors aarch64's mmap. */
 	int cacheable = !writable && fd->ino != 0;
 	void *mp = fd->mp;
-	u_int32_t ino = fd->ino;
+	u_int64_t ino = fd->ino;
 
 	for (i = 0; i < npages; i++)
 	{

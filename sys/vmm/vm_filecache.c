@@ -46,7 +46,7 @@
 struct vm_filecache_entry
 {
 	void *mp;                              /* mount-point identity token */
-	u_int32_t fileid;                      /* per-file id (start cluster/block) */
+	u_int64_t fileid;                      /* per-file id (start cluster or object id) */
 	off_t offset;                          /* page-aligned byte offset into file */
 	u_int32_t phys;                        /* physical page address (page-aligned) */
 	u_int32_t refcnt;                      /* live mappings of this page (0 = inactive/cached) */
@@ -117,9 +117,9 @@ static void inact_remove(struct vm_filecache_entry *e)
 }
 
 /** Hash a (mp, fileid, offset) key into a bucket index. */
-static inline u_int32_t key_hash(void *mp, u_int32_t fileid, off_t offset)
+static inline u_int32_t key_hash(void *mp, u_int64_t fileid, off_t offset)
 {
-	u_int32_t h = fileid * 2654435761u; /* Knuth multiplicative */
+	u_int32_t h = ((u_int32_t)fileid ^ (u_int32_t)(fileid >> 32)) * 2654435761u; /* Knuth multiplicative */
 	h ^= (u_int32_t)((u_int64_t)offset >> 12);
 	h ^= (u_int32_t)(uintptr_t)mp >> 4;
 	return (h % VM_FILECACHE_BUCKETS);
@@ -132,7 +132,7 @@ static inline u_int32_t phys_hash(u_int32_t phys)
 }
 
 /** Find the entry for a key, or NULL.  Caller holds g_filecache_lock. */
-static struct vm_filecache_entry *find_key(void *mp, u_int32_t fileid, off_t offset)
+static struct vm_filecache_entry *find_key(void *mp, u_int64_t fileid, off_t offset)
 {
 	struct vm_filecache_entry *e;
 
@@ -157,7 +157,12 @@ static struct vm_filecache_entry *find_phys(u_int32_t phys)
 	return (NULL);
 }
 
-u_int32_t vm_filecache_lookup_ref(void *mp, u_int32_t fileid, off_t offset)
+/**
+ * Look up the cached page for (mp, fileid, offset) and take a reference on a hit.
+ *
+ * @return physical page, or 0 if absent.
+ */
+u_int32_t vm_filecache_lookup_ref(void *mp, u_int64_t fileid, off_t offset)
 {
 	struct vm_filecache_entry *e;
 	u_int32_t phys = 0;
@@ -177,7 +182,12 @@ u_int32_t vm_filecache_lookup_ref(void *mp, u_int32_t fileid, off_t offset)
 	return (phys);
 }
 
-int vm_filecache_insert(void *mp, u_int32_t fileid, off_t offset, u_int32_t phys, u_int32_t *phys_out)
+/**
+ * Insert a freshly read page for (mp, fileid, offset) with refcount 1.
+ *
+ * @return 0 if inserted, -1 on duplicate (winner in @phys_out) or OOM.
+ */
+int vm_filecache_insert(void *mp, u_int64_t fileid, off_t offset, u_int32_t phys, u_int32_t *phys_out)
 {
 	struct vm_filecache_entry *e;
 	u_int32_t kb, pb;

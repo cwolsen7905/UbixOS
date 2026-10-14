@@ -269,7 +269,7 @@ static u_int64_t sc_mmap(u_int64_t addr, u_int64_t len, u_int64_t prot, u_int64_
 			int ex = ((prot & 0x4) != 0); /* PROT_EXEC  == 0x4 */
 			int cacheable = ro && fp->fd->ino != 0;
 			void *mp = fp->fd->mp;
-			u_int32_t ino = fp->fd->ino;
+			u_int64_t ino = fp->fd->ino;
 
 			for (done = 0; done < len; done += PAGE_SIZE)
 			{
