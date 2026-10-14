@@ -66,8 +66,8 @@ struct ubfs_mount
  * One lock for all of UbixFS.  The portable core (pool allocator, CoW block
  * trees, the transaction commit) has no locking of its own, so two CPUs inside
  * it at once corrupt or wedge it.  Every VFS entry point runs under this lock.
- * It is a sleeping (yielding) lock — the holder does disk I/O — and recursive
- * for the owning task, so a call that re-enters UbixFS cannot deadlock.
+ * It is a spinlock (non-yielding) and recursive for the owning task, so a call
+ * that re-enters UbixFS cannot deadlock.
  */
 static struct spinLock g_ubfs_lock = SPIN_LOCK_INITIALIZER;
 static void *volatile g_ubfs_owner; /* task holding g_ubfs_lock, NULL if free */
