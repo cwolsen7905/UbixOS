@@ -67,6 +67,12 @@ int ubfs_fs_readlink(ubfs_fs_t *fs, uint64_t obj, char *buf, uint64_t bufsz);
 /** Fetch an object's POSIX attributes (stat). */
 int ubfs_fs_getattr(ubfs_fs_t *fs, uint64_t obj, ubfs_inode_t *out);
 
+/** Set an object's permission bits (mode & 07777); the file type is kept. */
+int ubfs_fs_chmod(ubfs_fs_t *fs, uint64_t obj, uint32_t mode);
+
+/** Move @src's directory entry to @dst, which must not exist. */
+int ubfs_fs_rename(ubfs_fs_t *fs, const char *src, const char *dst);
+
 /** Iterate a directory's entries. */
 int ubfs_fs_readdir(ubfs_fs_t *fs, uint64_t dirobj, ubfs_dir_cb cb, void *arg);
 

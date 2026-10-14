@@ -248,6 +248,53 @@ static int check_thread_fds(void)
 }
 
 /**
+ * File modes: open(O_CREAT) gives a new file the requested mode less the umask,
+ * chmod and fchmod change it, rename keeps it, and O_CREAT|O_EXCL refuses an
+ * existing file.
+ */
+static void check_modes(void)
+{
+	const char *p = "/tmp/vfstest.mode";
+	struct stat st;
+	int fd;
+
+	unlink(p);
+	fd = open(p, O_WRONLY | O_CREAT | O_TRUNC, 0755);
+	check("open O_CREAT 0755", fd >= 0);
+	check("new file gets mode 0755", fstat(fd, &st) == 0 && (st.st_mode & 07777) == 0755);
+	check("fchmod 0600", fchmod(fd, 0600) == 0 && fstat(fd, &st) == 0 && (st.st_mode & 07777) == 0600);
+	close(fd);
+	check("fchmod mode persists", stat(p, &st) == 0 && (st.st_mode & 07777) == 0600);
+	check("chmod 0751", chmod(p, 0751) == 0 && stat(p, &st) == 0 && (st.st_mode & 07777) == 0751);
+	check("chmod keeps the file type", S_ISREG(st.st_mode));
+	errno = 0;
+	fd = open(p, O_WRONLY | O_CREAT | O_EXCL, 0644);
+	check("O_CREAT|O_EXCL on an existing file -> EEXIST", fd < 0 && errno == EEXIST);
+	if (fd >= 0)
+		close(fd);
+	/* rename moves the file, mode and contents, over an existing target. */
+	fd = open("/tmp/vfstest.mode2", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (fd >= 0)
+	{
+		write(fd, "old", 3);
+		close(fd);
+	}
+	fd = open(p, O_WRONLY | O_APPEND);
+	if (fd >= 0)
+	{
+		write(fd, "new!", 4);
+		close(fd);
+	}
+	check("rename over an existing file", rename(p, "/tmp/vfstest.mode2") == 0);
+	check("rename removes the source", access(p, F_OK) < 0);
+	check("rename keeps the mode",
+	      stat("/tmp/vfstest.mode2", &st) == 0 && (st.st_mode & 07777) == 0751 && st.st_size == 4);
+	unlink("/tmp/vfstest.mode2");
+	errno = 0;
+	check("chmod missing file -> ENOENT", chmod(p, 0644) < 0 && errno == ENOENT);
+}
+
+/**
  * execve passes long and numerous arguments whole, and refuses an oversized
  * or unreadable argv with an error instead of truncating it.
  */
@@ -568,6 +615,7 @@ int main(int argc, char **argv)
 		check("directory fd shared with an exited child and a dup", ok);
 	}
 
+	check_modes();
 	check_poll_pipes();
 	check("two threads' mmaps are distinct and intact", check_thread_mmap());
 	check("threads share one fd table", check_thread_fds());

@@ -139,6 +139,11 @@ struct sys_fwrite_args
 int unlink(const char *path);
 int vfs_symlink(const char *target, const char *linkpath);
 int vfs_readlink(const char *path, char *buf, int bufsz);
+int vfs_fchmod(fileDescriptor_t *fd, int mode);
+
+/* The umask every process reports and open(O_CREAT) applies, until per-process
+ * umask lands (sys_umask). */
+#define VFS_UMASK 0022
 int feof(fileDescriptor_t *fd);
 int fgetc(fileDescriptor_t *fd);
 size_t fread(void *ptr, size_t size, size_t nmemb, fileDescriptor_t *fd);

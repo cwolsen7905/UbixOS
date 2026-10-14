@@ -419,19 +419,17 @@ int sys_ftruncate(struct thread *td, struct sys_ftruncate_args *args)
 /**
  * sys_umask — POSIX umask(2), FreeBSD ABI syscall 60.
  *
- * Returns the old umask and sets the new one.  The per-process umask
- * isn't yet applied at file-create time (kern_openat doesn't consult
- * it), but tools that pass through "save and restore umask" — mkdir,
- * touch, tar — call it during init and would fail outright if the
- * syscall returned -ENOSYS.  Stubbing to 022 / accept-anything keeps
- * those callers happy until per-process umask tracking lands.
+ * Returns the old umask and sets the new one.  There is no per-process umask
+ * yet: every process reports VFS_UMASK, and kern_openat applies VFS_UMASK to
+ * the files it creates.  Tools that save and restore the umask (mkdir, touch,
+ * tar) call this during init and would fail outright on -ENOSYS.
  *
- * @return previous umask (0022 fixed for now).
+ * @return previous umask (VFS_UMASK, fixed for now).
  */
 int sys_umask(struct thread *td, struct sys_umask_args *args)
 {
 	(void)args;
-	td->td_retval[0] = 0022;
+	td->td_retval[0] = VFS_UMASK;
 	return (0);
 }
 
@@ -541,8 +539,9 @@ int sys_fchdir(struct thread *td, struct sys_fchdir_args *args)
  *
  * Same-FS rename only.  Both paths must live under the same mount;
  * cross-mount renames return -EXDEV so userland (mv) falls back to
- * the copy + unlink dance.  Calls into the FS-specific rename hook
- * via the mount's fs vector — currently only FAT (vfsType 0xFA).
+ * the copy + unlink dance.  FAT uses its native hook (g_fs_rename), a
+ * filesystem with a vfsRename (UbixFS) moves the entry, and anything
+ * else copies the file and unlinks the source.
  */
 int sys_rename(struct thread *td, struct sys_rename_args *args)
 {
@@ -603,12 +602,24 @@ int sys_rename(struct thread *td, struct sys_rename_args *args)
 			return (EIO);
 		}
 	}
+	else if (src_mp->fs->vfsRename != NULL)
+	{
+		int rc;
+
+		spinLock(&vfs_io_lock);
+		rc = src_mp->fs->vfsRename(src_full, dst_full, src_mp);
+		spinUnlock(&vfs_io_lock);
+		if (rc < 0)
+		{
+			td->td_retval[0] = rc;
+			return (-rc);
+		}
+	}
 	else
 	{
-		/* Other filesystems (ubixfs) have no rename primitive: fall back to
-		 * copy-the-file + unlink-the-source.  Not atomic and file-only (fopen
-		 * rejects directories), but makes rename(2) work on the pool root for
-		 * the common case (build tools, mv's non-EXDEV path).  src/dst are on the
+		/* No rename primitive: copy the file and unlink the source.  Not atomic
+		 * and file-only (fopen rejects directories), but rename(2) works for the
+		 * common case (build tools, mv's non-EXDEV path).  src/dst are on the
 		 * same mount (checked above), so this never crosses devices. */
 		fileDescriptor_t *in = fopen(src_full, "rb");
 		fileDescriptor_t *out;
@@ -639,6 +650,7 @@ int sys_rename(struct thread *td, struct sys_rename_args *args)
 		while ((n = fread(buf, 1, 4096, in)) > 0)
 			fwrite(buf, (int)n, 1, out);
 		kfree(buf);
+		vfs_fchmod(out, in->inode.u.ufs2_i.di_mode); /* keep the mode (e.g. +x) */
 		fclose(out);
 		fclose(in);
 
@@ -1358,6 +1370,34 @@ int vfs_readlink(const char *path, char *buf, int bufsz)
 	int rc = mp->fs->vfsReadlink(fullpath, buf, bufsz, mp);
 	spinUnlock(&vfs_io_lock);
 	return (rc < 0) ? -EINVAL : rc;
+}
+
+/**
+ * Set the permission bits of the open file @fd to @mode & 07777.  A filesystem
+ * that stores no permission bits (FAT, devfs) has no vfsChmod; that succeeds
+ * and changes nothing, as chmod always did there.
+ *
+ * @return 0 on success, -EBADF for a non-file descriptor, -EROFS if the
+ *         filesystem refused (e.g. a read-only mount).
+ */
+int vfs_fchmod(fileDescriptor_t *fd, int mode)
+{
+	int rc;
+
+	if (fd == 0x0 || fd->mp == 0x0 || fd->mp->fs == 0x0)
+		return (-EBADF);
+	if (fd->mp->fs->vfsChmod == NULL || fd->res == 0x0)
+		return (0);
+
+	spinLock(&vfs_io_lock);
+	rc = fd->mp->fs->vfsChmod(fd->res, mode);
+	spinUnlock(&vfs_io_lock);
+	if (rc < 0)
+		return (-EROFS);
+	/* stat on this descriptor reads the cached inode (sys/fs/vfs/stat.c). */
+	fd->inode.u.ufs2_i.di_mode =
+	    (u_int16_t)(((u_int)fd->inode.u.ufs2_i.di_mode & ~07777u) | ((u_int)mode & 07777u));
+	return (0);
 }
 
 kDIR_t *vfs_opendir(const char *path)
