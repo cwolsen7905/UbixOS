@@ -22,11 +22,11 @@ _ARCH = aarch64
 .endif
 .endif
 .if ${_ARCH} == "aarch64"
-all: ubix_api-code objgfx-code libaudio-code libbearssl-code libpw-code libhttp-code zlib-code \
+all: crtbegin-code ubix_api-code objgfx-code libaudio-code libbearssl-code libpw-code libhttp-code zlib-code \
      libwapcaplet-code libparserutils-code libcss-code libhubbub-code libdom-code \
      libnsgif-code libnsbmp-code libnsfb-code libnsutils-code libutf8proc-code
 .else
-all: crt-code ubix_api-code ubix-code objgfx-code libaudio-code libbearssl-code libpw-code libhttp-code zlib-code libwapcaplet-code libparserutils-code libcss-code libhubbub-code libdom-code libnsgif-code libnsbmp-code libnsfb-code libnsutils-code libutf8proc-code #csu-code
+all: crt-code crtbegin-code ubix_api-code ubix-code objgfx-code libaudio-code libbearssl-code libpw-code libhttp-code zlib-code libwapcaplet-code libparserutils-code libcss-code libhubbub-code libdom-code libnsgif-code libnsbmp-code libnsfb-code libnsutils-code libutf8proc-code #csu-code
 .endif
 # bin tools
 # depend kernel tools
@@ -36,6 +36,10 @@ csu-code: csu
 
 crt-code: crt
 	(cd crt;$(MAKE))
+
+# crtbegin/crtend for clang's driver (a bare on-device `clang hello.c`).
+crtbegin-code: crtbegin
+	(cd crtbegin;$(MAKE))
 
 ubix_api-code: ubix_api
 	(cd ubix_api;$(MAKE))
@@ -112,6 +116,7 @@ libutf8proc-code: libutf8proc
 
 clean:
 	(cd crt;${MAKE} clean)
+	(cd crtbegin;${MAKE} clean)
 	(cd ubix_api;${MAKE} clean)
 	(cd ubix;${MAKE} clean)
 	(cd objgfx;${MAKE} clean)

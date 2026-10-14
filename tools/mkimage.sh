@@ -166,6 +166,15 @@ for _o in Scrt1.o crti.o crtn.o; do
 		echo "mkimage: warning: ${_musllib}/${_o} missing — on-device linking will fail" >&2
 	fi
 done
+# crtbegin/crtend (lib/crtbegin): clang's driver adds them to every link that
+# is not -nostdlib, so a bare on-device `clang hello.c` needs them in /lib.
+for _o in crtbegin.o crtbeginS.o crtbeginT.o crtend.o crtendS.o; do
+	if [ -f "${BUILD}/lib/${_o}" ]; then
+		cp "${BUILD}/lib/${_o}" "${STAGE}/lib/${_o}"
+	else
+		echo "mkimage: warning: ${BUILD}/lib/${_o} missing — bare on-device clang links will fail" >&2
+	fi
+done
 _libgcc=$(${ARCH}-elf-gcc -print-libgcc-file-name 2>/dev/null || true)
 if [ -n "${_libgcc}" ] && [ -f "${_libgcc}" ]; then
 	cp "${_libgcc}" "${STAGE}/lib/libgcc.a"
