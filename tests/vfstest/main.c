@@ -295,6 +295,35 @@ static void check_modes(void)
 }
 
 /**
+ * umask is per process: it returns the old mask, open(O_CREAT) clears its bits,
+ * and a forked child inherits it without changing the parent's.
+ */
+static void check_umask(void)
+{
+	const char *p = "/tmp/vfstest.umask";
+	struct stat st;
+	mode_t old;
+	pid_t pid;
+	int fd;
+	int status = 0;
+
+	old = umask(077);
+	check("umask returns the old mask", umask(077) == 077);
+	unlink(p);
+	fd = open(p, O_WRONLY | O_CREAT | O_TRUNC, 0666);
+	check("umask 077 makes a new 0666 file 0600", fd >= 0 && fstat(fd, &st) == 0 && (st.st_mode & 07777) == 0600);
+	if (fd >= 0)
+		close(fd);
+	unlink(p);
+	pid = fork();
+	if (pid == 0)
+		_exit(umask(0) == 077 ? 0 : 1);
+	check("fork child inherits the umask",
+	      pid > 0 && waitpid(pid, &status, 0) == pid && WIFEXITED(status) && WEXITSTATUS(status) == 0);
+	check("child's umask change leaves the parent's", umask(old) == 077);
+}
+
+/**
  * execve passes long and numerous arguments whole, and refuses an oversized
  * or unreadable argv with an error instead of truncating it.
  */
@@ -616,6 +645,7 @@ int main(int argc, char **argv)
 	}
 
 	check_modes();
+	check_umask();
 	check_poll_pipes();
 	check("two threads' mmaps are distinct and intact", check_thread_mmap());
 	check("threads share one fd table", check_thread_fds());

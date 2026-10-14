@@ -254,6 +254,7 @@ int sched_init()
 	taskList->quantum = 6;
 	taskList->priority = QOS_REALTIME;
 	taskList->base_priority = QOS_REALTIME;
+	taskList->cmask = TASK_DEFAULT_CMASK;
 	strncpy(taskList->name, "kernel", sizeof(taskList->name) - 1);
 	/* Root of the cwd-inheritance chain: a real "/" so relative paths (".",
 	 * "..", "foo") resolve.  Without this the field is empty and every child
@@ -293,6 +294,7 @@ kTask_t *schedNewTask()
 	md_new_task(tmpTask);
 
 	tmpTask->usedMath = 0x0;
+	tmpTask->cmask = TASK_DEFAULT_CMASK;
 	tmpTask->state = NEW;
 
 	/* Default cwd to "/" so relative-path resolution (vfs_opendir(".") etc.)

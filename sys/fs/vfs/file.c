@@ -419,17 +419,18 @@ int sys_ftruncate(struct thread *td, struct sys_ftruncate_args *args)
 /**
  * sys_umask — POSIX umask(2), FreeBSD ABI syscall 60.
  *
- * Returns the old umask and sets the new one.  There is no per-process umask
- * yet: every process reports VFS_UMASK, and kern_openat applies VFS_UMASK to
- * the files it creates.  Tools that save and restore the umask (mkdir, touch,
- * tar) call this during init and would fail outright on -ENOSYS.
+ * Sets the calling process's file-creation mask and returns the old one.  The
+ * mask is per process: fork copies it, exec keeps it, and open(O_CREAT) clears
+ * its bits from the mode of the file it creates.
  *
- * @return previous umask (VFS_UMASK, fixed for now).
+ * @param td   calling thread
+ * @param args newmask — the new mask (only the 0777 bits are kept)
+ * @return 0; td_retval[0] holds the previous mask.
  */
 int sys_umask(struct thread *td, struct sys_umask_args *args)
 {
-	(void)args;
-	td->td_retval[0] = VFS_UMASK;
+	td->td_retval[0] = _current->cmask;
+	_current->cmask = (u_int16_t)((u_int)args->newmask & 0777u);
 	return (0);
 }
 

@@ -1210,9 +1210,10 @@ int kern_openat(struct thread *thr, int afd, char *path, int flags, int mode)
 		return (ENOENT);
 	}
 
-	/* The filesystem creates files 0644; give a new one the caller's mode. */
+	/* The filesystem creates files 0644; give a new one the caller's mode
+	 * less the process umask. */
 	if (created)
-		vfs_fchmod(nfp->fd, (int)((u_int)mode & ~(u_int)VFS_UMASK & 07777u));
+		vfs_fchmod(nfp->fd, (int)((u_int)mode & ~(u_int)_current->cmask & 07777u));
 
 	thr->td_retval[0] = fd;
 	return (0);
