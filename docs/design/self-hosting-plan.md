@@ -67,7 +67,7 @@ binutils (`llvm-ar`, `llvm-ranlib`, `llvm-objcopy`, `llvm-nm`). Reasons:
 | **Linker (userland + kernel)** | **lld** | ⬜ built with Clang; honors the kernel **linker script** → no binutils. |
 | **ar / ranlib / objcopy / nm** | `llvm-ar` etc. | ⬜ built alongside Clang/lld from the LLVM tree. |
 | **make** | **bmake** | ⬜ **only a toy in-tree.** `bin/make` is a 558-line "minimal POSIX-subset make" — it cannot parse the tree's BSD Makefiles (`.if`/`.for`/`!=`/`.CURDIR`/`.include`). **Real bmake must be ported** (user-requested; see the bmake section). |
-| **shell** | `/bin/sh` | ✅ **oksh ported** (`tools/ports/sh/`, public-domain), runs in-OS, builtins + external exec work. bmake *recipe* exec via `sh -c` is blocked on the signal-after-COW-fork kernel bug (Phase 2). |
+| **shell** | `/bin/sh` | ✅ **oksh ported** (now built by world: `bin/sh`, sources in `contrib/oksh-7.5`; was `tools/ports/sh/`, public-domain), runs in-OS, builtins + external exec work. bmake *recipe* exec via `sh -c` is blocked on the signal-after-COW-fork kernel bug (Phase 2). |
 | **coreutils** | bin/* | 🟡 `cp`/`cat`/`ls`/`mkdir`/… exist; a `bmake world` also leans on `rm`, `mv`, `test`/`[`, `sed`, `install`, `mkdir -p`, `cmp` — gap-fill as the build surfaces them. |
 | **C/C++ runtime libs** | musl + libcxx/libcxxabi + compiler-rt | 🟡 musl + libcxx are vendored and cross-built today; on-device we either rebuild them with Clang or ship prebuilt and relink. **compiler-rt** (Clang's builtins/`libgcc` equivalent) must be cross-built for the target. |
 | **headers / libs / src** | image | ✅ `/usr/include`, `/usr/src` (full tree), `/lib` are staged per the CLAUDE.md layout. |
@@ -127,7 +127,7 @@ In-OS `selfhost/test_*.c`: anon + file-backed `mmap`; `fork`+`exit`→`wait4` de
 write path (the capacity work above). *Independently useful regardless of compiler.*
 
 ### Phase 1 — Port bmake (keystone) — ✅ BUILT + RUNS (2026-06-21)
-**Done:** `tools/ports/bmake/` (the first port; proved `share/mk/ports.mk`).  bmake
+**Done:** `tools/ports/bmake/` (the first port; proved `share/mk/ports.mk`; since W-053 built by world as `bin/bmake` from `contrib/bmake-20240212`).  bmake
 cross-builds on both arches and runs in UbixOS — verified on aarch64 over the
 serial console: `bmake -r -V MACHINE` → `aarch64`, and it parses a real makefile
 file + evaluates a variable, clean exit.  Two follow-ups it surfaced, both **Phase
