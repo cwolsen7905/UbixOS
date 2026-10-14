@@ -914,6 +914,7 @@ int kern_openat(struct thread *thr, int afd, char *path, int flags, int mode)
 	int fd = 0x0;
 	struct file *nfp = 0x0;
 	int oflags = flags;
+	int created = 0;
 
 	/*
 	 * Only one of the O_EXEC, O_RDONLY, O_WRONLY and O_RDWR flags
@@ -1126,6 +1127,28 @@ int kern_openat(struct thread *thr, int afd, char *path, int flags, int mode)
 		return (0);
 	}
 
+	/* O_CREAT: probe for the file first, so O_EXCL fails with EEXIST (LLVM's
+	 * unique temp files rely on it) and a file this open creates gets @mode. */
+	if ((u_int)oflags & (u_int)O_CREAT)
+	{
+		fileDescriptor_t *probe = fopen(path, "r");
+
+		if (probe != NULL)
+		{
+			fclose(probe);
+			if ((u_int)oflags & (u_int)O_EXCL)
+			{
+				fdestroy(thr, nfp, fd);
+				thr->td_retval[0] = -EEXIST;
+				return (EEXIST);
+			}
+		}
+		else
+		{
+			created = 1;
+		}
+	}
+
 	if ((oflags & (O_WRONLY | O_RDWR)) && (oflags & O_APPEND))
 	{
 		/* Append: open positioned at EOF (fopen "a" handles that).  Must also
@@ -1186,6 +1209,11 @@ int kern_openat(struct thread *thr, int afd, char *path, int flags, int mode)
 		thr->td_retval[0] = -ENOENT;
 		return (ENOENT);
 	}
+
+	/* The filesystem creates files 0644; give a new one the caller's mode
+	 * less the process umask. */
+	if (created)
+		vfs_fchmod(nfp->fd, (int)((u_int)mode & ~(u_int)_current->cmask & 07777u));
 
 	thr->td_retval[0] = fd;
 	return (0);

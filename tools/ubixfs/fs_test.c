@@ -29,11 +29,12 @@ static int fdw(void *c, uint64_t b, const void *buf)
 }
 
 static int fails;
-#define CHECK(c, m)                                                                                                  \
-	do {                                                                                                           \
-		int _ok = (c);                                                                                          \
-		printf("  %s : %s\n", _ok ? "ok  " : "FAIL", m);                                                        \
-		if (!_ok)                                                                                                \
+#define CHECK(c, m)                                                                                                    \
+	do                                                                                                             \
+	{                                                                                                              \
+		int _ok = (c);                                                                                         \
+		printf("  %s : %s\n", _ok ? "ok  " : "FAIL", m);                                                       \
+		if (!_ok)                                                                                              \
 			fails++;                                                                                       \
 	} while (0)
 
@@ -56,19 +57,20 @@ static int collect_cb(void *arg, const char *name, uint64_t obj, uint8_t type)
 
 int main(void)
 {
-	const char    *path = "/tmp/ubfs_fs.img";
-	struct fdev    d;
+	const char *path = "/tmp/ubfs_fs.img";
+	struct fdev d;
 	ubfs_vdev_io_t io;
-	ubfs_pool_t   *p;
-	ubfs_dsl_t     dsl;
-	ubfs_dmu_os_t  os;
+	ubfs_pool_t *p;
+	ubfs_dsl_t dsl;
+	ubfs_dmu_os_t os;
 	ubfs_dataset_phys_t dp;
-	ubfs_fs_t      fs;
-	uint64_t       fs_ds, o;
-	uint8_t       *big = malloc(BIG), *rb = malloc(BIG);
+	ubfs_fs_t fs;
+	uint64_t fs_ds, o;
+	uint8_t *big = malloc(BIG), *rb = malloc(BIG);
 
 	d.fd = open(path, O_RDWR | O_CREAT | O_TRUNC, 0644);
-	if (d.fd < 0 || ftruncate(d.fd, 64ll * 1024 * 1024) < 0) {
+	if (d.fd < 0 || ftruncate(d.fd, 64ll * 1024 * 1024) < 0)
+	{
 		perror("img");
 		return 2;
 	}
@@ -99,13 +101,14 @@ int main(void)
 	printf("== read back + attrs (before sync) ==\n");
 	{
 		ubfs_inode_t in;
-		char         buf[64];
-		uint64_t     mo;
+		char buf[64];
+		uint64_t mo;
 		CHECK(ubfs_fs_lookup(&fs, "/etc/motd", &mo) == 0, "lookup /etc/motd");
 		CHECK(ubfs_fs_getattr(&fs, mo, &in) == 0, "getattr /etc/motd");
 		CHECK((in.mode & 07777) == 0644 && in.uid == 1000 && in.gid == 1000 && in.size == 18,
 		      "/etc/motd mode 0644 uid/gid 1000 size 18");
-		CHECK((int)ubfs_fs_read(&fs, mo, 0, buf, sizeof(buf)) == 18 && memcmp(buf, "Welcome to uBixOS\n", 18) == 0,
+		CHECK((int)ubfs_fs_read(&fs, mo, 0, buf, sizeof(buf)) == 18 &&
+		          memcmp(buf, "Welcome to uBixOS\n", 18) == 0,
 		      "/etc/motd content");
 		CHECK(ubfs_fs_lookup(&fs, "/bin/sh", &mo) == 0 && ubfs_fs_read(&fs, mo, 0, rb, BIG) == BIG &&
 		          memcmp(rb, big, BIG) == 0,
@@ -127,15 +130,14 @@ int main(void)
 	printf("== verify after reopen ==\n");
 	{
 		struct collect root = {{0}}, etc = {{0}};
-		uint64_t       mo;
-		char           buf[64];
+		uint64_t mo;
+		char buf[64];
 		ubfs_fs_readdir(&fs, UBFS_OBJ_ROOT, collect_cb, &root);
 		CHECK(strstr(root.buf, "bin") && strstr(root.buf, "etc"), "readdir / has bin + etc");
 		CHECK(ubfs_fs_lookup(&fs, "/etc", &mo) == 0, "lookup /etc");
 		ubfs_fs_readdir(&fs, mo, collect_cb, &etc);
 		CHECK(strstr(etc.buf, "motd") && strstr(etc.buf, "rc"), "readdir /etc has motd + rc");
-		CHECK(ubfs_fs_lookup(&fs, "/etc/motd", &mo) == 0 &&
-		          ubfs_fs_read(&fs, mo, 0, buf, sizeof(buf)) == 18 &&
+		CHECK(ubfs_fs_lookup(&fs, "/etc/motd", &mo) == 0 && ubfs_fs_read(&fs, mo, 0, buf, sizeof(buf)) == 18 &&
 		          memcmp(buf, "Welcome to uBixOS\n", 18) == 0,
 		      "/etc/motd content intact across reopen");
 		CHECK(ubfs_fs_lookup(&fs, "/bin/sh", &mo) == 0 && ubfs_fs_read(&fs, mo, 0, rb, BIG) == BIG &&
@@ -146,12 +148,34 @@ int main(void)
 	printf("== unlink ==\n");
 	{
 		struct collect etc = {{0}};
-		uint64_t       mo;
+		uint64_t mo;
 		CHECK(ubfs_fs_unlink(&fs, "/etc/motd") == 0, "unlink /etc/motd");
 		CHECK(ubfs_fs_lookup(&fs, "/etc/motd", &mo) != 0, "/etc/motd gone");
 		ubfs_fs_lookup(&fs, "/etc", &mo);
 		ubfs_fs_readdir(&fs, mo, collect_cb, &etc);
 		CHECK(!strstr(etc.buf, "motd") && strstr(etc.buf, "rc"), "readdir /etc now only rc");
+	}
+
+	printf("== chmod + rename ==\n");
+	{
+		ubfs_inode_t in;
+		uint64_t mo, mo2, binobj, dirobj;
+		CHECK(ubfs_fs_lookup(&fs, "/bin/sh", &mo) == 0 && ubfs_fs_chmod(&fs, mo, 0700) == 0 &&
+		          ubfs_fs_getattr(&fs, mo, &in) == 0 && in.mode == (UBFS_S_IFREG | 0700),
+		      "chmod /bin/sh 0700 keeps the file type");
+		CHECK(ubfs_fs_rename(&fs, "/bin/sh", "/etc/sh2") == 0, "rename /bin/sh -> /etc/sh2");
+		CHECK(ubfs_fs_lookup(&fs, "/bin/sh", &mo2) != 0, "/bin/sh gone");
+		CHECK(ubfs_fs_lookup(&fs, "/etc/sh2", &mo2) == 0 && mo2 == mo, "/etc/sh2 is the same object");
+		CHECK(ubfs_fs_getattr(&fs, mo2, &in) == 0 && in.mode == (UBFS_S_IFREG | 0700) &&
+		          ubfs_fs_lookup(&fs, "/etc", &dirobj) == 0 && in.parent == dirobj,
+		      "rename keeps the mode and repoints the parent");
+		CHECK(ubfs_fs_read(&fs, mo2, 0, rb, BIG) == BIG && memcmp(rb, big, BIG) == 0, "renamed data intact");
+		CHECK(ubfs_fs_rename(&fs, "/etc/sh2", "/etc/rc") == -3, "rename onto an existing name refused");
+		CHECK(ubfs_fs_rename(&fs, "/nope", "/etc/x") == -1, "rename of a missing source refused");
+		CHECK(ubfs_fs_lookup(&fs, "/bin", &binobj) == 0 && ubfs_fs_rename(&fs, "/bin", "/etc/bin") == 0 &&
+		          ubfs_fs_lookup(&fs, "/etc/bin", &mo2) == 0 && mo2 == binobj,
+		      "rename a directory under /etc");
+		CHECK(ubfs_fs_rename(&fs, "/etc", "/etc/bin/etc") == -4, "directory into its own subtree refused");
 	}
 	ubfs_pool_close(p);
 

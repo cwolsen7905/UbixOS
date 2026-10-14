@@ -74,6 +74,9 @@ extern "C"
 		u_int8_t gpf;
 	};
 
+	/* The umask a task starts with when it has no parent to inherit one from. */
+#define TASK_DEFAULT_CMASK 0022
+
 	typedef struct taskStruct
 	{
 		pidType id;
@@ -90,6 +93,7 @@ extern "C"
 		u_int16_t euid, suid;
 		u_int16_t egid, sgid;
 		u_int16_t usedMath;
+		u_int16_t cmask; /* file-creation mask (umask(2)); inherited across fork + exec */
 		tty_term *term;
 		struct thread td;
 		struct

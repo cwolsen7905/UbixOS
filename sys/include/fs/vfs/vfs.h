@@ -86,7 +86,11 @@ struct fileSystem
 	int (*vfsReadlink)(const char *path,
 	                   char *buf,
 	                   int bufsz,
-	                   void *mp); /* read symlink target into buf, returns length or <0 (may be NULL) */
+	                   void *mp);         /* read symlink target into buf, returns length or <0 (may be NULL) */
+	int (*vfsChmod)(void *res, int mode); /* set the open file's permission bits (may be NULL) */
+	int (*vfsRename)(const char *src,
+	                 const char *dst,
+	                 void *mp); /* move src to dst on one mount, replacing a file at dst; -errno (may be NULL) */
 };
 
 struct inode_operations

@@ -97,6 +97,16 @@ KERN_USER_CC = ${_CLANG} ${_TGT} ${_UNDEF}
 .else
 KERN_USER_CC = ${CROSS_PREFIX}gcc
 .endif
+# Load the embedded musl demos at 4 GiB.  GNU ld spells this -Ttext-segment;
+# lld (the in-OS linker) rejects that flag and spells it --image-base.  musl's
+# crt1 takes the address of the weak _DYNAMIC (0 in a static link), which an
+# adrp at 4 GiB cannot reach; GNU ld lets it pass, lld does not.  A static crt1
+# ignores the value, so point it at the image base.
+.if defined(UBIX_NATIVE)
+KERN_USER_TEXTBASE = -Wl,--image-base=0x100000000 -Wl,--defsym=_DYNAMIC=0x100000000
+.else
+KERN_USER_TEXTBASE = -Wl,-Ttext-segment=0x100000000
+.endif
 # clang's -nostdinc would also drop its resource headers (stdbool.h, stddef.h);
 # -nostdlibinc keeps them while still excluding the host's system headers.
 TC_NOSTDINC ?= -nostdlibinc
@@ -121,6 +131,7 @@ RANLIB   = ${CROSS_PREFIX}ranlib
 KERN_CC      = ${CROSS_PREFIX}gcc
 KERN_CCFLAGS =
 KERN_USER_CC = ${CROSS_PREFIX}gcc
+KERN_USER_TEXTBASE = -Wl,-Ttext-segment=0x100000000
 TC_NOSTDINC ?= -nostdinc
 TC_STDFLAG  ?=
 .endif

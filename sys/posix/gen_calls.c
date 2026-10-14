@@ -41,6 +41,7 @@
 #include <string.h>
 #include <assert.h>
 #include <sys/descrip.h>
+#include <fs/vfs/file.h> /* fopen, vfs_fchmod */
 #include <sys/video.h>
 #include <sys/signal.h>
 #include <ubixos/signal.h>
@@ -205,29 +206,65 @@ int mprotect(struct thread *td, struct mprotect_args *uap)
 	return (0);
 }
 
-/*
- * chmod(path, mode) — the FAT/devfs roots store no permission bits, so there is
- * nothing to change; report success (a real -1 would break build tools / cp -p /
- * install that chmod a file they just created).  Path validation is intentionally
- * skipped to match the rest of the FAT-era POSIX surface.
+/**
+ * chmod(path, mode): set @path's permission bits through vfs_fchmod().  UbixFS
+ * stores them; FAT and devfs store none, so there it succeeds and changes
+ * nothing (build tools, cp -p and install chmod the files they create).
+ *
+ * @return 0, or ENOENT / EFAULT / ENAMETOOLONG / EROFS (td_retval -errno).
  */
 int chmod(struct thread *td, struct chmod_args *uap)
 {
-	(void)uap;
-	td->td_retval[0] = 0;
-	return (0);
+	fileDescriptor_t *fd;
+	char *kpath;
+	int r;
+
+	kpath = (char *)kmalloc(1024);
+	if (kpath == NULL)
+	{
+		td->td_retval[0] = -ENOMEM;
+		return (ENOMEM);
+	}
+	r = copyinstr(uap->path, kpath, 1024);
+	if (r < 0)
+	{
+		kfree(kpath);
+		r = (r == -EFAULT) ? EFAULT : ENAMETOOLONG;
+		td->td_retval[0] = -r;
+		return (r);
+	}
+	fd = fopen(kpath, "r");
+	kfree(kpath);
+	if (fd == NULL)
+	{
+		td->td_retval[0] = -ENOENT;
+		return (ENOENT);
+	}
+	r = vfs_fchmod(fd, uap->mode);
+	fclose(fd);
+	td->td_retval[0] = r;
+	return (-r);
 }
 
-/*
- * fchmod(fd, mode) — the fd-relative twin of chmod().  Same rationale: the FAT/
- * devfs roots store no permission bits, so report success rather than failing a
- * build tool that fchmod()s a file it just created (cp -p, install).
+/**
+ * fchmod(fd, mode): the descriptor twin of chmod().  A descriptor with no
+ * filesystem file behind it (pipe, tty) has no mode to change and succeeds.
+ *
+ * @return 0, or EBADF / EROFS (td_retval -errno).
  */
 int fchmod(struct thread *td, struct fchmod_args *uap)
 {
-	(void)uap;
-	td->td_retval[0] = 0;
-	return (0);
+	struct file *fp = NULL;
+	int r;
+
+	if (getfd(td, &fp, uap->fd) != 0)
+	{
+		td->td_retval[0] = -EBADF;
+		return (EBADF);
+	}
+	r = (fp->fd != NULL) ? vfs_fchmod(fp->fd, uap->mode) : 0;
+	td->td_retval[0] = r;
+	return (-r);
 }
 
 /**

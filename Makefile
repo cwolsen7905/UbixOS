@@ -366,7 +366,7 @@ kernel-aarch64: ${AARCH64_COMPILE_OBJS}
 	    ${KERN_USER_CC} -static -no-pie -fno-pie -ffreestanding -fno-stack-protector -O2 \
 	        -nostdinc -isystem ${CURDIR}/contrib/musl/include -isystem ${CURDIR}/contrib/musl/arch/aarch64 \
 	        -isystem ${CURDIR}/contrib/musl/arch/generic -isystem ${OBJ_DIR}/obj/musl/obj/include \
-	        -nostdlib -Wl,-Ttext-segment=0x100000000 \
+	        -nostdlib ${KERN_USER_TEXTBASE} \
 	        ${OBJ_DIR}/obj/musl/lib/crt1.o ${OBJ_DIR}/obj/musl/lib/crti.o \
 	        ${CURDIR}/tools/aarch64-user/hello_musl.c \
 	        ${OBJ_DIR}/lib/libc.a ${LIBGCC} ${OBJ_DIR}/obj/musl/lib/crtn.o \
@@ -382,7 +382,7 @@ kernel-aarch64: ${AARCH64_COMPILE_OBJS}
 	        ${KERN_USER_CC} -static -no-pie -fno-pie -ffreestanding -fno-stack-protector -O2 \
 	            -nostdinc -isystem ${CURDIR}/contrib/musl/include -isystem ${CURDIR}/contrib/musl/arch/aarch64 \
 	            -isystem ${CURDIR}/contrib/musl/arch/generic -isystem ${OBJ_DIR}/obj/musl/obj/include \
-	            -nostdlib -Wl,-Ttext-segment=0x100000000 \
+	            -nostdlib ${KERN_USER_TEXTBASE} \
 	            ${OBJ_DIR}/obj/musl/lib/crt1.o ${OBJ_DIR}/obj/musl/lib/crti.o \
 	            ${CURDIR}/tools/aarch64-user/$$prog.c \
 	            ${OBJ_DIR}/lib/libc.a ${LIBGCC} ${OBJ_DIR}/obj/musl/lib/crtn.o \

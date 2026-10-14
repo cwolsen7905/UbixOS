@@ -93,7 +93,7 @@ void fork_copy_fdtable(kTask_t *child, struct thread *ptd)
 /**
  * Inherit the parent (@_current) process context into a forked @child: the QoS
  * floor, cwd, parent pid, process group / session, controlling terminal,
- * attached terminal, and credentials.  The arch-neutral field copies the two
+ * attached terminal, credentials, and umask.  The arch-neutral field copies the two
  * fork paths shared.  Pure field assignments with no address-space dependency,
  * so it is safe to call before or after the arch's address-space copy.
  *
@@ -118,6 +118,7 @@ void proc_fork_inherit_context(kTask_t *child)
 
 	child->uid = _current->uid;
 	child->gid = _current->gid;
+	child->cmask = _current->cmask;
 
 	/* Inherit the parent's process name + cmdline (Unix "comm"): a fork/clone child
 	 * runs the parent's image until it execve()s, so it should report the parent's

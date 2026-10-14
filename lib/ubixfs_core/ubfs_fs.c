@@ -272,6 +272,71 @@ int ubfs_fs_getattr(ubfs_fs_t *fs, uint64_t obj, ubfs_inode_t *out)
 	return inode_get(fs, obj, out);
 }
 
+/**
+ * Set @obj's permission bits to @mode & 07777, keeping its file type, and stamp
+ * ctime.
+ *
+ * @return 0 on success, -1 if @obj has no inode.
+ */
+int ubfs_fs_chmod(ubfs_fs_t *fs, uint64_t obj, uint32_t mode)
+{
+	ubfs_inode_t in;
+
+	if (inode_get(fs, obj, &in) < 0)
+		return -1;
+	in.mode = (in.mode & UBFS_S_IFMT) | (mode & 07777u);
+	in.ctime = fs->now;
+	return inode_put(fs, obj, &in);
+}
+
+/**
+ * Move the entry @src to @dst: link the object under @dst's parent, unlink it
+ * from @src's and repoint its ".." (inode parent).  The object, its data and
+ * its attributes are untouched.  @dst must not exist (the caller removes an
+ * existing target first), and a directory cannot move into its own subtree.
+ *
+ * @return 0 on success; -1 @src missing, -2 @dst's parent missing or not a
+ *         directory, -3 @dst exists, -4 move into own subtree, -5 I/O.
+ */
+int ubfs_fs_rename(ubfs_fs_t *fs, const char *src, const char *dst)
+{
+	char pbuf[1024];
+	const char *sleaf, *dleaf;
+	uint64_t spobj, dpobj, obj, dummy, cur;
+	uint8_t type;
+	ubfs_inode_t in;
+	int hops;
+
+	sleaf = split_parent(src, pbuf, sizeof(pbuf));
+	if (ubfs_fs_lookup(fs, pbuf, &spobj) < 0 || ubfs_dir_lookup(fs->os, spobj, sleaf, &obj, &type) < 0)
+		return -1;
+	dleaf = split_parent(dst, pbuf, sizeof(pbuf));
+	if (ubfs_fs_lookup(fs, pbuf, &dpobj) < 0 || inode_get(fs, dpobj, &in) < 0 ||
+	    (in.mode & UBFS_S_IFMT) != UBFS_S_IFDIR)
+		return -2;
+	if (ubfs_dir_lookup(fs->os, dpobj, dleaf, &dummy, NULL) == 0)
+		return -3;
+	/* A directory may not become its own descendant: walk @dst's parent chain
+	 * up to the root (bounded, in case of a corrupt loop). */
+	for (cur = dpobj, hops = 0; hops < 4096; hops++)
+	{
+		if (cur == obj)
+			return -4;
+		if (cur == UBFS_OBJ_ROOT || inode_get(fs, cur, &in) < 0 || in.parent == 0 || in.parent == cur)
+			break;
+		cur = in.parent;
+	}
+	if (ubfs_dir_add(fs->os, dpobj, dleaf, obj, type) < 0)
+		return -5;
+	if (ubfs_dir_remove(fs->os, spobj, sleaf) < 0)
+		return -5;
+	if (inode_get(fs, obj, &in) < 0)
+		return -5;
+	in.parent = dpobj;
+	in.ctime = fs->now;
+	return (inode_put(fs, obj, &in) < 0) ? -5 : 0;
+}
+
 int ubfs_fs_readdir(ubfs_fs_t *fs, uint64_t dirobj, ubfs_dir_cb cb, void *arg)
 {
 	return ubfs_dir_foreach(fs->os, dirobj, cb, arg);

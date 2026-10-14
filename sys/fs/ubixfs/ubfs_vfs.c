@@ -19,6 +19,7 @@
 #include <ubixos/spinlock.h> /* g_ubfs_lock */
 #include <ubixos/sched.h>    /* _current (lock owner) */
 #include <string.h>
+#include <sys/errno.h> /* vfsRename's -errno */
 #include <lib/kprintf.h>
 #include <lib/kmalloc.h>
 #include <sys/bus.h>       /* struct ubx_device (raw block-device vdev) */
@@ -800,6 +801,95 @@ static int ubfs_vfs_close(void *res)
 }
 
 /**
+ * vfsChmod: set the permission bits of the open file @res to @mode & 07777 and
+ * commit.
+ *
+ * @return 0 on success, -1 on a read-only mount or a missing object.
+ */
+static int ubfs_vfs_chmod_locked(void *res, int mode)
+{
+	struct ubfs_file *f = (struct ubfs_file *)res;
+	u_int perm = (u_int)mode & 07777u;
+
+	if (f == 0 || f->m == 0 || !f->m->writable)
+		return (-1);
+	ubfs_touch_clock(f->m);
+	if (ubfs_fs_chmod(&f->m->fs, f->obj, (uint32_t)perm) < 0)
+		return (-1);
+	return (ubfs_commit(f->m));
+}
+
+/** ubfs_vfs_chmod with the UbixFS lock held (see ubfs_lock). */
+static int ubfs_vfs_chmod(void *res, int mode)
+{
+	int r;
+
+	ubfs_lock();
+	r = ubfs_vfs_chmod_locked(res, mode);
+	ubfs_unlock();
+	return (r);
+}
+
+/**
+ * vfsRename: move @src to @dst (full paths on mount @vmp) and commit.  An
+ * existing regular file or symlink at @dst is replaced (it lives on while open,
+ * as with unlink); an existing directory is not.
+ *
+ * @return 0 on success, -ENOENT, -EISDIR, -EINVAL (into own subtree), -EROFS or
+ *         -EIO.
+ */
+static int ubfs_vfs_rename_locked(const char *src, const char *dst, void *vmp)
+{
+	struct vfs_mountPoint *mp = (struct vfs_mountPoint *)vmp;
+	struct ubfs_mount *m;
+	const char *s, *d;
+	uint64_t sobj, dobj;
+	ubfs_inode_t in;
+	int r;
+
+	if (mp == 0 || mp->fsInfo == 0)
+		return (-EIO);
+	m = (struct ubfs_mount *)mp->fsInfo;
+	if (!m->writable)
+		return (-EROFS);
+	s = pool_relative(mp, src);
+	d = pool_relative(mp, dst);
+	if (ubfs_fs_lookup(&m->fs, s, &sobj) < 0)
+		return (-ENOENT);
+	if (ubfs_fs_lookup(&m->fs, d, &dobj) == 0)
+	{
+		if (dobj == sobj)
+			return (0); /* both names already refer to the same file */
+		if (ubfs_fs_getattr(&m->fs, dobj, &in) < 0 || (in.mode & UBFS_S_IFMT) == UBFS_S_IFDIR)
+			return (-EISDIR);
+		if (ubfs_unlink_path(m, d) < 0)
+			return (-EIO);
+	}
+	ubfs_touch_clock(m);
+	r = ubfs_fs_rename(&m->fs, s, d);
+	if (r == -1)
+		return (-ENOENT);
+	if (r == -2)
+		return (-ENOENT);
+	if (r == -4)
+		return (-EINVAL);
+	if (r < 0)
+		return (-EIO);
+	return (ubfs_commit(m) < 0 ? -EIO : 0);
+}
+
+/** ubfs_vfs_rename with the UbixFS lock held (see ubfs_lock). */
+static int ubfs_vfs_rename(const char *src, const char *dst, void *vmp)
+{
+	int r;
+
+	ubfs_lock();
+	r = ubfs_vfs_rename_locked(src, dst, vmp);
+	ubfs_unlock();
+	return (r);
+}
+
+/**
  * vfsOpenDir: resolve @path to a directory and set up a streaming read cursor.
  *
  * @return 1 on success, 0 if @path is not a directory in the pool.
@@ -1133,6 +1223,8 @@ int ubfs_vfs_init(void)
 	    (void *)ubfs_vfs_close,    /* vfsClose */
 	    (void *)ubfs_vfs_symlink,  /* vfsSymlink */
 	    (void *)ubfs_vfs_readlink, /* vfsReadlink */
+	    (void *)ubfs_vfs_chmod,    /* vfsChmod */
+	    (void *)ubfs_vfs_rename,   /* vfsRename */
 	};
 
 	if (vfsRegisterFS(fs) != 0)

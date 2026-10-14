@@ -1,0 +1,2 @@
+crtbegin.c and crtend.c from LLVM 18.1.8 compiler-rt (lib/builtins), unmodified.
+Apache-2.0 WITH LLVM-exception (LICENSE.TXT).  Built by lib/crtbegin.
