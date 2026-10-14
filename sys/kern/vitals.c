@@ -30,6 +30,7 @@
 #include <ubixos/kpanic.h>
 #include <lib/kprintf.h>
 #include <lib/kmalloc.h>
+#include <ubixos/time.h> /* md_uptime */
 #include <string.h>
 
 vitalsNode *systemVitals = 0x0;
@@ -45,33 +46,51 @@ spinLock_t vitals_lock;
  02/20/2004 - Approved Its Quality
 
  ************************************************************************/
-int vitals_init() {
-  /* Initialize Vitals SpinLock */
-  vitals_lock = (spinLock_t)kmalloc(sizeof(struct spinLock));
-  spinLockInit(vitals_lock);
+int vitals_init()
+{
+	/* Initialize Vitals SpinLock */
+	vitals_lock = (spinLock_t)kmalloc(sizeof(struct spinLock));
+	spinLockInit(vitals_lock);
 
-  /* Initialize Memory For The System Vitals Node */
-  systemVitals = (vitalsNode *) kmalloc(sizeof(vitalsNode));
+	/* Initialize Memory For The System Vitals Node */
+	systemVitals = (vitalsNode *)kmalloc(sizeof(vitalsNode));
 
-  /* If malloc Failed Then Error */
-  if (systemVitals == 0x0) {
-    kpanic("Error: kmalloc Failed In initVitals\n");
-  }
+	/* If malloc Failed Then Error */
+	if (systemVitals == 0x0)
+	{
+		kpanic("Error: kmalloc Failed In initVitals\n");
+	}
 
-  /* Set all default values */
-  memset(systemVitals, 0x0, sizeof(vitalsNode));
+	/* Set all default values */
+	memset(systemVitals, 0x0, sizeof(vitalsNode));
 
-  systemVitals->quantum = 8;
-  systemVitals->dQuantum = 8;
+	systemVitals->quantum = 8;
+	systemVitals->dQuantum = 8;
 
-  /* Print Out Info For Vitals: */
-  kprintf("vitals0: addr=0x%X\n", systemVitals);
+	/* Print Out Info For Vitals: */
+	kprintf("vitals0: addr=0x%X\n", systemVitals);
 
-  /* Return so kernel knows that there is no problem */
-  return (0x0);
+	/* Return so kernel knows that there is no problem */
+	return (0x0);
+}
+
+/**
+ * Refresh systemVitals->sysUptime (whole seconds since boot) from md_uptime.
+ *
+ * Called from the BSP timer tick on each arch.  The wall clock the kernel
+ * stamps on files and log entries is timeStart + sysUptime, so without this
+ * every timestamp stays at the boot time.
+ */
+void vitals_tick_uptime(void)
+{
+	u_int64_t sec, nsec;
+
+	if (systemVitals == 0x0)
+		return;
+	md_uptime(&sec, &nsec);
+	systemVitals->sysUptime = (u_int32_t)sec;
 }
 
 /***
  END
  ***/
-

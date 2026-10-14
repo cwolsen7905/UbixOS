@@ -25,6 +25,7 @@
 #include <pthread.h>
 #include <signal.h>
 #include <sys/select.h>
+#include <time.h>
 
 #define NMAPS 64
 #define MAPSZ 8192
@@ -321,6 +322,30 @@ static void check_umask(void)
 	check("fork child inherits the umask",
 	      pid > 0 && waitpid(pid, &status, 0) == pid && WIFEXITED(status) && WEXITSTATUS(status) == 0);
 	check("child's umask change leaves the parent's", umask(old) == 077);
+}
+
+/**
+ * A newly written file is stamped with the current wall-clock time, not the
+ * time the system booted.
+ */
+static void check_mtime_now(void)
+{
+	const char *p = "/tmp/vfstest.mtime";
+	struct stat st;
+	time_t now;
+	int fd;
+
+	unlink(p);
+	fd = open(p, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (fd >= 0)
+	{
+		write(fd, "t", 1);
+		close(fd);
+	}
+	now = time(NULL);
+	check("new file mtime is the current time",
+	      stat(p, &st) == 0 && st.st_mtime <= now + 2 && st.st_mtime >= now - 2);
+	unlink(p);
 }
 
 /**
@@ -646,6 +671,7 @@ int main(int argc, char **argv)
 
 	check_modes();
 	check_umask();
+	check_mtime_now();
 	check_poll_pipes();
 	check("two threads' mmaps are distinct and intact", check_thread_mmap());
 	check("threads share one fd table", check_thread_fds());

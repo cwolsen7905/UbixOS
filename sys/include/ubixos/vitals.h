@@ -33,29 +33,31 @@
 #include <ubixos/spinlock.h>
 #include <fs/vfs/vfs.h>
 
-typedef struct vitalsStruct {
-    u_int32_t sysTicks;  // 0 - Do Not Change Order
-    u_int32_t sysUptime; // 4 - Do Not Change Order
-    u_int32_t quantum;   // 8 - Do Not Change Order
-    u_int32_t dQuantum;  // 12 - Do Not Change Order
-    u_int32_t openFiles;
-    u_int32_t lastFD;
-    u_int32_t freePages;
-    struct fileSystem *fileSystems;
-    struct vfs_mountPoint *mountPoints;
-    u_int32_t timeStart;
-    void *screen;
-    void *font;
-    char *packet;
-    u_int32_t packetLength;
+typedef struct vitalsStruct // NOLINT(readability-identifier-naming)
+{
+	u_int32_t sysTicks;  // 0 - Do Not Change Order
+	u_int32_t sysUptime; // 4 - Do Not Change Order
+	u_int32_t quantum;   // 8 - Do Not Change Order
+	u_int32_t dQuantum;  // 12 - Do Not Change Order
+	u_int32_t openFiles;
+	u_int32_t lastFD;
+	u_int32_t freePages;
+	struct fileSystem *fileSystems;
+	struct vfs_mountPoint *mountPoints;
+	u_int32_t timeStart;
+	void *screen;
+	void *font;
+	char *packet;
+	u_int32_t packetLength;
 } vitalsNode;
 
 extern vitalsNode *systemVitals;
 extern spinLock_t vitals_lock;
 
 /* Wrap-safe tick comparison: true if tick a is at or after b. */
-#define TICKS_AFTER(a, b)  ((int32_t)((a) - (b)) >= 0)
+#define TICKS_AFTER(a, b) ((int32_t)((a) - (b)) >= 0)
 
 int vitals_init();
+void vitals_tick_uptime(void);
 
 #endif
