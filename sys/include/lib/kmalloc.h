@@ -36,12 +36,12 @@ extern "C"
 {
 #endif
 
-#define sysID -2
+#define sysID (-2) // NOLINT(readability-identifier-naming)
 #define MALLOC_ALIGN_SIZE 32
 #define MALLOC_ALIGN(size)                                                                                             \
-	(size + ((((size) % (MALLOC_ALIGN_SIZE)) == 0) ? 0 : ((MALLOC_ALIGN_SIZE) - ((size) % (MALLOC_ALIGN_SIZE)))))
+	((size) + ((((size) % (MALLOC_ALIGN_SIZE)) == 0) ? 0 : ((MALLOC_ALIGN_SIZE) - ((size) % (MALLOC_ALIGN_SIZE)))))
 
-	struct memDescriptor
+	struct memDescriptor // NOLINT(readability-identifier-naming)
 	{
 		struct memDescriptor *prev; // 4
 		struct memDescriptor *next; // 4
@@ -49,7 +49,7 @@ extern "C"
 		u_int32_t limit;            // 4
 	};
 
-	void kfree(void *baseAddr);
+	void kfree(void *addr);
 	void *kmalloc(u_int32_t len);
 	void kmalloc_stats(u_int32_t *used, u_int32_t *blocks, u_int32_t *avail); /* /proc/meminfo */
 
