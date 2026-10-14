@@ -206,6 +206,48 @@ static int check_thread_mmap(void)
 }
 
 /**
+ * Open /etc/passwd in a thread and return its fd.
+ * @return the fd, cast to a pointer.
+ */
+static void *opener(void *arg)
+{
+	(void)arg;
+	return (void *)(long)open("/etc/passwd", O_RDONLY);
+}
+
+/**
+ * Threads share one fd table: an fd a thread opens is usable in the main
+ * thread, and a file the main thread closes is closed for the thread too.
+ * Run in a child so the child's exit (last thread closing the table) is
+ * checked as well; each thread used to have its own copy of the table, and
+ * that exit freed the closed file a second time (kernel double-free).
+ * @return 1 on success.
+ */
+static int check_thread_fds(void)
+{
+	pid_t pid;
+	int st = -1;
+
+	pid = fork();
+	if (pid == 0)
+	{
+		pthread_t t;
+		void *r = NULL;
+		char c;
+		int fd, ok;
+
+		fd = open("/etc/passwd", O_RDONLY);
+		if (fd < 0 || pthread_create(&t, NULL, opener, NULL) != 0)
+			_exit(2);
+		pthread_join(t, &r);
+		close(fd);
+		ok = (long)r >= 0 && read((int)(long)r, &c, 1) == 1;
+		_exit(ok ? 0 : 1);
+	}
+	return pid > 0 && waitpid(pid, &st, 0) == pid && WIFEXITED(st) && WEXITSTATUS(st) == 0;
+}
+
+/**
  * execve passes long and numerous arguments whole, and refuses an oversized
  * or unreadable argv with an error instead of truncating it.
  */
@@ -528,6 +570,7 @@ int main(int argc, char **argv)
 
 	check_poll_pipes();
 	check("two threads' mmaps are distinct and intact", check_thread_mmap());
+	check("threads share one fd table", check_thread_fds());
 	check_execve_args(argv[0][0] == '/' ? argv[0] : "/usr/tests/vfstest");
 
 	printf("vfstest: %s\n", g_fail ? "FAILED" : "all passed");

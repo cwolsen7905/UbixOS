@@ -19,6 +19,7 @@
 #include <vmm/vm_map.h>     /* vm_map_copy — inherit the demand-fault VMA tree */
 #include <lib/kmalloc.h>    /* sysID */
 #include <ubixos/uaccess.h> /* copyout — rfork CLONE_PARENT_SETTID */
+#include <sys/descrip.h>    /* fd_table_share */
 #include <string.h>
 
 #define PTE_P 0x1
@@ -273,19 +274,12 @@ long x86_64_rfork(struct x86_64_trapframe *parent_tf)
 	 * frees the address space only when the LAST thread of the group exits. */
 	child->tgid = _current->tgid;
 
-	/* Shallow-share the fd table: threads share open files.  Free the placeholder
-	 * fds schedNewTask() made for 0-2, then point at the caller's file objects.
-	 * (x86_64 uses the MI endTask, which does not close/free fds, so a non-last
-	 * thread exiting cannot drop a shared file out from under its siblings.) */
-	for (i = 0; i < O_FILES; i++)
-	{
-		if (child->td.o_files[i] != NULL)
-		{
-			kfree(child->td.o_files[i]);
-			child->td.o_files[i] = NULL;
-		}
-		child->td.o_files[i] = _current->td.o_files[i];
-	}
+	/* Threads share one fd table (an open, close or dup in any thread is seen
+	 * by all); the last thread to exit closes it.  Each thread used to get a
+	 * shallow copy of the array, so a close() in one thread left its siblings
+	 * holding the freed struct file, and the last thread's exit freed it again
+	 * (kfree double-free in multi-threaded ld.lld on x86_64). */
+	fd_table_share(&child->td, &_current->td);
 
 	proc_fork_inherit_context(child);
 	proc_fork_signal_init(child, &_current->td);

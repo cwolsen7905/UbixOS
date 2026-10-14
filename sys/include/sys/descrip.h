@@ -222,7 +222,11 @@ int fstat(struct thread *, struct sys_fstat_args *);
 int ioctl(struct thread *, struct ioctl_args *);
 int getfd(struct thread *td, struct file **fp, int fd);
 int fdestroy(struct thread *td, struct file *fp, int fd);
-void fd_close_on_exit(struct thread *td); /* endTask: close the exiting process's fds */
+void fd_close_on_exit(struct thread *td);                   /* close every fd in td's table */
+int fd_table_init(struct thread *td);                       /* schedNewTask: a fresh, empty table */
+void fd_table_share(struct thread *td, struct thread *ptd); /* thread create: use ptd's table */
+void fd_table_exit(struct thread *td);                      /* endTask: drop td's reference */
+void fd_table_free(struct thread *td);                      /* sched_free_task: drop a leftover reference */
 
 int kern_openat(struct thread *, int, char *, int, int);
 

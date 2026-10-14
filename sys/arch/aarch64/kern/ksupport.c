@@ -204,8 +204,8 @@ void endTask(pidType pid)
 			_current->clear_tid = NULL;
 		}
 
-		/* Close the task's fds on exit (fd_close_on_exit, shared with the x86_64
-		 * endTask).
+		/* Drop this thread's reference on the fd table; the last thread of the
+		 * process closes the fds (fd_table_exit, shared with the x86_64 endTask).
 		 *
 		 * FILES: shared with fork children through the descriptor's dup count
 		 * (fork_copy_fdtable), so only the last user really closes.
@@ -226,12 +226,12 @@ void endTask(pidType pid)
 		 * closed (closing a job-control child's inherited pty fd once corrupted
 		 * the device and panicked the kernel).
 		 *
-		 * Threads (rfork(RFMEM)) SHALLOW-share one fd table across a tgid, so only the
-		 * LAST thread of the group may close them — an earlier thread exiting must
-		 * leave the shared fd objects intact for its still-running siblings. */
+		 * Threads (rfork(RFMEM)) share the table, so an earlier thread exiting
+		 * leaves the fds open for its still-running siblings. */
+		fd_table_exit(&_current->td);
+
 		if (sched_tgid_others_alive(_current->tgid, _current->id) == 0)
 		{
-			fd_close_on_exit(&_current->td);
 
 			/* Release the user address space.  The bring-up teardown used to be a
 			 * no-op, so every exited process leaked its entire working set: a long run

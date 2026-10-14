@@ -37,10 +37,19 @@
 // #define O_FILES 64
 #define O_FILES 512
 
+/* A process's open-file table.  Threads (rfork(RFMEM)) share one through
+ * td_fdt; fork copies it (fork_copy_fdtable); the last reference closes it. */
+struct fdtable
+{
+	int refs;
+	void *files[O_FILES];
+};
+
 struct thread
 {
 	int td_retval[2];
-	void *o_files[O_FILES];
+	void **o_files;         /* td_fdt->files */
+	struct fdtable *td_fdt; /* NULL after endTask released it */
 	u_long vm_daddr;
 	u_long vm_dsize;
 	u_long vm_taddr;

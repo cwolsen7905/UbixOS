@@ -97,16 +97,17 @@ void endTask(pidType pid)
 	 * must leave the shared pages mapped for its still-running siblings.  The
 	 * reaper frees the page tables/dir only for the task flagged here.
 	 */
+	/* Drop this thread's reference on the fd table; the last thread of the
+	 * process closes the fds (fd_table_exit, shared with the aarch64 endTask).
+	 * Regular files are shared with fork children through the descriptor's dup
+	 * count (fork_copy_fdtable), so this only really closes the last user.  A
+	 * reader blocked on this task's pipe write end sees EOF when the writer
+	 * exits (`cmd | wc -l` hung forever without it), and a socket's lwIP
+	 * netconn is released. */
+	fd_table_exit(&_current->td);
+
 	if (sched_tgid_others_alive(_current->tgid, _current->id) == 0)
 	{
-		/* Close the task's fds (fd_close_on_exit, shared with the aarch64
-		 * endTask).  Regular files are shared with fork children through the
-		 * descriptor's dup count (fork_copy_fdtable), so this only really closes
-		 * the last user.  A reader blocked on this task's pipe write end sees EOF
-		 * when the writer exits (`cmd | wc -l` hung forever without it), and a
-		 * socket's lwIP netconn is released.  Last thread of the group only:
-		 * rfork(RFMEM) siblings share the table. */
-		fd_close_on_exit(&_current->td);
 
 		/* Free the demand-fault VMA tree (+ its backing file fds) before reclaiming
 		 * the pages.  A demand-loaded image (execve) leaves file-backed VMAs holding

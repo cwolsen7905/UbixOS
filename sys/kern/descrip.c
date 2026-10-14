@@ -182,9 +182,14 @@ int falloc(struct thread *td, struct file **resultfp, int *resultfd)
 	 * redirect idiom; starting the search at 5 broke that. */
 	for (i = 0; i < O_FILES; i++)
 	{
-		if (td->o_files[i] == 0x0)
+		void *none = NULL;
+
+		/* Claim the slot atomically: threads share the table, so another
+		 * thread may be allocating at the same time. */
+		if (td->o_files[i] == 0x0 &&
+		    __atomic_compare_exchange_n(
+		        &td->o_files[i], &none, (void *)fp, 0, __ATOMIC_ACQ_REL, __ATOMIC_ACQUIRE))
 		{
-			td->o_files[i] = (void *)fp;
 			if (resultfd)
 				*resultfd = i;
 			if (resultfp)
@@ -321,6 +326,93 @@ void fd_close_on_exit(struct thread *td)
 		else
 			close_fdslot(td, fd);
 	}
+}
+
+/* What a task's o_files points at once endTask has released its table: an
+ * empty table, so a late reader (procfs on a zombie) sees no open files. */
+static void *fd_table_none[O_FILES];
+
+/**
+ * Give a new task a fresh, empty fd table with one reference.
+ *
+ * @param td the new task's thread
+ * @return 0, or -1 if the table could not be allocated
+ */
+int fd_table_init(struct thread *td)
+{
+	struct fdtable *fdt = (struct fdtable *)kmalloc(sizeof(struct fdtable));
+
+	if (fdt == NULL)
+		return (-1);
+	memset(fdt, 0, sizeof(struct fdtable));
+	fdt->refs = 1;
+	td->td_fdt = fdt;
+	td->o_files = fdt->files;
+	return (0);
+}
+
+/**
+ * Make a new thread use its creator's fd table (rfork(RFMEM)).  The new
+ * thread's own table, holding only schedNewTask's stdio placeholders, is
+ * freed.
+ *
+ * @param td  the new thread
+ * @param ptd the creating thread
+ */
+void fd_table_share(struct thread *td, struct thread *ptd)
+{
+	int fd;
+
+	if (td->td_fdt != NULL)
+	{
+		for (fd = 0; fd < O_FILES; fd++)
+			if (td->td_fdt->files[fd] != NULL)
+				kfree(td->td_fdt->files[fd]);
+		kfree(td->td_fdt);
+	}
+	__atomic_add_fetch(&ptd->td_fdt->refs, 1, __ATOMIC_ACQ_REL);
+	td->td_fdt = ptd->td_fdt;
+	td->o_files = ptd->td_fdt->files;
+}
+
+/**
+ * Drop an exiting thread's reference on its fd table; the last thread of the
+ * process closes every fd and frees the table.
+ *
+ * @param td the exiting thread (_current)
+ */
+void fd_table_exit(struct thread *td)
+{
+	struct fdtable *fdt = td->td_fdt;
+
+	if (fdt == NULL)
+		return;
+	if (__atomic_sub_fetch(&fdt->refs, 1, __ATOMIC_ACQ_REL) == 0)
+	{
+		fd_close_on_exit(td);
+		kfree(fdt);
+	}
+	td->td_fdt = NULL;
+	td->o_files = fd_table_none;
+}
+
+/**
+ * Drop a reference endTask did not (a task freed without exiting through
+ * endTask).  Its fds cannot be closed from here, so a last reference only
+ * frees the table itself.
+ *
+ * @param td the task being freed
+ */
+void fd_table_free(struct thread *td)
+{
+	struct fdtable *fdt = td->td_fdt;
+
+	if (fdt == NULL)
+		return;
+	if (__atomic_sub_fetch(&fdt->refs, 1, __ATOMIC_ACQ_REL) == 0)
+		kfree(fdt);
+	td->td_fdt = NULL;
+	td->o_files = fd_table_none;
 }
 
 static int duplicate_descriptor(struct thread *td, int from, int to)
