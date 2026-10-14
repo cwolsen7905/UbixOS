@@ -107,6 +107,9 @@ typedef struct kDIR
 	 * did not fit in the caller's buffer, returned first on the next call. */
 	int has_pending;
 	struct kdirent pending;
+	/* Open file descriptions using this handle: fork and dup share it, and
+	 * vfs_closedir frees it when the last one closes. */
+	int refs;
 } kDIR_t;
 
 /* Userland-visible dirent / DIR passed through syscalls */
@@ -148,6 +151,7 @@ int kern_fseek(fileDescriptor_t *, u_int32_t, int);
 int sysFseek(userFileDescriptor *, long, int);
 
 kDIR_t *vfs_opendir(const char *path);
+void vfs_dir_ref(kDIR_t *dir);
 int vfs_readdir(kDIR_t *dir, struct kdirent *ent);
 int vfs_closedir(kDIR_t *dir);
 

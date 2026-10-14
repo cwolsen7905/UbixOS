@@ -502,6 +502,30 @@ int main(int argc, char **argv)
 		close(f);
 	}
 
+	/* A directory fd inherited across fork and dup shares one kernel handle;
+	 * the exiting child and the parent's close each freed it (kfree
+	 * double-free panic during the in-OS world build). */
+	{
+		DIR *dp;
+		int d, dd, st, ok = 0;
+		pid_t pid;
+
+		d = open("/etc", O_RDONLY | O_DIRECTORY);
+		dd = dup(d);
+		pid = fork();
+		if (pid == 0)
+			_exit(0);
+		waitpid(pid, &st, 0);
+		close(dd);
+		dp = d >= 0 ? fdopendir(d) : NULL;
+		if (dp != NULL)
+		{
+			ok = readdir(dp) != NULL;
+			closedir(dp);
+		}
+		check("directory fd shared with an exited child and a dup", ok);
+	}
+
 	check_poll_pipes();
 	check("two threads' mmaps are distinct and intact", check_thread_mmap());
 	check_execve_args(argv[0][0] == '/' ? argv[0] : "/usr/tests/vfstest");

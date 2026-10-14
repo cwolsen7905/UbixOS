@@ -364,6 +364,10 @@ static int duplicate_descriptor(struct thread *td, int from, int to)
 	if (fp->fd_type == FD_TYPE_PTMASTER)
 		pty_master_fork_ref((int)(uintptr_t)fp->data);
 
+	/* An open directory: both fds share one kDIR_t, freed on the last close. */
+	if (fp->fd_type == FD_TYPE_DIR)
+		vfs_dir_ref((kDIR_t *)fp->data);
+
 	td->o_files[to] = (void *)dup_fp;
 	return (0);
 }

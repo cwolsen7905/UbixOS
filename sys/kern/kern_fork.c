@@ -83,6 +83,10 @@ void fork_copy_fdtable(kTask_t *child, struct thread *ptd)
 		 * freed) out from under the parent's relay.  The pool slot is in fd->data. */
 		if (parent_f->fd_type == FD_TYPE_PTMASTER)
 			pty_master_fork_ref((int)(uintptr_t)parent_f->data);
+
+		/* An open directory shares its kDIR_t handle the same way. */
+		if (parent_f->fd_type == FD_TYPE_DIR)
+			vfs_dir_ref((kDIR_t *)parent_f->data);
 	}
 }
 
