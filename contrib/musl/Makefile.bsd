@@ -1,0 +1,203 @@
+# (C) 2002-2026 The UbixOS Project
+# Makefile.bsd — bmake build of musl libc for UbixOS.
+#
+# Replaces musl's configure + GNU-make Makefile so the C library builds with the
+# BSD toolchain on the host AND inside UbixOS (where there is no GNU make).  It
+# reproduces musl's Makefile: the same sources (an arch file under src/*/ARCH/
+# replaces the generic file of the same name), the same per-object flags, the
+# same generated headers, and the same outputs.  The flags are the ones musl's
+# configure picks for the toolchain in use (TOOLCHAIN=clang or gcc).
+#
+# Run from the object directory (the top-level Makefile's musl-libc target):
+#   cd ${OBJ_DIR}/obj/musl && bmake -f ${SRCTOP}/contrib/musl/Makefile.bsd TARGET=<arch>
+#
+# Outputs (relative to the object directory, as musl's own Makefile):
+#   lib/libc.a lib/libc.so lib/crt1.o lib/Scrt1.o lib/rcrt1.o lib/crti.o lib/crtn.o
+#   lib/lib{m,rt,pthread,crypt,util,xnet,resolv,dl}.a (empty, as upstream)
+#   obj/include/bits/{alltypes,syscall}.h
+
+MUSL_SRC := ${.PARSEDIR:tA}
+.include "${MUSL_SRC}/../../Makefile.incl"
+
+# Objects go under the directory we were started in, never an auto obj dir (musl
+# itself creates ./obj, which bmake would otherwise adopt as .OBJDIR).
+.OBJDIR: ${.CURDIR}
+
+ARCH       ?= ${_ARCH}
+MALLOC_DIR  = mallocng
+EMU         = ${MUSL_LDEMULATION}
+
+# ── Flags (musl's Makefile + what its configure picks per compiler) ─────────
+CFLAGS_C99FSE = -std=c99 -nostdinc -ffreestanding -fexcess-precision=standard \
+	-frounding-math -fno-strict-aliasing -Wa,--noexecstack
+CFLAGS_NOSSP  = -fno-stack-protector
+.if ${TOOLCHAIN} == "gcc"
+MUSL_CC       = ${CROSS_PREFIX}gcc
+MUSL_AR       = ${CROSS_PREFIX}ar
+MUSL_RANLIB   = ${CROSS_PREFIX}ranlib
+MUSL_LD       = ${CROSS_PREFIX}ld
+CFLAGS_AUTO   = -O2 -fno-align-jumps -fno-align-functions -fno-align-loops \
+	-fno-align-labels -fira-region=one -fira-hoist-pressure \
+	-freorder-blocks-algorithm=simple -fno-prefetch-loop-arrays -fno-tree-ch \
+	-pipe -fomit-frame-pointer -fno-unwind-tables -fno-asynchronous-unwind-tables \
+	-ffunction-sections -fdata-sections -Wno-pointer-to-int-cast \
+	-Werror=implicit-function-declaration -Werror=implicit-int \
+	-Werror=pointer-sign -Werror=pointer-arith -Werror=int-conversion \
+	-Werror=incompatible-pointer-types -Werror=discarded-qualifiers \
+	-Werror=discarded-array-qualifiers -Waddress -Warray-bounds \
+	-Wchar-subscripts -Wduplicate-decl-specifier -Winit-self -Wreturn-type \
+	-Wsequence-point -Wstrict-aliasing -Wunused-function -Wunused-label \
+	-Wunused-variable
+CFLAGS_MEMOPS = -fno-tree-loop-distribute-patterns
+.else
+MUSL_CC       = ${CC}
+MUSL_AR       = ${AR}
+MUSL_RANLIB   = ${RANLIB}
+MUSL_LD       = ${LD}
+CFLAGS_AUTO   = -O2 -fno-align-functions -pipe -fomit-frame-pointer \
+	-fno-unwind-tables -fno-asynchronous-unwind-tables -ffunction-sections \
+	-fdata-sections -w -Wno-pointer-to-int-cast \
+	-Werror=implicit-function-declaration -Werror=implicit-int \
+	-Werror=pointer-sign -Werror=pointer-arith -Werror=int-conversion \
+	-Werror=incompatible-pointer-types -Qunused-arguments -Waddress \
+	-Warray-bounds -Wchar-subscripts -Wduplicate-decl-specifier -Winit-self \
+	-Wreturn-type -Wsequence-point -Wstrict-aliasing -Wunused-function \
+	-Wunused-label -Wunused-variable
+CFLAGS_MEMOPS =
+.endif
+# Userland keeps FP/SIMD (musl's math needs it), unlike the kernel.
+.if ${ARCH} == "aarch64"
+MUSL_CFLAGS = -march=armv8-a -ffreestanding -fno-stack-protector
+.else
+MUSL_CFLAGS = -ffreestanding -fno-stack-protector
+.endif
+
+CFLAGS_ALL = ${CFLAGS_C99FSE} -D_XOPEN_SOURCE=700 -I${MUSL_SRC}/arch/${ARCH} \
+	-I${MUSL_SRC}/arch/generic -Iobj/src/internal -I${MUSL_SRC}/src/include \
+	-I${MUSL_SRC}/src/internal -Iobj/include -I${MUSL_SRC}/include \
+	${CFLAGS_AUTO} ${MUSL_CFLAGS}
+
+# ── Sources ──────────────────────────────────────────────────────────────────
+# Every .c in the source dirs plus every .c/.s/.S in their ARCH subdirs; an
+# arch file replaces the generic .c of the same name (src/string/x86_64/memcpy.s
+# replaces src/string/memcpy.c).
+_DIRS != cd ${MUSL_SRC} && echo src/*/ src/malloc/${MALLOC_DIR}/ crt/ ldso/
+_ALL  != cd ${MUSL_SRC} && for d in ${_DIRS}; do \
+		for f in $${d}*.c $${d}${ARCH}/*.c $${d}${ARCH}/*.s $${d}${ARCH}/*.S; do \
+			[ -f "$$f" ] && echo "$$f"; \
+		done; \
+	done; true
+.if empty(_ALL)
+.error musl: no sources found under ${MUSL_SRC}/src (is contrib/musl staged in full?)
+.endif
+ARCH_SRCS := ${_ALL:M*/${ARCH}/*}
+BASE_SRCS := ${_ALL:N*/${ARCH}/*}
+.for s in ${ARCH_SRCS}
+BASE_SRCS := ${BASE_SRCS:N${s:R:S,/${ARCH}/,/,}.c}
+.endfor
+SRCS := ${BASE_SRCS} ${ARCH_SRCS}
+
+LIBC_SRCS := ${SRCS:Msrc/*:O}
+CRT_SRCS  := ${SRCS:Mcrt/*:O}
+LDSO_SRCS := ${SRCS:Mldso/*:O}
+
+AOBJS     := ${LIBC_SRCS:R:S,^,obj/,:S,$,.o,}
+LOBJS     := ${LIBC_SRCS:R:S,^,obj/,:S,$,.lo,}
+LDSO_OBJS := ${LDSO_SRCS:R:S,^,obj/,:S,$,.lo,}
+CRT_OBJS  := ${CRT_SRCS:R:S,^,obj/,:S,$,.o,}
+
+GENH     = obj/include/bits/alltypes.h obj/include/bits/syscall.h
+GENH_INT = obj/src/internal/version.h
+IMPH     = ${MUSL_SRC}/src/internal/stdio_impl.h ${MUSL_SRC}/src/internal/pthread_impl.h \
+	${MUSL_SRC}/src/internal/locale_impl.h ${MUSL_SRC}/src/internal/libc.h
+
+EMPTY_LIBS = ${m rt pthread crypt util xnet resolv dl:L:S,^,lib/lib,:S,$,.a,}
+CRT_LIBS   = ${CRT_OBJS:T:S,^,lib/,}
+
+all: lib/libc.a lib/libc.so ${CRT_LIBS} ${EMPTY_LIBS}
+
+# One mkdir for every output directory, before any object is built.
+_ODIRS := obj/include/bits obj/src/internal lib ${AOBJS:H:O:u} ${LDSO_OBJS:H:O:u} ${CRT_OBJS:H:O:u}
+obj/.dirs:
+	mkdir -p ${_ODIRS}
+	touch ${.TARGET}
+
+# ── Generated headers ────────────────────────────────────────────────────────
+obj/include/bits/alltypes.h: obj/.dirs ${MUSL_SRC}/arch/${ARCH}/bits/alltypes.h.in \
+    ${MUSL_SRC}/include/alltypes.h.in ${MUSL_SRC}/tools/mkalltypes.sed
+	sed -f ${MUSL_SRC}/tools/mkalltypes.sed ${MUSL_SRC}/arch/${ARCH}/bits/alltypes.h.in \
+	    ${MUSL_SRC}/include/alltypes.h.in > ${.TARGET}
+
+obj/include/bits/syscall.h: obj/.dirs ${MUSL_SRC}/arch/${ARCH}/bits/syscall.h.in
+	cp ${MUSL_SRC}/arch/${ARCH}/bits/syscall.h.in ${.TARGET}
+	sed -n -e s/__NR_/SYS_/p < ${MUSL_SRC}/arch/${ARCH}/bits/syscall.h.in >> ${.TARGET}
+
+obj/src/internal/version.h: obj/.dirs ${MUSL_SRC}/VERSION
+	printf '#define VERSION "%s"\n' "$$(cd ${MUSL_SRC}; sh tools/version.sh)" > ${.TARGET}
+
+# ── Per-object flags (musl's target-specific CFLAGS_ALL additions) ───────────
+# -O3 for OPTIMIZE_GLOBS (src/internal, src/malloc, src/string top-level .c).
+.for s in ${LIBC_SRCS:Msrc/internal/*.c:Nsrc/internal/*/*} \
+    ${LIBC_SRCS:Msrc/malloc/*.c:Nsrc/malloc/*/*} ${LIBC_SRCS:Msrc/string/*.c:Nsrc/string/*/*}
+_XF.${s:R} += -O3
+.endfor
+.for s in ${LIBC_SRCS:M*/memcpy.*} ${LIBC_SRCS:M*/memmove.*} ${LIBC_SRCS:M*/memcmp.*} \
+    ${LIBC_SRCS:M*/memset.*}
+_XF.${s:R} += ${CFLAGS_MEMOPS}
+.endfor
+.for s in ${LIBC_SRCS:M*/__libc_start_main.*} ${LIBC_SRCS:M*/__init_tls.*} \
+    ${LIBC_SRCS:M*/__stack_chk_fail.*} ${LIBC_SRCS:M*/__set_thread_area.*} \
+    ${LIBC_SRCS:M*/memset.*} ${LIBC_SRCS:M*/memcpy.*} ${CRT_SRCS} ${LDSO_SRCS}
+_XF.${s:R} += ${CFLAGS_NOSSP}
+.endfor
+.for s in ${CRT_SRCS}
+_XF.${s:R} += -DCRT
+.endfor
+_XF.crt/Scrt1 += -fPIC
+_XF.crt/rcrt1 += -fPIC
+
+# ── Compile rules ────────────────────────────────────────────────────────────
+.for s in ${LIBC_SRCS}
+.if ${s:E} == "c"
+obj/${s:R}.o obj/${s:R}.lo: ${GENH} ${IMPH}
+.endif
+obj/${s:R}.o: obj/.dirs ${MUSL_SRC}/${s}
+	${MUSL_CC} ${CFLAGS_ALL} ${_XF.${s:R}} -c -o ${.TARGET} ${MUSL_SRC}/${s}
+obj/${s:R}.lo: obj/.dirs ${MUSL_SRC}/${s}
+	${MUSL_CC} ${CFLAGS_ALL} ${_XF.${s:R}} -fPIC -c -o ${.TARGET} ${MUSL_SRC}/${s}
+.endfor
+.for s in ${LDSO_SRCS}
+obj/${s:R}.lo: obj/.dirs ${MUSL_SRC}/${s} ${GENH} ${IMPH} ${MUSL_SRC}/src/internal/dynlink.h \
+    ${MUSL_SRC}/arch/${ARCH}/reloc.h ${MUSL_SRC}/arch/${ARCH}/crt_arch.h
+	${MUSL_CC} ${CFLAGS_ALL} ${_XF.${s:R}} -fPIC -c -o ${.TARGET} ${MUSL_SRC}/${s}
+.endfor
+.for s in ${CRT_SRCS}
+obj/${s:R}.o: obj/.dirs ${MUSL_SRC}/${s} ${GENH} ${MUSL_SRC}/arch/${ARCH}/crt_arch.h
+	${MUSL_CC} ${CFLAGS_ALL} ${_XF.${s:R}} -c -o ${.TARGET} ${MUSL_SRC}/${s}
+.endfor
+obj/crt/rcrt1.o: ${MUSL_SRC}/ldso/dlstart.c ${MUSL_SRC}/src/internal/dynlink.h \
+    ${MUSL_SRC}/arch/${ARCH}/reloc.h
+obj/src/internal/version.o obj/src/internal/version.lo: ${GENH_INT}
+
+# ── Libraries ────────────────────────────────────────────────────────────────
+lib/libc.a: ${AOBJS}
+	rm -f ${.TARGET}
+	${MUSL_AR} rc ${.TARGET} ${AOBJS}
+	${MUSL_RANLIB} ${.TARGET}
+
+lib/libc.so: ${LOBJS} ${LDSO_OBJS}
+	${MUSL_LD} -m ${EMU} -shared -e _dlstart -o ${.TARGET} ${LOBJS} ${LDSO_OBJS} ${LIBGCC}
+
+.for o in ${CRT_OBJS}
+lib/${o:T}: ${o}
+	cp ${o} ${.TARGET}
+.endfor
+
+${EMPTY_LIBS}: obj/.dirs
+	rm -f ${.TARGET}
+	${MUSL_AR} rc ${.TARGET}
+
+clean:
+	rm -rf obj lib
+
+.PHONY: all clean

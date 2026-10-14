@@ -9,7 +9,6 @@
 #   CROSS_PREFIX   cross-compiler prefix   (x86_64-elf- on Darwin/Linux x86_64, empty on FreeBSD i386)
 #   CROSS_M32      -m32 flag               (set when the host is not natively i386)
 #   LIBGCC         path to libgcc.a        (static libgcc for the link group)
-#   GNU_MAKE       GNU make command        (musl's own Makefile requires GNU make, not bmake)
 
 .if !defined(_UBIX_PLATFORM_MK)
 _UBIX_PLATFORM_MK = 1
@@ -22,7 +21,6 @@ UNAME_M != uname -m
 # -m32 targets i386 ELF output from the 64-bit ELF toolchain.
 CROSS_PREFIX ?= x86_64-elf-
 CROSS_M32    ?= -m32
-GNU_MAKE     ?= /usr/bin/make
 .elif ${UNAME_S} == "Linux"
 .  if ${UNAME_M} == "x86_64"
 # Linux x86_64: native gcc produces ELF (no prefix needed), but -m32 is
@@ -30,12 +28,10 @@ GNU_MAKE     ?= /usr/bin/make
 # gcc-multilib equivalent for your distro.
 CROSS_PREFIX ?=
 CROSS_M32    ?= -m32
-GNU_MAKE     ?= make
 .  else
 # Linux i386 (native 32-bit host): no cross steps needed.
 CROSS_PREFIX ?=
 CROSS_M32    ?=
-GNU_MAKE     ?= make
 .  endif
 .elif ${UNAME_S} == "UBIX"
 # Native on-device build (uname -s == "UBIX" only in-OS): no cross prefix, and
@@ -48,14 +44,12 @@ GNU_MAKE     ?= make
 UBIX_NATIVE  = 1
 CROSS_PREFIX ?=
 CROSS_M32    ?=
-GNU_MAKE     ?= make
 LIBGCC       ?= /lib/libgcc.a
 .else
 # FreeBSD and other BSDs: assumes native i386 host toolchain.
 # On FreeBSD x86_64 you would need to set CROSS_M32=-m32 manually.
 CROSS_PREFIX ?=
 CROSS_M32    ?=
-GNU_MAKE     ?= gmake
 .endif
 
 # Only compute LIBGCC once — child makes inherit it via the environment.
@@ -87,6 +81,6 @@ MUSL_LDEMULATION ?= elf_i386
 ARCH_NOSIMD      ?= -mno-sse -mno-sse2 -mno-mmx -mno-3dnow
 .endif
 
-.export CROSS_PREFIX CROSS_M32 LIBGCC GNU_MAKE MUSL_ARCH MUSL_LDEMULATION ARCH_NOSIMD UBIX_NATIVE
+.export CROSS_PREFIX CROSS_M32 LIBGCC MUSL_ARCH MUSL_LDEMULATION ARCH_NOSIMD UBIX_NATIVE
 
 .endif # _UBIX_PLATFORM_MK

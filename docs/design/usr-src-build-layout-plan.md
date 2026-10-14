@@ -144,7 +144,7 @@ in-flight hunk — stage source via a separate helper to avoid index contention)
   **native** (non-cross) toolchain profile exists.
 - **Kernel build host-deps:** `find` (source enumeration),
   `${CROSS_PREFIX}{gcc,ld,objcopy}`, `head -c`, and `kbuild-cc.sh`'s `sed`.
-  World additionally builds **musl via GNU make** (`${GNU_MAKE}`).
+  World builds musl with bmake (`contrib/musl/Makefile.bsd`; needs `sed`, `cp`, `printf`).
 - **Image staging:** `tools/mkimage.sh` builds a STAGE tree and `ubfs cpr`s it
   into the UbixFS pool. It stages `/bin /lib /sbin /usr/{bin,sbin,lib} /etc
   /var …` — **no `/usr/src`, `/usr/include`, `/usr/obj`, or `/usr/share/mk`**
