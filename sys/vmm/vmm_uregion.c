@@ -32,6 +32,11 @@ static int map_one_anon_page(u_int64_t *aspace_root, uintptr_t va)
 
 	if (frame == 0)
 		return -1;
+	/* MAP_FIXED over a live page (musl's mallocng puts a guard page at the
+	 * start of its brk heap) replaces it: release the old frame first, or it
+	 * stays allocated after the process exits. */
+	if (md_user_mapped(aspace_root, (u_int64_t)va))
+		md_unmap_user_page(aspace_root, (u_int64_t)va);
 	/* Zero through the MI phys->virt window (aarch64 physmap / x86_64 P2V) — the
 	 * kernel no longer has a low identity once TTBR0 is user-only.  The mapping
 	 * still takes the PHYSICAL frame. */

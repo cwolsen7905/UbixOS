@@ -622,6 +622,52 @@ int md_user_mapped(u64 *aspace_root, u64 va)
 	return x86_64_user_extract((uintptr_t)aspace_root, va) != 0;
 }
 
+/* The PTE macros are signed ints (as every walker here uses them). */
+/* NOLINTBEGIN(bugprone-signed-bitwise) */
+/**
+ * Remove @va's mapping from @aspace_root (a PML4 physical address) and release
+ * its frame (elf_load.h hook; same rules as x86_64_free_user_space).  Declared
+ * in sys/elf_load.h, which this file cannot include (u64 is not u_int64_t here).
+ */
+void md_unmap_user_page(u64 *aspace_root, u64 va) // NOLINT(misc-use-internal-linkage)
+{
+	u64 pml4_phys = (u64)(uintptr_t)aspace_root;
+	u64 *t;
+	u64 e, pte, phys;
+	u64 *slot;
+
+	if (pml4_phys == 0)
+		return;
+	t = (u64 *)P2V(pml4_phys);
+	e = t[(va >> 39) & 0x1FF];
+	if ((e & PTE_P) == 0)
+		return;
+	t = (u64 *)P2V(e & PTE_ADDR_MASK);
+	e = t[(va >> 30) & 0x1FF];
+	if ((e & PTE_P) == 0 || (e & PTE_PS))
+		return;
+	t = (u64 *)P2V(e & PTE_ADDR_MASK);
+	e = t[(va >> 21) & 0x1FF];
+	if ((e & PTE_P) == 0 || (e & PTE_PS))
+		return;
+	t = (u64 *)P2V(e & PTE_ADDR_MASK);
+	slot = &t[(va >> 12) & 0x1FF];
+	pte = *slot;
+	if ((pte & PTE_P) == 0)
+		return;
+	*slot = 0;
+	x86_64_tlb_shootdown(pml4_phys, va);
+
+	phys = pte & PTE_ADDR_MASK;
+	if ((pte & PTE_WIRED) || (phys >> 12) >= numPages)
+		return; /* owned by the device/region, or MMIO */
+	if (pte & PTE_SHARED)
+		vm_filecache_unref_phys((u_int32_t)phys);
+	else
+		free_page((uintptr_t)phys);
+}
+/* NOLINTEND(bugprone-signed-bitwise) */
+
 /** Sync the I-cache after writing code (x86_64's I-cache is coherent: no-op). */
 void md_sync_icache(uintptr_t addr, u64 len)
 {

@@ -25,6 +25,7 @@
 #include <sys/descrip.h>        /* getfd, struct file (file-backed mmap) */
 #include <fs/vfs/file.h>        /* fileDescriptor_t, fread (file-backed mmap) */
 #include <vmm/vm_filecache.h>   /* shared read-only file-page cache */
+#include <sys/elf_load.h>       /* md_user_mapped, md_unmap_user_page */
 #include <ubixos/vitals.h>      /* systemVitals — uptime/freePages for sys_sysinfo */
 
 void x86_64_map_user_page_shared(u64 pml4_phys, u64 va, u64 phys);
@@ -54,6 +55,18 @@ static kTask_t *x86_64_as_owner(void)
 }
 
 /**
+ * Release whatever is mapped at user VA @va in @pml4 before a new page goes
+ * there.  mmap(MAP_FIXED) over a live mapping (musl's mallocng guard page at
+ * the start of its brk heap; the dynamic linker's segments over its
+ * reservation) would otherwise drop the old frame without freeing it.
+ */
+static void unmap_old(u64 pml4, u64 va)
+{
+	if (md_user_mapped((u_int64_t *)(uintptr_t)pml4, va))
+		md_unmap_user_page((u_int64_t *)(uintptr_t)pml4, va);
+}
+
+/**
  * Map @npages zeroed, writable, user pages at @va in the current address space.
  * Zero-fill goes through the physmap (P2V), so it works regardless of which CR3
  * is active (a syscall runs under the user CR3, which has no low identity for the
@@ -70,6 +83,7 @@ static int map_anon(u64 va, u64 npages)
 		if (frame == 0)
 			return -1;
 		memset(P2V(frame), 0, PAGE_SIZE);
+		unmap_old(pml4, va + i * PAGE_SIZE);
 		x86_64_map_user_page_to(pml4, va + i * PAGE_SIZE, (u64)frame, 1 /* writable */);
 	}
 	return 0;
@@ -98,6 +112,8 @@ static int map_file(u64 va, u64 npages, fileDescriptor_t *fd, u64 file_off, int 
 		u64 va_pg = va + i * PAGE_SIZE;
 		off_t foff = (off_t)(file_off + i * PAGE_SIZE);
 		uintptr_t frame;
+
+		unmap_old(_current->md.md_cr3, va_pg);
 
 		/* Cache hit: share the cached frame read-only; allocate nothing. */
 		if (cacheable)
