@@ -398,18 +398,12 @@ int aarch64_rfork(u_int64_t *parent_tf)
 	proc_fork_inherit_context(child);
 	proc_fork_signal_init(child, &_current->td);
 
-	/* Shallow-share the fd table: threads share open files.  Free the placeholder
-	 * fds schedNewTask() made for 0-2, then point at the caller's file objects.
-	 * (endTask closes them only for the last thread of the tgid — guarded there.) */
-	for (i = 0; i < O_FILES; i++)
-	{
-		if (child->td.o_files[i] != 0)
-		{
-			kfree(child->td.o_files[i]);
-			child->td.o_files[i] = 0;
-		}
-		child->td.o_files[i] = _current->td.o_files[i];
-	}
+	/* Threads share one fd table (an open, close or dup in any thread is seen
+	 * by all); the last thread to exit closes it.  Each thread used to get a
+	 * shallow copy of the array, so a close() in one thread left its siblings
+	 * holding the freed struct file, and the last thread's exit freed it again
+	 * (kfree double-free in multi-threaded ld.lld on x86_64). */
+	fd_table_share(&child->td, &_current->td);
 
 	/* Build the child kernel stack: a copy of the caller's trapframe (x0 = 0, its own
 	 * user SP, fresh frame pointer), and below it a ctx frame that ret_from_fork's

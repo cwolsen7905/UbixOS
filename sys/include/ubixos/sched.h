@@ -185,6 +185,8 @@ extern "C"
 	int sched_deleteTask(pidType);
 	int sched_addDelTask(kTask_t *);
 	kTask_t *sched_getDelTask();
+	void sched_free_task(kTask_t *t);                        /* free a collected task (kernel stack + struct) */
+	void sched_free_deleted(void);                           /* free every task on delList */
 	int sched_tgid_others_alive(pidType tgid, pidType self); /* other live threads sharing the AS */
 	void sched_yield();
 	void sched();

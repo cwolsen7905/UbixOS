@@ -204,11 +204,11 @@ void endTask(pidType pid)
 			_current->clear_tid = NULL;
 		}
 
-		/* Close the task's open FILE, PIPE and SOCKET fds on exit.
+		/* Drop this thread's reference on the fd table; the last thread of the
+		 * process closes the fds (fd_table_exit, shared with the x86_64 endTask).
 		 *
 		 * FILES: shared with fork children through the descriptor's dup count
-		 * (fork_copy_fdtable), so only the last user really closes; an exited
-		 * process used to leak every file it left open.
+		 * (fork_copy_fdtable), so only the last user really closes.
 		 *
 		 * PIPES: a parent blocked reading this task's pipe write-end sees EOF when
 		 * the writer exits (the bmake Cmd_Exec case: fork + read child output —
@@ -216,36 +216,22 @@ void endTask(pidType pid)
 		 *
 		 * SOCKETS: a process that exits (or is killed — e.g. a ^C'd ping) with an
 		 * open socket must release its lwIP netconn, or the RAW/TCP/UDP PCB, its
-		 * queued netbufs, and the TCPIP_MSG_INPKT buffers behind them leak.  Over a
-		 * session of launching+killing net apps the pools bleed to empty and ALL
-		 * inbound packets are dropped — the "network dies after using it a while"
-		 * bug (RAW_PCB used==total, netbuf/TCPIP_MSG_INPKT err climbing while
-		 * link.recv still increments).  socket_fo_close is refcount-safe
-		 * (g_socket_refcount): it only tears down the lwIP socket on the LAST
-		 * alias, so a fork-shared socket the other process still holds survives.
+		 * queued netbufs, and the TCPIP_MSG_INPKT buffers behind them leak, and
+		 * the network eventually drops every inbound packet.  socket_fo_close is
+		 * refcount-safe (g_socket_refcount): it only tears down the lwIP socket on
+		 * the LAST alias, so a fork-shared socket the other process still holds
+		 * survives.
 		 *
-		 * NOT tty/pty: those are shared devices WITHOUT this refcount, and closing
-		 * a job-control child's inherited pty fd corrupted the shared device and
-		 * panicked the kernel (tcsh `ls` repeated).  Leave them to the no-op
-		 * teardown.
+		 * TTY: only the per-process fd slot is freed; the shared device is never
+		 * closed (closing a job-control child's inherited pty fd once corrupted
+		 * the device and panicked the kernel).
 		 *
-		 * Threads (rfork(RFMEM)) SHALLOW-share one fd table across a tgid, so only the
-		 * LAST thread of the group may close them — an earlier thread exiting must
-		 * leave the shared fd objects intact for its still-running siblings. */
+		 * Threads (rfork(RFMEM)) share the table, so an earlier thread exiting
+		 * leaves the fds open for its still-running siblings. */
+		fd_table_exit(&_current->td);
+
 		if (sched_tgid_others_alive(_current->tgid, _current->id) == 0)
 		{
-			for (int fd = 0; fd < O_FILES; fd++)
-			{
-				struct file *f = (struct file *)_current->td.o_files[fd];
-
-				if (f != 0 && (f->fd_type == FD_TYPE_PIPE || f->fd_type == FD_TYPE_SOCKET ||
-				               f->fd_type == FD_TYPE_FILE))
-				{
-					struct sys_close_args ca;
-					ca.fd = fd;
-					sys_close(&_current->td, &ca);
-				}
-			}
 
 			/* Release the user address space.  The bring-up teardown used to be a
 			 * no-op, so every exited process leaked its entire working set: a long run

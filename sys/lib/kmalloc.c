@@ -142,7 +142,8 @@ static void insertFreeDesc(struct memDescriptor *freeDesc)
 	}
 
 	/* --- coalesce with next block if physically adjacent --- */
-	if (freeDesc->next != 0x0 && (uintptr_t)freeDesc->baseAddr + freeDesc->limit == (uintptr_t)freeDesc->next->baseAddr)
+	if (freeDesc->next != 0x0 &&
+	    (uintptr_t)freeDesc->baseAddr + freeDesc->limit == (uintptr_t)freeDesc->next->baseAddr)
 	{
 		struct memDescriptor *next = freeDesc->next;
 		freeDesc->limit += next->limit;
@@ -319,14 +320,44 @@ void kfree(void *baseAddr)
 	}
 
 	/* Check if this pointer is already on the free list — double-free. */
-	for (tmpDesc = freeKernDesc; tmpDesc != 0x0; tmpDesc = tmpDesc->next) {
-		if (tmpDesc->baseAddr == baseAddr) {
+	for (tmpDesc = freeKernDesc; tmpDesc != 0x0; tmpDesc = tmpDesc->next)
+	{
+		if (tmpDesc->baseAddr == baseAddr)
+		{
 			spinUnlock(&mallocSpinLock);
-			kpanic("kfree: double-free %p\n", baseAddr);
+			kpanic("kfree: double-free %p (caller %p)\n", baseAddr, __builtin_return_address(0));
 			return;
 		}
 	}
 
 	spinUnlock(&mallocSpinLock);
 	kprintf("kfree: descriptor not found for %p\n", baseAddr);
+}
+
+/**
+ * Report the kernel heap's state for /proc/meminfo.  A leak shows as the used
+ * bytes and block count climbing across repeated runs of the same workload.
+ *
+ * @param used   out: bytes held by live allocations
+ * @param blocks out: number of live allocations
+ * @param avail  out: bytes on the free list (heap pages taken from the VMM
+ *               but not currently allocated)
+ */
+void kmalloc_stats(u_int32_t *used, u_int32_t *blocks, u_int32_t *avail)
+{
+	struct memDescriptor *d;
+	u_int32_t u = 0, n = 0, f = 0;
+
+	spinLock(&mallocSpinLock);
+	for (d = usedKernDesc; d != 0x0; d = d->next)
+	{
+		u += d->limit;
+		n++;
+	}
+	for (d = freeKernDesc; d != 0x0; d = d->next)
+		f += d->limit;
+	spinUnlock(&mallocSpinLock);
+	*used = u;
+	*blocks = n;
+	*avail = f;
 }

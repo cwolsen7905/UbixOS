@@ -1405,7 +1405,7 @@ kDIR_t *vfs_opendir(const char *path)
 		snprintf(tmp, sizeof(tmp), "/%s", dirPath);
 		strncpy(fileName, tmp, sizeof(fileName) - 1);
 		fileName[sizeof(fileName) - 1] = '\0';
-	vfs_canon_path(fileName);
+		vfs_canon_path(fileName);
 		dirPath = fileName;
 	}
 
@@ -1417,6 +1417,7 @@ kDIR_t *vfs_opendir(const char *path)
 		return (0x0);
 
 	memset(dir, 0x0, sizeof(kDIR_t));
+	dir->refs = 1;
 	dir->mp = mp;
 
 	/* Directory metadata hits the same non-re-entrant pool reader as fread/fopen, so
@@ -1447,11 +1448,35 @@ int vfs_readdir(kDIR_t *dir, struct kdirent *ent)
 	return (ret);
 }
 
+/**
+ * Take another reference on a directory handle, for an fd that fork or dup
+ * copies: both copies then share it, and vfs_closedir frees it on the last
+ * close.  Without this the child and parent each freed the same handle (a
+ * kfree double-free once exit began closing directory fds).
+ *
+ * @param dir the handle (NULL is ignored)
+ */
+void vfs_dir_ref(kDIR_t *dir)
+{
+	if (dir != 0x0)
+		__atomic_add_fetch(&dir->refs, 1, __ATOMIC_ACQ_REL);
+}
+
+/**
+ * Drop a reference on a directory handle; the last one closes it in the
+ * filesystem and frees it.
+ *
+ * @param dir the handle
+ * @return the filesystem's close result, 0 if other references remain, or -1
+ *         for a NULL handle
+ */
 int vfs_closedir(kDIR_t *dir)
 {
 	int ret = 0;
 	if (dir == 0x0)
 		return (-1);
+	if (__atomic_sub_fetch(&dir->refs, 1, __ATOMIC_ACQ_REL) > 0)
+		return (0);
 	if (dir->mp != 0x0 && dir->mp->fs->vfsCloseDir != 0x0)
 	{
 		spinLock(&vfs_io_lock);

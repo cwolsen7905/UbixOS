@@ -212,8 +212,12 @@ u64 x86_64_user_mmap(u64 addr, u64 len, u64 prot, u64 flags, u64 fd, u64 off)
 /**
  * brk(newbrk) — set/query the program break, Linux/musl-style (returns the
  * resulting break; brk(0) queries).  Grows by mapping anonymous pages from the
- * current break up to @newbrk; shrinking just lowers the cursor.  @return the
- * resulting break (returned directly, like mmap — see x86_64_user_mmap).
+ * current break up to @newbrk.  A shrink is ignored and reports the current
+ * break, as the MI vmm_uregion_brk does on aarch64: pages are never unmapped
+ * here, and lowering the cursor made the next grow map fresh frames over the
+ * still-mapped ones, leaking a page per shell command (ash trims and regrows
+ * its heap).  @return the resulting break (returned directly, like mmap — see
+ * x86_64_user_mmap).
  */
 u64 x86_64_user_brk(u64 newbrk)
 {
@@ -235,10 +239,6 @@ u64 x86_64_user_brk(u64 newbrk)
 			return cur; /* OOM: break unchanged */
 		}
 		cur = newbrk;
-	}
-	else if (newbrk >= BRK_BASE)
-	{
-		cur = newbrk; /* shrink: drop the cursor (pages kept mapped, harmless) */
 	}
 
 	owner->md.md_brk = cur;

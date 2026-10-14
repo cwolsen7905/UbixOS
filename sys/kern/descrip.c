@@ -59,6 +59,10 @@ static int duplicate_descriptor(struct thread *td, int from, int to);
 /* Wait channel for fd_poll_nap(); only its address matters. */
 static char g_fd_poll_chan;
 
+/* What a task's o_files points at once endTask has released its table: an
+ * empty table, so a late reader (procfs on a zombie) sees no open files. */
+static void *g_fd_table_none[O_FILES];
+
 /* (lwip_select is no longer called directly — see the g_socket_select hook.) */
 struct timeval;
 struct fd_set;
@@ -182,9 +186,14 @@ int falloc(struct thread *td, struct file **resultfp, int *resultfd)
 	 * redirect idiom; starting the search at 5 broke that. */
 	for (i = 0; i < O_FILES; i++)
 	{
-		if (td->o_files[i] == 0x0)
+		void *none = NULL;
+
+		/* Claim the slot atomically: threads share the table, so another
+		 * thread may be allocating at the same time. */
+		if (td->o_files[i] == 0x0 &&
+		    __atomic_compare_exchange_n(
+		        &td->o_files[i], &none, (void *)fp, 0, __ATOMIC_ACQ_REL, __ATOMIC_ACQUIRE))
 		{
-			td->o_files[i] = (void *)fp;
 			if (resultfd)
 				*resultfd = i;
 			if (resultfp)
@@ -285,6 +294,127 @@ static int close_fdslot(struct thread *td, int fd)
 	}
 }
 
+/**
+ * Close every descriptor of an exiting process (endTask, last thread of its
+ * group; rfork(RFMEM) siblings share the table).
+ *
+ * Regular files, directories, pipes and tty fds go through close_fdslot, the
+ * same teardown dup2 uses: a tty fd only frees its per-process slot and never
+ * touches the shared device.  Sockets go through sys_close, whose fileops
+ * close is refcount-safe across fork.  A pty master is left alone, as before.
+ *
+ * Regular files are not tagged FD_TYPE_FILE (sys_open leaves fd_type 0), so
+ * the old exit loop, which closed only FILE, PIPE and SOCKET fds, skipped them:
+ * every process leaked each file it left open (the `> /dev/null` of every
+ * shell command) and every tty fd slot.
+ *
+ * @param td the exiting task's thread
+ */
+void fd_close_on_exit(struct thread *td)
+{
+	int fd;
+
+	for (fd = 0; fd < O_FILES; fd++)
+	{
+		struct file *f = (struct file *)td->o_files[fd];
+
+		if (f == NULL || f->fd_type == FD_TYPE_PTMASTER)
+			continue;
+		if (f->fd_type == FD_TYPE_SOCKET)
+		{
+			struct sys_close_args ca;
+
+			ca.fd = fd;
+			sys_close(td, &ca);
+		}
+		else
+			close_fdslot(td, fd);
+	}
+}
+
+/**
+ * Give a new task a fresh, empty fd table with one reference.
+ *
+ * @param td the new task's thread
+ * @return 0, or -1 if the table could not be allocated
+ */
+int fd_table_init(struct thread *td)
+{
+	struct fdtable *fdt = (struct fdtable *)kmalloc(sizeof(struct fdtable));
+
+	if (fdt == NULL)
+		return (-1);
+	memset(fdt, 0, sizeof(struct fdtable));
+	fdt->refs = 1;
+	td->td_fdt = fdt;
+	td->o_files = fdt->files;
+	return (0);
+}
+
+/**
+ * Make a new thread use its creator's fd table (rfork(RFMEM)).  The new
+ * thread's own table, holding only schedNewTask's stdio placeholders, is
+ * freed.
+ *
+ * @param td  the new thread
+ * @param ptd the creating thread
+ */
+void fd_table_share(struct thread *td, struct thread *ptd)
+{
+	int fd;
+
+	if (td->td_fdt != NULL)
+	{
+		for (fd = 0; fd < O_FILES; fd++)
+			if (td->td_fdt->files[fd] != NULL)
+				kfree(td->td_fdt->files[fd]);
+		kfree(td->td_fdt);
+	}
+	__atomic_add_fetch(&ptd->td_fdt->refs, 1, __ATOMIC_ACQ_REL);
+	td->td_fdt = ptd->td_fdt;
+	td->o_files = ptd->td_fdt->files;
+}
+
+/**
+ * Drop an exiting thread's reference on its fd table; the last thread of the
+ * process closes every fd and frees the table.
+ *
+ * @param td the exiting thread (_current)
+ */
+void fd_table_exit(struct thread *td)
+{
+	struct fdtable *fdt = td->td_fdt;
+
+	if (fdt == NULL)
+		return;
+	if (__atomic_sub_fetch(&fdt->refs, 1, __ATOMIC_ACQ_REL) == 0)
+	{
+		fd_close_on_exit(td);
+		kfree(fdt);
+	}
+	td->td_fdt = NULL;
+	td->o_files = g_fd_table_none;
+}
+
+/**
+ * Drop a reference endTask did not (a task freed without exiting through
+ * endTask).  Its fds cannot be closed from here, so a last reference only
+ * frees the table itself.
+ *
+ * @param td the task being freed
+ */
+void fd_table_free(struct thread *td)
+{
+	struct fdtable *fdt = td->td_fdt;
+
+	if (fdt == NULL)
+		return;
+	if (__atomic_sub_fetch(&fdt->refs, 1, __ATOMIC_ACQ_REL) == 0)
+		kfree(fdt);
+	td->td_fdt = NULL;
+	td->o_files = g_fd_table_none;
+}
+
 static int duplicate_descriptor(struct thread *td, int from, int to)
 {
 	struct file *fp = NULL;
@@ -325,6 +455,10 @@ static int duplicate_descriptor(struct thread *td, int from, int to)
 	 * (SIGHUP) while the relay still holds a copy. */
 	if (fp->fd_type == FD_TYPE_PTMASTER)
 		pty_master_fork_ref((int)(uintptr_t)fp->data);
+
+	/* An open directory: both fds share one kDIR_t, freed on the last close. */
+	if (fp->fd_type == FD_TYPE_DIR)
+		vfs_dir_ref((kDIR_t *)fp->data);
 
 	td->o_files[to] = (void *)dup_fp;
 	return (0);

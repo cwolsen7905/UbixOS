@@ -674,12 +674,13 @@ int sys_pidStatus(struct thread *td, struct sys_pidStatus_args *args)
 
 /**
  * Find a direct child of _current that has exited or (if WUNTRACED) stopped.
- * When a DEAD child is found it is spliced from taskList and queued for
- * freeing — the caller reads child->id before the system task reclaims it.
+ * When a DEAD child is found it is spliced from taskList and pid hash and
+ * *reaped is set: the caller then owns it, reads its pid and frees it with
+ * sched_free_task.
  *
- * Runs under schedulerSpinLock: taskList and delList are shared with every
- * CPU (fork inserts at the head, the reaper unlinks orphans, the system task
- * pops delList), and cli() only masks this CPU.  Unlinking without the lock
+ * Runs under schedulerSpinLock: taskList is shared with every CPU (fork
+ * inserts at the head, the reaper unlinks orphans), and cli() only masks
+ * this CPU.  Unlinking without the lock
  * lost concurrent updates — a forked child dropped off taskList, so its exit
  * was never reaped and its parent waited for SIGCHLD forever.
  *
@@ -687,15 +688,18 @@ int sys_pidStatus(struct thread *td, struct sys_pidStatus_args *args)
  * @param options   WUNTRACED to also report a stopped child
  * @param wstatus   out: wait status of the collected child
  * @param have_child out: non-zero if a matching child exists at all
+ * @param reaped    out: non-zero if the returned child was collected (the
+ *                  caller must free it); zero for a stopped child
  * @return the collected (or stopped) child, or NULL if none is ready
  */
-static kTask_t *wait_find_child(int want_pid, int options, int *wstatus, int *have_child)
+static kTask_t *wait_find_child(int want_pid, int options, int *wstatus, int *have_child, int *reaped)
 {
 	kTask_t *t, *found = NULL;
 	int untraced = options & WUNTRACED;
 	u_int32_t flags;
 
 	*have_child = 0;
+	*reaped = 0;
 	save_flags(flags);
 	cli();
 	spinLock(&schedulerSpinLock);
@@ -734,9 +738,9 @@ static kTask_t *wait_find_child(int want_pid, int options, int *wstatus, int *ha
 			if (t->next != NULL)
 				t->next->prev = t->prev;
 			pid_hash_remove(t);
-			sched_addDelTask(t);
 			if (_current->children > 0)
 				_current->children--;
+			*reaped = 1;
 			found = t;
 			break;
 		}
@@ -759,6 +763,7 @@ int sys_wait4(struct thread *td, struct sys_wait4_args *args)
 	kTask_t *child;
 	int wstatus = 0;
 	int have_child;
+	int reaped;
 
 	/*
 	 * Scan for a finished child; with none ready, ECHILD if no matching child
@@ -771,7 +776,7 @@ int sys_wait4(struct thread *td, struct sys_wait4_args *args)
 	 */
 	for (;;)
 	{
-		child = wait_find_child(args->pid, args->options, &wstatus, &have_child);
+		child = wait_find_child(args->pid, args->options, &wstatus, &have_child, &reaped);
 		if (child != NULL)
 			break;
 		if (!have_child)
@@ -799,6 +804,9 @@ int sys_wait4(struct thread *td, struct sys_wait4_args *args)
 	if (args->status)
 		*args->status = wstatus;
 	td->td_retval[0] = (int)child->id;
+	if (reaped)
+		sched_free_task(child);
+	sched_free_deleted(); /* orphans the scheduler reaper collected */
 	return (0);
 }
 
