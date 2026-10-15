@@ -10,15 +10,16 @@
 
 #include "efi.h"
 
-/** ELF e_machine value the kernel image must carry (EM_X86_64 = 62). */
+/** ELF e_machine value the kernel image must carry (EM_X86_64 = 62, EM_AARCH64 = 183). */
 extern const uint16_t md_elf_machine;
 
 /**
  * Prepare the final hand-off (allocate and fill any low-memory trampoline).
- * Called while boot services are still available.
- * @return 0 on success, -1 on failure.
+ * Called while boot services are still available; @st gives access to the configuration tables.
+ * @return 0 on success, -1 if the trampoline cannot be placed, -2 if a required
+ * firmware table (the aarch64 device tree) is missing.
  */
-int md_prepare(efi_boot_services_t *bs);
+int md_prepare(efi_system_table_t *st);
 
 /**
  * Enter the kernel at physical address @entry with the boot-info block at

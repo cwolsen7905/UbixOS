@@ -298,8 +298,13 @@ efi_status_t efi_main(efi_handle_t image, efi_system_table_t *st)
 	mma = 0xFFFFFFFFULL;
 	if (g_bs->allocate_pages(EFI_ALLOCATE_MAX_ADDRESS, EFI_LOADER_DATA, MEMMAP_PAGES, &mma) != EFI_SUCCESS)
 		return EFI_ERR(9);
-	if (md_prepare(g_bs) != 0)
+	i = md_prepare(g_st);
+	if (i != 0)
+	{
+		say(i == -2 ? "loader: no device tree in the firmware configuration table\n"
+		            : "loader: cannot allocate the hand-off trampoline\n");
 		return EFI_ERR(9);
+	}
 
 	say("loader: starting kernel entry ");
 	say_hex(entry);
