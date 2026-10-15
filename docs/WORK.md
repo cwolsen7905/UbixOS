@@ -60,6 +60,21 @@ Every lane updates its row in the same PR; rows are never deleted.
 | W-051 | ubixfs | Programs linked in-OS were not executable: open(O_CREAT) ignored the mode, chmod/fchmod were no-ops, and rename copied the file (losing the mode) | done | - | - | vfsChmod + vfsRename (native entry move: atomic, keeps mode and data, no copy); O_CREAT applies mode & ~022, O_EXCL gives EEXIST; vfstest + fs_test cover them. A bare in-OS `clang -o h h.c` now gives a runnable 0755 file. Umask is per process since W-052 |
 | W-052 | kernel | umask(2) was a fixed 022 that ignored the new mask | done | - | #39 | Per-task cmask: umask sets it and returns the old one, fork and rfork threads inherit it, exec keeps it, open(O_CREAT) applies it; vfstest covers it. mkdir still ignores its mode (directories are always 0755) |
 | W-053 | self-host | Build /bin/sh (oksh) and bmake in world instead of as ports, so a world built inside UbixOS rebuilds its own build tools | done | - | #41 | Sources vendored pristine in contrib/oksh-7.5 and contrib/bmake-20240212 (bmake unit-tests dropped); bin/sh and bin/bmake carry the musl config headers and the sys/cdefs.h shim from the old ports; mkimage stages bmake's mk/ files from contrib. tools/ports/sh and tools/ports/bmake removed |
+| W-054 | boot | Installer B1: clean-room UEFI loader for x86_64 (BOOTX64.EFI) + kernel UEFI entry | todo | - | - | Plan: docs/design/installer-plan.md. Can start now; B2 and B4 wait on it |
+| W-055 | boot | Installer B2: clean-room UEFI loader for aarch64 (BOOTAA64.EFI) | todo | - | - | Plan: docs/design/installer-plan.md. After W-054 |
+| W-056 | kernel | Installer B3: ramdisk / initrd live root on both arches | todo | - | - | Plan: docs/design/installer-plan.md. Can start now |
+| W-057 | release | Installer B4: live media (tools/mkmedia.sh) + CI boot-smoke job under OVMF/AAVMF | todo | - | - | Plan: docs/design/installer-plan.md. After W-054 and W-056 |
+| W-058 | disk | Installer B5: disk layer (disk-utility-plan phases 0 and 0b) + GPT read/write | todo | - | - | Plan: docs/design/installer-plan.md; docs/design/disk-utility-plan.md. Can start now |
+| W-059 | disk | Installer B6: ubdisk, format and ubpool make the target layout on the device | todo | - | - | Plan: docs/design/installer-plan.md. After W-058 |
+| W-060 | userland | Installer B7: text installer (ubinstall + libinstall) | todo | - | - | Plan: docs/design/installer-plan.md. After W-057 and W-059 |
+| W-061 | views | Installer B8: graphical installer on views (front end on libinstall) | todo | - | - | Plan: docs/design/installer-plan.md. After W-060 |
+| W-062 | driver | Installer B9: AHCI (SATA) driver from the AHCI spec | todo | - | - | Plan: docs/design/installer-plan.md. After W-058 |
+| W-063 | driver | Installer B10: NVMe driver from the NVMe spec | todo | - | - | Plan: docs/design/installer-plan.md. After W-058 |
+| W-064 | driver | Installer B11: USB mass storage (bulk-only, SCSI) driver | todo | - | - | Plan: docs/design/installer-plan.md. After W-058 |
+| W-065 | release | Release 3.1.0 (version.h, CHANGELOG roll, tag) | todo | - | - | Self-hosting follow-up. Tagging and publishing are the person's call; checklist in CONTRIBUTING.md |
+| W-066 | abi | ABI layering audit: native uBix ABI first, POSIX layer on FreeBSD semantics, no Linux 1:1 | todo | - | - | Self-hosting follow-up; rules in docs/standards/abi-and-syscalls.md. Related: W-009, W-012, W-029 |
+| W-067 | abi | A5 ABI fixes | todo | - | - | Self-hosting follow-up; scope not written down in the tree (rule A-5 is fixed-width, identically padded argument structs with _Static_assert sizes). status unclear: confirm the scope before starting |
+| W-068 | legal | Provenance audit: origin and license of every file outside contrib/; no GPL code in the tree | todo | - | - | Self-hosting follow-up; third-party code belongs under contrib/ or tools/ports/ (docs/design/third-party-ports-plan.md) |
 
 ## Notes
 
