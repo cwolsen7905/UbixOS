@@ -17,11 +17,11 @@ static uint8_t *g_tramp;
  * Copy the trampoline to a page below 4 GB (the 32-bit code must be
  * addressable and identity mapped).  @return 0 on success, -1 on failure.
  */
-int md_prepare(efi_boot_services_t *bs)
+int md_prepare(efi_system_table_t *st)
 {
 	uint64_t a = 0xFFFFFFFFULL;
 
-	if (bs->allocate_pages(EFI_ALLOCATE_MAX_ADDRESS, EFI_LOADER_CODE, 1, &a) != EFI_SUCCESS)
+	if (st->boot_services->allocate_pages(EFI_ALLOCATE_MAX_ADDRESS, EFI_LOADER_CODE, 1, &a) != EFI_SUCCESS)
 		return -1;
 	g_tramp = (uint8_t *)(uintptr_t)a;
 	memcpy(g_tramp, ubix_tramp_start, (unsigned long long)(ubix_tramp_end - ubix_tramp_start));

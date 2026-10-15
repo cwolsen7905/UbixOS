@@ -9,7 +9,7 @@ VMs first (QEMU, UTM, VirtualBox), real PCs later.
 |------|------|-----|--------|
 | B0 | This plan | — | ✅ |
 | B1 | Clean-room UEFI loader, x86_64 | W-054 | 🚧 PR open |
-| B2 | Clean-room UEFI loader, aarch64 | W-055 | ⬜ |
+| B2 | Clean-room UEFI loader, aarch64 | W-055 | 🚧 PR open |
 | B3 | Ramdisk / initrd live root | W-056 | ⬜ |
 | B4 | Live media: `mkmedia` + CI smoke job | W-057 | ⬜ |
 | B5 | Disk layer: disk-utility-plan phases 0 + 0b, GPT | W-058 | ⬜ |
@@ -90,6 +90,15 @@ PVH one; PVH stays for `bmake run-*`. Done when QEMU + OVMF boots a disk image
 to login with no `-kernel`.
 
 ### B2 — UEFI loader, aarch64
+
+*Implemented (W-055):* `stand/efi/aarch64/` (MD part: DTB lookup from the
+firmware configuration table, cache clean, MMU off at the current EL, enter the
+kernel's `_start` with `x0 = DTB`, `x1 = bootinfo`, `x2 = UBIX_BOOTINFO_MAGIC`),
+`tools/run-aavmf-aarch64.sh`, `bmake efi` / `bmake run-aavmf-aarch64`. The kernel
+is unchanged (it already takes `x0 = DTB`). Known gaps: the run script uses
+`acpi=off` because AAVMF hides the DTB when ACPI is on and the aarch64 kernel
+has no ACPI consumer; a full login-prompt smoke needs a built image
+(`bmake world image`) and has not been run yet.
 
 The same loader built for AArch64 (`BOOTAA64.EFI`), sharing the MI loader code;
 the MD part is the entry state the kernel expects (EL, MMU off, DTB or ACPI
