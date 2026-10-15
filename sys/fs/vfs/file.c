@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018, 2020 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -59,6 +59,48 @@ static struct spinLock fdTable_lock = SPIN_LOCK_INITIALIZER;
  * it once the drivers are individually audited for re-entrancy.
  */
 static struct spinLock vfs_io_lock = SPIN_LOCK_INITIALIZER;
+
+/*
+ * Lookup cache (W-039).  Remembers two facts about a canonical absolute path on a
+ * UbixFS mount, so the common probes skip the filesystem (and vfs_io_lock):
+ *
+ *   VNC_NOENT   nothing exists at the path (not even a dangling symlink);
+ *   VNC_NOLINK  something exists at the path and it is not a symbolic link.
+ *
+ * musl's realpath() calls readlink() once per path component and clang
+ * canonicalises every header, so an in-OS build issues tens of thousands of
+ * readlink() calls on ordinary files and directories; each one used to cost up
+ * to three full path walks from the root.  Neither fact depends on file
+ * contents, size or times, so writes never invalidate an entry.  Only namespace
+ * changes do, and every one of them goes through this file: create (fopen for
+ * writing), mkdir, symlink, unlink, rmdir and rename.  Mounts change which
+ * filesystem a path reaches; vnc_cacheable checks the mount on every use, so an
+ * entry is only consulted while the path's current mount is UbixFS.  4-way set-associative, round-robin replacement;
+ * paths longer than VNC_PATH_MAX - 1 are simply not cached.
+ *
+ * g_vnc_lock guards the table and g_vnc_seq.  Lock order: g_vnc_lock is a leaf;
+ * it is never held across a filesystem call or another lock.
+ */
+#define VNC_SETS 512
+#define VNC_WAYS 4
+#define VNC_PATH_MAX 216
+#define VNC_NOENT 1
+#define VNC_NOLINK 2
+
+struct vnc_entry
+{
+	u_int32_t hash;
+	u_int32_t state; /* 0 (empty), VNC_NOENT or VNC_NOLINK */
+	char path[VNC_PATH_MAX];
+};
+
+static struct spinLock g_vnc_lock = SPIN_LOCK_INITIALIZER;
+static struct vnc_entry g_vnc[VNC_SETS][VNC_WAYS];
+static u_int8_t g_vnc_victim[VNC_SETS];
+/* Bumped by every invalidation.  A lookup that went to the filesystem records it
+ * first and inserts its result only if it is unchanged, so a result read before
+ * a concurrent namespace change can never be cached after that change. */
+static u_int64_t g_vnc_seq;
 
 int sysMkDir(const char *path);
 
@@ -212,6 +254,166 @@ static void vfs_canon_path(char *path)
 	memcpy(path, out, o + 1);
 }
 
+/**
+ * Hash @path (FNV-1a), stopping before a trailing '/' so "/a/b/" and "/a/b" share
+ * a slot.
+ *
+ * @param len  set to the hashed length (the path without its trailing '/').
+ * @return the hash.
+ */
+static u_int32_t vnc_hash(const char *path, size_t *len)
+{
+	u_int32_t h = 2166136261u;
+	size_t n = strlen(path);
+
+	while (n > 1 && path[n - 1] == '/')
+		n--;
+	for (size_t i = 0; i < n; i++)
+		h = (h ^ (u_int8_t)path[i]) * 16777619u;
+	*len = n;
+	return (h);
+}
+
+/**
+ * Whether lookups of @fullpath may use the cache: only UbixFS mounts.  devfs and
+ * procfs change behind the VFS's back (devices attach, processes come and go),
+ * and FAT reports directories as missing to fopen.
+ */
+static int vnc_cacheable(const struct vfs_mountPoint *mp, const char *fullpath)
+{
+	return (mp != 0x0 && mp->fs != 0x0 && mp->fs->vfsType == VFS_TYPE_UBIXFS && fullpath[0] == '/' &&
+	        strlen(fullpath) < VNC_PATH_MAX);
+}
+
+/**
+ * Look @fullpath up in the cache.  Takes g_vnc_lock.
+ *
+ * @return VNC_NOENT, VNC_NOLINK, or 0 if nothing is cached.
+ */
+static int vnc_lookup(const char *fullpath)
+{
+	size_t len;
+	u_int32_t h = vnc_hash(fullpath, &len);
+	struct vnc_entry *set = g_vnc[h % VNC_SETS];
+	int state = 0;
+
+	spinLock(&g_vnc_lock);
+	for (int w = 0; w < VNC_WAYS; w++)
+	{
+		if (set[w].state != 0 && set[w].hash == h && strncmp(set[w].path, fullpath, len) == 0 &&
+		    set[w].path[len] == '\0')
+		{
+			state = (int)set[w].state;
+			break;
+		}
+	}
+	spinUnlock(&g_vnc_lock);
+	return (state);
+}
+
+/**
+ * Read the invalidation sequence before a filesystem lookup whose result may be
+ * cached with vnc_insert.  Takes g_vnc_lock.
+ */
+static u_int64_t vnc_seq(void)
+{
+	u_int64_t seq;
+
+	spinLock(&g_vnc_lock);
+	seq = g_vnc_seq;
+	spinUnlock(&g_vnc_lock);
+	return (seq);
+}
+
+/**
+ * Cache @state for @fullpath, unless the namespace changed since @seq was read
+ * (the result may then be stale).  Takes g_vnc_lock.
+ */
+static void vnc_insert(const char *fullpath, int state, u_int64_t seq)
+{
+	size_t len;
+	u_int32_t h = vnc_hash(fullpath, &len);
+	u_int32_t si = h % VNC_SETS;
+	struct vnc_entry *set = g_vnc[si];
+	struct vnc_entry *e = 0x0;
+
+	spinLock(&g_vnc_lock);
+	if (seq == g_vnc_seq)
+	{
+		for (int w = 0; w < VNC_WAYS && e == 0x0; w++)
+			if (set[w].state != 0 && set[w].hash == h && strncmp(set[w].path, fullpath, len) == 0 &&
+			    set[w].path[len] == '\0')
+				e = &set[w];
+		for (int w = 0; w < VNC_WAYS && e == 0x0; w++)
+			if (set[w].state == 0)
+				e = &set[w];
+		if (e == 0x0)
+		{
+			e = &set[g_vnc_victim[si]];
+			g_vnc_victim[si] = (u_int8_t)((g_vnc_victim[si] + 1) % VNC_WAYS);
+		}
+		memcpy(e->path, fullpath, len);
+		e->path[len] = '\0';
+		e->hash = h;
+		e->state = (u_int32_t)state;
+	}
+	spinUnlock(&g_vnc_lock);
+}
+
+/**
+ * Forget @fullpath, and with @subtree everything below it too (a removed or
+ * replaced directory).  Call after the filesystem change is complete.  Takes
+ * g_vnc_lock.
+ */
+static void vnc_invalidate(const char *fullpath, int subtree)
+{
+	size_t len;
+	u_int32_t h = vnc_hash(fullpath, &len);
+	struct vnc_entry *set = g_vnc[h % VNC_SETS];
+
+	spinLock(&g_vnc_lock);
+	g_vnc_seq++;
+	for (int w = 0; w < VNC_WAYS; w++)
+		if (set[w].state != 0 && set[w].hash == h && strncmp(set[w].path, fullpath, len) == 0 &&
+		    set[w].path[len] == '\0')
+			set[w].state = 0;
+	if (subtree)
+	{
+		for (int i = 0; i < VNC_SETS; i++)
+			for (int w = 0; w < VNC_WAYS; w++)
+				if (g_vnc[i][w].state != 0 && strncmp(g_vnc[i][w].path, fullpath, len) == 0 &&
+				    (g_vnc[i][w].path[len] == '/' || len == 1))
+					g_vnc[i][w].state = 0;
+	}
+	spinUnlock(&g_vnc_lock);
+}
+
+/**
+ * Empty the lookup cache.  Called for a namespace change the cache cannot track
+ * path by path: rename, which moves whole subtrees.  Takes g_vnc_lock.
+ */
+static void vfs_lookup_cache_flush(void)
+{
+	spinLock(&g_vnc_lock);
+	g_vnc_seq++;
+	memset(g_vnc, 0, sizeof(g_vnc));
+	spinUnlock(&g_vnc_lock);
+}
+
+/**
+ * Resolve @path against the cwd into the canonical absolute @out, as every VFS
+ * entry point does.
+ */
+static void vfs_full_path(const char *path, char *out, size_t outsz)
+{
+	if (path[0] != '/')
+		snprintf(out, outsz, "%s%s", _current->oInfo.cwd, path);
+	else
+		strncpy(out, path, outsz - 1);
+	out[outsz - 1] = '\0';
+	vfs_canon_path(out);
+}
+
 void sysRmDir(const char *path)
 {
 	char fullpath[1024];
@@ -237,6 +439,7 @@ void sysRmDir(const char *path)
 	spinLock(&vfs_io_lock);
 	mp->fs->vfsRemDir(dir_path, mp);
 	spinUnlock(&vfs_io_lock);
+	vnc_invalidate(fullpath, 1);
 }
 
 int sys_mkdir(struct thread *td, struct sys_mkdir_args *args)
@@ -610,6 +813,7 @@ int sys_rename(struct thread *td, struct sys_rename_args *args)
 		spinLock(&vfs_io_lock);
 		rc = src_mp->fs->vfsRename(src_full, dst_full, src_mp);
 		spinUnlock(&vfs_io_lock);
+		vfs_lookup_cache_flush(); /* a renamed directory moves everything below it */
 		if (rc < 0)
 		{
 			td->td_retval[0] = rc;
@@ -1040,12 +1244,35 @@ fileDescriptor_t *fopen(const char *file, const char *flags)
 		}
 	}
 
+	/* A read-only open of a path the lookup cache knows is missing fails
+	 * without touching the filesystem (clang's header search probes many). */
+	int cacheable = vnc_cacheable(tmpFd->mp, fileName);
+	int writing = ((u_int)tmpFd->mode & ((u_int)fileWrite | (u_int)fileTrunc)) != 0u;
+	if (cacheable && !writing && vnc_lookup(fileName) == VNC_NOENT)
+	{
+		kfree(tmpFd);
+		return (0x0);
+	}
+	u_int64_t seq = vnc_seq();
+
 	/* Search For The File.  The lookup reads FS metadata (the UbixFS pool
 	 * directory/dataset blocks) through the same non-re-entrant reader as fread,
 	 * so serialise it across CPUs too (smp-plan M4). */
 	spinLock(&vfs_io_lock);
 	int found = (tmpFd->mp->fs->vfsOpenFile(tmpFd->fileName, tmpFd) == 0x1);
+	/* A failed open also fails for a dangling symlink; only remember the path as
+	 * missing when there is no link there either. */
+	int learn_noent = 0;
+	if (!found && cacheable && !writing && tmpFd->mp->fs->vfsReadlink != NULL)
+	{
+		char probe[8];
+		learn_noent = (tmpFd->mp->fs->vfsReadlink(fileName, probe, (int)sizeof(probe), tmpFd->mp) < 0);
+	}
 	spinUnlock(&vfs_io_lock);
+	if (writing && cacheable)
+		vnc_invalidate(fileName, 0); /* the open may have created the file */
+	else if (learn_noent)
+		vnc_insert(fileName, VNC_NOENT, seq);
 	if (found)
 	{
 		/* If The File Is Found Then Set Up The Descriptor */
@@ -1244,6 +1471,7 @@ int sysMkDir(const char *path)
 	spinLock(&vfs_io_lock);
 	int rc = mp->fs->vfsMakeDir(fullpath, &mkdir_fd);
 	spinUnlock(&vfs_io_lock);
+	vnc_invalidate(fullpath, 0);
 	if (rc != 0)
 		return (-EIO);
 	return (0);
@@ -1302,6 +1530,7 @@ int unlink(const char *node)
 	spinLock(&vfs_io_lock);
 	int urc = mp->fs->vfsUnlink(fs_path, mp);
 	spinUnlock(&vfs_io_lock);
+	vnc_invalidate(fullpath, 1); /* a removed directory takes its subtree with it */
 	if (urc != 0)
 		return (-EIO);
 
@@ -1338,39 +1567,77 @@ int vfs_symlink(const char *target, const char *linkpath)
 	spinLock(&vfs_io_lock);
 	int rc = mp->fs->vfsSymlink(target, fullpath, mp);
 	spinUnlock(&vfs_io_lock);
+	vnc_invalidate(fullpath, 0);
 	return (rc == 0) ? 0 : -EIO;
 }
 
 /**
  * Read the target of the symlink at @path into @buf (not NUL-terminated).
  *
- * @return the target length on success, -errno on failure.
+ * When @path is not a symlink, tell "nothing there" from "not a link", as
+ * readlink(2) must: musl's realpath() treats EINVAL as "use the component as it
+ * is" and gives up on any other errno.  Both answers are remembered in the
+ * lookup cache, because realpath() asks again for every component of every path
+ * it resolves.
+ *
+ * @return the target length on success; -EINVAL if @path exists and is not a
+ *         symlink; -ENOENT if nothing exists at @path.
  */
 int vfs_readlink(const char *path, char *buf, int bufsz)
 {
 	char fullpath[1024];
 	struct vfs_mountPoint *mp = 0x0;
+	fileDescriptor_t *fd;
+	kDIR_t *dir;
+	u_int64_t seq;
+	int cacheable;
+	int exists = 0;
 
 	if (path == NULL || path[0] == '\0' || buf == NULL || bufsz <= 0)
 		return (-EINVAL);
 
-	if (path[0] != '/')
-		snprintf(fullpath, sizeof(fullpath), "%s%s", _current->oInfo.cwd, path);
-	else
-		strncpy(fullpath, path, sizeof(fullpath) - 1);
-	fullpath[sizeof(fullpath) - 1] = '\0';
-	vfs_canon_path(fullpath);
+	vfs_full_path(path, fullpath, sizeof(fullpath));
 
 	mp = vfs_findMount(fullpath);
 	if (mp == 0x0 || mp->fs == 0x0)
 		return (-ENOENT);
-	if (mp->fs->vfsReadlink == NULL)
-		return (-EINVAL); /* not a link / unsupported */
 
-	spinLock(&vfs_io_lock);
-	int rc = mp->fs->vfsReadlink(fullpath, buf, bufsz, mp);
-	spinUnlock(&vfs_io_lock);
-	return (rc < 0) ? -EINVAL : rc;
+	cacheable = vnc_cacheable(mp, fullpath);
+	if (cacheable)
+	{
+		int state = vnc_lookup(fullpath);
+		if (state == VNC_NOENT)
+			return (-ENOENT);
+		if (state == VNC_NOLINK)
+			return (-EINVAL);
+	}
+	seq = vnc_seq();
+
+	if (mp->fs->vfsReadlink != NULL)
+	{
+		spinLock(&vfs_io_lock);
+		int rc = mp->fs->vfsReadlink(fullpath, buf, bufsz, mp);
+		spinUnlock(&vfs_io_lock);
+		if (rc >= 0)
+			return (rc);
+	}
+
+	/* Not a symlink, or nothing there.  fopen rejects directories on some
+	 * filesystems, so fall back to vfs_opendir. */
+	fd = fopen(fullpath, "rb");
+	if (fd != 0x0)
+	{
+		fclose(fd);
+		exists = 1;
+	}
+	else if ((dir = vfs_opendir(fullpath)) != 0x0)
+	{
+		vfs_closedir(dir);
+		exists = 1;
+	}
+	if (cacheable)
+		vnc_insert(fullpath, exists ? VNC_NOLINK : VNC_NOENT, seq);
+	return (exists ? -EINVAL : -ENOENT);
 }
 
 /**
@@ -1430,6 +1697,8 @@ kDIR_t *vfs_opendir(const char *path)
 	/* Find mount by longest POSIX prefix match. */
 	mp = vfs_findMount(fileName);
 	if (mp == 0x0)
+		return (0x0);
+	if (vnc_cacheable(mp, fileName) && vnc_lookup(fileName) == VNC_NOENT)
 		return (0x0);
 
 	/* Strip mount prefix for the FS-relative path. */
