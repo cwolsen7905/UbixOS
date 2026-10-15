@@ -19,6 +19,7 @@
 #include <vmm/vmm.h>
 #include <vmm/paging.h>       /* PAGE_SIZE */
 #include <vmm/vm_filecache.h> /* shared file-page cache (PTE_SHARED pages) */
+#include <sys/elf_load.h>     /* md_* loader hooks */
 #include <lib/kmalloc.h>      /* sysID */
 #include <ubixos/spinlock.h>  /* g_pmap_lock — SMP-serialise page-table mutation */
 #include <string.h>           /* memset, memcpy */
@@ -241,6 +242,55 @@ int md_user_mapped(u_int64_t *aspace_root, u_int64_t va)
 {
 	return pmap_extract(aspace_root, va) != 0;
 }
+
+/* The PTE/index macros shift by signed counts (as every walker here does). */
+/* NOLINTBEGIN(bugprone-signed-bitwise) */
+/**
+ * Remove @va's mapping from @aspace_root and release its frame (elf_load.h
+ * hook; same rules as pmap_free_user_space).
+ */
+void md_unmap_user_page(u_int64_t *aspace_root, u_int64_t va)
+{
+	u_int64_t *l1 = aspace_root;
+	u_int64_t *l2, *l3;
+	u_int64_t v = va;
+	u_int64_t e, pte;
+
+	if (l1 == 0)
+		return;
+	spinLock(&g_pmap_lock);
+	e = l1[L1_IDX(v)];
+	if ((e & PTE_VALID) == 0 || (e & PTE_TYPE_MASK) != PTE_TABLE)
+	{
+		spinUnlock(&g_pmap_lock);
+		return;
+	}
+	l2 = (u_int64_t *)(uintptr_t)AARCH64_VIRT_OF(e & PTE_ADDR_MASK);
+	e = l2[L2_IDX(v)];
+	if ((e & PTE_VALID) == 0 || (e & PTE_TYPE_MASK) != PTE_TABLE)
+	{
+		spinUnlock(&g_pmap_lock);
+		return;
+	}
+	l3 = (u_int64_t *)(uintptr_t)AARCH64_VIRT_OF(e & PTE_ADDR_MASK);
+	pte = l3[L3_IDX(v)];
+	if ((pte & PTE_VALID) == 0)
+	{
+		spinUnlock(&g_pmap_lock);
+		return;
+	}
+	l3[L3_IDX(v)] = 0;
+	__asm__ volatile("dsb ishst; tlbi vaae1is, %0; dsb ish; isb" : : "r"(v >> 12) : "memory");
+	spinUnlock(&g_pmap_lock);
+
+	if ((pte & PTE_WIRED) != 0)
+		return; /* owned by the device/region */
+	if ((pte & PTE_SHARED) != 0)
+		vm_filecache_unref_phys((u_int32_t)(pte & PTE_ADDR_MASK));
+	else
+		free_page((uintptr_t)(pte & PTE_ADDR_MASK));
+}
+/* NOLINTEND(bugprone-signed-bitwise) */
 
 /**
  * Clean D-cache + invalidate I-cache for [@addr, @addr+@len) to the PoU so

@@ -104,6 +104,15 @@ void md_map_user_page_shared(u_int64_t *aspace_root, u_int64_t va, u_int64_t pa,
 int md_user_mapped(u_int64_t *aspace_root, u_int64_t va);
 
 /**
+ * Remove user VA @va's mapping from @aspace_root and release its frame the way
+ * address-space teardown does: a wired page is left to its owner, a shared
+ * file-cache page drops a cache reference, and anything else goes to
+ * free_page (which only decrements a COW-shared frame).  No-op if @va is not
+ * mapped.  Used before mapping a fresh page over an existing one.
+ */
+void md_unmap_user_page(u_int64_t *aspace_root, u_int64_t va);
+
+/**
  * Synchronize the I-cache for [@addr, @addr+@len) after writing code there.
  * No-op on architectures with coherent instruction caches.
  */

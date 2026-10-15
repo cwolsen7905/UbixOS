@@ -17,28 +17,32 @@
 static char g_console_nap_chan;
 
 /**
- * Wake predicate for the console poll nap that never fires, so the nap always
- * runs to its timeout.
+ * Wake predicate for console_nap: input has arrived.
  *
- * @return 0 (never ready).
+ * @return non-zero if a received byte is waiting.
  */
-static int console_never(void *arg)
+static int console_rx_pending(void *arg)
 {
 	(void)arg;
-	return (0);
+	return (serial_rx_ready());
 }
 
 /**
- * Sleep ~2 ticks between serial console polls.
+ * Sleep until serial input arrives.
  *
- * The serial console has no RX interrupt wired: poll it, but sleep a couple of
- * ticks between polls instead of sched_yield().  A yield loop kept the console
- * shell permanently runnable, burning its CPU and starving real work sharing
- * that core (an on-device build crawled).  20 ms is imperceptible for typing.
+ * The COM1 RX interrupt queues the bytes and wakes this channel
+ * (x86_64_console_rx_wake).  The 10-tick timeout only bounds how long a
+ * pending signal or a missed wakeup waits; the reader does not poll.
  */
 static void console_nap(void)
 {
-	sched_wait_event_timeout(&g_console_nap_chan, console_never, 0, 2);
+	sched_wait_event_timeout(&g_console_nap_chan, console_rx_pending, 0, 10);
+}
+
+/** COM1 IRQ hook: wake the tasks sleeping in console_nap for input. */
+void x86_64_console_rx_wake(void)
+{
+	sched_wakeup_chan(&g_console_nap_chan);
 }
 
 /**
@@ -153,6 +157,7 @@ void x86_64_console_tty_init(void)
 	g_tty_print = console_print;
 	g_tty_getchar = console_getchar_hook;
 	g_console_stdin_ready = console_stdin_ready;
+	serial_rx_irq_enable();
 }
 
 /**

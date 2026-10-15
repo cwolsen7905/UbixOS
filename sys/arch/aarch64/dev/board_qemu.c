@@ -20,6 +20,7 @@ static struct aarch64_board g_board_qemu_virt = {
     .gicd_base = 0x08000000UL, /* GICv2 distributor   */
     .gicc_base = 0x08010000UL, /* GICv2 CPU interface */
     .intc = &g_gicv2_intc,     /* GICv2 (gic.c)       */
+    .uart_irq = 33,            /* PL011 UART0: SPI 1  */
 };
 
 /* The active board.  Statically the QEMU default so the very first kprintf works

@@ -53,6 +53,7 @@ struct aarch64_board
 	u_int64_t gicd_base;             /* GIC distributor (0 = no GIC, e.g. the Pi's BCM controller) */
 	u_int64_t gicc_base;             /* GIC CPU interface                                         */
 	const struct aarch64_intc *intc; /* interrupt-controller implementation           */
+	u_int32_t uart_irq;              /* PL011 interrupt ID (0 = none: the console polls)          */
 	void (*console_init)(void);      /* optional early UART setup (Pi GPIO+baud); NULL = firmware-ready */
 };
 extern struct aarch64_board *g_board;
@@ -61,13 +62,17 @@ extern struct aarch64_board *g_board;
  * itself is the shared arch-neutral entry point in sys/lib/kprintf.c. */
 void uart_putc(char c);
 void uart_puts(const char *s);
-int uart_getc(void);     /* non-blocking PL011 RX: byte, or -1 if empty */
-int uart_rx_ready(void); /* non-zero if a byte is waiting (peek) */
+int uart_getc(void);          /* non-blocking PL011 RX: byte, or -1 if empty */
+int uart_rx_ready(void);      /* non-zero if a byte is waiting (peek) */
+void uart_irq(void);          /* PL011 RX interrupt: drain the FIFO into the RX ring */
+int uart_rx_irq_enable(void); /* switch PL011 receive to its interrupt; 0 if the board can't */
 
 /* console.c — wire the PL011 into the VFS console fileops (g_console_ops etc.). */
 struct thread;
 void aarch64_console_init(void);
 int aarch64_console_setup_fds(struct thread *td);
+void aarch64_console_rx_wake(void);     /* PL011 IRQ: wake readers waiting for input */
+void aarch64_console_rx_irq_init(void); /* switch console input to the PL011 IRQ */
 
 /* exceptions.c — install the EL1 vector table (defined in vectors.S). */
 void aarch64_vbar_init(void);
@@ -84,6 +89,7 @@ struct aarch64_intc
 	void (*timer_enable)(void);         /* enable the per-CPU timer IRQ                        */
 	void (*send_resched)(unsigned cpu); /* poke one CPU's reschedule IPI                       */
 	int (*dispatch)(void);              /* EL1 IRQ vector: ack/route/eoi; non-zero on a tick   */
+	void (*irq_enable)(unsigned intid); /* route a device interrupt to the BSP (NULL = none)   */
 };
 extern const struct aarch64_intc g_gicv2_intc; /* gic.c — GICv2 (QEMU virt) */
 extern const struct aarch64_intc g_bcm_intc;   /* bcm_intc.c — BCM2837 (Raspberry Pi 3) */
@@ -221,10 +227,10 @@ struct ubx_device *aarch64_virtio_blk_init(void);
 int aarch64_virtio_blk_pool_minor(void); /* minor of the MBR pool partition (0x9C), or -1 */
 
 /* bcm_sdhci.c — BCM2837 EMMC SD-card driver (Raspberry Pi 3, M4 storage). */
-int aarch64_sd_card_init(void);                                       /* bring up the microSD on the EMMC */
+int aarch64_sd_card_init(void);                                               /* bring up the microSD on the EMMC */
 int aarch64_sd_readblock(u_int32_t lba, u_int8_t *buf, u_int32_t num);        /* read num 512-byte blocks */
 int aarch64_sd_writeblock(u_int32_t lba, const u_int8_t *buf, u_int32_t num); /* write num 512-byte blocks */
-int aarch64_sd_write_ok(void); /* non-zero if the SD write path passed its self-test */
+int aarch64_sd_write_ok(void);            /* non-zero if the SD write path passed its self-test */
 struct ubx_device *aarch64_sd_init(void); /* bring up + register the microSD as sd0 (block device) */
 int aarch64_sd_pool_minor(void);          /* minor of the UbixFS pool partition (0x9C), or -1 */
 
@@ -259,8 +265,8 @@ void aarch64_fb_present(void);
 /* bcm_mbox.c / bcm_fb.c — Raspberry Pi VideoCore mailbox + framebuffer (M6). */
 int aarch64_mbox_prop(volatile u_int32_t *msg); /* property-mailbox call (channel 8) */
 int aarch64_bcm_fb_init(void);                  /* allocate the VideoCore framebuffer */
-int aarch64_usb_init(void);      /* bcm_usb.c — DWC2 host: core up + port detect (M7.0) */
-int aarch64_usb_enumerate(void); /* M7.1 — enumerate the root-port device (control transfers) */
+int aarch64_usb_init(void);                     /* bcm_usb.c — DWC2 host: core up + port detect (M7.0) */
+int aarch64_usb_enumerate(void);                /* M7.1 — enumerate the root-port device (control transfers) */
 
 /* bcm_usb.c — SMSC LAN9514 USB Ethernet (M7.4); the lwIP bridge NIC interface. */
 extern u_int8_t smsc_mac[6];
@@ -272,8 +278,8 @@ int smsc_poll_rx(void (*deliver)(const u_int8_t *, u_int32_t));
  * interface as the SMSC/virtio backends. */
 extern u_int8_t genet_mac[6];
 extern int genet_ready;
-int aarch64_genet_init(void);                             /* bring up the MAC + PHY; 0 on success */
-int genet_send(const void *frame, u_int32_t len);         /* TX one Ethernet frame */
+int aarch64_genet_init(void);                                    /* bring up the MAC + PHY; 0 on success */
+int genet_send(const void *frame, u_int32_t len);                /* TX one Ethernet frame */
 int genet_poll_rx(void (*deliver)(const u_int8_t *, u_int32_t)); /* drain the RX ring */
 
 /* sys/fs/ubixfs/ubixfs_selftest.c — UbixFS core in-kernel self-test (plan K1). */

@@ -124,6 +124,7 @@ void timer_tick(void)
 		g_ticks++;
 		if (systemVitals != 0)
 			systemVitals->sysTicks++; /* the scheduler's quantum/aging clock */
+		vitals_tick_uptime();             /* seconds since boot, for the wall clock */
 		sched_account_tick();             /* Phase 3.5: charge the tick to the running thread */
 	}
 	else

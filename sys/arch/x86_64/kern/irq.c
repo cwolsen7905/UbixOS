@@ -61,7 +61,7 @@ void pic_remap(void)
 }
 
 /** Unmask a single IRQ line (0..15) on the PIC. */
-static void pic_unmask(unsigned irq)
+void irq_unmask(unsigned irq)
 {
 	u16 port = (irq < 8) ? PIC1_DATA : PIC2_DATA;
 	u8 line = (irq < 8) ? irq : (irq - 8);
@@ -79,7 +79,7 @@ void pit_init(unsigned hz)
 	outb(PIT_CH0, (u8)(divisor & 0xFF));
 	outb(PIT_CH0, (u8)((divisor >> 8) & 0xFF));
 
-	pic_unmask(0); /* IRQ0 = the timer */
+	irq_unmask(0); /* IRQ0 = the timer */
 }
 
 /** Signal end-of-interrupt to the PIC(s) for a handled IRQ vector. */
@@ -95,9 +95,9 @@ void pit_init(unsigned hz)
 #define PIT_PORTB 0x61
 #define TSC_CAL_MS 50
 
-static u64 g_tsc_hz;       /* TSC ticks per second (0 = not calibrated) */
-static u64 g_tsc_base;     /* TSC at tick 0 of the TSC-driven tick count */
-static u64 g_tsc_ticked;   /* scheduler ticks accounted since g_tsc_base */
+static u64 g_tsc_hz;        /* TSC ticks per second (0 = not calibrated) */
+static u64 g_tsc_base;      /* TSC at tick 0 of the TSC-driven tick count */
+static u64 g_tsc_ticked;    /* scheduler ticks accounted since g_tsc_base */
 static u32 g_systicks_base; /* sysTicks when the TSC took over */
 
 static inline u64 rdtsc64(void)
@@ -119,7 +119,7 @@ void x86_64_tsc_calibrate(void)
 	u8 b = inb(PIT_PORTB);
 
 	outb(PIT_PORTB, (u8)((b & ~0x02) | 0x01)); /* gate ch2 on, speaker data off */
-	outb(PIT_CMD, 0xB0);                         /* ch2, lo/hi byte, mode 0, binary */
+	outb(PIT_CMD, 0xB0);                       /* ch2, lo/hi byte, mode 0, binary */
 	outb(PIT_CH2, (u8)(count & 0xFF));
 	t0 = rdtsc64();
 	outb(PIT_CH2, (u8)((count >> 8) & 0xFF)); /* counting starts on the high byte */
@@ -223,10 +223,17 @@ int x86_64_irq(unsigned vector)
 		extern vitalsNode *systemVitals;
 		g_ticks++;
 		if (systemVitals != 0)
-			systemVitals->sysTicks += tsc_ticks_due(); /* MI time base (aging, callouts), lost ticks caught up */
+			systemVitals->sysTicks +=
+			    tsc_ticks_due(); /* MI time base (aging, callouts), lost ticks caught up */
+		vitals_tick_uptime();        /* seconds since boot, for the wall clock */
 		/* Charge the elapsed tick to whatever was running. */
 		sched_account_tick();
 		ticked = 1;
+	}
+	else if (vector == IRQ_BASE + 4) /* IRQ4 — COM1 */
+	{
+		if (serial_irq() > 0)
+			x86_64_console_rx_wake();
 	}
 	irq_eoi(vector);
 	return ticked;

@@ -25,6 +25,7 @@
 #include <pthread.h>
 #include <signal.h>
 #include <sys/select.h>
+#include <time.h>
 
 #define NMAPS 64
 #define MAPSZ 8192
@@ -247,6 +248,58 @@ static int check_thread_fds(void)
 	return pid > 0 && waitpid(pid, &st, 0) == pid && WIFEXITED(st) && WEXITSTATUS(st) == 0;
 }
 
+/** @return MemFree from /proc/meminfo in kB, or -1 if it can't be read. */
+static long mem_free_kb(void)
+{
+	char line[128];
+	long kb = -1;
+	FILE *f = fopen("/proc/meminfo", "r");
+
+	if (f == NULL)
+		return -1;
+	while (fgets(line, sizeof(line), f) != NULL)
+	{
+		if (sscanf(line, "MemFree: %ld", &kb) == 1)
+			break;
+	}
+	fclose(f);
+	return kb;
+}
+
+/**
+ * mmap(MAP_FIXED) over a page that is already mapped replaces it without
+ * leaking the old frame: 2000 remaps of one page must not use up ~8 MB.
+ */
+static void check_mmap_fixed_reuse(void)
+{
+	enum
+	{
+		REMAPS = 2000
+	};
+	long before, after;
+	char *p;
+	int i;
+
+	p = mmap(NULL, 4096, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANON, -1, 0);
+	if (p == MAP_FAILED)
+	{
+		check("mmap a page to remap", 0);
+		return;
+	}
+	before = mem_free_kb();
+	for (i = 0; i < REMAPS; i++)
+	{
+		if (mmap(p, 4096, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANON | MAP_FIXED, -1, 0) != p)
+			break;
+		p[0] = 1;
+	}
+	after = mem_free_kb();
+	check("mmap MAP_FIXED over a mapped page succeeds", i == REMAPS);
+	check("mmap MAP_FIXED over a mapped page frees the old frame",
+	      before > 0 && after > 0 && before - after < 2048);
+	munmap(p, 4096);
+}
+
 /**
  * File modes: open(O_CREAT) gives a new file the requested mode less the umask,
  * chmod and fchmod change it, rename keeps it, and O_CREAT|O_EXCL refuses an
@@ -321,6 +374,30 @@ static void check_umask(void)
 	check("fork child inherits the umask",
 	      pid > 0 && waitpid(pid, &status, 0) == pid && WIFEXITED(status) && WEXITSTATUS(status) == 0);
 	check("child's umask change leaves the parent's", umask(old) == 077);
+}
+
+/**
+ * A newly written file is stamped with the current wall-clock time, not the
+ * time the system booted.
+ */
+static void check_mtime_now(void)
+{
+	const char *p = "/tmp/vfstest.mtime";
+	struct stat st;
+	time_t now;
+	int fd;
+
+	unlink(p);
+	fd = open(p, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (fd >= 0)
+	{
+		write(fd, "t", 1);
+		close(fd);
+	}
+	now = time(NULL);
+	check("new file mtime is the current time",
+	      stat(p, &st) == 0 && st.st_mtime <= now + 2 && st.st_mtime >= now - 2);
+	unlink(p);
 }
 
 /**
@@ -646,6 +723,8 @@ int main(int argc, char **argv)
 
 	check_modes();
 	check_umask();
+	check_mtime_now();
+	check_mmap_fixed_reuse();
 	check_poll_pipes();
 	check("two threads' mmaps are distinct and intact", check_thread_mmap());
 	check("threads share one fd table", check_thread_fds());
