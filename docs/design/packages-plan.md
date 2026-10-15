@@ -1,6 +1,6 @@
 # Binary packages — design
 
-**Status:** proposal (2026-10-15). Plan only; no code. Every section ends in a
+**Status:** proposal (2026-10-15); P1 (`lib/libpkg`, W-069) is implemented (`include/ubix/pkg.h`, tests in `tests/pkgtest`), the rest is plan only. Every section ends in a
 **Recommendation** and the **Questions for the person**. Nothing here is
 decided until the person answers; rows W-069..W-078 in [`../WORK.md`](../WORK.md)
 are `todo`.

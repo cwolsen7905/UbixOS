@@ -19,7 +19,7 @@ _ARCH != uname -m
 _ARCH = aarch64
 .endif
 .endif
-SUBDIRS = syscheck filetest pipetest selfhostck ttytest udptest fbtest sigtest vfstest gpttest
+SUBDIRS = syscheck filetest pipetest selfhostck ttytest udptest fbtest sigtest vfstest gpttest pkgtest
 .if ${_ARCH} == "i386"
 SUBDIRS += clonetest tlstest futextest pthreadtest condtest detachtest vmtest \
            nsfbtest rndtest pwtest ssltest hello
