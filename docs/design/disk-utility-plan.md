@@ -14,8 +14,8 @@ Partition → First Aid).  MVP is read-only and grows toward full management.
 
 | Phase | Item | Status |
 |-------|------|--------|
-| 0 | Data layer — `ubix_disk_query` native syscall + DTO + lib thunk | ⬜ |
-| 0b | Raw block access on both arches (for later write ops) | ⬜ |
+| 0 | Data layer — `ubix_disk_query` native syscall + DTO + lib thunk | ✅ (syscall 68; GPT-aware since W-058) |
+| 0b | Raw block access on both arches (for later write ops) | ✅ (native syscall 72 `disk_rawio`, W-058) |
 | 1 | **MVP** — read-only GUI: enumerate drives, select, info + layout bar | ⬜ |
 | 2 | Mount / Unmount a volume | ⬜ |
 | 3 | Erase / format (FAT32 + UbixFS pool) | ⬜ |
@@ -128,6 +128,27 @@ means a **block device node** the app can `open()`/`pwrite()`:
   blocks fstab `/boot` on aarch64** (see the bootstrap-convergence work). Adding
   them here closes both. Whole disk + partitions registered via `devfs_makeNode`
   from `virtio_blk` after the MBR parse.
+
+**As built (W-058):** instead of devfs nodes, one native syscall 72,
+`ubix_disk_rawio(index, op, lba, count, buf)` (`include/api/ubix_disk.h`),
+shared by both arches (`sys/kern/disk_query.c`). Root only; at most 8 sectors per
+call; `index` is the whole-disk position in the `ubix_disk_query` result. Writes
+are refused with `-EBUSY` over LBA 0 and over any mounted partition of a disk
+that has one mounted, so the live table and filesystems are protected. LBAs are
+32-bit at the block-ops layer (2 TiB limit, unchanged).
+
+**GPT (W-058).** The kernel reads GPT beside MBR (`sys/kern/gpt_part.c`,
+`dev/partition.c`): protective MBR (type 0xEE) -> validated primary header and
+array, else the backup at the last LBA. GPT types map onto the MBR type bytes
+(EFI System -> 0x0C, uBix swap -> 0x82, uBix pool -> 0x9C, other -> 0xDA); the
+DTO carries the raw GUID in `gpt_type` and `UBIX_DF_GPT` on the disk. The writer
+is `lib/libgpt` (`<ubix/diskgpt.h>`). uBix partition-type GUIDs (random v4):
+
+| Role | GUID |
+|------|------|
+| EFI System Partition | `C12A7328-F81F-11D2-BA4B-00A0C93EC93B` (standard) |
+| uBix swap | `2E7AE24F-9672-436D-98C8-3830882044D5` |
+| uBix UbixFS pool | `DE479544-D2B7-4693-9B24-3A0E638CCF81` |
 
 Read-only MVP (Phases 1-2) needs **none** of this — it runs entirely on
 `ubix_disk_query` + `mount`/`unmount`.
