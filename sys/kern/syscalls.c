@@ -159,6 +159,10 @@ struct syscall_entry systemCalls[] = {
      "net_status",
      (sys_call_t *)sys_net_status,
      SYSCALL_VALID}, // 71 - default interface up/link/IPv4 (taskbar network item)
+    {ARG_COUNT(sys_disk_rawio_args),
+     "disk_rawio",
+     (sys_call_t *)sys_disk_rawio,
+     SYSCALL_VALID}, // 72 - raw sector I/O on a whole disk (installer / GPT writer)
 };
 
 int totalCalls = sizeof(systemCalls) / sizeof(struct syscall_entry);

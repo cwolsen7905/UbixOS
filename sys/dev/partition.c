@@ -27,6 +27,7 @@
  */
 
 #include <dev/partition.h>
+#include <sys/gpt_part.h>
 #include <lib/kprintf.h>
 #include <string.h>
 
@@ -67,7 +68,69 @@ static int part_write(struct ubx_device *dev, u_int32_t lba, u_int32_t count, vo
 	return (p->parent->dev_blk_ops->write(p->parent, p->lba_start + lba, count, buf));
 }
 
+/**
+ * Fill one ubp_partition: block ops, parent link, device name and log line.
+ */
+static void part_init(
+    struct ubp_partition *p, struct ubx_device *disk, u_int64_t start, u_int64_t count, int slot, u_int8_t type)
+{
+	memset(p, 0, sizeof(*p));
+	p->parent = disk;
+	p->lba_start = start;
+	p->lba_count = count;
+	p->type = type;
+	p->minor = slot + 1; /* table slot -> sNN (1-based), matching i386 ad0sN */
+	p->ops.read = part_read;
+	p->ops.write = part_write;
+	p->dev.dev_parent = disk;
+	p->dev.dev_blk_ops = &p->ops;
+	p->dev.dev_softc = p; /* self-reference; handy for callers */
+	snprintf(p->dev.dev_nameunit, sizeof(p->dev.dev_nameunit), "%ss%i", disk->dev_nameunit, slot + 1);
+
+	kprintf("partition: %s type=0x%02X start=%u sectors=%u (minor %i)\n",
+	        p->dev.dev_nameunit,
+	        type,
+	        (u_int32_t)p->lba_start,
+	        (u_int32_t)p->lba_count,
+	        p->minor);
+}
+
+/**
+ * Populate @out from the GPT on @disk (a protective MBR was already seen).
+ */
+static int gpt_parse_into(struct ubx_device *disk, u_int64_t disk_sectors, struct ubp_partition *out, int max)
+{
+	struct gpt_part ents[UBP_MAX_PARTITIONS];
+	int n, i;
+
+	n = gpt_read_partitions(disk, disk_sectors, ents, max < UBP_MAX_PARTITIONS ? max : UBP_MAX_PARTITIONS);
+	if (n < 0)
+		return (0);
+	for (i = 0; i < n; i++)
+	{
+		part_init(&out[i],
+		          disk,
+		          ents[i].first_lba,
+		          ents[i].last_lba - ents[i].first_lba + 1,
+		          (int)ents[i].slot,
+		          gpt_guid_mbr_type(ents[i].type));
+		memcpy(out[i].gpt_type, ents[i].type, 16);
+	}
+	return (n);
+}
+
+/**
+ * Parse MBR/GPT without knowing the disk size (primary GPT only).
+ */
 int mbr_parse_partitions(struct ubx_device *disk, struct ubp_partition *out, int max)
+{
+	return (ubp_parse_partitions(disk, 0, out, max));
+}
+
+/**
+ * Parse the MBR (or the GPT behind a protective MBR) and fill @out.
+ */
+int ubp_parse_partitions(struct ubx_device *disk, u_int64_t disk_sectors, struct ubp_partition *out, int max)
 {
 	u_int8_t sector[512];
 	int i, n;
@@ -94,6 +157,11 @@ int mbr_parse_partitions(struct ubx_device *disk, struct ubp_partition *out, int
 			return (0);
 	}
 
+	/* A protective MBR (type 0xEE) means the real table is the GPT. */
+	for (i = 0; i < MBR_MAX_PARTITIONS; i++)
+		if (sector[MBR_PART_TABLE_OFF + (i * MBR_PART_RECORD_SZ) + 4] == MBR_TYPE_PROTECTIVE)
+			return (gpt_parse_into(disk, disk_sectors, out, max));
+
 	n = 0;
 	for (i = 0; i < MBR_MAX_PARTITIONS && i < max; i++)
 	{
@@ -105,25 +173,7 @@ int mbr_parse_partitions(struct ubx_device *disk, struct ubp_partition *out, int
 			continue;
 
 		p = &out[n];
-		memset(p, 0, sizeof(*p));
-		p->parent = disk;
-		p->lba_start = le32(rec + 8);
-		p->lba_count = le32(rec + 12);
-		p->type = type;
-		p->minor = i + 1; /* MBR slot i -> sNN (1-based), matching i386 ad0sN */
-		p->ops.read = part_read;
-		p->ops.write = part_write;
-		p->dev.dev_parent = disk;
-		p->dev.dev_blk_ops = &p->ops;
-		p->dev.dev_softc = p; /* self-reference; handy for callers */
-		snprintf(p->dev.dev_nameunit, sizeof(p->dev.dev_nameunit), "%ss%i", disk->dev_nameunit, i + 1);
-
-		kprintf("partition: %s type=0x%02X start=%u sectors=%u (minor %i)\n",
-		        p->dev.dev_nameunit,
-		        type,
-		        p->lba_start,
-		        p->lba_count,
-		        p->minor);
+		part_init(p, disk, le32(rec + 8), le32(rec + 12), i, type);
 		n++;
 	}
 

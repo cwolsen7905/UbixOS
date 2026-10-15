@@ -154,7 +154,7 @@ static struct spinLock g_blk_lock = SPIN_LOCK_INITIALIZER;
 
 /* MBR partitions discovered on the disk (vtblk0sN).  The pool root lives on one
  * of these (type 0x9C); vfs_mount resolves it by minor via the find hook. */
-static struct ubp_partition g_parts[MBR_MAX_PARTITIONS];
+static struct ubp_partition g_parts[UBP_MAX_PARTITIONS];
 static int g_npart;
 
 static inline u_int32_t mmio_rd(u_int32_t off)
@@ -456,7 +456,13 @@ struct ubx_device *aarch64_virtio_blk_init(void)
 		/* Parse the MBR (if any) so the pool partition is mountable as vtblk0sN.
 		 * A bare-FAT image (no MBR) simply yields 0 partitions and the whole-disk
 		 * device stays the only one — preserving the legacy mount path. */
-		g_npart = mbr_parse_partitions(&g_blk_dev, g_parts, MBR_MAX_PARTITIONS);
+		{
+			struct disk_hw hw;
+
+			memset(&hw, 0, sizeof(hw));
+			(void)md_disk_list(&hw, 1);
+			g_npart = ubp_parse_partitions(&g_blk_dev, hw.sectors, g_parts, UBP_MAX_PARTITIONS);
+		}
 		if (g_npart < 0)
 			g_npart = 0;
 		if (g_npart == 0)

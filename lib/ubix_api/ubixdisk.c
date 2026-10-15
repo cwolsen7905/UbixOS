@@ -9,3 +9,4 @@
 #include <sys/ubix_syscall.h>
 
 UBIX_NATIVE_THUNK(ubix_disk_query, 68);
+UBIX_NATIVE_THUNK(ubix_disk_rawio, 72);

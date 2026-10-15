@@ -47,6 +47,7 @@
 #define UBIX_DF_REMOVABLE 0x1
 #define UBIX_DF_MOUNTED 0x2
 #define UBIX_DF_READONLY 0x4
+#define UBIX_DF_GPT 0x8 /* whole disk carries a GPT (else MBR/none) */
 
 struct ubix_disk_info
 {
@@ -64,6 +65,7 @@ struct ubix_disk_info
 	char fstype[16];
 	char mountpoint[64];
 	char model[40];
+	u_int8_t gpt_type[16]; /* GPT partition-type GUID (raw bytes); zero for MBR */
 };
 
 /*
@@ -96,5 +98,20 @@ int md_disk_list(struct disk_hw *out, int max);
  * @return the number of entries written.
  */
 int disk_query(void *buf, int max);
+
+/* disk_rawio ops (native syscall 72). */
+#define UBIX_DISK_RAW_READ 0
+#define UBIX_DISK_RAW_WRITE 1
+#define UBIX_DISK_RAW_MAXSECS 8 /* sectors moved per call */
+
+/**
+ * Raw sector I/O on whole disk number @index (as ordered by md_disk_list).
+ * Writes are refused while any partition of the disk is mounted and the range
+ * would touch LBA 0 or a mounted partition.
+ *
+ * @param ubuf  user buffer of count * 512 bytes.
+ * @return 0 on success, -errno on failure.
+ */
+int disk_rawio(u_int32_t index, u_int32_t op, u_int64_t lba, u_int32_t count, void *ubuf);
 
 #endif /* _DEV_DISK_H */
