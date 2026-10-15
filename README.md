@@ -1,8 +1,8 @@
 # UbixOS
 
-**Version:** 2.2.0-BETA &nbsp;|&nbsp; **Architecture:** i386 (x86 32-bit) &nbsp;|&nbsp; **License:** BSD 3-Clause
+**Version:** 3.1.0 &nbsp;|&nbsp; **Architecture:** aarch64 (primary), x86_64 &nbsp;|&nbsp; **License:** BSD 3-Clause
 
-UbixOS is a hobby/research operating system for the x86 platform, developed from scratch since 2002. It implements a monolithic kernel with a modular subsystem layout, a FreeBSD-derived POSIX userland, and its own native filesystem (UbixFS).
+UbixOS is a hobby/research operating system for 64-bit aarch64 and x86_64, developed from scratch since 2002. It implements a monolithic kernel with a modular subsystem layout, a FreeBSD-derived POSIX userland, and its own native filesystem (UbixFS).
 
 ---
 
@@ -17,6 +17,7 @@ UbixOS is a hobby/research operating system for the x86 platform, developed from
 - **Drivers:** AT keyboard, PIT, PIC (8259), floppy, serial (RS-232), PCI hard disk, PS/2 mouse, USB mass storage
 - **GUI:** Composited window system (`views`), taskbar, VT100 terminal — all via shared-memory MPI protocol
 - **Userland:** 30+ utilities including tcsh 6.24.16, ed, uname, mount, ps; FreeBSD-derived libc; C++ runtime (libc++ 18 subset); objgfx rendering library
+- **Self-hosting:** on both aarch64 and x86_64, UbixOS builds its own world and kernel inside UbixOS (Clang/LLVM + lld, `bmake`), and an image made from that output boots on the self-built kernel and passes `sigtest` and `vfstest`. See [docs/releases/3.1.0.md](docs/releases/3.1.0.md)
 - **ELF loader:** Loads and executes standard i386 ELF binaries; runtime dynamic linker (`ld.so`)
 
 ---
