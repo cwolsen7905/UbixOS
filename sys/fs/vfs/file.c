@@ -73,9 +73,8 @@ static struct spinLock vfs_io_lock = SPIN_LOCK_INITIALIZER;
  * to three full path walks from the root.  Neither fact depends on file
  * contents, size or times, so writes never invalidate an entry.  Only namespace
  * changes do, and every one of them goes through this file: create (fopen for
- * writing), mkdir, symlink, unlink, rmdir and rename.  Mounts change which
- * filesystem a path reaches; vnc_cacheable checks the mount on every use, so an
- * entry is only consulted while the path's current mount is UbixFS.  4-way set-associative, round-robin replacement;
+ * writing), mkdir, symlink, unlink, rmdir and rename here, and mount/unmount in
+ * mount.c (vfs_lookup_cache_flush).  4-way set-associative, round-robin replacement;
  * paths longer than VNC_PATH_MAX - 1 are simply not cached.
  *
  * g_vnc_lock guards the table and g_vnc_seq.  Lock order: g_vnc_lock is a leaf;
@@ -389,10 +388,11 @@ static void vnc_invalidate(const char *fullpath, int subtree)
 }
 
 /**
- * Empty the lookup cache.  Called for a namespace change the cache cannot track
- * path by path: rename, which moves whole subtrees.  Takes g_vnc_lock.
+ * Empty the lookup cache.  Called for namespace changes the cache cannot track
+ * path by path: rename (it moves whole subtrees) and mount/unmount (they change
+ * which filesystem a path reaches).  Takes g_vnc_lock.
  */
-static void vfs_lookup_cache_flush(void)
+void vfs_lookup_cache_flush(void)
 {
 	spinLock(&g_vnc_lock);
 	g_vnc_seq++;

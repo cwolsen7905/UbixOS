@@ -98,13 +98,7 @@ invalidate an entry.
 - Invalidation: every namespace change goes through `file.c`.
   - Create (`fopen` for writing), mkdir and symlink forget the path.
   - Unlink and rmdir forget the path and everything below it.
-  - Rename empties the cache.
-  - Mounts: an entry is consulted only while the path's current mount is
-    UbixFS, so a devfs, procfs or FAT mount over a cached path hides its
-    entries.  Not yet handled: a second UbixFS pool mounted over a path that
-    has entries.  The fix is to empty the cache on mount and unmount
-    (`sys/fs/vfs/mount.c`), which needs a prototype in
-    `sys/include/fs/vfs/file.h`.
+  - Rename, mount and unmount empty the cache.
 - A lookup that goes to the filesystem notes a sequence number first and
   inserts its result only if no invalidation happened in between.  A result
   read before a concurrent change is therefore never cached after it.

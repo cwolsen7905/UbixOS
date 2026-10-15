@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -45,66 +45,74 @@
  Notes:
 
  ************************************************************************/
-int vfs_mount( int major, int minor, int partition, int vfsType, char *mountPoint, char *perms ) {
-  struct vfs_mountPoint *mp = 0x0;
-  struct ubx_device *device = 0x0;
+int vfs_mount(int major, int minor, int partition, int vfs_type, char *mount_point, char *perms)
+{
+	struct vfs_mountPoint *mp = 0x0;
+	struct ubx_device *device = 0x0;
 
-  /* If an exact mount already exists at this path, treat as success (no-op).
-   * Matches FreeBSD behaviour: fstab entries for kernel-pre-mounted FSes
-   * (devfs, procfs) succeed silently rather than double-mounting. */
-  {
-    struct vfs_mountPoint *existing = vfs_findMount(mountPoint);
-    if (existing != NULL && strcmp(existing->mountPoint, mountPoint) == 0) {
-      kprintf("vfs_mount: %s already mounted, skipping\n", mountPoint);
-      return (0x0);
-    }
-  }
+	/* If an exact mount already exists at this path, treat as success (no-op).
+	 * Matches FreeBSD behaviour: fstab entries for kernel-pre-mounted FSes
+	 * (devfs, procfs) succeed silently rather than double-mounting. */
+	{
+		struct vfs_mountPoint *existing = vfs_findMount(mount_point);
+		if (existing != NULL && strcmp(existing->mountPoint, mount_point) == 0)
+		{
+			kprintf("vfs_mount: %s already mounted, skipping\n", mount_point);
+			return (0x0);
+		}
+	}
 
-  /* Allocate Memory For Mount Point */
-  if ( (mp = (struct vfs_mountPoint *) kmalloc( sizeof(struct vfs_mountPoint) )) == NULL ) {
-    kprintf( "vfs_mount: failed to allocate mp\n" );
-    return (0x1);
-  }
+	/* Allocate Memory For Mount Point */
+	if ((mp = (struct vfs_mountPoint *)kmalloc(sizeof(struct vfs_mountPoint))) == NULL)
+	{
+		kprintf("vfs_mount: failed to allocate mp\n");
+		return (0x1);
+	}
 
-  /* Validate filesystem type before touching the mount list */
-  mp->fs = (struct fileSystem *) vfs_findFS( vfsType );
-  if ( mp->fs == 0x0 ) {
-    kprintf( "File System Type: %i Not Found\n", vfsType );
-    kfree( mp );
-    return (0x1);
-  }
+	/* Validate filesystem type before touching the mount list */
+	mp->fs = (struct fileSystem *)vfs_findFS(vfs_type);
+	if (mp->fs == 0x0)
+	{
+		kprintf("File System Type: %i Not Found\n", vfs_type);
+		kfree(mp);
+		return (0x1);
+	}
 
-  /* Copy Mount Point Into Buffer */
-  snprintf( mp->mountPoint, sizeof(mp->mountPoint), "%s", mountPoint );
+	/* Copy Mount Point Into Buffer */
+	snprintf(mp->mountPoint, sizeof(mp->mountPoint), "%s", mount_point);
 
-  /* Set Pointer To Physical Drive (via the device-lookup hook; NULL on arches
-   * without the device model, e.g. a deviceless procfs/devfs mount). */
-  device = g_device_find ? (struct ubx_device *)g_device_find( major, minor ) : NULL;
+	/* Set Pointer To Physical Drive (via the device-lookup hook; NULL on arches
+	 * without the device model, e.g. a deviceless procfs/devfs mount). */
+	device = g_device_find ? (struct ubx_device *)g_device_find(major, minor) : NULL;
 
-  /* Set Up Mp Defaults */
-  mp->device = device;
-  mp->partition = partition;
-  mp->perms = (perms && perms[0] == 'r' && perms[1] == 'w') ? 'w' : 'r';
+	/* Set Up Mp Defaults */
+	mp->device = device;
+	mp->partition = partition;
+	mp->perms = (perms && perms[0] == 'r' && perms[1] == 'w') ? 'w' : 'r';
 
-  /* Add Mountpoint; if it fails free and return */
-  if ( vfs_addMount( mp ) != 0x0 ) {
-    kfree( mp );
-    return (0x1);
-  }
+	/* Add Mountpoint; if it fails free and return */
+	if (vfs_addMount(mp) != 0x0)
+	{
+		kfree(mp);
+		return (0x1);
+	}
 
-  /* Initialize The File System; if it fails remove from list and free */
-  if ( mp->fs->vfsInitFS( mp ) == 0x0 ) {
-    if ( systemVitals->mountPoints == mp )
-      systemVitals->mountPoints = mp->next;
-    if ( mp->prev )
-      mp->prev->next = mp->next;
-    if ( mp->next )
-      mp->next->prev = mp->prev;
-    kfree( mp );
-    return (0x1);
-  }
-  /* Return */
-  return (0x0);
+	/* Initialize The File System; if it fails remove from list and free */
+	if (mp->fs->vfsInitFS(mp) == 0x0)
+	{
+		if (systemVitals->mountPoints == mp)
+			systemVitals->mountPoints = mp->next;
+		if (mp->prev)
+			mp->prev->next = mp->next;
+		if (mp->next)
+			mp->next->prev = mp->prev;
+		kfree(mp);
+		return (0x1);
+	}
+	/* Paths under the mount point now reach another filesystem. */
+	vfs_lookup_cache_flush();
+	/* Return */
+	return (0x0);
 }
 
 /************************************************************************
@@ -116,22 +124,25 @@ int vfs_mount( int major, int minor, int partition, int vfsType, char *mountPoin
  Notes:
 
  ************************************************************************/
-int vfs_addMount( struct vfs_mountPoint *mp ) {
+int vfs_addMount(struct vfs_mountPoint *mp)
+{
 
-  /* If There Are No Existing Mounts Make It The First */
-  if ( systemVitals->mountPoints == 0x0 ) {
-    mp->prev = 0x0;
-    mp->next = 0x0;
-    systemVitals->mountPoints = mp;
-  }
-  else {
-    mp->next = systemVitals->mountPoints;
-    systemVitals->mountPoints->prev = mp;
-    mp->prev = 0x0;
-    systemVitals->mountPoints = mp;
-  }
-  /* Return */
-  return (0x0);
+	/* If There Are No Existing Mounts Make It The First */
+	if (systemVitals->mountPoints == 0x0)
+	{
+		mp->prev = 0x0;
+		mp->next = 0x0;
+		systemVitals->mountPoints = mp;
+	}
+	else
+	{
+		mp->next = systemVitals->mountPoints;
+		systemVitals->mountPoints->prev = mp;
+		mp->prev = 0x0;
+		systemVitals->mountPoints = mp;
+	}
+	/* Return */
+	return (0x0);
 }
 
 /************************************************************************
@@ -152,33 +163,36 @@ int vfs_addMount( struct vfs_mountPoint *mp ) {
  * by '/' or end-of-string to avoid false matches (e.g. "/developer" must not
  * match a "/dev" mount).
  */
-struct vfs_mountPoint *vfs_findMount( const char *path ) {
-  struct vfs_mountPoint *tmpMp = 0x0;
-  struct vfs_mountPoint *best  = NULL;
-  size_t best_len = 0;
-  size_t path_len;
+struct vfs_mountPoint *vfs_findMount(const char *path)
+{
+	struct vfs_mountPoint *tmp_mp = 0x0;
+	struct vfs_mountPoint *best = NULL;
+	size_t best_len = 0;
+	size_t path_len;
 
-  if (path == NULL)
-    return NULL;
+	if (path == NULL)
+		return NULL;
 
-  path_len = strlen(path);
+	path_len = strlen(path);
 
-  for ( tmpMp = systemVitals->mountPoints; tmpMp; tmpMp = tmpMp->next ) {
-    size_t mlen = strlen(tmpMp->mountPoint);
-    if (mlen > path_len)
-      continue;
-    if (strncmp(path, tmpMp->mountPoint, mlen) != 0)
-      continue;
-    /* Boundary check: root "/" matches everything; otherwise the next
-     * character must be '/' or '\0'. */
-    if (mlen > 1 && path[mlen] != '/' && path[mlen] != '\0')
-      continue;
-    if (mlen > best_len) {
-      best     = tmpMp;
-      best_len = mlen;
-    }
-  }
-  return best;
+	for (tmp_mp = systemVitals->mountPoints; tmp_mp; tmp_mp = tmp_mp->next)
+	{
+		size_t mlen = strlen(tmp_mp->mountPoint);
+		if (mlen > path_len)
+			continue;
+		if (strncmp(path, tmp_mp->mountPoint, mlen) != 0)
+			continue;
+		/* Boundary check: root "/" matches everything; otherwise the next
+		 * character must be '/' or '\0'. */
+		if (mlen > 1 && path[mlen] != '/' && path[mlen] != '\0')
+			continue;
+		if (mlen > best_len)
+		{
+			best = tmp_mp;
+			best_len = mlen;
+		}
+	}
+	return best;
 }
 
 /*
@@ -206,10 +220,10 @@ int vfs_umount(const char *path)
 		mp->next->prev = mp->prev;
 
 	kfree(mp);
+	vfs_lookup_cache_flush(); /* paths under it reach the covered filesystem again */
 	return (0);
 }
 
 /***
  END
  ***/
-

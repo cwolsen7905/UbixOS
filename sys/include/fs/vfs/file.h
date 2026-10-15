@@ -139,6 +139,8 @@ struct sys_fwrite_args
 int unlink(const char *path);
 int vfs_symlink(const char *target, const char *linkpath);
 int vfs_readlink(const char *path, char *buf, int bufsz);
+/* Empty the VFS lookup cache (file.c); mount and unmount call it. */
+void vfs_lookup_cache_flush(void);
 int vfs_fchmod(fileDescriptor_t *fd, int mode);
 int feof(fileDescriptor_t *fd);
 int fgetc(fileDescriptor_t *fd);
