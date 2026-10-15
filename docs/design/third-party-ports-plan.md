@@ -8,8 +8,10 @@ source into `contrib/`) remains an explicit, *documented* exception for a narrow
 class of deps. Existing vendored deps are **not** retrofitted.
 
 > Scope note: "ports" here means *build-time recipes for the deps the OS builds
-> from* (toolchain, libraries) — not a user-facing package manager. An on-device
-> `pkg`-style system is a separate, much later thing.
+> from* (toolchain, libraries) — not a user-facing package manager. The
+> on-device binary package system is designed separately in
+> [packages-plan.md](packages-plan.md); it reuses this recipe shape in a
+> separate project (ubixos-packages) and makes LLVM its first package.
 
 ---
 
