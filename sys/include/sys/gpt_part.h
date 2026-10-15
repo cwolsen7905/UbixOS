@@ -43,13 +43,10 @@
 #define GPT_GUID_LEN 16
 #define GPT_SECTOR_SIZE 512
 
-/* uBix partition-type GUIDs (random v4, allocated for B5 / W-058). */
-#define GPT_TYPE_EFI_BYTES                                                                                             \
-	{0x28, 0x73, 0x2A, 0xC1, 0x1F, 0xF8, 0xD2, 0x11, 0xBA, 0x4B, 0x00, 0xA0, 0xC9, 0x3E, 0xC9, 0x3B}
-#define GPT_TYPE_UBIX_SWAP_BYTES                                                                                       \
-	{0x4F, 0xE2, 0x7A, 0x2E, 0x72, 0x96, 0x6D, 0x43, 0x98, 0xC8, 0x38, 0x30, 0x88, 0x20, 0x44, 0xD5}
-#define GPT_TYPE_UBIX_POOL_BYTES                                                                                       \
-	{0x44, 0x95, 0x47, 0xDE, 0xB7, 0xD2, 0x93, 0x46, 0x9B, 0x24, 0x3A, 0x0E, 0x63, 0x8C, 0xCF, 0x81}
+/* Partition-type GUIDs (raw on-disk bytes).  uBix swap/pool are random v4 GUIDs. */
+extern const u_int8_t gpt_type_efi[GPT_GUID_LEN];
+extern const u_int8_t gpt_type_ubix_swap[GPT_GUID_LEN];
+extern const u_int8_t gpt_type_ubix_pool[GPT_GUID_LEN];
 
 /** One in-use GPT entry, reduced to what the partition layer needs. */
 struct gpt_part

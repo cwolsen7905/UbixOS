@@ -20,13 +20,10 @@
 #define GPT_ARRAY_SECTORS ((GPT_NUM_ENTRIES * GPT_ENTRY_SIZE) / GPT_SECTOR)
 #define GPT_MIN_SECTORS (1 + 1 + GPT_ARRAY_SECTORS + 1 + GPT_ARRAY_SECTORS + 1 + 1)
 
-/* uBix partition-type GUIDs; must match sys/include/sys/gpt_part.h. */
-#define GPT_TYPE_EFI_BYTES                                                                                             \
-	{0x28, 0x73, 0x2A, 0xC1, 0x1F, 0xF8, 0xD2, 0x11, 0xBA, 0x4B, 0x00, 0xA0, 0xC9, 0x3E, 0xC9, 0x3B}
-#define GPT_TYPE_UBIX_SWAP_BYTES                                                                                       \
-	{0x4F, 0xE2, 0x7A, 0x2E, 0x72, 0x96, 0x6D, 0x43, 0x98, 0xC8, 0x38, 0x30, 0x88, 0x20, 0x44, 0xD5}
-#define GPT_TYPE_UBIX_POOL_BYTES                                                                                       \
-	{0x44, 0x95, 0x47, 0xDE, 0xB7, 0xD2, 0x93, 0x46, 0x9B, 0x24, 0x3A, 0x0E, 0x63, 0x8C, 0xCF, 0x81}
+/* Partition-type GUIDs (raw on-disk bytes); same values as the kernel's. */
+extern const uint8_t gpt_type_efi[16];
+extern const uint8_t gpt_type_ubix_swap[16];
+extern const uint8_t gpt_type_ubix_pool[16];
 
 /** Sector I/O supplied by the caller; return 0 on success, nonzero on error. */
 struct gpt_io

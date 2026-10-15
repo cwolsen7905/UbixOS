@@ -36,6 +36,61 @@
 #include <dev/partition.h> /* MBR_TYPE_* */
 #include <string.h>
 
+const u_int8_t gpt_type_efi[GPT_GUID_LEN] = {
+    0x28,
+    0x73,
+    0x2A,
+    0xC1,
+    0x1F,
+    0xF8,
+    0xD2,
+    0x11,
+    0xBA,
+    0x4B,
+    0x00,
+    0xA0,
+    0xC9,
+    0x3E,
+    0xC9,
+    0x3B,
+};
+const u_int8_t gpt_type_ubix_swap[GPT_GUID_LEN] = {
+    0x4F,
+    0xE2,
+    0x7A,
+    0x2E,
+    0x72,
+    0x96,
+    0x6D,
+    0x43,
+    0x98,
+    0xC8,
+    0x38,
+    0x30,
+    0x88,
+    0x20,
+    0x44,
+    0xD5,
+};
+const u_int8_t gpt_type_ubix_pool[GPT_GUID_LEN] = {
+    0x44,
+    0x95,
+    0x47,
+    0xDE,
+    0xB7,
+    0xD2,
+    0x93,
+    0x46,
+    0x9B,
+    0x24,
+    0x3A,
+    0x0E,
+    0x63,
+    0x8C,
+    0xCF,
+    0x81,
+};
+
 #define GPT_SIG "EFI PART"
 #define GPT_REV_1_0 0x00010000U
 #define GPT_HDR_MIN 92U
@@ -69,7 +124,7 @@ u_int32_t gpt_crc32(u_int32_t crc, const void *buf, u_int32_t len)
 	{
 		crc ^= p[i];
 		for (k = 0; k < 8; k++)
-			crc = (crc >> 1) ^ (0xEDB88320U & (u_int32_t) - (int32_t)(crc & 1));
+			crc = (crc & 1) ? (crc >> 1) ^ 0xEDB88320U : crc >> 1;
 	}
 	return (~crc);
 }
@@ -79,15 +134,11 @@ u_int32_t gpt_crc32(u_int32_t crc, const void *buf, u_int32_t len)
  */
 u_int8_t gpt_guid_mbr_type(const u_int8_t *guid)
 {
-	static const u_int8_t efi[GPT_GUID_LEN] = GPT_TYPE_EFI_BYTES;
-	static const u_int8_t swap[GPT_GUID_LEN] = GPT_TYPE_UBIX_SWAP_BYTES;
-	static const u_int8_t pool[GPT_GUID_LEN] = GPT_TYPE_UBIX_POOL_BYTES;
-
-	if (memcmp(guid, efi, GPT_GUID_LEN) == 0)
+	if (memcmp(guid, gpt_type_efi, GPT_GUID_LEN) == 0)
 		return (MBR_TYPE_FAT32);
-	if (memcmp(guid, swap, GPT_GUID_LEN) == 0)
+	if (memcmp(guid, gpt_type_ubix_swap, GPT_GUID_LEN) == 0)
 		return (MBR_TYPE_SWAP);
-	if (memcmp(guid, pool, GPT_GUID_LEN) == 0)
+	if (memcmp(guid, gpt_type_ubix_pool, GPT_GUID_LEN) == 0)
 		return (MBR_TYPE_UBPOOL);
 	return (MBR_TYPE_OTHER);
 }

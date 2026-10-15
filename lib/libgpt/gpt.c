@@ -14,6 +14,61 @@
 
 static const uint8_t g_zero_guid[16];
 
+const uint8_t gpt_type_efi[16] = {
+    0x28,
+    0x73,
+    0x2A,
+    0xC1,
+    0x1F,
+    0xF8,
+    0xD2,
+    0x11,
+    0xBA,
+    0x4B,
+    0x00,
+    0xA0,
+    0xC9,
+    0x3E,
+    0xC9,
+    0x3B,
+};
+const uint8_t gpt_type_ubix_swap[16] = {
+    0x4F,
+    0xE2,
+    0x7A,
+    0x2E,
+    0x72,
+    0x96,
+    0x6D,
+    0x43,
+    0x98,
+    0xC8,
+    0x38,
+    0x30,
+    0x88,
+    0x20,
+    0x44,
+    0xD5,
+};
+const uint8_t gpt_type_ubix_pool[16] = {
+    0x44,
+    0x95,
+    0x47,
+    0xDE,
+    0xB7,
+    0xD2,
+    0x93,
+    0x46,
+    0x9B,
+    0x24,
+    0x3A,
+    0x0E,
+    0x63,
+    0x8C,
+    0xCF,
+    0x81,
+};
+
 /** Little-endian stores into an unaligned buffer. */
 static void put32(uint8_t *p, uint32_t v)
 {
@@ -62,7 +117,7 @@ uint32_t gpt_crc32(uint32_t crc, const void *buf, uint32_t len)
 	{
 		crc ^= p[i];
 		for (k = 0; k < 8; k++)
-			crc = (crc >> 1) ^ (0xEDB88320U & (uint32_t)-(int32_t)(crc & 1));
+			crc = (crc & 1) ? (crc >> 1) ^ 0xEDB88320U : crc >> 1;
 	}
 	return ~crc;
 }

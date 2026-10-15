@@ -52,8 +52,6 @@ static uint32_t le32(const uint8_t *p)
  */
 int main(int argc, char **argv)
 {
-	static const uint8_t efi[16] = GPT_TYPE_EFI_BYTES, swp[16] = GPT_TYPE_UBIX_SWAP_BYTES,
-	                     pool[16] = GPT_TYPE_UBIX_POOL_BYTES;
 	static struct gpt_table t, back;
 	struct gpt_io io;
 	uint8_t mbr[512], guid[16];
@@ -104,7 +102,11 @@ int main(int argc, char **argv)
 
 		if (type == 0 || len == 0)
 			continue;
-		memcpy(e->type, type == 0x82 ? swp : type == 0x9C ? pool : efi, 16);
+		memcpy(e->type,
+		       type == 0x82   ? gpt_type_ubix_swap
+		       : type == 0x9C ? gpt_type_ubix_pool
+		                      : gpt_type_efi,
+		       16);
 		for (k = 0; k < 16; k++)
 			e->guid[k] = (uint8_t)random();
 		e->first_lba = start;
