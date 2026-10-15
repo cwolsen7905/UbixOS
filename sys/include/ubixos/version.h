@@ -40,23 +40,22 @@
  *   4. Commit and tag: git tag -a vMAJOR.MINOR.PATCH -m "Release MAJOR.MINOR.PATCH-TAG"
  */
 
-#define UBIXOS_VERSION_MAJOR  3
-#define UBIXOS_VERSION_MINOR  0
-#define UBIXOS_VERSION_PATCH  0
-#define UBIXOS_VERSION_TAG    "BETA"
+#define UBIXOS_VERSION_MAJOR 3
+#define UBIXOS_VERSION_MINOR 1
+#define UBIXOS_VERSION_PATCH 0
+/* Pre-release suffix including its dash, e.g. "-BETA"; empty for a release. */
+#define UBIXOS_VERSION_TAG ""
 
 /* Internal stringify helpers — do not use directly. */
-#define _UBIXOS_STR(x)   #x
-#define _UBIXOS_XSTR(x)  _UBIXOS_STR(x)
+#define _UBIXOS_STR(x) #x
+#define _UBIXOS_XSTR(x) _UBIXOS_STR(x)
 
-/* "2.0.0-BETA" */
-#define UBIXOS_VERSION_RELEASE \
-  _UBIXOS_XSTR(UBIXOS_VERSION_MAJOR) "." \
-  _UBIXOS_XSTR(UBIXOS_VERSION_MINOR) "." \
-  _UBIXOS_XSTR(UBIXOS_VERSION_PATCH) "-" \
-  UBIXOS_VERSION_TAG
+/* "3.1.0" (or "3.1.0-BETA" while a tag is set) */
+#define UBIXOS_VERSION_RELEASE                                                                                         \
+	_UBIXOS_XSTR(UBIXOS_VERSION_MAJOR)                                                                             \
+	"." _UBIXOS_XSTR(UBIXOS_VERSION_MINOR) "." _UBIXOS_XSTR(UBIXOS_VERSION_PATCH) UBIXOS_VERSION_TAG
 
-/* "UbixOS 2.0.0-BETA" */
-#define UBIXOS_VERSION_STRING  "UbixOS " UBIXOS_VERSION_RELEASE
+/* "UbixOS 3.1.0" */
+#define UBIXOS_VERSION_STRING "UbixOS " UBIXOS_VERSION_RELEASE
 
 #endif /* _UBIXOS_VERSION_H_ */
