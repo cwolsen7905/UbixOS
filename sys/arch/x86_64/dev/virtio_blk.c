@@ -107,7 +107,7 @@ static volatile u8 *g_status; /* 1-byte status */
 
 static struct ubx_device g_blk_dev;  /* whole-disk block device (vtblk0) */
 static struct ubx_blk_ops g_blk_ops; /* its block ops */
-static struct ubp_partition g_parts[MBR_MAX_PARTITIONS];
+static struct ubp_partition g_parts[UBP_MAX_PARTITIONS];
 static int g_npart;
 
 /* SMP: the request path reuses one set of DMA buffers + one virtqueue, so two CPUs
@@ -344,8 +344,14 @@ int virtio_blk_init(void)
 	strncpy(g_blk_dev.dev_nameunit, "vtblk0", sizeof(g_blk_dev.dev_nameunit) - 1);
 	g_device_find = virtio_blk_device_find;
 
-	g_npart = mbr_parse_partitions(&g_blk_dev, g_parts, MBR_MAX_PARTITIONS);
-	serial_puts("virtio-blk: MBR partitions = ");
+	{
+		struct disk_hw hw;
+
+		memset(&hw, 0, sizeof(hw));
+		(void)md_disk_list(&hw, 1);
+		g_npart = ubp_parse_partitions(&g_blk_dev, hw.sectors, g_parts, UBP_MAX_PARTITIONS);
+	}
+	serial_puts("virtio-blk: partitions (MBR/GPT) = ");
 	serial_putdec((u64)g_npart);
 	serial_puts("\n");
 	return 0;

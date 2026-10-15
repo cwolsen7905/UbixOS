@@ -14,8 +14,9 @@
 #include <stdint.h>
 
 #define UBIX_SYS_DISK_QUERY 68
+#define UBIX_SYS_DISK_RAWIO 72
 
-#define UBIX_DISK_MAX 16     /* cap on entries returned in one query */
+#define UBIX_DISK_MAX 16 /* cap on entries returned in one query */
 
 /* entry kind */
 #define UBIX_DK_DISK 0 /* a whole drive */
@@ -25,11 +26,18 @@
 #define UBIX_DF_REMOVABLE 0x1 /* USB / hotplug media */
 #define UBIX_DF_MOUNTED 0x2   /* partition is mounted */
 #define UBIX_DF_READONLY 0x4
+#define UBIX_DF_GPT 0x8 /* whole disk carries a GPT (else MBR/none) */
 
 /* MBR partition type bytes uBixOS uses (see tools/mkimage*.sh). */
 #define UBIX_PT_FAT32 0x0C
 #define UBIX_PT_SWAP 0x82
 #define UBIX_PT_UBPOOL 0x9C
+#define UBIX_PT_OTHER 0xDA /* GPT partition of an unrecognised type */
+
+/* disk_rawio ops and per-call limit. */
+#define UBIX_DISK_RAW_READ 0
+#define UBIX_DISK_RAW_WRITE 1
+#define UBIX_DISK_RAW_MAXSECS 8
 
 /*
  * One enumeration entry.  Whole disks and their partitions both appear in the
@@ -39,20 +47,21 @@
  */
 struct ubix_disk_info
 {
-	char     name[32];      /* "ad0", "ad0s1", "vtblk0", "vtblk0s3" */
-	uint64_t lba_start;     /* first LBA on the parent disk (PART; 0 for a disk) */
-	uint64_t sectors;       /* length in sectors */
-	uint32_t sector_size;   /* bytes per sector (512) */
-	uint32_t flags;         /* UBIX_DF_* */
-	uint16_t major;         /* device major */
-	uint16_t minor;         /* device minor (0 = whole disk) */
-	uint8_t  kind;          /* UBIX_DK_DISK | UBIX_DK_PART */
-	uint8_t  parent;        /* owning-disk index (PART only) */
-	uint8_t  mbr_type;      /* MBR partition type byte (PART) */
-	uint8_t  _pad;          /* keep the struct naturally aligned */
-	char     fstype[16];    /* "fat", "ubixfs", "swap", "" (best-effort) */
-	char     mountpoint[64]; /* mount path if mounted, else "" */
-	char     model[40];     /* drive model / bus id (DISK; "" if unknown) */
+	char name[32];        /* "ad0", "ad0s1", "vtblk0", "vtblk0s3" */
+	uint64_t lba_start;   /* first LBA on the parent disk (PART; 0 for a disk) */
+	uint64_t sectors;     /* length in sectors */
+	uint32_t sector_size; /* bytes per sector (512) */
+	uint32_t flags;       /* UBIX_DF_* */
+	uint16_t major;       /* device major */
+	uint16_t minor;       /* device minor (0 = whole disk) */
+	uint8_t kind;         /* UBIX_DK_DISK | UBIX_DK_PART */
+	uint8_t parent;       /* owning-disk index (PART only) */
+	uint8_t mbr_type;     /* MBR partition type byte (PART) */
+	uint8_t _pad;         /* keep the struct naturally aligned */
+	char fstype[16];      /* "fat", "ubixfs", "swap", "" (best-effort) */
+	char mountpoint[64];  /* mount path if mounted, else "" */
+	char model[40];       /* drive model / bus id (DISK; "" if unknown) */
+	uint8_t gpt_type[16]; /* GPT partition-type GUID, raw on-disk bytes (PART; 0 for MBR) */
 };
 
 /**
@@ -62,5 +71,16 @@ struct ubix_disk_info
  * @return the number of entries written, or a negative errno.
  */
 int ubix_disk_query(struct ubix_disk_info *buf, uint32_t max);
+
+/**
+ * Raw 512-byte-sector I/O on whole disk @index (its position in the
+ * ubix_disk_query result's whole-disk entries, 0-based).  Native syscall 72.
+ * Root only; at most UBIX_DISK_RAW_MAXSECS sectors per call; writes are refused
+ * over LBA 0 and over mounted partitions of a disk that has any mounted.
+ *
+ * @param op  UBIX_DISK_RAW_READ or UBIX_DISK_RAW_WRITE.
+ * @return 0 on success, a negative errno on failure.
+ */
+int ubix_disk_rawio(uint32_t index, uint32_t op, uint64_t lba, uint32_t count, void *buf);
 
 #endif /* _API_UBIX_DISK_H */

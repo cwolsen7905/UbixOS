@@ -610,7 +610,7 @@ int aarch64_sd_writeblock(u_int32_t lba, const u_int8_t *buffer, u_int32_t num)
 
 static struct ubx_device sd_blk_dev;                      /* whole-disk device (sd0) */
 static struct ubx_blk_ops sd_blk_ops;                     /* its block ops */
-static struct ubp_partition sd_parts[MBR_MAX_PARTITIONS]; /* MBR partitions (sd0sN) */
+static struct ubp_partition sd_parts[UBP_MAX_PARTITIONS]; /* MBR partitions (sd0sN) */
 static int sd_npart;
 static int sd_ready;
 static int sd_write_ok; /* the write path passed its self-test */
@@ -736,7 +736,7 @@ struct ubx_device *aarch64_sd_init(void)
 	kprintf("sd: microSD on the EMMC ready (sd0)\n");
 	sd_write_selftest(); /* verify the write path before any pool write can happen */
 
-	sd_npart = mbr_parse_partitions(&sd_blk_dev, sd_parts, MBR_MAX_PARTITIONS);
+	sd_npart = mbr_parse_partitions(&sd_blk_dev, sd_parts, UBP_MAX_PARTITIONS);
 	if (sd_npart < 0)
 		sd_npart = 0;
 	if (sd_npart == 0)

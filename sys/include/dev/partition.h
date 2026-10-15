@@ -45,13 +45,16 @@
  * ubx_blk_ops structs, so it links on every architecture.
  */
 
-#define MBR_MAX_PARTITIONS 4 /* 4 primary slots in a classic MBR */
+#define MBR_MAX_PARTITIONS 4     /* 4 primary slots in a classic MBR */
+#define UBP_MAX_PARTITIONS 8     /* partition devices kept per disk (MBR or GPT) */
+#define MBR_TYPE_PROTECTIVE 0xEE /* GPT protective MBR entry */
 
 /* MBR partition type bytes uBixOS cares about (see tools/mkimage*.sh). */
 #define MBR_TYPE_EMPTY 0x00
 #define MBR_TYPE_FAT32 0x0C  /* LBA FAT32 — the /boot partition */
 #define MBR_TYPE_SWAP 0x82   /* Linux swap — uBixOS swap device */
 #define MBR_TYPE_UBPOOL 0x9C /* UbixFS pool — the native CoW root */
+#define MBR_TYPE_OTHER 0xDA  /* GPT partition of a type uBixOS does not know */
 
 /*
  * One MBR partition exposed as a block device.  `dev` MUST be the first member:
@@ -63,10 +66,11 @@ struct ubp_partition
 	struct ubx_device dev;     /* the partition's block device (first member!) */
 	struct ubx_blk_ops ops;    /* offsetting read/write */
 	struct ubx_device *parent; /* the whole-disk device */
-	u_int32_t lba_start;       /* partition's first LBA on the parent */
-	u_int32_t lba_count;       /* partition length in sectors */
-	int minor;                 /* device minor (= MBR slot + 1, i.e. sNN) */
-	u_int8_t type;             /* MBR partition type byte */
+	u_int64_t lba_start;       /* partition's first LBA on the parent */
+	u_int64_t lba_count;       /* partition length in sectors */
+	int minor;                 /* device minor (= table slot + 1, i.e. sNN) */
+	u_int8_t type;             /* MBR type byte (GPT types are mapped onto it) */
+	u_int8_t gpt_type[16];     /* GPT partition-type GUID (raw bytes); zero for MBR */
 };
 
 /**
@@ -81,5 +85,18 @@ struct ubp_partition
  *         (no 0x55AA signature), or -1 on a read error.
  */
 int mbr_parse_partitions(struct ubx_device *disk, struct ubp_partition *out, int max);
+
+/**
+ * As mbr_parse_partitions(), but also recognises a GPT (protective MBR at LBA 0
+ * plus a valid GPT header) and knows the disk capacity so the backup GPT header
+ * can be used when the primary is damaged.  GPT type GUIDs are mapped onto the
+ * MBR_TYPE_* bytes (EFI System -> FAT32, uBix swap -> SWAP, uBix pool -> UBPOOL)
+ * so type-based lookups keep working; the raw GUID is kept in gpt_type.
+ *
+ * @param disk_sectors  total sectors of @disk, 0 if unknown (primary GPT only).
+ * @param max           capacity of @out (use UBP_MAX_PARTITIONS).
+ * @return as mbr_parse_partitions(); a GPT disk with no valid GPT returns 0.
+ */
+int ubp_parse_partitions(struct ubx_device *disk, u_int64_t disk_sectors, struct ubp_partition *out, int max);
 
 #endif /* _DEV_PARTITION_H */
