@@ -22,11 +22,11 @@ _ARCH = aarch64
 .endif
 .endif
 .if ${_ARCH} == "aarch64"
-all: crtbegin-code ubix_api-code objgfx-code libaudio-code libbearssl-code libpw-code libgpt-code libhttp-code zlib-code \
+all: crtbegin-code ubix_api-code objgfx-code libaudio-code libbearssl-code libpw-code libgpt-code libpkg-code libhttp-code zlib-code \
      libwapcaplet-code libparserutils-code libcss-code libhubbub-code libdom-code \
      libnsgif-code libnsbmp-code libnsfb-code libnsutils-code libutf8proc-code
 .else
-all: crt-code crtbegin-code ubix_api-code ubix-code objgfx-code libaudio-code libbearssl-code libpw-code libgpt-code libhttp-code zlib-code libwapcaplet-code libparserutils-code libcss-code libhubbub-code libdom-code libnsgif-code libnsbmp-code libnsfb-code libnsutils-code libutf8proc-code #csu-code
+all: crt-code crtbegin-code ubix_api-code ubix-code objgfx-code libaudio-code libbearssl-code libpw-code libgpt-code libpkg-code libhttp-code zlib-code libwapcaplet-code libparserutils-code libcss-code libhubbub-code libdom-code libnsgif-code libnsbmp-code libnsfb-code libnsutils-code libutf8proc-code #csu-code
 .endif
 # bin tools
 # depend kernel tools
@@ -76,6 +76,10 @@ libpw-code: libpw
 
 libgpt-code: libgpt
 	(cd libgpt;$(MAKE))
+
+# libpkg — package format library (ustar+gzip reader, manifest/index, verify).
+libpkg-code: libpkg
+	(cd libpkg;$(MAKE))
 
 # Must build after libbearssl (links libbearssl.so).
 libhttp-code: libhttp
@@ -127,6 +131,7 @@ clean:
 	(cd libbearssl;${MAKE} clean)
 	(cd libpw;${MAKE} clean)
 	(cd libgpt;${MAKE} clean)
+	(cd libpkg;${MAKE} clean)
 	(cd libhttp;${MAKE} clean)
 	(cd libwapcaplet;${MAKE} clean)
 	(cd libparserutils;${MAKE} clean)
