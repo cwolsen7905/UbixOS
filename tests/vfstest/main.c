@@ -2,7 +2,8 @@
  * Copyright (c) 2002-2026 The UbixOS Project.  All rights reserved.
  *
  * vfstest — checks VFS edge cases: zero-length read, O_APPEND on every write,
- * ".." in paths and faccessat.  Prints one PASS/FAIL line per check and exits
+ * ".." in paths, faccessat, and that the VFS lookup cache follows namespace
+ * changes.  Prints one PASS/FAIL line per check and exits
  * non-zero if any check failed.
  *
  * "vfstest --long N" and "vfstest --many N" are the re-exec targets of the
@@ -462,6 +463,156 @@ static void check_execve_args(const char *self)
  *
  * @return 0 if every check passed.
  */
+/**
+ * errno after a readlink() of @path, or 0 if it succeeded (it was a symlink).
+ */
+static int readlink_errno(const char *path)
+{
+	char t[64];
+
+	errno = 0;
+	return (readlink(path, t, sizeof(t)) >= 0 ? 0 : errno);
+}
+
+/**
+ * Nanoseconds on the monotonic clock.
+ */
+static long long now_ns(void)
+{
+	struct timespec ts;
+
+	clock_gettime(CLOCK_MONOTONIC, &ts);
+	return ((long long)ts.tv_sec * 1000000000LL + ts.tv_nsec);
+}
+
+/**
+ * The VFS lookup cache (W-039) remembers "nothing here" and "here, not a
+ * symlink" per path.  Every namespace change must make those answers current:
+ * create, unlink, symlink (including a dangling one), mkdir, rmdir and a
+ * directory rename.
+ */
+static void check_lookup_cache(void)
+{
+	char dir[64], p[96], q[96], sub[96], sub2[96], x[128], x2[128], t[64];
+	struct stat st;
+	int fd;
+
+	snprintf(dir, sizeof(dir), "/tmp/vnc.%d", (int)getpid());
+	mkdir(dir, 0755);
+	snprintf(p, sizeof(p), "%s/f", dir);
+	snprintf(q, sizeof(q), "%s/target", dir);
+
+	/* Missing: ENOENT from every probe, asked twice (the second is cached). */
+	check("lookup cache: readlink missing is ENOENT", readlink_errno(p) == ENOENT);
+	check("lookup cache: readlink missing again is ENOENT", readlink_errno(p) == ENOENT);
+	check("lookup cache: stat missing fails", stat(p, &st) != 0 && errno == ENOENT);
+	check("lookup cache: access missing fails", access(p, F_OK) != 0);
+	check("lookup cache: open missing fails", open(p, O_RDONLY) < 0);
+
+	/* Create: the "missing" answer must go. */
+	fd = open(p, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	check("lookup cache: create", fd >= 0);
+	if (fd >= 0)
+		close(fd);
+	check("lookup cache: stat after create", stat(p, &st) == 0);
+	check("lookup cache: access after create", access(p, F_OK) == 0);
+	fd = open(p, O_RDONLY);
+	check("lookup cache: open after create", fd >= 0);
+	if (fd >= 0)
+		close(fd);
+	check("lookup cache: readlink regular file is EINVAL", readlink_errno(p) == EINVAL);
+	check("lookup cache: readlink regular file again is EINVAL", readlink_errno(p) == EINVAL);
+
+	/* Unlink: the "exists, not a link" answer must go. */
+	check("lookup cache: unlink", unlink(p) == 0);
+	check("lookup cache: readlink after unlink is ENOENT", readlink_errno(p) == ENOENT);
+	check("lookup cache: stat after unlink fails", stat(p, &st) != 0);
+	check("lookup cache: access after unlink fails", access(p, F_OK) != 0);
+
+	/* A dangling symlink is not "missing": stat fails, readlink still reads it,
+	 * and creating its target makes it resolve. */
+	check("lookup cache: symlink over a removed name", symlink("target", p) == 0);
+	check("lookup cache: stat of dangling link fails", stat(p, &st) != 0);
+	check("lookup cache: access of dangling link fails", access(p, F_OK) != 0);
+	memset(t, 0, sizeof(t));
+	check("lookup cache: readlink of dangling link",
+	      readlink(p, t, sizeof(t) - 1) == 6 && strcmp(t, "target") == 0);
+	fd = open(q, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (fd >= 0)
+		close(fd);
+	check("lookup cache: access through link after target created", access(p, F_OK) == 0);
+	check("lookup cache: stat through link after target created", stat(p, &st) == 0);
+	unlink(p);
+	unlink(q);
+
+	/* mkdir of a name known to be missing; rmdir of one known to exist. */
+	snprintf(sub, sizeof(sub), "%s/sub", dir);
+	check("lookup cache: readlink missing dir is ENOENT", readlink_errno(sub) == ENOENT);
+	check("lookup cache: mkdir", mkdir(sub, 0755) == 0);
+	check("lookup cache: readlink new dir is EINVAL", readlink_errno(sub) == EINVAL);
+	check("lookup cache: stat new dir is a directory", stat(sub, &st) == 0 && S_ISDIR(st.st_mode));
+
+	/* Rename a directory: names below the old path vanish, the new ones exist. */
+	snprintf(x, sizeof(x), "%s/x", sub);
+	snprintf(sub2, sizeof(sub2), "%s/sub2", dir);
+	snprintf(x2, sizeof(x2), "%s/x", sub2);
+	fd = open(x, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (fd >= 0)
+		close(fd);
+	check("lookup cache: readlink file in dir is EINVAL", readlink_errno(x) == EINVAL);
+	check("lookup cache: readlink in renamed-to dir is ENOENT before", readlink_errno(x2) == ENOENT);
+	check("lookup cache: rename dir", rename(sub, sub2) == 0);
+	check("lookup cache: old path gone after rename", readlink_errno(x) == ENOENT && stat(x, &st) != 0);
+	check("lookup cache: new path there after rename", readlink_errno(x2) == EINVAL && stat(x2, &st) == 0);
+	unlink(x2);
+	check("lookup cache: rmdir", rmdir(sub2) == 0);
+	check("lookup cache: readlink after rmdir is ENOENT", readlink_errno(sub2) == ENOENT);
+	check("lookup cache: opendir after rmdir fails", opendir(sub2) == NULL);
+	rmdir(dir);
+}
+
+/**
+ * readlink() of an existing file that is not a symlink (what realpath() does for
+ * every component) costs about as much as a trivial syscall, not a filesystem
+ * walk.  Before the lookup cache each call made up to three full path lookups
+ * under the global VFS lock, about 20,000 times the cost of getppid(); with it
+ * the ratio is about 13 on both arches.  Compares the faster of five rounds of
+ * each, so a busy host affects both sides.
+ */
+static void check_readlink_cost(void)
+{
+	const char *path = "/usr/share/mk/sys.mk";
+	long long best_rl = -1, best_pp = -1;
+	int round, i, ok = 1;
+
+	if (access(path, F_OK) != 0)
+		path = "/etc/passwd";
+	for (round = 0; round < 5; round++)
+	{
+		long long t0 = now_ns();
+		for (i = 0; i < 200; i++)
+			if (readlink_errno(path) != EINVAL)
+				ok = 0;
+		long long t1 = now_ns();
+		for (i = 0; i < 200; i++)
+			(void)getppid();
+		long long t2 = now_ns();
+		if (best_rl < 0 || t1 - t0 < best_rl)
+			best_rl = t1 - t0;
+		if (best_pp < 0 || t2 - t1 < best_pp)
+			best_pp = t2 - t1;
+	}
+	if (best_pp <= 0)
+		best_pp = 1;
+	printf("readlink(%s) x200: %lld us, getppid() x200: %lld us, ratio %lld\n",
+	       path,
+	       best_rl / 1000,
+	       best_pp / 1000,
+	       best_rl / best_pp);
+	check("readlink of a non-link answers EINVAL", ok);
+	check("readlink of a non-link costs under 100 getppid() calls", best_rl < 100 * best_pp);
+}
+
 int main(int argc, char **argv)
 {
 	char buf[64];
@@ -724,6 +875,8 @@ int main(int argc, char **argv)
 	check_modes();
 	check_umask();
 	check_mtime_now();
+	check_lookup_cache();
+	check_readlink_cost();
 	check_mmap_fixed_reuse();
 	check_poll_pipes();
 	check("two threads' mmaps are distinct and intact", check_thread_mmap());
