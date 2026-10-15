@@ -7,6 +7,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.1.0] - 2026-10-15
+
+### Added
+- **Self-hosting on aarch64 and x86_64.** uBixOS rebuilds its own world and
+  kernel in-OS (Clang/LLVM + lld, `bmake`); an image made from that output
+  boots on the self-built kernel and passes `sigtest` and `vfstest` (W-007).
+  Enabled by W-043 (musl builds with `bmake`), W-045 (in-OS `clang` links
+  programs), W-051 (`open(O_CREAT)` mode, `chmod`/`fchmod`, atomic `rename`),
+  W-052 (real per-task `umask(2)`) and W-053 (`/bin/sh` and `bmake` built by
+  `world`). See `docs/releases/3.1.0.md`.
+- **VFS lookup cache** (`sys/fs/vfs/file.c`, W-039). Caches "missing" and
+  "exists, not a symlink" per canonical path on UbixFS mounts (2048 entries).
+  `readlink`, `access` and read-only open/opendir of missing paths no longer
+  walk the path under the VFS lock; create/mkdir/symlink/unlink/rmdir/rename/
+  mount/unmount invalidate it. Clean in-OS `bmake -j4 kernel`: aarch64
+  138.6 s -> 86.4 s, x86_64 980.4 s -> 483.1 s. `tests/vfstest` gains lookup
+  cache and `readlink` cost checks.
+
+### Fixed
+- **Physical page leak per exited process** (W-050): `mmap(MAP_FIXED)` over a
+  live page now frees the old frame on both arches.
+
 ### Changed
 - **i386 retired from master.** 32-bit support is frozen on `releng/2`; master is
   now 64-bit only — **aarch64** (default/primary) + **x86_64** (the abstraction
@@ -1257,7 +1279,8 @@ Initial git import from prior CVS/SVN history. Kernel booted, basic VFS and VMM 
 - `lseek` syscall (`SEEK_END` not yet implemented).
 - TCC added to base system.
 
-[Unreleased]: https://github.com/cwolsen7905/UbixOS/compare/v3.0.0-BETA...HEAD
+[Unreleased]: https://github.com/cwolsen7905/UbixOS/compare/v3.1.0...HEAD
+[3.1.0]: https://github.com/cwolsen7905/UbixOS/compare/v3.0.0-BETA...v3.1.0
 [3.0.0-BETA]: https://github.com/cwolsen7905/UbixOS/compare/v2.4.0-BETA...v3.0.0-BETA
 [2.4.0-BETA]: https://github.com/cwolsen7905/UbixOS/compare/v2.3.0-BETA...v2.4.0-BETA
 [2.3.0-BETA]: https://github.com/cwolsen7905/UbixOS/compare/v2.2.0-BETA...v2.3.0-BETA
