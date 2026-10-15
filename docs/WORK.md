@@ -75,6 +75,16 @@ Every lane updates its row in the same PR; rows are never deleted.
 | W-066 | abi | ABI layering audit: native uBix ABI first, POSIX layer on FreeBSD semantics, no Linux 1:1 | todo | - | - | Self-hosting follow-up; rules in docs/standards/abi-and-syscalls.md. Related: W-009, W-012, W-029 |
 | W-067 | abi | A5 ABI fixes | todo | - | - | Self-hosting follow-up; scope not written down in the tree (rule A-5 is fixed-width, identically padded argument structs with _Static_assert sizes). status unclear: confirm the scope before starting |
 | W-068 | legal | Provenance audit: origin and license of every file outside contrib/; no GPL code in the tree | todo | - | - | Self-hosting follow-up; third-party code belongs under contrib/ or tools/ports/ (docs/design/third-party-ports-plan.md) |
+| W-069 | pkg | Packages P1: lib/libpkg (ustar+deflate reader, manifest/index parser, SHA-256 and ECDSA P-256 verify) with host unit tests | todo | - | - | Plan: docs/design/packages-plan.md. Can start now; B7 (W-060) wants it |
+| W-070 | pkg | Packages P2: ubpkg host tool (build package from staging dir, build and sign index, --root install, key generation) | todo | - | - | Plan: docs/design/packages-plan.md. After W-069 |
+| W-071 | pkg | Packages P3: pkg on device (add --local, del, info, verify), /var/db/pkg database, key trust list in the image | todo | - | - | Plan: docs/design/packages-plan.md. After W-069 |
+| W-072 | pkg | Packages P4: pkg update/add/upgrade from a repository (libhttp, index probing, dependency order) | todo | - | - | Plan: docs/design/packages-plan.md. After W-071 |
+| W-073 | pkg | Packages P5: ubixos-packages project bootstrap (ports.mk + pkg.mk, change-detection plan step, hello package, builder image, CI pipeline) | todo | - | - | Plan: docs/design/packages-plan.md. After W-070; needs CI host choice (GitLab recommended) |
+| W-074 | pkg | Packages P6: packages.ubixos.org origin and publish job (DNS, ingress, cert, rsync --ignore-existing, serial allocation, verify) | todo | - | - | Plan: docs/design/packages-plan.md. After W-073; needs the person's answers on domain and kube-003 wiring |
+| W-075 | pkg | Packages P7: clang/lld as the first package, both arches, QEMU smoke gate; drop LLVM staging from mkimage | todo | - | - | Plan: docs/design/packages-plan.md. After W-072 and W-074. Recipe today: tools/ports/llvm |
+| W-076 | pkg | Packages P8: base manifest in /var/db/pkg/base, base: constraint checks, /var in the filesystem hierarchy plan | todo | - | - | Plan: docs/design/packages-plan.md. After W-071; related W-023 |
+| W-077 | pkg | Packages P9: installer package step in libinstall, set selection, bundled repository on live media | todo | - | - | Plan: docs/design/packages-plan.md. After W-060, W-057 and W-072 |
+| W-078 | pkg | Packages P10: snapshot before a pkg transaction and rollback | todo | - | - | Plan: docs/design/packages-plan.md. Waits on snapshots from W-023 |
 
 ## Notes
 
