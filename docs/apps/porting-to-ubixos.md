@@ -10,8 +10,6 @@ The reference ports to read alongside this doc, simplest first:
 
 | Port | Shape | Read it for |
 |------|-------|-------------|
-| [`tools/ports/sh`](../../tools/ports/sh) | oksh, small, own build | the minimal recipe |
-| [`tools/ports/bmake`](../../tools/ports/bmake) | bmake, `sys/cdefs.h` shim | header shims |
 | [`tools/ports/git`](../../tools/ports/git) | git, drives upstream's Makefile | the **CC-wrapper** trick + new-platform strategy |
 | [`tools/ports/dropbear`](../../tools/ports/dropbear) | sshd, hand-driven build | bypassing a hostile `./configure` |
 
@@ -144,7 +142,7 @@ rejects position-dependent relocations (`R_AARCH64_ADR_PREL_PG_HI21 against
 
 ### Two build shapes
 
-1. **Upstream has a sane Makefile you can drive** (git, bmake, oksh). Feed it
+1. **Upstream has a sane Makefile you can drive** (git). Feed it
    `CC`, `AR`, `CFLAGS`, `LDFLAGS` and let it build. The wrinkle: upstream's
    link recipe rarely has a hook to append `crtn` *after* its libraries. The
    clean fix is a **CC wrapper** — a generated shell script used as `CC` that
@@ -195,7 +193,7 @@ header dir to your compile includes.
 | `cannot find -lrt` / `-lpthread` | musl folds `librt`/`libpthread` into `libc` | drop those `-l` flags (or the feature that adds them) |
 | Missing `strlcpy`, `strlcat` | musl doesn't provide them | use the project's compat, or provide your own |
 | Binary rejected by the loader near ~4 MB | unstripped symbols exceed `EXEC_MAX` | `${CROSS_PREFIX}strip` in `do-install` |
-| `<sys/cdefs.h>` not found | musl doesn't ship it; BSD-ish code expects it | add the shim: `-I tools/ports/bmake/shim` |
+| `<sys/cdefs.h>` not found | musl doesn't ship it; BSD-ish code expects it | add the shim: `-I bin/bmake/shim` |
 | Nothing in the image | you ran `bmake`, not `bmake install` | staging is the `install` target |
 
 ---

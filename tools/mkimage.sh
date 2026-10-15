@@ -203,16 +203,13 @@ fi
 
 # bmake's own system makefiles (sys.mk + bsd.*.mk) so on-device bmake has system
 # rules — uBixOS's share/mk carries only custom ubix.*.mk, so without these bmake
-# dies "no system rules (sys.mk)".  Present only once the bmake port is built
-# (bmake -C tools/ports/bmake build); skipped otherwise.  The /bin copy loop below
-# stages the bmake + sh (oksh) binaries themselves from ${BUILD}/bin when built.
-for _bmk in build/ports/bmake-*/mk; do
-	if [ -d "${_bmk}" ]; then
-		mkdir -p "${STAGE}/usr/share/mk"
-		cp -R "${_bmk}/." "${STAGE}/usr/share/mk/"
-		break
-	fi
-done
+# dies "no system rules (sys.mk)".  They ship with bmake's source in contrib/;
+# world builds the bmake + sh (oksh) binaries themselves (bin/bmake, bin/sh), and
+# the /bin copy loop below stages them.
+if [ -d contrib/bmake-20240212/mk ]; then
+	mkdir -p "${STAGE}/usr/share/mk"
+	cp -R contrib/bmake-20240212/mk/. "${STAGE}/usr/share/mk/"
+fi
 # Desktop-only shared libraries: objGFX (compositor + every GUI app) and the
 # NetSurf stack.  The base profile ships none of them.
 if [ "${PROFILE}" = desktop ]; then

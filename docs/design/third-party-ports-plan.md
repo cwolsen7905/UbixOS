@@ -37,7 +37,9 @@ from this narrow set:
 
 1. **Foundational, ABI-coupled, must-build-offline base** — you cannot sanely
    *fetch* your libc at build time. **musl stays vendored.** (libcxx/libcxxabi are
-   borderline but stay vendored as the C++ base.)
+   borderline but stay vendored as the C++ base.)  **bmake and `/bin/sh`
+   (oksh)** moved from ports to `contrib/` (W-053): world must rebuild its own
+   build tools inside uBixOS, with no network, so they are base, not ports.
 2. **Tiny / header-only / single-file** libs where a fetch+checksum+patch recipe is
    more machinery than the dependency itself (e.g. `stb_image`).
 3. **Heavily forked** code where *our copy is effectively the source* and there is
