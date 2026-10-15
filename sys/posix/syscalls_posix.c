@@ -47,12 +47,12 @@ struct syscall_entry systemCalls_posix[] = {
     {ARG_COUNT(sys_write_args), "write", (sys_call_t *)sys_write, SYSCALL_VALID},                               /* 4 */
     {ARG_COUNT(sys_open_args), "open", (sys_call_t *)sys_open, SYSCALL_VALID},                                  /* 5 */
     {ARG_COUNT(sys_close_args), "close", (sys_call_t *)sys_close, SYSCALL_VALID},                               /* 6 */
-    {ARG_COUNT(sys_wait4_args), "wiat4", (sys_call_t *)sys_wait4, SYSCALL_VALID},                               /* 7 */
+    {ARG_COUNT(sys_wait4_args), "wait4", (sys_call_t *)sys_wait4, SYSCALL_VALID},                               /* 7 */
     {0, "No Call", sys_invalid, SYSCALL_INVALID},                                                               /* 8 */
     {0, "link", sys_invalid, SYSCALL_NOTIMP},                                                                   /* 9 */
     {ARG_COUNT(sys_unlink_args), "unlink", sys_unlink, SYSCALL_VALID},                                          /* 10 */
     {0, "No Call", sys_invalid, SYSCALL_INVALID},                                                               /* 11 */
-    {ARG_COUNT(sys_chdir_args), "cgdur", (sys_call_t *)sys_chdir, SYSCALL_VALID},                               /* 12 */
+    {ARG_COUNT(sys_chdir_args), "chdir", (sys_call_t *)sys_chdir, SYSCALL_VALID},                               /* 12 */
     {ARG_COUNT(sys_fchdir_args), "fchdir", sys_fchdir, SYSCALL_VALID},                                          /* 13 */
     {0, "mknod", sys_invalid, SYSCALL_NOTIMP},                                                                  /* 14 */
     {ARG_COUNT(chmod_args), "chmod", (sys_call_t *)chmod, SYSCALL_VALID},                                  /* 15 */
@@ -87,7 +87,7 @@ struct syscall_entry systemCalls_posix[] = {
     {0, "profil", sys_invalid, SYSCALL_NOTIMP},                                                                 // 44  - profil
     {0, "No Call", sys_invalid, SYSCALL_NOTIMP},                                                                // 45 - ktrace
     {0, "No Call", sys_invalid, SYSCALL_INVALID},                                                               // 46
-    {0, "getuid", sys_getGID, SYSCALL_VALID},                                                                   // 47 - getgid
+    {0, "getgid", sys_getGID, SYSCALL_VALID},                                                                   // 47 - getgid
     {0, "No Call", sys_invalid, SYSCALL_INVALID},                                                               // 48
     {ARG_COUNT(sys_getlogin_args), "getlogin", sys_getlogin, SYSCALL_VALID},                                    /* 49 */
     {ARG_COUNT(sys_setlogin_args), "setlogin", sys_setlogin, SYSCALL_NOTIMP},                                   /* 50 */
@@ -182,7 +182,7 @@ struct syscall_entry systemCalls_posix[] = {
     {0, "obsolete sigreturn", sys_invalid, SYSCALL_INVALID},                                                    /* 139 - Invalid */
     {0, "adjtime", sys_invalid, SYSCALL_NOTIMP},                                                                /* 140 - adjtime */
     {0, "old getpeername", sys_invalid, SYSCALL_INVALID},                                                       /* 141 - Invalid */
-    {0, "ikd gethostid", sys_invalid, SYSCALL_INVALID},                                                         /* 142 - Invalid */
+    {0, "old gethostid", sys_invalid, SYSCALL_INVALID},                                                         /* 142 - Invalid */
     {0, "old sethostid", sys_invalid, SYSCALL_INVALID},                                                         /* 143 - Invalid */
     {0, "old getrlimit", sys_invalid, SYSCALL_INVALID},                                                         /* 144 - Invalid */
     {0, "old setrlimit", sys_invalid, SYSCALL_INVALID},                                                         /* 145 - Invalid */
@@ -283,7 +283,7 @@ struct syscall_entry systemCalls_posix[] = {
     {2, "nanosleep", sys_nanosleep, SYSCALL_VALID},                                                             /* 240 - nanosleep */
     {0, "ffclock_getcounter", sys_invalid, SYSCALL_NOTIMP},                                                     /* 241 - Invalid */
     {0, "ffclock_setestimate", sys_invalid, SYSCALL_NOTIMP},                                                    /* 242 - Invalid */
-    {0, "fflock_getestimate", sys_invalid, SYSCALL_NOTIMP},                                                     /* 243 - Invalid */
+    {0, "ffclock_getestimate", sys_invalid, SYSCALL_NOTIMP},                                                     /* 243 - Invalid */
     {0, "clock_nanosleep", sys_invalid, SYSCALL_NOTIMP},                                                        /* 244 - Invalid */
     {0, "No Call", sys_invalid, SYSCALL_INVALID},                                                               /* 245 - Invalid */
     {0, "No Call", sys_invalid, SYSCALL_INVALID},                                                               /* 246 - Invalid */
@@ -334,9 +334,9 @@ struct syscall_entry systemCalls_posix[] = {
     {0, "No Call", sys_invalid, SYSCALL_INVALID},                                                               /* 291 - Invalid */
     {0, "No Call", sys_invalid, SYSCALL_INVALID},                                                               /* 292 - Invalid */
     {0, "No Call", sys_invalid, SYSCALL_INVALID},                                                               /* 293 - Invalid */
-    {ARG_COUNT(sys_fseek_args), "feek", (sys_call_t *)sys_fseek, SYSCALL_VALID},                                /* XXX - Wrong Spot 294 - fseek */
+    {ARG_COUNT(sys_fseek_args), "fseek", (sys_call_t *)sys_fseek, SYSCALL_VALID},                                /* XXX - Wrong Spot 294 - fseek */
     {ARG_COUNT(sys_fgetc_args), "fgetc", (sys_call_t *)sys_fgetc, SYSCALL_VALID},                               /* XXX - Wrong Spot 295 - fgetc */
-    {ARG_COUNT(sys_fclose_args), "flose", (sys_call_t *)sys_fclose, SYSCALL_VALID},                             /* XXX - Wrong Spot 296 - fclose */
+    {ARG_COUNT(sys_fclose_args), "fclose", (sys_call_t *)sys_fclose, SYSCALL_VALID},                             /* XXX - Wrong Spot 296 - fclose */
     {ARG_COUNT(sys_fread_args), "fread", (sys_call_t *)sys_fread, SYSCALL_VALID},                               /* XXX - Wrong Spot 297 - fread */
     {ARG_COUNT(sys_fopen_args), "fopen", (sys_call_t *)sys_fopen, SYSCALL_VALID},                               /* XXX - Wrong Spot 298 - fopen */
     {ARG_COUNT(sys_opendir_args), "opendir", (sys_call_t *)sys_opendir, SYSCALL_VALID},                         /* 299 - opendir */
