@@ -74,7 +74,7 @@ _USB_FLAGS!= test -f ${USB_IMAGE} && \
 
 # ── Primary targets ──────────────────────────────────────────────────────────
 
-.PHONY: all kernel kernel-aarch64 kernel-x86_64 run-x86_64 run-debug-x86_64 musl-libc world makeuser image image-aarch64 image-arm usb-image \
+.PHONY: efi run-uefi-x86_64 all kernel kernel-aarch64 kernel-x86_64 run-x86_64 run-debug-x86_64 musl-libc world makeuser image image-aarch64 image-arm usb-image \
         mount-image unmount-image \
         install-kernel install-world install \
         run-aarch64 run-debug-aarch64 run-uboot-aarch64 run-uboot-debug-aarch64 run-claude \
@@ -658,6 +658,14 @@ run-x86_64:
 	  -netdev vmnet-bridged,id=n0,ifname=${BRIDGE_IF} \
 	  -device virtio-net-pci,netdev=n0,disable-modern=true \
 	  -audiodev coreaudio,id=snd0 -device AC97,audiodev=snd0
+
+# UEFI loader (stand/): BOOTX64.EFI -> build/x86_64/boot/.  PVH (-kernel) is unaffected.
+efi:
+	${MAKE} -C ${CURDIR}/stand TARGET=x86_64
+
+# Boot a COPY of the x86_64 image through QEMU + OVMF with no -kernel (headless smoke).
+run-uefi-x86_64: efi
+	tools/run-uefi-x86_64.sh --smoke ${DISK_IMAGE_X86_64}
 
 # Headless x86_64 run: serial only to stdout, no display (the bring-up console for
 # debugging).  Ctrl-A X quits.

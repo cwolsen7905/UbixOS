@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **UEFI boot on x86_64** (W-054, installer B1). A clean-room PE32+ loader
+  (`stand/efi/`, `BOOTX64.EFI`, built with clang + lld-link) loads the kernel
+  from the ESP and hands over a `ubix_bootinfo` block (UEFI memory map, GOP
+  framebuffer, ACPI RSDP, optional ramdisk). The kernel accepts it next to PVH,
+  which stays for `bmake run-*`. `bmake efi`; `tools/run-uefi-x86_64.sh` boots a
+  disk-image copy under QEMU + OVMF with no `-kernel`.
+
 ## [3.1.0] - 2026-10-15
 
 ### Added
