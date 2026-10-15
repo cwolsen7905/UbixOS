@@ -24,7 +24,7 @@ _ARCH = aarch64
 SUBDIRS = taskbar term settings uname basename cut dirname env find grep head \
           less more sort sed stat tail touch tr uniq wc which cmp install diff \
           printf awk make vi nc diskutil activity files vdoom tessera cubitaire \
-          aplay mp3play paste
+          aplay mp3play paste tee
 .if ${_ARCH} == "x86_64"
 SUBDIRS += wget httpsget
 .endif
