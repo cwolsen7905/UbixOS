@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -679,35 +679,55 @@ int sys_write(struct thread *td, struct sys_write_args *uap)
  * Returning 0 unconditionally made every missing candidate look present, so a
  * missing command (e.g. `pwd` with no /bin/pwd) was exec'd as a non-existent
  * file and surfaced as EACCES ("permission denied") instead of ENOENT
- * ("command not found").  Probe existence the same way readlink/utimensat do
- * (fopen rejects directories, so fall back to vfs_opendir).
+ * ("command not found").  Existence comes from vfs_readlink, which answers
+ * from the VFS lookup cache; a symlink is followed with fopen (or vfs_opendir,
+ * as fopen rejects directories on some filesystems).
  *
  * @return 0 if @path resolves (any mode), -ENOENT if it does not.
  */
 int sys_access(struct thread *td, struct sys_access_args *args)
 {
 	fileDescriptor_t *fp;
+	char probe[8];
+	int rc;
 
 	if (args->path == NULL)
 	{
 		td->td_retval[0] = -EFAULT;
 		return (EFAULT);
 	}
-
-	fp = fopen(args->path, "r");
-	if (fp != NULL)
+	if (args->path[0] == '\0')
 	{
-		fclose(fp);
+		td->td_retval[0] = -ENOENT;
+		return (ENOENT);
 	}
-	else
+
+	/* vfs_readlink answers "exists" and "missing" from the lookup cache for
+	 * anything that is not a symlink.  A symlink must be followed: it is only
+	 * accessible if its target exists. */
+	rc = vfs_readlink(args->path, probe, (int)sizeof(probe));
+	if (rc == -ENOENT)
 	{
-		kDIR_t *dir = vfs_opendir(args->path);
-		if (dir == NULL)
+		td->td_retval[0] = -ENOENT;
+		return (ENOENT);
+	}
+	if (rc >= 0)
+	{
+		fp = fopen(args->path, "r");
+		if (fp != NULL)
 		{
-			td->td_retval[0] = -ENOENT;
-			return (ENOENT);
+			fclose(fp);
 		}
-		vfs_closedir(dir);
+		else
+		{
+			kDIR_t *dir = vfs_opendir(args->path);
+			if (dir == NULL)
+			{
+				td->td_retval[0] = -ENOENT;
+				return (ENOENT);
+			}
+			vfs_closedir(dir);
+		}
 	}
 
 	td->td_retval[0] = 0;
@@ -859,53 +879,27 @@ int sys_readlink(struct thread *thr, struct sys_readlink_args *args)
 		return (0);
 	}
 
-	/* Real filesystem symlink (ubixfs): ask the FS for the target.  Returns the
-	 * target length, or <0 if @path is missing / not a link (fall through). */
+	/*
+	 * Ask the VFS for the link target.  A path that is not a symlink fails with
+	 * EINVAL if it exists and ENOENT if it does not, as POSIX requires: musl's
+	 * realpath() treats EINVAL as "use the literal component and continue" and
+	 * aborts on any other errno, so the two must not be confused.
+	 */
 	{
 		char target[1024];
 		int tn = vfs_readlink(path, target, (int)sizeof(target));
-		if (tn >= 0)
+		if (tn < 0)
 		{
-			size_t n = (size_t)tn;
-			if ((size_t)args->count < n)
-				n = (size_t)args->count;
-			memcpy(args->buf, target, n);
-			thr->td_retval[0] = (int)n;
-			return (0);
+			thr->td_retval[0] = tn;
+			return (-tn);
 		}
+		size_t n = (size_t)tn;
+		if ((size_t)args->count < n)
+			n = (size_t)args->count;
+		memcpy(args->buf, target, n);
+		thr->td_retval[0] = (int)n;
+		return (0);
 	}
-
-	/*
-	 * uBixOS filesystems (FAT/devfs) have no symbolic links, so no existing
-	 * path is ever a symlink.  POSIX requires readlink() on an existing
-	 * non-symlink to fail with EINVAL ("not a symbolic link"), and on a
-	 * missing path to fail with ENOENT.  Distinguishing the two matters for
-	 * musl's realpath(), which aborts on any errno other than EINVAL but
-	 * treats EINVAL as "use the literal component and continue": returning
-	 * ENOENT for an existing directory broke resource discovery in ported
-	 * apps (e.g. NetSurf's Messages/CSS/font lookup), while returning EINVAL
-	 * for a missing path would let realpath() wrongly succeed on it.  Probe
-	 * existence (fopen rejects directories, so fall back to vfs_opendir) to
-	 * return the POSIX-correct errno.
-	 */
-	fileDescriptor_t *fd = fopen(path, "rb");
-	if (fd != 0x0)
-	{
-		fclose(fd);
-	}
-	else
-	{
-		kDIR_t *dir = vfs_opendir(path);
-		if (dir == 0x0)
-		{
-			thr->td_retval[0] = -ENOENT;
-			return (ENOENT);
-		}
-		vfs_closedir(dir);
-	}
-
-	thr->td_retval[0] = -EINVAL;
-	return (EINVAL);
 }
 
 int kern_openat(struct thread *thr, int afd, char *path, int flags, int mode)
