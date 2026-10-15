@@ -15,6 +15,7 @@
  * kernel mapping.
  */
 
+#include <ubixos/bootinfo.h>
 #include "../x86_64.h"
 #include "pci.h"
 
@@ -63,6 +64,21 @@ int x86_64_fb_init(void)
 	struct pci_dev d;
 	u32 cmd;
 	u32 w = 1280, h = 720; /* 16:9; 1280x720x4 = 3.7 MB, well within the 16 MB std-VGA LFB */
+
+	/* UEFI boot: the loader handed over the firmware GOP framebuffer — use it as is
+	 * (no device-specific mode set).  The compositor assumes pitch == width * 4. */
+	if (g_x86_64_have_bootinfo && g_x86_64_bootinfo.fb_format != UBIX_FB_NONE &&
+	    g_x86_64_bootinfo.fb_pitch == g_x86_64_bootinfo.fb_width * 4)
+	{
+		x86_64_fb_phys = g_x86_64_bootinfo.fb_base;
+		x86_64_fb_width = g_x86_64_bootinfo.fb_width;
+		x86_64_fb_height = g_x86_64_bootinfo.fb_height;
+		x86_64_fb_pitch = g_x86_64_bootinfo.fb_pitch;
+		serial_puts("vga-fb: UEFI GOP framebuffer @phys=");
+		serial_puthex(x86_64_fb_phys);
+		serial_puts("\n");
+		return 0;
+	}
 
 	if (!pci_find_device(VGA_VENDOR, VGA_DEVICE, &d))
 	{

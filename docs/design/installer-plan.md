@@ -8,7 +8,7 @@ VMs first (QEMU, UTM, VirtualBox), real PCs later.
 | Lane | Item | Row | Status |
 |------|------|-----|--------|
 | B0 | This plan | — | ✅ |
-| B1 | Clean-room UEFI loader, x86_64 | W-054 | ⬜ |
+| B1 | Clean-room UEFI loader, x86_64 | W-054 | 🚧 PR open |
 | B2 | Clean-room UEFI loader, aarch64 | W-055 | ⬜ |
 | B3 | Ramdisk / initrd live root | W-056 | ⬜ |
 | B4 | Live media: `mkmedia` + CI smoke job | W-057 | ⬜ |
@@ -71,6 +71,15 @@ PCs need B9 (AHCI) or B10 (NVMe), and installing from a USB stick needs B11.
 ## Phases
 
 ### B1 — UEFI loader, x86_64
+
+*Implemented (W-054):* `stand/efi/` (MI loader + `x86_64/` hand-off),
+`sys/include/ubixos/bootinfo.h`, `share/mk/ubix.efi.mk`, `bmake efi`,
+`tools/run-uefi-x86_64.sh`. The loader drops to 32-bit protected mode and
+enters the kernel's existing physical `_start` with `eax = UBIX_BOOTINFO_MAGIC`,
+`ebx = &bootinfo`; the kernel tells UEFI from PVH by the magic
+(`x86_64_mem_init`, `x86_64_fb_init`). Kernel found at `\boot\kernel\kernel`
+on the ESP. Known gap: ACPI RSDP is not yet consumed by `madt.c` (it scans the
+BIOS areas), so SMP enumeration falls back to the BSP under OVMF.
 
 A small EFI application (PE32+) written from the UEFI specification: open the
 ESP through the Simple File System protocol, load the kernel ELF, get the
