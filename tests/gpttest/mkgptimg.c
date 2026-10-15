@@ -103,9 +103,9 @@ int main(int argc, char **argv)
 		if (type == 0 || len == 0)
 			continue;
 		memcpy(e->type,
-		       type == 0x82   ? gpt_type_ubix_swap
-		       : type == 0x9C ? gpt_type_ubix_pool
-		                      : gpt_type_efi,
+		       type == 0x82   ? g_gpt_type_ubix_swap
+		       : type == 0x9C ? g_gpt_type_ubix_pool
+		                      : g_gpt_type_efi,
 		       16);
 		for (k = 0; k < 16; k++)
 			e->guid[k] = (uint8_t)random();

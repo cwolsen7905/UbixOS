@@ -34,8 +34,8 @@
  * GUIDs are kept as the 16 raw on-disk bytes (first three fields little-endian)
  * so they compare with memcmp and need no byte swapping.
  */
-#ifndef _SYS_GPT_PART_H
-#define _SYS_GPT_PART_H
+#ifndef UBIXOS_SYS_GPT_PART_H
+#define UBIXOS_SYS_GPT_PART_H
 
 #include <sys/types.h>
 #include <sys/bus.h>
@@ -44,9 +44,9 @@
 #define GPT_SECTOR_SIZE 512
 
 /* Partition-type GUIDs (raw on-disk bytes).  uBix swap/pool are random v4 GUIDs. */
-extern const u_int8_t gpt_type_efi[GPT_GUID_LEN];
-extern const u_int8_t gpt_type_ubix_swap[GPT_GUID_LEN];
-extern const u_int8_t gpt_type_ubix_pool[GPT_GUID_LEN];
+extern const u_int8_t g_gpt_type_efi[GPT_GUID_LEN];
+extern const u_int8_t g_gpt_type_ubix_swap[GPT_GUID_LEN];
+extern const u_int8_t g_gpt_type_ubix_pool[GPT_GUID_LEN];
 
 /** One in-use GPT entry, reduced to what the partition layer needs. */
 struct gpt_part
@@ -83,4 +83,4 @@ u_int8_t gpt_guid_mbr_type(const u_int8_t *guid);
  */
 int gpt_read_partitions(struct ubx_device *disk, u_int64_t disk_sectors, struct gpt_part *out, int max);
 
-#endif /* _SYS_GPT_PART_H */
+#endif /* UBIXOS_SYS_GPT_PART_H */

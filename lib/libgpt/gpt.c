@@ -14,7 +14,7 @@
 
 static const uint8_t g_zero_guid[16];
 
-const uint8_t gpt_type_efi[16] = {
+const uint8_t g_gpt_type_efi[16] = {
     0x28,
     0x73,
     0x2A,
@@ -32,7 +32,7 @@ const uint8_t gpt_type_efi[16] = {
     0xC9,
     0x3B,
 };
-const uint8_t gpt_type_ubix_swap[16] = {
+const uint8_t g_gpt_type_ubix_swap[16] = {
     0x4F,
     0xE2,
     0x7A,
@@ -50,7 +50,7 @@ const uint8_t gpt_type_ubix_swap[16] = {
     0x44,
     0xD5,
 };
-const uint8_t gpt_type_ubix_pool[16] = {
+const uint8_t g_gpt_type_ubix_pool[16] = {
     0x44,
     0x95,
     0x47,
@@ -200,7 +200,7 @@ static void build_header(
  */
 int gpt_write(const struct gpt_io *io, const struct gpt_table *t)
 {
-	static uint8_t array[GPT_NUM_ENTRIES * GPT_ENTRY_SIZE];
+	static uint8_t g_array[GPT_NUM_ENTRIES * GPT_ENTRY_SIZE];
 	uint8_t sec[GPT_SECTOR];
 	uint32_t array_crc;
 	uint64_t n, backup_array, backup_hdr;
@@ -231,21 +231,21 @@ int gpt_write(const struct gpt_io *io, const struct gpt_table *t)
 		}
 	}
 
-	memset(array, 0, sizeof(array));
+	memset(g_array, 0, sizeof(g_array));
 	for (i = 0; i < GPT_NUM_ENTRIES; i++)
-		pack_entry(array + (size_t)i * GPT_ENTRY_SIZE, &t->entries[i]);
-	array_crc = gpt_crc32(0, array, sizeof(array));
+		pack_entry(g_array + (size_t)i * GPT_ENTRY_SIZE, &t->entries[i]);
+	array_crc = gpt_crc32(0, g_array, sizeof(g_array));
 
 	backup_array = n - 1 - GPT_ARRAY_SECTORS;
 	backup_hdr = n - 1;
 
 	/* Backup first, then primary, then the protective MBR (UEFI 5.3.2). */
-	if (io->write(io->ctx, backup_array, GPT_ARRAY_SECTORS, array) != 0)
+	if (io->write(io->ctx, backup_array, GPT_ARRAY_SECTORS, g_array) != 0)
 		return GPT_E_IO;
 	build_header(sec, t, backup_hdr, GPT_PRIMARY_HDR_LBA, backup_array, array_crc);
 	if (io->write(io->ctx, backup_hdr, 1, sec) != 0)
 		return GPT_E_IO;
-	if (io->write(io->ctx, 2, GPT_ARRAY_SECTORS, array) != 0)
+	if (io->write(io->ctx, 2, GPT_ARRAY_SECTORS, g_array) != 0)
 		return GPT_E_IO;
 	build_header(sec, t, GPT_PRIMARY_HDR_LBA, backup_hdr, 2, array_crc);
 	if (io->write(io->ctx, GPT_PRIMARY_HDR_LBA, 1, sec) != 0)
@@ -274,7 +274,7 @@ int gpt_write(const struct gpt_io *io, const struct gpt_table *t)
  */
 static int try_copy(const struct gpt_io *io, uint64_t total, uint64_t hdr_lba, uint64_t expect_alt, struct gpt_table *t)
 {
-	static uint8_t array[GPT_NUM_ENTRIES * GPT_ENTRY_SIZE];
+	static uint8_t g_array[GPT_NUM_ENTRIES * GPT_ENTRY_SIZE];
 	uint8_t sec[GPT_SECTOR];
 	uint32_t crc_self, size;
 	uint64_t array_lba;
@@ -306,13 +306,13 @@ static int try_copy(const struct gpt_io *io, uint64_t total, uint64_t hdr_lba, u
 	{
 		uint32_t crc_arr = get32(sec + 88);
 
-		if (io->read(io->ctx, array_lba, GPT_ARRAY_SECTORS, array) != 0)
+		if (io->read(io->ctx, array_lba, GPT_ARRAY_SECTORS, g_array) != 0)
 			return GPT_E_IO;
-		if (gpt_crc32(0, array, sizeof(array)) != crc_arr)
+		if (gpt_crc32(0, g_array, sizeof(g_array)) != crc_arr)
 			return GPT_E_INVALID;
 	}
 	for (i = 0; i < GPT_NUM_ENTRIES; i++)
-		unpack_entry(&t->entries[i], array + (size_t)i * GPT_ENTRY_SIZE);
+		unpack_entry(&t->entries[i], g_array + (size_t)i * GPT_ENTRY_SIZE);
 	t->total_sectors = total;
 	return 0;
 }

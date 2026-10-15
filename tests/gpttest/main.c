@@ -105,8 +105,8 @@ static void set_entry(
 	memset(e->guid, id, 16);
 	e->first_lba = first;
 	e->last_lba = last;
-	for (i = 0; name[i] != '\0' && i < 36; i++)
-		e->name[i] = (uint16_t)name[i];
+	for (i = 0; *name != '\0' && i < 36; i++)
+		e->name[i] = (uint16_t)(uint8_t)*name++;
 }
 
 /** Compare the meaningful content of two tables. */
@@ -134,9 +134,9 @@ static void run_suite(struct window *w, uint64_t total)
 	check(gpt_crc32(0, "123456789", 9) == 0xCBF43926U, "crc32 check value 0xCBF43926");
 
 	check(gpt_init(&want, total, disk_guid) == 0, "gpt_init");
-	set_entry(&want.entries[0], gpt_type_efi, 1, want.first_usable, want.first_usable + 255, "ESP");
-	set_entry(&want.entries[1], gpt_type_ubix_swap, 2, want.first_usable + 256, want.first_usable + 511, "swap");
-	set_entry(&want.entries[2], gpt_type_ubix_pool, 3, want.first_usable + 512, want.last_usable, "pool");
+	set_entry(&want.entries[0], g_gpt_type_efi, 1, want.first_usable, want.first_usable + 255, "ESP");
+	set_entry(&want.entries[1], g_gpt_type_ubix_swap, 2, want.first_usable + 256, want.first_usable + 511, "swap");
+	set_entry(&want.entries[2], g_gpt_type_ubix_pool, 3, want.first_usable + 512, want.last_usable, "pool");
 
 	rc = gpt_write(&io, &want);
 	check(rc == 0, "gpt_write");
@@ -169,7 +169,7 @@ static void run_suite(struct window *w, uint64_t total)
 	check(rc == 0 && src == GPT_FROM_BACKUP, "primary array corrupt: backup used");
 
 	/* Overlapping entries are refused before anything is written. */
-	set_entry(&want.entries[3], gpt_type_ubix_swap, 4, want.first_usable + 100, want.first_usable + 300, "bad");
+	set_entry(&want.entries[3], g_gpt_type_ubix_swap, 4, want.first_usable + 100, want.first_usable + 300, "bad");
 	check(gpt_write(&io, &want) == GPT_E_OVERLAP, "overlapping entries rejected");
 	memset(&want.entries[3], 0, sizeof(want.entries[3]));
 

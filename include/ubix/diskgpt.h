@@ -9,8 +9,8 @@
  * Sector size is fixed at 512 bytes.  GUIDs are the 16 raw on-disk bytes (first
  * three fields little-endian).
  */
-#ifndef _UBIX_DISKGPT_H
-#define _UBIX_DISKGPT_H
+#ifndef UBIXOS_DISKGPT_H
+#define UBIXOS_DISKGPT_H
 
 #include <stdint.h>
 
@@ -21,9 +21,9 @@
 #define GPT_MIN_SECTORS (1 + 1 + GPT_ARRAY_SECTORS + 1 + GPT_ARRAY_SECTORS + 1 + 1)
 
 /* Partition-type GUIDs (raw on-disk bytes); same values as the kernel's. */
-extern const uint8_t gpt_type_efi[16];
-extern const uint8_t gpt_type_ubix_swap[16];
-extern const uint8_t gpt_type_ubix_pool[16];
+extern const uint8_t g_gpt_type_efi[16];
+extern const uint8_t g_gpt_type_ubix_swap[16];
+extern const uint8_t g_gpt_type_ubix_pool[16];
 
 /** Sector I/O supplied by the caller; return 0 on success, nonzero on error. */
 struct gpt_io
@@ -101,4 +101,4 @@ int gpt_load(const struct gpt_io *io, uint64_t total_sectors, struct gpt_table *
  */
 int gpt_check_protective_mbr(const struct gpt_io *io);
 
-#endif /* _UBIX_DISKGPT_H */
+#endif /* UBIXOS_DISKGPT_H */
