@@ -323,7 +323,14 @@ struct buf
 /** Append bytes to a growable buffer. */
 static void buf_add(struct buf *b, const void *d, size_t n)
 {
-	b->p = realloc(b->p, b->n + n);
+	uint8_t *np;
+
+	if (d == NULL || n == 0)
+		return;
+	np = realloc(b->p, b->n + n);
+	if (np == NULL)
+		abort();
+	b->p = np;
 	memcpy(b->p + b->n, d, n);
 	b->n += n;
 }
@@ -397,6 +404,8 @@ static void gz(const struct buf *in, struct buf *out)
 	deflateInit2(&z, 6, Z_DEFLATED, 15 + 16, 8, Z_DEFAULT_STRATEGY);
 	out->n = deflateBound(&z, (uLong)in->n);
 	out->p = malloc(out->n);
+	if (out->p == NULL)
+		abort();
 	z.next_in = in->p;
 	z.avail_in = (uInt)in->n;
 	z.next_out = out->p;
@@ -439,8 +448,12 @@ static int walk(const struct buf *gzbuf, unsigned flags, const char *prefix, int
 	uint8_t tmp[300];
 
 	*count = 0;
-	if (pkg_reader_open(r, mem_read, &src, flags, prefix) != 0)
+	if (r == NULL || e == NULL || pkg_reader_open(r, mem_read, &src, flags, prefix) != 0)
+	{
+		free(r);
+		free(e);
 		return -ENOMEM;
+	}
 	while ((rc = pkg_reader_next(r, e)) == 1)
 	{
 		long k;
@@ -508,6 +521,8 @@ static void test_archive_good(void)
 	int n = 0;
 	int ok = 1;
 
+	if (r == NULL || e == NULL)
+		abort();
 	build_good(&t);
 	gz(&t, &g);
 	src = (struct memsrc){g.p, g.n, 0, 100};
@@ -649,7 +664,13 @@ static void test_archive_bad(void)
 	g.n -= g.n / 3;
 	check(walk(&g, 0, NULL, &count) == -EINVAL, "truncated gzip rejected");
 	g.n += g.n / 2;
-	g.p = realloc(g.p, g.n);
+	{
+		uint8_t *np = realloc(g.p, g.n);
+
+		if (np == NULL)
+			abort();
+		g.p = np;
+	}
 	memset(g.p + 20, 0xA5, 64);
 	check(walk(&g, 0, NULL, &count) < 0, "corrupt deflate data rejected");
 	free(t.p);
