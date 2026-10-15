@@ -113,6 +113,26 @@ struct sys_disk_query_args
 };
 int sys_disk_query(struct thread *, struct sys_disk_query_args *);
 
+struct sys_disk_rawio_args
+{
+	char index_l_[PADL_(u_int32_t)];
+	u_int32_t index;
+	char index_r_[PADR_(u_int32_t)];
+	char op_l_[PADL_(u_int32_t)];
+	u_int32_t op;
+	char op_r_[PADR_(u_int32_t)];
+	char lba_l_[PADL_(u_int64_t)];
+	u_int64_t lba;
+	char lba_r_[PADR_(u_int64_t)];
+	char count_l_[PADL_(u_int32_t)];
+	u_int32_t count;
+	char count_r_[PADR_(u_int32_t)];
+	char buf_l_[PADL_(void *)];
+	void *buf;
+	char buf_r_[PADR_(void *)];
+};
+int sys_disk_rawio(struct thread *, struct sys_disk_rawio_args *);
+
 struct sys_pidStatus_args
 {
 	char pid_l_[PADL_(int)];
