@@ -16,6 +16,9 @@
 #include <lib/kmalloc.h>      /* sysID */
 #include <string.h>
 
+/* Physmap virtual address of physical @p as an integer (typed-pointer casts stay direct). */
+#define PHYS_VA(p) ((uintptr_t)((u64)(p) + PHYSMAP_BASE))
+
 extern char _end[]; /* end of the kernel image (ldscript) */
 
 /*
@@ -118,14 +121,14 @@ static void boot_ranges(u32 boot_magic, u32 boot_info)
 	g_nranges = 0;
 	if (boot_magic == UBIX_BOOTINFO_MAGIC && boot_info != 0)
 	{
-		const struct ubix_bootinfo *bi = (const struct ubix_bootinfo *)P2V(boot_info);
+		const struct ubix_bootinfo *bi = (const struct ubix_bootinfo *)PHYS_VA(boot_info);
 		const u8 *md;
 
 		if (bi->magic != UBIX_BOOTINFO_MAGIC || bi->memmap_addr == 0 || bi->memmap_desc_size < 40)
 			return;
 		g_x86_64_bootinfo = *bi;
 		g_x86_64_have_bootinfo = 1;
-		md = (const u8 *)P2V(bi->memmap_addr);
+		md = (const u8 *)PHYS_VA(bi->memmap_addr);
 		for (i = 0; i < bi->memmap_desc_count; i++, md += bi->memmap_desc_size)
 		{
 			u32 type = *(const u32 *)md;
@@ -144,10 +147,10 @@ static void boot_ranges(u32 boot_magic, u32 boot_info)
 
 		if (boot_info == 0)
 			return;
-		si = (const struct hvm_start_info *)P2V(boot_info);
+		si = (const struct hvm_start_info *)PHYS_VA(boot_info);
 		if (si->magic != HVM_START_MAGIC || si->version < 1 || si->memmap_paddr == 0 || si->memmap_entries == 0)
 			return;
-		mm = (const struct hvm_memmap_entry *)P2V(si->memmap_paddr);
+		mm = (const struct hvm_memmap_entry *)PHYS_VA(si->memmap_paddr);
 		for (i = 0; i < si->memmap_entries; i++)
 			if (mm[i].type == E820_RAM)
 				range_add(mm[i].addr, mm[i].addr + mm[i].size);

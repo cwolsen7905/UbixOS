@@ -7,8 +7,8 @@
  * ebx = physical address of the block (below 4 GB).
  */
 
-#ifndef _UBIXOS_BOOTINFO_H
-#define _UBIXOS_BOOTINFO_H
+#ifndef UBIXOS_BOOTINFO_H
+#define UBIXOS_BOOTINFO_H
 
 #define UBIX_BOOTINFO_MAGIC 0x55424958U /* "UBIX" */
 #define UBIX_BOOTINFO_VERSION 1U
@@ -45,4 +45,4 @@ struct ubix_bootinfo
 	unsigned long long kernel_end;
 };
 
-#endif /* _UBIXOS_BOOTINFO_H */
+#endif /* UBIXOS_BOOTINFO_H */
