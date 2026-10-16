@@ -92,3 +92,13 @@ format-dsk:
 	(rm -fr ld.so)
 	(rm -fr libc.so.5)
 	(rm -fr ttyd)
+
+# ubpkg: host package tool (W-070).  Native build into build/host/ubpkg/; host
+# tests live in tests/ubpkg (`bmake -C tests/ubpkg host`).
+ubpkg:
+	${MAKE} -C ubpkg
+
+ubpkg-clean:
+	${MAKE} -C ubpkg clean
+
+.PHONY: ubpkg ubpkg-clean
