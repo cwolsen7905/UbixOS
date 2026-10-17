@@ -4,11 +4,12 @@
 # truncates the log and hides the actual failure.  On failure the error lines and
 # the tail of LOG are shown; LOG itself is uploaded as a job artifact.
 log="$1"; shift
-if "$@" >"$log" 2>&1; then
+"$@" >"$log" 2>&1
+rc=$?
+if [ "$rc" -eq 0 ]; then
 	echo "ok: $* (log: $log, $(wc -l <"$log") lines)"
 	exit 0
 fi
-rc=$?
 echo "FAILED rc=$rc: $*"
 echo "--- error lines ---"
 grep -nE '(^|[^a-z-])(error|Error)[: ]|\*\*\*|Stop\.|undefined reference|No such file' "$log" | grep -v -- '-Werror' | head -60
