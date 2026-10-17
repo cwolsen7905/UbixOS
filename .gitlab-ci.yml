@@ -103,7 +103,7 @@ lint:
   artifacts:
     name: kernel-$ARCH-$CI_COMMIT_SHORT_SHA
     when: always
-    paths: ["build/$ARCH/boot/kernel*", "build-$ARCH.log"]
+    paths: ["build/$ARCH/boot/kernel*", "build/$ARCH/*.log", "build-$ARCH.log"]
 
 build: { extends: [.build, .mr-only] }
 build:keep: { extends: [.build, .keep] }
@@ -144,7 +144,7 @@ analyze:
   artifacts:
     name: image-$ARCH-$CI_COMMIT_SHORT_SHA
     when: always
-    paths: ["ubixos*.img", "build/$ARCH/boot/kernel*", "boot-$ARCH.log"]
+    paths: ["ubixos*.img", "build/$ARCH/boot/kernel*", "build/$ARCH/*.log", "boot-$ARCH.log"]
 
 boot: { extends: [.boot, .mr-only] }
 boot:keep: { extends: [.boot, .keep] }
