@@ -51,9 +51,13 @@ static void tar_put(const void *p, size_t n)
 {
 	if (g_tarlen + n > g_tarcap)
 	{
+		unsigned char *ntar;
+
 		g_tarcap = (g_tarlen + n) * 2 + 4096;
-		if ((g_tar = realloc(g_tar, g_tarcap)) == NULL)
+		ntar = realloc(g_tar, g_tarcap);
+		if (ntar == NULL)
 			die("out of memory");
+		g_tar = ntar;
 	}
 	memcpy(g_tar + g_tarlen, p, n);
 	g_tarlen += n;
@@ -145,8 +149,15 @@ static void walk(const char *root, const char *rel)
 			walk(root, sub); /* the prefix itself belongs to the base layout */
 			continue;
 		}
-		g_ents = realloc(g_ents, (g_nents + 1) * sizeof *g_ents);
-		e = &g_ents[g_nents++];
+		g_nents += 1;
+		{
+			struct ent *nents = realloc(g_ents, g_nents * sizeof *g_ents);
+
+			if (nents == NULL)
+				die("out of memory");
+			g_ents = nents;
+		}
+		e = &g_ents[g_nents - 1];
 		memset(e, 0, sizeof *e);
 		e->path = strdup(sub);
 		e->mode = st.st_mode & 0777;
