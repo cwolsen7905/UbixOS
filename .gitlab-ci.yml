@@ -35,6 +35,7 @@ toolchain:
   stage: toolchain
   tags: [shell]
   interruptible: false
+  variables: { GIT_DEPTH: "1" }
   script:
     - tag="$(sha256sum .gitlab/Dockerfile | cut -c1-16)"
     - echo "CI_IMAGE=$CI_IMAGE_REPO:$tag" > toolchain.env
@@ -98,10 +99,11 @@ lint:
     matrix:
       - ARCH: [aarch64, x86_64]
   script:
-    - bmake kernel world TARGET=$ARCH CROSS_PREFIX="$(tools/ci/crossprefix.sh $ARCH)"
+    - tools/ci/quiet.sh build-$ARCH.log bmake kernel world TARGET=$ARCH CROSS_PREFIX="$(tools/ci/crossprefix.sh $ARCH)"
   artifacts:
     name: kernel-$ARCH-$CI_COMMIT_SHORT_SHA
-    paths: ["build/$ARCH/boot/kernel*"]
+    when: always
+    paths: ["build/$ARCH/boot/kernel*", "build-$ARCH.log"]
 
 build: { extends: [.build, .mr-only] }
 build:keep: { extends: [.build, .keep] }
@@ -137,12 +139,12 @@ analyze:
     matrix:
       - ARCH: [aarch64, x86_64]
   script:
-    - bmake kernel world image TARGET=$ARCH CROSS_PREFIX="$(tools/ci/crossprefix.sh $ARCH)"
+    - tools/ci/quiet.sh boot-$ARCH.log bmake kernel world image TARGET=$ARCH CROSS_PREFIX="$(tools/ci/crossprefix.sh $ARCH)"
     - tools/check/run.sh --strict --arch $ARCH boot-smoke
   artifacts:
     name: image-$ARCH-$CI_COMMIT_SHORT_SHA
     when: always
-    paths: ["ubixos*.img", "build/$ARCH/boot/kernel*"]
+    paths: ["ubixos*.img", "build/$ARCH/boot/kernel*", "boot-$ARCH.log"]
 
 boot: { extends: [.boot, .mr-only] }
 boot:keep: { extends: [.boot, .keep] }
