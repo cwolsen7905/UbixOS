@@ -225,10 +225,11 @@ static void file_line(char *dst, size_t sz, const char *path, const char *data, 
 {
 	uint8_t d[PKG_SHA256_LEN];
 	char hex[PKG_SHA256_HEX];
+	size_t len = strlen(data);
 
-	pkg_sha256(data, strlen(data), d);
+	pkg_sha256(data, len, d);
 	pkg_hex_encode(d, sizeof d, hex);
-	snprintf(dst, sz, "file: %04o %zu %s %s\n", mode, strlen(data), hex, path);
+	snprintf(dst, sz, "file: %04o %zu %s %s\n", mode, len, hex, path);
 }
 
 /** A directory name that pushes the member path past the 100-byte ustar field. */
