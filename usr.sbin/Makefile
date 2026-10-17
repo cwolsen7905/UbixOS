@@ -4,7 +4,7 @@
 # FreeBSD/macOS convention: long-running services and their admin tools live
 # here (the compositor, the auth/log/automount/registry/audio daemons, the
 # graphical login, the ssh server, …).  Add a directory name to SUBDIRS.
-SUBDIRS = logd authd automountd ubistry aural netcfg views vlogin
+SUBDIRS = pkg logd authd automountd ubistry aural netcfg views vlogin
 
 # The per-directory targets below are defined before "all"; keep "all" the
 # default so a bare `bmake` builds every subdirectory (on-device it built only
