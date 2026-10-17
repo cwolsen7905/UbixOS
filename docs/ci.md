@@ -16,10 +16,12 @@ Pipelines run on merge requests, on `master` and on tags.
 | `lint` | lint | `tools/check/selftest.sh`; fast gates on files changed vs the MR merge-base; whole-tree `banned-api` and `syscall-table` ratchets | yes |
 | `build` / `build:keep` | build | `bmake kernel world` for **aarch64 and x86_64** (matrix); kernel is kept as an artifact | yes |
 | `analyze` | analyze | `header-selfcontained warnings clang-tidy cppcheck` on changed files | no (`allow_failure`) |
-| `boot` / `boot:keep` | boot | `bmake kernel world image`, then `tools/check/run.sh --strict --arch <arch> boot-smoke` (QEMU TCG, headless) for both arches; image and kernel kept as artifacts | no (`allow_failure`) |
+| `boot` / `boot:keep` | boot | `bmake kernel world image`, then `tools/check/run.sh --strict --arch <arch> boot-smoke` (QEMU TCG, headless) for both arches; image and kernel kept as artifacts | yes |
 
-`allow_failure: true` marks a job not yet proven on these runners (as
-`continue-on-error` did on GitHub). Drop it once the job has passed.
+`analyze` still carries `allow_failure: true` (as `continue-on-error` did on
+GitHub): its first run had no C changes to check, so it is not yet proven.
+Drop the flag once it has passed on a change that touches C. `lint`, `build`
+and `boot` passed on both arches and block.
 
 `build`/`boot` come in two flavours because `artifacts:expire_in` cannot take a
 variable: MR pipelines (`build`, `boot`) keep artifacts **1 week**; `master`
@@ -40,7 +42,7 @@ Neither is arm64, so aarch64 is **cross-built** on amd64 with the distro
 KVM and no privileged mode.
 
 The toolchain image is `registry.../ubixos/ubixos/ci:<hash of .gitlab/Dockerfile>`
-(Ubuntu 24.04 with bmake, clang/lld/llvm 18, the cross gcc, clang-format,
+(Ubuntu 24.04 with bmake, xxd and perl HTML::Entities for NetSurf's JS build, clang/lld/llvm 18, the cross gcc, clang-format,
 clang-tidy, cppcheck, shellcheck, mtools, QEMU, libpng/bison/flex). Edit the
 Dockerfile and the next pipeline builds a new tag automatically.
 

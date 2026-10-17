@@ -5,7 +5,7 @@
 #   lint       fast gates + selftest                                      BLOCKING
 #   build      kernel + world, aarch64 and x86_64                         BLOCKING
 #   analyze    header-selfcontained, warnings, clang-tidy, cppcheck       advisory
-#   boot       bmake image + QEMU (TCG) boot to login, both arches        advisory
+#   boot       bmake image + QEMU (TCG) boot to login, both arches        BLOCKING
 #
 # Jobs not yet proven on these runners carry allow_failure: true (as the GitHub
 # workflow carried continue-on-error); drop it once a job has passed.
@@ -133,7 +133,6 @@ analyze:
   extends: .ci
   stage: boot
   timeout: 60m
-  allow_failure: true # advisory until proven on the k8s runner
   needs: [toolchain, lint]
   parallel:
     matrix:
