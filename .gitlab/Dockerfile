@@ -7,6 +7,10 @@
 #
 # linux/amd64 only (the runners are amd64); aarch64 is cross-built with the
 # distro gcc-aarch64-linux-gnu, as on GitHub.
+#
+# xxd and libhtml-parser-perl (HTML::Entities) are NetSurf's host-side build
+# needs (JS generics include, message splitting); without them `bmake world`
+# silently drops the JS bindings and the nsfb link fails.
 FROM ubuntu:24.04
 
 ENV DEBIAN_FRONTEND=noninteractive
@@ -17,6 +21,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         libpng-dev pkg-config bison flex \
         mtools qemu-utils qemu-system-arm qemu-system-x86 \
         python3 git ca-certificates rsync file \
+        xxd perl libhtml-parser-perl \
     && rm -rf /var/lib/apt/lists/*
 
 # TOOLCHAIN defaults to clang: the makefiles call bare clang, ld.lld and
