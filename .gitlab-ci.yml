@@ -1,0 +1,148 @@
+# uBixOS CI.  GitLab is the source of truth; this replaces .github/workflows/ci.yml.
+# Entry point is the same as local: tools/check/run.sh.  See docs/ci.md.
+#
+#   toolchain  build/push the CI image (.gitlab/Dockerfile) when missing  [shell runner]
+#   lint       fast gates + selftest                                      BLOCKING
+#   build      kernel + world, aarch64 and x86_64                         BLOCKING
+#   analyze    header-selfcontained, warnings, clang-tidy, cppcheck       advisory
+#   boot       bmake image + QEMU (TCG) boot to login, both arches        advisory
+#
+# Jobs not yet proven on these runners carry allow_failure: true (as the GitHub
+# workflow carried continue-on-error); drop it once a job has passed.
+
+stages: [toolchain, lint, build, analyze, boot]
+
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - if: $CI_COMMIT_TAG
+
+variables:
+  CI: "true"
+  GIT_DEPTH: "0" # the gates need history for the merge-base
+  CI_IMAGE_REPO: $CI_REGISTRY_IMAGE/ci
+
+default:
+  interruptible: true
+
+# --- toolchain image -------------------------------------------------------
+
+# The shell runner has docker + buildx (the same runner ubixcore-php builds on).
+# The tag is the Dockerfile's hash, so the image is rebuilt only when it changes
+# and every job in the pipeline (or any later one) pulls the same bytes.
+toolchain:
+  stage: toolchain
+  tags: [shell]
+  interruptible: false
+  script:
+    - tag="$(sha256sum .gitlab/Dockerfile | cut -c1-16)"
+    - echo "CI_IMAGE=$CI_IMAGE_REPO:$tag" > toolchain.env
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
+    - |
+      if docker manifest inspect "$CI_IMAGE_REPO:$tag" >/dev/null 2>&1; then
+        echo "toolchain image $CI_IMAGE_REPO:$tag already present"
+      else
+        docker build --pull --provenance=false --sbom=false -t "$CI_IMAGE_REPO:$tag" -f .gitlab/Dockerfile .gitlab
+        docker push "$CI_IMAGE_REPO:$tag"
+      fi
+  after_script:
+    - docker logout "$CI_REGISTRY" || true
+  artifacts:
+    reports:
+      dotenv: toolchain.env
+
+# Every other job: the toolchain image, on the k8s runner.
+.ci:
+  tags: [k8s]
+  image: $CI_IMAGE
+  needs: [toolchain]
+  before_script:
+    # origin/master is the fallback merge-base (GitLab fetches only the pipeline ref).
+    - git fetch --quiet origin "+refs/heads/$CI_DEFAULT_BRANCH:refs/remotes/origin/$CI_DEFAULT_BRANCH" || true
+
+# artifacts:expire_in cannot take a variable, so artifact-producing jobs come in
+# two flavours: MR pipelines keep artifacts 1 week, master and tags longer.
+.mr-only:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+  artifacts:
+    expire_in: 1 week
+.keep:
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - if: $CI_COMMIT_TAG
+  artifacts:
+    expire_in: 4 weeks
+
+# --- lint ------------------------------------------------------------------
+
+lint:
+  extends: .ci
+  stage: lint
+  timeout: 15m
+  script:
+    - tools/check/selftest.sh
+    - tools/check/run.sh --base "$(tools/ci/lint-base.sh)" --tier fast
+    # whole-tree baseline ratchet
+    - tools/check/run.sh --all banned-api syscall-table
+
+# --- build -----------------------------------------------------------------
+
+.build:
+  extends: .ci
+  stage: build
+  timeout: 45m
+  needs: [toolchain, lint]
+  parallel:
+    matrix:
+      - ARCH: [aarch64, x86_64]
+  script:
+    - bmake kernel world TARGET=$ARCH CROSS_PREFIX="$(tools/ci/crossprefix.sh $ARCH)"
+  artifacts:
+    name: kernel-$ARCH-$CI_COMMIT_SHORT_SHA
+    paths: ["build/$ARCH/boot/kernel*"]
+
+build: { extends: [.build, .mr-only] }
+build:keep: { extends: [.build, .keep] }
+
+# --- analyze ---------------------------------------------------------------
+
+analyze:
+  extends: .ci
+  stage: analyze
+  timeout: 30m
+  allow_failure: true # advisory until baselines settle
+  needs: [toolchain, lint]
+  variables:
+    # check_cc_for() looks for *-elf-gcc; point it at the distro compilers
+    # (syntax-only, no linking, so the triplet is fine).
+    AARCH64_CC: aarch64-linux-gnu-gcc
+    X86_64_CC: gcc
+  script:
+    - tools/check/run.sh --base "$(tools/ci/lint-base.sh)" --tier ci header-selfcontained warnings clang-tidy cppcheck
+
+# --- image + boot smoke ----------------------------------------------------
+
+# Rebuilds kernel+world and the image, then boots it headless under QEMU TCG:
+# no KVM or privileged mode needed.  Independent of `build` (which carries only
+# the kernel) so it starts as soon as lint passes.
+.boot:
+  extends: .ci
+  stage: boot
+  timeout: 60m
+  allow_failure: true # advisory until proven on the k8s runner
+  needs: [toolchain, lint]
+  parallel:
+    matrix:
+      - ARCH: [aarch64, x86_64]
+  script:
+    - bmake kernel world image TARGET=$ARCH CROSS_PREFIX="$(tools/ci/crossprefix.sh $ARCH)"
+    - tools/check/run.sh --strict --arch $ARCH boot-smoke
+  artifacts:
+    name: image-$ARCH-$CI_COMMIT_SHORT_SHA
+    when: always
+    paths: ["ubixos*.img", "build/$ARCH/boot/kernel*"]
+
+boot: { extends: [.boot, .mr-only] }
+boot:keep: { extends: [.boot, .keep] }
