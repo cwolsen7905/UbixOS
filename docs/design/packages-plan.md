@@ -453,6 +453,46 @@ the in-progress transaction so an interrupted `pkg` can roll forward or back on
 the next run. Removal deletes files first, the database entry last, and only
 files whose hash still matches unless `--force`.
 
+### As built (P3, W-071)
+
+`usr.sbin/pkg` implements `add --local`, `del`, `info`, `verify` and `--root`;
+host tests are `bmake -C tests/pkgdev host`.
+
+- **Local signature.** A package outside a signed index is checked against a
+  detached `<file>.upkg.sig`: `ecdsa-p256-sha256: <hex DER>` lines (the
+  `pkg_sigfile_verify` format) over the message `<lowercase hex SHA-256 of the
+  whole .upkg>\n`, so a very large package is streamed, not held in memory.
+  The signature must verify under at least one key in `/etc/pkg/keys/*.pub`.
+  No signature or no trusted key refuses the add; `--no-verify` installs anyway
+  with a warning. (`ubpkg` signs indexes, not packages, so signing a loose file
+  is `tests/pkgdev/mkpkg sign` for now.)
+- **`FILES` format**, one line per manifest entry:
+  `F <octal mode> <sha256> <path>`, `D <octal mode> - <path>`,
+  `L <octal mode> - <path> -> <target>`. `/var/db/pkg/base/MANIFEST`, when
+  present, uses the same lines and its files are treated as owned by `base`
+  (W-076 writes it).
+- **Add checks, in order, before touching the disk:** signature; arch, abi,
+  `base:` against the running OS; not already installed; `depends:` installed
+  and satisfied; no installed package matches `conflicts:`; every path is under
+  `usr/local/`, passes through no symlink (on disk or made by the package), and
+  is neither owned by another package or base nor already on disk.
+- **Transaction.** `/var/lock/pkg.lock` (pid; a dead owner's lock is stolen),
+  then `/var/db/pkg/.journal` (`add <name>`, then `D <dir>` / `F <file>` lines
+  written before each action). Files are written to `<path>.upkg-tmp`, hashed as
+  written, compared with the manifest and renamed. The record is built in
+  `/var/db/pkg/.new-<name>/` and renamed to `<name>` last: that rename is the
+  commit. Any failure, or the next `pkg` run after a crash, replays the journal
+  backwards and removes exactly what the add created. An interrupted `del` is
+  rolled forward.
+- **`del`** removes files whose hash still matches (others are kept and named),
+  then empty directories, then the record; refused if another installed package
+  `depends:` on it unless `--force`, which also removes modified files.
+- Setuid/setgid members and packages touching paths outside `usr/local/` are
+  refused for now. Upgrade-in-place is P4: re-adding an installed name is refused.
+- `mkimage` creates `/var/db/pkg`, `/var/cache/pkg`, `/var/lock` and copies
+  `etc/pkg/keys/*.pub` into `/etc/pkg/keys`. The project key itself is not in
+  the tree yet.
+
 ### Relationship to base and to W-023
 
 - **Base is recorded, not managed by `pkg`.** `mkimage` (and the installer)
