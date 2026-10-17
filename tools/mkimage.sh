@@ -129,6 +129,7 @@ mkdir -p "${STAGE}"/bin "${STAGE}"/lib "${STAGE}"/sbin \
          "${STAGE}"/usr/bin "${STAGE}"/usr/sbin "${STAGE}"/usr/lib "${STAGE}"/usr/tests \
          "${STAGE}"/etc "${STAGE}"/etc/init.d "${STAGE}"/etc/dropbear \
          "${STAGE}"/var/log "${STAGE}"/var/tmp \
+         "${STAGE}"/var/db/pkg "${STAGE}"/var/cache/pkg "${STAGE}"/var/lock \
          "${STAGE}"/tmp \
          "${STAGE}"/home/root "${STAGE}"/home/guest \
          "${STAGE}"/home/reddawg "${STAGE}"/home/bsd
@@ -147,7 +148,7 @@ chmod 1777 "${STAGE}/tmp" "${STAGE}/var/tmp" 2>/dev/null || true
 # it (relative target, resolved against /lib) when loading the program interp.
 cp "${BUILD}/lib/libc.so" "${STAGE}/lib/libc.so"
 ln -s libc.so "${STAGE}/lib/ld-musl-${ARCH}.so.1"
-for _l in libubix_api libpw libbearssl; do
+for _l in libubix_api libpw libbearssl libz; do
 	[ -f "${BUILD}/lib/${_l}.so" ] && cp "${BUILD}/lib/${_l}.so" "${STAGE}/lib/${_l}.so" || true
 done
 
@@ -257,6 +258,13 @@ done
 if [ -d etc/init.d ]; then
 	for f in etc/init.d/*; do [ -f "$f" ] && cp "$f" "${STAGE}/etc/init.d/"; done
 fi
+# Package trust list: every etc/pkg/keys/*.pub is a public key `pkg` accepts
+# signatures from (docs/design/packages-plan.md, Signing).  The directory
+# always exists so the installed system has somewhere for a key to be added.
+mkdir -p "${STAGE}/etc/pkg/keys"
+for f in etc/pkg/keys/*.pub; do
+	[ -f "$f" ] && cp "$f" "${STAGE}/etc/pkg/keys/" || true
+done
 # Credentials for login (root / user).  Staged last so tools/userdb (the build's
 # canonical copy) wins over any etc/userdb.
 [ -f tools/userdb ] && cp tools/userdb "${STAGE}/etc/userdb" || true

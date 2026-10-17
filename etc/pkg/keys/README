@@ -1,0 +1,7 @@
+Trusted package signing keys.
+
+Every *.pub file in this directory (one `ecdsa-p256: <130 hex digits>` line,
+`#` comments allowed) is a public key the on-device `pkg` accepts signatures
+from.  tools/mkimage.sh copies them into /etc/pkg/keys of the image.  The
+project's repository key is added here when the repository is published
+(docs/design/packages-plan.md, section 1 "Signing").
