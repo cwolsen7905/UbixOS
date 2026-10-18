@@ -119,10 +119,10 @@ arches are TCG (no KVM needed). Firmware: see below.
 | `publish:registry` | publish | upload to the generic package registry | master only |
 | `publish:cdn` | publish | rsync to the CDN | protected tag, manual |
 
-The existing `boot` / `boot:keep` jobs are **replaced** by `image` (they would
+The existing `boot` / `boot:keep` jobs are **replaced** by `images` (they would
 be redundant: same build, weaker smoke). The `-kernel` smoke remains available
 locally and as `CHECK_BOOT_MODE=kernel`. `build` / `build:keep` stay (kernel +
-world per arch, fast signal, no image) — this keeps `image` off the critical
+world per arch, fast signal, no image) — this keeps `images` off the critical
 path of the cheap feedback.
 
 Building the world once and cutting both profiles from it avoids doubling the
@@ -189,7 +189,7 @@ Three tiers, increasing in permanence. File names are the same everywhere:
 
 ### 5.1 MR images: job artifacts, 7 days
 
-`image` publishes `ubixos-*.img.zst`, `SHA256SUMS`, the serial boot log and the
+`images` publishes `ubixos-*.img.zst`, `SHA256SUMS`, the serial boot log and the
 kernel as artifacts with `expire_in: 7 days` (today it is "1 week" — the same,
 spelled explicitly) and `when: always` so a failed boot keeps its log. The
 `.mr-only` / `.keep` split stays because `expire_in` cannot take a variable.
@@ -261,7 +261,7 @@ later needs no rework and no re-upload. Skip D.
   CDN/branded URL, not the images (avoids a second copy of ~GB assets).
 - **W-057** (Installer B4: `tools/mkmedia.sh` + CI boot-smoke under OVMF/AAVMF)
   is *after* W-056 (ramdisk). This lane delivers its CI half early, for the
-  plain disk image: the `image` job, firmware in the toolchain image,
+  plain disk image: the `images` job, firmware in the toolchain image,
   `CHECK_BOOT_MODE=uefi`, the file-name scheme and the three storage tiers.
   When B4 lands, `mkmedia` outputs `ubixos-<version>-<arch>-live.img` and joins
   the same matrix and publishing path with no CI redesign: the run scripts take
@@ -284,7 +284,7 @@ later needs no rework and no re-upload. Skip D.
 | B | mkimage: ESP install of loader + `\EFI\BOOT\kernel`, `cmp` assert, 128 MB ESP, `POOL_*` overrides, name parameter | `tools/mkimage.sh` |
 | C | Run scripts: no-injection default, `--inject`, firmware autodetect, shared marker | `tools/run-uefi-x86_64.sh`, `tools/run-aavmf-aarch64.sh` |
 | D | boot-smoke `CHECK_BOOT_MODE`, marker | `tools/check/checks/boot-smoke.sh` |
-| E | `image` job replacing `boot`; artifacts 7 days; profiles; compression | `.gitlab-ci.yml`, `tools/ci/` |
+| E | `images` job replacing `boot`; artifacts 7 days; profiles; compression | `.gitlab-ci.yml`, `tools/ci/` |
 | F | `publish:registry` + cleanup | `.gitlab-ci.yml`, `tools/ci/publish-registry.sh` |
 | G | `publish:cdn` + release object + signature (if wanted) | `.gitlab-ci.yml`, `tools/ci/publish-cdn.sh` |
 | H | Docs: describe jobs, how to reproduce locally, download page text | `docs/design/ci-images.md`, `docs/ci.md` |
@@ -377,13 +377,14 @@ Deviations from the plan:
 
 ### Needed from outside this lane
 
-1. **`stand/efi/loader.c`** — kernel search order. The loader tries
+1. **`stand/efi/loader.c`** — kernel search order (done: the lane scope was
+   widened; `\EFI\BOOT\kernel` is now tried first, both arches boot). The loader tries
    `\boot\kernel\kernel`, `\kernel\kernel`, `\EFI\BOOT\kernel`. On aarch64
    `\kernel\kernel` is the flat U-Boot Image, so the loader reads it, fails
    `load_elf` ("kernel is not a valid ELF64") and never reaches the ELF. Fix:
    put `\EFI\BOOT\kernel` first. (Verified with a local one-line change:
    aarch64 then boots to login; reverted here.)
-2. **`.gitlab/Dockerfile`** — add `ovmf`, `qemu-efi-aarch64`, `zstd`,
+2. **`.gitlab/Dockerfile`** (done) — added `ovmf`, `qemu-efi-aarch64`, `zstd`,
    `xz-utils`, `curl`, `openssh-client`.
 3. `docs/ci.md`, `docs/WORK.md` (new row, W-057 note),
    `docs/design/installer-plan.md` B4 status.
@@ -392,5 +393,16 @@ Deviations from the plan:
    `PRUNE_REGISTRY`/`PRUNE_TOKEN`; the CDN-side deploy user restricted to
    `releases/`.
 
-Not verified locally (needs CI/servers): the `.gitlab-ci.yml` job graph (parsed
-as YAML only), the registry upload/prune scripts, and the CDN publish.
+First MR pipeline (!7, pipeline 8463): `images` passed on both arches in about
+3 min each on the k8s runner (job `images: [aarch64]` 192 s, `[x86_64]` 184 s,
+including the world build). Desktop images: 59 MB (aarch64) / 53 MB (x86_64)
+allocated, 9.5 MB / 9.4 MB `zstd -19`; base: 41 / 37 MB, 2.4 MB each. The
+desktop UEFI boot-smoke passed under OVMF and AAVMF (TCG); base was built, not
+smoked (MR policy). Job artifact per arch about 12 MB.
+
+Not verified yet (only run on master / tags): `images:keep`, the registry
+upload and prune scripts, and the CDN publish. `.gitlab-ci.yml` was checked
+with GitLab's CI lint.
+
+Naming gotcha: a job called `image` collides with the global `image:` keyword,
+so the jobs are `images` / `images:keep`.
