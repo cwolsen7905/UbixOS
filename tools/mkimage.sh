@@ -13,9 +13,17 @@
 #                        DIRECTLY from build/${ARCH}/ + the asset sources; it is
 #                        no longer mirrored out of the FAT.
 #
+# The FAT partition is also the UEFI ESP: \EFI\BOOT\BOOT{X64,AA64}.EFI plus the
+# ELF kernel at \EFI\BOOT\kernel (docs/design/ci-images.md), so the image boots in
+# any UEFI firmware with no QEMU -kernel.  Same layout on both arches.
+#
 # Requires mtools (brew install mtools).  Run after `bmake world TARGET=aarch64`.
 #
 # Usage: tools/mkimage.sh [image] [build-dir]
+#   LOADER=path     UEFI loader to install (default ${BUILD}/boot/BOOT{X64,AA64}.EFI)
+#   NO_LOADER=1     build without a loader (QEMU -kernel / U-Boot only images)
+#   REQUIRE_LOADER=1  fail instead of continuing when the loader/kernel is missing (CI)
+#   FAT_SIZE_MB, POOL_SIZE_MB, POOL_FS_MB   override the partition sizes
 set -e
 
 # ARCH selects the world build dir + the musl dynamic-linker soname.  Defaults to
@@ -27,10 +35,10 @@ BUILD=${2:-build/${ARCH}}
 # MBR-partitioned layout: FAT32 (boot only) + swap + UbixFS pool (the native CoW
 # root the kernel mounts at /).  The kernel is loaded by QEMU (-kernel), so FAT
 # is not a boot partition here — it is boot-only parity for the GRUB path.
-FAT_SIZE_MB=64      # FAT32 partition (type 0x0C) — boot only (kernel for GRUB)
+FAT_SIZE_MB=${FAT_SIZE_MB:-128}  # FAT32 partition (type 0x0C) — the UEFI ESP + boot files
 SWAP_SIZE_MB=256    # raw swap partition (type 0x82)
-POOL_SIZE_MB=3080   # UbixFS pool partition (type 0x9C) — the raw root /
-POOL_FS_MB=3072     # pool filesystem size inside that partition (self-hosting: world + src + tools)
+POOL_SIZE_MB=${POOL_SIZE_MB:-3080}   # UbixFS pool partition (type 0x9C) — the raw root /
+POOL_FS_MB=${POOL_FS_MB:-3072}     # pool filesystem size inside that partition (self-hosting: world + src + tools)
 SIZE_MB=$(( 1 + FAT_SIZE_MB + SWAP_SIZE_MB + POOL_SIZE_MB + 4 ))
 
 # Image profile (docs/design/console-and-arch-convergence-plan.md Phase 4):
@@ -98,26 +106,45 @@ POOL_LBA=$(cat "${IMG}.poollba"); rm -f "${IMG}.poollba"
 # Format the FAT32 partition (partition 1 begins at LBA 2048 = 1 MB).
 mformat -i "${IMG}@@1M" -F ::
 
-# ── FAT is the boot partition ────────────────────────────────────────────────
-# Carries the kernel a bootloader loads from the filesystem.  On aarch64 this is
-# the FLAT Image (boot/kernel.img — arm64 Image header at byte 0) that U-Boot's
-# `booti` loads on QEMU virt, matching how the Pi firmware loads kernel8.img; the
-# QEMU `-kernel` dev fast-path still uses the ELF directly.  On x86_64 the ELF is
-# carried for the GRUB/multiboot path.  The world lives in the UbixFS pool below.
+# ── FAT is the boot partition and the UEFI ESP ───────────────────────────────
+# UEFI: the loader at the removable-media path plus the ELF kernel beside it
+# (the loader's \EFI\BOOT\kernel search path).  Both arches, identical layout.
+# Legacy: aarch64 also carries the FLAT Image (boot/kernel.img — arm64 Image
+# header at byte 0) at /kernel/kernel for U-Boot's `booti`, matching how the Pi
+# firmware loads kernel8.img.  The OS mounts this FAT at /boot, so the flat
+# Image is at the FAT root (/boot/kernel/kernel on-device), not under boot/.
+# The QEMU `-kernel` dev fast-path uses the ELF directly.  The world lives in
+# the UbixFS pool below.
+case "${ARCH}" in
+aarch64) LOADER_NAME=BOOTAA64.EFI ;;
+x86_64)  LOADER_NAME=BOOTX64.EFI ;;
+*)       echo "mkimage: unsupported ARCH ${ARCH}" >&2; exit 1 ;;
+esac
+LOADER="${LOADER:-${BUILD}/boot/${LOADER_NAME}}"
+if [ -z "${NO_LOADER:-}" ] && { [ ! -f "${LOADER}" ] || [ ! -f "${BUILD}/boot/kernel" ]; }; then
+	echo "mkimage: need ${LOADER} and ${BUILD}/boot/kernel for a UEFI image (bmake -C stand TARGET=${ARCH}; bmake kernel)" >&2
+	# CI sets REQUIRE_LOADER=1 so a shipped image can never silently lack the loader.
+	[ -n "${REQUIRE_LOADER:-}" ] && exit 1
+	echo "mkimage: continuing without a UEFI loader (QEMU -kernel / U-Boot only image)" >&2
+	NO_LOADER=1
+fi
+if [ -z "${NO_LOADER:-}" ]; then
+	mmd -i "${IMG}@@1M" ::/EFI ::/EFI/BOOT
+	mcopy -o -i "${IMG}@@1M" "${LOADER}" "::/EFI/BOOT/${LOADER_NAME}"
+	mcopy -o -i "${IMG}@@1M" "${BUILD}/boot/kernel" ::/EFI/BOOT/kernel
+	# Every kernel copy on the ESP must be byte-identical to the build output.
+	_chk=$(mktemp "${TMPDIR:-/tmp}/ubixkchk.XXXXXX")
+	mcopy -n -i "${IMG}@@1M" ::/EFI/BOOT/kernel "${_chk}"
+	cmp -s "${_chk}" "${BUILD}/boot/kernel" || { rm -f "${_chk}"; echo "mkimage: ESP kernel copy differs from build" >&2; exit 1; }
+	rm -f "${_chk}"
+	echo "mkimage: ESP carries \\EFI\\BOOT\\${LOADER_NAME} + \\EFI\\BOOT\\kernel"
+else
+	echo "mkimage: NO_LOADER set; no UEFI loader on the ESP"
+fi
 if [ "${ARCH}" = "aarch64" ] && [ -f "${BUILD}/boot/kernel.img" ]; then
-	# Stage the flat Image at the FAT ROOT (/kernel/kernel), not /boot/kernel/kernel:
-	# the OS mounts this FAT partition at /boot, so an internal boot/ dir would
-	# double up to /boot/boot/kernel/kernel on-device.  Flat root => /boot/kernel/kernel.
-	# (U-Boot's bootcmd fatloads /kernel/kernel to match — see tools/ports/u-boot.)
 	mmd -i "${IMG}@@1M" ::/kernel 2>/dev/null || true
 	mcopy -o -i "${IMG}@@1M" "${BUILD}/boot/kernel.img" ::/kernel/kernel
 	echo "mkimage: FAT carries the flat arm64 Image at /kernel/kernel (U-Boot booti; /boot/kernel/kernel on-device)"
-elif [ -f "${BUILD}/boot/kernel" ]; then
-	mmd -i "${IMG}@@1M" ::/boot ::/boot/kernel 2>/dev/null || true
-	mcopy -o -i "${IMG}@@1M" "${BUILD}/boot/kernel" ::/boot/kernel/kernel
-	echo "mkimage: FAT (boot-only) carries /boot/kernel/kernel"
-else
-	echo "mkimage: FAT left empty (no ${BUILD}/boot/kernel; kernel loaded via QEMU -kernel)"
 fi
 
 # ── Build the root tree on the host, then lay it into the UbixFS pool ─────────
