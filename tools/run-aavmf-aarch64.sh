@@ -4,27 +4,32 @@
 #
 # Works on a PRIVATE COPY of the image in a temp directory (the original is never
 # touched).  Usage:
-#   tools/run-aavmf-aarch64.sh [--smoke] [--timeout SEC] [--fw CODE.fd] [--vars VARS.fd] IMAGE
-# --smoke   headless; exit 0 only if the serial console reaches a login prompt.
+#   tools/run-aavmf-aarch64.sh [--smoke] [--inject] [--timeout SEC] [--fw CODE.fd] [--vars VARS.fd] IMAGE
+# --smoke   headless; exit 0 only if the serial console reaches a login prompt
+#           (regex MARKER, default '[Ll]ogin: ').
+# --inject  dev loop: first copy the loader and build/ kernel onto the copy's ESP.  Without it
+#           the image is booted exactly as shipped (loader + \EFI\BOOT\kernel already on it).
 # Env: ACCEL (default tcg; hvf on Apple Silicon is much faster), LOADER, KERNEL.
-# Needs: qemu-system-aarch64, mtools, the loader at build/aarch64/boot/BOOTAA64.EFI
-# (`bmake -C stand TARGET=aarch64`).
+# Needs: qemu-system-aarch64, AAVMF (tools/ci/firmware.sh finds it); mtools and the loader
+# at build/aarch64/boot/BOOTAA64.EFI (`bmake -C stand TARGET=aarch64`) only with --inject.
 set -eu
 
 ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
 LOADER="${LOADER:-$ROOT/build/aarch64/boot/BOOTAA64.EFI}"
-QEMU_SHARE="${QEMU_SHARE:-$(dirname "$(command -v qemu-system-aarch64)")/../share/qemu}"
 KERNEL="${KERNEL:-$ROOT/build/aarch64/boot/kernel}"
-FW="${FW:-$QEMU_SHARE/edk2-aarch64-code.fd}"
+FW="${FW:-}"
 VARS="${VARS:-}"
 ACCEL="${ACCEL:-tcg}"
 SMOKE=0
+INJECT=0
+MARKER="${MARKER:-[Ll]ogin: }"
 TIMEOUT=300
 MEM=512
 
 while [ $# -gt 0 ]; do
 	case "$1" in
 	--smoke) SMOKE=1 ;;
+	--inject) INJECT=1 ;;
 	--timeout) TIMEOUT=$2; shift ;;
 	--fw) FW=$2; shift ;;
 	--vars) VARS=$2; shift ;;
@@ -33,9 +38,14 @@ while [ $# -gt 0 ]; do
 	esac
 	shift
 done
-[ -n "${IMG:-}" ] && [ -f "$IMG" ] || { echo "usage: $0 [--smoke] IMAGE" >&2; exit 2; }
-[ -f "$LOADER" ] || { echo "missing $LOADER (bmake -C stand TARGET=aarch64)" >&2; exit 2; }
-[ -f "$FW" ] || { echo "missing AAVMF firmware $FW" >&2; exit 2; }
+[ -n "${IMG:-}" ] && [ -f "$IMG" ] || { echo "usage: $0 [--smoke] [--inject] IMAGE" >&2; exit 2; }
+[ "$INJECT" = 0 ] || [ -f "$LOADER" ] || { echo "missing $LOADER (bmake -C stand TARGET=aarch64)" >&2; exit 2; }
+if [ -z "$FW" ] || [ -z "$VARS" ]; then
+	set -- $("$ROOT/tools/ci/firmware.sh" aarch64) || exit 2
+	[ -n "$FW" ] || FW=$1
+	[ -n "$VARS" ] || VARS=${2:-}
+fi
+[ -f "$FW" ] || { echo "missing firmware $FW" >&2; exit 2; }
 
 WORK=$(mktemp -d "${TMPDIR:-/tmp}/ubix-aavmf.XXXXXX")
 trap 'kill $QPID 2>/dev/null || true; rm -rf "$WORK"' EXIT INT TERM
@@ -46,14 +56,12 @@ dd if=/dev/zero of="$WORK/code.fd" bs=1048576 count=64 2>/dev/null
 dd if="$FW" of="$WORK/code.fd" conv=notrunc 2>/dev/null
 if [ -n "$VARS" ]; then cp "$VARS" "$WORK/vars.fd"; else dd if=/dev/zero of="$WORK/vars.fd" bs=1048576 count=64 2>/dev/null; fi
 
-# Install the loader at the removable-media path on the ESP (partition 1 at 1 MB).
-mmd -i "$WORK/disk.img@@1M" ::/EFI ::/EFI/BOOT 2>/dev/null || true
-mcopy -o -i "$WORK/disk.img@@1M" "$LOADER" ::/EFI/BOOT/BOOTAA64.EFI
-
-# Refresh the kernel on the copy so a rebuilt kernel is tested without a new image.
-if [ -f "$KERNEL" ]; then
-	mmd -i "$WORK/disk.img@@1M" ::/boot ::/boot/kernel 2>/dev/null || true
-	mcopy -o -i "$WORK/disk.img@@1M" "$KERNEL" ::/boot/kernel/kernel
+if [ "$INJECT" = 1 ]; then
+	# Install the loader at the removable-media path on the ESP (partition 1 at 1 MB).
+	mmd -i "$WORK/disk.img@@1M" ::/EFI ::/EFI/BOOT 2>/dev/null || true
+	mcopy -o -i "$WORK/disk.img@@1M" "$LOADER" ::/EFI/BOOT/BOOTAA64.EFI
+	# Refresh the kernel beside it so a rebuilt kernel is tested without a new image.
+	[ -f "$KERNEL" ] && mcopy -o -i "$WORK/disk.img@@1M" "$KERNEL" ::/EFI/BOOT/kernel
 fi
 
 CPU=cortex-a72
@@ -72,7 +80,7 @@ if [ "$SMOKE" = 1 ]; then
 	QPID=$!
 	i=0
 	while [ $i -lt "$TIMEOUT" ]; do
-		if grep -q "login:" "$WORK/serial.log" 2>/dev/null; then
+		if grep -Eq "$MARKER" "$WORK/serial.log" 2>/dev/null; then
 			echo "aavmf-smoke: PASS (login prompt reached)"
 			exit 0
 		fi
