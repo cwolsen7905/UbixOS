@@ -5,12 +5,14 @@
 #   lint       fast gates + selftest                                      BLOCKING
 #   build      kernel + world, aarch64 and x86_64                         BLOCKING
 #   analyze    header-selfcontained, warnings, clang-tidy, cppcheck       advisory
-#   boot       bmake image + QEMU (TCG) boot to login, both arches        BLOCKING
+#   boot       UEFI images (desktop+base) per arch, booted under OVMF/AAVMF  BLOCKING
+#   publish    master -> package registry; tag -> CDN (manual)
+#   docs/design/ci-images.md has the design and the storage tiers.
 #
 # Jobs not yet proven on these runners carry allow_failure: true (as the GitHub
 # workflow carried continue-on-error); drop it once a job has passed.
 
-stages: [toolchain, lint, build, analyze, boot]
+stages: [toolchain, lint, build, analyze, boot, publish]
 
 workflow:
   rules:
@@ -63,12 +65,12 @@ toolchain:
     - git fetch --quiet origin "+refs/heads/$CI_DEFAULT_BRANCH:refs/remotes/origin/$CI_DEFAULT_BRANCH" || true
 
 # artifacts:expire_in cannot take a variable, so artifact-producing jobs come in
-# two flavours: MR pipelines keep artifacts 1 week, master and tags longer.
+# two flavours: MR pipelines keep artifacts 7 days, master and tags longer.
 .mr-only:
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
   artifacts:
-    expire_in: 1 week
+    expire_in: 7 days
 .keep:
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
@@ -124,26 +126,73 @@ analyze:
   script:
     - tools/check/run.sh --base "$(tools/ci/lint-base.sh)" --tier ci header-selfcontained warnings clang-tidy cppcheck
 
-# --- image + boot smoke ----------------------------------------------------
+# --- UEFI images + boot smoke ----------------------------------------------
 
-# Rebuilds kernel+world and the image, then boots it headless under QEMU TCG:
-# no KVM or privileged mode needed.  Independent of `build` (which carries only
-# the kernel) so it starts as soon as lint passes.
-.boot:
+# Rebuilds kernel+world and the UEFI loader, cuts the desktop and base images from
+# that one world (tools/mkimage.sh puts BOOT*.EFI + the kernel on the ESP), boots
+# them AS SHIPPED under OVMF/AAVMF with no -kernel (QEMU TCG: no KVM or privileged
+# mode), and compresses.  Independent of `build` so it starts as soon as lint passes.
+# MRs smoke desktop and only build base; master and tags smoke both.
+.image:
   extends: .ci
   stage: boot
-  timeout: 60m
+  timeout: 90m
   needs: [toolchain, lint]
   parallel:
     matrix:
       - ARCH: [aarch64, x86_64]
   script:
-    - tools/ci/quiet.sh boot-$ARCH.log bmake kernel world image TARGET=$ARCH CROSS_PREFIX="$(tools/ci/crossprefix.sh $ARCH)"
-    - tools/check/run.sh --strict --arch $ARCH boot-smoke
+    - tools/ci/quiet.sh build-$ARCH.log bmake kernel world TARGET=$ARCH CROSS_PREFIX="$(tools/ci/crossprefix.sh $ARCH)"
+    - tools/ci/quiet.sh loader-$ARCH.log bmake -C stand TARGET=$ARCH
+    - tools/ci/make-images.sh $ARCH
   artifacts:
-    name: image-$ARCH-$CI_COMMIT_SHORT_SHA
+    name: images-$ARCH-$CI_COMMIT_SHORT_SHA
     when: always
-    paths: ["ubixos*.img", "build/$ARCH/boot/kernel*", "build/$ARCH/*.log", "boot-$ARCH.log"]
+    paths: ["images/", "build/$ARCH/boot/kernel*", "build/$ARCH/boot/BOOT*.EFI", "*-$ARCH*.log"]
 
-boot: { extends: [.boot, .mr-only] }
-boot:keep: { extends: [.boot, .keep] }
+image:
+  extends: [.image, .mr-only]
+  variables: { SMOKE_PROFILES: "desktop" }
+image:keep:
+  extends: [.image, .keep]
+  variables: { SMOKE_PROFILES: "desktop base" }
+
+# --- publish ---------------------------------------------------------------
+
+# master: every build goes to the generic package registry under a unique
+# version (<version.h>-dev.<sha>).  Pruned by registry:prune.
+publish:registry:
+  extends: .ci
+  stage: publish
+  interruptible: false
+  needs: ["image:keep"]
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  script:
+    - tools/ci/publish-registry.sh
+
+# Scheduled: keep the newest 10 -dev versions.  Needs PRUNE_TOKEN (api scope).
+registry:prune:
+  extends: .ci
+  stage: publish
+  needs: [toolchain]
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule" && $PRUNE_REGISTRY == "1"
+  script:
+    - tools/ci/prune-registry.sh 10
+
+# tag: manual, so a deliberate click follows a green tag pipeline (release names are
+# never reused).  rsyncs the xz images to the CDN, read-only, then creates the
+# release.  Needs the protected variables CDN_HOST, CDN_USER, CDN_ROOT and the
+# file variable CDN_SSH_KEY (protected tags only).
+publish:cdn:
+  extends: .ci
+  stage: publish
+  interruptible: false
+  needs: ["image:keep"]
+  rules:
+    - if: $CI_COMMIT_TAG
+      when: manual
+  environment: { name: release/$CI_COMMIT_TAG, url: "https://cdn.ubixsys.com/releases/" }
+  script:
+    - tools/ci/publish-cdn.sh

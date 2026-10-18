@@ -1,6 +1,12 @@
 # CI-built UEFI disk images — design + build plan
 
-Status: **plan, awaiting the person's approval. Nothing here is implemented.**
+Status: **approved 2026-10-17 and implemented in this lane**, except the two
+changes outside its scope (section 11), which the CI jobs depend on.
+
+Approved choices: branded host A now, B (or C) before the first public
+announcement; desktop smoke + base build-only on MRs; `\EFI\BOOT\kernel` as the
+single UEFI kernel path; MBR for step 1; `.img.xz` only for releases; manual
+`publish:cdn`; GitLab canonical; Dockerfile change in scope of a wider lane.
 
 Goal: CI builds a UEFI-bootable disk image per architecture, with the loader and
 kernel already on the image's ESP, and proves each one boots to the login prompt
@@ -179,7 +185,7 @@ and `image-name.sh` (single source of the file-name scheme below).
 Three tiers, increasing in permanence. File names are the same everywhere:
 `ubixos-<version>-<arch>-<profile>.img.<ext>`, where `<version>` is
 `3.1.0-BETA` style from `sys/include/ubixos/version.h` for tags, and
-`<version>+<shortsha>` for non-tags.
+`<version>-dev.<shortsha>` for non-tags (no `+` in file names).
 
 ### 5.1 MR images: job artifacts, 7 days
 
@@ -194,7 +200,7 @@ Risk: artifact size limit (section 4); fallback is "log + kernel only on MRs".
 On every master build, `publish:registry` uploads to
 `<project>/-/packages/generic/ubixos-images/<version>+<shortsha>/<file>` using
 `CI_JOB_TOKEN` and `curl --upload-file`. Not overwritten: the version is unique
-per commit. A scheduled cleanup (a small `tools/ci/` script calling the
+per commit; a tag's `<version>` is the tag name without `v`. A scheduled cleanup (a small `tools/ci/` script calling the
 packages API) keeps the last N (default 10) per arch/profile so the registry
 doesn't grow without bound; the number is a knob. Needs project registry
 storage headroom — about 4 images × compressed size × N; the person should
@@ -333,3 +339,58 @@ script with `--smoke` for aarch64 and x86_64) before CI is touched; `tools/check
 9. Server facts only the person can give: artifact size limit, registry quota,
    CDN docroot/user on kube-003, whether `ubixos.org` is owned and who runs
    its DNS.
+
+## 11. Implementation notes (what was built, what changed from the plan)
+
+Measured locally (Apple Silicon; aarch64 under HVF, x86_64 under TCG), from a
+clean `bmake kernel world` + `bmake -C stand`:
+
+| Image | Allocated | `zstd -19` | Smoke |
+|-------|-----------|------------|-------|
+| aarch64 desktop | 68 MB | 11.4 MB | PASS (login via AAVMF) |
+| aarch64 base | 40 MB | 2.9 MB | PASS |
+| x86_64 desktop | 67 MB | 11.7 MB | PASS (login via OVMF, TCG) |
+| x86_64 base | 39 MB | 3.1 MB | PASS |
+
+The pool is mostly a hole, so the compressed images are tiny. This removes the
+artifact-size and registry-quota worry in sections 4 and 5 and makes the
+`POOL_*` size knobs optional (kept, harmless). x86_64 `make-images.sh` (two
+profiles, two TCG boots) took about 35 s locally; CI will be slower, the
+`kernel world` build dominates. Real CI times come from the first pipeline.
+
+Deviations from the plan:
+
+- **`mkimage` is lenient by default.** A missing loader/kernel warns and builds
+  a QEMU `-kernel`/U-Boot-only image, so `bmake image` keeps working for local
+  use. CI sets `REQUIRE_LOADER=1`, which fails instead. (Plan said "fails unless
+  `NO_LOADER=1`".)
+- **x86_64 `/boot/kernel/kernel` is dropped**: nothing read it (checked
+  `update-image.sh`, `extract-kernel.sh`, `grub.cfg`, the Makefile). aarch64
+  keeps the flat Image at `/kernel/kernel` for U-Boot self-hosting.
+- **Version names** use `-dev.<sha>`, not `+<sha>`.
+- `registry:prune` is a scheduled job (variable `PRUNE_REGISTRY=1`, token
+  `PRUNE_TOKEN`).
+- `tools/ci/` gained `firmware.sh`, `image-name.sh`, `make-images.sh`,
+  `publish-registry.sh`, `prune-registry.sh`, `publish-cdn.sh`.
+- Run scripts take `--inject` for the dev loop; the default boots the image as
+  shipped. All three smoke paths share the `[Ll]ogin: ` marker.
+
+### Needed from outside this lane
+
+1. **`stand/efi/loader.c`** — kernel search order. The loader tries
+   `\boot\kernel\kernel`, `\kernel\kernel`, `\EFI\BOOT\kernel`. On aarch64
+   `\kernel\kernel` is the flat U-Boot Image, so the loader reads it, fails
+   `load_elf` ("kernel is not a valid ELF64") and never reaches the ELF. Fix:
+   put `\EFI\BOOT\kernel` first. (Verified with a local one-line change:
+   aarch64 then boots to login; reverted here.)
+2. **`.gitlab/Dockerfile`** — add `ovmf`, `qemu-efi-aarch64`, `zstd`,
+   `xz-utils`, `curl`, `openssh-client`.
+3. `docs/ci.md`, `docs/WORK.md` (new row, W-057 note),
+   `docs/design/installer-plan.md` B4 status.
+4. GitLab project settings: protected variables `CDN_HOST`, `CDN_USER`,
+   `CDN_ROOT`, file variable `CDN_SSH_KEY` (protected tags only), schedule +
+   `PRUNE_REGISTRY`/`PRUNE_TOKEN`; the CDN-side deploy user restricted to
+   `releases/`.
+
+Not verified locally (needs CI/servers): the `.gitlab-ci.yml` job graph (parsed
+as YAML only), the registry upload/prune scripts, and the CDN publish.
