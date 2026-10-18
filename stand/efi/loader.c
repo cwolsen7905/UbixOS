@@ -242,7 +242,7 @@ static void get_fb(struct ubix_bootinfo *bi)
 efi_status_t efi_main(efi_handle_t image, efi_system_table_t *st)
 {
 	static const char16_t *const kpaths[] = {
-	    u"\\boot\\kernel\\kernel", u"\\kernel\\kernel", u"\\EFI\\BOOT\\kernel", 0};
+	    u"\\EFI\\BOOT\\kernel", u"\\boot\\kernel\\kernel", u"\\kernel\\kernel", 0};
 	efi_loaded_image_t *li = 0;
 	efi_simple_fs_t *fs = 0;
 	efi_file_t *root = 0;

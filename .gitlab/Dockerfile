@@ -8,6 +8,9 @@
 # linux/amd64 only (the runners are amd64); aarch64 is cross-built with the
 # distro gcc-aarch64-linux-gnu, as on GitHub.
 #
+# ovmf / qemu-efi-aarch64 are the UEFI firmware (OVMF, AAVMF) the image boot-smoke
+# runs under; zstd/xz-utils compress the images, curl and openssh-client publish them.
+#
 # xxd and libhtml-parser-perl (HTML::Entities) are NetSurf's host-side build
 # needs (JS generics include, message splitting); without them `bmake world`
 # silently drops the JS bindings and the nsfb link fails.
@@ -22,6 +25,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         mtools qemu-utils qemu-system-arm qemu-system-x86 \
         python3 git ca-certificates rsync file \
         xxd perl libhtml-parser-perl \
+        ovmf qemu-efi-aarch64 zstd xz-utils curl openssh-client \
     && rm -rf /var/lib/apt/lists/*
 
 # TOOLCHAIN defaults to clang: the makefiles call bare clang, ld.lld and
