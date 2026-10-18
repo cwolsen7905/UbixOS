@@ -6,11 +6,16 @@
 #   CHECK_IMAGE_<ARCH>   image to copy (default: ubixos-arm.img / ubixos-x86_64.img,
 #                        the Makefile's DISK_IMAGE_ARM / DISK_IMAGE_X86_64)
 #   CHECK_BOOT_TIMEOUT   seconds per arch (default 240; TCG is slow)
-#   CHECK_BOOT_MARKER    regex that means "booted" (default: "Login: ", bin/login)
+#   CHECK_BOOT_MARKER    regex that means "booted" (default: "[Ll]ogin: ", bin/login)
+#   CHECK_BOOT_MODE      kernel (default): QEMU -kernel injection, the local fast loop.
+#                        uefi: boot the image AS SHIPPED through OVMF/AAVMF with no
+#                        -kernel (tools/run-uefi-x86_64.sh / run-aavmf-aarch64.sh), so the
+#                        loader, ESP layout and firmware are what is tested.  CI uses this.
 . "$CHECK_ROOT/tools/check/lib.sh"
 cd "$CHECK_ROOT" || exit 2
 TIMEOUT="${CHECK_BOOT_TIMEOUT:-240}"
-MARKER="${CHECK_BOOT_MARKER:-Login: }"
+MARKER="${CHECK_BOOT_MARKER:-[Ll]ogin: }"
+MODE="${CHECK_BOOT_MODE:-kernel}"
 bad=0; ran=0
 work="$(mktemp -d)"; trap 'rm -rf "$work"' EXIT
 
@@ -30,6 +35,19 @@ for a in $CHECK_ARCHES; do
 	*) continue ;;
 	esac
 	command -v "$q" >/dev/null 2>&1 || { echo "$q not installed"; continue; }
+	if [ "$MODE" = uefi ]; then
+		case "$a" in aarch64) rs="$CHECK_ROOT/tools/run-aavmf-aarch64.sh" ;; *) rs="$CHECK_ROOT/tools/run-uefi-x86_64.sh" ;; esac
+		[ -f "$img" ] || { echo "[$a] need $img (bmake image TARGET=$a)"; continue; }
+		"$CHECK_ROOT/tools/ci/firmware.sh" "$a" >/dev/null 2>&1 || { echo "[$a] no UEFI firmware (OVMF/AAVMF) installed"; continue; }
+		ran=1
+		# The run script waits for the marker itself and prints the serial tail on failure.
+		if MARKER="$MARKER" sh "$rs" --smoke --timeout "$TIMEOUT" "$img"; then
+			echo "[$a] booted via UEFI"
+		else
+			bad=1
+		fi
+		continue
+	fi
 	[ -f "$img" ] && [ -f "$kern" ] || { echo "[$a] need $kern and $img (bmake kernel image TARGET=$a)"; continue; }
 	ran=1
 	cp "$img" "$work/$a.img"
