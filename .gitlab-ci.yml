@@ -133,7 +133,7 @@ analyze:
 # them AS SHIPPED under OVMF/AAVMF with no -kernel (QEMU TCG: no KVM or privileged
 # mode), and compresses.  Independent of `build` so it starts as soon as lint passes.
 # MRs smoke desktop and only build base; master and tags smoke both.
-.image:
+.images:
   extends: .ci
   stage: boot
   timeout: 90m
@@ -150,11 +150,11 @@ analyze:
     when: always
     paths: ["images/", "build/$ARCH/boot/kernel*", "build/$ARCH/boot/BOOT*.EFI", "*-$ARCH*.log"]
 
-image:
-  extends: [.image, .mr-only]
+images:
+  extends: [.images, .mr-only]
   variables: { SMOKE_PROFILES: "desktop" }
-image:keep:
-  extends: [.image, .keep]
+images:keep:
+  extends: [.images, .keep]
   variables: { SMOKE_PROFILES: "desktop base" }
 
 # --- publish ---------------------------------------------------------------
@@ -165,7 +165,7 @@ publish:registry:
   extends: .ci
   stage: publish
   interruptible: false
-  needs: ["image:keep"]
+  needs: ["images:keep"]
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
   script:
@@ -189,7 +189,7 @@ publish:cdn:
   extends: .ci
   stage: publish
   interruptible: false
-  needs: ["image:keep"]
+  needs: ["images:keep"]
   rules:
     - if: $CI_COMMIT_TAG
       when: manual

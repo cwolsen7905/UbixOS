@@ -4,7 +4,7 @@
 #   CDN_HOST   ssh host (kube-003)         CDN_USER   deploy user (can write only under CDN_ROOT)
 #   CDN_ROOT   docroot releases dir        CDN_SSH_KEY  path to the private key (file-type CI variable)
 #   CDN_URL    public base URL             (default https://cdn.ubixsys.com)
-# Needs images/ from the tag's `image:keep` jobs (xz images + SHA256SUMS-*), run on a protected tag.
+# Needs images/ from the tag's `images:keep` jobs (xz images + SHA256SUMS-*), run on a protected tag.
 set -eu
 ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/../.." && pwd)
 cd "$ROOT"

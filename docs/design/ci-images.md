@@ -115,7 +115,7 @@ arches are TCG (no KVM needed). Firmware: see below.
 
 | Job | Stage | Runs | When |
 |-----|-------|------|------|
-| `image` (matrix: arch) | boot | `bmake kernel world TARGET=$ARCH`, `bmake -C stand TARGET=$ARCH`, then `mkimage` for `desktop` (and `base` where required, same world, two images), smoke each by `tools/check/run.sh --strict --arch $ARCH boot-smoke` with `CHECK_BOOT_MODE=uefi`, then compress | MR, master, tags |
+| `images` (matrix: arch) | boot | `bmake kernel world TARGET=$ARCH`, `bmake -C stand TARGET=$ARCH`, then `mkimage` for `desktop` (and `base` where required, same world, two images), smoke each by `tools/check/run.sh --strict --arch $ARCH boot-smoke` with `CHECK_BOOT_MODE=uefi`, then compress | MR, master, tags |
 | `publish:registry` | publish | upload to the generic package registry | master only |
 | `publish:cdn` | publish | rsync to the CDN | protected tag, manual |
 
